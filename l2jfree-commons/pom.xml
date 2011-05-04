@@ -58,6 +58,11 @@
       <version>2.0.3</version>
     </dependency>
     <dependency>
+      <groupId>org.eclipse.jdt.core.compiler</groupId>
+      <artifactId>ecj</artifactId>
+      <version>3.5.1</version>
+    </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
@@ -67,8 +72,6 @@
   <build>
     <defaultGoal>install</defaultGoal>
     <finalName>${project.artifactId}-${project.version}</finalName>
-    <resources/>
-    <testResources/>
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>

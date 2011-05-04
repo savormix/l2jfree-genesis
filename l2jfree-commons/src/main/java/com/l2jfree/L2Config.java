@@ -33,7 +33,8 @@ import com.l2jfree.lang.L2Math;
 import com.l2jfree.util.HandlerRegistry;
 import com.l2jfree.util.logging.L2Logger;
 
-//TODO do we need commons logging?
+// TODO do we need commons logging?
+// TODO fill /doc folder
 public abstract class L2Config
 {
 	public static final String LOG_FILE = "./config/logging.properties";
