@@ -16,8 +16,6 @@ package com.l2jfree.network.mmocore;
 
 import java.nio.BufferUnderflowException;
 
-import javolution.text.TextBuilder;
-
 import com.l2jfree.network.mmocore.FloodManager.ErrorMode;
 
 /**
@@ -48,12 +46,7 @@ public abstract class ReceivablePacket<T extends MMOConnection<T, RP, SP>, RP ex
 		return 0;
 	}
 	
-	protected final int getAvaliableBytes()
-	{
-		return getByteBuffer().remaining();
-	}
-	
-	protected abstract boolean read() throws BufferUnderflowException, RuntimeException;
+	protected abstract boolean read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException;
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -78,65 +71,5 @@ public abstract class ReceivablePacket<T extends MMOConnection<T, RP, SP>, RP ex
 	protected final void sendPacket(SP sp)
 	{
 		getClient().sendPacket(sp);
-	}
-	
-	protected final void skip(int bytes)
-	{
-		if (getByteBuffer().remaining() < bytes)
-			throw new BufferUnderflowException();
-		
-		getByteBuffer().position(getByteBuffer().position() + bytes);
-	}
-	
-	protected final void skipAll()
-	{
-		getByteBuffer().position(getByteBuffer().limit());
-	}
-	
-	protected final void readB(byte[] dst)
-	{
-		getByteBuffer().get(dst);
-	}
-	
-	protected final void readB(byte[] dst, int offset, int len)
-	{
-		getByteBuffer().get(dst, offset, len);
-	}
-	
-	protected final int readC()
-	{
-		return getByteBuffer().get() & 0xFF;
-	}
-	
-	protected final int readH()
-	{
-		return getByteBuffer().getShort() & 0xFFFF;
-	}
-	
-	protected final int readD()
-	{
-		return getByteBuffer().getInt();
-	}
-	
-	protected final long readQ()
-	{
-		return getByteBuffer().getLong();
-	}
-	
-	protected final double readF()
-	{
-		return getByteBuffer().getDouble();
-	}
-	
-	protected final String readS()
-	{
-		TextBuilder tb = TextBuilder.newInstance();
-		
-		for (char c; (c = getByteBuffer().getChar()) != 0;)
-			tb.append(c);
-		
-		String str = tb.toString();
-		TextBuilder.recycle(tb);
-		return str;
 	}
 }

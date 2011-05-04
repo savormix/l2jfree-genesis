@@ -55,6 +55,9 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 	// ByteBuffers General Purpose Pool
 	private final FastList<ByteBuffer> _bufferPool = new FastList<ByteBuffer>();
 	
+	// wrapper for read and write operations
+	private final MMOBuffer MMO_BUFFER = new MMOBuffer();
+	
 	public ReadWriteThread(String name, SelectorThread<T, RP, SP> selectorThread, SelectorConfig sc,
 			IPacketHandler<T, RP, SP> packetHandler) throws IOException
 	{
@@ -331,16 +334,16 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 				
 				if (cp != null)
 				{
-					cp.setByteBuffer(buf);
+					MMO_BUFFER.setByteBuffer(buf);
 					cp.setClient(client);
 					
 					try
 					{
-						if (cp.getAvaliableBytes() < cp.getMinimumLength())
+						if (MMO_BUFFER.getAvailableBytes() < cp.getMinimumLength())
 						{
 							getSelectorThread().report(ErrorMode.BUFFER_UNDER_FLOW, client, cp, null);
 						}
-						else if (cp.read())
+						else if (cp.read(MMO_BUFFER))
 						{
 							getSelectorThread().executePacket(cp);
 							
@@ -365,7 +368,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 						getSelectorThread().report(ErrorMode.FAILED_READING, client, cp, e);
 					}
 					
-					cp.setByteBuffer(null);
+					MMO_BUFFER.setByteBuffer(null);
 				}
 			}
 			
@@ -498,7 +501,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		WRITE_BUFFER.clear();
 		
 		// set the write buffer
-		sp.setByteBuffer(WRITE_BUFFER);
+		MMO_BUFFER.setByteBuffer(WRITE_BUFFER);
 		
 		// reserve space for the size
 		WRITE_BUFFER.position(HEADER_SIZE);
@@ -506,7 +509,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		// write content to buffer
 		try
 		{
-			sp.write(client);
+			sp.write(client, MMO_BUFFER);
 		}
 		catch (RuntimeException e)
 		{
@@ -529,7 +532,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		WRITE_BUFFER.position(HEADER_SIZE + dataSize);
 		
 		// set the write buffer
-		sp.setByteBuffer(null);
+		MMO_BUFFER.setByteBuffer(null);
 	}
 	
 	private void closePendingConnections()

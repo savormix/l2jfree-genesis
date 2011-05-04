@@ -14,25 +14,11 @@
  */
 package com.l2jfree.network.mmocore;
 
-import java.nio.ByteBuffer;
-
 /**
  * @author KenM
  */
 abstract class AbstractPacket
 {
-	private ByteBuffer _buf;
-	
-	final void setByteBuffer(ByteBuffer buf)
-	{
-		_buf = buf;
-	}
-	
-	protected final ByteBuffer getByteBuffer()
-	{
-		return _buf;
-	}
-	
 	/**
 	 * @return a String with this packet name for debugging purposes
 	 */
