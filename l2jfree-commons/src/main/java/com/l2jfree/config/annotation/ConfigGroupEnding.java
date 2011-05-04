@@ -12,21 +12,18 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.config;
+package com.l2jfree.config.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-// TODO replace with the new config solution
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ConfigProperty
+public @interface ConfigGroupEnding
 {
-	public String loader();
-	
 	public String name();
 	
-	public String value();
+	public String[] comment() default {};
 }

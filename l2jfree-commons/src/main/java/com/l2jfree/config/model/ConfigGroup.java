@@ -12,21 +12,26 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.config;
+package com.l2jfree.config.model;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.util.ArrayList;
+import java.util.List;
 
-// TODO replace with the new config solution
-@Target(ElementType.FIELD)
-@Retention(RetentionPolicy.RUNTIME)
-public @interface ConfigProperty
+public final class ConfigGroup
 {
-	public String loader();
+	private final List<ConfigFieldInfo> _infos = new ArrayList<ConfigFieldInfo>();
 	
-	public String name();
+	public void add(ConfigFieldInfo info)
+	{
+		_infos.add(info);
+	}
 	
-	public String value();
+	public boolean isModified()
+	{
+		for (ConfigFieldInfo info : _infos)
+			if (info.isModified())
+				return true;
+		
+		return false;
+	}
 }
