@@ -12,10 +12,20 @@ public class L2Logger extends Logger
 {
 	public static L2Logger getLogger(Class<?> clazz)
 	{
-		return getLogger(clazz.getName());
+		return (L2Logger)Logger.getLogger(clazz.getName());
 	}
 	
 	public static L2Logger getLogger(String name)
+	{
+		return (L2Logger)Logger.getLogger(name);
+	}
+	
+	public static L2Logger getLog(Class<?> clazz)
+	{
+		return (L2Logger)Logger.getLogger(clazz.getName());
+	}
+	
+	public static L2Logger getLog(String name)
 	{
 		return (L2Logger)Logger.getLogger(name);
 	}
