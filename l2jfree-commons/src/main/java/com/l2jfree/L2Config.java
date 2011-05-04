@@ -223,6 +223,13 @@ public abstract class L2Config
 	{
 	}
 	
+	// TODO move this variables
+	public static int DATABASE_MAX_CONNECTIONS;
+	public static String DATABASE_DRIVER;
+	public static String DATABASE_URL;
+	public static String DATABASE_LOGIN;
+	public static String DATABASE_PASSWORD;
+	
 	// TODO move to telnet related classes
 	public static Set<String> getAllowedTelnetHostAddresses()
 	{
