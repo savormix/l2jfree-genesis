@@ -118,7 +118,11 @@ public final class ConfigClassInfo
 	
 	public synchronized void load() throws IOException
 	{
-		final L2Properties properties = new L2Properties(getConfigFile()).setLog(false);
+		final L2Properties properties = new L2Properties().setLog(false);
+		
+		// if config file is missing it will use default values everywhere
+		if (getConfigFile().exists())
+			properties.load(getConfigFile());
 		
 		for (ConfigFieldInfo info : _infos)
 			info.setCurrentValue(properties);

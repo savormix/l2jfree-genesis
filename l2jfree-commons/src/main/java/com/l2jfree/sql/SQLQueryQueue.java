@@ -91,7 +91,7 @@ public abstract class SQLQueryQueue implements Runnable
 		}
 		finally
 		{
-			L2DB.close(con);
+			L2Database.close(con);
 		}
 	}
 }
