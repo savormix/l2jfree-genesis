@@ -14,5 +14,6 @@
   </build>
   <modules>
     <module>l2jfree-commons</module>
+    <module>l2jfree-login</module>
   </modules>
 </project>
