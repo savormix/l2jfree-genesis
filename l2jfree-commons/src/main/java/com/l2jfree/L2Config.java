@@ -50,7 +50,10 @@ import com.l2jfree.util.logging.L2Logger;
 // TODO fill /doc folder
 public abstract class L2Config
 {
+	public static final long SERVER_STARTED = System.currentTimeMillis();
+	
 	public static final String LOG_FILE = "./config/logging.properties";
+	// TODO move from here
 	public static final String TELNET_FILE = "./config/telnet.properties";
 	
 	public static Level EXTENDED_LOG_LEVEL = Level.OFF;
