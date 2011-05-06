@@ -125,7 +125,8 @@ public class JavaCompiler
 		
 		Map<String, byte[]> classBytes = manager.getClassBytes();
 		try
-		{			manager.close();
+		{
+			manager.close();
 		}
 		catch (IOException exp)
 		{
