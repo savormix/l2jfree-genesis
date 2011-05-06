@@ -178,12 +178,21 @@ public abstract class L2Config
 		{
 			try
 			{
-				// if failed to load 'logging.properties', then load default logging parameters
-				LogManager.getLogManager().readConfiguration();
+				// if failed to load 'logging.properties' from config then try to load from resources
+				LogManager.getLogManager().readConfiguration(
+						ClassLoader.getSystemResourceAsStream("logging.properties"));
 			}
 			catch (Exception e1)
 			{
-				throw new Error(e1);
+				try
+				{
+					// if failed to load 'logging.properties', then load default logging parameters
+					LogManager.getLogManager().readConfiguration();
+				}
+				catch (Exception e2)
+				{
+					throw new Error(e2);
+				}
 			}
 		}
 		finally

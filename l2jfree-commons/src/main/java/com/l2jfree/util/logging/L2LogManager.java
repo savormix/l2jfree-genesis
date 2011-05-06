@@ -46,22 +46,9 @@ public final class L2LogManager extends LogManager
 	@Override
 	public synchronized boolean addLogger(Logger logger)
 	{
-		if (!(logger instanceof L2Logger))
+		if (logger.getClass() == Logger.class)
 			logger = new L2Logger(logger.getName(), logger.getResourceBundleName());
 		
 		return super.addLogger(logger);
-	}
-	
-	@Override
-	public synchronized Logger getLogger(String name)
-	{
-		Logger logger = super.getLogger(name);
-		if (logger == null)
-		{
-			logger = new L2Logger(name, null);
-			addLogger(logger);
-			logger = getLogger(name);
-		}
-		return logger;
 	}
 }
