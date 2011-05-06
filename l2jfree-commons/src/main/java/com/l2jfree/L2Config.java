@@ -44,6 +44,7 @@ import com.l2jfree.config.L2Properties;
 import com.l2jfree.io.BufferedRedirectingOutputStream;
 import com.l2jfree.lang.L2Math;
 import com.l2jfree.util.HandlerRegistry;
+import com.l2jfree.util.L2FastSet;
 import com.l2jfree.util.logging.L2Logger;
 
 // TODO do we need commons logging?
@@ -404,5 +405,35 @@ public abstract class L2Config
 		}
 		
 		protected abstract void loadImpl(L2Properties properties);
+	}
+	
+	private static Set<StartupHook> _startupHooks = new L2FastSet<StartupHook>();
+	
+	public synchronized static boolean isLoaded()
+	{
+		return _startupHooks == null;
+	}
+	
+	public synchronized static void addStartupHook(StartupHook hook)
+	{
+		if (_startupHooks != null)
+			_startupHooks.add(hook);
+		else
+			hook.onStartup();
+	}
+	
+	public synchronized static void onStartup()
+	{
+		final Set<StartupHook> startupHooks = _startupHooks;
+		
+		_startupHooks = null;
+		
+		for (StartupHook hook : startupHooks)
+			hook.onStartup();
+	}
+	
+	public interface StartupHook
+	{
+		public void onStartup();
 	}
 }
