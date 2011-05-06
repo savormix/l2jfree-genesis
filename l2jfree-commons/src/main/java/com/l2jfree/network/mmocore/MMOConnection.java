@@ -27,6 +27,8 @@ import java.nio.channels.WritableByteChannel;
 
 import javolution.util.FastList;
 
+import com.l2jfree.util.concurrent.FIFORunnableQueue;
+
 /**
  * @author KenM
  */
@@ -304,5 +306,15 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 		final String UID = getUID();
 		
 		return UID == null || UID.isEmpty() ? getHostAddress() : UID;
+	}
+	
+	private FIFORunnableQueue<Runnable> _packetQueue;
+	
+	public FIFORunnableQueue<Runnable> getPacketQueue()
+	{
+		if (_packetQueue == null)
+			_packetQueue = new FIFORunnableQueue<Runnable>() {};
+		
+		return _packetQueue;
 	}
 }

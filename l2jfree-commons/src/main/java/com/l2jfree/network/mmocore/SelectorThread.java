@@ -90,8 +90,6 @@ public abstract class SelectorThread<T extends MMOConnection<T, RP, SP>, RP exte
 	
 	protected abstract T createClient(SocketChannel socketChannel) throws ClosedChannelException;
 	
-	protected abstract void executePacket(RP packet);
-	
 	// ==============================================
 	
 	private final FloodManager _accepts;

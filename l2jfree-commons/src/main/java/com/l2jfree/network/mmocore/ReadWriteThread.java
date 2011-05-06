@@ -345,7 +345,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 						}
 						else if (cp.read(MMO_BUFFER))
 						{
-							getSelectorThread().executePacket(cp);
+							client.getPacketQueue().execute(cp);
 							
 							if (buf.hasRemaining())
 							{
