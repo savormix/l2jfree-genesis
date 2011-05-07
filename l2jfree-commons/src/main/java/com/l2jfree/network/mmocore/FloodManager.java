@@ -21,6 +21,8 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
+import com.l2jfree.util.concurrent.L2ThreadPool;
+
 /**
  * @author NB4L1
  */
@@ -73,13 +75,13 @@ public final class FloodManager
 		
 		_tickAmount = max;
 		
-		MMOFlusher.add(new Runnable() {
+		L2ThreadPool.scheduleAtFixedRate(new Runnable() {
 			@Override
 			public void run()
 			{
 				flush();
 			}
-		}, 60000);
+		}, 60000, 60000);
 	}
 	
 	public static final class FloodFilter

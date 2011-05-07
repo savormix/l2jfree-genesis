@@ -21,6 +21,8 @@ import java.util.logging.Logger;
 import javolution.util.FastMap;
 import javolution.util.FastMap.Entry;
 
+import com.l2jfree.util.concurrent.L2ThreadPool;
+
 /**
  * @author NB4L1
  */
@@ -124,13 +126,13 @@ public final class MMOLogger
 	{
 		_logger = Logger.getLogger(clazz.getName());
 		
-		MMOFlusher.add(new Runnable() {
+		L2ThreadPool.scheduleAtFixedRate(new Runnable() {
 			@Override
 			public void run()
 			{
 				flush();
 			}
-		}, flushInterval);
+		}, flushInterval, flushInterval);
 	}
 	
 	public void flush()

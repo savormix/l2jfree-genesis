@@ -17,10 +17,9 @@ package com.l2jfree.network.mmocore;
 import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 
-import javolution.text.TextBuilder;
-
 public final class MMOBuffer
 {
+	private final StringBuilder _sb = new StringBuilder();
 	private ByteBuffer _buffer;
 	
 	public MMOBuffer()
@@ -90,14 +89,13 @@ public final class MMOBuffer
 	
 	public String readS()
 	{
-		TextBuilder tb = TextBuilder.newInstance();
+		// clears the builder
+		_sb.setLength(0);
 		
 		for (char c; (c = _buffer.getChar()) != 0;)
-			tb.append(c);
+			_sb.append(c);
 		
-		String str = tb.toString();
-		TextBuilder.recycle(tb);
-		return str;
+		return _sb.toString();
 	}
 	
 	// ======================================================================
