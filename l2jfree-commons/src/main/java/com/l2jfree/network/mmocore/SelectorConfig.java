@@ -21,6 +21,8 @@ import java.nio.ByteOrder;
  */
 public final class SelectorConfig
 {
+	private final String NAME;
+	
 	private int BUFFER_SIZE = 64 * 1024; // 0xFFFF + 1
 	
 	private int MAX_SEND_PER_PASS = Integer.MAX_VALUE;
@@ -37,8 +39,14 @@ public final class SelectorConfig
 	
 	private int THREAD_COUNT = Runtime.getRuntime().availableProcessors();
 	
-	public SelectorConfig()
+	public SelectorConfig(String name)
 	{
+		NAME = name;
+	}
+	
+	public String getName()
+	{
+		return NAME;
 	}
 	
 	public void setBufferSize(int bufferSize)

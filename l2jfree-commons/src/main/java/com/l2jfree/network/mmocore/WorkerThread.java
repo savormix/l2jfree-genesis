@@ -32,9 +32,9 @@ abstract class WorkerThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 	
 	private final long SLEEP_TIME;
 	
-	protected WorkerThread(String name, SelectorThread<T, RP, SP> selectorThread, SelectorConfig sc) throws IOException
+	protected WorkerThread(SelectorThread<T, RP, SP> selectorThread, SelectorConfig sc) throws IOException
 	{
-		super(name);
+		setName(selectorThread.getName() + "-" + getClass().getCanonicalName());
 		
 		SLEEP_TIME = sc.getSelectorSleepTime();
 		

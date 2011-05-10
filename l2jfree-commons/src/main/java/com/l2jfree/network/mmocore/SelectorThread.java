@@ -30,17 +30,27 @@ public abstract class SelectorThread<T extends MMOConnection<T, RP, SP>, RP exte
 {
 	protected static final MMOLogger _log = new MMOLogger(SelectorThread.class, 1000);
 	
+	private final String _name;
+	
 	private final AcceptorThread<T, RP, SP> _acceptorThread;
 	private final ReadWriteThread<T, RP, SP>[] _readWriteThreads;
 	
 	@SuppressWarnings("unchecked")
 	protected SelectorThread(SelectorConfig sc, IPacketHandler<T, RP, SP> packetHandler) throws IOException
 	{
-		_acceptorThread = new AcceptorThread<T, RP, SP>("AcceptorThread", this, sc);
+		_name = sc.getName();
+		
+		_acceptorThread = new AcceptorThread<T, RP, SP>(this, sc);
 		_readWriteThreads = new ReadWriteThread[sc.getSelectorThreadCount()];
 		
 		for (int i = 0; i < _readWriteThreads.length; i++)
-			_readWriteThreads[i] = new ReadWriteThread<T, RP, SP>("ReadWriteThread-" + (i + 1), this, sc, packetHandler);
+		{
+			final ReadWriteThread<T, RP, SP> readWriteThread = new ReadWriteThread<T, RP, SP>(this, sc, packetHandler);
+			
+			readWriteThread.setName(readWriteThread.getName() + "-" + (i + 1));
+			
+			_readWriteThreads[i] = readWriteThread;
+		}
 	}
 	
 	public final void openServerSocket(String address, int port) throws IOException
@@ -51,6 +61,11 @@ public abstract class SelectorThread<T extends MMOConnection<T, RP, SP>, RP exte
 	public final void openServerSocket(InetAddress address, int port) throws IOException
 	{
 		getAcceptorThread().openServerSocket(address, port);
+	}
+	
+	public String getName()
+	{
+		return _name;
 	}
 	
 	private AcceptorThread<T, RP, SP> getAcceptorThread()

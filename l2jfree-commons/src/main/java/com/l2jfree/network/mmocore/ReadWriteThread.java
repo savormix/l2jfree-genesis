@@ -58,10 +58,10 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 	// wrapper for read and write operations
 	private final MMOBuffer MMO_BUFFER = new MMOBuffer();
 	
-	public ReadWriteThread(String name, SelectorThread<T, RP, SP> selectorThread, SelectorConfig sc,
+	public ReadWriteThread(SelectorThread<T, RP, SP> selectorThread, SelectorConfig sc,
 			IPacketHandler<T, RP, SP> packetHandler) throws IOException
 	{
-		super(name, selectorThread, sc);
+		super(selectorThread, sc);
 		
 		BUFFER_SIZE = sc.getBufferSize();
 		HELPER_BUFFER_COUNT = sc.getHelperBufferCount();

@@ -28,9 +28,9 @@ import java.nio.channels.SocketChannel;
 final class AcceptorThread<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
 		extends WorkerThread<T, RP, SP>
 {
-	public AcceptorThread(String name, SelectorThread<T, RP, SP> selectorThread, SelectorConfig sc) throws IOException
+	public AcceptorThread(SelectorThread<T, RP, SP> selectorThread, SelectorConfig sc) throws IOException
 	{
-		super(name, selectorThread, sc);
+		super(selectorThread, sc);
 	}
 	
 	public void openServerSocket(InetAddress address, int port) throws IOException
