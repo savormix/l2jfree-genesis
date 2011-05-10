@@ -16,8 +16,11 @@ package com.l2jfree.network.mmocore;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SocketChannel;
+
+import javolution.util.FastList;
 
 import com.l2jfree.network.mmocore.FloodManager.ErrorMode;
 import com.l2jfree.network.mmocore.FloodManager.Result;
@@ -30,17 +33,19 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 {
 	protected static final MMOLogger _log = new MMOLogger(MMOController.class, 1000);
 	
+	private final MMOConfig _config;
 	private final String _name;
 	
-	private final AcceptorThread<T, RP, SP> _acceptorThread;
+	private AcceptorThread<T, RP, SP> _acceptorThread;
+	private final FastList<ConnectorThread<T, RP, SP>> _connectorThreads = new FastList<ConnectorThread<T, RP, SP>>();
 	private final ReadWriteThread<T, RP, SP>[] _readWriteThreads;
 	
 	@SuppressWarnings("unchecked")
 	protected MMOController(MMOConfig config, IPacketHandler<T, RP, SP> packetHandler) throws IOException
 	{
+		_config = config;
 		_name = config.getName();
 		
-		_acceptorThread = new AcceptorThread<T, RP, SP>(this, config);
 		_readWriteThreads = new ReadWriteThread[config.getThreadCount()];
 		
 		for (int i = 0; i < _readWriteThreads.length; i++)
@@ -60,7 +65,20 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 	
 	public final void openServerSocket(InetAddress address, int port) throws IOException
 	{
-		getAcceptorThread().openServerSocket(address, port);
+		if (_acceptorThread == null)
+			_acceptorThread = new AcceptorThread<T, RP, SP>(this, _config);
+		
+		_acceptorThread.openServerSocket(address, port);
+	}
+	
+	public final void connect(String address, int port) throws UnknownHostException
+	{
+		connect(InetAddress.getByName(address), port);
+	}
+	
+	public final void connect(InetAddress address, int port)
+	{
+		_connectorThreads.add(new ConnectorThread<T, RP, SP>(this, address, port));
 	}
 	
 	public String getName()
@@ -68,36 +86,34 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 		return _name;
 	}
 	
-	private AcceptorThread<T, RP, SP> getAcceptorThread()
-	{
-		return _acceptorThread;
-	}
-	
-	private ReadWriteThread<T, RP, SP>[] getReadWriteThreads()
-	{
-		return _readWriteThreads;
-	}
-	
 	private int _readWriteThreadIndex;
 	
-	final ReadWriteThread<T, RP, SP> getReadWriteThread()
+	final ReadWriteThread<T, RP, SP> getRandomReadWriteThread()
 	{
-		return getReadWriteThreads()[_readWriteThreadIndex++ % getReadWriteThreads().length];
+		return _readWriteThreads[_readWriteThreadIndex++ % _readWriteThreads.length];
 	}
 	
 	public final void start()
 	{
-		getAcceptorThread().start();
+		if (_acceptorThread != null)
+			_acceptorThread.start();
 		
-		for (ReadWriteThread<T, RP, SP> readWriteThread : getReadWriteThreads())
+		for (ConnectorThread<T, RP, SP> connectorThread : _connectorThreads)
+			connectorThread.start();
+		
+		for (ReadWriteThread<T, RP, SP> readWriteThread : _readWriteThreads)
 			readWriteThread.start();
 	}
 	
 	public final void shutdown() throws InterruptedException
 	{
-		getAcceptorThread().shutdown();
+		if (_acceptorThread != null)
+			_acceptorThread.shutdown();
 		
-		for (ReadWriteThread<T, RP, SP> readWriteThread : getReadWriteThreads())
+		for (ConnectorThread<T, RP, SP> connectorThread : _connectorThreads)
+			connectorThread.shutdown();
+		
+		for (ReadWriteThread<T, RP, SP> readWriteThread : _readWriteThreads)
 			readWriteThread.shutdown();
 	}
 	

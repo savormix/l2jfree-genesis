@@ -54,7 +54,7 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 			throws ClosedChannelException
 	{
 		_mmoController = mmoController;
-		_readWriteThread = getMMOController().getReadWriteThread();
+		_readWriteThread = getMMOController().getRandomReadWriteThread();
 		_socket = socketChannel.socket();
 		_inetAddress = _socket.getInetAddress();
 		_hostAddress = _inetAddress.getHostAddress();
