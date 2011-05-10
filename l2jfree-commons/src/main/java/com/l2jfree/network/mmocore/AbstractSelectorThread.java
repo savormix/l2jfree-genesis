@@ -14,7 +14,7 @@ abstract class AbstractSelectorThread<T extends MMOConnection<T, RP, SP>, RP ext
 	
 	protected AbstractSelectorThread(MMOController<T, RP, SP> mmoController, MMOConfig config) throws IOException
 	{
-		super(mmoController, config);
+		super(mmoController);
 		
 		SLEEP_TIME = config.getSelectorSleepTime();
 		
@@ -36,7 +36,7 @@ abstract class AbstractSelectorThread<T extends MMOConnection<T, RP, SP>, RP ext
 			if (isShuttingDown())
 			{
 				close();
-				break;
+				return;
 			}
 			
 			try

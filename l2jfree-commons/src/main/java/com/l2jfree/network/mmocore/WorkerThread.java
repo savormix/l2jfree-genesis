@@ -24,7 +24,7 @@ abstract class WorkerThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 	
 	private volatile boolean _shutdown;
 	
-	protected WorkerThread(MMOController<T, RP, SP> mmoController, MMOConfig config)
+	protected WorkerThread(MMOController<T, RP, SP> mmoController)
 	{
 		setName(mmoController.getName() + "-" + getClass().getCanonicalName());
 		
