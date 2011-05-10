@@ -26,7 +26,7 @@ import java.nio.channels.SocketChannel;
  * @author NB4L1
  */
 final class AcceptorThread<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
-		extends WorkerThread<T, RP, SP>
+		extends AbstractSelectorThread<T, RP, SP>
 {
 	public AcceptorThread(MMOController<T, RP, SP> mmoController, MMOConfig config) throws IOException
 	{

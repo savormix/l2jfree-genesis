@@ -29,7 +29,7 @@ import com.l2jfree.network.mmocore.FloodManager.ErrorMode;
  * @author NB4L1
  */
 final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
-		extends WorkerThread<T, RP, SP>
+		extends AbstractSelectorThread<T, RP, SP>
 {
 	// Implementations
 	private final IPacketHandler<T, RP, SP> _packetHandler;

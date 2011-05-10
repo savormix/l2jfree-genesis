@@ -14,11 +14,6 @@
  */
 package com.l2jfree.network.mmocore;
 
-import java.io.IOException;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.Selector;
-import java.util.Set;
-
 /**
  * @author NB4L1
  */
@@ -26,20 +21,14 @@ abstract class WorkerThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		extends Thread
 {
 	private final MMOController<T, RP, SP> _mmoController;
-	private final Selector _selector;
 	
 	private volatile boolean _shutdown;
 	
-	private final long SLEEP_TIME;
-	
-	protected WorkerThread(MMOController<T, RP, SP> mmoController, MMOConfig config) throws IOException
+	protected WorkerThread(MMOController<T, RP, SP> mmoController, MMOConfig config)
 	{
 		setName(mmoController.getName() + "-" + getClass().getCanonicalName());
 		
-		SLEEP_TIME = config.getSelectorSleepTime();
-		
 		_mmoController = mmoController;
-		_selector = Selector.open();
 	}
 	
 	protected final MMOController<T, RP, SP> getMMOController()
@@ -47,67 +36,8 @@ abstract class WorkerThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		return _mmoController;
 	}
 	
-	protected final Selector getSelector()
-	{
-		return _selector;
-	}
-	
 	@Override
-	public final void run()
-	{
-		// main loop
-		for (;;)
-		{
-			// check for shutdown
-			if (isShuttingDown())
-			{
-				close();
-				break;
-			}
-			
-			try
-			{
-				if (getSelector().selectNow() > 0)
-				{
-					Set<SelectionKey> keys = getSelector().selectedKeys();
-					
-					for (SelectionKey key : keys)
-					{
-						handle(key);
-					}
-					
-					keys.clear();
-				}
-			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			}
-			catch (RuntimeException e)
-			{
-				e.printStackTrace();
-			}
-			
-			cleanup();
-			
-			try
-			{
-				Thread.sleep(SLEEP_TIME);
-			}
-			catch (InterruptedException e)
-			{
-				e.printStackTrace();
-			}
-			
-			cleanup();
-		}
-	}
-	
-	protected abstract void handle(SelectionKey key) throws IOException;
-	
-	protected void cleanup()
-	{
-	}
+	public abstract void run();
 	
 	public final void shutdown() throws InterruptedException
 	{
@@ -119,29 +49,5 @@ abstract class WorkerThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 	final boolean isShuttingDown()
 	{
 		return _shutdown;
-	}
-	
-	private void close()
-	{
-		for (SelectionKey key : getSelector().keys())
-		{
-			try
-			{
-				key.channel().close();
-			}
-			catch (IOException e)
-			{
-				// ignore
-			}
-		}
-		
-		try
-		{
-			getSelector().close();
-		}
-		catch (IOException e)
-		{
-			// Ignore
-		}
 	}
 }
