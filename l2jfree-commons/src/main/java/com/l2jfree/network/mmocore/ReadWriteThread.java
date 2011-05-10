@@ -58,18 +58,18 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 	// wrapper for read and write operations
 	private final MMOBuffer MMO_BUFFER = new MMOBuffer();
 	
-	public ReadWriteThread(SelectorThread<T, RP, SP> selectorThread, SelectorConfig sc,
-			IPacketHandler<T, RP, SP> packetHandler) throws IOException
+	public ReadWriteThread(MMOController<T, RP, SP> mmoController, MMOConfig config, IPacketHandler<T, RP, SP> packetHandler)
+			throws IOException
 	{
-		super(selectorThread, sc);
+		super(mmoController, config);
 		
-		BUFFER_SIZE = sc.getBufferSize();
-		HELPER_BUFFER_COUNT = sc.getHelperBufferCount();
-		MAX_SEND_PER_PASS = sc.getMaxSendPerPass();
-		MAX_READ_PER_PASS = sc.getMaxReadPerPass();
-		MAX_SEND_BYTE_PER_PASS = sc.getMaxSendBytePerPass();
-		MAX_READ_BYTE_PER_PASS = sc.getMaxReadBytePerPass();
-		BYTE_ORDER = sc.getByteOrder();
+		BUFFER_SIZE = config.getBufferSize();
+		HELPER_BUFFER_COUNT = config.getHelperBufferCount();
+		MAX_SEND_PER_PASS = config.getMaxSendPerPass();
+		MAX_READ_PER_PASS = config.getMaxReadPerPass();
+		MAX_SEND_BYTE_PER_PASS = config.getMaxSendBytePerPass();
+		MAX_READ_BYTE_PER_PASS = config.getMaxReadBytePerPass();
+		BYTE_ORDER = config.getByteOrder();
 		
 		DIRECT_WRITE_BUFFER = ByteBuffer.allocateDirect(BUFFER_SIZE).order(BYTE_ORDER);
 		WRITE_BUFFER = ByteBuffer.allocate(BUFFER_SIZE).order(BYTE_ORDER);
@@ -328,7 +328,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 			
 			final int opcode = buf.get() & 0xFF;
 			
-			if (getSelectorThread().canReceivePacketFrom(client, opcode))
+			if (getMMOController().canReceivePacketFrom(client, opcode))
 			{
 				RP cp = getPacketHandler().handlePacket(buf, client, opcode);
 				
@@ -341,7 +341,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 					{
 						if (MMO_BUFFER.getAvailableBytes() < cp.getMinimumLength())
 						{
-							getSelectorThread().report(ErrorMode.BUFFER_UNDER_FLOW, client, cp, null);
+							getMMOController().report(ErrorMode.BUFFER_UNDER_FLOW, client, cp, null);
 						}
 						else if (cp.read(MMO_BUFFER))
 						{
@@ -352,20 +352,20 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 								// disabled until packet structures updated properly
 								//report(ErrorMode.BUFFER_OVER_FLOW, client, cp, null);
 								
-								SelectorThread._log.info("Invalid packet format (buf: " + buf + ", dataSize: "
-										+ dataSize + ", pos: " + pos + ", limit: " + limit + ", opcode: " + opcode
+								MMOController._log.info("Invalid packet format (buf: " + buf + ", dataSize: " + dataSize
+										+ ", pos: " + pos + ", limit: " + limit + ", opcode: " + opcode
 										+ ") used for reading - " + client + " - " + cp.getType() + " - "
-										+ getSelectorThread().getVersionInfo());
+										+ getMMOController().getVersionInfo());
 							}
 						}
 					}
 					catch (BufferUnderflowException e)
 					{
-						getSelectorThread().report(ErrorMode.BUFFER_UNDER_FLOW, client, cp, e);
+						getMMOController().report(ErrorMode.BUFFER_UNDER_FLOW, client, cp, e);
 					}
 					catch (RuntimeException e)
 					{
-						getSelectorThread().report(ErrorMode.FAILED_READING, client, cp, e);
+						getMMOController().report(ErrorMode.FAILED_READING, client, cp, e);
 					}
 					
 					MMO_BUFFER.setByteBuffer(null);
@@ -513,8 +513,8 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		}
 		catch (RuntimeException e)
 		{
-			SelectorThread._log.fatal("Failed writing: " + client + " - " + sp.getType() + " - "
-					+ getSelectorThread().getVersionInfo(), e);
+			MMOController._log.fatal("Failed writing: " + client + " - " + sp.getType() + " - "
+					+ getMMOController().getVersionInfo(), e);
 		}
 		
 		// calculate size and encrypt content

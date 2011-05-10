@@ -58,11 +58,11 @@ public abstract class ReceivablePacket<T extends MMOConnection<T, RP, SP>, RP ex
 		}
 		catch (InvalidPacketException e)
 		{
-			getClient().getSelectorThread().report(ErrorMode.FAILED_RUNNING, getClient(), (RP)this, e);
+			getClient().getMMOController().report(ErrorMode.FAILED_RUNNING, getClient(), (RP)this, e);
 		}
 		catch (RuntimeException e)
 		{
-			getClient().getSelectorThread().report(ErrorMode.FAILED_RUNNING, getClient(), (RP)this, e);
+			getClient().getMMOController().report(ErrorMode.FAILED_RUNNING, getClient(), (RP)this, e);
 		}
 	}
 	

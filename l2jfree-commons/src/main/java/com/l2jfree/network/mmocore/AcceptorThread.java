@@ -28,9 +28,9 @@ import java.nio.channels.SocketChannel;
 final class AcceptorThread<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
 		extends WorkerThread<T, RP, SP>
 {
-	public AcceptorThread(SelectorThread<T, RP, SP> selectorThread, SelectorConfig sc) throws IOException
+	public AcceptorThread(MMOController<T, RP, SP> mmoController, MMOConfig config) throws IOException
 	{
-		super(selectorThread, sc);
+		super(mmoController, config);
 	}
 	
 	public void openServerSocket(InetAddress address, int port) throws IOException
@@ -63,11 +63,11 @@ final class AcceptorThread<T extends MMOConnection<T, RP, SP>, RP extends Receiv
 		{
 			while ((sc = ((ServerSocketChannel)key.channel()).accept()) != null)
 			{
-				if (getSelectorThread().acceptConnectionFrom(sc))
+				if (getMMOController().acceptConnectionFrom(sc))
 				{
 					sc.configureBlocking(false);
 					
-					getSelectorThread().createClient(sc);
+					getMMOController().createClient(sc);
 				}
 				else
 				{

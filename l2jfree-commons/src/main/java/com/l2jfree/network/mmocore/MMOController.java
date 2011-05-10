@@ -26,9 +26,9 @@ import com.l2jfree.network.mmocore.FloodManager.Result;
  * @author KenM<BR>
  *         Parts of design based on networkcore from WoodenGil
  */
-public abstract class SelectorThread<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
+public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
 {
-	protected static final MMOLogger _log = new MMOLogger(SelectorThread.class, 1000);
+	protected static final MMOLogger _log = new MMOLogger(MMOController.class, 1000);
 	
 	private final String _name;
 	
@@ -36,16 +36,16 @@ public abstract class SelectorThread<T extends MMOConnection<T, RP, SP>, RP exte
 	private final ReadWriteThread<T, RP, SP>[] _readWriteThreads;
 	
 	@SuppressWarnings("unchecked")
-	protected SelectorThread(SelectorConfig sc, IPacketHandler<T, RP, SP> packetHandler) throws IOException
+	protected MMOController(MMOConfig config, IPacketHandler<T, RP, SP> packetHandler) throws IOException
 	{
-		_name = sc.getName();
+		_name = config.getName();
 		
-		_acceptorThread = new AcceptorThread<T, RP, SP>(this, sc);
-		_readWriteThreads = new ReadWriteThread[sc.getSelectorThreadCount()];
+		_acceptorThread = new AcceptorThread<T, RP, SP>(this, config);
+		_readWriteThreads = new ReadWriteThread[config.getThreadCount()];
 		
 		for (int i = 0; i < _readWriteThreads.length; i++)
 		{
-			final ReadWriteThread<T, RP, SP> readWriteThread = new ReadWriteThread<T, RP, SP>(this, sc, packetHandler);
+			final ReadWriteThread<T, RP, SP> readWriteThread = new ReadWriteThread<T, RP, SP>(this, config, packetHandler);
 			
 			readWriteThread.setName(readWriteThread.getName() + "-" + (i + 1));
 			

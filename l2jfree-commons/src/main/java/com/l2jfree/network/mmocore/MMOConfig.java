@@ -19,7 +19,7 @@ import java.nio.ByteOrder;
 /**
  * @author KenM
  */
-public final class SelectorConfig
+public final class MMOConfig
 {
 	private final String NAME;
 	
@@ -39,7 +39,7 @@ public final class SelectorConfig
 	
 	private int THREAD_COUNT = Runtime.getRuntime().availableProcessors();
 	
-	public SelectorConfig(String name)
+	public MMOConfig(String name)
 	{
 		NAME = name;
 	}
@@ -156,12 +156,12 @@ public final class SelectorConfig
 		return SLEEP_TIME;
 	}
 	
-	public void setSelectorThreadCount(int threadCount)
+	public void setThreadCount(int threadCount)
 	{
 		THREAD_COUNT = threadCount;
 	}
 	
-	int getSelectorThreadCount()
+	int getThreadCount()
 	{
 		return THREAD_COUNT;
 	}

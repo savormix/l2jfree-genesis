@@ -34,7 +34,7 @@ import com.l2jfree.util.concurrent.FIFORunnableQueue;
  */
 public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
 {
-	private final SelectorThread<T, RP, SP> _selectorThread;
+	private final MMOController<T, RP, SP> _mmoController;
 	private final ReadWriteThread<T, RP, SP> _readWriteThread;
 	private final Socket _socket;
 	private InetAddress _inetAddress;
@@ -50,11 +50,11 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 	
 	private long _closeTimeout = -1;
 	
-	protected MMOConnection(SelectorThread<T, RP, SP> selectorThread, SocketChannel socketChannel)
+	protected MMOConnection(MMOController<T, RP, SP> mmoController, SocketChannel socketChannel)
 			throws ClosedChannelException
 	{
-		_selectorThread = selectorThread;
-		_readWriteThread = getSelectorThread().getReadWriteThread();
+		_mmoController = mmoController;
+		_readWriteThread = getMMOController().getReadWriteThread();
 		_socket = socketChannel.socket();
 		_inetAddress = _socket.getInetAddress();
 		_hostAddress = _inetAddress.getHostAddress();
@@ -78,9 +78,9 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 		}
 	}
 	
-	final SelectorThread<T, RP, SP> getSelectorThread()
+	final MMOController<T, RP, SP> getMMOController()
 	{
-		return _selectorThread;
+		return _mmoController;
 	}
 	
 	private ReadWriteThread<T, RP, SP> getReadWriteThread()
@@ -141,7 +141,7 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 		}
 		catch (UnknownHostException e)
 		{
-			SelectorThread._log.warn("", e);
+			MMOController._log.warn("", e);
 		}
 	}
 	

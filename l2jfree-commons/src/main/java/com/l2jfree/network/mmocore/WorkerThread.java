@@ -25,26 +25,26 @@ import java.util.Set;
 abstract class WorkerThread<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
 		extends Thread
 {
-	private final SelectorThread<T, RP, SP> _selectorThread;
+	private final MMOController<T, RP, SP> _mmoController;
 	private final Selector _selector;
 	
 	private volatile boolean _shutdown;
 	
 	private final long SLEEP_TIME;
 	
-	protected WorkerThread(SelectorThread<T, RP, SP> selectorThread, SelectorConfig sc) throws IOException
+	protected WorkerThread(MMOController<T, RP, SP> mmoController, MMOConfig config) throws IOException
 	{
-		setName(selectorThread.getName() + "-" + getClass().getCanonicalName());
+		setName(mmoController.getName() + "-" + getClass().getCanonicalName());
 		
-		SLEEP_TIME = sc.getSelectorSleepTime();
+		SLEEP_TIME = config.getSelectorSleepTime();
 		
-		_selectorThread = selectorThread;
+		_mmoController = mmoController;
 		_selector = Selector.open();
 	}
 	
-	protected final SelectorThread<T, RP, SP> getSelectorThread()
+	protected final MMOController<T, RP, SP> getMMOController()
 	{
-		return _selectorThread;
+		return _mmoController;
 	}
 	
 	protected final Selector getSelector()
