@@ -17,9 +17,19 @@ package com.l2jfree.network.mmocore;
 import java.nio.ByteBuffer;
 
 /**
+ * @param <T> connection
+ * @param <RP> receivable packet
+ * @param <SP> sendable packet
  * @author KenM
  */
 public interface IPacketHandler<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
 {
+	/**
+	 * Returns a packet that represents the payload.
+	 * @param buf a byte buffer containing the payload without it's first byte
+	 * @param client a client that received the payload
+	 * @param opcode the first byte of the payload
+	 * @return a packet
+	 */
 	public RP handlePacket(ByteBuffer buf, T client, int opcode);
 }

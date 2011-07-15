@@ -26,6 +26,9 @@ import com.l2jfree.network.mmocore.FloodManager.ErrorMode;
 import com.l2jfree.network.mmocore.FloodManager.Result;
 
 /**
+ * @param <T> connection
+ * @param <RP> receivable packet
+ * @param <SP> sendable packet
  * @author KenM<BR>
  *         Parts of design based on networkcore from WoodenGil
  */

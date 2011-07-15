@@ -30,6 +30,9 @@ import javolution.util.FastList;
 import com.l2jfree.util.concurrent.FIFORunnableQueue;
 
 /**
+ * @param <T> connection
+ * @param <RP> receivable packet
+ * @param <SP> sendable packet
  * @author KenM
  */
 public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
@@ -313,7 +316,10 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 	public FIFORunnableQueue<Runnable> getPacketQueue()
 	{
 		if (_packetQueue == null)
-			_packetQueue = new FIFORunnableQueue<Runnable>() {};
+			_packetQueue = new FIFORunnableQueue<Runnable>()
+			{
+				/* Instantiating an abstract class */
+			};
 		
 		return _packetQueue;
 	}

@@ -12,27 +12,19 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.network.mmocore;
+package com.l2jfree.loginserver.network.packets;
+
+import com.l2jfree.loginserver.network.L2LoginClient;
+import com.l2jfree.network.mmocore.SendablePacket;
 
 /**
- * @param <T> connection
- * @param <RP> receivable packet
- * @param <SP> sendable packet
- * @author KenM
+ * Just a wrapper class for convenience.
+ * @author savormix
  */
-public abstract class SendablePacket<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
-		extends AbstractPacket
+public abstract class L2ServerPacket extends SendablePacket<L2LoginClient, L2ClientPacket, L2ServerPacket>
 {
-	protected SendablePacket()
+	protected L2ServerPacket()
 	{
 		super();
 	}
-	
-	/**
-	 * Embed data into a network packet.
-	 * @param client a client that sends this packet
-	 * @param buf a buffer to write bytes to
-	 * @throws RuntimeException if a generic failure occurs while writing
-	 */
-	protected abstract void write(T client, MMOBuffer buf) throws RuntimeException;
 }

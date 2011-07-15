@@ -16,10 +16,21 @@ package com.l2jfree.loginserver;
 
 import com.l2jfree.L2Config;
 
+/**
+ * This class contains the application entry point.
+ * @author savormix
+ */
 public final class LoginServer extends L2Config
 {
+	/**
+	 * Launches the login server.
+	 * @param args ignored
+	 */
 	public static void main(String[] args)
 	{
-		
+		// TODO Auto-generated method stub
+		//L2LoginConnections llc = new L2LoginConnections(cfg);
+		//llc.openServerSocket(adr, port);
+		// etc
 	}
 }
