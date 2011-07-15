@@ -30,7 +30,7 @@ import org.apache.commons.io.IOUtils;
  */
 public final class GPLLicenseChecker extends L2Config
 {
-	private static final ArrayList<String> MODIFIED = new ArrayList<String>();
+	private static final List<String> MODIFIED = new ArrayList<String>();
 	
 	/**
 	 * Determines that it will check the whole project, or only the core itself.<br>
@@ -38,6 +38,10 @@ public final class GPLLicenseChecker extends L2Config
 	 */
 	private static boolean WHOLE_PROJECT = false;
 	
+	/**
+	 * @param args ignored
+	 * @throws IOException if any file to be licensed could not be accessed/modified
+	 */
 	public static void main(String[] args) throws IOException
 	{
 		if (WHOLE_PROJECT)
@@ -64,6 +68,9 @@ public final class GPLLicenseChecker extends L2Config
 	}
 	
 	private static final FileFilter FILTER = new FileFilter() {
+		/* (non-Javadoc)
+		 * @see java.io.FileFilter#accept(java.io.File)
+		 */
 		@Override
 		public boolean accept(File f)
 		{
@@ -71,7 +78,7 @@ public final class GPLLicenseChecker extends L2Config
 			if (f.isHidden())
 				return false;
 			
-			return f.isDirectory() || f.getName().endsWith("java");
+			return f.isDirectory() || f.getName().endsWith(".java");
 		}
 	};
 	
@@ -91,7 +98,7 @@ public final class GPLLicenseChecker extends L2Config
 			if (tmpList == null)
 				return;
 			
-			ArrayList<String> list2 = new ArrayList<String>();
+			List<String> list2 = new ArrayList<String>();
 			
 			for (String line : LICENSE)
 				list2.add(line);
@@ -134,7 +141,7 @@ public final class GPLLicenseChecker extends L2Config
 	
 	private static List<String> read(File f) throws IOException
 	{
-		ArrayList<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<String>();
 		
 		LineNumberReader lnr = null;
 		try

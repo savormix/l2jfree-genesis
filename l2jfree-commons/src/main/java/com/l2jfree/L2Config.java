@@ -49,19 +49,30 @@ import com.l2jfree.util.logging.L2Logger;
 
 // TODO do we need commons logging?
 // TODO fill /doc folder
+/**
+ */
 public abstract class L2Config
 {
+	/** Application's launch timestamp */
 	public static final long SERVER_STARTED = System.currentTimeMillis();
 	
+	/** Logging configuration file */
 	public static final String LOG_FILE = "./config/logging.properties";
+	/** Telnet configuration file */
 	// TODO move from here
 	public static final String TELNET_FILE = "./config/telnet.properties";
 	
+	/**
+	 * Defines the type of log entries that should be followed by a
+	 * complete stack trace, regardless if an exception is attached.
+	 */
 	public static Level EXTENDED_LOG_LEVEL = Level.OFF;
 	
 	protected static final L2Logger _log;
 	
+	/** A stream where normal log messages are printed. */
 	public static final PrintStream out = System.out;
+	/** A stream where error messages are printed. */
 	public static final PrintStream err = System.err;
 	
 	static
@@ -69,6 +80,9 @@ public abstract class L2Config
 		Locale.setDefault(Locale.ENGLISH);
 		
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler() {
+			/* (non-Javadoc)
+			 * @see java.lang.Thread.UncaughtExceptionHandler#uncaughtException(java.lang.Thread, java.lang.Throwable)
+			 */
 			@Override
 			public void uncaughtException(Thread t, Throwable e)
 			{
@@ -78,14 +92,14 @@ public abstract class L2Config
 				
 				// restart automatically
 				if (e instanceof Error && !(e instanceof StackOverflowError))
-					Runtime.getRuntime().halt(2);
+					Runtime.getRuntime().halt(TerminationStatus.RUNTIME_UNCAUGHT_ERROR);
 			}
 		});
 		
 		if (System.getProperty("user.name").equals("root") && System.getProperty("user.home").equals("/root"))
 		{
 			System.out.print("L2jFree servers should not run under root-account ... exited.");
-			System.exit(-1);
+			System.exit(TerminationStatus.ENVIRONMENT_SUPERUSER);
 		}
 		
 		final Map<String, List<String>> libs = new HashMap<String, List<String>>();
@@ -160,7 +174,7 @@ public abstract class L2Config
 					for (String name : entry.getValue())
 						System.out.println("\t'" + name + "'");
 			
-			System.exit(-1);
+			System.exit(TerminationStatus.ENVIRONMENT_CP_CONFLICT);
 		}
 		
 		System.setProperty("line.separator", "\r\n");
@@ -204,6 +218,9 @@ public abstract class L2Config
 		_log.info("logging initialized");
 		
 		System.setOut(new PrintStream(new BufferedRedirectingOutputStream() {
+			/* (non-Javadoc)
+			 * @see com.l2jfree.io.BufferedRedirectingOutputStream#handleLine(java.lang.String)
+			 */
 			@Override
 			protected void handleLine(String line)
 			{
@@ -217,6 +234,9 @@ public abstract class L2Config
 		}));
 		
 		System.setErr(new PrintStream(new BufferedRedirectingOutputStream() {
+			/* (non-Javadoc)
+			 * @see com.l2jfree.io.BufferedRedirectingOutputStream#handleLine(java.lang.String)
+			 */
 			@Override
 			protected void handleLine(String line)
 			{
@@ -230,7 +250,7 @@ public abstract class L2Config
 		}));
 	}
 	
-	private static StackTraceElement getCaller()
+	protected static StackTraceElement getCaller()
 	{
 		StackTraceElement[] stack = new Throwable().getStackTrace();
 		
@@ -248,8 +268,12 @@ public abstract class L2Config
 	
 	protected L2Config()
 	{
+		super();
 	}
 	
+	/**
+	 * @return internet addresses that are allowed to connect via telnet
+	 */
 	// TODO move to telnet related classes
 	public static Set<String> getAllowedTelnetHostAddresses()
 	{
@@ -301,12 +325,22 @@ public abstract class L2Config
 		_loaders.register(loader.getName(), loader);
 	}
 	
+	/**
+	 * Load all available configuration files.
+	 * @throws Exception if any config failed to load
+	 */
 	public static void loadConfigs() throws Exception
 	{
 		for (ConfigLoader loader : _loaders.getHandlers().values())
 			loader.load();
 	}
 	
+	/**
+	 * Load the specified configuration file.
+	 * @param name Configuration name
+	 * @return the outcome of this call in a string
+	 * @throws Exception if the specified config could not be loaded
+	 */
 	public static String loadConfig(String name) throws Exception
 	{
 		final ConfigLoader loader = _loaders.get(name);
@@ -325,6 +359,9 @@ public abstract class L2Config
 		}
 	}
 	
+	/**
+	 * @return all available configuration names
+	 */
 	public static String getLoaderNames()
 	{
 		return StringUtils.join(_loaders.getHandlers().keySet().iterator(), "|");
@@ -336,12 +373,18 @@ public abstract class L2Config
 		
 		protected abstract void load() throws Exception;
 		
+		/* (non-Javadoc)
+		 * @see java.lang.Object#hashCode()
+		 */
 		@Override
 		public final int hashCode()
 		{
 			return getClass().hashCode();
 		}
 		
+		/* (non-Javadoc)
+		 * @see java.lang.Object#equals(java.lang.Object)
+		 */
 		@Override
 		public final boolean equals(Object obj)
 		{
@@ -353,6 +396,9 @@ public abstract class L2Config
 	{
 		protected abstract String getFileName();
 		
+		/* (non-Javadoc)
+		 * @see com.l2jfree.L2Config.ConfigLoader#load()
+		 */
 		@Override
 		protected final void load() throws Exception
 		{
@@ -375,6 +421,9 @@ public abstract class L2Config
 	
 	protected static abstract class ConfigPropertiesLoader extends ConfigFileLoader
 	{
+		/* (non-Javadoc)
+		 * @see com.l2jfree.L2Config.ConfigFileLoader#getFileName()
+		 */
 		@Override
 		protected final String getFileName()
 		{
@@ -386,6 +435,9 @@ public abstract class L2Config
 			return new Class<?>[] { getClass().getEnclosingClass() };
 		}
 		
+		/* (non-Javadoc)
+		 * @see com.l2jfree.L2Config.ConfigFileLoader#loadReader(java.io.BufferedReader)
+		 */
 		@Override
 		protected final void loadReader(BufferedReader reader) throws Exception
 		{
@@ -418,11 +470,22 @@ public abstract class L2Config
 	
 	private static Set<StartupHook> _startupHooks = new L2FastSet<StartupHook>();
 	
+	/**
+	 * While application is loading, returns {@code false}. After the
+	 * application finishes loading, returns {@code true}.<BR><BR>
+	 * If calling this method resulted in {@code true}, all following
+	 * invocations are guaranteed to result in {@code true}.
+	 * @return whether the application has finished loading
+	 */
 	public synchronized static boolean isLoaded()
 	{
 		return _startupHooks == null;
 	}
 	
+	/**
+	 * Adds a hook to be executed after the application loads.
+	 * @param hook The hook to be attached
+	 */
 	public synchronized static void addStartupHook(StartupHook hook)
 	{
 		if (_startupHooks != null)
@@ -431,6 +494,7 @@ public abstract class L2Config
 			hook.onStartup();
 	}
 	
+	/** Executes startup hooks. */
 	public synchronized static void onStartup()
 	{
 		final Set<StartupHook> startupHooks = _startupHooks;
@@ -441,8 +505,16 @@ public abstract class L2Config
 			hook.onStartup();
 	}
 	
+	/**
+	 * This interface allows the implementing class to be attached
+	 * as a startup hook.
+	 */
 	public interface StartupHook
 	{
+		/**
+		 * This method is called on an attached startup hook when/if the
+		 * application has finished loading.
+		 */
 		public void onStartup();
 	}
 }

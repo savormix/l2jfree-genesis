@@ -20,13 +20,24 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 // TODO replace with the new config solution
+/**
+ */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ConfigProperty
 {
+	/**
+	 * @return configuration name
+	 */
 	public String loader();
 	
+	/**
+	 * @return value name
+	 */
 	public String name();
 	
+	/**
+	 * @return loaded value
+	 */
 	public String value();
 }

@@ -23,45 +23,62 @@ import com.l2jfree.config.gui.Configurator;
 import com.l2jfree.config.model.ConfigClassInfo;
 import com.l2jfree.config.model.ConfigClassInfo.PrintMode;
 
+/**
+ */
 @ConfigClass(folderName = "config", fileName = "test")
 public class ConfigTester extends L2Config
 {
+	/** Just a field for testing */
 	@ConfigGroupBeginning(name = "OUTER GROUP", comment = "group start comment")
 	@ConfigField(name = "configValue1", value = "default1")
 	public static String TEST1;
 	
+	/** Just a field for testing */
 	@ConfigGroupBeginning(name = "MIXED GROUP", comment = { "line1", "line2", "line3" })
 	@ConfigField(name = "configValue2", value = "default2")
 	public static String TEST2;
 	
+	/** Just a field for testing */
 	@ConfigGroupBeginning(name = "INNER GROUP", comment = "group start comment")
 	@ConfigField(name = "configValue3", value = "default3")
 	@ConfigGroupEnding(name = "INNER GROUP", comment = "group end comment")
 	public static String TEST3;
 	
+	/** Just a field for testing */
 	@ConfigField(name = "configValue4", value = "default4")
 	@ConfigGroupEnding(name = "OUTER GROUP", comment = "group end comment")
 	public static String TEST4;
 	
+	/** Just a field for testing */
 	@ConfigField(name = "configValue5", value = "default5")
 	public static String TEST5;
 	
+	/** Just a field for testing */
 	@ConfigField(name = "configValue6", value = "default6")
 	public static String TEST6;
 	
+	/** Just a field for testing */
 	@ConfigField(name = "configValue7", value = "default7")
 	public static String TEST7;
 	
+	/** Just a field for testing */
 	@ConfigField(name = "configValue8", value = "default8")
 	@ConfigGroupEnding(name = "MIXED GROUP")
 	public static String TEST8;
 	
+	/** Just a field for testing */
 	@ConfigField(name = "configValue9", value = "default9", comment = { "This", "is", "a", "multi-line", "comment!" })
 	public static String TEST9;
 	
+	/** Just a field for testing */
 	@ConfigField(name = "doubleTest", value = "0.12,1.34", eternal = true)
 	public static double[] DOUBLE_ARRAY;
 	
+	/**
+	 * @param args ignored
+	 * @throws Exception if this test failed
+	 */
+	@SuppressWarnings("unused")
 	public static void main(String[] args) throws Exception
 	{
 		final ConfigClassInfo info = ConfigClassInfo.valueOf(ConfigTester.class);

@@ -14,12 +14,19 @@
  */
 package com.l2jfree;
 
+/**
+ */
 public final class Shutdown
 {
 	private Shutdown()
 	{
+		super();
 	}
 	
+	/**
+	 * Issues an orderly shutdown.
+	 * @param initiator initiator's ID/name
+	 */
 	public static void shutdown(String initiator)
 	{
 		try
@@ -28,10 +35,14 @@ public final class Shutdown
 		}
 		finally
 		{
-			Runtime.getRuntime().exit(0);
+			Runtime.getRuntime().exit(TerminationStatus.MANUAL_SHUTDOWN);
 		}
 	}
 	
+	/**
+	 * Issues an orderly shutdown and requests a restart.
+	 * @param initiator initiator's ID/name
+	 */
 	public static void restart(String initiator)
 	{
 		try
@@ -40,10 +51,14 @@ public final class Shutdown
 		}
 		finally
 		{
-			Runtime.getRuntime().exit(2);
+			Runtime.getRuntime().exit(TerminationStatus.MANUAL_RESTART);
 		}
 	}
 	
+	/**
+	 * Issues a forced shutdown and requests a restart.
+	 * @param initiator initiator's ID/name
+	 */
 	public static void halt(String initiator)
 	{
 		try
@@ -52,7 +67,7 @@ public final class Shutdown
 		}
 		finally
 		{
-			Runtime.getRuntime().halt(2);
+			Runtime.getRuntime().halt(TerminationStatus.MANUAL_RESTART);
 		}
 	}
 }

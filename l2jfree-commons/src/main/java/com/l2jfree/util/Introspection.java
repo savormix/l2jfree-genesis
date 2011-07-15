@@ -16,12 +16,17 @@ package com.l2jfree.util;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.Arrays;
 
 /**
+ * This class provides advanced object status reporting capabilities.
+ * <BR><BR>
+ * Allows inspecting objects that do not extend the
+ * {@code IntrospectiveObject} class.
  * @author savormix
- *
  */
-public final class Introspection {
+public final class Introspection
+{
 	private static final int DEFAULT_WIDTH = 80;
 	
 	private Introspection()
@@ -45,26 +50,23 @@ public final class Introspection {
 	 * SomeClass<BR>
 	 * SomeClass(number = 15, object = this)
 	 * </CODE>
-	 * @param o An object (of type {@code T})
+	 * @param o an object (of type {@code T})
 	 * @param c {@code Class<T>} or {@code Class<? super T>}
 	 * @return a textual representation of the given object
 	 */
 	public static String toString(Object o, Class<?> c)
 	{
+		if (o == null)
+			return "null".intern();
 		Class<?> actual = (c == null ? o.getClass() : c);
 		StringBuilder sb = new StringBuilder(actual.getSimpleName());
 		int open = sb.length();
 		sb.append('(');
-		boolean written = false;
+		boolean written = writeFields(actual, o, sb, null, true);
 		if (c == null)
-		{
-			written = writeFields(actual, o, sb, null, true);
 			while ((actual = actual.getSuperclass()) != null)
-				if (writeFields(actual, o, sb, null, written))
+				if (writeFields(actual, o, sb, null, !written))
 					written = true;
-		}
-		else
-			written = writeFields(actual, o, sb, null, true);
 		if (!written)
 			sb.deleteCharAt(open);
 		else
@@ -86,7 +88,7 @@ public final class Introspection {
 	 * SomeClass<BR>
 	 * SomeClass(number = 15, object = this)
 	 * </CODE>
-	 * @param o An object
+	 * @param o an object
 	 * @return a textual representation of the given object
 	 */
 	public static String toString(Object o)
@@ -118,7 +120,7 @@ public final class Introspection {
 	 * Superclass: java.lang.Object<BR>
 	 * =================================================<BR>
 	 * </CODE>
-	 * @param o An object
+	 * @param o an object
 	 * @return a textual representation of the given object
 	 */
 	public static String toMultiLineString(Object o)
@@ -178,6 +180,8 @@ public final class Introspection {
 				Object val = f.get(accessor);
 				if (accessor == val)
 					dest.append("this");
+				else if (val instanceof Object[])
+					dest.append(Arrays.deepToString((Object[]) val));
 				else
 					dest.append(val);
 			}

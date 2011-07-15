@@ -22,8 +22,14 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
+/**
+ */
 public class NewLineChecker
 {
+	/**
+	 * @param args ignored
+	 * @throws IOException if any file to be checked could not be accessed/modified
+	 */
 	public static void main(String[] args) throws IOException
 	{
 		parse(new File("../"));
@@ -36,6 +42,9 @@ public class NewLineChecker
 	}
 	
 	private static final FileFilter FILTER = new FileFilter() {
+		/* (non-Javadoc)
+		 * @see java.io.FileFilter#accept(java.io.File)
+		 */
 		@Override
 		public boolean accept(File f)
 		{

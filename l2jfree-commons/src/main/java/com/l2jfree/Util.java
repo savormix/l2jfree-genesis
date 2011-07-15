@@ -14,12 +14,19 @@
  */
 package com.l2jfree;
 
+/**
+ */
 public final class Util
 {
 	private Util()
 	{
+		super();
 	}
 	
+	/**
+	 * Prints a named section to log.
+	 * @param s Section name
+	 */
 	public static void printSection(String s)
 	{
 		s = "={ " + s + " }";
