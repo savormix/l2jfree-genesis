@@ -41,6 +41,7 @@ public abstract class ReceivablePacket<T extends MMOConnection<T, RP, SP>, RP ex
 	
 	/**
 	 * Returns the client that received this packet.
+	 * 
 	 * @return packet receiver
 	 */
 	public final T getClient()
@@ -49,25 +50,41 @@ public abstract class ReceivablePacket<T extends MMOConnection<T, RP, SP>, RP ex
 	}
 	
 	/**
-	 * Specifies the minimum length of a valid packet in bytes.
-	 * <BR><BR>
-	 * The main purpose of this value is to help identify
-	 * malformed packets and/or outdated packet formats.
-	 * @return size of a smallest valid packet
+	 * Specifies the minimum length of a valid packet in bytes.<br>
+	 * <br>
+	 * The main purpose of this value is to help identify malformed packets and/or outdated packet formats,<br>
+	 * and also to avoid throwing a {@link BufferUnderflowException}, by simply skipping the invalid - shorter - packets.
+	 * 
+	 * @return size of the shortest valid packet
 	 */
-	protected abstract int getMinimumLength();
+	protected int getMinimumLength()
+	{
+		return 0;
+	}
 	
 	/**
-	 * Extract data from a network packet.
-	 * <BR><BR>
-	 * All bytes should be read, even if they have
-	 * no use when processing the packet.
-	 * @param buf a byte buffer containing packet data
-	 * @return whether to process this packet (true) or ignore it
+	 * Specifies the maximum length of a valid packet in bytes.<br>
+	 * <br>
+	 * The main purpose of this value is to help identify malformed packets and/or outdated packet formats,<br>
+	 * and also to avoid throwing a {@link BufferOverflowException}, by simply skipping the invalid - longer - packets.
+	 * 
+	 * @return size of the longest valid packet
+	 */
+	protected int getMaximumLength()
+	{
+		return Integer.MAX_VALUE;
+	}
+	
+	/**
+	 * Extract data from a network packet.<br>
+	 * <br>
+	 * NOTE: All bytes should be read, even if they have no use when processing the packet.
+	 * 
+	 * @param buf the buffer, where the data should be read from
 	 * @throws BufferUnderflowException if packet does not match the expected format
 	 * @throws RuntimeException if a generic failure occurs while reading
 	 */
-	protected abstract boolean read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException;
+	protected abstract void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException;
 	
 	/* (non-Javadoc)
 	 * @see java.lang.Runnable#run()
@@ -90,8 +107,20 @@ public abstract class ReceivablePacket<T extends MMOConnection<T, RP, SP>, RP ex
 		}
 	}
 	
+	/**
+	 * Contains everything that this packet should do. Runs asynchronously in worker threads.
+	 * 
+	 * @throws InvalidPacketException if this packet turns out to be invalid<br>
+	 *             (either by time synchronization issues, either by purposeful exploitation, etc...)
+	 * @throws RuntimeException if a generic failure occurs while running the packet
+	 */
 	protected abstract void runImpl() throws InvalidPacketException, RuntimeException;
 	
+	/**
+	 * Send a packet to the client, which this packet belongs to.
+	 * 
+	 * @param sp the packet to be sent
+	 */
 	protected final void sendPacket(SP sp)
 	{
 		getClient().sendPacket(sp);

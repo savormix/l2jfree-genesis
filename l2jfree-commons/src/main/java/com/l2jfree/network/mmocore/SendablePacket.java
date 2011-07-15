@@ -30,8 +30,9 @@ public abstract class SendablePacket<T extends MMOConnection<T, RP, SP>, RP exte
 	
 	/**
 	 * Embed data into a network packet.
-	 * @param client a client that sends this packet
-	 * @param buf a buffer to write bytes to
+	 * 
+	 * @param client the client, where the packet will be sent to
+	 * @param buf the buffer, where the data should be written to
 	 * @throws RuntimeException if a generic failure occurs while writing
 	 */
 	protected abstract void write(T client, MMOBuffer buf) throws RuntimeException;

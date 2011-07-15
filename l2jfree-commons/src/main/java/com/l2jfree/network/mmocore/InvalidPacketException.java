@@ -15,7 +15,7 @@
 package com.l2jfree.network.mmocore;
 
 /**
- * Exception thrown by ReceivablePacket.runImpl() to trigger IOFloodManager.report().
+ * Exception thrown by {@link ReceivablePacket#runImpl()} to trigger {@link MMOController#report()}.
  * 
  * @author NB4L1
  */

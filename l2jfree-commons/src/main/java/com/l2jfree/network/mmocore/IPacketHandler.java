@@ -25,11 +25,10 @@ import java.nio.ByteBuffer;
 public interface IPacketHandler<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
 {
 	/**
-	 * Returns a packet that represents the payload.
-	 * @param buf a byte buffer containing the payload without it's first byte
+	 * @param buf a byte buffer containing any further opcodes, and packet data
 	 * @param client a client that received the payload
-	 * @param opcode the first byte of the payload
-	 * @return a packet
+	 * @param opcode the first byte (opcode) of the payload
+	 * @return a recognized packet that represents the payload or null otherwise
 	 */
 	public RP handlePacket(ByteBuffer buf, T client, int opcode);
 }

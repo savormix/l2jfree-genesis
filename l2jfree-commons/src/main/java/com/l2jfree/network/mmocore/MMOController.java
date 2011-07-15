@@ -53,7 +53,8 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 		
 		for (int i = 0; i < _readWriteThreads.length; i++)
 		{
-			final ReadWriteThread<T, RP, SP> readWriteThread = new ReadWriteThread<T, RP, SP>(this, config, packetHandler);
+			final ReadWriteThread<T, RP, SP> readWriteThread = new ReadWriteThread<T, RP, SP>(this, config,
+					packetHandler);
 			
 			readWriteThread.setName(readWriteThread.getName() + "-" + (i + 1));
 			
@@ -61,11 +62,26 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 		}
 	}
 	
-	public final void openServerSocket(String address, int port) throws IOException
+	/**
+	 * Opens a server socket, to accept incoming connections.
+	 * 
+	 * @param address the address to listen on
+	 * @param port the port to listen on
+	 * @throws IOException if any problem occurs while opening the acceptor
+	 * @throws UnknownHostException if an invalid address was given
+	 */
+	public final void openServerSocket(String address, int port) throws IOException, UnknownHostException
 	{
 		openServerSocket(InetAddress.getByName(address), port);
 	}
 	
+	/**
+	 * Opens a server socket, to accept incoming connections.
+	 * 
+	 * @param address the address to listen on (should be null in order to listen on all available addresses)
+	 * @param port the port to listen on
+	 * @throws IOException if any problem occurs while opening the acceptor
+	 */
 	public final void openServerSocket(InetAddress address, int port) throws IOException
 	{
 		if (_acceptorThread == null)
@@ -74,11 +90,24 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 		_acceptorThread.openServerSocket(address, port);
 	}
 	
+	/**
+	 * Connects to the given address and port as a client.
+	 * 
+	 * @param address the address to connect to
+	 * @param port the port to connect to
+	 * @throws UnknownHostException if an invalid address was given
+	 */
 	public final void connect(String address, int port) throws UnknownHostException
 	{
 		connect(InetAddress.getByName(address), port);
 	}
 	
+	/**
+	 * Connects to the given address and port as a client.
+	 * 
+	 * @param address the address to connect to
+	 * @param port the port to connect to
+	 */
 	public final void connect(InetAddress address, int port)
 	{
 		_connectorThreads.add(new ConnectorThread<T, RP, SP>(this, address, port));
@@ -96,6 +125,9 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 		return _readWriteThreads[_readWriteThreadIndex++ % _readWriteThreads.length];
 	}
 	
+	/**
+	 * Starts the mmocore threads.
+	 */
 	public final void start()
 	{
 		if (_acceptorThread != null)
@@ -108,6 +140,11 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 			readWriteThread.start();
 	}
 	
+	/**
+	 * Initiates the shutdown of the mmocore threads, and waits until they are finished.
+	 * 
+	 * @throws InterruptedException
+	 */
 	public final void shutdown() throws InterruptedException
 	{
 		if (_acceptorThread != null)
@@ -122,6 +159,13 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 	
 	// ==============================================
 	
+	/**
+	 * Creates a client with any required custom additions.
+	 * 
+	 * @param socketChannel the socket channel for read-write calls
+	 * @return a client backed by the given socket channel
+	 * @throws ClosedChannelException
+	 */
 	protected abstract T createClient(SocketChannel socketChannel) throws ClosedChannelException;
 	
 	// ==============================================
@@ -143,11 +187,23 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 				new FloodManager.FloodFilter(10, 10, 1));
 	}
 	
+	/**
+	 * @return a String with informations about this controller for debugging purposes
+	 */
 	protected String getVersionInfo()
 	{
 		return "";
 	}
 	
+	/**
+	 * An easy way to apply any special limitations on incoming connections. At default it contains a flood protection.<br>
+	 * Overriding implementations should call the super method before anything else gets checked.<br>
+	 * <br>
+	 * NOTE: Uses a special way of logging to avoid console flood.
+	 * 
+	 * @param sc the inbound connection from a possible client
+	 * @return true if the connection is valid, and should be allowed, no otherwise
+	 */
 	protected boolean acceptConnectionFrom(SocketChannel sc)
 	{
 		final String host = sc.socket().getInetAddress().getHostAddress();
@@ -173,6 +229,16 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 		}
 	}
 	
+	/**
+	 * To report any occuring error.<br>
+	 * <br>
+	 * NOTE: Uses a special way of logging to avoid console flood.
+	 * 
+	 * @param mode describing the nature of the error
+	 * @param client the associated client
+	 * @param packet the associated packet, if there is any
+	 * @param throwable the associated throwable, if there is any
+	 */
 	public void report(ErrorMode mode, T client, RP packet, Throwable throwable)
 	{
 		final Result isFlooding = _errors.isFlooding(client.getValidUID(), true);
@@ -208,6 +274,16 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 		//}
 	}
 	
+	/**
+	 * An easy way to apply any special limitations on incoming packets. At default it contains a flood protection.<br>
+	 * Overriding implementations should call the super method before anything else gets checked.<br>
+	 * <br>
+	 * NOTE: Uses a special way of logging to avoid console flood.
+	 * 
+	 * @param client the associated client
+	 * @param opcode the opcode of the potential packet (for debugging purposes)
+	 * @return true if the client can be allowed to receive a packet, no otherwise
+	 */
 	protected boolean canReceivePacketFrom(T client, int opcode)
 	{
 		final String key = client.getValidUID();

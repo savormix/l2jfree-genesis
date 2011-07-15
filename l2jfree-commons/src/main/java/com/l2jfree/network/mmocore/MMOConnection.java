@@ -65,6 +65,11 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 		_selectionKey.attach(this);
 	}
 	
+	/**
+	 * Sends a packet to the client, by adding it to the queue, and enabling write interest.
+	 * 
+	 * @param sp the packet to be sent
+	 */
 	public synchronized void sendPacket(SP sp)
 	{
 		if (isClosed())
@@ -238,6 +243,11 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 		return System.currentTimeMillis() > _closeTimeout;
 	}
 	
+	/**
+	 * Clears the packet queue, and closes the client with the default close packet.<br>
+	 * <br>
+	 * NOTE: It allows a short timeout (100 msec) only, to close the client as soon as possible.
+	 */
 	@SuppressWarnings("unchecked")
 	public synchronized void closeNow()
 	{
@@ -255,6 +265,11 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 		getReadWriteThread().closeConnection((T)this);
 	}
 	
+	/**
+	 * Clears the packet queue, and closes the client with the given packet.<br>
+	 * <br>
+	 * NOTE: It allows a longer timeout (10 sec), to let the client have the chance to get all of the packets.
+	 */
 	@SuppressWarnings("unchecked")
 	public synchronized void close(SP sp)
 	{
@@ -292,16 +307,29 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 		}
 	}
 	
+	/**
+	 * Called <b><font color="red">on EVERY</font></b> disconnection.
+	 */
 	protected abstract void onDisconnection();
 	
+	/**
+	 * Called <b><font color="red">ONLY on FORCED - most likely Exception caused - </font></b> disconnection.
+	 */
 	protected abstract void onForcedDisconnection();
 	
 	protected abstract boolean decrypt(ByteBuffer buf, int size);
 	
 	protected abstract boolean encrypt(ByteBuffer buf, int size);
 	
+	/**
+	 * @return the default close packet used by {@link #closeNow()}.
+	 */
 	protected abstract SP getDefaultClosePacket();
 	
+	/**
+	 * @return a String used to identify the "real" user "behind" the client for flood protection<br>
+	 *         it must stay the same after a disconnection (for example it could be the account name)
+	 */
 	protected abstract String getUID();
 	
 	final String getValidUID()
@@ -316,8 +344,7 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 	public FIFORunnableQueue<Runnable> getPacketQueue()
 	{
 		if (_packetQueue == null)
-			_packetQueue = new FIFORunnableQueue<Runnable>()
-			{
+			_packetQueue = new FIFORunnableQueue<Runnable>() {
 				/* Instantiating an abstract class */
 			};
 		

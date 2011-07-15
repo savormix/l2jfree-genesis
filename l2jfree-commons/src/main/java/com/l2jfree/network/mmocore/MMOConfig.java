@@ -49,6 +49,11 @@ public final class MMOConfig
 		return NAME;
 	}
 	
+	/**
+	 * To configure the bytebuffers' size used for read-write operations.  (probably never used)
+	 * 
+	 * @param bufferSize
+	 */
 	public void setBufferSize(int bufferSize)
 	{
 		if (bufferSize < 64 * 1024) // 0xFFFF + 1
@@ -62,6 +67,11 @@ public final class MMOConfig
 		return BUFFER_SIZE;
 	}
 	
+	/**
+	 * To configure the amount of "helper" bytebuffers kept in cache for further usage.
+	 * 
+	 * @param helperBufferCount
+	 */
 	public void setHelperBufferCount(int helperBufferCount)
 	{
 		HELPER_BUFFER_COUNT = helperBufferCount;
@@ -72,6 +82,11 @@ public final class MMOConfig
 		return HELPER_BUFFER_COUNT;
 	}
 	
+	/**
+	 * To configure the byte order used by the bytebuffers. (probably never used)
+	 * 
+	 * @param byteOrder
+	 */
 	public void setByteOrder(ByteOrder byteOrder)
 	{
 		BYTE_ORDER = byteOrder;
@@ -83,10 +98,10 @@ public final class MMOConfig
 	}
 	
 	/**
-	 * Server will try to send maxSendPerPass packets per socket write call however it may send less if the write buffer
-	 * was filled before achieving this value.
+	 * Server will try to send maxSendPerPass packets per socket write call however it may send less<br>
+	 * if the write buffer was filled before achieving this value.
 	 * 
-	 * @param The maximum number of packets to be sent on a single socket write call
+	 * @param maxSendPerPass The maximum number of packets to be sent on a single socket write call
 	 */
 	public void setMaxSendPerPass(int maxSendPerPass)
 	{
@@ -101,6 +116,12 @@ public final class MMOConfig
 		return MAX_SEND_PER_PASS;
 	}
 	
+	/**
+	 * Server will try to read maxReadPerPass packets per socket read call however it may read less<br>
+	 * if the read buffer was filled before achieving this value.
+	 * 
+	 * @param maxReadPerPass The maximum number of packets to be read on a single socket read call
+	 */
 	public void setMaxReadPerPass(int maxReadPerPass)
 	{
 		MAX_READ_PER_PASS = maxReadPerPass;
@@ -111,6 +132,12 @@ public final class MMOConfig
 		return MAX_READ_PER_PASS;
 	}
 	
+	/**
+	 * Server will try to send maxSendBytePerPass bytes per socket write call however it may send less<br>
+	 * if the write buffer was filled before achieving this value.
+	 * 
+	 * @param maxSendBytePerPass The maximum number of bytes to be sent on a single socket write call
+	 */
 	public void setMaxSendBytePerPass(int maxSendBytePerPass)
 	{
 		MAX_SEND_BYTE_PER_PASS = maxSendBytePerPass;
@@ -121,6 +148,12 @@ public final class MMOConfig
 		return MAX_SEND_BYTE_PER_PASS;
 	}
 	
+	/**
+	 * Server will try to read maxReadBytePerPass bytes per socket read call however it may read less<br>
+	 * if the read buffer was filled before achieving this value.
+	 * 
+	 * @param maxReadBytePerPass The maximum number of bytes to be read on a single socket read call
+	 */
 	public void setMaxReadBytePerPass(int maxReadBytePerPass)
 	{
 		MAX_READ_BYTE_PER_PASS = maxReadBytePerPass;
@@ -132,16 +165,18 @@ public final class MMOConfig
 	}
 	
 	/**
-	 * Defines how much time (in milis) should the selector sleep, an higher value increases throughput but also
-	 * increases latency(to a max of the sleep value itself).<BR>
-	 * Also an extremely high value(usually > 100) will decrease throughput due to the server not doing enough sends per
-	 * second (depends on max sends per pass).<BR>
-	 * <BR>
-	 * Recommended values:<BR>
-	 * 1 for minimal latency.<BR>
-	 * 10-30 for an latency/troughput trade-off based on your needs.<BR>
+	 * Defines how much time (in milis) should the selector sleep, a higher value increases throughput but also<br>
+	 * increases latency (to a max of the sleep value itself).<br>
+	 * Also an extremely high value(usually > 100) will decrease throughput due to the server<br>
+	 * not doing enough sends per second (depends on max sends per pass).<br>
+	 * <br>
+	 * Recommended values:
+	 * <ul>
+	 * <li>1 for minimal latency</li>
+	 * <li>5-50 for a latency/troughput trade-off based on your needs</li>
+	 * </ul>
 	 * 
-	 * @param sleepTime the sleepTime to set
+	 * @param sleepTime the sleepTime to set in millisec
 	 */
 	public void setSelectorSleepTime(int sleepTime)
 	{
@@ -156,6 +191,11 @@ public final class MMOConfig
 		return SLEEP_TIME;
 	}
 	
+	/**
+	 * To configure the amount of read-write threads.
+	 * 
+	 * @param threadCount
+	 */
 	public void setThreadCount(int threadCount)
 	{
 		THREAD_COUNT = threadCount;

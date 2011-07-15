@@ -343,8 +343,14 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 						{
 							getMMOController().report(ErrorMode.BUFFER_UNDER_FLOW, client, cp, null);
 						}
-						else if (cp.read(MMO_BUFFER))
+						else if (MMO_BUFFER.getAvailableBytes() > cp.getMaximumLength())
 						{
+							getMMOController().report(ErrorMode.BUFFER_OVER_FLOW, client, cp, null);
+						}
+						else
+						{
+							cp.read(MMO_BUFFER);
+							
 							client.getPacketQueue().execute(cp);
 							
 							if (buf.hasRemaining())

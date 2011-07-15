@@ -17,6 +17,11 @@ package com.l2jfree.network.mmocore;
 import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 
+/**
+ * A wrapper class around a {@link ByteBuffer} to implement the "usual" API for reading-writing data.
+ * 
+ * @author NB4L1
+ */
 public final class MMOBuffer
 {
 	private final StringBuilder _sb = new StringBuilder();
@@ -157,8 +162,8 @@ public final class MMOBuffer
 	}
 	
 	/**
-	 * Same as {@link MMOBuffer#writeS(CharSequence)}, except that <code>'\000'</code> won't be written automatically.<br>
-	 * So this way there is no need to concat multiple Strings into a single one.
+	 * Same as {@link #writeS(CharSequence)}, except that <code>'\000'</code> won't be written automatically.<br>
+	 * So this way there is no need to concat multiple Strings into a single one, before actually sending it.
 	 * 
 	 * @param charSequence
 	 */
