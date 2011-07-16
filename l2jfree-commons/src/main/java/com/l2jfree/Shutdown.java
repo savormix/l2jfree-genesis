@@ -20,7 +20,7 @@ public final class Shutdown
 {
 	private Shutdown()
 	{
-		super();
+		// utility class
 	}
 	
 	/**

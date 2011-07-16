@@ -12,28 +12,23 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree;
+package com.l2jfree.loginserver.network;
 
 /**
+ * @author savormix
+ *
  */
-public final class Util
-{
-	private Util()
-	{
-		// utility class
-	}
-	
+public enum L2LoginClientState {
 	/**
-	 * Prints a named section to log.
-	 * @param s Section name
+	 * Connection between the client and login server has been established.
 	 */
-	public static void printSection(String s)
-	{
-		s = "={ " + s + " }";
-		
-		while (s.length() < 160)
-			s = "-" + s;
-		
-		L2Config.out.println(s);
-	}
+	CONNECTED,
+	/**
+	 * Client passed a GameGuard check.
+	 */
+	GAMEGUARD_PASSED,
+	/**
+	 * Client has logged in with a valid account.
+	 */
+	LOGGED_IN;
 }

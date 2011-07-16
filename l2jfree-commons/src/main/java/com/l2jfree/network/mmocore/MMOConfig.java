@@ -38,8 +38,10 @@ public final class MMOConfig
 	public static final int MINIMUM_BUFFER_SIZE = 64 * 1024;
 	
 	private final String _name;
+	private boolean _modifiable;
 	
 	private int _bufferSize;
+	private int _acceptTimeout;
 	
 	private int _maxOutgoingPacketsPerPass;
 	private int _maxIncomingPacketsPerPass;
@@ -62,7 +64,9 @@ public final class MMOConfig
 	public MMOConfig(String name)
 	{
 		_name = name;
+		_modifiable = true;
 		_bufferSize = MINIMUM_BUFFER_SIZE;
+		_acceptTimeout = 0;
 		_maxOutgoingPacketsPerPass = Integer.MAX_VALUE;
 		_maxIncomingPacketsPerPass = Integer.MAX_VALUE;
 		_maxOutgoingBytesPerPass = Integer.MAX_VALUE;
@@ -82,14 +86,46 @@ public final class MMOConfig
 		return _name;
 	}
 	
+	private void tryModify() throws IllegalStateException
+	{
+		if (!isModifiable())
+			throw new IllegalStateException("Configuration already in use.");
+	}
+	
+	/**
+	 * Allows or prevents modification of this configuration.
+	 * @param modifiable whether to allow modification
+	 */
+	void setModifiable(boolean modifiable)
+	{
+		tryModify();
+		_modifiable = modifiable;
+	}
+	
+	/**
+	 * Returns whether this configuration can be altered.
+	 * <BR><BR>
+	 * Already used configurations cannot be altered.
+	 * @return is this configuration modifiable
+	 */
+	public boolean isModifiable()
+	{
+		return _modifiable;
+	}
+	
 	/**
 	 * Sets the size (in bytes) of byte buffers used in network I/O.
 	 * <BR><BR>
-	 * Defaults to {@value #MINIMUM_BUFFER_SIZE}.
+	 * Defaults to {@link #MINIMUM_BUFFER_SIZE}.
 	 * @param bufferSize buffer's size in bytes
+	 * @throws IllegalArgumentException if <TT>bufferSize</TT> < {@value #MINIMUM_BUFFER_SIZE}
+	 * @throws IllegalStateException if this configuration is already in use
 	 */
 	public void setBufferSize(int bufferSize)
+	throws IllegalArgumentException, IllegalStateException
 	{
+		tryModify();
+		
 		if (bufferSize < MINIMUM_BUFFER_SIZE)
 			throw new IllegalArgumentException("Buffer's size too low.");
 		
@@ -108,11 +144,51 @@ public final class MMOConfig
 	}
 	
 	/**
+	 * Sets the maximum amount of time to wait for a pending connection to
+	 * be established after it is accepted, in milliseconds.
+	 * <BR><BR>
+	 * Defaults to 0 (disabled/infinite).
+	 * @param acceptTimeout connection establishment timeout
+	 * @throws IllegalArgumentException if <TT>acceptTimeout</TT> < 0
+	 * @throws IllegalStateException if this configuration is already in use
+	 * @see java.net.ServerSocket#setSoTimeout(int)
+	 */
+	public void setAcceptTimeout(int acceptTimeout)
+	throws IllegalArgumentException, IllegalStateException
+	{
+		tryModify();
+		
+		if (acceptTimeout < 0)
+			throw new IllegalArgumentException("Invalid accept timeout.");
+		
+		_acceptTimeout = acceptTimeout;
+	}
+	
+	/**
+	 * Returns the desired maximum amount of time to wait for a pending
+	 * connection to be established after it is accepted, in milliseconds.
+	 * <BR><BR>
+	 * Defaults to 0 (disabled/infinite).
+	 * @return connection establishment timeout
+	 */
+	public int getAcceptTimeout()
+	{
+		return _acceptTimeout;
+	}
+	
+	/**
 	 * Sets the amount of "helper" byte buffers kept in cache for further usage.
 	 * @param helperBufferCount count of additional byte buffers
+	 * @throws IllegalArgumentException if <TT>helperBufferCount</TT> < 0
+	 * @throws IllegalStateException if this configuration is already in use
 	 */
-	public void setHelperBufferCount(int helperBufferCount)
+	public void setHelperBufferCount(int helperBufferCount) throws IllegalStateException
 	{
+		tryModify();
+		
+		if (helperBufferCount < 0)
+			throw new IllegalArgumentException("Invalid helper buffer count.");
+		
 		_helperBufferCount = helperBufferCount;
 	}
 	
@@ -132,10 +208,12 @@ public final class MMOConfig
 	 * Defaults to {@link java.nio.ByteOrder#LITTLE_ENDIAN}.
 	 * @param byteOrder {@link java.nio.ByteOrder#BIG_ENDIAN}
 	 * 			or {@link java.nio.ByteOrder#LITTLE_ENDIAN}
+	 * @throws IllegalStateException if this configuration is already in use
 	 * @see java.nio.ByteOrder#nativeOrder()
 	 */
-	public void setByteOrder(ByteOrder byteOrder)
+	public void setByteOrder(ByteOrder byteOrder) throws IllegalStateException
 	{
+		tryModify();
 		_byteOrder = byteOrder;
 	}
 	
@@ -161,10 +239,18 @@ public final class MMOConfig
 	 * Defaults to {@link java.lang.Integer#MAX_VALUE}.
 	 * @param maxOutgoingPacketsPerPass maximum number of packets to
 	 * 			be sent at once
+	 * @throws IllegalArgumentException if <TT>maxOutgoingPacketsPerPass</TT> < 1
+	 * @throws IllegalStateException if this configuration is already in use
 	 * @see #setMaxOutgoingBytesPerPass(int)
 	 */
 	public void setMaxOutgoingPacketsPerPass(int maxOutgoingPacketsPerPass)
+	throws IllegalArgumentException, IllegalStateException
 	{
+		tryModify();
+		
+		if (maxOutgoingPacketsPerPass < 1)
+			throw new IllegalArgumentException("At least one packet must be sent per pass");
+		
 		_maxOutgoingPacketsPerPass = maxOutgoingPacketsPerPass;
 	}
 	
@@ -191,10 +277,18 @@ public final class MMOConfig
 	 * <BR><BR>
 	 * Defaults to {@link java.lang.Integer#MAX_VALUE}.
 	 * @param maxIncomingPacketsPerPass maximum number of packets to read at once
+	 * @throws IllegalArgumentException if <TT>maxIncomingPacketsPerPass</TT> < 1
+	 * @throws IllegalStateException if this configuration is already in use
 	 * @see #setMaxIncomingBytesPerPass(int)
 	 */
 	public void setMaxIncomingPacketsPerPass(int maxIncomingPacketsPerPass)
+	throws IllegalArgumentException, IllegalStateException
 	{
+		tryModify();
+		
+		if (maxIncomingPacketsPerPass < 1)
+			throw new IllegalArgumentException("At least one packet must be read per pass");
+		
 		_maxIncomingPacketsPerPass = maxIncomingPacketsPerPass;
 	}
 	
@@ -222,10 +316,18 @@ public final class MMOConfig
 	 * Defaults to {@link java.lang.Integer#MAX_VALUE}.
 	 * @param maxOutgoingBytesPerPass maximum number of bytes to be sent at
 	 * 			once
+	 * @throws IllegalArgumentException if <TT>maxOutgoingBytesPerPass</TT> < 1
+	 * @throws IllegalStateException if this configuration is already in use
 	 * @see #setMaxOutgoingPacketsPerPass(int)
 	 */
 	public void setMaxOutgoingBytesPerPass(int maxOutgoingBytesPerPass)
+	throws IllegalArgumentException, IllegalStateException
 	{
+		tryModify();
+		
+		if (maxOutgoingBytesPerPass < 1)
+			throw new IllegalArgumentException("At least one byte must be sent per pass.");
+		
 		_maxOutgoingBytesPerPass = maxOutgoingBytesPerPass;
 	}
 	
@@ -253,10 +355,18 @@ public final class MMOConfig
 	 * Defaults to {@link java.lang.Integer#MAX_VALUE}.
 	 * @param maxIncomingBytesPerPass maximum number of bytes to be sent at
 	 * 			once
+	 * @throws IllegalArgumentException if <TT>maxIncomingBytesPerPass</TT> < 1
+	 * @throws IllegalStateException if this configuration is already in use
 	 * @see #setMaxIncomingPacketsPerPass(int)
 	 */
 	public void setMaxIncomingBytesPerPass(int maxIncomingBytesPerPass)
+	throws IllegalArgumentException, IllegalStateException
 	{
+		tryModify();
+		
+		if (maxIncomingBytesPerPass < 1)
+			throw new IllegalArgumentException("At least one byte must be read per pass.");
+		
 		_maxIncomingBytesPerPass = maxIncomingBytesPerPass;
 	}
 	
@@ -288,9 +398,17 @@ public final class MMOConfig
 	 * <LI>25-50 (or possibly higher) for an authorization service (Login Server <-> Client)</LI>
 	 * </UL>
 	 * @param selectorSleepTime selector wakeup interval in nanoseconds
+	 * @throws IllegalArgumentException if <TT>selectorSleepTime</TT> < 1
+	 * @throws IllegalStateException if this configuration is already in use
 	 */
 	public void setSelectorSleepTime(long selectorSleepTime)
+	throws IllegalArgumentException, IllegalStateException
 	{
+		tryModify();
+		
+		if (selectorSleepTime < 1)
+			throw new IllegalArgumentException("Invalid sleep time.");
+		
 		_selectorSleepTime = selectorSleepTime;
 	}
 	
@@ -311,9 +429,17 @@ public final class MMOConfig
 	 * <BR><BR>
 	 * Defaults to {@link java.lang.Runtime#availableProcessors()}.
 	 * @param threadCount network thread count
+	 * @throws IllegalArgumentException if <TT>threadCount</TT> < 1
+	 * @throws IllegalStateException if this configuration is already in use
 	 */
 	public void setThreadCount(int threadCount)
+	throws IllegalArgumentException, IllegalStateException
 	{
+		tryModify();
+		
+		if (threadCount < 1)
+			throw new IllegalArgumentException("At least one thread is required.");
+		
 		_threadCount = threadCount;
 	}
 	

@@ -14,6 +14,7 @@
  */
 package com.l2jfree.network.mmocore;
 
+import java.nio.BufferOverflowException;
 import java.nio.BufferUnderflowException;
 
 import com.l2jfree.network.mmocore.FloodManager.ErrorMode;
@@ -54,21 +55,18 @@ public abstract class ReceivablePacket<T extends MMOConnection<T, RP, SP>, RP ex
 	 * <br>
 	 * The main purpose of this value is to help identify malformed packets and/or outdated packet formats,<br>
 	 * and also to avoid throwing a {@link BufferUnderflowException}, by simply skipping the invalid - shorter - packets.
-	 * 
 	 * @return size of the shortest valid packet
+	 * @see #getMaximumLength()
 	 */
-	protected int getMinimumLength()
-	{
-		return 0;
-	}
+	protected abstract int getMinimumLength();
 	
 	/**
 	 * Specifies the maximum length of a valid packet in bytes.<br>
 	 * <br>
 	 * The main purpose of this value is to help identify malformed packets and/or outdated packet formats,<br>
 	 * and also to avoid throwing a {@link BufferOverflowException}, by simply skipping the invalid - longer - packets.
-	 * 
 	 * @return size of the longest valid packet
+	 * @see #getMinimumLength()
 	 */
 	protected int getMaximumLength()
 	{

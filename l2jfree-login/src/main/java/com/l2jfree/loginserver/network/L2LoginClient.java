@@ -29,14 +29,17 @@ import com.l2jfree.network.mmocore.MMOController;
  */
 public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPacket, L2ServerPacket>
 {
+	private L2LoginClientState _state;
+	
 	protected L2LoginClient(
 			MMOController<L2LoginClient, L2ClientPacket, L2ServerPacket> mmoController,
 			SocketChannel socketChannel) throws ClosedChannelException
 	{
 		super(mmoController, socketChannel);
+		_state = L2LoginClientState.CONNECTED;
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see com.l2jfree.network.mmocore.MMOConnection#onDisconnection()
 	 */
@@ -46,7 +49,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see com.l2jfree.network.mmocore.MMOConnection#onForcedDisconnection()
 	 */
@@ -56,7 +59,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see com.l2jfree.network.mmocore.MMOConnection#decrypt(java.nio.ByteBuffer, int)
 	 */
@@ -66,7 +69,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see com.l2jfree.network.mmocore.MMOConnection#encrypt(java.nio.ByteBuffer, int)
 	 */
@@ -76,7 +79,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see com.l2jfree.network.mmocore.MMOConnection#getDefaultClosePacket()
 	 */
@@ -86,7 +89,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see com.l2jfree.network.mmocore.MMOConnection#getUID()
 	 */
@@ -95,5 +98,23 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	{
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	/**
+	 * Returns current connection's state.
+	 * @return connection's state
+	 */
+	public L2LoginClientState getState()
+	{
+		return _state;
+	}
+	
+	/**
+	 * Changes the connection's state.
+	 * @param state connection's state
+	 */
+	public void setState(L2LoginClientState state)
+	{
+		_state = state;
 	}
 }

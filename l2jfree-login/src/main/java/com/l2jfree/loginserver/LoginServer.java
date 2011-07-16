@@ -14,7 +14,14 @@
  */
 package com.l2jfree.loginserver;
 
+import java.io.IOException;
+
 import com.l2jfree.L2Config;
+import com.l2jfree.config.L2Properties;
+import com.l2jfree.loginserver.network.L2LoginConnections;
+import com.l2jfree.network.mmocore.MMOConfig;
+import com.l2jfree.util.concurrent.L2ThreadPool;
+import com.l2jfree.util.logging.L2Logger;
 
 /**
  * This class contains the application entry point.
@@ -22,6 +29,14 @@ import com.l2jfree.L2Config;
  */
 public final class LoginServer extends L2Config
 {
+	static final L2Logger _log = L2Logger.getLogger(LoginServer.class);
+	
+	// TODO should be sorted into groups and redone with annotation loaders
+	/** Login server listens for connections on this IP address */
+	public static String LISTEN_IP;
+	/** Login server listens for connections on this port */
+	public static int LISTEN_PORT;
+	
 	/**
 	 * Launches the login server.
 	 * @param args ignored
@@ -29,8 +44,82 @@ public final class LoginServer extends L2Config
 	public static void main(String[] args)
 	{
 		// TODO Auto-generated method stub
-		//L2LoginConnections llc = new L2LoginConnections(cfg);
-		//llc.openServerSocket(adr, port);
-		// etc
+		registerConfig(new NetworkConfig());
+		
+		try
+		{
+			loadConfigs();
+		}
+		catch (Exception e)
+		{
+			_log.fatal("Could not load configuration files!", e);
+		}
+		
+		try
+		{
+			L2ThreadPool.initThreadPools(new L2LoginThreadPools());
+		}
+		catch (Exception e)
+		{
+			_log.fatal("Could not initialize thread pools!", e);
+		}
+		
+		MMOConfig cfg = new MMOConfig("Experimental Login");
+		cfg.setSelectorSleepTime(40 * 1000 * 1000);
+		cfg.setThreadCount(1);
+		cfg.setAcceptTimeout(5 * 1000);
+		try
+		{
+			final L2LoginConnections llc = new L2LoginConnections(cfg);
+			_log.info(LISTEN_IP);
+			llc.openServerSocket(LISTEN_IP, LISTEN_PORT);
+			llc.start();
+			Runtime.getRuntime().addShutdownHook(new Thread("Terminator")
+			{
+				/* (non-Javadoc)
+				 * @see java.lang.Thread#run()
+				 */
+				@Override
+				public void run()
+				{
+					try
+					{
+						llc.shutdown();
+					}
+					catch (InterruptedException e)
+					{
+						_log.warn(
+								"Orderly shutdown sequence interrupted", e
+						);
+					}
+				}
+			});
+		}
+		catch (IOException e)
+		{
+			_log.fatal("Could not start login server!", e);
+		}
+	}
+	
+	protected static class NetworkConfig extends ConfigPropertiesLoader
+	{
+		/* (non-Javadoc)
+		 * @see com.l2jfree.L2Config.ConfigPropertiesLoader#loadImpl(com.l2jfree.config.L2Properties)
+		 */
+		@Override
+		protected void loadImpl(L2Properties properties)
+		{
+			LISTEN_IP = properties.getString("ListenIP", "0.0.0.0");
+			LISTEN_PORT = properties.getInteger("ListenPort", 2106);
+		}
+		
+		/* (non-Javadoc)
+		 * @see com.l2jfree.L2Config.ConfigLoader#getName()
+		 */
+		@Override
+		protected String getName()
+		{
+			return "network";
+		}
 	}
 }

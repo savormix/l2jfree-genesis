@@ -28,9 +28,14 @@ import java.nio.channels.SocketChannel;
 final class AcceptorThread<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
 		extends AbstractSelectorThread<T, RP, SP>
 {
+	private final int _bufferSize;
+	private final int _acceptTimeout;
+	
 	public AcceptorThread(MMOController<T, RP, SP> mmoController, MMOConfig config) throws IOException
 	{
 		super(mmoController, config);
+		_bufferSize = config.getBufferSize();
+		_acceptTimeout = config.getAcceptTimeout();
 	}
 	
 	public void openServerSocket(InetAddress address, int port) throws IOException
@@ -39,6 +44,9 @@ final class AcceptorThread<T extends MMOConnection<T, RP, SP>, RP extends Receiv
 		selectable.configureBlocking(false);
 		
 		ServerSocket ss = selectable.socket();
+		ss.setReuseAddress(true);
+		ss.setReceiveBufferSize(getBufferSize());
+		ss.setSoTimeout(getAcceptTimeout());
 		if (address == null)
 		{
 			ss.bind(new InetSocketAddress(port));
@@ -50,6 +58,9 @@ final class AcceptorThread<T extends MMOConnection<T, RP, SP>, RP extends Receiv
 		selectable.register(getSelector(), SelectionKey.OP_ACCEPT);
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.l2jfree.network.mmocore.AbstractSelectorThread#handle(java.nio.channels.SelectionKey)
+	 */
 	@Override
 	protected void handle(SelectionKey key)
 	{
@@ -79,5 +90,15 @@ final class AcceptorThread<T extends MMOConnection<T, RP, SP>, RP extends Receiv
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	private int getBufferSize()
+	{
+		return _bufferSize;
+	}
+	
+	private int getAcceptTimeout()
+	{
+		return _acceptTimeout;
 	}
 }

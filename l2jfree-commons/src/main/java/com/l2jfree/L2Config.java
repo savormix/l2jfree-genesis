@@ -266,11 +266,6 @@ public abstract class L2Config
 		return null;
 	}
 	
-	protected L2Config()
-	{
-		super();
-	}
-	
 	/**
 	 * @return internet addresses that are allowed to connect via telnet
 	 */

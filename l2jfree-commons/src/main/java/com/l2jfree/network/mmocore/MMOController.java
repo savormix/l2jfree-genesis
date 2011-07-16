@@ -47,6 +47,7 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 	protected MMOController(MMOConfig config, IPacketHandler<T, RP, SP> packetHandler) throws IOException
 	{
 		_config = config;
+		_config.setModifiable(false);
 		_name = config.getName();
 		
 		_readWriteThreads = new ReadWriteThread[config.getThreadCount()];
@@ -233,7 +234,7 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 	}
 	
 	/**
-	 * To report any occuring error.<br>
+	 * To report any occurring error.<br>
 	 * <br>
 	 * NOTE: Uses a special way of logging to avoid console flood.
 	 * 
