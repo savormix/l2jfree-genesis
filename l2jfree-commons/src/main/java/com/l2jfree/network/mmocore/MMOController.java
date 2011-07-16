@@ -113,6 +113,10 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 		_connectorThreads.add(new ConnectorThread<T, RP, SP>(this, address, port));
 	}
 	
+	/**
+	 * Returns the name of this controller's configuration.
+	 * @return configuration's name
+	 */
 	public String getName()
 	{
 		return _name;
@@ -142,8 +146,7 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 	
 	/**
 	 * Initiates the shutdown of the mmocore threads, and waits until they are finished.
-	 * 
-	 * @throws InterruptedException
+	 * @throws InterruptedException if orderly shutdown sequence was interrupted
 	 */
 	public final void shutdown() throws InterruptedException
 	{

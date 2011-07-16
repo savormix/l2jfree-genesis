@@ -31,73 +31,76 @@ import com.l2jfree.network.mmocore.FloodManager.ErrorMode;
 final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
 		extends AbstractSelectorThread<T, RP, SP>
 {
+	private static final int PACKET_HEADER_SIZE = 2;
+	
 	// Implementations
 	private final IPacketHandler<T, RP, SP> _packetHandler;
 	
 	// Pending Close
-	private final FastList<T> _pendingClose = new FastList<T>();
+	private final FastList<T> _pendingClose;
 	
 	// Configs
-	private final int BUFFER_SIZE;
-	private final int HELPER_BUFFER_COUNT;
-	private final int MAX_SEND_PER_PASS;
-	private final int MAX_READ_PER_PASS;
-	private final int MAX_SEND_BYTE_PER_PASS;
-	private final int MAX_READ_BYTE_PER_PASS;
-	private final int HEADER_SIZE = 2;
-	private final ByteOrder BYTE_ORDER;
+	private final int _bufferSize;
+	private final int _helperBufferCount;
+	private final int _maxOutgoingPacketsPerPass;
+	private final int _maxIncomingPacketsPerPass;
+	private final int _maxOutgoingBytesPerPass;
+	private final int _maxIncomingBytesPerPass;
+	private final ByteOrder _byteOrder;
 	
 	// MAIN BUFFERS
-	private final ByteBuffer DIRECT_WRITE_BUFFER;
-	private final ByteBuffer WRITE_BUFFER;
-	private final ByteBuffer READ_BUFFER;
+	private final ByteBuffer _directWriteBuffer;
+	private final ByteBuffer _writeBuffer;
+	private final ByteBuffer _readBuffer;
 	
 	// ByteBuffers General Purpose Pool
-	private final FastList<ByteBuffer> _bufferPool = new FastList<ByteBuffer>();
+	private final FastList<ByteBuffer> _bufferPool;
 	
 	// wrapper for read and write operations
-	private final MMOBuffer MMO_BUFFER = new MMOBuffer();
+	private final MMOBuffer _mmoBuffer;
 	
 	public ReadWriteThread(MMOController<T, RP, SP> mmoController, MMOConfig config, IPacketHandler<T, RP, SP> packetHandler)
 			throws IOException
 	{
 		super(mmoController, config);
 		
-		BUFFER_SIZE = config.getBufferSize();
-		HELPER_BUFFER_COUNT = config.getHelperBufferCount();
-		MAX_SEND_PER_PASS = config.getMaxSendPerPass();
-		MAX_READ_PER_PASS = config.getMaxReadPerPass();
-		MAX_SEND_BYTE_PER_PASS = config.getMaxSendBytePerPass();
-		MAX_READ_BYTE_PER_PASS = config.getMaxReadBytePerPass();
-		BYTE_ORDER = config.getByteOrder();
+		_bufferSize = config.getBufferSize();
+		_helperBufferCount = config.getHelperBufferCount();
+		_maxOutgoingPacketsPerPass = config.getMaxOutgoingPacketsPerPass();
+		_maxIncomingPacketsPerPass = config.getMaxIncomingPacketsPerPass();
+		_maxOutgoingBytesPerPass = config.getMaxOutgoingBytesPerPass();
+		_maxIncomingBytesPerPass = config.getMaxIncomingBytesPerPass();
+		_byteOrder = config.getByteOrder();
 		
-		DIRECT_WRITE_BUFFER = ByteBuffer.allocateDirect(BUFFER_SIZE).order(BYTE_ORDER);
-		WRITE_BUFFER = ByteBuffer.allocate(BUFFER_SIZE).order(BYTE_ORDER);
-		READ_BUFFER = ByteBuffer.allocate(BUFFER_SIZE).order(BYTE_ORDER);
+		_directWriteBuffer = ByteBuffer.allocateDirect(getBufferSize()).order(getByteOrder());
+		_writeBuffer = ByteBuffer.allocate(getBufferSize()).order(getByteOrder());
+		_readBuffer = ByteBuffer.allocate(getBufferSize()).order(getByteOrder());
 		
+		_bufferPool = FastList.newInstance();
 		initBufferPool();
+		_mmoBuffer = new MMOBuffer();
+		
 		_packetHandler = packetHandler;
+		_pendingClose = FastList.newInstance();
 	}
 	
 	private void initBufferPool()
 	{
-		for (int i = 0; i < HELPER_BUFFER_COUNT; i++)
-		{
-			getFreeBuffers().addLast(ByteBuffer.allocate(BUFFER_SIZE).order(BYTE_ORDER));
-		}
+		for (int i = 0; i < getHelperBufferCount(); i++)
+			getFreeBuffers().addLast(ByteBuffer.allocate(getBufferSize()).order(getByteOrder()));
 	}
 	
 	final ByteBuffer getPooledBuffer()
 	{
 		if (getFreeBuffers().isEmpty())
-			return ByteBuffer.allocate(BUFFER_SIZE).order(BYTE_ORDER);
+			return ByteBuffer.allocate(getBufferSize()).order(getByteOrder());
 		else
 			return getFreeBuffers().removeFirst();
 	}
 	
 	final void recycleBuffer(ByteBuffer buf)
 	{
-		if (getFreeBuffers().size() < HELPER_BUFFER_COUNT)
+		if (getFreeBuffers().size() < getHelperBufferCount())
 		{
 			buf.clear();
 			getFreeBuffers().addLast(buf);
@@ -127,6 +130,9 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.l2jfree.network.mmocore.AbstractSelectorThread#handle(java.nio.channels.SelectionKey)
+	 */
 	@Override
 	protected void handle(SelectionKey key)
 	{
@@ -150,6 +156,9 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.l2jfree.network.mmocore.AbstractSelectorThread#cleanup()
+	 */
 	@Override
 	protected void cleanup()
 	{
@@ -187,14 +196,14 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		
 		if (buf == null)
 		{
-			buf = READ_BUFFER;
+			buf = getReadBuffer();
 			buf.clear();
 		}
 		
 		int readPackets = 0;
 		int readBytes = 0;
 		
-		for (;;)
+		while (true)
 		{
 			final int remainingFreeSpace = buf.remaining();
 			int result = -2;
@@ -228,7 +237,8 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 					{
 						final int startPos = buf.position();
 						
-						if (readPackets >= MAX_READ_PER_PASS || readBytes >= MAX_READ_BYTE_PER_PASS)
+						if (readPackets >= getMaxIncomingPacketsPerPass() ||
+								readBytes >= getMaxIncomingBytesPerPass())
 							break;
 						
 						if (!tryReadPacket2(con, buf))
@@ -242,7 +252,8 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 			}
 			
 			// stop reading, if we have reached a config limit
-			if (readPackets >= MAX_READ_PER_PASS || readBytes >= MAX_READ_BYTE_PER_PASS)
+			if (readPackets >= getMaxIncomingPacketsPerPass() ||
+					readBytes >= getMaxIncomingBytesPerPass())
 				break;
 			
 			// if the buffer wasn't filled completely, we should stop trying as the input channel is empty
@@ -259,9 +270,9 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		// check if there are some more bytes in buffer and allocate/compact to prevent content lose.
 		if (buf.hasRemaining())
 		{
-			if (buf == READ_BUFFER)
+			if (buf == getReadBuffer())
 			{
-				con.setReadBuffer(getPooledBuffer().put(READ_BUFFER));
+				con.setReadBuffer(getPooledBuffer().put(getReadBuffer()));
 			}
 			else
 			{
@@ -270,8 +281,9 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		}
 		else
 		{
-			if (buf == READ_BUFFER)
+			if (buf == getReadBuffer())
 			{
+				// no additional buffers used
 			}
 			else
 			{
@@ -287,7 +299,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		if (buf.remaining() >= 2)
 		{
 			// parse all headers and get expected packet size
-			final int size = (buf.getShort() & 0xFFFF) - HEADER_SIZE;
+			final int size = (buf.getChar() - PACKET_HEADER_SIZE);
 			
 			// do we got enough bytes for the packet?
 			if (size <= buf.remaining())
@@ -305,7 +317,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 			else
 			{
 				// we dont have enough bytes for the packet so we need to read and revert the header
-				buf.position(buf.position() - HEADER_SIZE);
+				buf.position(buf.position() - PACKET_HEADER_SIZE);
 				return false;
 			}
 		}
@@ -334,22 +346,22 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 				
 				if (cp != null)
 				{
-					MMO_BUFFER.setByteBuffer(buf);
+					getMmoBuffer().setByteBuffer(buf);
 					cp.setClient(client);
 					
 					try
 					{
-						if (MMO_BUFFER.getAvailableBytes() < cp.getMinimumLength())
+						if (getMmoBuffer().getAvailableBytes() < cp.getMinimumLength())
 						{
 							getMMOController().report(ErrorMode.BUFFER_UNDER_FLOW, client, cp, null);
 						}
-						else if (MMO_BUFFER.getAvailableBytes() > cp.getMaximumLength())
+						else if (getMmoBuffer().getAvailableBytes() > cp.getMaximumLength())
 						{
 							getMMOController().report(ErrorMode.BUFFER_OVER_FLOW, client, cp, null);
 						}
 						else
 						{
-							cp.read(MMO_BUFFER);
+							cp.read(getMmoBuffer());
 							
 							client.getPacketQueue().execute(cp);
 							
@@ -374,7 +386,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 						getMMOController().report(ErrorMode.FAILED_READING, client, cp, e);
 					}
 					
-					MMO_BUFFER.setByteBuffer(null);
+					getMmoBuffer().setByteBuffer(null);
 				}
 			}
 			
@@ -393,16 +405,16 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		for (;;)
 		{
 			wrotePackets += prepareWriteBuffer2(con, wrotePackets, wroteBytes);
-			wroteBytes += DIRECT_WRITE_BUFFER.position();
-			DIRECT_WRITE_BUFFER.flip();
+			wroteBytes += getDirectWriteBuffer().position();
+			getDirectWriteBuffer().flip();
 			
-			int size = DIRECT_WRITE_BUFFER.remaining();
+			int size = getDirectWriteBuffer().remaining();
 			
 			int result = -1;
 			
 			try
 			{
-				result = con.getWritableChannel().write(DIRECT_WRITE_BUFFER);
+				result = con.getWritableChannel().write(getDirectWriteBuffer());
 			}
 			catch (IOException e)
 			{
@@ -423,14 +435,15 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 							con.disableWriteInterest();
 							return;
 						}
-						else if (wrotePackets >= MAX_SEND_PER_PASS || wroteBytes >= MAX_SEND_BYTE_PER_PASS)
+						else if (wrotePackets >= getMaxOutgoingPacketsPerPass() ||
+								wroteBytes >= getMaxOutgoingBytesPerPass())
 							return;
 					}
 				}
 				else
 				// incomplete write
 				{
-					con.createWriteBuffer(DIRECT_WRITE_BUFFER);
+					con.createWriteBuffer(getDirectWriteBuffer());
 					return;
 				}
 			}
@@ -444,26 +457,27 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 	
 	private int prepareWriteBuffer2(T con, int wrotePackets, int wroteBytes)
 	{
-		DIRECT_WRITE_BUFFER.clear();
+		getDirectWriteBuffer().clear();
 		
 		// if theres pending content add it
 		if (con.hasPendingWriteBuffer())
 		{
-			con.movePendingWriteBufferTo(DIRECT_WRITE_BUFFER);
+			con.movePendingWriteBufferTo(getDirectWriteBuffer());
 			// ADDED PENDING TO DIRECT
 			
 			//wrotePackets += x; // not stored yet, so...
-			wroteBytes += DIRECT_WRITE_BUFFER.position();
+			wroteBytes += getDirectWriteBuffer().position();
 		}
 		
 		// don't write additional, if there are still pending content
 		if (!con.hasPendingWriteBuffer())
 		{
-			for (; DIRECT_WRITE_BUFFER.remaining() >= 2;)
+			for (; getDirectWriteBuffer().remaining() >= 2;)
 			{
-				final int startPos = DIRECT_WRITE_BUFFER.position();
+				final int startPos = getDirectWriteBuffer().position();
 				
-				if (wrotePackets >= MAX_SEND_PER_PASS || wroteBytes >= MAX_SEND_BYTE_PER_PASS)
+				if (wrotePackets >= getMaxOutgoingPacketsPerPass() ||
+						wroteBytes >= getMaxOutgoingBytesPerPass())
 					break;
 				
 				final SP sp;
@@ -480,20 +494,20 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 				
 				// put into WriteBuffer
 				putPacketIntoWriteBuffer(con, sp);
-				WRITE_BUFFER.flip();
+				getWriteBuffer().flip();
 				
-				if (DIRECT_WRITE_BUFFER.remaining() >= WRITE_BUFFER.limit())
+				if (getDirectWriteBuffer().remaining() >= getWriteBuffer().limit())
 				{
 					// put last written packet to the direct buffer
-					DIRECT_WRITE_BUFFER.put(WRITE_BUFFER);
+					getDirectWriteBuffer().put(getWriteBuffer());
 					
 					wrotePackets++;
-					wroteBytes += (DIRECT_WRITE_BUFFER.position() - startPos);
+					wroteBytes += (getDirectWriteBuffer().position() - startPos);
 				}
 				else
 				{
 					// there isn't enough space in the direct buffer
-					con.createWriteBuffer(WRITE_BUFFER);
+					con.createWriteBuffer(getWriteBuffer());
 					break;
 				}
 			}
@@ -504,18 +518,18 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 	
 	private void putPacketIntoWriteBuffer(T client, SP sp)
 	{
-		WRITE_BUFFER.clear();
+		getWriteBuffer().clear();
 		
 		// set the write buffer
-		MMO_BUFFER.setByteBuffer(WRITE_BUFFER);
+		getMmoBuffer().setByteBuffer(getWriteBuffer());
 		
 		// reserve space for the size
-		WRITE_BUFFER.position(HEADER_SIZE);
+		getWriteBuffer().position(PACKET_HEADER_SIZE);
 		
 		// write content to buffer
 		try
 		{
-			sp.write(client, MMO_BUFFER);
+			sp.write(client, getMmoBuffer());
 		}
 		catch (RuntimeException e)
 		{
@@ -524,21 +538,21 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		}
 		
 		// calculate size and encrypt content
-		int dataSize = WRITE_BUFFER.position() - HEADER_SIZE;
-		WRITE_BUFFER.position(HEADER_SIZE);
-		client.encrypt(WRITE_BUFFER, dataSize);
+		int dataSize = getWriteBuffer().position() - PACKET_HEADER_SIZE;
+		getWriteBuffer().position(PACKET_HEADER_SIZE);
+		client.encrypt(getWriteBuffer(), dataSize);
 		
 		// recalculate size after encryption
-		dataSize = WRITE_BUFFER.position() - HEADER_SIZE;
+		dataSize = getWriteBuffer().position() - PACKET_HEADER_SIZE;
 		
 		// prepend header
-		WRITE_BUFFER.position(0);
-		WRITE_BUFFER.putShort((short)(HEADER_SIZE + dataSize));
+		getWriteBuffer().position(0);
+		getWriteBuffer().putChar((char) (PACKET_HEADER_SIZE + dataSize));
 		
-		WRITE_BUFFER.position(HEADER_SIZE + dataSize);
+		getWriteBuffer().position(PACKET_HEADER_SIZE + dataSize);
 		
 		// set the write buffer
-		MMO_BUFFER.setByteBuffer(null);
+		getMmoBuffer().setByteBuffer(null);
 	}
 	
 	private void closePendingConnections()
@@ -605,5 +619,60 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 				con.getSelectionKey().cancel();
 			}
 		}
+	}
+	
+	private int getBufferSize()
+	{
+		return _bufferSize;
+	}
+	
+	public int getHelperBufferCount()
+	{
+		return _helperBufferCount;
+	}
+	
+	private int getMaxOutgoingPacketsPerPass()
+	{
+		return _maxOutgoingPacketsPerPass;
+	}
+	
+	private int getMaxIncomingPacketsPerPass()
+	{
+		return _maxIncomingPacketsPerPass;
+	}
+	
+	private int getMaxOutgoingBytesPerPass()
+	{
+		return _maxOutgoingBytesPerPass;
+	}
+	
+	private int getMaxIncomingBytesPerPass()
+	{
+		return _maxIncomingBytesPerPass;
+	}
+	
+	private ByteOrder getByteOrder()
+	{
+		return _byteOrder;
+	}
+	
+	private ByteBuffer getDirectWriteBuffer()
+	{
+		return _directWriteBuffer;
+	}
+	
+	private ByteBuffer getWriteBuffer()
+	{
+		return _writeBuffer;
+	}
+	
+	private ByteBuffer getReadBuffer()
+	{
+		return _readBuffer;
+	}
+
+	private MMOBuffer getMmoBuffer()
+	{
+		return _mmoBuffer;
 	}
 }

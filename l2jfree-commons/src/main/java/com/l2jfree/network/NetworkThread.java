@@ -22,8 +22,8 @@ import java.net.SocketException;
 
 import org.apache.commons.io.IOUtils;
 
-import com.l2jfree.net.HexUtil;
 import com.l2jfree.security.NewCrypt;
+import com.l2jfree.util.HexUtil;
 import com.l2jfree.util.logging.L2Logger;
 
 // FIXME new login server/protocol

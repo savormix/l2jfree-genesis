@@ -11,15 +11,19 @@ import java.util.Set;
 abstract class AbstractSelectorThread<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
 		extends WorkerThread<T, RP, SP>
 {
+	private static final int MILLISECOND = 1000 * 1000;
+	
 	private final Selector _selector;
 	
-	private final long SLEEP_TIME;
+	private final long _sleepTimeMs;
+	private final int _sleepTimeNs;
 	
 	protected AbstractSelectorThread(MMOController<T, RP, SP> mmoController, MMOConfig config) throws IOException
 	{
 		super(mmoController);
 		
-		SLEEP_TIME = config.getSelectorSleepTime();
+		_sleepTimeMs = config.getSelectorSleepTime() / MILLISECOND;
+		_sleepTimeNs = (int) (config.getSelectorSleepTime() % MILLISECOND);
 		
 		_selector = Selector.open();
 	}
@@ -69,7 +73,7 @@ abstract class AbstractSelectorThread<T extends MMOConnection<T, RP, SP>, RP ext
 			
 			try
 			{
-				Thread.sleep(SLEEP_TIME);
+				Thread.sleep(getSleepTimeMs(), getSleepTimeNs());
 			}
 			catch (InterruptedException e)
 			{
@@ -84,6 +88,7 @@ abstract class AbstractSelectorThread<T extends MMOConnection<T, RP, SP>, RP ext
 	
 	protected void cleanup()
 	{
+		// to be overridden
 	}
 	
 	private void close()
@@ -108,5 +113,15 @@ abstract class AbstractSelectorThread<T extends MMOConnection<T, RP, SP>, RP ext
 		{
 			// Ignore
 		}
+	}
+	
+	private long getSleepTimeMs()
+	{
+		return _sleepTimeMs;
+	}
+	
+	private int getSleepTimeNs()
+	{
+		return _sleepTimeNs;
 	}
 }

@@ -16,193 +16,323 @@ package com.l2jfree.network.mmocore;
 
 import java.nio.ByteOrder;
 
+import com.l2jfree.util.Introspection;
+
 /**
  * @author KenM
  */
 public final class MMOConfig
 {
-	private final String NAME;
+	/**
+	 * Specifies the minimum allowed buffer size.
+	 * <BR><BR>
+	 * It is generally accepted that this value should be equal to:<BR>
+	 * <I>Maximum length of a valid packet + 1</I><BR>
+	 * When a largest possible packet is read, the last byte helps
+	 * to identify whether there <U>may</U> be available bytes in
+	 * the channel/socket.
+	 * <BR><BR>
+	 * So if the packet's size field is a word, the minimum buffer
+	 * size should be <I>0xFFFF + 1 = 0x10000</I>.
+	 */
+	public static final int MINIMUM_BUFFER_SIZE = 64 * 1024;
 	
-	private int BUFFER_SIZE = 64 * 1024; // 0xFFFF + 1
+	private final String _name;
 	
-	private int MAX_SEND_PER_PASS = Integer.MAX_VALUE;
-	private int MAX_READ_PER_PASS = Integer.MAX_VALUE;
+	private int _bufferSize;
 	
-	private int MAX_SEND_BYTE_PER_PASS = Integer.MAX_VALUE;
-	private int MAX_READ_BYTE_PER_PASS = Integer.MAX_VALUE;
+	private int _maxOutgoingPacketsPerPass;
+	private int _maxIncomingPacketsPerPass;
 	
-	private int SLEEP_TIME = 10;
+	private int _maxOutgoingBytesPerPass;
+	private int _maxIncomingBytesPerPass;
 	
-	private int HELPER_BUFFER_COUNT = 20;
+	private long _selectorSleepTime;
 	
-	private ByteOrder BYTE_ORDER = ByteOrder.LITTLE_ENDIAN;
+	private int _helperBufferCount;
 	
-	private int THREAD_COUNT = Runtime.getRuntime().availableProcessors();
+	private ByteOrder _byteOrder;
 	
+	private int _threadCount;
+	
+	/**
+	 * Creates a MMOCore configuration.
+	 * @param name name of configuration
+	 */
 	public MMOConfig(String name)
 	{
-		NAME = name;
-	}
-	
-	public String getName()
-	{
-		return NAME;
+		_name = name;
+		_bufferSize = MINIMUM_BUFFER_SIZE;
+		_maxOutgoingPacketsPerPass = Integer.MAX_VALUE;
+		_maxIncomingPacketsPerPass = Integer.MAX_VALUE;
+		_maxOutgoingBytesPerPass = Integer.MAX_VALUE;
+		_maxIncomingBytesPerPass = Integer.MAX_VALUE;
+		_selectorSleepTime = 10 * 1000 * 1000;
+		_helperBufferCount = 20;
+		_byteOrder = ByteOrder.LITTLE_ENDIAN;
+		_threadCount = Runtime.getRuntime().availableProcessors();
 	}
 	
 	/**
-	 * To configure the bytebuffers' size used for read-write operations.  (probably never used)
-	 * 
-	 * @param bufferSize
+	 * Returns the name of this configuration.
+	 * @return name of configuration
+	 */
+	public String getName()
+	{
+		return _name;
+	}
+	
+	/**
+	 * Sets the size (in bytes) of byte buffers used in network I/O.
+	 * <BR><BR>
+	 * Defaults to {@value #MINIMUM_BUFFER_SIZE}.
+	 * @param bufferSize buffer's size in bytes
 	 */
 	public void setBufferSize(int bufferSize)
 	{
-		if (bufferSize < 64 * 1024) // 0xFFFF + 1
-			throw new IllegalArgumentException();
+		if (bufferSize < MINIMUM_BUFFER_SIZE)
+			throw new IllegalArgumentException("Buffer's size too low.");
 		
-		BUFFER_SIZE = bufferSize;
-	}
-	
-	int getBufferSize()
-	{
-		return BUFFER_SIZE;
+		_bufferSize = bufferSize;
 	}
 	
 	/**
-	 * To configure the amount of "helper" bytebuffers kept in cache for further usage.
-	 * 
-	 * @param helperBufferCount
+	 * Returns the desired size (in bytes) of byte buffers used in network I/O.
+	 * <BR><BR>
+	 * Defaults to {@value #MINIMUM_BUFFER_SIZE}.
+	 * @return buffer's size in bytes
+	 */
+	public int getBufferSize()
+	{
+		return _bufferSize;
+	}
+	
+	/**
+	 * Sets the amount of "helper" byte buffers kept in cache for further usage.
+	 * @param helperBufferCount count of additional byte buffers
 	 */
 	public void setHelperBufferCount(int helperBufferCount)
 	{
-		HELPER_BUFFER_COUNT = helperBufferCount;
-	}
-	
-	int getHelperBufferCount()
-	{
-		return HELPER_BUFFER_COUNT;
+		_helperBufferCount = helperBufferCount;
 	}
 	
 	/**
-	 * To configure the byte order used by the bytebuffers. (probably never used)
-	 * 
-	 * @param byteOrder
+	 * Returns the desired amount of "helper" byte buffers kept in cache for
+	 * further usage.
+	 * @return count of additional byte buffers
+	 */
+	public int getHelperBufferCount()
+	{
+		return _helperBufferCount;
+	}
+	
+	/**
+	 * Sets the byte order of byte buffers used in network I/O.
+	 * <BR><BR>
+	 * Defaults to {@link java.nio.ByteOrder#LITTLE_ENDIAN}.
+	 * @param byteOrder {@link java.nio.ByteOrder#BIG_ENDIAN}
+	 * 			or {@link java.nio.ByteOrder#LITTLE_ENDIAN}
+	 * @see java.nio.ByteOrder#nativeOrder()
 	 */
 	public void setByteOrder(ByteOrder byteOrder)
 	{
-		BYTE_ORDER = byteOrder;
-	}
-	
-	ByteOrder getByteOrder()
-	{
-		return BYTE_ORDER;
+		_byteOrder = byteOrder;
 	}
 	
 	/**
-	 * Server will try to send maxSendPerPass packets per socket write call however it may send less<br>
-	 * if the write buffer was filled before achieving this value.
-	 * 
-	 * @param maxSendPerPass The maximum number of packets to be sent on a single socket write call
+	 * Returns the desired byte order of byte buffers used in network I/O.
+	 * <BR><BR>
+	 * Defaults to {@link java.nio.ByteOrder#LITTLE_ENDIAN}.
+	 * @return buffer's byte order
 	 */
-	public void setMaxSendPerPass(int maxSendPerPass)
+	public ByteOrder getByteOrder()
 	{
-		MAX_SEND_PER_PASS = maxSendPerPass;
+		return _byteOrder;
 	}
 	
 	/**
-	 * @return The maximum number of packets sent in an socket write call
+	 * Instructs server to send at most {@code maxOutgoingPacketsPerPass} packets
+	 * in a single socket write call.
+	 * <BR><BR>
+	 * Less packets may be sent if the connection drops, the underlying
+	 * channel's send buffer is completely filled or the number
+	 * of outgoing bytes reaches the configured limit.
+	 * <BR><BR>
+	 * Defaults to {@link java.lang.Integer#MAX_VALUE}.
+	 * @param maxOutgoingPacketsPerPass maximum number of packets to
+	 * 			be sent at once
+	 * @see #setMaxOutgoingBytesPerPass(int)
 	 */
-	int getMaxSendPerPass()
+	public void setMaxOutgoingPacketsPerPass(int maxOutgoingPacketsPerPass)
 	{
-		return MAX_SEND_PER_PASS;
+		_maxOutgoingPacketsPerPass = maxOutgoingPacketsPerPass;
 	}
 	
 	/**
-	 * Server will try to read maxReadPerPass packets per socket read call however it may read less<br>
-	 * if the read buffer was filled before achieving this value.
-	 * 
-	 * @param maxReadPerPass The maximum number of packets to be read on a single socket read call
+	 * Returns the desired maximum amount of packets to be sent in
+	 * a single socket write call.
+	 * <BR><BR>
+	 * Defaults to {@link java.lang.Integer#MAX_VALUE}.
+	 * @return maximum number of packets to be sent at once
+	 * @see #getMaxOutgoingBytesPerPass()
 	 */
-	public void setMaxReadPerPass(int maxReadPerPass)
+	public int getMaxOutgoingPacketsPerPass()
 	{
-		MAX_READ_PER_PASS = maxReadPerPass;
-	}
-	
-	int getMaxReadPerPass()
-	{
-		return MAX_READ_PER_PASS;
+		return _maxOutgoingPacketsPerPass;
 	}
 	
 	/**
-	 * Server will try to send maxSendBytePerPass bytes per socket write call however it may send less<br>
-	 * if the write buffer was filled before achieving this value.
-	 * 
-	 * @param maxSendBytePerPass The maximum number of bytes to be sent on a single socket write call
+	 * Instructs server to read at most {@code maxIncomingPacketsPerPass} packets
+	 * in a single socket read call.
+	 * <BR><BR>
+	 * Less packets may be read if the connection drops, the underlying
+	 * channel's read buffer is completely exhausted or the number
+	 * of incoming bytes reaches the configured limit.
+	 * <BR><BR>
+	 * Defaults to {@link java.lang.Integer#MAX_VALUE}.
+	 * @param maxIncomingPacketsPerPass maximum number of packets to read at once
+	 * @see #setMaxIncomingBytesPerPass(int)
 	 */
-	public void setMaxSendBytePerPass(int maxSendBytePerPass)
+	public void setMaxIncomingPacketsPerPass(int maxIncomingPacketsPerPass)
 	{
-		MAX_SEND_BYTE_PER_PASS = maxSendBytePerPass;
-	}
-	
-	int getMaxSendBytePerPass()
-	{
-		return MAX_SEND_BYTE_PER_PASS;
+		_maxIncomingPacketsPerPass = maxIncomingPacketsPerPass;
 	}
 	
 	/**
-	 * Server will try to read maxReadBytePerPass bytes per socket read call however it may read less<br>
-	 * if the read buffer was filled before achieving this value.
-	 * 
-	 * @param maxReadBytePerPass The maximum number of bytes to be read on a single socket read call
+	 * Returns the desired maximum amount of packets to be read in
+	 * a single socket read call.
+	 * <BR><BR>
+	 * Defaults to {@link java.lang.Integer#MAX_VALUE}.
+	 * @return maximum number of packets to read at once
+	 * @see #getMaxIncomingBytesPerPass()
 	 */
-	public void setMaxReadBytePerPass(int maxReadBytePerPass)
+	public int getMaxIncomingPacketsPerPass()
 	{
-		MAX_READ_BYTE_PER_PASS = maxReadBytePerPass;
-	}
-	
-	int getMaxReadBytePerPass()
-	{
-		return MAX_READ_BYTE_PER_PASS;
+		return _maxIncomingPacketsPerPass;
 	}
 	
 	/**
-	 * Defines how much time (in milis) should the selector sleep, a higher value increases throughput but also<br>
-	 * increases latency (to a max of the sleep value itself).<br>
-	 * Also an extremely high value(usually > 100) will decrease throughput due to the server<br>
-	 * not doing enough sends per second (depends on max sends per pass).<br>
-	 * <br>
-	 * Recommended values:
-	 * <ul>
-	 * <li>1 for minimal latency</li>
-	 * <li>5-50 for a latency/troughput trade-off based on your needs</li>
-	 * </ul>
-	 * 
-	 * @param sleepTime the sleepTime to set in millisec
+	 * Instructs server to send at most {@code maxOutgoingBytesPerPass} bytes
+	 * in a single socket write call.
+	 * <BR><BR>
+	 * Less bytes may be sent if the connection drops, the underlying
+	 * channel's send buffer is completely filled or the number
+	 * of outgoing packets reaches the configured limit.
+	 * <BR><BR>
+	 * Defaults to {@link java.lang.Integer#MAX_VALUE}.
+	 * @param maxOutgoingBytesPerPass maximum number of bytes to be sent at
+	 * 			once
+	 * @see #setMaxOutgoingPacketsPerPass(int)
 	 */
-	public void setSelectorSleepTime(int sleepTime)
+	public void setMaxOutgoingBytesPerPass(int maxOutgoingBytesPerPass)
 	{
-		SLEEP_TIME = sleepTime;
+		_maxOutgoingBytesPerPass = maxOutgoingBytesPerPass;
 	}
 	
 	/**
-	 * @return the sleepTime setting for the selector
+	 * Returns the desired maximum amount of bytes to be sent in
+	 * a single socket write call.
+	 * <BR><BR>
+	 * Defaults to {@link java.lang.Integer#MAX_VALUE}.
+	 * @return maximum number of bytes to be sent at once
+	 * @see #getMaxOutgoingPacketsPerPass()
 	 */
-	int getSelectorSleepTime()
+	public int getMaxOutgoingBytesPerPass()
 	{
-		return SLEEP_TIME;
+		return _maxOutgoingBytesPerPass;
 	}
 	
 	/**
-	 * To configure the amount of read-write threads.
-	 * 
-	 * @param threadCount
+	 * Instructs server to read at most {@code maxIncomingBytesPerPass} bytes
+	 * in a single socket read call.
+	 * <BR><BR>
+	 * Less bytes may be read if the connection drops, the underlying
+	 * channel's read buffer is completely exhausted or the number
+	 * of incoming packets reaches the configured limit.
+	 * <BR><BR>
+	 * Defaults to {@link java.lang.Integer#MAX_VALUE}.
+	 * @param maxIncomingBytesPerPass maximum number of bytes to be sent at
+	 * 			once
+	 * @see #setMaxIncomingPacketsPerPass(int)
+	 */
+	public void setMaxIncomingBytesPerPass(int maxIncomingBytesPerPass)
+	{
+		_maxIncomingBytesPerPass = maxIncomingBytesPerPass;
+	}
+	
+	/**
+	 * Returns the desired maximum amount of bytes to be read in
+	 * a single socket read call.
+	 * <BR><BR>
+	 * Defaults to {@link java.lang.Integer#MAX_VALUE}.
+	 * @return maximum number of bytes to be read at once
+	 * @see #getMaxIncomingPacketsPerPass()
+	 */
+	public int getMaxIncomingBytesPerPass()
+	{
+		return _maxIncomingBytesPerPass;
+	}
+	
+	/**
+	 * Instructs the selector thread to sleep for {@code selectorSleepTime}
+	 * nanoseconds between iterations.<BR>
+	 * Lower values decrease latency, higher values increase throughput.
+	 * <BR><BR>
+	 * Extremely low values (below 1 ms) will provide nearly no latency at the cost
+	 * of wasting CPU time due to very frequent network I/O.<BR>
+	 * High values (above 100 ms) tend to give noticeable latency and CPU usage
+	 * spikes due to longer I/O coupled with longer idle times.
+	 * <UL>
+	 * <LI>5 or less for a [pseudo] real-time service (Geo/PF/Login Server <-> Game Server)</LI>
+	 * <LI>5-15 for any interactive service (Game Server <-> Client)</LI>
+	 * <LI>25-50 (or possibly higher) for an authorization service (Login Server <-> Client)</LI>
+	 * </UL>
+	 * @param selectorSleepTime selector wakeup interval in nanoseconds
+	 */
+	public void setSelectorSleepTime(long selectorSleepTime)
+	{
+		_selectorSleepTime = selectorSleepTime;
+	}
+	
+	/**
+	 * Returns the desired selector thread's sleep (idling) time
+	 * between iterations.
+	 * <BR><BR>
+	 * Defaults to 10 milliseconds.
+	 * @return selector wakeup interval in nanoseconds
+	 */
+	public long getSelectorSleepTime()
+	{
+		return _selectorSleepTime;
+	}
+	
+	/**
+	 * Sets the amount of network I/O threads.
+	 * <BR><BR>
+	 * Defaults to {@link java.lang.Runtime#availableProcessors()}.
+	 * @param threadCount network thread count
 	 */
 	public void setThreadCount(int threadCount)
 	{
-		THREAD_COUNT = threadCount;
+		_threadCount = threadCount;
 	}
 	
-	int getThreadCount()
+	/**
+	 * Returns the desired amount of network I/O threads.
+	 * <BR><BR>
+	 * Defaults to {@link java.lang.Runtime#availableProcessors()}.
+	 * @return network thread count
+	 */
+	public int getThreadCount()
 	{
-		return THREAD_COUNT;
+		return _threadCount;
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return Introspection.toString(this);
 	}
 }
