@@ -92,14 +92,14 @@ public abstract class L2Config
 				
 				// restart automatically
 				if (e instanceof Error && !(e instanceof StackOverflowError))
-					Runtime.getRuntime().halt(TerminationStatus.RUNTIME_UNCAUGHT_ERROR);
+					Shutdown.halt(TerminationStatus.RUNTIME_UNCAUGHT_ERROR);
 			}
 		});
 		
 		if (System.getProperty("user.name").equals("root") && System.getProperty("user.home").equals("/root"))
 		{
 			System.out.print("L2jFree servers should not run under root-account ... exited.");
-			System.exit(TerminationStatus.ENVIRONMENT_SUPERUSER);
+			Shutdown.exit(TerminationStatus.ENVIRONMENT_SUPERUSER);
 		}
 		
 		final Map<String, List<String>> libs = new HashMap<String, List<String>>();
@@ -174,7 +174,7 @@ public abstract class L2Config
 					for (String name : entry.getValue())
 						System.out.println("\t'" + name + "'");
 			
-			System.exit(TerminationStatus.ENVIRONMENT_CP_CONFLICT);
+			Shutdown.exit(TerminationStatus.ENVIRONMENT_CP_CONFLICT);
 		}
 		
 		System.setProperty("line.separator", "\r\n");
@@ -248,9 +248,11 @@ public abstract class L2Config
 					_log.logp(Level.WARNING, caller.getClassName(), caller.getMethodName(), line);
 			}
 		}));
+		
+		Shutdown.initShutdownHook();
 	}
 	
-	protected static StackTraceElement getCaller()
+	private static StackTraceElement getCaller()
 	{
 		StackTraceElement[] stack = new Throwable().getStackTrace();
 		

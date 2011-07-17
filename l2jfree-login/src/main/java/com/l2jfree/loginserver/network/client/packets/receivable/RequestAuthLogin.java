@@ -20,6 +20,7 @@ import java.security.GeneralSecurityException;
 
 import javax.crypto.Cipher;
 
+import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
 import com.l2jfree.loginserver.network.client.L2LoginClient;
 import com.l2jfree.loginserver.network.client.L2LoginClientState;
@@ -92,7 +93,7 @@ public final class RequestAuthLogin extends L2ClientPacket
 		catch (UnsupportedEncodingException e)
 		{
 			_log.fatal("ASCII is not avaialable!", e);
-			System.exit(TerminationStatus.ENVIRONMENT_MISSING_COMPONENT_OR_SERVICE);
+			Shutdown.exit(TerminationStatus.ENVIRONMENT_MISSING_COMPONENT_OR_SERVICE);
 			return;
 		}
 		_log.info(user + " | " + password);

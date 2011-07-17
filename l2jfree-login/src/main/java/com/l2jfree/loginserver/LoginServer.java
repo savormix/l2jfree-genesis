@@ -17,6 +17,7 @@ package com.l2jfree.loginserver;
 import java.io.IOException;
 
 import com.l2jfree.L2Config;
+import com.l2jfree.Shutdown;
 import com.l2jfree.config.L2Properties;
 import com.l2jfree.loginserver.network.client.L2ClientConnections;
 import com.l2jfree.loginserver.network.client.L2ClientSecurity;
@@ -26,6 +27,7 @@ import com.l2jfree.util.logging.L2Logger;
 
 /**
  * This class contains the application entry point.
+ * 
  * @author savormix
  */
 public final class LoginServer extends L2Config
@@ -45,6 +47,7 @@ public final class LoginServer extends L2Config
 	
 	/**
 	 * Launches the login server.
+	 * 
 	 * @param args ignored
 	 */
 	public static void main(String[] args)
@@ -81,11 +84,8 @@ public final class LoginServer extends L2Config
 			final L2ClientConnections llc = new L2ClientConnections(cfg);
 			llc.openServerSocket(LISTEN_IP, LISTEN_PORT);
 			llc.start();
-			Runtime.getRuntime().addShutdownHook(new Thread("Terminator")
-			{
-				/* (non-Javadoc)
-				 * @see java.lang.Thread#run()
-				 */
+			
+			Shutdown.addShutdownHook(new Runnable() {
 				@Override
 				public void run()
 				{
@@ -95,9 +95,7 @@ public final class LoginServer extends L2Config
 					}
 					catch (InterruptedException e)
 					{
-						_log.warn(
-								"Orderly shutdown sequence interrupted", e
-						);
+						_log.warn("Orderly shutdown sequence interrupted", e);
 					}
 				}
 			});

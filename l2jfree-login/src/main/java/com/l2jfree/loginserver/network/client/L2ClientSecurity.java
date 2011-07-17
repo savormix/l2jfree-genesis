@@ -23,6 +23,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.crypto.Cipher;
 
+import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
 import com.l2jfree.security.ScrambledKeyPair;
 import com.l2jfree.util.Rnd;
@@ -63,7 +64,7 @@ public class L2ClientSecurity
 		catch (GeneralSecurityException e)
 		{
 			_log.fatal("Could not generate RSA key pairs!", e);
-			System.exit(TerminationStatus.ENVIRONMENT_MISSING_COMPONENT_OR_SERVICE);
+			Shutdown.exit(TerminationStatus.ENVIRONMENT_MISSING_COMPONENT_OR_SERVICE);
 			return;
 		}
 		
@@ -82,7 +83,7 @@ public class L2ClientSecurity
 		catch (GeneralSecurityException e)
 		{
 			_log.fatal("Invalid generated key pair!", e);
-			System.exit(TerminationStatus.ENVIRONMENT_MISSING_COMPONENT_OR_SERVICE);
+			Shutdown.exit(TerminationStatus.ENVIRONMENT_MISSING_COMPONENT_OR_SERVICE);
 		}
 	}
 	

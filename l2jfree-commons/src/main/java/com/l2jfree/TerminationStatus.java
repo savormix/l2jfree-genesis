@@ -15,49 +15,73 @@
 package com.l2jfree;
 
 /**
- * This class contains status codes to be passed to
- * {@link System#exit(int)} and {@link Runtime#halt(int)}
- * methods.
+ * This class contains status codes to be passed to {@link Shutdown#exit()} and {@link Shutdown#halt()} methods.
+ * 
  * @author savormix
  */
-public abstract class TerminationStatus {
+public enum TerminationStatus
+{
+	/**
+	 * <B>Cause</B>: An unknown reason caused a shutdown.<BR>
+	 * <B>Resolution</B>: Shut down for safety reasons and do not report anything.
+	 */
+	INVALID(-1, "terminating due to an unknown reason"),
+	
 	/**
 	 * <B>Cause</B>: A privileged user issued a shutdown.<BR>
 	 * <B>Resolution</B>: Shut down orderly and do not report anything.
 	 */
-	public static final int MANUAL_SHUTDOWN = 0;
+	MANUAL_SHUTDOWN(0, "shutting down, because a privileged user issued a shutdown"),
+	
 	/**
 	 * <B>Cause</B>: A privileged user issued a restart.<BR>
 	 * <B>Resolution</B>: Restart orderly and do not report anything.
 	 */
-	public static final int MANUAL_RESTART = 1;
+	MANUAL_RESTART(1, "restarting, because a privileged user issued a restart"),
 	
 	/**
 	 * <B>Cause</B>: Server detected superuser privileges.<BR>
-	 * <B>Resolution</B>: Inform the user that the server must be
-	 * run on a normal user account and terminate.
+	 * <B>Resolution</B>: Inform the user that the server must be run on a normal user account and terminate.
 	 */
-	public static final int ENVIRONMENT_SUPERUSER = 2;
-	/**
-	 * <B>Cause</B>: Server detected a classpath conflict.<BR>
-	 * <B>Resolution</B>: Inform the user that the reported
-	 * classpath conflicts must be resolved and terminate.
-	 */
-	public static final int ENVIRONMENT_CP_CONFLICT = 3;
-	/**
-	 * <B>Cause</B>: Server needs a specific object or function, but it is not
-	 * provided.<BR>
-	 * <B>Resolution</B>: Inform the user about the needed feature and terminate.
-	 * <BR><BR>
-	 * Designed for missing encodings, ciphers, digests, etc.
-	 */
-	public static final int ENVIRONMENT_MISSING_COMPONENT_OR_SERVICE = 4;
+	ENVIRONMENT_SUPERUSER(2, "shutting down, because the server has detected superuser privileges"),
 	
 	/**
-	 * <B>Cause</B>: An [uncaught] error (other than {@link StackOverflowError})
-	 * occured during runtime.<BR>
-	 * <B>Resolution</B>: Possibly inform the user about the
-	 * occured error and restart.
+	 * <B>Cause</B>: Server detected a classpath conflict.<BR>
+	 * <B>Resolution</B>: Inform the user that the reported classpath conflicts must be resolved and terminate.
 	 */
-	public static final int RUNTIME_UNCAUGHT_ERROR = 4;
+	ENVIRONMENT_CP_CONFLICT(3, "shutting down, because the server has detected a classpath conflict"),
+	
+	/**
+	 * <B>Cause</B>: Server needs a specific object or function, but it is not provided.<BR>
+	 * <B>Resolution</B>: Inform the user about the needed feature and terminate. <BR>
+	 * <BR>
+	 * NOTE: Designed for missing encodings, ciphers, digests, etc.
+	 */
+	ENVIRONMENT_MISSING_COMPONENT_OR_SERVICE(4,
+			"shutting down, because the server needs a specific object or function, but it is not provided"),
+	
+	/**
+	 * <B>Cause</B>: An [uncaught] error (other than {@link StackOverflowError}) occured during runtime.<BR>
+	 * <B>Resolution</B>: Possibly inform the user about the occured error and restart.
+	 */
+	RUNTIME_UNCAUGHT_ERROR(5, "shutting down, because an uncaught error occured during runtime");
+	
+	private final int _statusCode;
+	private final String _description;
+	
+	private TerminationStatus(int statusCode, String description)
+	{
+		_statusCode = statusCode;
+		_description = description;
+	}
+	
+	public int getStatusCode()
+	{
+		return _statusCode;
+	}
+	
+	public String getDescription()
+	{
+		return _description;
+	}
 }

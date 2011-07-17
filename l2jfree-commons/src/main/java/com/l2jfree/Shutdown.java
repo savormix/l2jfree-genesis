@@ -14,6 +14,12 @@
  */
 package com.l2jfree;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import com.l2jfree.sql.L2Database;
+import com.l2jfree.util.concurrent.L2ThreadPool;
+
 /**
  */
 public final class Shutdown
@@ -23,51 +29,214 @@ public final class Shutdown
 		// utility class
 	}
 	
-	/**
-	 * Issues an orderly shutdown.
-	 * @param initiator initiator's ID/name
-	 */
-	public static void shutdown(String initiator)
+	private static TerminationStatus _mode = TerminationStatus.INVALID;
+	private static ShutdownCounter _shutdownCounter;
+	
+	public static synchronized void start(TerminationStatus mode, int seconds, String initiator)
 	{
-		try
+		if (_shutdownCounter != null)
+			abort(initiator);
+		
+		if (initiator != null)
+			System.err.println(initiator + " issued a shutdown command: " + mode.getDescription() + " in " + seconds
+					+ " seconds!");
+		else
+			System.err.println("A shutdown command was issued: " + mode.getDescription() + " in " + seconds
+					+ " seconds!");
+		
+		_mode = mode;
+		
+		_shutdownCounter = new ShutdownCounter(seconds);
+		_shutdownCounter.start();
+	}
+	
+	public static synchronized void abort(String initiator)
+	{
+		if (_shutdownCounter == null)
+			return;
+		
+		if (initiator != null)
+			System.err.println(initiator + " issued an abort abort: " + _mode.getDescription() + " has been stopped!");
+		else
+			System.err.println("An abort command was issued: " + _mode.getDescription() + " has been stopped!");
+		
+		_mode = TerminationStatus.INVALID;
+		
+		_shutdownCounter = null;
+	}
+	
+	private static final class ShutdownCounter extends Thread
+	{
+		private int _counter;
+		
+		private ShutdownCounter(int counter)
 		{
-			System.out.println(initiator + " issued SHUTDOWN command!");
+			_counter = counter;
 		}
-		finally
+		
+		@Override
+		public void run()
 		{
-			Runtime.getRuntime().exit(TerminationStatus.MANUAL_SHUTDOWN);
+			while (_counter > 0 && this == _shutdownCounter)
+			{
+				_counter--;
+				
+				try
+				{
+					Thread.sleep(1000);
+				}
+				catch (InterruptedException e)
+				{
+					e.printStackTrace();
+				}
+			}
+			
+			// shutdown aborted
+			if (this != _shutdownCounter)
+				return;
+			
+			// last point where logging is operational :(
+			System.err.println("Shutdown countdown is over: " + _mode.getDescription() + " NOW!");
+			
+			Runtime.getRuntime().exit(_mode.getStatusCode());
 		}
 	}
 	
 	/**
+	 * Issues an orderly shutdown.
+	 * 
+	 * @param initiator initiator's ID/name
+	 */
+	public static void shutdown(String initiator)
+	{
+		exit(TerminationStatus.MANUAL_SHUTDOWN, initiator);
+	}
+	
+	/**
 	 * Issues an orderly shutdown and requests a restart.
+	 * 
 	 * @param initiator initiator's ID/name
 	 */
 	public static void restart(String initiator)
 	{
+		exit(TerminationStatus.MANUAL_RESTART, initiator);
+	}
+	
+	/**
+	 * Exits the server.
+	 * 
+	 * @param mode indicates the cause and/or effect of the action
+	 */
+	public static void exit(TerminationStatus mode)
+	{
+		exit(mode, null);
+	}
+	
+	/**
+	 * Exits the server.
+	 * 
+	 * @param mode indicates the cause and/or effect of the action
+	 * @param initiator initiator's ID/name
+	 */
+	public static void exit(TerminationStatus mode, String initiator)
+	{
 		try
 		{
-			System.out.println(initiator + " issued RESTART command!");
+			if (initiator != null)
+				System.err.println(initiator + " issued a shutdown command: " + mode.getDescription() + "!");
+			else
+				System.err.println("A shutdown command was issued: " + mode.getDescription() + "!");
 		}
 		finally
 		{
-			Runtime.getRuntime().exit(TerminationStatus.MANUAL_RESTART);
+			Runtime.getRuntime().exit(mode.getStatusCode());
 		}
 	}
 	
 	/**
 	 * Issues a forced shutdown and requests a restart.
+	 * 
 	 * @param initiator initiator's ID/name
 	 */
 	public static void halt(String initiator)
 	{
+		halt(TerminationStatus.MANUAL_RESTART, initiator);
+	}
+	
+	/**
+	 * Halts the server.
+	 * 
+	 * @param mode indicates the cause and/or effect of the action
+	 */
+	public static void halt(TerminationStatus mode)
+	{
+		halt(mode, null);
+	}
+	
+	/**
+	 * Halts the server.
+	 * 
+	 * @param mode indicates the cause and/or effect of the action
+	 * @param initiator initiator's ID/name
+	 */
+	public static void halt(TerminationStatus mode, String initiator)
+	{
 		try
 		{
-			System.out.println(initiator + " issued HALT command!");
+			if (initiator != null)
+				System.err.println(initiator + " issued a halt command: " + mode.getDescription() + "!");
+			else
+				System.err.println("A halt command was issued: " + mode.getDescription() + "!");
 		}
 		finally
 		{
-			Runtime.getRuntime().halt(TerminationStatus.MANUAL_RESTART);
+			Runtime.getRuntime().halt(mode.getStatusCode());
 		}
+	}
+	
+	public static void initShutdownHook()
+	{
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			@Override
+			public void run()
+			{
+				runShutdownHooks();
+			}
+		});
+	}
+	
+	private static final Set<Runnable> _shutdownHooks = new HashSet<Runnable>();
+	
+	public static synchronized void addShutdownHook(Runnable hook)
+	{
+		_shutdownHooks.add(hook);
+	}
+	
+	private static synchronized void runShutdownHooks()
+	{
+		for (Runnable shutdownHook : _shutdownHooks)
+		{
+			shutdownHook.run();
+		}
+		
+		try
+		{
+			L2ThreadPool.shutdown();
+		}
+		catch (Throwable t)
+		{
+			t.printStackTrace();
+		}
+		
+		try
+		{
+			L2Database.shutdown();
+		}
+		catch (Throwable t)
+		{
+			t.printStackTrace();
+		}
+		
+		Runtime.getRuntime().halt(_mode.getStatusCode());
 	}
 }
