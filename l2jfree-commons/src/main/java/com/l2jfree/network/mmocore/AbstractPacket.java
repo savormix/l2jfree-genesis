@@ -14,11 +14,15 @@
  */
 package com.l2jfree.network.mmocore;
 
+import com.l2jfree.util.logging.L2Logger;
+
 /**
  * @author KenM
  */
 abstract class AbstractPacket
 {
+	protected static final L2Logger _log = L2Logger.getLogger(AbstractPacket.class);
+	
 	/**
 	 * @return a String with this packet name for debugging purposes
 	 */

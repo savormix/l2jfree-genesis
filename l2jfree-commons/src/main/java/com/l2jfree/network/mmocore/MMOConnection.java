@@ -28,6 +28,7 @@ import java.nio.channels.WritableByteChannel;
 import javolution.util.FastList;
 
 import com.l2jfree.util.concurrent.FIFORunnableQueue;
+import com.l2jfree.util.logging.L2Logger;
 
 /**
  * @param <T> connection
@@ -37,6 +38,8 @@ import com.l2jfree.util.concurrent.FIFORunnableQueue;
  */
 public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
 {
+	protected static final L2Logger _log = L2Logger.getLogger(MMOConnection.class);
+	
 	private final MMOController<T, RP, SP> _mmoController;
 	private final ReadWriteThread<T, RP, SP> _readWriteThread;
 	private final Socket _socket;
