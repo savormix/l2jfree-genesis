@@ -24,9 +24,13 @@ import java.util.TreeMap;
 
 import org.apache.commons.io.IOUtils;
 
+import com.l2jfree.status.commands.Abort;
 import com.l2jfree.status.commands.ClassStats;
 import com.l2jfree.status.commands.GC;
+import com.l2jfree.status.commands.Halt;
 import com.l2jfree.status.commands.MemoryStatistics;
+import com.l2jfree.status.commands.Restart;
+import com.l2jfree.status.commands.ShutdownCommand;
 import com.l2jfree.status.commands.Threads;
 import com.l2jfree.util.HandlerRegistry;
 import com.l2jfree.util.logging.L2Logger;
@@ -75,6 +79,11 @@ public abstract class StatusThread extends Thread
 		register(new GC());
 		register(new MemoryStatistics());
 		register(new Threads());
+		
+		register(new ShutdownCommand());
+		register(new Restart());
+		register(new Abort());
+		register(new Halt());
 	}
 	
 	protected final Socket getSocket()

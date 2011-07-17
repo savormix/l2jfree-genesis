@@ -21,6 +21,9 @@ import com.l2jfree.sql.L2Database;
 import com.l2jfree.util.concurrent.L2ThreadPool;
 
 /**
+ * This class provides the functions for shutting down and restarting the server.
+ * 
+ * @author NB4L1
  */
 public final class Shutdown
 {
@@ -32,9 +35,14 @@ public final class Shutdown
 	private static TerminationStatus _mode = TerminationStatus.INVALID;
 	private static ShutdownCounter _shutdownCounter;
 	
+	public static boolean isInProgress()
+	{
+		return _shutdownCounter != null;
+	}
+	
 	public static synchronized void start(TerminationStatus mode, int seconds, String initiator)
 	{
-		if (_shutdownCounter != null)
+		if (isInProgress())
 			abort(initiator);
 		
 		if (initiator != null)
@@ -52,7 +60,7 @@ public final class Shutdown
 	
 	public static synchronized void abort(String initiator)
 	{
-		if (_shutdownCounter == null)
+		if (!isInProgress())
 			return;
 		
 		if (initiator != null)
