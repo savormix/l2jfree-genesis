@@ -48,7 +48,7 @@ public final class HexUtil
 	 */
 	public static byte[] stringToHex(String string)
 	{
-		return new BigInteger(string, 16).toByteArray();
+		return new BigInteger(string.replace(" ", ""), 16).toByteArray();
 	}
 	
 	/**
@@ -90,8 +90,8 @@ public final class HexUtil
 	 */
 	public static String printData(byte[] data, int len)
 	{
-		final StringBuilder result = new StringBuilder();
 		String eol = System.getProperty("line.separator", "\r\n");
+		final StringBuilder result = new StringBuilder(eol);
 		
 		int counter = 0;
 		
@@ -158,7 +158,7 @@ public final class HexUtil
 	}
 	
 	/**
-	 * Convert a number to hexadecimal format and adds leading zeros
+	 * Converts a number to hexadecimal format and adds leading zeros
 	 * if necessary.
 	 * @param data a number
 	 * @param digits minimum hexadecimal digit count

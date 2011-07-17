@@ -21,30 +21,42 @@ import java.io.IOException;
  * 
  * @version $Revision: 1.3.4.1 $ $Date: 2005/03/27 15:30:09 $
  */
-public class NewCrypt
+public class NewCipher
 {
+	private final byte[] _blowfishKey;
+	
 	BlowfishEngine _crypt;
 	BlowfishEngine _decrypt;
 	
 	/**
 	 * @param blowfishKey
 	 */
-	public NewCrypt(byte[] blowfishKey)
+	public NewCipher(byte[] blowfishKey)
 	{
+		_blowfishKey = blowfishKey;
 		_crypt = new BlowfishEngine();
-		_crypt.init(true, blowfishKey);
+		_crypt.init(true, getBlowfishKey());
 		_decrypt = new BlowfishEngine();
-		_decrypt.init(false, blowfishKey);
+		_decrypt.init(false, getBlowfishKey());
 	}
 	
-	public NewCrypt(String key)
+	public NewCipher(String key)
 	{
 		this(key.getBytes());
 	}
 	
+	/**
+	 * Returns the associated Blowfish key.
+	 * @return Blowfish key
+	 */
+	public byte[] getBlowfishKey()
+	{
+		return _blowfishKey;
+	}
+	
 	public static boolean verifyChecksum(byte[] raw)
 	{
-		return NewCrypt.verifyChecksum(raw, 0, raw.length);
+		return NewCipher.verifyChecksum(raw, 0, raw.length);
 	}
 	
 	public static boolean verifyChecksum(byte[] raw, final int offset, final int size)
@@ -81,7 +93,7 @@ public class NewCrypt
 	
 	public static void appendChecksum(byte[] raw)
 	{
-		NewCrypt.appendChecksum(raw, 0, raw.length);
+		NewCipher.appendChecksum(raw, 0, raw.length);
 	}
 	
 	public static void appendChecksum(byte[] raw, final int offset, final int size)
@@ -120,7 +132,7 @@ public class NewCrypt
 	 */
 	public static void encXORPass(byte[] raw, int key)
 	{
-		NewCrypt.encXORPass(raw, 0, raw.length, key);
+		NewCipher.encXORPass(raw, 0, raw.length, key);
 	}
 	
 	/**

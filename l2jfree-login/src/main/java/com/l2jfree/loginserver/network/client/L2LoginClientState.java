@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.loginserver.network;
+package com.l2jfree.loginserver.network.client;
 
 /**
  * @author savormix
@@ -24,11 +24,13 @@ public enum L2LoginClientState {
 	 */
 	CONNECTED,
 	/**
-	 * Client passed a GameGuard check.
+	 * Client has passed a GameGuard check.
 	 */
 	GAMEGUARD_PASSED,
 	/**
 	 * Client has logged in with a valid account.
 	 */
-	LOGGED_IN;
+	LOGGED_IN,
+	/** Client has received the game server list. */
+	VIEWING_LIST;
 }

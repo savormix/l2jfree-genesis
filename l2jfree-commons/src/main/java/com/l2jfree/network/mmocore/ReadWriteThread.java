@@ -332,7 +332,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 	{
 		int pos = buf.position();
 		
-		if (client.decrypt(buf, dataSize) && buf.hasRemaining())
+		if (client.decipher(buf, dataSize) && buf.hasRemaining())
 		{
 			// apply limit
 			int limit = buf.limit();
@@ -540,7 +540,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		// calculate size and encrypt content
 		int dataSize = getWriteBuffer().position() - PACKET_HEADER_SIZE;
 		getWriteBuffer().position(PACKET_HEADER_SIZE);
-		client.encrypt(getWriteBuffer(), dataSize);
+		client.encipher(getWriteBuffer(), dataSize);
 		
 		// recalculate size after encryption
 		dataSize = getWriteBuffer().position() - PACKET_HEADER_SIZE;

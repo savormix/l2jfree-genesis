@@ -81,11 +81,13 @@ public final class MMOBuffer
 	/**
 	 * Reads <TT>dst.length</TT> bytes into the given array.
 	 * @param dst a byte array
+	 * @return <TT>dst</TT>
 	 * @see java.nio.ByteBuffer#get(byte[])
 	 */
-	public void readB(byte[] dst)
+	public byte[] readB(byte[] dst)
 	{
 		_buffer.get(dst);
+		return dst;
 	}
 	
 	/**
@@ -166,6 +168,15 @@ public final class MMOBuffer
 			_sb.append(c);
 		
 		return _sb.toString();
+	}
+	
+	/**
+	 * Writes <TT>count</TT> null bytes.
+	 * @param count byte count
+	 */
+	public void write0(int count)
+	{
+		writeB(new byte[count]);
 	}
 	
 	/**

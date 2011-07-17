@@ -22,7 +22,7 @@ import java.net.SocketException;
 
 import org.apache.commons.io.IOUtils;
 
-import com.l2jfree.security.NewCrypt;
+import com.l2jfree.security.NewCipher;
 import com.l2jfree.util.HexUtil;
 import com.l2jfree.util.logging.L2Logger;
 
@@ -50,7 +50,7 @@ public abstract class NetworkThread extends Thread
 	 * It is first initialized with a unified key: <quote>_;v.]05-31!|+-%xT!^[$\00</quote><br>
 	 * and then after handshake, with a new key sent by server during the handshake.
 	 */
-	private NewCrypt _blowfish;
+	private NewCipher _blowfish;
 	
 	protected final void initConnection(Socket con) throws IOException
 	{
@@ -60,10 +60,10 @@ public abstract class NetworkThread extends Thread
 		_in = new BufferedInputStream(con.getInputStream());
 		_out = new BufferedOutputStream(con.getOutputStream());
 		
-		_blowfish = new NewCrypt("_;v.]05-31!|+-%xT!^[$\00");
+		_blowfish = new NewCipher("_;v.]05-31!|+-%xT!^[$\00");
 	}
 	
-	protected final void setBlowfish(NewCrypt blowfish)
+	protected final void setBlowfish(NewCipher blowfish)
 	{
 		_blowfish = blowfish;
 	}
@@ -76,7 +76,7 @@ public abstract class NetworkThread extends Thread
 	protected final void sendPacket(SendableBasePacket sbp) throws IOException
 	{
 		byte[] data = sbp.getContent();
-		NewCrypt.appendChecksum(data);
+		NewCipher.appendChecksum(data);
 		if (_log.isDebugEnabled())
 			_log.debug("[S] " + sbp.getClass().getSimpleName() + ":\n" + HexUtil.printData(data));
 		data = _blowfish.crypt(data);
@@ -170,7 +170,7 @@ public abstract class NetworkThread extends Thread
 			return null;
 		}
 		
-		if (!NewCrypt.verifyChecksum(data))
+		if (!NewCipher.verifyChecksum(data))
 		{
 			_log.warn(getClass().getSimpleName() + ": Incorrect packet checksum, ignoring packet, closing connection.");
 			return null;

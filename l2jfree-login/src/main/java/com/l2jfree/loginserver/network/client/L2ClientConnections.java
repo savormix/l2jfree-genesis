@@ -12,30 +12,33 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.loginserver.network;
+package com.l2jfree.loginserver.network.client;
 
 import java.io.IOException;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SocketChannel;
 
-import com.l2jfree.loginserver.network.packets.L2ClientPacket;
-import com.l2jfree.loginserver.network.packets.L2ServerPacket;
+import com.l2jfree.loginserver.network.client.packets.L2ClientPacket;
+import com.l2jfree.loginserver.network.client.packets.L2ServerPacket;
+import com.l2jfree.loginserver.network.client.packets.sendable.Init;
 import com.l2jfree.network.mmocore.MMOConfig;
 import com.l2jfree.network.mmocore.MMOController;
 
 /**
  * @author savormix
  */
-public final class L2LoginConnections extends MMOController<L2LoginClient, L2ClientPacket, L2ServerPacket>
+public final class L2ClientConnections extends MMOController<L2LoginClient, L2ClientPacket, L2ServerPacket>
 {
+	private static final int PROTOCOL_VERSION = 0xc621;
+	
 	/**
 	 * Placeholder javadoc
 	 * @param config param
 	 * @throws IOException exception
 	 */
-	public L2LoginConnections(MMOConfig config) throws IOException
+	public L2ClientConnections(MMOConfig config) throws IOException
 	{
-		super(config, new L2LoginPackets());
+		super(config, L2ClientPackets.getInstance());
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -46,6 +49,10 @@ public final class L2LoginConnections extends MMOController<L2LoginClient, L2Cli
 	protected L2LoginClient createClient(SocketChannel socketChannel)
 			throws ClosedChannelException
 	{
-		return new L2LoginClient(this, socketChannel);
+		L2ClientSecurity lcs = L2ClientSecurity.getInstance();
+		L2LoginClient llc = new L2LoginClient(this, socketChannel, lcs.getNextSessionId(),
+				PROTOCOL_VERSION, lcs.getKeyPair(), lcs.getBlowfishKey());
+		llc.sendPacket(new Init(llc));
+		return llc;
 	}
 }

@@ -12,12 +12,11 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.loginserver.network.packets.client;
+package com.l2jfree.loginserver.network.client.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 
-import com.l2jfree.loginserver.network.L2LoginClientState;
-import com.l2jfree.loginserver.network.packets.L2ClientPacket;
+import com.l2jfree.loginserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
@@ -25,9 +24,10 @@ import com.l2jfree.network.mmocore.MMOBuffer;
  * @author savormix
  *
  */
-public final class AuthGameGuard extends L2ClientPacket
+public final class RequestSubmitCardNo extends L2ClientPacket
 {
-	private int _sessionId;
+	/** Packet's identifier */
+	public static final int OPCODE = 0x06;
 	
 	/* (non-Javadoc)
 	 * @see com.l2jfree.network.mmocore.ReceivablePacket#getMinimumLength()
@@ -35,17 +35,19 @@ public final class AuthGameGuard extends L2ClientPacket
 	@Override
 	protected int getMinimumLength()
 	{
-		return 20;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	/* (non-Javadoc)
 	 * @see com.l2jfree.network.mmocore.ReceivablePacket#read(com.l2jfree.network.mmocore.MMOBuffer)
 	 */
 	@Override
-	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
+	protected void read(MMOBuffer buf) throws BufferUnderflowException,
+			RuntimeException
 	{
-		_sessionId = buf.readD();
-		buf.skip(35);
+		// TODO Auto-generated method stub
+		
 	}
 	
 	/* (non-Javadoc)
@@ -55,6 +57,6 @@ public final class AuthGameGuard extends L2ClientPacket
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		// TODO Auto-generated method stub
-		getClient().setState(L2LoginClientState.GAMEGUARD_PASSED);
+		
 	}
 }

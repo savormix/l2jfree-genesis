@@ -388,15 +388,16 @@ public final class MMOConfig
 	 * nanoseconds between iterations.<BR>
 	 * Lower values decrease latency, higher values increase throughput.
 	 * <BR><BR>
-	 * Extremely low values (below 1 ms) will provide nearly no latency at the cost
+	 * Extremely low values (<= 1 ms) will provide nearly no latency at the cost
 	 * of wasting CPU time due to very frequent network I/O.<BR>
-	 * High values (above 100 ms) tend to give noticeable latency and CPU usage
+	 * High values (> 100 ms) tend to give noticeable latency and CPU usage
 	 * spikes due to longer I/O coupled with longer idle times.
 	 * <UL>
 	 * <LI>5 or less for a [pseudo] real-time service (Geo/PF/Login Server <-> Game Server)</LI>
 	 * <LI>5-15 for any interactive service (Game Server <-> Client)</LI>
 	 * <LI>25-50 (or possibly higher) for an authorization service (Login Server <-> Client)</LI>
 	 * </UL>
+	 * Please review the code of {@link Thread#sleep(long, int)} before using this method.
 	 * @param selectorSleepTime selector wakeup interval in nanoseconds
 	 * @throws IllegalArgumentException if <TT>selectorSleepTime</TT> < 1
 	 * @throws IllegalStateException if this configuration is already in use

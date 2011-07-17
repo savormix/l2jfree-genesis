@@ -12,9 +12,9 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.loginserver.network.packets;
+package com.l2jfree.loginserver.network.client.packets;
 
-import com.l2jfree.loginserver.network.L2LoginClient;
+import com.l2jfree.loginserver.network.client.L2LoginClient;
 import com.l2jfree.network.mmocore.ReceivablePacket;
 
 /**

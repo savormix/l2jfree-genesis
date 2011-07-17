@@ -18,7 +18,8 @@ import java.io.IOException;
 
 import com.l2jfree.L2Config;
 import com.l2jfree.config.L2Properties;
-import com.l2jfree.loginserver.network.L2LoginConnections;
+import com.l2jfree.loginserver.network.client.L2ClientConnections;
+import com.l2jfree.loginserver.network.client.L2ClientSecurity;
 import com.l2jfree.network.mmocore.MMOConfig;
 import com.l2jfree.util.concurrent.L2ThreadPool;
 import com.l2jfree.util.logging.L2Logger;
@@ -37,14 +38,19 @@ public final class LoginServer extends L2Config
 	/** Login server listens for connections on this port */
 	public static int LISTEN_PORT;
 	
+	/** Whether to ignore obvious signs that client has GameGuard disabled */
+	public static boolean BYPASS_GAMEGUARD;
+	/** Whether to show NCSoft's EULA before the game server list */
+	public static boolean SHOW_EULA;
+	
 	/**
 	 * Launches the login server.
 	 * @param args ignored
 	 */
 	public static void main(String[] args)
 	{
-		// TODO Auto-generated method stub
 		registerConfig(new NetworkConfig());
+		registerConfig(new ServiceConfig());
 		
 		try
 		{
@@ -64,14 +70,15 @@ public final class LoginServer extends L2Config
 			_log.fatal("Could not initialize thread pools!", e);
 		}
 		
+		L2ClientSecurity.getInstance();
+		
 		MMOConfig cfg = new MMOConfig("Experimental Login");
 		cfg.setSelectorSleepTime(40 * 1000 * 1000);
 		cfg.setThreadCount(1);
 		cfg.setAcceptTimeout(5 * 1000);
 		try
 		{
-			final L2LoginConnections llc = new L2LoginConnections(cfg);
-			_log.info(LISTEN_IP);
+			final L2ClientConnections llc = new L2ClientConnections(cfg);
 			llc.openServerSocket(LISTEN_IP, LISTEN_PORT);
 			llc.start();
 			Runtime.getRuntime().addShutdownHook(new Thread("Terminator")
@@ -120,6 +127,28 @@ public final class LoginServer extends L2Config
 		protected String getName()
 		{
 			return "network";
+		}
+	}
+	
+	protected static class ServiceConfig extends ConfigPropertiesLoader
+	{
+		/* (non-Javadoc)
+		 * @see com.l2jfree.L2Config.ConfigPropertiesLoader#loadImpl(com.l2jfree.config.L2Properties)
+		 */
+		@Override
+		protected void loadImpl(L2Properties properties)
+		{
+			BYPASS_GAMEGUARD = properties.getBool("BypassGameGuard", false);
+			SHOW_EULA = properties.getBool("ShowEULA", false);
+		}
+		
+		/* (non-Javadoc)
+		 * @see com.l2jfree.L2Config.ConfigLoader#getName()
+		 */
+		@Override
+		protected String getName()
+		{
+			return "service";
 		}
 	}
 }

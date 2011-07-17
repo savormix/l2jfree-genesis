@@ -22,33 +22,41 @@ package com.l2jfree;
  */
 public abstract class TerminationStatus {
 	/**
-	 * Cause: A privileged user issued a shutdown.
-	 * Resolution: Shut down orderly and do not report anything.
+	 * <B>Cause</B>: A privileged user issued a shutdown.<BR>
+	 * <B>Resolution</B>: Shut down orderly and do not report anything.
 	 */
 	public static final int MANUAL_SHUTDOWN = 0;
 	/**
-	 * Cause: A privileged user issued a restart.
-	 * Resolution: Restart orderly and do not report anything.
+	 * <B>Cause</B>: A privileged user issued a restart.<BR>
+	 * <B>Resolution</B>: Restart orderly and do not report anything.
 	 */
 	public static final int MANUAL_RESTART = 1;
 	
 	/**
-	 * Cause: Server detected superuser privileges.
-	 * Resolution: Inform the user that the server must be
+	 * <B>Cause</B>: Server detected superuser privileges.<BR>
+	 * <B>Resolution</B>: Inform the user that the server must be
 	 * run on a normal user account and terminate.
 	 */
 	public static final int ENVIRONMENT_SUPERUSER = 2;
 	/**
-	 * Cause: Server detected a classpath conflict.
-	 * Resolution: Inform the user that the reported
+	 * <B>Cause</B>: Server detected a classpath conflict.<BR>
+	 * <B>Resolution</B>: Inform the user that the reported
 	 * classpath conflicts must be resolved and terminate.
 	 */
 	public static final int ENVIRONMENT_CP_CONFLICT = 3;
+	/**
+	 * <B>Cause</B>: Server needs a specific object or function, but it is not
+	 * provided.<BR>
+	 * <B>Resolution</B>: Inform the user about the needed feature and terminate.
+	 * <BR><BR>
+	 * Designed for missing encodings, ciphers, digests, etc.
+	 */
+	public static final int ENVIRONMENT_MISSING_COMPONENT_OR_SERVICE = 4;
 	
 	/**
-	 * Cause: An [uncaught] error (other than {@link StackOverflowError})
-	 * occured during runtime.
-	 * Resolution: Possibly inform the user about the
+	 * <B>Cause</B>: An [uncaught] error (other than {@link StackOverflowError})
+	 * occured during runtime.<BR>
+	 * <B>Resolution</B>: Possibly inform the user about the
 	 * occured error and restart.
 	 */
 	public static final int RUNTIME_UNCAUGHT_ERROR = 4;
