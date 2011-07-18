@@ -18,7 +18,7 @@ import java.io.IOException;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.l2jfree.lang.L2Thread;
+import com.l2jfree.lang.L2System;
 import com.l2jfree.util.logging.L2Logger;
 
 /**
@@ -97,7 +97,7 @@ public abstract class StatusCommand
 	
 	protected final void printMemoryStatistics()
 	{
-		for (String line : L2Thread.getMemoryUsageStatistics())
+		for (String line : L2System.getMemoryUsageStatistics())
 			println(line);
 	}
 }

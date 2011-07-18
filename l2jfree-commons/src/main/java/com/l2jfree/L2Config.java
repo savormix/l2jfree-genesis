@@ -43,6 +43,7 @@ import com.l2jfree.config.ConfigProperty;
 import com.l2jfree.config.L2Properties;
 import com.l2jfree.io.BufferedRedirectingOutputStream;
 import com.l2jfree.lang.L2Math;
+import com.l2jfree.lang.L2TextBuilder;
 import com.l2jfree.util.HandlerRegistry;
 import com.l2jfree.util.L2FastSet;
 import com.l2jfree.util.logging.L2Logger;
@@ -56,6 +57,32 @@ public abstract class L2Config
 	/** Application's launch timestamp */
 	public static final long SERVER_STARTED = System.currentTimeMillis();
 	
+	public static String getUptime()
+	{
+		final long uptimeInSec = (System.currentTimeMillis() - SERVER_STARTED) - 1000;
+		
+		final long s = uptimeInSec / 1 % 60;
+		final long m = uptimeInSec / 60 % 60;
+		final long h = uptimeInSec / 3600 % 24;
+		final long d = uptimeInSec / 86400;
+		
+		final L2TextBuilder tb = L2TextBuilder.newInstance();
+		
+		if (d > 0)
+			tb.append(d + " day(s), ");
+		
+		if (h > 0 || tb.length() != 0)
+			tb.append(h + " hour(s), ");
+		
+		if (m > 0 || tb.length() != 0)
+			tb.append(m + " minute(s), ");
+		
+		if (s > 0 || tb.length() != 0)
+			tb.append(s + " second(s)");
+		
+		return tb.moveToString();
+	}
+	
 	/** Logging configuration file */
 	public static final String LOG_FILE = "./config/logging.properties";
 	/** Telnet configuration file */
@@ -63,8 +90,7 @@ public abstract class L2Config
 	public static final String TELNET_FILE = "./config/telnet.properties";
 	
 	/**
-	 * Defines the type of log entries that should be followed by a
-	 * complete stack trace, regardless if an exception is attached.
+	 * Defines the type of log entries that should be followed by a complete stack trace, regardless if an exception is attached.
 	 */
 	public static Level EXTENDED_LOG_LEVEL = Level.OFF;
 	
@@ -324,6 +350,7 @@ public abstract class L2Config
 	
 	/**
 	 * Load all available configuration files.
+	 * 
 	 * @throws Exception if any config failed to load
 	 */
 	public static void loadConfigs() throws Exception
@@ -334,6 +361,7 @@ public abstract class L2Config
 	
 	/**
 	 * Load the specified configuration file.
+	 * 
 	 * @param name Configuration name
 	 * @return the outcome of this call in a string
 	 * @throws Exception if the specified config could not be loaded
@@ -468,10 +496,10 @@ public abstract class L2Config
 	private static Set<StartupHook> _startupHooks = new L2FastSet<StartupHook>();
 	
 	/**
-	 * While application is loading, returns {@code false}. After the
-	 * application finishes loading, returns {@code true}.<BR><BR>
-	 * If calling this method resulted in {@code true}, all following
-	 * invocations are guaranteed to result in {@code true}.
+	 * While application is loading, returns {@code false}. After the application finishes loading, returns {@code true}.<BR>
+	 * <BR>
+	 * If calling this method resulted in {@code true}, all following invocations are guaranteed to result in {@code true}.
+	 * 
 	 * @return whether the application has finished loading
 	 */
 	public synchronized static boolean isLoaded()
@@ -481,6 +509,7 @@ public abstract class L2Config
 	
 	/**
 	 * Adds a hook to be executed after the application loads.
+	 * 
 	 * @param hook The hook to be attached
 	 */
 	public synchronized static void addStartupHook(StartupHook hook)
@@ -503,14 +532,12 @@ public abstract class L2Config
 	}
 	
 	/**
-	 * This interface allows the implementing class to be attached
-	 * as a startup hook.
+	 * This interface allows the implementing class to be attached as a startup hook.
 	 */
 	public interface StartupHook
 	{
 		/**
-		 * This method is called on an attached startup hook when/if the
-		 * application has finished loading.
+		 * This method is called on an attached startup hook when/if the application has finished loading.
 		 */
 		public void onStartup();
 	}

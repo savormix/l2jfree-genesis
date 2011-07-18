@@ -14,6 +14,9 @@
  */
 package com.l2jfree.lang;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -59,5 +62,37 @@ public final class L2System
 	public static boolean equals(Object o1, Object o2)
 	{
 		return o1 == null ? o2 == null : o1.equals(o2);
+	}
+	
+	public static String[] getMemoryUsageStatistics()
+	{
+		double max = Runtime.getRuntime().maxMemory() / 1024; // maxMemory is the upper limit the jvm can use
+		double allocated = Runtime.getRuntime().totalMemory() / 1024; //totalMemory the size of the current allocation pool
+		double nonAllocated = max - allocated; //non allocated memory till jvm limit
+		double cached = Runtime.getRuntime().freeMemory() / 1024; // freeMemory the unused memory in the allocation pool
+		double used = allocated - cached; // really used memory
+		double useable = max - used; //allocated, but non-used and non-allocated memory
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("H:mm:ss");
+		DecimalFormat df = new DecimalFormat(" (0.0000'%')");
+		DecimalFormat df2 = new DecimalFormat(" # 'KB'");
+		
+		return new String[] {
+				"+----",// ...
+				"| Global Memory Informations at " + sdf.format(new Date()) + ":", // ...
+				"|    |", // ...
+				"| Allowed Memory:" + df2.format(max),
+				"|    |= Allocated Memory:" + df2.format(allocated) + df.format(allocated / max * 100),
+				"|    |= Non-Allocated Memory:" + df2.format(nonAllocated) + df.format(nonAllocated / max * 100),
+				"| Allocated Memory:" + df2.format(allocated),
+				"|    |= Used Memory:" + df2.format(used) + df.format(used / max * 100),
+				"|    |= Unused (cached) Memory:" + df2.format(cached) + df.format(cached / max * 100),
+				"| Useable Memory:" + df2.format(useable) + df.format(useable / max * 100), // ...
+				"+----" };
+	}
+	
+	public static long usedMemory()
+	{
+		return (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576;
 	}
 }

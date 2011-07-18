@@ -29,8 +29,11 @@ import com.l2jfree.status.commands.ClassStats;
 import com.l2jfree.status.commands.GC;
 import com.l2jfree.status.commands.Halt;
 import com.l2jfree.status.commands.MemoryStatistics;
+import com.l2jfree.status.commands.Purge;
 import com.l2jfree.status.commands.Restart;
 import com.l2jfree.status.commands.ShutdownCommand;
+import com.l2jfree.status.commands.Statistics;
+import com.l2jfree.status.commands.ThreadPool;
 import com.l2jfree.status.commands.Threads;
 import com.l2jfree.util.HandlerRegistry;
 import com.l2jfree.util.logging.L2Logger;
@@ -84,6 +87,10 @@ public abstract class StatusThread extends Thread
 		register(new Restart());
 		register(new Abort());
 		register(new Halt());
+		
+		register(new Purge());
+		register(new Statistics());
+		register(new ThreadPool());
 	}
 	
 	protected final Socket getSocket()
