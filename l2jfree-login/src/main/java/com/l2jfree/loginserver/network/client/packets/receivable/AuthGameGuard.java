@@ -77,7 +77,7 @@ public final class AuthGameGuard extends L2ClientPacket
 		if (_unk1 != _unk2)
 			_log.warn("Suspicious client activity! " + llc);
 		
-		if (LoginServer.BYPASS_GAMEGUARD || llc.getSessionId() == _sessionId)
+		if (!LoginServer.SVC_CHECK_GAMEGUARD || llc.getSessionId() == _sessionId)
 		{
 			llc.setState(L2LoginClientState.GAMEGUARD_PASSED);
 			llc.sendPacket(new GameGuardSuccess(_sessionId));

@@ -23,11 +23,56 @@ import org.apache.commons.lang.StringUtils;
 
 import com.l2jfree.util.logging.L2Logger;
 
+/**
+ * 
+ */
 public final class TableOptimizer
 {
 	private static final L2Logger _log = L2Logger.getLogger(TableOptimizer.class);
+	private static final String MYSQL = "mysql";
+	private static final String POSTGRESQL = "postgresql";
 	
-	public static void optimize()
+	/**
+	 * Optimizes database tables.
+	 * @param jdbcUrl JDBC URL of the database
+	 */
+	public static void optimize(String jdbcUrl)
+	{
+		int off = jdbcUrl.indexOf(':') + 1;
+		String provider = jdbcUrl.substring(off, jdbcUrl.indexOf(':', off)).toLowerCase();
+		if (provider.equals(MYSQL))
+			optimizeMySql();
+		else if (provider.equals(POSTGRESQL))
+			optimizePostgreSql();
+		else
+			_log.warn("TableOptimizer: Provider (" + provider + ") not supported.");
+	}
+	
+	private static void optimizePostgreSql()
+	{
+		Connection con = null;
+		try
+		{
+			con = L2Database.getConnection();
+			Statement st = con.createStatement();
+			_log.info("TableOptimizer: Vacuuming and building usage statistics...");
+			st.execute("VACUUM ANALYZE");
+			_log.info("TableOptimizer: Clustering...");
+			st.execute("CLUSTER");
+			_log.info("TableOptimizer: Database tables have been optimized.");
+			st.close();
+		}
+		catch (Exception e)
+		{
+			_log.warn("TableOptimizer: Could not optimize database tables!", e);
+		}
+		finally
+		{
+			L2Database.close(con);
+		}
+	}
+	
+	private static void optimizeMySql()
 	{
 		Connection con = null;
 		try

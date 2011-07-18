@@ -22,10 +22,12 @@ import javax.crypto.Cipher;
 
 import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
+import com.l2jfree.loginserver.LoginServer;
 import com.l2jfree.loginserver.network.client.L2LoginClient;
 import com.l2jfree.loginserver.network.client.L2LoginClientState;
 import com.l2jfree.loginserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.loginserver.network.client.packets.sendable.LoginSuccess;
+import com.l2jfree.loginserver.network.client.packets.sendable.ServerList;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 import com.l2jfree.util.logging.L2Logger;
@@ -92,13 +94,16 @@ public final class RequestAuthLogin extends L2ClientPacket
 		}
 		catch (UnsupportedEncodingException e)
 		{
-			_log.fatal("ASCII is not avaialable!", e);
+			_log.fatal("ASCII is not available!", e);
 			Shutdown.exit(TerminationStatus.ENVIRONMENT_MISSING_COMPONENT_OR_SERVICE);
 			return;
 		}
 		_log.info(user + " | " + password);
 		
 		llc.setState(L2LoginClientState.LOGGED_IN);
-		llc.sendPacket(new LoginSuccess(llc));
+		if (LoginServer.SVC_SHOW_EULA)
+			llc.sendPacket(new LoginSuccess(llc));
+		else
+			llc.sendPacket(new ServerList());
 	}
 }

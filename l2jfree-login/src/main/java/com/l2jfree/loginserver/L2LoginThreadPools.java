@@ -29,7 +29,7 @@ public class L2LoginThreadPools implements ThreadPoolInitializer
 	private ThreadPoolExecutor[] _instantPools;
 	private ThreadPoolExecutor[] _longRunningPools;
 	
-	/** Placeholder javadoc */
+	/** Constructs a login server thread pool initializer. */
 	public L2LoginThreadPools()
 	{
 		_scheduledPools = null;
@@ -43,6 +43,7 @@ public class L2LoginThreadPools implements ThreadPoolInitializer
 	@Override
 	public void initThreadPool() throws Exception
 	{
+		// TODO Auto-generated method stub
 		_scheduledPools = new ScheduledThreadPoolExecutor[0];
 		_instantPools = new ThreadPoolExecutor[0];
 		_longRunningPools = new ThreadPoolExecutor[0];

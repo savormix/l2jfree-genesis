@@ -42,13 +42,26 @@ public final class HexUtil
 	}
 	
 	/**
-	 * Transforms a string of hex octets into a byte array.
-	 * @param string bytes encoded into a string
+	 * Transforms a legacy HexID into a byte array.
+	 * @param string HexID
 	 * @return decoded byte array
 	 */
 	public static byte[] stringToHex(String string)
 	{
-		return new BigInteger(string.replace(" ", ""), 16).toByteArray();
+		return new BigInteger(string, 16).toByteArray();
+	}
+	
+	/**
+	 * Converts a byte array to a legacy HexID.
+	 * @param hex a byte array
+	 * @return HexID
+	 */
+	public static String hexToString(byte[] hex)
+	{
+		if (hex == null)
+			return "null";
+		
+		return new BigInteger(hex).toString(16);
 	}
 	
 	/**
@@ -56,12 +69,34 @@ public final class HexUtil
 	 * @param hex a byte array
 	 * @return encoded string
 	 */
-	public static String hexToString(byte[] hex)
+	public static String bytesToHexString(byte[] hex)
 	{
 		if (hex == null)
-			return "null".intern();
+			return "null";
 		
-		return new BigInteger(hex).toString(16);
+		StringBuilder bytes = new StringBuilder();
+		for (int i : hex)
+			bytes.append(fillHex(i & 0xFF, 2));
+		return bytes.toString().toUpperCase();
+	}
+	
+	/**
+	 * Decodes a string of hex octets to a byte array.
+	 * @param hex a byte array
+	 * @return decoded byte array
+	 */
+	public static byte[] HexStringToBytes(String hex)
+	{
+		if (hex == null || hex.length() % 2 == 1)
+			return null;
+		
+		byte[] bytes = new byte[hex.length() / 2];
+		for (int i = 0; i < bytes.length; i++)
+		{
+			String byte_ = hex.substring(i * 2, (i + 1) * 2);
+			bytes[i] = (byte) (Integer.parseInt(byte_, 16) & 0xFF);
+		}
+		return bytes;
 	}
 	
 	/**

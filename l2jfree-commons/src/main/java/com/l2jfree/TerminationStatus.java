@@ -15,8 +15,9 @@
 package com.l2jfree;
 
 /**
- * This class contains status codes to be passed to {@link Shutdown#exit()} and {@link Shutdown#halt()} methods.
- * 
+ * This class contains status codes to be passed to
+ * {@link Shutdown#exit(TerminationStatus)} and
+ * {@link Shutdown#halt(TerminationStatus)} methods.
  * @author savormix
  */
 public enum TerminationStatus
@@ -61,10 +62,24 @@ public enum TerminationStatus
 			"shutting down, because the server needs a specific object or function, but it is not provided"),
 	
 	/**
-	 * <B>Cause</B>: An [uncaught] error (other than {@link StackOverflowError}) occured during runtime.<BR>
-	 * <B>Resolution</B>: Possibly inform the user about the occured error and restart.
+	 * <B>Cause</B>: An [uncaught] error (other than {@link StackOverflowError}) occurred during runtime.<BR>
+	 * <B>Resolution</B>: Possibly inform the user about the occurred error and restart.
 	 */
-	RUNTIME_UNCAUGHT_ERROR(5, "shutting down, because an uncaught error occured during runtime");
+	RUNTIME_UNCAUGHT_ERROR(5, "shutting down, because an uncaught error occured during runtime"),
+	
+	/**
+	 * <B>Cause</B>: Configuration files could not be loaded.<BR>
+	 * <B>Resolution</B>: Inform the user about the issue and terminate.
+	 */
+	RUNTIME_INVALID_CONFIGURATION(6, "shutting down, because configuration could not be loaded"),
+	
+	/**
+	 * <B>Cause</B>: Common services, such as binding to socket, thread or
+	 * database connection pooling could not be initialized.<BR>
+	 * <B>Resolution</B>: Inform the user about the issue and terminate.
+	 */
+	RUNTIME_INITIALIZATION_FAILURE(7, "shutting down, because required services could not be initialized"),
+	;
 	
 	private final int _statusCode;
 	private final String _description;
@@ -75,11 +90,19 @@ public enum TerminationStatus
 		_description = description;
 	}
 	
+	/**
+	 * Returns the application's exit code.
+	 * @return exit code
+	 */
 	public int getStatusCode()
 	{
 		return _statusCode;
 	}
 	
+	/**
+	 * Returns the description of this status code.
+	 * @return a message
+	 */
 	public String getDescription()
 	{
 		return _description;
