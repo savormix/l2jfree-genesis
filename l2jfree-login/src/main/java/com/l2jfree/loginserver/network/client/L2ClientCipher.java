@@ -26,7 +26,7 @@ import com.l2jfree.util.Rnd;
  */
 public final class L2ClientCipher
 {
-	private static final byte[] ONE_TIME_BLOWFISH_KEY = HexUtil.stringToHex(
+	private static final byte[] ONE_TIME_BLOWFISH_KEY = HexUtil.HexStringToBytes(
 			"6b 60 cb 5b 82 ce 90 b1 cc 2b 6c 55 6c 6c 6c 6c"
 	);
 	

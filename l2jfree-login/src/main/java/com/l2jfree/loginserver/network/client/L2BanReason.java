@@ -40,8 +40,8 @@ public enum L2BanReason implements Reason
 	NO_TIME_LEFT(19),
 	/** Access failed. */
 	ACCESS_FAILED(21),
-	/** <I>Shows the copyright.</I> */
-	IGNORE(23), // shows the copyright as all unused ones
+	/** <I>Shows an empty string.</I> */
+	IGNORE(23),
 	/** This week's usage time has finished. */
 	WEEK_TIME_FINISHED(30),
 	/**

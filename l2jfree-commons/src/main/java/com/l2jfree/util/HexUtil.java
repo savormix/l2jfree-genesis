@@ -87,7 +87,10 @@ public final class HexUtil
 	 */
 	public static byte[] HexStringToBytes(String hex)
 	{
-		if (hex == null || hex.length() % 2 == 1)
+		if (hex == null)
+			return null;
+		hex = hex.replace(" ", "");
+		if (hex.length() % 2 == 1)
 			return null;
 		
 		byte[] bytes = new byte[hex.length() / 2];

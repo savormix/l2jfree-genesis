@@ -17,19 +17,30 @@ package com.l2jfree.loginserver.network.client.packets.receivable;
 import java.io.UnsupportedEncodingException;
 import java.nio.BufferUnderflowException;
 import java.security.GeneralSecurityException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.crypto.Cipher;
 
 import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
 import com.l2jfree.loginserver.LoginServer;
+import com.l2jfree.loginserver.network.client.L2BanReason;
 import com.l2jfree.loginserver.network.client.L2LoginClient;
 import com.l2jfree.loginserver.network.client.L2LoginClientState;
+import com.l2jfree.loginserver.network.client.L2NoServiceReason;
 import com.l2jfree.loginserver.network.client.packets.L2ClientPacket;
+import com.l2jfree.loginserver.network.client.packets.sendable.LoginFailure;
 import com.l2jfree.loginserver.network.client.packets.sendable.LoginSuccess;
 import com.l2jfree.loginserver.network.client.packets.sendable.ServerList;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
+import com.l2jfree.sql.L2Database;
+import com.l2jfree.util.HexUtil;
 import com.l2jfree.util.logging.L2Logger;
 
 /**
@@ -91,6 +102,16 @@ public final class RequestAuthLogin extends L2ClientPacket
 		{
 			user = new String(deciphered, 0x5E, 14, "US-ASCII").trim().toLowerCase();
 			password = new String(deciphered, 0x6C, 16, "US-ASCII").trim();
+			
+			MessageDigest sha = MessageDigest.getInstance("SHA");
+			byte[] pass = sha.digest(password.getBytes("US-ASCII"));
+			password = HexUtil.bytesToHexString(pass);
+		}
+		catch (NoSuchAlgorithmException e)
+		{
+			_log.fatal("SHA1 is not available!", e);
+			Shutdown.exit(TerminationStatus.ENVIRONMENT_MISSING_COMPONENT_OR_SERVICE);
+			return;
 		}
 		catch (UnsupportedEncodingException e)
 		{
@@ -98,12 +119,51 @@ public final class RequestAuthLogin extends L2ClientPacket
 			Shutdown.exit(TerminationStatus.ENVIRONMENT_MISSING_COMPONENT_OR_SERVICE);
 			return;
 		}
-		_log.info(user + " | " + password);
 		
-		llc.setState(L2LoginClientState.LOGGED_IN);
-		if (LoginServer.SVC_SHOW_EULA)
-			llc.sendPacket(new LoginSuccess(llc));
-		else
-			llc.sendPacket(new ServerList());
+		Connection con = null;
+		try
+		{
+			con = L2Database.getConnection();
+			PreparedStatement ps = con.prepareStatement("SELECT username, password, banReason FROM account WHERE username LIKE ?");
+			ps.setString(1, user);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next())
+			{
+				if (password.equals(rs.getString("password")))
+				{
+					int ban = rs.getInt("banReason");
+					if (ban == 0)
+					{
+						if (LoginServer.SVC_SHOW_EULA)
+						{
+							llc.setState(L2LoginClientState.LOGGED_IN);
+							llc.sendPacket(new LoginSuccess(llc));
+						}
+						else
+						{
+							llc.setState(L2LoginClientState.VIEWING_LIST);
+							llc.sendPacket(new ServerList());
+						}
+					}
+					else
+						llc.close(new LoginFailure(L2BanReason.getById(ban)));
+				}
+				else
+					llc.close(new LoginFailure(L2NoServiceReason.PASSWORD_INCORRECT));
+			}
+			else
+				llc.close(new LoginFailure(L2NoServiceReason.PASSWORD_INCORRECT));
+			rs.close();
+			ps.close();
+		}
+		catch (SQLException e)
+		{
+			_log.error("Could not validate login credentials!", e);
+			llc.close(new LoginFailure(L2NoServiceReason.THERE_IS_A_SYSTEM_ERROR));
+		}
+		finally
+		{
+			L2Database.close(con);
+		}
 	}
 }

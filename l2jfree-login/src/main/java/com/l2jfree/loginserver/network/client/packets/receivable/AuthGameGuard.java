@@ -26,7 +26,6 @@ import com.l2jfree.loginserver.network.client.packets.sendable.Init;
 import com.l2jfree.loginserver.network.client.packets.sendable.LoginFailure;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
-import com.l2jfree.util.logging.L2Logger;
 
 /**
  * Client sends this packet automatically in response to
@@ -39,11 +38,7 @@ public final class AuthGameGuard extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x07;
 	
-	private static final L2Logger _log = L2Logger.getLogger(AuthGameGuard.class);
-	
 	private int _sessionId;
-	private long _unk1;
-	private long _unk2;
 	
 	/* (non-Javadoc)
 	 * @see com.l2jfree.network.mmocore.ReceivablePacket#getMinimumLength()
@@ -51,7 +46,7 @@ public final class AuthGameGuard extends L2ClientPacket
 	@Override
 	protected int getMinimumLength()
 	{
-		return 20;
+		return 20; // session ID and two longs
 	}
 	
 	/* (non-Javadoc)
@@ -61,8 +56,6 @@ public final class AuthGameGuard extends L2ClientPacket
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		_sessionId = buf.readD();
-		_unk1 = buf.readQ();
-		_unk2 = buf.readQ();
 		// the rest doesn't make much sense
 		buf.skipAll();
 	}
@@ -74,9 +67,6 @@ public final class AuthGameGuard extends L2ClientPacket
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		L2LoginClient llc = getClient();
-		if (_unk1 != _unk2)
-			_log.warn("Suspicious client activity! " + llc);
-		
 		if (!LoginServer.SVC_CHECK_GAMEGUARD || llc.getSessionId() == _sessionId)
 		{
 			llc.setState(L2LoginClientState.GAMEGUARD_PASSED);

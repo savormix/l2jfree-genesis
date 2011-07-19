@@ -122,6 +122,7 @@ public final class LoginServer extends L2Config
 			final L2ClientConnections llc = new L2ClientConnections(cfg);
 			llc.openServerSocket(NET_LISTEN_IP, NET_LISTEN_PORT);
 			llc.start();
+			_log.info("Login server ready.");
 			
 			Shutdown.addShutdownHook(new Runnable() {
 				@Override

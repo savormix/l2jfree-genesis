@@ -130,7 +130,7 @@ public class L2LoginInstaller
 			con.setAutoCommit(false);
 			Statement st = con.createStatement();
 			for (i = 0; i < tables.length; i++)
-				st.execute(tables[i]);
+				st.executeUpdate(tables[i]);
 			st.close();
 			con.commit();
 			_log.info("Automatically installed database tables.");

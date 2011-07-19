@@ -38,8 +38,8 @@ public enum L2NoServiceReason implements Reason
 	SYSTEM_ERROR(20),
 	/** Game connection attempted through a restricted IP. */
 	IP_RESTRICTED(22),
-	/** <I>Shows the copyright.</I> */
-	IGNORE(23), // shows the copyright as all unused ones
+	/** <I>Shows an empty string.</I> */
+	IGNORE(23),
 	/** <I>Shows a dialog to input a number.</I> */
 	// when using this, you mustn't terminate the connection!
 	INVALID_SECURITY_CARD_NO(31),

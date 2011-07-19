@@ -56,9 +56,9 @@ public final class TableOptimizer
 			con = L2Database.getConnection();
 			Statement st = con.createStatement();
 			_log.info("TableOptimizer: Vacuuming and building usage statistics...");
-			st.execute("VACUUM ANALYZE");
+			st.executeUpdate("VACUUM ANALYZE");
 			_log.info("TableOptimizer: Clustering...");
-			st.execute("CLUSTER");
+			st.executeUpdate("CLUSTER");
 			_log.info("TableOptimizer: Database tables have been optimized.");
 			st.close();
 		}

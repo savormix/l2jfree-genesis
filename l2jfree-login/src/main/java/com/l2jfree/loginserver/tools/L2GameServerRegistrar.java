@@ -107,6 +107,7 @@ public final class L2GameServerRegistrar extends L2Config
 	 */
 	public static void main(String[] args)
 	{
+		// TODO rework this crap
 		registerConfig(new DatabaseConfig());
 		
 		try
@@ -147,6 +148,7 @@ public final class L2GameServerRegistrar extends L2Config
 		_log.info("reg - register a game server");
 		_log.info("rem - remove a registered game server");
 		_log.info("hexid - generate a legacy hexid file");
+		_log.info("quit - exit this application");
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		L2GameServerRegistrar reg = new L2GameServerRegistrar();
@@ -171,16 +173,59 @@ public final class L2GameServerRegistrar extends L2Config
 					}
 					catch (RuntimeException e)
 					{
-						_log.warn("You must input a number between 1 and 127");
+						_log.info("You must input a number between 1 and 127");
 					}
 					
 					if (reg.getState() == RegistrationState.ALLOW_BANS)
 					{
-						_log.info("Allow account bans from this game server? [y/n]:");
+						Connection con = null;
+						try
+						{
+							con = L2Database.getConnection();
+							PreparedStatement ps = con.prepareStatement("SELECT allowBans FROM gameserver WHERE id = ?");
+							ps.setInt(1, reg.getId());
+							ResultSet rs = ps.executeQuery();
+							if (rs.next())
+							{
+								_log.info("A game server is already registered on ID " + reg.getId());
+								reg.setState(RegistrationState.INITIAL_CHOICE);
+							}
+							else
+								_log.info("Allow account bans from this game server? [y/n]:");
+							ps.close();
+						}
+						catch (SQLException e)
+						{
+							_log.error("Could not remove a game server!", e);
+						}
+						finally
+						{
+							L2Database.close(con);
+						}
 					}
 					else if (reg.getState() == RegistrationState.REMOVE)
 					{
-						// TODO remove
+						Connection con = null;
+						try
+						{
+							con = L2Database.getConnection();
+							PreparedStatement ps = con.prepareStatement("DELETE FROM gameserver WHERE id = ?");
+							ps.setInt(1, reg.getId());
+							int cnt = ps.executeUpdate();
+							if (cnt == 0)
+								_log.info("No game server registered on ID " + reg.getId());
+							else
+								_log.info("Game server removed.");
+							ps.close();
+						}
+						catch (SQLException e)
+						{
+							_log.error("Could not remove a game server!", e);
+						}
+						finally
+						{
+							L2Database.close(con);
+						}
 						reg.setState(RegistrationState.INITIAL_CHOICE);
 					}
 					else if (reg.getState() == RegistrationState.GENERATE)
@@ -208,7 +253,7 @@ public final class L2GameServerRegistrar extends L2Config
 								_log.info("hexid.txt has been generated.");
 							}
 							else
-								_log.warn("No game server registered on ID " + reg.getId());
+								_log.info("No game server registered on ID " + reg.getId());
 							
 							rs.close();
 							ps.close();
@@ -251,7 +296,8 @@ public final class L2GameServerRegistrar extends L2Config
 							ps.close();
 							
 							_log.info("Registered game server on ID " + reg.getId());
-							_log.info("The authorization string is " + reg.getAuth());
+							_log.info("The authorization string is:");
+							_log.info(reg.getAuth());
 							_log.info("Use it when registering this login server.");
 							_log.info("If you need a legacy hexid file, use the 'hexid' command.");
 						}
@@ -274,29 +320,49 @@ public final class L2GameServerRegistrar extends L2Config
 				default:
 					if (line.equals("list"))
 					{
-						_log.warn("Not implemented yet.");
+						Connection con = null;
+						try
+						{
+							con = L2Database.getConnection();
+							PreparedStatement ps = con.prepareStatement("SELECT id, allowBans FROM gameserver");
+							ResultSet rs = ps.executeQuery();
+							while (rs.next())
+								_log.info("ID: " + rs.getInt("id") + ", trusted: " + rs.getBoolean("allowBans"));
+							rs.close();
+							ps.close();
+						}
+						catch (SQLException e)
+						{
+							_log.error("Could not register gameserver!", e);
+						}
+						finally
+						{
+							L2Database.close(con);
+						}
 						reg.setState(RegistrationState.INITIAL_CHOICE);
 					}
 					else if (line.equals("reg"))
 					{
-						_log.warn("Enter the desired ID:");
+						_log.info("Enter the desired ID:");
 						reg.setState(RegistrationState.GAMESERVER_ID);
 						next = RegistrationState.ALLOW_BANS;
 					}
 					else if (line.equals("rem"))
 					{
-						_log.warn("Not implemented yet.");
-						//reg.setState(RegistrationState.GAMESERVER_ID);
-						//next = RegistrationState.REMOVE;
+						_log.info("Enter game server ID:");
+						reg.setState(RegistrationState.GAMESERVER_ID);
+						next = RegistrationState.REMOVE;
 					}
 					else if (line.equals("hexid"))
 					{
-						_log.warn("Enter the game server ID:");
+						_log.info("Enter game server ID:");
 						reg.setState(RegistrationState.GAMESERVER_ID);
 						next = RegistrationState.GENERATE;
 					}
+					else if (line.equals("quit"))
+						Shutdown.exit(TerminationStatus.MANUAL_SHUTDOWN);
 					else
-						_log.warn("Incorrect command.");
+						_log.info("Incorrect command.");
 					break;
 				}
 			}
