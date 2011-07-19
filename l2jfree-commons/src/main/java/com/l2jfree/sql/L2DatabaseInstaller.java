@@ -22,7 +22,7 @@ import com.l2jfree.util.L2XML;
  * @author NB4L1
  */
 // FIXME: exception handling
-public final class L2DatabaseManager
+public final class L2DatabaseInstaller
 {
 	public static void check() throws SAXException, IOException, ParserConfigurationException
 	{
@@ -34,7 +34,7 @@ public final class L2DatabaseManager
 		factory.setIgnoringComments(true);
 		
 		final Document doc = factory.newDocumentBuilder().parse(
-				L2DatabaseManager.class.getResourceAsStream("database_schema.xml"));
+				L2DatabaseInstaller.class.getResourceAsStream("database_schema.xml"));
 		
 		for (Node n1 : L2XML.listNodesByNodeName(doc, "database"))
 		{

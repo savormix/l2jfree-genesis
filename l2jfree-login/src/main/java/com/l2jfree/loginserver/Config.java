@@ -5,7 +5,7 @@ import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
 import com.l2jfree.config.L2Properties;
 import com.l2jfree.sql.L2Database;
-import com.l2jfree.sql.L2DatabaseManager;
+import com.l2jfree.sql.L2DatabaseInstaller;
 import com.l2jfree.util.concurrent.L2ThreadPool;
 
 // TODO should be sorted into groups and redone with annotation loaders
@@ -49,7 +49,7 @@ public class Config extends L2Config
 		
 		try
 		{
-			L2DatabaseManager.check();
+			L2DatabaseInstaller.check();
 		}
 		catch (Exception e)
 		{
