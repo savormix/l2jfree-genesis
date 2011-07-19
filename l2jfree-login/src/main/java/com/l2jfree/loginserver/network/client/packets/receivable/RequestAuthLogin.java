@@ -123,6 +123,8 @@ public final class RequestAuthLogin extends L2ClientPacket
 		Connection con = null;
 		try
 		{
+			int ban = -1;
+			
 			con = L2Database.getConnection();
 			PreparedStatement ps = con.prepareStatement("SELECT username, password, banReason FROM account WHERE username LIKE ?");
 			ps.setString(1, user);
@@ -131,7 +133,7 @@ public final class RequestAuthLogin extends L2ClientPacket
 			{
 				if (password.equals(rs.getString("password")))
 				{
-					int ban = rs.getInt("banReason");
+					ban = rs.getInt("banReason");
 					if (ban == 0)
 					{
 						if (Config.SVC_SHOW_EULA)
@@ -145,16 +147,25 @@ public final class RequestAuthLogin extends L2ClientPacket
 							llc.sendPacket(new ServerList());
 						}
 					}
-					else
+					else // suspended
 						llc.close(new LoginFailure(L2BanReason.getById(ban)));
 				}
-				else
+				else // wrong password
 					llc.close(new LoginFailure(L2NoServiceReason.PASSWORD_INCORRECT));
 			}
-			else
+			else // no such user
 				llc.close(new LoginFailure(L2NoServiceReason.PASSWORD_INCORRECT));
 			rs.close();
 			ps.close();
+			
+			if (ban == 0)
+			{
+				ps = con.prepareStatement("UPDATE account SET lastLogin = ? WHERE username = ?");
+				ps.setLong(1, System.currentTimeMillis());
+				ps.setString(2, user);
+				ps.executeUpdate();
+				ps.close();
+			}
 		}
 		catch (SQLException e)
 		{

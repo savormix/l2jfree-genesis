@@ -12,9 +12,9 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.loginserver.network.client.packets;
+package com.l2jfree.loginserver.network.legacy.packets;
 
-import com.l2jfree.loginserver.network.client.L2LoginClient;
+import com.l2jfree.loginserver.network.legacy.L2GameServer;
 import com.l2jfree.network.mmocore.MMOBuffer;
 import com.l2jfree.network.mmocore.SendablePacket;
 
@@ -22,9 +22,9 @@ import com.l2jfree.network.mmocore.SendablePacket;
  * Just a wrapper class for convenience.
  * @author savormix
  */
-public abstract class L2ServerPacket extends SendablePacket<L2LoginClient, L2ClientPacket, L2ServerPacket>
+public abstract class L2LoginServerPacket extends SendablePacket<L2GameServer, L2GameServerPacket, L2LoginServerPacket>
 {
-	protected L2ServerPacket()
+	protected L2LoginServerPacket()
 	{
 		// wrapper class
 	}
@@ -41,13 +41,13 @@ public abstract class L2ServerPacket extends SendablePacket<L2LoginClient, L2Cli
 	 * @param client packet receiver
 	 * @param buf buffer for packet's data
 	 */
-	protected abstract void writeImpl(L2LoginClient client, MMOBuffer buf);
+	protected abstract void writeImpl(L2GameServer client, MMOBuffer buf);
 	
 	/* (non-Javadoc)
 	 * @see com.l2jfree.network.mmocore.SendablePacket#write(com.l2jfree.network.mmocore.MMOConnection, com.l2jfree.network.mmocore.MMOBuffer)
 	 */
 	@Override
-	protected final void write(L2LoginClient client, MMOBuffer buf) throws RuntimeException
+	protected final void write(L2GameServer client, MMOBuffer buf) throws RuntimeException
 	{
 		buf.writeC(getOpcode());
 		writeImpl(client, buf);

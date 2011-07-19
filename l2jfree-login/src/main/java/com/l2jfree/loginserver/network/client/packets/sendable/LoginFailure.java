@@ -59,7 +59,7 @@ public final class LoginFailure extends L2ServerPacket
 	public interface Reason
 	{
 		/**
-		 * Return's the reason's ID.
+		 * Returns the reason's ID.
 		 * @return reason's ID
 		 */
 		int getId();
