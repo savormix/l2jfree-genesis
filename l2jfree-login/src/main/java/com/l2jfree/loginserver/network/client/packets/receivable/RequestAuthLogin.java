@@ -28,7 +28,7 @@ import javax.crypto.Cipher;
 
 import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
-import com.l2jfree.loginserver.LoginServer;
+import com.l2jfree.loginserver.Config;
 import com.l2jfree.loginserver.network.client.L2BanReason;
 import com.l2jfree.loginserver.network.client.L2LoginClient;
 import com.l2jfree.loginserver.network.client.L2LoginClientState;
@@ -134,7 +134,7 @@ public final class RequestAuthLogin extends L2ClientPacket
 					int ban = rs.getInt("banReason");
 					if (ban == 0)
 					{
-						if (LoginServer.SVC_SHOW_EULA)
+						if (Config.SVC_SHOW_EULA)
 						{
 							llc.setState(L2LoginClientState.LOGGED_IN);
 							llc.sendPacket(new LoginSuccess(llc));

@@ -21,6 +21,7 @@ import com.l2jfree.util.L2XML;
 /**
  * @author NB4L1
  */
+// FIXME: exception handling
 public final class L2DatabaseManager
 {
 	public static void check() throws SAXException, IOException, ParserConfigurationException
@@ -75,6 +76,8 @@ public final class L2DatabaseManager
 		}
 		else // check for possibly required updates
 		{
+			// FIXME: install non-existing tables
+			
 			for (Entry<Double, String> update : updates.entrySet())
 			{
 				final double updateRevision = update.getKey();

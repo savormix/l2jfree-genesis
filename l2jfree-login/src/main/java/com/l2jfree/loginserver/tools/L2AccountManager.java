@@ -29,28 +29,20 @@ import java.sql.Types;
 
 import org.apache.commons.io.IOUtils;
 
-import com.l2jfree.L2Config;
 import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
 import com.l2jfree.Util;
-import com.l2jfree.loginserver.L2LoginDataSource;
-import com.l2jfree.loginserver.L2LoginThreadPools;
-import com.l2jfree.loginserver.LoginServer.DatabaseConfig;
-import com.l2jfree.loginserver.database.L2LoginInstaller;
+import com.l2jfree.loginserver.Config;
 import com.l2jfree.loginserver.network.client.L2BanReason;
 import com.l2jfree.sql.L2Database;
 import com.l2jfree.util.HexUtil;
-import com.l2jfree.util.concurrent.L2ThreadPool;
-import com.l2jfree.util.logging.L2Logger;
 
 /**
  * @author savormix
  *
  */
-public final class L2AccountManager extends L2Config
+public final class L2AccountManager extends Config
 {
-	private static final L2Logger _log = L2Logger.getLogger(L2AccountManager.class);
-	
 	private ManagerState _state;
 	
 	private String _user;
@@ -131,40 +123,6 @@ public final class L2AccountManager extends L2Config
 	public static void main(String[] args)
 	{
 		// TODO rework this crap
-		registerConfig(new DatabaseConfig());
-		
-		try
-		{
-			loadConfigs();
-		}
-		catch (Exception e)
-		{
-			_log.fatal("Could not load configuration files!", e);
-			Shutdown.exit(TerminationStatus.RUNTIME_INVALID_CONFIGURATION);
-		}
-		
-		try
-		{
-			L2ThreadPool.initThreadPools(new L2LoginThreadPools());
-		}
-		catch (Exception e)
-		{
-			_log.fatal("Could not initialize thread pools!", e);
-			Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
-		}
-		
-		try
-		{
-			L2Database.setDataSource("default", new L2LoginDataSource());
-		}
-		catch (Exception e)
-		{
-			_log.fatal("Could not initialize DB!", e);
-			Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
-		}
-		
-		L2LoginInstaller.getInstance().install();
-		
 		Util.printSection("Account Management");
 		
 		_log.info("Please choose:");

@@ -40,7 +40,7 @@ public class L2LoginDataSource implements DataSourceInitializer
 	public ComboPooledDataSource initDataSource() throws Exception
 	{
 		// TODO Auto-generated method stub
-		if (LoginServer.DB_MAX_CONNECTIONS < DB_MIN_CONNECTIONS)
+		if (Config.DB_MAX_CONNECTIONS < DB_MIN_CONNECTIONS)
 			throw new IllegalArgumentException("At least " + DB_MIN_CONNECTIONS +
 					" required in pool.");
 		
@@ -49,7 +49,7 @@ public class L2LoginDataSource implements DataSourceInitializer
 		
 		_source.setInitialPoolSize(DB_MIN_CONNECTIONS);
 		_source.setMinPoolSize(DB_MIN_CONNECTIONS);
-		_source.setMaxPoolSize(LoginServer.DB_MAX_CONNECTIONS);
+		_source.setMaxPoolSize(Config.DB_MAX_CONNECTIONS);
 		
 		_source.setAcquireRetryAttempts(0);
 		_source.setAcquireRetryDelay(500);
@@ -67,10 +67,10 @@ public class L2LoginDataSource implements DataSourceInitializer
 		
 		_source.setBreakAfterAcquireFailure(false);
 		
-		_source.setDriverClass(LoginServer.DB_DRIVER);
-		_source.setJdbcUrl(LoginServer.DB_URL);
-		_source.setUser(LoginServer.DB_USER);
-		_source.setPassword(LoginServer.DB_PASSWORD);
+		_source.setDriverClass(Config.DB_DRIVER);
+		_source.setJdbcUrl(Config.DB_URL);
+		_source.setUser(Config.DB_USER);
+		_source.setPassword(Config.DB_PASSWORD);
 		
 		_source.getConnection().close();
 		

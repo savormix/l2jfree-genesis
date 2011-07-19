@@ -31,8 +31,36 @@ public final class L2ClientConnections extends MMOController<L2LoginClient, L2Cl
 {
 	private static final int PROTOCOL_VERSION = 0xc621;
 	
+	private static final class SingletonHolder
+	{
+		static
+		{
+			final MMOConfig cfg = new MMOConfig("Experimental Login");
+			cfg.setSelectorSleepTime(40 * 1000 * 1000);
+			cfg.setThreadCount(1);
+			cfg.setAcceptTimeout(5 * 1000);
+			
+			try
+			{
+				INSTANCE = new L2ClientConnections(cfg);
+			}
+			catch (IOException e)
+			{
+				throw new Error(e);
+			}
+		}
+		
+		private static final L2ClientConnections INSTANCE;
+	}
+	
+	public static L2ClientConnections getInstance()
+	{
+		return SingletonHolder.INSTANCE;
+	}
+	
 	/**
 	 * Placeholder javadoc
+	 * 
 	 * @param config param
 	 * @throws IOException exception
 	 */
