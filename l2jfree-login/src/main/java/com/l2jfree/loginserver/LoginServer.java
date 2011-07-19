@@ -14,6 +14,7 @@
  */
 package com.l2jfree.loginserver;
 
+import com.l2jfree.L2Config;
 import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
 import com.l2jfree.loginserver.network.client.L2ClientConnections;
@@ -51,6 +52,8 @@ public final class LoginServer extends Config
 			Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
 			return;
 		}
+		
+		L2Config.onStartup();
 		
 		_log.info("Login server ready.");
 		

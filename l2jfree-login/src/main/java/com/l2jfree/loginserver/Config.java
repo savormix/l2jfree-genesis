@@ -13,13 +13,13 @@ public class Config extends L2Config
 {
 	static
 	{
-		registerConfig(new DatabaseConfig());
-		registerConfig(new NetworkConfig());
-		registerConfig(new ServiceConfig());
+		L2Config.registerConfig(new DatabaseConfig());
+		L2Config.registerConfig(new NetworkConfig());
+		L2Config.registerConfig(new ServiceConfig());
 		
 		try
 		{
-			loadConfigs();
+			L2Config.loadConfigs();
 		}
 		catch (Exception e)
 		{
