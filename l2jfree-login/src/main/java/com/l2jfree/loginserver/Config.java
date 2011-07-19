@@ -4,8 +4,8 @@ import com.l2jfree.L2Config;
 import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
 import com.l2jfree.config.L2Properties;
-import com.l2jfree.loginserver.database.L2LoginInstaller;
 import com.l2jfree.sql.L2Database;
+import com.l2jfree.sql.L2DatabaseManager;
 import com.l2jfree.util.concurrent.L2ThreadPool;
 
 // TODO should be sorted into groups and redone with annotation loaders
@@ -43,11 +43,19 @@ public class Config extends L2Config
 		}
 		catch (Exception e)
 		{
-			_log.fatal("Could not initialize DB!", e);
+			_log.fatal("Could not initialize DB connections!", e);
 			Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
 		}
 		
-		L2LoginInstaller.getInstance().install();
+		try
+		{
+			L2DatabaseManager.check();
+		}
+		catch (Exception e)
+		{
+			_log.fatal("Could not initialize DB tables!", e);
+			Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
+		}
 	}
 	
 	/** Maximum amount of database connections in pool */
