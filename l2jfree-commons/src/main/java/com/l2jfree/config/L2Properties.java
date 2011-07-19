@@ -21,7 +21,8 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.util.Properties;
 
-import com.l2jfree.util.logging.L2Logger;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
 
 /**
  * @author Noctarius
@@ -29,8 +30,6 @@ import com.l2jfree.util.logging.L2Logger;
 public final class L2Properties extends Properties
 {
 	private static final long serialVersionUID = -4599023842346938325L;
-	
-	private static final L2Logger _log = L2Logger.getLogger(L2Properties.class);
 	
 	private boolean _warn = true;
 	
@@ -65,6 +64,11 @@ public final class L2Properties extends Properties
 	public L2Properties(Reader reader) throws IOException
 	{
 		load(reader);
+	}
+	
+	public L2Properties(Node node)
+	{
+		loadAttributes(node);
 	}
 	
 	// ===================================================================================
@@ -105,6 +109,18 @@ public final class L2Properties extends Properties
 		}
 	}
 	
+	public void loadAttributes(Node node)
+	{
+		final NamedNodeMap attrs = node.getAttributes();
+		
+		for (int i = 0; i < attrs.getLength(); i++)
+		{
+			final Node attr = attrs.item(i);
+			
+			setProperty(attr.getNodeName(), attr.getNodeValue());
+		}
+	}
+	
 	// ===================================================================================
 	
 	@Override
@@ -115,7 +131,7 @@ public final class L2Properties extends Properties
 		if (property == null)
 		{
 			if (_warn)
-				_log.warn("L2Properties: Missing property for key - " + key);
+				System.err.println("L2Properties: Missing property for key - " + key);
 			
 			return null;
 		}
@@ -131,7 +147,7 @@ public final class L2Properties extends Properties
 		if (property == null)
 		{
 			if (_warn)
-				_log.warn("L2Properties: Missing defaultValue for key - " + key);
+				System.err.println("L2Properties: Missing defaultValue for key - " + key);
 			
 			return null;
 		}
@@ -148,7 +164,7 @@ public final class L2Properties extends Properties
 	
 	// ===================================================================================
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings( { "unchecked", "rawtypes" })
 	public Object getProperty(Class<?> expectedType, ConfigProperty configProperty)
 	{
 		final String name = configProperty.name();

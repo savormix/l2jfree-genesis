@@ -119,4 +119,24 @@ public final class L2XML
 			}
 		};
 	}
+	
+	public static String getAttribute(Node n, String name)
+	{
+		final Node attr = n.getAttributes().getNamedItem(name);
+		
+		if (attr != null)
+			return attr.getNodeValue();
+		
+		throw new IllegalStateException("Missing attribute '" + name + "' from tag <" + n.getNodeName() + ">");
+	}
+	
+	public static String getAttribute(Node n, String name, String defaultValue)
+	{
+		final Node attr = n.getAttributes().getNamedItem(name);
+		
+		if (attr != null)
+			return attr.getNodeValue();
+		
+		return defaultValue;
+	}
 }

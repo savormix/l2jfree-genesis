@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This is just a sample, and should be removed as soon as it's implemented at login/game. -->
+<database>
+	<table name="testTable1"
+		definition="
+		CREATE TABLE testTable1 (
+			testColumn1 INT NOT NULL AUTO_INCREMENT,
+			testColumn2 VARCHAR (16) NOT NULL,
+			testColumn3 SMALLINT UNSIGNED DEFAULT 12,
+			PRIMARY KEY (testColumn1),
+			UNIQUE KEY (testColumn1, testColumn2),
+			KEY (testColumn3)
+		) DEFAULT CHARSET=utf8;
+	" />
+	<table name="testTable2"
+		definition="
+		CREATE TABLE testTable2 (
+			testColumn4 INT NOT NULL DEFAULT 1,
+			testColumn5 VARCHAR (16) NOT NULL DEFAULT 'dummy',
+			testColumn6 INT ,
+			testColumn7 INT,
+			PRIMARY KEY (testColumn4)
+		) DEFAULT CHARSET=utf8;
+	" />
+</database>
