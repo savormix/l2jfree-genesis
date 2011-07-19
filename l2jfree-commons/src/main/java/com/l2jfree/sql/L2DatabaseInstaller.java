@@ -21,7 +21,7 @@ import com.l2jfree.util.L2XML;
 /**
  * @author NB4L1
  */
-// FIXME: exception handling
+// FIXME: error management, rollback, etc
 public final class L2DatabaseInstaller
 {
 	public static void check() throws SAXException, IOException, ParserConfigurationException
@@ -76,7 +76,7 @@ public final class L2DatabaseInstaller
 		}
 		else // check for possibly required updates
 		{
-			// FIXME: install non-existing tables
+			// FIXME: check for non-existing tables and install if necessary
 			
 			for (Entry<Double, String> update : updates.entrySet())
 			{
@@ -180,7 +180,7 @@ public final class L2DatabaseInstaller
 			con = L2Database.getConnection();
 			
 			L2TextBuilder tb = L2TextBuilder.newInstance();
-			tb.append("CREATE TABLE _revision (");
+			tb.append("CREATE TABLE IF NOT EXISTS _revision ("); // FIXME: non-standard SQL
 			tb.append("  revision DECIMAL NOT NULL,");
 			tb.append("  date BIGINT NOT NULL,");
 			tb.append("  PRIMARY KEY (revision)");
@@ -211,7 +211,8 @@ public final class L2DatabaseInstaller
 		{
 			con = L2Database.getConnection();
 			
-			PreparedStatement ps = con.prepareStatement("SELECT MAX(revision) FROM _revision");
+			// FIXME: non-standard SQL
+			PreparedStatement ps = con.prepareStatement("SELECT revision FROM _revision ORDER BY revision DESC LIMIT 1");
 			ResultSet rs = ps.executeQuery();
 			
 			if (rs.next())

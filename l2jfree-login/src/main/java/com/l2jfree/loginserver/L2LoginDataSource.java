@@ -57,7 +57,7 @@ public class L2LoginDataSource implements DataSourceInitializer
 		
 		_source.setAcquireIncrement(5);
 		
-		_source.setAutomaticTestTable("connection_test_table");
+		_source.setAutomaticTestTable("_connection_test_table");
 		_source.setTestConnectionOnCheckin(false);
 		
 		_source.setIdleConnectionTestPeriod(3600);

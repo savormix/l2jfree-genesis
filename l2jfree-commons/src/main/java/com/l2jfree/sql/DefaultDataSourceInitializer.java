@@ -71,8 +71,8 @@ public final class DefaultDataSourceInitializer implements DataSourceInitializer
 		// so taking more than one connection at once will make connection pooling
 		// more effective.
 		
-		// this "connection_test_table" is automatically created if not already there
-		source.setAutomaticTestTable("connection_test_table");
+		// this "_connection_test_table" is automatically created if not already there
+		source.setAutomaticTestTable("_connection_test_table");
 		source.setTestConnectionOnCheckin(false);
 		
 		// testing OnCheckin used with IdleConnectionTestPeriod is faster than testing on checkout
