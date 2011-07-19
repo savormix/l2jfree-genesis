@@ -17,9 +17,13 @@
 		CREATE TABLE testTable2 (
 			testColumn4 INT NOT NULL DEFAULT 1,
 			testColumn5 VARCHAR (16) NOT NULL DEFAULT 'dummy',
-			testColumn6 INT ,
-			testColumn7 INT,
 			PRIMARY KEY (testColumn4)
 		) DEFAULT CHARSET=utf8;
+	" />
+	<update revision="1" query="
+		ALTER TABLE testTable2 DROP COLUMN testColumn7;
+	" />
+	<update revision="2" query="
+		ALTER TABLE testTable2 DROP COLUMN testColumn6;
 	" />
 </database>
