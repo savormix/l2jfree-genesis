@@ -88,7 +88,7 @@ public final class L2ClientPackets implements IPacketHandler<L2LoginClient, L2Cl
 	{
 		return SingletonHolder._instance;
 	}
-
+	
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{

@@ -15,15 +15,10 @@
 package com.l2jfree.loginserver.network.legacy.packets.receivable;
 
 import java.nio.BufferUnderflowException;
-import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.crypto.Cipher;
-
-import com.l2jfree.loginserver.network.legacy.L2GameServer;
-import com.l2jfree.loginserver.network.legacy.L2LegacyState;
-import com.l2jfree.loginserver.network.legacy.L2NoServiceReason;
 import com.l2jfree.loginserver.network.legacy.packets.L2GameServerPacket;
-import com.l2jfree.loginserver.network.legacy.packets.sendable.LoginServerFail;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
@@ -31,12 +26,12 @@ import com.l2jfree.network.mmocore.MMOBuffer;
  * @author savormix
  *
  */
-public final class BlowfishKey extends L2GameServerPacket
+public final class PlayersInGame extends L2GameServerPacket
 {
 	/** Packet's identifier */
-	public static final int OPCODE = 0x00;
+	public static final int OPCODE = 0x02;
 	
-	private byte[] _enciphered;
+	private List<String> _accounts;
 	
 	/* (non-Javadoc)
 	 * @see com.l2jfree.network.mmocore.ReceivablePacket#getMinimumLength()
@@ -44,7 +39,7 @@ public final class BlowfishKey extends L2GameServerPacket
 	@Override
 	protected int getMinimumLength()
 	{
-		return 5;
+		return 2;
 	}
 	
 	/* (non-Javadoc)
@@ -54,33 +49,10 @@ public final class BlowfishKey extends L2GameServerPacket
 	protected void read(MMOBuffer buf) throws BufferUnderflowException,
 			RuntimeException
 	{
-		int size = buf.readD();
-		_enciphered = buf.readB(new byte[size]);
-		
-		// Must stall any packets queued for read!
-		L2GameServer lgs = getClient();
-		byte[] padded;
-		try
-		{
-			Cipher rsa = Cipher.getInstance("RSA/ECB/nopadding");
-			rsa.init(Cipher.DECRYPT_MODE, getClient().getPrivateKey());
-			padded = rsa.doFinal(_enciphered);
-		}
-		catch (GeneralSecurityException e)
-		{
-			_log.error("Failed to decipher the Blowfish key!", e);
-			lgs.close(new LoginServerFail(L2NoServiceReason.WRONG_HEXID));
-			return;
-		}
-		int i;
-		for (i = 0; i < padded.length; i++)
-			if (padded[i] != 0)
-				break;
-		byte[] key = new byte[padded.length - i];
-		System.arraycopy(padded, i, key, 0, padded.length - i);
-		
-		lgs.getCipher().setBlowfishKey(key);
-		lgs.setState(L2LegacyState.KEYS_EXCHANGED);
+		int size = buf.readH();
+		_accounts = new ArrayList<String>(size);
+		for (int i = 0; i < size; i++)
+			_accounts.add(buf.readS());
 	}
 	
 	/* (non-Javadoc)
@@ -89,6 +61,7 @@ public final class BlowfishKey extends L2GameServerPacket
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		// time-critical packet
+		// TODO Auto-generated method stub
+		
 	}
 }

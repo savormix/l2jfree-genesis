@@ -24,6 +24,7 @@ import com.l2jfree.loginserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.loginserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.loginserver.network.client.packets.sendable.LoginFailure;
 import com.l2jfree.loginserver.network.client.packets.sendable.PlayFailure;
+import com.l2jfree.network.mmocore.DataSizeHolder;
 import com.l2jfree.network.mmocore.MMOConnection;
 import com.l2jfree.network.mmocore.MMOController;
 import com.l2jfree.security.ScrambledKeyPair;
@@ -84,7 +85,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	 * @see com.l2jfree.network.mmocore.MMOConnection#decrypt(java.nio.ByteBuffer, int)
 	 */
 	@Override
-	protected boolean decipher(ByteBuffer buf, int size)
+	protected boolean decipher(ByteBuffer buf, DataSizeHolder size)
 	{
 		boolean success = false;
 		try

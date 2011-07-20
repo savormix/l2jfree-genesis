@@ -70,11 +70,11 @@ public class L2ClientSecurity
 		
 		for (int i = 0; i < getKeyPairs().length; i++)
 			getKeyPairs()[i] = new ScrambledKeyPair(rsa.generateKeyPair());
-		_log.info("Generated " + getKeyPairs().length + " RSA key pairs.");
+		_log.info("Generated " + getKeyPairs().length + " RSA key pairs (client).");
 		
 		for (int i = 0; i < BLOWFISH_KEY_COUNT; i++)
 			Rnd.nextBytes(getBlowfishKeys()[i]);
-		_log.info("Generated " + getBlowfishKeys().length + " Blowfish keys.");
+		_log.info("Generated " + getBlowfishKeys().length + " Blowfish keys (client).");
 		
 		try
 		{

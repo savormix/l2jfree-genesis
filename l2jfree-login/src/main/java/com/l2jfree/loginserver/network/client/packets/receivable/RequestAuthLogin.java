@@ -93,6 +93,7 @@ public final class RequestAuthLogin extends L2ClientPacket
 		catch (GeneralSecurityException e)
 		{
 			_log.error("Failed to decipher account credentials!", e);
+			llc.close(new LoginFailure(L2NoServiceReason.THERE_IS_A_SYSTEM_ERROR));
 			return;
 		}
 		
@@ -110,12 +111,14 @@ public final class RequestAuthLogin extends L2ClientPacket
 		catch (NoSuchAlgorithmException e)
 		{
 			_log.fatal("SHA1 is not available!", e);
+			llc.close(new LoginFailure(L2NoServiceReason.SYSTEM_ERROR));
 			Shutdown.exit(TerminationStatus.ENVIRONMENT_MISSING_COMPONENT_OR_SERVICE);
 			return;
 		}
 		catch (UnsupportedEncodingException e)
 		{
 			_log.fatal("ASCII is not available!", e);
+			llc.close(new LoginFailure(L2NoServiceReason.SYSTEM_ERROR));
 			Shutdown.exit(TerminationStatus.ENVIRONMENT_MISSING_COMPONENT_OR_SERVICE);
 			return;
 		}

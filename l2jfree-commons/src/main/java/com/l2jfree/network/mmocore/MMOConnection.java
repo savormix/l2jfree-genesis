@@ -320,7 +320,7 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 	 */
 	protected abstract void onForcedDisconnection();
 	
-	protected abstract boolean decipher(ByteBuffer buf, int size);
+	protected abstract boolean decipher(ByteBuffer buf, DataSizeHolder size);
 	
 	protected abstract boolean encipher(ByteBuffer buf, int size);
 	

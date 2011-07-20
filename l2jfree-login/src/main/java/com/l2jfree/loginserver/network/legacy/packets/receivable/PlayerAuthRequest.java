@@ -26,6 +26,9 @@ import com.l2jfree.network.mmocore.MMOBuffer;
  */
 public final class PlayerAuthRequest extends L2GameServerPacket
 {
+	/** Packet's identifier */
+	public static final int OPCODE = 0x05;
+	
 	private String _account;
 	private long _activeSessionKey;
 	private long _oldSessionKey;

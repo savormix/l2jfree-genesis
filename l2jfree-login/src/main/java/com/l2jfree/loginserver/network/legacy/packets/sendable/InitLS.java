@@ -14,6 +14,8 @@
  */
 package com.l2jfree.loginserver.network.legacy.packets.sendable;
 
+import java.security.interfaces.RSAPublicKey;
+
 import com.l2jfree.loginserver.network.legacy.L2GameServer;
 import com.l2jfree.loginserver.network.legacy.packets.L2LoginServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
@@ -32,9 +34,9 @@ public final class InitLS extends L2LoginServerPacket
 	 * Constructs the packet to transmit the public key.
 	 * @param publicKey public key
 	 */
-	public InitLS(byte[] publicKey)
+	public InitLS(RSAPublicKey publicKey)
 	{
-		_publicKey = publicKey;
+		_publicKey = publicKey.getModulus().toByteArray();
 	}
 	
 	/* (non-Javadoc)

@@ -29,7 +29,8 @@ public class NewCipher
 	BlowfishEngine _decrypt;
 	
 	/**
-	 * @param blowfishKey
+	 * Constructs a Blowfish cipher.
+	 * @param blowfishKey Blowfish key
 	 */
 	public NewCipher(byte[] blowfishKey)
 	{
@@ -40,6 +41,14 @@ public class NewCipher
 		_decrypt.init(false, getBlowfishKey());
 	}
 	
+	/**
+	 * An inherently unsafe method to initialize a Blowfish cipher.
+	 * <BR><BR>
+	 * If the given string contains non-ASCII characters, the
+	 * cipher may not be initialized properly.
+	 * @param key An ASCII string
+	 */
+	@Deprecated
 	public NewCipher(String key)
 	{
 		this(key.getBytes());
@@ -54,26 +63,35 @@ public class NewCipher
 		return _blowfishKey;
 	}
 	
+	/**
+	 * Verifies a packet's checksum.
+	 * @param raw Packet body
+	 * @return whether packet integrity is OK or not
+	 */
 	public static boolean verifyChecksum(byte[] raw)
 	{
 		return NewCipher.verifyChecksum(raw, 0, raw.length);
 	}
 	
+	/**
+	 * Verifies a packet's checksum.
+	 * @param raw Data
+	 * @param offset offset to a packet's body
+	 * @param size packet's body size
+	 * @return whether packet integrity is OK or not
+	 */
 	public static boolean verifyChecksum(byte[] raw, final int offset, final int size)
 	{
-		// check if size is multiple of 4 and if there is more then only the
-		// checksum
+		// check if size is multiple of 4 (and > 0)
 		if ((size & 3) != 0 || size <= 4)
-		{
 			return false;
-		}
 		
 		long chksum = 0;
-		int count = size - 4;
+		int end = (size - 4) + offset;
 		long check = -1;
 		int i;
 		
-		for (i = offset; i < count; i += 4)
+		for (i = offset; i < end; i += 4)
 		{
 			check = raw[i] & 0xff;
 			check |= raw[i + 1] << 8 & 0xff00;
@@ -91,19 +109,29 @@ public class NewCipher
 		return check == chksum;
 	}
 	
+	/**
+	 * Calculates and embeds packet's checksum.
+	 * @param raw Packet body with padding
+	 */
 	public static void appendChecksum(byte[] raw)
 	{
 		NewCipher.appendChecksum(raw, 0, raw.length);
 	}
 	
+	/**
+	 * Calculates and embeds packet's checksum.
+	 * @param raw Data
+	 * @param offset offset to a packet's body
+	 * @param size packet's body size
+	 */
 	public static void appendChecksum(byte[] raw, final int offset, final int size)
 	{
 		long chksum = 0;
-		int count = size - 4;
+		int end = (size - 4) + offset;
 		long ecx;
 		int i;
 		
-		for (i = offset; i < count; i += 4)
+		for (i = offset; i < end; i += 4)
 		{
 			ecx = raw[i] & 0xff;
 			ecx |= raw[i + 1] << 8 & 0xff00;
@@ -112,11 +140,6 @@ public class NewCipher
 			
 			chksum ^= ecx;
 		}
-		
-		ecx = raw[i] & 0xff;
-		ecx |= raw[i + 1] << 8 & 0xff00;
-		ecx |= raw[i + 2] << 0x10 & 0xff0000;
-		ecx |= raw[i + 3] << 0x18 & 0xff000000;
 		
 		raw[i] = (byte)(chksum & 0xff);
 		raw[i + 1] = (byte)(chksum >> 0x08 & 0xff);

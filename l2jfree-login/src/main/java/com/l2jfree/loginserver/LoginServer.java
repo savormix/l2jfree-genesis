@@ -19,6 +19,8 @@ import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
 import com.l2jfree.loginserver.network.client.L2ClientConnections;
 import com.l2jfree.loginserver.network.client.L2ClientSecurity;
+import com.l2jfree.loginserver.network.legacy.L2LegacyConnections;
+import com.l2jfree.loginserver.network.legacy.L2LegacySecurity;
 import com.l2jfree.sql.TableOptimizer;
 
 /**
@@ -38,6 +40,23 @@ public final class LoginServer extends Config
 		L2LoginIdentifier.getInstance().getUID();
 		
 		TableOptimizer.optimize(Config.DB_URL);
+		
+		if (Config.NET_ENABLE_LEGACY || Config.SVC_FORCE_LEGACY)
+		{
+			L2LegacySecurity.getInstance();
+			
+			try
+			{
+				L2LegacyConnections.getInstance().openServerSocket(Config.NET_LEGACY_LISTEN_IP, Config.NET_LEGACY_LISTEN_PORT);
+				L2LegacyConnections.getInstance().start();
+			}
+			catch (Throwable e)
+			{
+				_log.fatal("Could not start legacy listener!", e);
+				Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
+				return;
+			}
+		}
 		
 		L2ClientSecurity.getInstance();
 		

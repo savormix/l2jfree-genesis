@@ -16,7 +16,9 @@ package com.l2jfree.loginserver.network.legacy.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 
+import com.l2jfree.loginserver.network.legacy.L2NoServiceReason;
 import com.l2jfree.loginserver.network.legacy.packets.L2GameServerPacket;
+import com.l2jfree.loginserver.network.legacy.packets.sendable.LoginServerFail;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 import com.l2jfree.util.HexUtil;
@@ -27,6 +29,9 @@ import com.l2jfree.util.HexUtil;
  */
 public final class GameServerAuth extends L2GameServerPacket
 {
+	/** Packet's identifier */
+	public static final int OPCODE = 0x01;
+	
 	private int _desiredId;
 	private boolean _acceptAlternateId;
 	private boolean _reservedHost;
@@ -41,8 +46,7 @@ public final class GameServerAuth extends L2GameServerPacket
 	@Override
 	protected int getMinimumLength()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return 17;
 	}
 	
 	/* (non-Javadoc)
@@ -73,5 +77,6 @@ public final class GameServerAuth extends L2GameServerPacket
 	{
 		// TODO Auto-generated method stub
 		String hexId = HexUtil.hexToString(_hexId);
+		getClient().close(new LoginServerFail(L2NoServiceReason.WRONG_HEXID));
 	}
 }

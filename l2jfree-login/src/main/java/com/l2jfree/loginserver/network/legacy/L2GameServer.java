@@ -14,12 +14,18 @@
  */
 package com.l2jfree.loginserver.network.legacy;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SocketChannel;
+import java.security.KeyPair;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 
 import com.l2jfree.loginserver.network.legacy.packets.L2GameServerPacket;
 import com.l2jfree.loginserver.network.legacy.packets.L2LoginServerPacket;
+import com.l2jfree.loginserver.network.legacy.packets.sendable.LoginServerFail;
+import com.l2jfree.network.mmocore.DataSizeHolder;
 import com.l2jfree.network.mmocore.MMOConnection;
 import com.l2jfree.network.mmocore.MMOController;
 
@@ -29,12 +35,22 @@ import com.l2jfree.network.mmocore.MMOController;
  */
 public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServerPacket, L2LoginServerPacket>
 {
+	private final KeyPair _keyPair;
+	private final L2LegacyCipher _cipher;
+	
+	private L2LegacyState _state;
+	private Integer _id;
+	
 	protected L2GameServer(
 			MMOController<L2GameServer, L2GameServerPacket, L2LoginServerPacket> mmoController,
-			SocketChannel socketChannel) throws ClosedChannelException
+			SocketChannel socketChannel, KeyPair keyPair) throws ClosedChannelException
 	{
 		super(mmoController, socketChannel);
-		// TODO Auto-generated constructor stub
+		_keyPair = keyPair;
+		_cipher = new L2LegacyCipher();
+		
+		_state = L2LegacyState.CONNECTED;
+		_id = null;
 	}
 	
 	@Override
@@ -52,30 +68,134 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	}
 	
 	@Override
-	protected boolean decipher(ByteBuffer buf, int size)
+	protected boolean decipher(ByteBuffer buf, DataSizeHolder size)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		boolean success = false;
+		try
+		{
+			success = getCipher().decipher(buf.array(), buf.position(), size);
+		}
+		catch (IOException e)
+		{
+			_log.error("Failed to decipher received data!", e);
+			closeNow();
+			return false;
+		}
+		
+		if (!success)
+		{
+			_log.warn("Could not decipher received data: checksum mismatch. " + this);
+			closeNow();
+		}
+		
+		buf.limit(buf.limit() - 4);
+		
+		return success;
 	}
 	
 	@Override
 	protected boolean encipher(ByteBuffer buf, int size)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		final int offset = buf.position();
+		try
+		{
+			size = getCipher().encipher(buf.array(), offset, size);
+		}
+		catch (IOException e)
+		{
+			_log.error("Failed to encipher sent data!", e);
+			return false;
+		}
+		
+		buf.position(offset + size);
+		return true;
 	}
 	
 	@Override
 	protected L2LoginServerPacket getDefaultClosePacket()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new LoginServerFail(L2NoServiceReason.WRONG_HEXID);
 	}
 	
 	@Override
 	protected String getUID()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Integer id = getId();
+		if (id == null)
+			return null;
+		else
+			return String.valueOf(id);
+	}
+	
+	/**
+	 * Returns the public key.
+	 * @return public key
+	 */
+	public PublicKey getPublicKey()
+	{
+		return getKeyPair().getPublic();
+	}
+	
+	/**
+	 * Returns the private key.
+	 * @return private key
+	 */
+	public PrivateKey getPrivateKey()
+	{
+		return getKeyPair().getPrivate();
+	}
+	
+	/**
+	 * Returns the cipher.
+	 * @return cipher
+	 */
+	public L2LegacyCipher getCipher()
+	{
+		return _cipher;
+	}
+	
+	/**
+	 * Returns current connection's state.
+	 * @return connection's state
+	 */
+	public L2LegacyState getState()
+	{
+		return _state;
+	}
+	
+	/**
+	 * Changes the connection's state.
+	 * @param state connection's state
+	 */
+	public void setState(L2LegacyState state)
+	{
+		_state = state;
+	}
+	
+	/**
+	 * Returns the assigned ID.
+	 * @return game server ID
+	 */
+	public Integer getId()
+	{
+		return _id;
+	}
+	
+	/**
+	 * Assigns a game server ID.
+	 * @param id game server ID
+	 */
+	public void setId(int id)
+	{
+		_id = id;
+	}
+	
+	/**
+	 * Returns the scrambled RSA key pair.
+	 * @return key pair
+	 */
+	private KeyPair getKeyPair()
+	{
+		return _keyPair;
 	}
 }

@@ -12,36 +12,30 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.loginserver.network.client;
+package com.l2jfree.loginserver.network.legacy;
 
 import java.io.IOException;
 
 import com.l2jfree.network.mmocore.DataSizeHolder;
 import com.l2jfree.security.NewCipher;
 import com.l2jfree.util.HexUtil;
-import com.l2jfree.util.Rnd;
 
 /**
  * @author savormix
  *
  */
-public final class L2ClientCipher
+public final class L2LegacyCipher
 {
-	private static final byte[] ONE_TIME_BLOWFISH_KEY = HexUtil.HexStringToBytes(
-			"6b 60 cb 5b 82 ce 90 b1 cc 2b 6c 55 6c 6c 6c 6c"
+	private static final byte[] STARTER_BLOWFISH_KEY = HexUtil.HexStringToBytes(
+			"5F 3B 76 2E 5D 30 35 2D 33 31 21 7C 2B 2D 25 78 54 21 5E 5B 24 00"
 	);
 	
-	private final NewCipher _cipher;
-	private boolean _firstTime;
+	private NewCipher _cipher;
 	
-	/**
-	 * Creates a cipher to secure communications.
-	 * @param blowfishKey a Blowfish key
-	 */
-	public L2ClientCipher(byte[] blowfishKey)
+	/** Creates a cipher to secure communications. */
+	public L2LegacyCipher()
 	{
-		_cipher = new NewCipher(blowfishKey);
-		_firstTime = true;
+		_cipher = new NewCipher(STARTER_BLOWFISH_KEY);
 	}
 	
 	/**
@@ -74,26 +68,11 @@ public final class L2ClientCipher
 	{
 		// reserve checksum
 		size += 4;
+		// padding
+		size += 8 - size % 8;
 		
-		if (isFirstTime())
-		{
-			// reserve for XOR "key"
-			size += 4;
-			
-			// padding
-			size += 8 - size % 8;
-			NewCipher.encXORPass(raw, offset, size, Rnd.nextInt(Integer.MAX_VALUE));
-			getOneTimeCipher().crypt(raw, offset, size);
-			
-			_firstTime = false;
-		}
-		else
-		{
-			// padding
-			size += 8 - size % 8;
-			NewCipher.appendChecksum(raw, offset, size);
-			getBlowfishCipher().crypt(raw, offset, size);
-		}
+		NewCipher.appendChecksum(raw, offset, size);
+		getBlowfishCipher().crypt(raw, offset, size);
 		return size;
 	}
 	
@@ -106,13 +85,12 @@ public final class L2ClientCipher
 		return _cipher;
 	}
 	
-	private boolean isFirstTime()
+	/**
+	 * Changes the Blowfish key.
+	 * @param key Blowfish key
+	 */
+	public void setBlowfishKey(byte[] key)
 	{
-		return _firstTime;
-	}
-	
-	private NewCipher getOneTimeCipher()
-	{
-		return new NewCipher(ONE_TIME_BLOWFISH_KEY);
+		_cipher = new NewCipher(key);
 	}
 }

@@ -10,7 +10,7 @@
 			PRIMARY KEY (testColumn1),
 			UNIQUE KEY (testColumn1, testColumn2),
 			KEY (testColumn3)
-		) DEFAULT CHARSET=utf8;
+		);
 	" />
 	<table name="testTable2"
 		definition="
@@ -18,7 +18,7 @@
 			testColumn4 INT NOT NULL DEFAULT 1,
 			testColumn5 VARCHAR (16) NOT NULL DEFAULT 'dummy',
 			PRIMARY KEY (testColumn4)
-		) DEFAULT CHARSET=utf8;
+		);
 	" />
 	<update revision="1" query="
 		ALTER TABLE testTable2 DROP COLUMN testColumn7;

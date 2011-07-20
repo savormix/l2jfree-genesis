@@ -37,7 +37,7 @@ public final class L2ClientConnections extends MMOController<L2LoginClient, L2Cl
 		{
 			final MMOConfig cfg = new MMOConfig("Experimental Login");
 			cfg.setSelectorSleepTime(40 * 1000 * 1000);
-			cfg.setThreadCount(1);
+			cfg.setThreadCount(Math.min(2, Runtime.getRuntime().availableProcessors()));
 			cfg.setAcceptTimeout(5 * 1000);
 			
 			try
@@ -53,6 +53,10 @@ public final class L2ClientConnections extends MMOController<L2LoginClient, L2Cl
 		private static final L2ClientConnections INSTANCE;
 	}
 	
+	/**
+	 * Returns a singleton object.
+	 * @return an instance of this class
+	 */
 	public static L2ClientConnections getInstance()
 	{
 		return SingletonHolder.INSTANCE;

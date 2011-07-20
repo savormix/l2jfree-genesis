@@ -26,6 +26,9 @@ import com.l2jfree.network.mmocore.MMOBuffer;
  */
 public final class ChangeAccessLevel extends L2GameServerPacket
 {
+	/** Packet's identifier */
+	public static final int OPCODE = 0x04;
+	
 	private String _account;
 	private int _level;
 	

@@ -331,12 +331,13 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 	private void parseClientPacket(ByteBuffer buf, int dataSize, T client)
 	{
 		int pos = buf.position();
+		DataSizeHolder dsh = new DataSizeHolder(dataSize);
 		
-		if (client.decipher(buf, dataSize) && buf.hasRemaining())
+		if (client.decipher(buf, dsh) && buf.hasRemaining())
 		{
 			// apply limit
 			int limit = buf.limit();
-			buf.limit(pos + dataSize);
+			buf.limit(pos + dsh.getSize());
 			
 			final int opcode = buf.get() & 0xFF;
 			
@@ -370,7 +371,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 								// TODO: disabled until packet structures updated properly
 								//report(ErrorMode.BUFFER_OVER_FLOW, client, cp, null);
 								
-								MMOController._log.info("Invalid packet format (buf: " + buf + ", dataSize: " + dataSize
+								MMOController._log.info("Invalid packet format or padding (buf: " + buf + ", dataSize: " + dataSize
 										+ ", pos: " + pos + ", limit: " + limit + ", opcode: " + opcode
 										+ ") used for reading - " + client + " - " + cp.getType() + " - "
 										+ getMMOController().getVersionInfo());

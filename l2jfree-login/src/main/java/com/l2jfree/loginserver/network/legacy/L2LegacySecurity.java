@@ -14,6 +14,18 @@
  */
 package com.l2jfree.loginserver.network.legacy;
 
+import java.security.GeneralSecurityException;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.PrivateKey;
+import java.security.spec.AlgorithmParameterSpec;
+import java.security.spec.RSAKeyGenParameterSpec;
+
+import javax.crypto.Cipher;
+
+import com.l2jfree.Shutdown;
+import com.l2jfree.TerminationStatus;
+import com.l2jfree.util.Rnd;
 import com.l2jfree.util.logging.L2Logger;
 
 /**
@@ -24,9 +36,63 @@ public class L2LegacySecurity
 {
 	private static final L2Logger _log = L2Logger.getLogger(L2LegacySecurity.class);
 	
+	private static final int RSA_KEY_PAIR_COUNT = 10;
+	
+	private final KeyPair[] _keyPairs;
+	
 	private L2LegacySecurity()
 	{
-		// TODO Auto-generated constructor stub
+		_keyPairs = new KeyPair[RSA_KEY_PAIR_COUNT];
+		
+		KeyPairGenerator rsa = null;
+		try
+		{
+			rsa = KeyPairGenerator.getInstance("RSA");
+			AlgorithmParameterSpec spec = new RSAKeyGenParameterSpec(512,
+					RSAKeyGenParameterSpec.F4);
+			rsa.initialize(spec);
+		}
+		catch (GeneralSecurityException e)
+		{
+			_log.fatal("Could not generate RSA key pairs!", e);
+			Shutdown.exit(TerminationStatus.ENVIRONMENT_MISSING_COMPONENT_OR_SERVICE);
+			return;
+		}
+		
+		for (int i = 0; i < getKeyPairs().length; i++)
+			getKeyPairs()[i] = rsa.generateKeyPair();
+		_log.info("Generated " + getKeyPairs().length + " RSA key pairs (legacy game server).");
+		
+		try
+		{
+			warmUp(getKeyPair().getPrivate());
+		}
+		catch (GeneralSecurityException e)
+		{
+			_log.fatal("Invalid generated key pair!", e);
+			Shutdown.exit(TerminationStatus.ENVIRONMENT_MISSING_COMPONENT_OR_SERVICE);
+		}
+	}
+	
+	private void warmUp(PrivateKey key) throws GeneralSecurityException
+	{
+		// avoid worst-case execution, KenM
+		Cipher rsaCipher = Cipher.getInstance("RSA/ECB/nopadding");
+		rsaCipher.init(Cipher.DECRYPT_MODE, key);
+	}
+	
+	/**
+	 * Returns a RSA key pair.
+	 * @return a key pair
+	 */
+	public KeyPair getKeyPair()
+	{
+		return Rnd.get(getKeyPairs());
+	}
+	
+	private KeyPair[] getKeyPairs()
+	{
+		return _keyPairs;
 	}
 	
 	/**

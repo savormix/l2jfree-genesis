@@ -8,7 +8,12 @@ import com.l2jfree.sql.L2Database;
 import com.l2jfree.sql.L2DatabaseInstaller;
 import com.l2jfree.util.concurrent.L2ThreadPool;
 
+/**
+ * @author NB4L1
+ * @author savormix
+ */
 // TODO should be sorted into groups and redone with annotation loaders
+@SuppressWarnings("synthetic-access")
 public class Config extends L2Config
 {
 	static
@@ -73,9 +78,6 @@ public class Config extends L2Config
 	/** Whether to install database tables */
 	public static boolean DB_INSTALL;
 	
-	/**
-	 * @author savormix
-	 */
 	private static final class DatabaseConfig extends ConfigPropertiesLoader
 	{
 		@Override
@@ -102,10 +104,17 @@ public class Config extends L2Config
 		}
 	}
 	
-	/** Login server listens for connections on this IP address */
+	/** Login server listens for client connections on this IP address */
 	public static String NET_LISTEN_IP;
-	/** Login server listens for connections on this port */
+	/** Login server listens for client connections on this port */
 	public static int NET_LISTEN_PORT;
+	
+	/** Whether to listen for legacy game servers */
+	public static boolean NET_ENABLE_LEGACY;
+	/** Login server listens for legacy game server connections on this IP address */
+	public static String NET_LEGACY_LISTEN_IP;
+	/** Login server listens for legacy game server connections on this port */
+	public static int NET_LEGACY_LISTEN_PORT;
 	
 	private static final class NetworkConfig extends ConfigPropertiesLoader
 	{
@@ -114,6 +123,10 @@ public class Config extends L2Config
 		{
 			NET_LISTEN_IP = properties.getString("ListenIP", "0.0.0.0");
 			NET_LISTEN_PORT = properties.getInteger("ListenPort", 2106);
+			
+			NET_ENABLE_LEGACY = properties.getBool("EnableLegacyListener", true);
+			NET_LEGACY_LISTEN_IP = properties.getString("LegacyListenIP", "127.0.0.1");
+			NET_LEGACY_LISTEN_PORT = properties.getInteger("LegacyListenPort", 9014);
 		}
 		
 		@Override

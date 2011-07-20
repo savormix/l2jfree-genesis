@@ -1,16 +1,18 @@
 package com.l2jfree.sql;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.TreeMap;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.io.IOUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
@@ -24,6 +26,8 @@ import com.l2jfree.util.L2XML;
 // FIXME: error management, rollback, etc
 public final class L2DatabaseInstaller
 {
+	private static String ACTIVE_SCHEMA = null;
+	
 	public static void check() throws SAXException, IOException, ParserConfigurationException
 	{
 		final TreeMap<String, String> tables = new TreeMap<String, String>();
@@ -33,8 +37,18 @@ public final class L2DatabaseInstaller
 		factory.setValidating(false); // FIXME: add validation
 		factory.setIgnoringComments(true);
 		
-		final Document doc = factory.newDocumentBuilder().parse(
-				L2DatabaseInstaller.class.getResourceAsStream("database_schema.xml"));
+		InputStream is = null;
+		Document doc = null;
+		
+		try
+		{
+			is = L2DatabaseInstaller.class.getResourceAsStream("database_schema.xml");
+			doc = factory.newDocumentBuilder().parse(is);
+		}
+		finally
+		{
+			IOUtils.closeQuietly(is);
+		}
 		
 		for (Node n1 : L2XML.listNodesByNodeName(doc, "database"))
 		{
@@ -54,6 +68,8 @@ public final class L2DatabaseInstaller
 				updates.put(revision, query);
 			}
 		}
+		
+		getActiveSchema();
 		
 		createRevisionTable();
 		
@@ -172,23 +188,36 @@ public final class L2DatabaseInstaller
 	
 	private static void createRevisionTable()
 	{
-		System.out.println("Creating revision table.");
+		System.out.println("Checking revision table.");
 		
 		Connection con = null;
 		try
 		{
 			con = L2Database.getConnection();
 			
-			L2TextBuilder tb = L2TextBuilder.newInstance();
-			tb.append("CREATE TABLE IF NOT EXISTS _revision ("); // FIXME: non-standard SQL
-			tb.append("  revision DECIMAL NOT NULL,");
-			tb.append("  date BIGINT NOT NULL,");
-			tb.append("  PRIMARY KEY (revision)");
-			tb.append(") DEFAULT CHARSET=utf8;");
-			
-			PreparedStatement ps = con.prepareStatement(tb.moveToString());
-			ps.execute();
+			PreparedStatement ps = con.prepareStatement("SELECT table_catalog FROM information_schema.tables WHERE table_type LIKE ? AND table_name LIKE ? AND table_schema LIKE ?");
+			ps.setString(1, "BASE_TABLE");
+			ps.setString(2, "_revision");
+			ps.setString(3, ACTIVE_SCHEMA);
+			ResultSet rs = ps.executeQuery();
+			boolean exists = rs.next();
+			rs.close();
 			ps.close();
+			
+			if (!exists)
+			{
+				System.out.println("Creating revision table.");
+				L2TextBuilder tb = L2TextBuilder.newInstance();
+				tb.append("CREATE TABLE _revision (");
+				tb.append("  revision DECIMAL NOT NULL,");
+				tb.append("  date BIGINT NOT NULL,");
+				tb.append("  PRIMARY KEY (revision)");
+				tb.append(')');
+				
+				ps = con.prepareStatement(tb.moveToString());
+				ps.execute();
+				ps.close();
+			}
 		}
 		catch (SQLException e)
 		{
@@ -231,5 +260,72 @@ public final class L2DatabaseInstaller
 		}
 		
 		return revision;
+	}
+	
+	/**
+	 * Obtains <TT>CURRENT_SCHEMA</TT> on an arbitrary DBMS.
+	 * @author savormix
+	 */
+	private static void getActiveSchema()
+	{
+		String drop = "DROP TABLE _tmp_active_schema";
+		Connection con = null;
+		try
+		{
+			con = L2Database.getConnection();
+			PreparedStatement ps = con.prepareStatement(drop);
+			ps.executeUpdate();
+			ps.close();
+		}
+		catch (SQLException e)
+		{
+			// OK
+		}
+		finally
+		{
+			L2Database.close(con);
+		}
+		
+		try
+		{
+			con = L2Database.getConnection();
+			PreparedStatement ps = con.prepareStatement("CREATE TABLE _tmp_active_schema (x INT)");
+			ps.executeUpdate();
+			ps.close();
+			ps = con.prepareStatement("SELECT table_schema FROM information_schema.tables WHERE table_type LIKE ? AND table_name LIKE ?");
+			ps.setString(1, "BASE_TABLE");
+			ps.setString(2, "_tmp_active_schema");
+			ResultSet rs = ps.executeQuery();
+			if (rs.next())
+				ACTIVE_SCHEMA = rs.getString("table_schema");
+			else
+				throw new IllegalStateException("Table stolen.");
+			rs.close();
+			ps.close();
+		}
+		catch (SQLException e)
+		{
+			throw new RuntimeException(e);
+		}
+		finally
+		{
+			L2Database.close(con);
+		}
+		
+		try
+		{
+			con = L2Database.getConnection();
+			PreparedStatement ps = con.prepareStatement(drop);
+			ps.executeUpdate();
+			ps.close();
+		}
+		catch (SQLException e)
+		{
+			// whatever...
+		}
+		finally
+		{
+			L2Database.close(con);
+		}
 	}
 }
