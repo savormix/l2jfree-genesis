@@ -15,6 +15,8 @@
 package com.l2jfree.sql;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,6 +42,7 @@ public final class L2Database
 	private static ComboPooledDataSource _defaultDataSource;
 	private static EntityManagerFactory _defaultEntityManagerFactory;
 	private static final Map<String, ComboPooledDataSource> _dataSources = new HashMap<String, ComboPooledDataSource>();
+	private static final Map<String, String> _tableSchemas = new HashMap<String, String>();
 	
 	public static void setDataSource(String dataSourceName, DataSourceInitializer initializer) throws Exception
 	{
@@ -67,6 +70,79 @@ public final class L2Database
 			
 			// test the entity manager
 			_defaultEntityManagerFactory.createEntityManager().close();
+		}
+		
+		/**
+		 * Obtains <TT>CURRENT_SCHEMA</TT> on an arbitrary DBMS.
+		 * @author savormix
+		 */
+		Connection con = null;
+		
+		try
+		{
+			con = L2Database.getConnection(dataSourceName);
+			
+			PreparedStatement ps = con.prepareStatement("DROP TABLE _tmp_active_schema");
+			ps.executeUpdate();
+			ps.close();
+		}
+		catch (SQLException e)
+		{
+			// OK
+		}
+		finally
+		{
+			L2Database.close(con);
+		}
+		
+		try
+		{
+			con = L2Database.getConnection(dataSourceName);
+			
+			PreparedStatement ps = null;
+			
+			ps = con.prepareStatement("CREATE TABLE _tmp_active_schema (x INT)");
+			ps.executeUpdate();
+			ps.close();
+			
+			ps = con.prepareStatement("SELECT table_schema FROM information_schema.tables WHERE table_type LIKE ? AND table_name LIKE ?");
+			ps.setString(1, "BASE_TABLE");
+			ps.setString(2, "_tmp_active_schema");
+			
+			ResultSet rs = ps.executeQuery();
+			
+			if (rs.next())
+				_tableSchemas.put(dataSourceName, rs.getString("table_schema"));
+			else
+				throw new IllegalStateException("Table stolen."); // should never happen
+			
+			rs.close();
+			ps.close();
+		}
+		catch (SQLException e)
+		{
+			throw e;
+		}
+		finally
+		{
+			L2Database.close(con);
+		}
+		
+		try
+		{
+			con = L2Database.getConnection(dataSourceName);
+			
+			PreparedStatement ps = con.prepareStatement("DROP TABLE _tmp_active_schema");
+			ps.executeUpdate();
+			ps.close();
+		}
+		catch (SQLException e)
+		{
+			// whatever...
+		}
+		finally
+		{
+			L2Database.close(con);
 		}
 	}
 	
@@ -163,5 +239,45 @@ public final class L2Database
 		{
 			_log.warn("L2Database: Failed to close entity manager!", e);
 		}
+	}
+	
+	public static boolean tableExists(String tableName)
+	{
+		return tableExists("default", tableName);
+	}
+	
+	public static boolean tableExists(String dataSourceName, String tableName)
+	{
+		boolean tableExists = false;
+		
+		Connection con = null;
+		try
+		{
+			con = L2Database.getConnection(dataSourceName);
+			
+			PreparedStatement ps = con
+					.prepareStatement("SELECT table_catalog FROM information_schema.tables WHERE table_type LIKE ? AND table_name LIKE ? AND table_schema LIKE ?");
+			ps.setString(1, "BASE_TABLE");
+			ps.setString(2, tableName);
+			ps.setString(3, _tableSchemas.get(dataSourceName));
+			
+			ResultSet rs = ps.executeQuery();
+			
+			if (rs.next())
+				tableExists = true;
+			
+			rs.close();
+			ps.close();
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			L2Database.close(con);
+		}
+		
+		return tableExists;
 	}
 }
