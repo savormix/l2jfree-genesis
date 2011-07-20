@@ -319,13 +319,36 @@ public final class L2ThreadPool
 	{
 		final long begin = System.currentTimeMillis();
 		
-		System.out.println("L2ThreadPool: Shutting down.");
-		System.out.println("\t... executing " + getTaskCount(_scheduledPools) + " scheduled tasks.");
-		System.out.println("\t... executing " + getTaskCount(_instantPools) + " instant tasks.");
-		System.out.println("\t... executing " + getTaskCount(_longRunningPools) + " long running tasks.");
+		try
+		{
+			System.out.println("L2ThreadPool: Shutting down.");
+			System.out.println("\t... executing " + getTaskCount(_scheduledPools) + " scheduled tasks.");
+			System.out.println("\t... executing " + getTaskCount(_instantPools) + " instant tasks.");
+			System.out.println("\t... executing " + getTaskCount(_longRunningPools) + " long running tasks.");
+		}
+		catch (Throwable t)
+		{
+			t.printStackTrace();
+		}
 		
-		for (ThreadPoolExecutor threadPool : getThreadPools())
-			threadPool.shutdown();
+		try
+		{
+			for (ThreadPoolExecutor threadPool : getThreadPools())
+			{
+				try
+				{
+					threadPool.shutdown();
+				}
+				catch (Throwable t)
+				{
+					t.printStackTrace();
+				}
+			}
+		}
+		catch (Throwable t)
+		{
+			t.printStackTrace();
+		}
 		
 		boolean success = false;
 		try
@@ -340,18 +363,25 @@ public final class L2ThreadPool
 			
 			success |= awaitTermination(10000);
 		}
-		catch (InterruptedException e)
+		catch (Throwable t)
 		{
-			e.printStackTrace();
+			t.printStackTrace();
 		}
 		
-		System.out.println("\t... success: " + success + " in " + (System.currentTimeMillis() - begin) + " msec.");
-		System.out.println("\t... " + getTaskCount(_scheduledPools) + " scheduled tasks left.");
-		System.out.println("\t... " + getTaskCount(_instantPools) + " instant tasks left.");
-		System.out.println("\t... " + getTaskCount(_longRunningPools) + " long running tasks left.");
-		
-		if (TimeUnit.HOURS.toMillis(12) < (System.currentTimeMillis() - L2Config.SERVER_STARTED))
-			RunnableStatsManager.dumpClassStats(SortBy.TOTAL);
+		try
+		{
+			System.out.println("\t... success: " + success + " in " + (System.currentTimeMillis() - begin) + " msec.");
+			System.out.println("\t... " + getTaskCount(_scheduledPools) + " scheduled tasks left.");
+			System.out.println("\t... " + getTaskCount(_instantPools) + " instant tasks left.");
+			System.out.println("\t... " + getTaskCount(_longRunningPools) + " long running tasks left.");
+			
+			if (TimeUnit.HOURS.toMillis(12) < (System.currentTimeMillis() - L2Config.SERVER_STARTED))
+				RunnableStatsManager.dumpClassStats(SortBy.TOTAL);
+		}
+		catch (Throwable t)
+		{
+			t.printStackTrace();
+		}
 	}
 	
 	public static void purge()

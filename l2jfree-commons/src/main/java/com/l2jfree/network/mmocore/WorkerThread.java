@@ -39,11 +39,18 @@ abstract class WorkerThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 	@Override
 	public abstract void run();
 	
-	public final void shutdown() throws InterruptedException
+	public final void shutdown()
 	{
-		_shutdown = true;
-		
-		join();
+		try
+		{
+			_shutdown = true;
+			
+			join();
+		}
+		catch (Throwable t)
+		{
+			t.printStackTrace();
+		}
 	}
 	
 	final boolean isShuttingDown()

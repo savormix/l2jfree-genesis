@@ -54,13 +54,27 @@ public abstract class L2Thread extends Thread
 	
 	private volatile boolean _isAlive = true;
 	
-	public final void shutdown() throws InterruptedException
+	public final void shutdown()
 	{
-		onShutdown();
+		try
+		{
+			onShutdown();
+		}
+		catch (Throwable t)
+		{
+			t.printStackTrace();
+		}
 		
-		_isAlive = false;
-		
-		join();
+		try
+		{
+			_isAlive = false;
+			
+			join();
+		}
+		catch (Throwable t)
+		{
+			t.printStackTrace();
+		}
 	}
 	
 	protected void onShutdown()

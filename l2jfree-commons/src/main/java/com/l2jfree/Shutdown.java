@@ -224,7 +224,14 @@ public final class Shutdown
 	{
 		for (Runnable shutdownHook : _shutdownHooks)
 		{
-			shutdownHook.run();
+			try
+			{
+				shutdownHook.run();
+			}
+			catch (Throwable t)
+			{
+				t.printStackTrace();
+			}
 		}
 		
 		try

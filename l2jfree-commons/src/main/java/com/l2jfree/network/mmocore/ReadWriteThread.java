@@ -367,7 +367,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 							
 							if (buf.hasRemaining())
 							{
-								// disabled until packet structures updated properly
+								// TODO: disabled until packet structures updated properly
 								//report(ErrorMode.BUFFER_OVER_FLOW, client, cp, null);
 								
 								MMOController._log.info("Invalid packet format (buf: " + buf + ", dataSize: " + dataSize

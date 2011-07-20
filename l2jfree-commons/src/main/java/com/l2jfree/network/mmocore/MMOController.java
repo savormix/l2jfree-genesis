@@ -147,18 +147,24 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 	
 	/**
 	 * Initiates the shutdown of the mmocore threads, and waits until they are finished.
-	 * @throws InterruptedException if orderly shutdown sequence was interrupted
 	 */
-	public final void shutdown() throws InterruptedException
+	public final void shutdown()
 	{
-		if (_acceptorThread != null)
-			_acceptorThread.shutdown();
-		
-		for (ConnectorThread<T, RP, SP> connectorThread : _connectorThreads)
-			connectorThread.shutdown();
-		
-		for (ReadWriteThread<T, RP, SP> readWriteThread : _readWriteThreads)
-			readWriteThread.shutdown();
+		try
+		{
+			if (_acceptorThread != null)
+				_acceptorThread.shutdown();
+			
+			for (ConnectorThread<T, RP, SP> connectorThread : _connectorThreads)
+				connectorThread.shutdown();
+			
+			for (ReadWriteThread<T, RP, SP> readWriteThread : _readWriteThreads)
+				readWriteThread.shutdown();
+		}
+		catch (Throwable t)
+		{
+			t.printStackTrace();
+		}
 	}
 	
 	// ==============================================

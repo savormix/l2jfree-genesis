@@ -65,9 +65,9 @@ public final class LoginServer extends Config
 				{
 					L2ClientConnections.getInstance().shutdown();
 				}
-				catch (InterruptedException e)
+				catch (Throwable t)
 				{
-					_log.warn("Orderly shutdown sequence interrupted", e);
+					_log.warn("Orderly shutdown sequence interrupted", t);
 				}
 			}
 		});

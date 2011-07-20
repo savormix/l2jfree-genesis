@@ -70,7 +70,7 @@ public final class L2Database
 		}
 	}
 	
-	public static void shutdown() throws Exception
+	public static void shutdown()
 	{
 		try
 		{
@@ -81,16 +81,23 @@ public final class L2Database
 			_log.fatal("", t);
 		}
 		
-		for (ComboPooledDataSource dataSource : _dataSources.values())
+		try
 		{
-			try
+			for (ComboPooledDataSource dataSource : _dataSources.values())
 			{
-				dataSource.close();
+				try
+				{
+					dataSource.close();
+				}
+				catch (Throwable t)
+				{
+					_log.fatal("", t);
+				}
 			}
-			catch (Throwable t)
-			{
-				_log.fatal("", t);
-			}
+		}
+		catch (Throwable t)
+		{
+			_log.fatal("", t);
 		}
 	}
 	
