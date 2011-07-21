@@ -43,6 +43,8 @@ public final class L2Database
 {
 	private static final L2Logger _log = L2Logger.getLogger(L2Database.class);
 	
+	public static final String DEFAULT_DATA_SOURCE_NAME = "default";
+	
 	private static ComboPooledDataSource _defaultDataSource;
 	private static EntityManagerFactory _defaultEntityManagerFactory;
 	private static final Map<String, ComboPooledDataSource> _dataSources = new HashMap<String, ComboPooledDataSource>();
@@ -61,7 +63,7 @@ public final class L2Database
 		
 		_dataSources.put(dataSourceName, dataSource);
 		
-		if (dataSourceName.equals("default"))
+		if (dataSourceName.equals(DEFAULT_DATA_SOURCE_NAME))
 		{
 			_defaultDataSource = dataSource;
 			
@@ -70,7 +72,7 @@ public final class L2Database
 			
 			props.put(PersistenceUnitProperties.NON_JTA_DATASOURCE, _defaultDataSource);
 			
-			_defaultEntityManagerFactory = Persistence.createEntityManagerFactory("default", props);
+			_defaultEntityManagerFactory = Persistence.createEntityManagerFactory(DEFAULT_DATA_SOURCE_NAME, props);
 			
 			// test the entity manager
 			_defaultEntityManagerFactory.createEntityManager().close();
@@ -217,7 +219,8 @@ public final class L2Database
 	{
 		try
 		{
-			_defaultEntityManagerFactory.close();
+			if (_defaultEntityManagerFactory != null)
+				_defaultEntityManagerFactory.close();
 		}
 		catch (Throwable t)
 		{
@@ -246,7 +249,7 @@ public final class L2Database
 	
 	public static Connection getConnection() throws SQLException
 	{
-		return getConnection("default", _defaultDataSource);
+		return getConnection(DEFAULT_DATA_SOURCE_NAME, _defaultDataSource);
 	}
 	
 	public static Connection getConnection(String dataSourceName) throws SQLException
@@ -310,7 +313,7 @@ public final class L2Database
 	
 	public static boolean tableExists(String tableName)
 	{
-		return tableExists("default", tableName);
+		return tableExists(DEFAULT_DATA_SOURCE_NAME, tableName);
 	}
 	
 	public static boolean tableExists(String dataSourceName, String tableName)

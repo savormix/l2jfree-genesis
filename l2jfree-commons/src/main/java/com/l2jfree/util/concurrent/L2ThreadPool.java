@@ -39,9 +39,9 @@ public final class L2ThreadPool
 	
 	private static final long MAX_DELAY = TimeUnit.NANOSECONDS.toMillis(Long.MAX_VALUE - System.nanoTime()) / 2;
 	
-	private static ScheduledThreadPoolExecutor[] _scheduledPools;
-	private static ThreadPoolExecutor[] _instantPools;
-	private static ThreadPoolExecutor[] _longRunningPools;
+	private static ScheduledThreadPoolExecutor[] _scheduledPools = new ScheduledThreadPoolExecutor[0];
+	private static ThreadPoolExecutor[] _instantPools = new ThreadPoolExecutor[0];
+	private static ThreadPoolExecutor[] _longRunningPools = new ThreadPoolExecutor[0];
 	
 	private static int getPoolSize(ThreadPoolExecutor[] threadPools)
 	{
