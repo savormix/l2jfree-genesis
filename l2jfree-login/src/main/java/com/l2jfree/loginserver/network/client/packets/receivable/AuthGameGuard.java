@@ -56,7 +56,8 @@ public final class AuthGameGuard extends L2ClientPacket
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		_sessionId = buf.readD();
-		// the rest doesn't make much sense
+		buf.readQ();
+		buf.readQ();
 		buf.skipAll();
 	}
 	

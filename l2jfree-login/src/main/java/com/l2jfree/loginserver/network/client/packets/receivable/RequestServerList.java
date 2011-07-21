@@ -52,7 +52,6 @@ public final class RequestServerList extends L2ClientPacket
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		_sessionKey = buf.readQ();
-		// the rest doesn't make much sense
 		buf.skipAll();
 	}
 	

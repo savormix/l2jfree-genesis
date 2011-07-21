@@ -62,6 +62,6 @@ public final class PlayersInGame extends L2GameServerPacket
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		// TODO Auto-generated method stub
-		
+		_log.warn("PIG");
 	}
 }

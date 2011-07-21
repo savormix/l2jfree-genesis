@@ -71,6 +71,6 @@ public final class ServerStatus extends L2GameServerPacket
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		// TODO Auto-generated method stub
-		
+		_log.warn("SS");
 	}
 }

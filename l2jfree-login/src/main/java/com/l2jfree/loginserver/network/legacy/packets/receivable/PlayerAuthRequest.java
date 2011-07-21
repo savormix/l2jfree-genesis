@@ -61,6 +61,6 @@ public final class PlayerAuthRequest extends L2GameServerPacket
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		// TODO Auto-generated method stub
-		
+		_log.warn("PAR");
 	}
 }

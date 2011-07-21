@@ -21,9 +21,7 @@ import javax.crypto.Cipher;
 
 import com.l2jfree.loginserver.network.legacy.L2GameServer;
 import com.l2jfree.loginserver.network.legacy.L2LegacyState;
-import com.l2jfree.loginserver.network.legacy.L2NoServiceReason;
 import com.l2jfree.loginserver.network.legacy.packets.L2GameServerPacket;
-import com.l2jfree.loginserver.network.legacy.packets.sendable.LoginServerFail;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
@@ -69,7 +67,8 @@ public final class BlowfishKey extends L2GameServerPacket
 		catch (GeneralSecurityException e)
 		{
 			_log.error("Failed to decipher the Blowfish key!", e);
-			lgs.close(new LoginServerFail(L2NoServiceReason.WRONG_HEXID));
+			// game server already changed the key
+			lgs.closeNow();
 			return;
 		}
 		int i;

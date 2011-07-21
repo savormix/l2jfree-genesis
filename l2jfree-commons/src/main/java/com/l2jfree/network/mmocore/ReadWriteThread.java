@@ -336,7 +336,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		if (client.decipher(buf, dsh) && buf.hasRemaining())
 		{
 			// apply limit
-			int limit = buf.limit();
+			final int limit = buf.limit();
 			buf.limit(pos + dsh.getSize());
 			
 			final int opcode = buf.get() & 0xFF;
@@ -366,12 +366,12 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 							
 							client.getPacketQueue().execute(cp);
 							
-							if (buf.hasRemaining())
+							if (buf.hasRemaining() && buf.remaining() > dsh.getMaxPadding())
 							{
 								// TODO: disabled until packet structures updated properly
 								//report(ErrorMode.BUFFER_OVER_FLOW, client, cp, null);
 								
-								MMOController._log.info("Invalid packet format or padding (buf: " + buf + ", dataSize: " + dataSize
+								MMOController._log.info("Invalid packet format (buf: " + buf + ", dataSize: " + dataSize
 										+ ", pos: " + pos + ", limit: " + limit + ", opcode: " + opcode
 										+ ") used for reading - " + client + " - " + cp.getType() + " - "
 										+ getMMOController().getVersionInfo());

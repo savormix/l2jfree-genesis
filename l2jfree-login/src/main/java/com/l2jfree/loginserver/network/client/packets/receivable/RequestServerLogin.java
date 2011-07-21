@@ -55,7 +55,6 @@ public final class RequestServerLogin extends L2ClientPacket
 	{
 		_sessionKey = buf.readQ();
 		_serverId = buf.readC();
-		// the rest doesn't make much sense
 		buf.skipAll();
 	}
 	

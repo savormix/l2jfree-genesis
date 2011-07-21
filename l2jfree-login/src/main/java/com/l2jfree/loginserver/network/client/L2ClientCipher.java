@@ -57,6 +57,8 @@ public final class L2ClientCipher
 		final int dataSize = size.getSize();
 		// remove checksum
 		size.decreaseSize(4);
+		// ignore padding
+		size.setMaxPadding(8);
 		
 		getBlowfishCipher().decrypt(raw, offset, dataSize);
 		return NewCipher.verifyChecksum(raw, offset, dataSize);

@@ -138,10 +138,16 @@ public class Config extends L2Config
 	
 	/** Whether to behave as a traditional login server */
 	public static boolean SVC_FORCE_LEGACY;
+	
 	/** Whether to check for obvious signs that client has GameGuard disabled */
 	public static boolean SVC_CHECK_GAMEGUARD;
 	/** Whether to show NCSoft's EULA before the game server list */
 	public static boolean SVC_SHOW_EULA;
+	
+	/** Whether to authorize only registered game servers */
+	public static boolean SVC_STRICT_AUTHORIZATION;
+	/** Whether to register game servers if they request an unused ID */
+	public static boolean SVC_SAVE_REQUESTS;
 	
 	private static final class ServiceConfig extends ConfigPropertiesLoader
 	{
@@ -149,8 +155,12 @@ public class Config extends L2Config
 		protected void loadImpl(L2Properties properties)
 		{
 			SVC_FORCE_LEGACY = properties.getBool("ForceLegacyMode", false);
+			
 			SVC_CHECK_GAMEGUARD = properties.getBool("CheckGameGuard", true);
 			SVC_SHOW_EULA = properties.getBool("ShowEULA", false);
+			
+			SVC_STRICT_AUTHORIZATION = properties.getBool("StrictAuthorization", true);
+			SVC_SAVE_REQUESTS = properties.getBool("PersistentRequests", false);
 		}
 		
 		@Override

@@ -72,7 +72,6 @@ public final class RequestAuthLogin extends L2ClientPacket
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		_enciphered = buf.readB(new byte[getMinimumLength()]);
-		// the rest isn't important
 		buf.skipAll();
 	}
 	

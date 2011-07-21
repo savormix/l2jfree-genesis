@@ -40,6 +40,11 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	
 	private L2LegacyState _state;
 	private Integer _id;
+	private boolean _allowedToBan;
+	
+	private String _host;
+	private int _port;
+	private int _maxPlayers;
 	
 	protected L2GameServer(
 			MMOController<L2GameServer, L2GameServerPacket, L2LoginServerPacket> mmoController,
@@ -51,20 +56,19 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 		
 		_state = L2LegacyState.CONNECTED;
 		_id = null;
+		_allowedToBan = false;
 	}
 	
 	@Override
 	protected void onDisconnection()
 	{
-		// TODO Auto-generated method stub
-		
+		L2LegacyConnections.getInstance().remGameServer(this);
 	}
 	
 	@Override
 	protected void onForcedDisconnection()
 	{
-		// TODO Auto-generated method stub
-		
+		L2LegacyConnections.getInstance().remGameServer(this);
 	}
 	
 	@Override
@@ -87,8 +91,6 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 			_log.warn("Could not decipher received data: checksum mismatch. " + this);
 			closeNow();
 		}
-		
-		buf.limit(buf.limit() - 4);
 		
 		return success;
 	}
@@ -114,7 +116,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	@Override
 	protected L2LoginServerPacket getDefaultClosePacket()
 	{
-		return new LoginServerFail(L2NoServiceReason.WRONG_HEXID);
+		return new LoginServerFail(L2NoServiceReason.NO_FREE_ID);
 	}
 	
 	@Override
@@ -188,6 +190,80 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	public void setId(int id)
 	{
 		_id = id;
+	}
+	
+	/**
+	 * Returns whether account ban requests from this game server
+	 * should be served.
+	 * @return can this game server ban accounts
+	 */
+	public boolean isAllowedToBan()
+	{
+		return _allowedToBan;
+	}
+	
+	/**
+	 * Specifies whether account ban requests from this game server
+	 * should be served.
+	 * @param allowedToBan can this game server ban accounts
+	 */
+	public void setAllowedToBan(boolean allowedToBan)
+	{
+		_allowedToBan = allowedToBan;
+	}
+	
+	/**
+	 * Returns the advertised listening IP.
+	 * @return the listening IP
+	 */
+	public String getHost()
+	{
+		return _host;
+	}
+	
+	/**
+	 * Sets the listening IP.
+	 * @param host game server's listening IP
+	 */
+	public void setHost(String host)
+	{
+		_host = host;
+	}
+	
+	/**
+	 * Returns the advertised listening port.
+	 * @return game server's listening port
+	 */
+	public int getPort()
+	{
+		return _port;
+	}
+	
+	/**
+	 * Sets the listening port.
+	 * @param port game server's listening port
+	 */
+	public void setPort(int port)
+	{
+		_port = port;
+	}
+	
+	/**
+	 * Returns how many players are allowed to be connected at any given time.
+	 * @return maximum players online
+	 */
+	public int getMaxPlayers()
+	{
+		return _maxPlayers;
+	}
+	
+	/**
+	 * Sets the maximum number of players online.
+	 * @param maxPlayers maximum players online
+	 */
+	public void setMaxPlayers(int maxPlayers)
+	{
+		_maxPlayers = maxPlayers;
 	}
 	
 	/**

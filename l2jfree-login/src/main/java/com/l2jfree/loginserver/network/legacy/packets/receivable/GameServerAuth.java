@@ -15,13 +15,26 @@
 package com.l2jfree.loginserver.network.legacy.packets.receivable;
 
 import java.nio.BufferUnderflowException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Set;
+import java.util.TreeSet;
 
+import com.l2jfree.loginserver.Config;
+import com.l2jfree.loginserver.network.legacy.L2GameServer;
+import com.l2jfree.loginserver.network.legacy.L2LegacyConnections;
+import com.l2jfree.loginserver.network.legacy.L2LegacyState;
 import com.l2jfree.loginserver.network.legacy.L2NoServiceReason;
 import com.l2jfree.loginserver.network.legacy.packets.L2GameServerPacket;
+import com.l2jfree.loginserver.network.legacy.packets.sendable.AuthResponse;
 import com.l2jfree.loginserver.network.legacy.packets.sendable.LoginServerFail;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
+import com.l2jfree.sql.L2Database;
 import com.l2jfree.util.HexUtil;
+import com.l2jfree.util.logging.L2Logger;
 
 /**
  * @author savormix
@@ -32,9 +45,12 @@ public final class GameServerAuth extends L2GameServerPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x01;
 	
+	private static final L2Logger _log = L2Logger.getLogger(GameServerAuth.class);
+	private static final Object ASSIGNMENT_LOCK = new Object();
+	
 	private int _desiredId;
 	private boolean _acceptAlternateId;
-	private boolean _reservedHost;
+	//private boolean _reservedHost;
 	private int _port;
 	private int _maxPlayers;
 	private byte[] _hexId;
@@ -58,7 +74,7 @@ public final class GameServerAuth extends L2GameServerPacket
 	{
 		_desiredId = buf.readC();
 		_acceptAlternateId = (buf.readC() == 0 ? false : true);
-		_reservedHost = (buf.readC() == 0 ? false : true);
+		/*_reservedHost = (*/buf.readC()/* == 0 ? false : true)*/;
 		_port = buf.readH();
 		_maxPlayers = buf.readD();
 		int size = buf.readD();
@@ -75,8 +91,178 @@ public final class GameServerAuth extends L2GameServerPacket
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		// TODO Auto-generated method stub
-		String hexId = HexUtil.hexToString(_hexId);
-		getClient().close(new LoginServerFail(L2NoServiceReason.WRONG_HEXID));
+		L2GameServer lgs = getClient();
+		L2LegacyConnections llc = L2LegacyConnections.getInstance();
+		synchronized (ASSIGNMENT_LOCK)
+		{
+			if (llc.getById(_desiredId) != null)
+			{
+				if (!_acceptAlternateId || Config.SVC_STRICT_AUTHORIZATION)
+					// desired ID is not available
+					lgs.close(new LoginServerFail(L2NoServiceReason.ALREADY_LOGGED_IN));
+				else // game server can take any ID and login server may assign them
+					tryAssignAvailableId(lgs);
+			}
+			else // no on-line game server on the desired ID
+			{
+				boolean reservedId = false;
+				String auth = null;
+				boolean bans = false;
+				
+				Connection con = null;
+				try
+				{
+					con = L2Database.getConnection();
+					PreparedStatement ps = con.prepareStatement("SELECT authData, allowBans FROM gameserver WHERE id = ?");
+					ps.setInt(1, _desiredId);
+					ResultSet rs = ps.executeQuery();
+					
+					reservedId = rs.next();
+					if (reservedId)
+					{
+						auth = rs.getString("authData");
+						bans = rs.getBoolean("allowBans");
+					}
+					
+					rs.close();
+					ps.close();
+				}
+				catch (SQLException e)
+				{
+					_log.error("Could not obtain game server data!", e);
+					lgs.close(new LoginServerFail(L2NoServiceReason.NO_FREE_ID));
+					return;
+				}
+				finally
+				{
+					L2Database.close(con);
+				}
+				
+				if (reservedId) // this ID is registered
+				{
+					String hexId = HexUtil.bytesToHexString(_hexId);
+					if (!hexId.equals(auth)) // invalid authorization
+					{
+						if (!_acceptAlternateId || Config.SVC_STRICT_AUTHORIZATION)
+							// desired ID is not available
+							lgs.close(new LoginServerFail(L2NoServiceReason.WRONG_HEXID));
+						else // game server can take any ID and login server may assign them
+							tryAssignAvailableId(lgs);
+					}
+					else // valid authorization
+						finishAuthorization(_desiredId, bans, lgs);
+				}
+				else if (Config.SVC_STRICT_AUTHORIZATION) // ID is free, but not available
+				{
+					lgs.close(new LoginServerFail(L2NoServiceReason.WRONG_HEXID));
+				}
+				else // ID is available for persistent use
+				{
+					if (Config.SVC_SAVE_REQUESTS)
+					{
+						try
+						{
+							con = L2Database.getConnection();
+							PreparedStatement ps = con.prepareStatement("INSERT INTO gameserver (id, authData, allowBans) VALUES (?, ?, ?)");
+							ps.setInt(1, _desiredId);
+							ps.setString(2, HexUtil.bytesToHexString(_hexId));
+							ps.setBoolean(3, false);
+							ps.executeUpdate();
+							ps.close();
+						}
+						catch (SQLException e)
+						{
+							_log.error("Could not save game server data!", e);
+							// but we still can authorize temporarily
+						}
+						finally
+						{
+							L2Database.close(con);
+						}
+					}
+					
+					finishAuthorization(_desiredId, false, lgs);
+				}
+			}
+		}
+	}
+	
+	private void finishAuthorization(int id, boolean trusted, L2GameServer lgs)
+	{
+		lgs.setId(id);
+		lgs.setAllowedToBan(trusted);
+		
+		// TODO subnet-based hosts
+		// REGRESSION -->
+		lgs.setHost(null);
+		for (int i = 0; i < _hosts.length; i++)
+			if (_hosts[i++].startsWith("0"))
+				lgs.setHost(_hosts[i]);
+		
+		if (lgs.getHost() == null)
+		{
+			lgs.setHost("127.0.0.1");
+			_log.info("Game server on ID " + _desiredId + " did not specify a default IP!");
+		}
+		else
+			_log.info("Authorized game server on ID " + _desiredId +
+					", advertised IP: " + lgs.getHost());
+		// <-- REGRESSION
+		lgs.setPort(_port);
+		lgs.setMaxPlayers(_maxPlayers);
+		
+		L2LegacyConnections.getInstance().addGameServer(_desiredId, lgs);
+		lgs.setState(L2LegacyState.AUTHED);
+		lgs.sendPacket(new AuthResponse(lgs));
+	}
+	
+	private void tryAssignAvailableId(L2GameServer lgs)
+	{
+		Set<Integer> reserved;
+		
+		Connection con = null;
+		try
+		{
+			con = L2Database.getConnection();
+			PreparedStatement ps = con.prepareStatement("SELECT id FROM gameserver");
+			ResultSet rs = ps.executeQuery();
+			
+			reserved = new TreeSet<Integer>();
+			while (rs.next())
+				reserved.add(rs.getInt("id"));
+			
+			rs.close();
+			ps.close();
+		}
+		catch (SQLException e)
+		{
+			_log.error("Could not obtain game server data!", e);
+			lgs.close(new LoginServerFail(L2NoServiceReason.NO_FREE_ID));
+			return;
+		}
+		finally
+		{
+			L2Database.close(con);
+		}
+		
+		int newId;
+		boolean available = false;
+		for (newId = 1; newId < Byte.MAX_VALUE; newId++)
+		{
+			if (reserved.contains(newId) || // Cannot use a registered ID
+					L2LegacyConnections.getInstance().getById(newId) != null)
+					// Cannot use an ID in use
+				continue;
+			else // can use this ID
+			{
+				available = true;
+				break;
+			}
+		}
+		
+		if (available)
+			finishAuthorization(newId, false, lgs);
+		else // all IDs registered or in use
+			lgs.close(new LoginServerFail(L2NoServiceReason.NO_FREE_ID));
 	}
 }

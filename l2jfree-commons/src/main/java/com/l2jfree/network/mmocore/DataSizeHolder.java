@@ -7,10 +7,12 @@ package com.l2jfree.network.mmocore;
 public class DataSizeHolder
 {
 	private int _size;
+	private int _maxPadding;
 	
 	DataSizeHolder(int size)
 	{
 		_size = size;
+		_maxPadding = 0;
 	}
 	
 	/**
@@ -30,5 +32,26 @@ public class DataSizeHolder
 	{
 		if (diff > 0)
 			_size -= Math.min(getSize(), diff);
+	}
+	
+	/**
+	 * Returns the maximum number of bytes that may appear
+	 * after a valid packet's body.
+	 * @return maximum number of padded bytes
+	 */
+	public int getMaxPadding()
+	{
+		return _maxPadding;
+	}
+	
+	/**
+	 * Sets the maximum number of bytes that may appear
+	 * after a valid packet's body.
+	 * @param maxPadding maximum number of padded bytes
+	 */
+	public void setMaxPadding(int maxPadding)
+	{
+		if (maxPadding > 0)
+			_maxPadding = maxPadding;
 	}
 }

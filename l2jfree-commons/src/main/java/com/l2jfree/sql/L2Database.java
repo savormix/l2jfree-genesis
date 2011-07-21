@@ -42,7 +42,7 @@ public final class L2Database
 	private static ComboPooledDataSource _defaultDataSource;
 	private static EntityManagerFactory _defaultEntityManagerFactory;
 	private static final Map<String, ComboPooledDataSource> _dataSources = new HashMap<String, ComboPooledDataSource>();
-	private static final Map<String, String> _tableSchemas = new HashMap<String, String>();
+	private static final Map<String, SQLContext> _tableContexts = new HashMap<String, SQLContext>();
 	
 	public static void setDataSource(String dataSourceName, DataSourceInitializer initializer) throws Exception
 	{
@@ -73,7 +73,8 @@ public final class L2Database
 		}
 		
 		/**
-		 * Obtains <TT>CURRENT_SCHEMA</TT> on an arbitrary DBMS.
+		 * Obtains <TT>CURRENT_DATABASE</TT> and <TT>CURRENT_SCHEMA</TT>
+		 * on an arbitrary DBMS.
 		 * @author savormix
 		 */
 		Connection con = null;
@@ -105,14 +106,18 @@ public final class L2Database
 			ps.executeUpdate();
 			ps.close();
 			
-			ps = con.prepareStatement("SELECT table_schema FROM information_schema.tables WHERE table_type LIKE ? AND table_name LIKE ?");
+			ps = con.prepareStatement("SELECT table_catalog, table_schema FROM information_schema.tables WHERE table_type LIKE ? AND table_name LIKE ?");
 			ps.setString(1, "BASE_TABLE");
 			ps.setString(2, "_tmp_active_schema");
 			
 			ResultSet rs = ps.executeQuery();
 			
 			if (rs.next())
-				_tableSchemas.put(dataSourceName, rs.getString("table_schema"));
+			{
+				SQLContext sqlc = new SQLContext(rs.getString("table_catalog"),
+						rs.getString("table_schema"));
+				_tableContexts.put(dataSourceName, sqlc);
+			}
 			else
 				throw new IllegalStateException("Table stolen."); // should never happen
 			
@@ -256,10 +261,12 @@ public final class L2Database
 			con = L2Database.getConnection(dataSourceName);
 			
 			PreparedStatement ps = con
-					.prepareStatement("SELECT table_catalog FROM information_schema.tables WHERE table_type LIKE ? AND table_name LIKE ? AND table_schema LIKE ?");
+					.prepareStatement("SELECT table_name FROM information_schema.tables WHERE table_type LIKE ? AND table_name LIKE ? AND table_schema LIKE ? AND table_catalog LIKE ?");
 			ps.setString(1, "BASE_TABLE");
 			ps.setString(2, tableName);
-			ps.setString(3, _tableSchemas.get(dataSourceName));
+			SQLContext sqlc = _tableContexts.get(dataSourceName);
+			ps.setString(3, sqlc.getSchema());
+			ps.setString(4, sqlc.getDatabase());
 			
 			ResultSet rs = ps.executeQuery();
 			
@@ -279,5 +286,27 @@ public final class L2Database
 		}
 		
 		return tableExists;
+	}
+	
+	private static class SQLContext
+	{
+		private final String _database;
+		private final String _schema;
+		
+		private SQLContext(String database, String schema)
+		{
+			_database = database;
+			_schema = schema;
+		}
+		
+		public String getDatabase()
+		{
+			return _database;
+		}
+		
+		public String getSchema()
+		{
+			return _schema;
+		}
 	}
 }

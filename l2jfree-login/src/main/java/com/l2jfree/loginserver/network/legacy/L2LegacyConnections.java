@@ -19,6 +19,9 @@ import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SocketChannel;
 import java.security.interfaces.RSAPublicKey;
 
+import javolution.util.FastMap;
+import javolution.util.FastSet;
+
 import com.l2jfree.loginserver.network.legacy.packets.L2GameServerPacket;
 import com.l2jfree.loginserver.network.legacy.packets.L2LoginServerPacket;
 import com.l2jfree.loginserver.network.legacy.packets.sendable.InitLS;
@@ -62,11 +65,15 @@ public final class L2LegacyConnections extends MMOController<L2GameServer, L2Gam
 		return SingletonHolder.INSTANCE;
 	}
 	
+	private final FastSet<L2GameServer> _connected;
+	private final FastMap<Integer, L2GameServer> _gameServers;
+	
 	protected L2LegacyConnections(MMOConfig config)
 			throws IOException
 	{
 		super(config, L2LegacyPackets.getInstance());
-		// TODO Auto-generated constructor stub
+		_connected = FastSet.newInstance();
+		_gameServers = FastMap.newInstance();
 	}
 	
 	@Override
@@ -75,7 +82,58 @@ public final class L2LegacyConnections extends MMOController<L2GameServer, L2Gam
 	{
 		L2LegacySecurity lls = L2LegacySecurity.getInstance();
 		L2GameServer lgs = new L2GameServer(this, socketChannel, lls.getKeyPair());
+		getConnected().add(lgs);
 		lgs.sendPacket(new InitLS((RSAPublicKey) lgs.getPublicKey()));
 		return lgs;
+	}
+	
+	/**
+	 * Adds an authorized game server.
+	 * @param id game server ID
+	 * @param client game server
+	 */
+	public void addGameServer(int id, L2GameServer client)
+	{
+		getGameServers().put(id, client);
+	}
+	
+	/**
+	 * Removes a possibly authorized game server.
+	 * @param client game server
+	 */
+	public void remGameServer(L2GameServer client)
+	{
+		Integer id = client.getId();
+		if (id != null)
+			getGameServers().remove(id);
+		getConnected().remove(client);
+	}
+	
+	/**
+	 * Returns an authorized game server with the assigned ID.
+	 * @param id assigned ID
+	 * @return an authorized game server or <TT>null</TT>
+	 */
+	public L2GameServer getById(int id)
+	{
+		return getGameServers().get(id);
+	}
+	
+	/**
+	 * Returns connected game servers.
+	 * @return connected game servers
+	 */
+	public FastSet<L2GameServer> getConnected()
+	{
+		return _connected;
+	}
+	
+	/**
+	 * Returns authorized game servers.
+	 * @return authorized game servers
+	 */
+	private FastMap<Integer, L2GameServer> getGameServers()
+	{
+		return _gameServers;
 	}
 }

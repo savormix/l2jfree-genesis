@@ -29,13 +29,13 @@ public final class AuthResponse extends L2LoginServerPacket
 	
 	/**
 	 * Constructs a packet to inform about successful authorization.
-	 * @param id server's ID
-	 * @param name server's name
+	 * @param lgs an authorized game server
 	 */
-	public AuthResponse(int id, String name)
+	public AuthResponse(L2GameServer lgs)
 	{
-		_id = id;
-		_name = name;
+		// TODO Auto-generated method stub
+		_id = lgs.getId();
+		_name = "Unknown";
 	}
 	
 	/* (non-Javadoc)
