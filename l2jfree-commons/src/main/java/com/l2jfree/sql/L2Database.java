@@ -18,7 +18,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
@@ -27,6 +30,7 @@ import javax.persistence.Persistence;
 
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 
+import com.l2jfree.util.Rnd;
 import com.l2jfree.util.logging.L2Logger;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
@@ -79,71 +83,129 @@ public final class L2Database
 		 */
 		Connection con = null;
 		
+		// remove leftover tables
 		try
 		{
 			con = L2Database.getConnection(dataSourceName);
-			
-			PreparedStatement ps = con.prepareStatement("DROP TABLE _tmp_active_schema");
-			ps.executeUpdate();
-			ps.close();
-		}
-		catch (SQLException e)
-		{
-			// OK
-		}
-		finally
-		{
-			L2Database.close(con);
-		}
-		
-		try
-		{
-			con = L2Database.getConnection(dataSourceName);
-			
-			PreparedStatement ps = null;
-			
-			ps = con.prepareStatement("CREATE TABLE _tmp_active_schema (x INT)");
-			ps.executeUpdate();
-			ps.close();
-			
-			ps = con.prepareStatement("SELECT table_catalog, table_schema FROM information_schema.tables WHERE table_type LIKE ? AND table_name LIKE ?");
+			PreparedStatement ps = con.prepareStatement("SELECT table_name FROM information_schema.tables WHERE table_type LIKE ? AND table_name LIKE ?");
 			ps.setString(1, "BASE_TABLE");
-			ps.setString(2, "_tmp_active_schema");
-			
+			ps.setString(2, "zzz%");
 			ResultSet rs = ps.executeQuery();
 			
-			if (rs.next())
-			{
-				SQLContext sqlc = new SQLContext(rs.getString("table_catalog"),
-						rs.getString("table_schema"));
-				_tableContexts.put(dataSourceName, sqlc);
-			}
-			else
-				throw new IllegalStateException("Table stolen."); // should never happen
+			List<String> left = new ArrayList<String>();
+			while (rs.next())
+				left.add(rs.getString("table_name"));
 			
 			rs.close();
 			ps.close();
-		}
-		catch (SQLException e)
-		{
-			throw e;
-		}
-		finally
-		{
-			L2Database.close(con);
-		}
-		
-		try
-		{
-			con = L2Database.getConnection(dataSourceName);
 			
-			PreparedStatement ps = con.prepareStatement("DROP TABLE _tmp_active_schema");
-			ps.executeUpdate();
-			ps.close();
+			int size = left.size();
+			for (String table : left)
+			{
+				try
+				{
+					ps = con.prepareStatement("DROP TABLE " + table);
+					ps.executeUpdate();
+				}
+				catch (SQLException e)
+				{
+					// whatever...
+					size--;
+				}
+				finally
+				{
+					L2Database.closeQuietly(ps);
+				}
+			}
+			
+			if (size > 0)
+				_log.info("Removed " + size + " temporary tables.");
 		}
 		catch (SQLException e)
 		{
 			// whatever...
+		}
+		finally
+		{
+			L2Database.close(con);
+		}
+		
+		try
+		{
+			con = L2Database.getConnection(dataSourceName);
+			String table = null;
+			while (true)
+			{
+				// generate a random table name
+				StringBuilder sb = new StringBuilder("zzz");
+				for (int i = 0; i < 5; i++)
+					sb.append((char) Rnd.get('a', 'z'));
+				table = sb.toString();
+				// DO NOT LOOK UP information_schema NOW
+				
+				// attempt to create in current schema instead
+				PreparedStatement ps = null;
+				try
+				{
+					ps = con.prepareStatement("CREATE TABLE " + table + " (x INT)");
+					ps.executeUpdate();
+				}
+				catch (SQLException e)
+				{
+					// already exists in current schema
+					continue;
+					// P.S. if DB doesn't have enough space for this table
+					// then administrator will have more important problems
+					// than this infinite cycle
+				}
+				finally
+				{
+					L2Database.closeQuietly(ps);
+				}
+				
+				// table did not exist in current schema
+				// we can look it up in information_schema now
+				
+				ps = con.prepareStatement("SELECT table_catalog, table_schema FROM information_schema.tables WHERE table_type LIKE ? AND table_name LIKE ?");
+				ps.setString(1, "BASE_TABLE");
+				ps.setString(2, table);
+				ResultSet rs = ps.executeQuery();
+				if (!rs.next())
+					throw new IllegalStateException("Table stolen."); // should never happen
+				String db = rs.getString("table_catalog");
+				String schema = rs.getString("table_schema");
+				
+				boolean ndr = rs.next(); // non-deterministic results
+				
+				rs.close();
+				ps.close();
+				
+				// remove table
+				try
+				{
+					ps = con.prepareStatement("DROP TABLE " + table);
+					ps.executeUpdate();
+				}
+				catch (SQLException e)
+				{
+					// whatever...
+				}
+				finally
+				{
+					L2Database.closeQuietly(ps);
+				}
+				
+				if (!ndr) // database and schema obtained
+				{
+					SQLContext sqlc = new SQLContext(db, schema);
+					_tableContexts.put(dataSourceName, sqlc);
+					break;
+				}
+			}
+		}
+		catch (SQLException e)
+		{
+			throw e;
 		}
 		finally
 		{
@@ -286,6 +348,18 @@ public final class L2Database
 		}
 		
 		return tableExists;
+	}
+	
+	private static void closeQuietly(Statement s)
+	{
+		try
+		{
+			s.close();
+		}
+		catch (Exception e)
+		{
+			// ignore
+		}
 	}
 	
 	private static class SQLContext

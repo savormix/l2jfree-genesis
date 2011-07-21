@@ -249,7 +249,7 @@ public final class GameServerAuth extends L2GameServerPacket
 		boolean available = false;
 		for (newId = 1; newId < Byte.MAX_VALUE; newId++)
 		{
-			if (reserved.contains(newId) || // Cannot use a registered ID
+			if (reserved.remove(newId) || // Cannot use a registered ID
 					L2LegacyConnections.getInstance().getById(newId) != null)
 					// Cannot use an ID in use
 				continue;

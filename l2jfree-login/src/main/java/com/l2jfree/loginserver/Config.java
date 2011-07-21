@@ -73,10 +73,8 @@ public class Config extends L2Config
 	public static String DB_USER;
 	/** Database password */
 	public static String DB_PASSWORD;
-	/** Whether to optimize database tables */
+	/** Whether to optimize database tables on startup */
 	public static boolean DB_OPTIMIZE;
-	/** Whether to install database tables */
-	public static boolean DB_INSTALL;
 	
 	private static final class DatabaseConfig extends ConfigPropertiesLoader
 	{
@@ -91,10 +89,14 @@ public class Config extends L2Config
 				DB_URL = "jdbc:" + DB_URL;
 			
 			DB_USER = properties.getString("Login");
+			if (DB_USER.equalsIgnoreCase("root") || DB_USER.equalsIgnoreCase("postgres"))
+			{
+				_log.info("L2jFree servers should not use DBMS superuser accounts ... exited.");
+				Shutdown.exit(TerminationStatus.ENVIRONMENT_SUPERUSER);
+			}
 			DB_PASSWORD = properties.getString("Password", "");
 			
 			DB_OPTIMIZE = properties.getBool("OptimizeTables", true);
-			DB_INSTALL = properties.getBool("AutoCreateTables", false);
 		}
 		
 		@Override
