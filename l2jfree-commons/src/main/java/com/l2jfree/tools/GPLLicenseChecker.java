@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree;
+package com.l2jfree.tools;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
+
+import com.l2jfree.L2Config;
 
 /**
  * @author NB4L1
