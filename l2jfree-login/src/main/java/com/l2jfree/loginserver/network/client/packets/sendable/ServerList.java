@@ -14,8 +14,15 @@
  */
 package com.l2jfree.loginserver.network.client.packets.sendable;
 
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import com.l2jfree.loginserver.network.client.L2LoginClient;
 import com.l2jfree.loginserver.network.client.packets.L2ServerPacket;
+import com.l2jfree.loginserver.network.gameserver.L2GameServerCache;
+import com.l2jfree.loginserver.network.gameserver.L2GameServerView;
+import com.l2jfree.loginserver.network.legacy.L2GameServer;
+import com.l2jfree.loginserver.network.legacy.L2LegacyConnections;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
@@ -24,12 +31,25 @@ import com.l2jfree.network.mmocore.MMOBuffer;
  */
 public final class ServerList extends L2ServerPacket
 {
+	private final SortedSet<L2GameServerView> _gameServers;
+	
 	/**
 	 * Constructs a packet to inform about known game servers.
 	 */
 	public ServerList()
 	{
-		// TODO Auto-generated constructor stub
+		_gameServers = new TreeSet<L2GameServerView>();
+		for (L2GameServerView lgsv : L2GameServerCache.getInstance().getRegisteredGameServers())
+			_gameServers.add(lgsv);
+		
+		Object[] authed = L2LegacyConnections.getInstance().getAuthorized().toArray();
+		for (int i = 0; i < authed.length; i++)
+		{
+			L2GameServerView lgsv = ((L2GameServer) authed[i]).getView();
+			lgsv.update();
+			_gameServers.remove(lgsv);
+			_gameServers.add(lgsv);
+		}
 	}
 	
 	/* (non-Javadoc)
@@ -47,33 +67,22 @@ public final class ServerList extends L2ServerPacket
 	@Override
 	protected void writeImpl(L2LoginClient client, MMOBuffer buf)
 	{
-		buf.writeC(1); // how many servers
-		buf.writeC(0); // last server ID
+		buf.writeC(_gameServers.size());
+		buf.writeC(client.getAccount().getLastServerId());
 		
-		buf.writeC(1); // server ID
-		// advertised IP
-		buf.writeC(127);
-		buf.writeC(0);
-		buf.writeC(0);
-		buf.writeC(1);
-		buf.writeD(7777); // port
-		buf.writeC(21); // min age
-		buf.writeC(true); // PvP
-		buf.writeH(0); // players on
-		buf.writeH(0); // max players
-		buf.writeC(false); // online
-		
-		int bits = 0;
-        //if (false) // ???
-        //    bits |= 0x01;
-        if (true) // clock
-            bits |= 0x02;
-        //if (false) // hide name?
-        //	bits |= 0x03;
-        //if (false) // test server
-        //    bits |= 0x04;
-        buf.writeD(bits);
-
-        buf.writeC(true); // brackets
+		for (L2GameServerView gsv : _gameServers)
+		{
+			buf.writeC(gsv.getId());
+			for (int i = 0; i < 4; i++)
+				buf.writeC(gsv.getIpv4()[i]);
+			buf.writeD(gsv.getPort());
+			buf.writeC(gsv.getAge());
+			buf.writeC(gsv.isPvp());
+			buf.writeH(gsv.getOnlinePlayers());
+			buf.writeH(gsv.getMaxPlayers());
+			buf.writeC(gsv.isOnline());
+			buf.writeD(gsv.getTypes());
+			buf.writeC(gsv.isBrackets());
+		}
 	}
 }

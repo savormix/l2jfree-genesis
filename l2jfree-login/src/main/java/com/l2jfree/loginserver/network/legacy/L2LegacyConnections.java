@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SocketChannel;
 import java.security.interfaces.RSAPublicKey;
+import java.util.Collection;
 
 import javolution.util.FastMap;
 import javolution.util.FastSet;
@@ -126,6 +127,15 @@ public final class L2LegacyConnections extends MMOController<L2GameServer, L2Gam
 	public FastSet<L2GameServer> getConnected()
 	{
 		return _connected;
+	}
+	
+	/**
+	 * Returns authorized game servers.
+	 * @return authorized game servers
+	 */
+	public Collection<L2GameServer> getAuthorized()
+	{
+		return getGameServers().values();
 	}
 	
 	/**

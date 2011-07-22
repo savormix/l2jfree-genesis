@@ -17,8 +17,14 @@ package com.l2jfree.loginserver.network.legacy.packets.receivable;
 import java.nio.BufferUnderflowException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
+import com.l2jfree.loginserver.network.legacy.L2GameServer;
 import com.l2jfree.loginserver.network.legacy.packets.L2GameServerPacket;
+import com.l2jfree.loginserver.network.legacy.status.L2LegacyAgeLimit;
+import com.l2jfree.loginserver.network.legacy.status.L2LegacyManagedState;
+import com.l2jfree.loginserver.network.legacy.status.L2LegacyStatus;
+import com.l2jfree.loginserver.network.legacy.status.L2LegacyType;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
@@ -45,7 +51,8 @@ public final class ServerStatus extends L2GameServerPacket
 	@Override
 	protected int getMinimumLength()
 	{
-		return 4;
+		// a valid packet of 4 bytes does not need to be handled
+		return 12;
 	}
 	
 	/* (non-Javadoc)
@@ -70,7 +77,49 @@ public final class ServerStatus extends L2GameServerPacket
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		// TODO Auto-generated method stub
-		_log.warn("SS");
+		L2GameServer lgs = getClient();
+		for (L2LegacyManagedState llms : L2LegacyManagedState.values())
+		{
+			Integer val = _status.remove(llms.getId());
+			if (val == null)
+				continue;
+			
+			switch (llms)
+			{
+			case STATUS:
+				lgs.setStatus(L2LegacyStatus.getById(val));
+				break;
+			case TYPE:
+				lgs.setTypes(val);
+				break;
+			case BRACKETS:
+				lgs.setBrackets(val.intValue() == 0);
+				break;
+			case MAX_PLAYERS:
+				lgs.setMaxPlayers(val);
+				break;
+			case TEST_SERVER:
+				boolean off = val.intValue() == 0;
+				int mask = L2LegacyType.TEST.getMask();
+				if (off)
+					lgs.setTypes(lgs.getTypes() & ~mask);
+				else
+					lgs.setTypes(lgs.getTypes() | mask);
+				break;
+			case AGE_LIMIT:
+				lgs.setAge(val);
+				if (!L2LegacyAgeLimit.isDisplayed(lgs))
+					_log.info("Game server on ID " + lgs.getId() +
+							" specified an invisible age limit.");
+				break;
+			default:
+				_log.warn("Unhandled legacy managed state: " + llms);
+				break;
+			}
+		}
+		
+		for (Entry<Integer, Integer> e : _status.entrySet())
+			_log.warn("Unknown legacy managed state! Type: " +
+					e.getKey() + " value: " + e.getValue());
 	}
 }

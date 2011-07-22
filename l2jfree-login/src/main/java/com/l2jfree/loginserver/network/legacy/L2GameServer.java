@@ -22,9 +22,12 @@ import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
+import javolution.util.FastSet;
+
 import com.l2jfree.loginserver.network.legacy.packets.L2GameServerPacket;
 import com.l2jfree.loginserver.network.legacy.packets.L2LoginServerPacket;
 import com.l2jfree.loginserver.network.legacy.packets.sendable.LoginServerFail;
+import com.l2jfree.loginserver.network.legacy.status.L2LegacyStatus;
 import com.l2jfree.network.mmocore.DataSizeHolder;
 import com.l2jfree.network.mmocore.MMOConnection;
 import com.l2jfree.network.mmocore.MMOController;
@@ -38,13 +41,28 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	private final KeyPair _keyPair;
 	private final L2LegacyCipher _cipher;
 	
+	private L2LegacyGameServerView _view;
 	private L2LegacyState _state;
 	private Integer _id;
 	private boolean _allowedToBan;
 	
+	// GameServerAuth
 	private String _host;
 	private int _port;
+	// Can be modified via ServerStatus
 	private int _maxPlayers;
+	
+	// ServerStatus
+	private L2LegacyStatus _status;
+	private int _types;
+	private boolean _brackets;
+	private int _age;
+	
+	// PlayersInGame, PlayerAuthRequest, PlayerLogout
+	private final FastSet<String> _onlineAccounts;
+	
+	// unmanaged
+	private final boolean _pvp;
 	
 	protected L2GameServer(
 			MMOController<L2GameServer, L2GameServerPacket, L2LoginServerPacket> mmoController,
@@ -57,6 +75,12 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 		_state = L2LegacyState.CONNECTED;
 		_id = null;
 		_allowedToBan = false;
+		
+		_host = "0.0.0.0";
+		
+		_status = L2LegacyStatus.DOWN;
+		_onlineAccounts = FastSet.newInstance();
+		_pvp = true;
 	}
 	
 	@Override
@@ -148,12 +172,32 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	}
 	
 	/**
+	 * Returns the scrambled RSA key pair.
+	 * @return key pair
+	 */
+	private KeyPair getKeyPair()
+	{
+		return _keyPair;
+	}
+	
+	/**
 	 * Returns the cipher.
 	 * @return cipher
 	 */
 	public L2LegacyCipher getCipher()
 	{
 		return _cipher;
+	}
+	
+	/**
+	 * Returns a view over this game server.
+	 * @return view
+	 */
+	public L2LegacyGameServerView getView()
+	{
+		if (_view == null)
+			_view = new L2LegacyGameServerView(this);
+		return _view;
 	}
 	
 	/**
@@ -227,7 +271,8 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	 */
 	public void setHost(String host)
 	{
-		_host = host;
+		if (host != null)
+			_host = host;
 	}
 	
 	/**
@@ -267,11 +312,95 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	}
 	
 	/**
-	 * Returns the scrambled RSA key pair.
-	 * @return key pair
+	 * Returns game server status to be displayed in the server list.
+	 * @return server status
 	 */
-	private KeyPair getKeyPair()
+	public L2LegacyStatus getStatus()
 	{
-		return _keyPair;
+		return _status;
+	}
+	
+	/**
+	 * Change game server status.
+	 * @param status server status
+	 */
+	public void setStatus(L2LegacyStatus status)
+	{
+		if (status != null)
+			_status = status;
+	}
+	
+	/**
+	 * Returns game server types to be displayed in the server list.
+	 * @return server types
+	 */
+	public int getTypes()
+	{
+		return _types;
+	}
+	
+	/**
+	 * Specify game server types to be displayed in the server list.
+	 * @param types server types
+	 */
+	public void setTypes(int types)
+	{
+		_types = types;
+	}
+	
+	/**
+	 * Returns whether square brackets should be displayed before the game server's
+	 * name in the server list.
+	 * @return whether to show square brackets
+	 */
+	public boolean isBrackets()
+	{
+		return _brackets;
+	}
+	
+	/**
+	 * Specify whether square brackets should be displayed before the game server's
+	 * name in the server list.
+	 * @param brackets whether to show square brackets
+	 */
+	public void setBrackets(boolean brackets)
+	{
+		_brackets = brackets;
+	}
+	
+	/**
+	 * Returns age required to play on this game server.
+	 * @return minimal player age
+	 */
+	public int getAge()
+	{
+		return _age;
+	}
+	
+	/**
+	 * Changes age required to play on this game server.
+	 * @param age minimal player age
+	 */
+	public void setAge(int age)
+	{
+		_age = age;
+	}
+	
+	/**
+	 * Returns names of accounts logged into this game server.
+	 * @return online account names
+	 */
+	public FastSet<String> getOnlineAccounts()
+	{
+		return _onlineAccounts;
+	}
+	
+	/**
+	 * All legacy game servers allow PvP.
+	 * @return <TT>true</TT>
+	 */
+	public boolean isPvp()
+	{
+		return _pvp;
 	}
 }

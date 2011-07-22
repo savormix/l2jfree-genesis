@@ -29,6 +29,7 @@ import javax.crypto.Cipher;
 import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
 import com.l2jfree.loginserver.Config;
+import com.l2jfree.loginserver.network.client.L2Account;
 import com.l2jfree.loginserver.network.client.L2BanReason;
 import com.l2jfree.loginserver.network.client.L2LoginClient;
 import com.l2jfree.loginserver.network.client.L2LoginClientState;
@@ -128,7 +129,7 @@ public final class RequestAuthLogin extends L2ClientPacket
 			int ban = -1;
 			
 			con = L2Database.getConnection();
-			PreparedStatement ps = con.prepareStatement("SELECT username, password, banReason FROM account WHERE username LIKE ?");
+			PreparedStatement ps = con.prepareStatement("SELECT password, superUser, birthDate, banReason, lastServerId FROM account WHERE username LIKE ?");
 			ps.setString(1, user);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next())
@@ -138,6 +139,10 @@ public final class RequestAuthLogin extends L2ClientPacket
 					ban = rs.getInt("banReason");
 					if (ban == 0)
 					{
+						L2Account la = new L2Account(user, rs.getBoolean("superUser"),
+								rs.getDate("birthDate"), rs.getInt("lastServerId"));
+						llc.setAccount(la);
+						
 						if (Config.SVC_SHOW_EULA)
 						{
 							llc.setState(L2LoginClientState.LOGGED_IN);

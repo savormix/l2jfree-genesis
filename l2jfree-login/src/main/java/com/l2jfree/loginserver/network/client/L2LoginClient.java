@@ -46,6 +46,8 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	private L2LoginClientState _state;
 	private Long _activeSessionKey;
 	
+	private L2Account _account;
+	
 	protected L2LoginClient(
 			MMOController<L2LoginClient, L2ClientPacket, L2ServerPacket> mmoController,
 			SocketChannel socketChannel, int sessionId, int protocol,
@@ -244,5 +246,23 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	public void setActiveSessionKey(Long activeSessionKey)
 	{
 		_activeSessionKey = activeSessionKey;
+	}
+	
+	/**
+	 * Returns the associated account.
+	 * @return account
+	 */
+	public L2Account getAccount()
+	{
+		return _account;
+	}
+	
+	/**
+	 * Associates an account with this connection.
+	 * @param account account
+	 */
+	public void setAccount(L2Account account)
+	{
+		_account = account;
 	}
 }

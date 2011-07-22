@@ -47,7 +47,6 @@ public final class L2LegacyPackets implements IPacketHandler<L2GameServer, L2Gam
 	public L2GameServerPacket handlePacket(ByteBuffer buf, L2GameServer client,
 			int opcode)
 	{
-		_log.info("Incoming: " + opcode);
 		switch (opcode)
 		{
 		case BlowfishKey.OPCODE:

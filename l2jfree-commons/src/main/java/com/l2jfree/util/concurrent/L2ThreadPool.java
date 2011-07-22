@@ -55,7 +55,8 @@ public final class L2ThreadPool
 	
 	public static void initThreadPools(ThreadPoolInitializer initializer) throws Exception
 	{
-		if (_scheduledPools != null || _instantPools != null || _longRunningPools != null)
+		if (!ArrayUtils.isEmpty(_scheduledPools) || !ArrayUtils.isEmpty(_instantPools) ||
+				!ArrayUtils.isEmpty(_longRunningPools))
 			throw new Exception("The thread pool has been already set!");
 		
 		initializer.initThreadPool();

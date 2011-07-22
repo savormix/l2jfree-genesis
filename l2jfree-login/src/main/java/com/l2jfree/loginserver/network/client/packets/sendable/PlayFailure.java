@@ -51,6 +51,7 @@ public final class PlayFailure extends L2ServerPacket
 	@Override
 	protected void writeImpl(L2LoginClient client, MMOBuffer buf)
 	{
+		client.setAccount(null);
 		buf.writeC(_reason);
 	}
 }

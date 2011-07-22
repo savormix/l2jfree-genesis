@@ -19,6 +19,7 @@ import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
 import com.l2jfree.loginserver.network.client.L2ClientConnections;
 import com.l2jfree.loginserver.network.client.L2ClientSecurity;
+import com.l2jfree.loginserver.network.gameserver.L2GameServerCache;
 import com.l2jfree.loginserver.network.legacy.L2LegacyConnections;
 import com.l2jfree.loginserver.network.legacy.L2LegacySecurity;
 import com.l2jfree.sql.TableOptimizer;
@@ -40,6 +41,8 @@ public final class LoginServer extends Config
 		L2LoginIdentifier.getInstance().getUID();
 		
 		TableOptimizer.optimize(Config.DB_URL);
+		
+		L2GameServerCache.getInstance();
 		
 		if (Config.NET_ENABLE_LEGACY || Config.SVC_FORCE_LEGACY)
 		{
