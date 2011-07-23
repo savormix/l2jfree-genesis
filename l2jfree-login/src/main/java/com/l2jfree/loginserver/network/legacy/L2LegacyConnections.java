@@ -75,6 +75,7 @@ public final class L2LegacyConnections extends MMOController<L2GameServer, L2Gam
 		super(config, L2LegacyPackets.getInstance());
 		_connected = FastSet.newInstance();
 		_gameServers = FastMap.newInstance();
+		_gameServers.setShared(true);
 	}
 	
 	@Override

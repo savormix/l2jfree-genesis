@@ -44,6 +44,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	private L2LegacyGameServerView _view;
 	private L2LegacyState _state;
 	private Integer _id;
+	private String _auth;
 	private boolean _allowedToBan;
 	
 	// GameServerAuth
@@ -234,6 +235,27 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	public void setId(int id)
 	{
 		_id = id;
+	}
+	
+	/**
+	 * Returns the game server's authorization string.
+	 * <BR><BR>
+	 * If login server [temporarily] assigned a free ID to this game server, then
+	 * <TT>null</TT> is returned instead.
+	 * @return authorization data
+	 */
+	public String getAuth()
+	{
+		return _auth;
+	}
+	
+	/**
+	 * Specifies the authorization string used by this game server.
+	 * @param auth authorization data
+	 */
+	public void setAuth(String auth)
+	{
+		_auth = auth;
 	}
 	
 	/**

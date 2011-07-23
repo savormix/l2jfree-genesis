@@ -20,6 +20,7 @@ import java.security.GeneralSecurityException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -172,6 +173,19 @@ public final class RequestAuthLogin extends L2ClientPacket
 				ps.setString(2, user);
 				ps.executeUpdate();
 				ps.close();
+				try
+				{
+					ps = con.prepareStatement("INSERT INTO logins (username, ipv4, date_) VALUES (?, ?, ?)");
+					ps.setString(1, user);
+					ps.setString(2, llc.getHostAddress());
+					ps.setDate(3, new Date(System.currentTimeMillis()));
+					ps.executeUpdate();
+					ps.close();
+				}
+				catch (SQLException e)
+				{
+					// one entry per IP per day by default
+				}
 			}
 		}
 		catch (SQLException e)

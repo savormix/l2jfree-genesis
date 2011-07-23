@@ -15,10 +15,15 @@
 package com.l2jfree.loginserver.network.legacy.packets.receivable;
 
 import java.nio.BufferUnderflowException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Types;
 
 import com.l2jfree.loginserver.network.legacy.packets.L2GameServerPacket;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
+import com.l2jfree.sql.L2Database;
 
 /**
  * @author savormix
@@ -58,7 +63,27 @@ public final class ChangeAccessLevel extends L2GameServerPacket
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		// TODO Auto-generated method stub
-		_log.warn("CAL");
+		Connection con = null;
+		try
+		{
+			con = L2Database.getConnection();
+			PreparedStatement ps = con.prepareStatement("UPDATE account SET banReason = ?, superUser = ? WHERE username LIKE ?");
+			if (_level < 0)
+				ps.setInt(1, -_level);
+			else
+				ps.setNull(1, Types.INTEGER);
+			ps.setBoolean(2, _level > 0);
+			ps.setString(3, _account);
+			ps.executeUpdate();
+			ps.close();
+		}
+		catch (SQLException e)
+		{
+			_log.error("Could not change account access level!", e);
+		}
+		finally
+		{
+			L2Database.close(con);
+		}
 	}
 }

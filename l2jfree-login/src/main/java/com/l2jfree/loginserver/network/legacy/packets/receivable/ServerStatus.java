@@ -24,7 +24,6 @@ import com.l2jfree.loginserver.network.legacy.packets.L2GameServerPacket;
 import com.l2jfree.loginserver.network.legacy.status.L2LegacyAgeLimit;
 import com.l2jfree.loginserver.network.legacy.status.L2LegacyManagedState;
 import com.l2jfree.loginserver.network.legacy.status.L2LegacyStatus;
-import com.l2jfree.loginserver.network.legacy.status.L2LegacyType;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
@@ -97,14 +96,6 @@ public final class ServerStatus extends L2GameServerPacket
 				break;
 			case MAX_PLAYERS:
 				lgs.setMaxPlayers(val);
-				break;
-			case TEST_SERVER:
-				boolean off = val.intValue() == 0;
-				int mask = L2LegacyType.TEST.getMask();
-				if (off)
-					lgs.setTypes(lgs.getTypes() & ~mask);
-				else
-					lgs.setTypes(lgs.getTypes() | mask);
 				break;
 			case AGE_LIMIT:
 				lgs.setAge(val);

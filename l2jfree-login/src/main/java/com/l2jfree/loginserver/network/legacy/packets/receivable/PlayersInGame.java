@@ -61,7 +61,7 @@ public final class PlayersInGame extends L2GameServerPacket
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		// TODO Auto-generated method stub
-		_log.warn("PIG");
+		for (String s : _accounts)
+			getClient().getOnlineAccounts().add(s);
 	}
 }

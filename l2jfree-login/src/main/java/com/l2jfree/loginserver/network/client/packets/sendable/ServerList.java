@@ -47,8 +47,8 @@ public final class ServerList extends L2ServerPacket
 		{
 			L2GameServerView lgsv = ((L2GameServer) authed[i]).getView();
 			lgsv.update();
-			_gameServers.remove(lgsv);
-			_gameServers.add(lgsv);
+			_gameServers.remove(lgsv); // cached empty view
+			_gameServers.add(lgsv); // up-to-date view
 		}
 	}
 	

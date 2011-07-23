@@ -28,10 +28,8 @@ public enum L2LegacyManagedState
 	BRACKETS(3),
 	/** Maximum online players */
 	MAX_PLAYERS(4),
-	/** Restrict to test clients */
-	TEST_SERVER(5),
 	/** Minimal player age */
-	AGE_LIMIT(6);
+	AGE_LIMIT(5);
 	
 	private final Integer _id;
 	

@@ -23,6 +23,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import com.l2jfree.loginserver.Config;
+import com.l2jfree.loginserver.network.gameserver.L2GameServerCache;
 import com.l2jfree.loginserver.network.legacy.L2GameServer;
 import com.l2jfree.loginserver.network.legacy.L2LegacyConnections;
 import com.l2jfree.loginserver.network.legacy.L2LegacyState;
@@ -46,7 +47,6 @@ public final class GameServerAuth extends L2GameServerPacket
 	public static final int OPCODE = 0x01;
 	
 	private static final L2Logger _log = L2Logger.getLogger(GameServerAuth.class);
-	private static final Object ASSIGNMENT_LOCK = new Object();
 	
 	private int _desiredId;
 	private boolean _acceptAlternateId;
@@ -93,7 +93,7 @@ public final class GameServerAuth extends L2GameServerPacket
 	{
 		L2GameServer lgs = getClient();
 		L2LegacyConnections llc = L2LegacyConnections.getInstance();
-		synchronized (ASSIGNMENT_LOCK)
+		synchronized (L2GameServerCache.getInstance().getAuthorizationLock())
 		{
 			if (llc.getById(_desiredId) != null)
 			{
@@ -150,7 +150,7 @@ public final class GameServerAuth extends L2GameServerPacket
 							tryAssignAvailableId(lgs);
 					}
 					else // valid authorization
-						finishAuthorization(_desiredId, bans, lgs);
+						finishAuthorization(_desiredId, hexId, bans, lgs);
 				}
 				else if (Config.SVC_STRICT_AUTHORIZATION) // ID is free, but not available
 				{
@@ -158,6 +158,7 @@ public final class GameServerAuth extends L2GameServerPacket
 				}
 				else // ID is available for persistent use
 				{
+					String hexId = HexUtil.bytesToHexString(_hexId);
 					if (Config.SVC_SAVE_REQUESTS)
 					{
 						try
@@ -165,7 +166,7 @@ public final class GameServerAuth extends L2GameServerPacket
 							con = L2Database.getConnection();
 							PreparedStatement ps = con.prepareStatement("INSERT INTO gameserver (id, authData, allowBans) VALUES (?, ?, ?)");
 							ps.setInt(1, _desiredId);
-							ps.setString(2, HexUtil.bytesToHexString(_hexId));
+							ps.setString(2, hexId);
 							ps.setBoolean(3, false);
 							ps.executeUpdate();
 							ps.close();
@@ -181,15 +182,16 @@ public final class GameServerAuth extends L2GameServerPacket
 						}
 					}
 					
-					finishAuthorization(_desiredId, false, lgs);
+					finishAuthorization(_desiredId, auth, false, lgs);
 				}
 			}
 		}
 	}
 	
-	private void finishAuthorization(int id, boolean trusted, L2GameServer lgs)
+	private void finishAuthorization(int id, String auth, boolean trusted, L2GameServer lgs)
 	{
 		lgs.setId(id);
+		lgs.setAuth(auth);
 		lgs.setAllowedToBan(trusted);
 		
 		// TODO subnet-based hosts
@@ -205,7 +207,7 @@ public final class GameServerAuth extends L2GameServerPacket
 			_log.info("Game server on ID " + _desiredId + " did not specify a default IP!");
 		}
 		else
-			_log.info("Authorized game server on ID " + _desiredId +
+			_log.info("Authorized legacy/compatible game server on ID " + _desiredId +
 					", advertised IP: " + lgs.getHost());
 		// <-- REGRESSION
 		lgs.setPort(_port);
@@ -261,7 +263,7 @@ public final class GameServerAuth extends L2GameServerPacket
 		}
 		
 		if (available)
-			finishAuthorization(newId, false, lgs);
+			finishAuthorization(newId, null, false, lgs);
 		else // all IDs registered or in use
 			lgs.close(new LoginServerFail(L2NoServiceReason.NO_FREE_ID));
 	}
