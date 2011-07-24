@@ -14,10 +14,11 @@
  */
 package com.l2jfree.loginserver.network.client.packets.sendable;
 
+import com.l2jfree.loginserver.network.client.L2ClientConnections;
+import com.l2jfree.loginserver.network.client.L2ClientSecurity;
 import com.l2jfree.loginserver.network.client.L2LoginClient;
 import com.l2jfree.loginserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
-import com.l2jfree.util.Rnd;
 
 /**
  * @author savormix
@@ -28,13 +29,13 @@ public final class PlaySuccess extends L2ServerPacket
 	private final long _sessionKey;
 	
 	/**
-	 * Constructs a packet to inform the client to show the EULA.
+	 * Constructs a packet to inform the client that it can now log into the game server.
 	 * @param llc a connection wrapper
 	 */
 	public PlaySuccess(L2LoginClient llc)
 	{
-		llc.setActiveSessionKey(Rnd.get(Long.MIN_VALUE, Long.MAX_VALUE));
-		_sessionKey = llc.getActiveSessionKey();
+		_sessionKey = L2ClientSecurity.getInstance().assignSessionKey(llc);
+		L2ClientConnections.getInstance().authorize(llc);
 	}
 	
 	/* (non-Javadoc)

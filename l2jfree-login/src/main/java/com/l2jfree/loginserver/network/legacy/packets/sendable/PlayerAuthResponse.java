@@ -25,16 +25,18 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 public final class PlayerAuthResponse extends L2LoginServerPacket
 {
 	private final String _account;
-	private final boolean _response;
+	private final boolean _valid;
 	
 	/**
-	 * @param account Account name
-	 * @param response
+	 * Constructs a packet to confirm/deny account login to a game server.
+	 * @param account account name
+	 * @param valid is login valid
 	 */
-	public PlayerAuthResponse(String account, boolean response)
+	public PlayerAuthResponse(String account, boolean valid)
 	{
 		_account = account;
-		_response = response;
+		_valid = valid;
+		_log.info("PAR: " + account + " " + valid);
 	}
 	
 	/* (non-Javadoc)
@@ -53,6 +55,6 @@ public final class PlayerAuthResponse extends L2LoginServerPacket
 	protected void writeImpl(L2GameServer client, MMOBuffer buf)
 	{
 		buf.writeS(_account);
-		buf.writeC(_response);
+		buf.writeC(_valid);
 	}
 }

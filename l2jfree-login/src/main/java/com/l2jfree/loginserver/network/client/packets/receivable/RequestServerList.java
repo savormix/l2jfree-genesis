@@ -16,6 +16,7 @@ package com.l2jfree.loginserver.network.client.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 
+import com.l2jfree.loginserver.network.client.L2ClientSecurity.SessionKey;
 import com.l2jfree.loginserver.network.client.L2LoginClient;
 import com.l2jfree.loginserver.network.client.L2LoginClientState;
 import com.l2jfree.loginserver.network.client.L2NoServiceReason;
@@ -62,7 +63,8 @@ public final class RequestServerList extends L2ClientPacket
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		L2LoginClient llc = getClient();
-		if (llc.getActiveSessionKey() == _sessionKey)
+		SessionKey sk = llc.getSessionKey();
+		if (sk != null && sk.getActiveKey() == _sessionKey)
 		{
 			llc.setState(L2LoginClientState.VIEWING_LIST);
 			llc.sendPacket(new ServerList());

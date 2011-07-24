@@ -18,6 +18,9 @@ import java.io.IOException;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SocketChannel;
 
+import javolution.util.FastMap;
+
+import com.l2jfree.loginserver.network.client.L2ClientSecurity.SessionKey;
 import com.l2jfree.loginserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.loginserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.loginserver.network.client.packets.sendable.Init;
@@ -62,16 +65,45 @@ public final class L2ClientConnections extends MMOController<L2LoginClient, L2Cl
 		return SingletonHolder.INSTANCE;
 	}
 	
-	/**
-	 * Placeholder javadoc
-	 * 
-	 * @param config param
-	 * @throws IOException exception
-	 */
-	public L2ClientConnections(MMOConfig config) throws IOException
+	private final FastMap<String, SessionKey> _authorized;
+	
+	protected L2ClientConnections(MMOConfig config) throws IOException
 	{
 		super(config, L2ClientPackets.getInstance());
-		// TODO Auto-generated constructor stub
+		_authorized = FastMap.newInstance();
+		_authorized.setShared(true);
+	}
+	
+	/**
+	 * Authorizes an account as logged in via this login server.
+	 * @param client connection
+	 */
+	public void authorize(L2LoginClient client)
+	{
+		if (client == null)
+			return;
+		L2Account acc = client.getAccount();
+		SessionKey sk = client.getSessionKey();
+		if (acc != null && sk != null)
+			getAuthorized().put(acc.getAccount(), sk);
+	}
+	
+	/**
+	 * Determines whether the given account has logged in via this login server.
+	 * @param account account name
+	 * @param activeKey	session key
+	 * @param oldKey previous session key
+	 * @return is login valid
+	 */
+	public boolean isAuthorized(String account, long activeKey, long oldKey)
+	{
+		if (account == null)
+			return false;
+		SessionKey sk = getAuthorized().remove(account);
+		if (sk == null)
+			return false;
+		else
+			return (sk.getActiveKey() == activeKey && sk.getOldKey() == oldKey);
 	}
 	
 	/* (non-Javadoc)
@@ -86,5 +118,10 @@ public final class L2ClientConnections extends MMOController<L2LoginClient, L2Cl
 				PROTOCOL_VERSION, lcs.getKeyPair(), lcs.getBlowfishKey());
 		llc.sendPacket(new Init(llc));
 		return llc;
+	}
+	
+	private FastMap<String, SessionKey> getAuthorized()
+	{
+		return _authorized;
 	}
 }

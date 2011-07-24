@@ -15,13 +15,22 @@
 package com.l2jfree.loginserver.network.client.packets.receivable;
 
 import java.nio.BufferUnderflowException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
+import com.l2jfree.loginserver.network.client.L2Account;
 import com.l2jfree.loginserver.network.client.L2LoginClient;
 import com.l2jfree.loginserver.network.client.L2NoServiceReason;
 import com.l2jfree.loginserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.loginserver.network.client.packets.sendable.PlayFailure;
+import com.l2jfree.loginserver.network.client.packets.sendable.PlaySuccess;
+import com.l2jfree.loginserver.network.legacy.L2GameServer;
+import com.l2jfree.loginserver.network.legacy.L2LegacyConnections;
+import com.l2jfree.loginserver.network.legacy.status.L2LegacyStatus;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
+import com.l2jfree.sql.L2Database;
 import com.l2jfree.util.logging.L2Logger;
 
 /**
@@ -64,11 +73,51 @@ public final class RequestServerLogin extends L2ClientPacket
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		_log.info("Logging into server " + _serverId);
 		L2LoginClient llc = getClient();
-		if (llc.getActiveSessionKey() == null || llc.getActiveSessionKey() == _sessionKey)
-			llc.close(new PlayFailure(L2NoServiceReason.INCORRECT_COUPON_FOR_SERVER));
-		else
+		if (llc.getSessionKey() != null && llc.getSessionKey().getActiveKey() != _sessionKey)
+		{
 			llc.close(new PlayFailure(L2NoServiceReason.ACCESS_FAILED_TRY_AGAIN));
+			return;
+		}
+		
+		L2GameServer lgs = L2LegacyConnections.getInstance().getById(_serverId);
+		if (lgs == null || lgs.getStatus() == L2LegacyStatus.DOWN) // server down
+		{
+			llc.close(new PlayFailure(L2NoServiceReason.MAINTENANCE_UNDERGOING));
+			return;
+		}
+		
+		L2Account acc = llc.getAccount();
+		if (acc == null) // should never happen
+			llc.close(new PlayFailure(L2NoServiceReason.THERE_IS_A_SYSTEM_ERROR));
+		else if (!llc.getAccount().isSuperUser()) // normal account
+		{
+			if (lgs.getStatus() == L2LegacyStatus.GM_ONLY) // restricted access
+				llc.close(new PlayFailure(L2NoServiceReason.MAINTENANCE_UNDERGOING));
+			else if (lgs.getOnlineAccounts().size() >= lgs.getMaxPlayers()) // server full
+				llc.close(new PlayFailure(L2NoServiceReason.TOO_HIGH_TRAFFIC));
+		}
+		else
+		{
+			Connection con = null;
+			try
+			{
+				con = L2Database.getConnection();
+				PreparedStatement ps = con.prepareStatement("UPDATE account SET lastServerId = ? WHERE username LIKE ?");
+				ps.setInt(1, _serverId);
+				ps.setString(2, acc.getAccount());
+				ps.executeUpdate();
+				ps.close();
+			}
+			catch (SQLException e)
+			{
+				_log.error("Could not modify account data!", e);
+			}
+			finally
+			{
+				L2Database.close(con);
+			}
+			llc.sendPacket(new PlaySuccess(llc));
+		}
 	}
 }

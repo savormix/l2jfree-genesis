@@ -182,7 +182,7 @@ public final class GameServerAuth extends L2GameServerPacket
 						}
 					}
 					
-					finishAuthorization(_desiredId, auth, false, lgs);
+					finishAuthorization(_desiredId, hexId, false, lgs);
 				}
 			}
 		}

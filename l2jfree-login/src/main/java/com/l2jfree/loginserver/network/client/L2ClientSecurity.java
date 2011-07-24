@@ -104,6 +104,23 @@ public class L2ClientSecurity
 	}
 	
 	/**
+	 * Assigns a session key to an authorized client connection.
+	 * @param client logged in client
+	 * @return the assigned session key
+	 */
+	public long assignSessionKey(L2LoginClient client)
+	{
+		if (client == null || client.getAccount() == null)
+			throw new IllegalStateException("Client not authorized.");
+		SessionKey sk = client.getSessionKey();
+		if (sk == null)
+			client.setSessionKey(sk = new SessionKey());
+		else
+			sk.assignNewKey();
+		return sk.getActiveKey();
+	}
+	
+	/**
 	 * Returns a scrambled RSA key pair.
 	 * @return a key pair
 	 */
@@ -149,5 +166,45 @@ public class L2ClientSecurity
 	private static class SingletonHolder
 	{
 		static final L2ClientSecurity _instance = new L2ClientSecurity();
+	}
+	
+	/**
+	 * A session key to be assigned to an account via a client connection.
+	 * @author savormix
+	 */
+	public static class SessionKey
+	{
+		private long _activeKey;
+		private long _oldKey;
+		
+		private SessionKey()
+		{
+			assignNewKey();
+		}
+		
+		private long assignNewKey()
+		{
+			_oldKey = _activeKey;
+			_activeKey = Rnd.get(Long.MIN_VALUE, Long.MAX_VALUE);
+			return getActiveKey();
+		}
+		
+		/**
+		 * Returns the current session key.
+		 * @return session key
+		 */
+		public long getActiveKey()
+		{
+			return _activeKey;
+		}
+		
+		/**
+		 * Returns the previous session key.
+		 * @return session key
+		 */
+		public long getOldKey()
+		{
+			return _oldKey;
+		}
 	}
 }

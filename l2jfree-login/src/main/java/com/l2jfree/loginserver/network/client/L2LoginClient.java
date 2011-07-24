@@ -20,6 +20,7 @@ import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SocketChannel;
 import java.security.PrivateKey;
 
+import com.l2jfree.loginserver.network.client.L2ClientSecurity.SessionKey;
 import com.l2jfree.loginserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.loginserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.loginserver.network.client.packets.sendable.LoginFailure;
@@ -44,7 +45,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	private final L2ClientCipher _cipher;
 	
 	private L2LoginClientState _state;
-	private Long _activeSessionKey;
+	private SessionKey _sessionKey;
 	
 	private L2Account _account;
 	
@@ -59,8 +60,8 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 		_keyPair = keyPair;
 		_cipher = new L2ClientCipher(blowfishKey);
 		_state = L2LoginClientState.CONNECTED;
-		_activeSessionKey = null;
-		// TODO Auto-generated constructor stub
+		_sessionKey = null;
+		_account = null;
 	}
 	
 	/* (non-Javadoc)
@@ -149,8 +150,11 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	@Override
 	protected String getUID()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		L2Account acc = getAccount();
+		if (acc != null)
+			return acc.getAccount();
+		else
+			return null;
 	}
 	
 	/**
@@ -231,21 +235,21 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	}
 	
 	/**
-	 * Returns the active session key.
+	 * Returns the assigned session key.
 	 * @return session key
 	 */
-	public Long getActiveSessionKey()
+	public SessionKey getSessionKey()
 	{
-		return _activeSessionKey;
+		return _sessionKey;
 	}
 	
 	/**
-	 * Changes the active session key.
-	 * @param activeSessionKey session key
+	 * Assigns a session key.
+	 * @param sessionKey session key
 	 */
-	public void setActiveSessionKey(Long activeSessionKey)
+	public void setSessionKey(SessionKey sessionKey)
 	{
-		_activeSessionKey = activeSessionKey;
+		_sessionKey = sessionKey;
 	}
 	
 	/**

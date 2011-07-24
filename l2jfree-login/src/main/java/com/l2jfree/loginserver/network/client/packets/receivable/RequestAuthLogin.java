@@ -39,6 +39,9 @@ import com.l2jfree.loginserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.loginserver.network.client.packets.sendable.LoginFailure;
 import com.l2jfree.loginserver.network.client.packets.sendable.LoginSuccess;
 import com.l2jfree.loginserver.network.client.packets.sendable.ServerList;
+import com.l2jfree.loginserver.network.legacy.L2GameServer;
+import com.l2jfree.loginserver.network.legacy.L2LegacyConnections;
+import com.l2jfree.loginserver.network.legacy.packets.sendable.KickPlayer;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 import com.l2jfree.sql.L2Database;
@@ -140,19 +143,34 @@ public final class RequestAuthLogin extends L2ClientPacket
 					ban = rs.getInt("banReason");
 					if (ban == 0)
 					{
-						L2Account la = new L2Account(user, rs.getBoolean("superUser"),
-								rs.getDate("birthDate"), rs.getInt("lastServerId"));
-						llc.setAccount(la);
-						
-						if (Config.SVC_SHOW_EULA)
+						boolean offline = true;
+						for (L2GameServer lgs : L2LegacyConnections.getInstance().getAuthorized())
 						{
-							llc.setState(L2LoginClientState.LOGGED_IN);
-							llc.sendPacket(new LoginSuccess(llc));
+							if (lgs.getOnlineAccounts().contains(user))
+							{
+								offline = false;
+								lgs.sendPacket(new KickPlayer(user));
+								llc.close(new LoginFailure(L2NoServiceReason.ALREADY_IN_USE));
+								break;
+							}
 						}
-						else
+						
+						if (offline)
 						{
-							llc.setState(L2LoginClientState.VIEWING_LIST);
-							llc.sendPacket(new ServerList());
+							L2Account la = new L2Account(user, rs.getBoolean("superUser"),
+									rs.getDate("birthDate"), rs.getInt("lastServerId"));
+							llc.setAccount(la);
+							
+							if (Config.SVC_SHOW_EULA)
+							{
+								llc.setState(L2LoginClientState.LOGGED_IN);
+								llc.sendPacket(new LoginSuccess(llc));
+							}
+							else
+							{
+								llc.setState(L2LoginClientState.VIEWING_LIST);
+								llc.sendPacket(new ServerList());
+							}
 						}
 					}
 					else // suspended

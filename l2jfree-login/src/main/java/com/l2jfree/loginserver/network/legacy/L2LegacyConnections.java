@@ -21,7 +21,6 @@ import java.security.interfaces.RSAPublicKey;
 import java.util.Collection;
 
 import javolution.util.FastMap;
-import javolution.util.FastSet;
 
 import com.l2jfree.loginserver.network.legacy.packets.L2GameServerPacket;
 import com.l2jfree.loginserver.network.legacy.packets.L2LoginServerPacket;
@@ -66,14 +65,12 @@ public final class L2LegacyConnections extends MMOController<L2GameServer, L2Gam
 		return SingletonHolder.INSTANCE;
 	}
 	
-	private final FastSet<L2GameServer> _connected;
 	private final FastMap<Integer, L2GameServer> _gameServers;
 	
 	protected L2LegacyConnections(MMOConfig config)
 			throws IOException
 	{
 		super(config, L2LegacyPackets.getInstance());
-		_connected = FastSet.newInstance();
 		_gameServers = FastMap.newInstance();
 		_gameServers.setShared(true);
 	}
@@ -84,7 +81,6 @@ public final class L2LegacyConnections extends MMOController<L2GameServer, L2Gam
 	{
 		L2LegacySecurity lls = L2LegacySecurity.getInstance();
 		L2GameServer lgs = new L2GameServer(this, socketChannel, lls.getKeyPair());
-		getConnected().add(lgs);
 		lgs.sendPacket(new InitLS((RSAPublicKey) lgs.getPublicKey()));
 		return lgs;
 	}
@@ -108,7 +104,6 @@ public final class L2LegacyConnections extends MMOController<L2GameServer, L2Gam
 		Integer id = client.getId();
 		if (id != null)
 			getGameServers().remove(id);
-		getConnected().remove(client);
 	}
 	
 	/**
@@ -119,15 +114,6 @@ public final class L2LegacyConnections extends MMOController<L2GameServer, L2Gam
 	public L2GameServer getById(int id)
 	{
 		return getGameServers().get(id);
-	}
-	
-	/**
-	 * Returns connected game servers.
-	 * @return connected game servers
-	 */
-	public FastSet<L2GameServer> getConnected()
-	{
-		return _connected;
 	}
 	
 	/**

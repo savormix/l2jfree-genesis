@@ -16,7 +16,9 @@ package com.l2jfree.loginserver.network.legacy.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 
+import com.l2jfree.loginserver.network.client.L2ClientConnections;
 import com.l2jfree.loginserver.network.legacy.packets.L2GameServerPacket;
+import com.l2jfree.loginserver.network.legacy.packets.sendable.PlayerAuthResponse;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
@@ -39,7 +41,7 @@ public final class PlayerAuthRequest extends L2GameServerPacket
 	@Override
 	protected int getMinimumLength()
 	{
-		return 17;
+		return 20;
 	}
 	
 	/* (non-Javadoc)
@@ -60,7 +62,8 @@ public final class PlayerAuthRequest extends L2GameServerPacket
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		// TODO Auto-generated method stub
-		_log.warn("PAR");
+		boolean valid = L2ClientConnections.getInstance().isAuthorized(_account,
+				_activeSessionKey, _oldSessionKey);
+		sendPacket(new PlayerAuthResponse(_account, valid));
 	}
 }
