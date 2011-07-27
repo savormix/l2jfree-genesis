@@ -106,9 +106,6 @@ public abstract class L2Config
 		Locale.setDefault(Locale.ENGLISH);
 		
 		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler() {
-			/* (non-Javadoc)
-			 * @see java.lang.Thread.UncaughtExceptionHandler#uncaughtException(java.lang.Thread, java.lang.Throwable)
-			 */
 			@Override
 			public void uncaughtException(Thread t, Throwable e)
 			{
@@ -244,9 +241,6 @@ public abstract class L2Config
 		_log.info("logging initialized");
 		
 		System.setOut(new PrintStream(new BufferedRedirectingOutputStream() {
-			/* (non-Javadoc)
-			 * @see com.l2jfree.io.BufferedRedirectingOutputStream#handleLine(java.lang.String)
-			 */
 			@Override
 			protected void handleLine(String line)
 			{
@@ -260,9 +254,6 @@ public abstract class L2Config
 		}));
 		
 		System.setErr(new PrintStream(new BufferedRedirectingOutputStream() {
-			/* (non-Javadoc)
-			 * @see com.l2jfree.io.BufferedRedirectingOutputStream#handleLine(java.lang.String)
-			 */
 			@Override
 			protected void handleLine(String line)
 			{
@@ -398,18 +389,12 @@ public abstract class L2Config
 		
 		protected abstract void load() throws Exception;
 		
-		/* (non-Javadoc)
-		 * @see java.lang.Object#hashCode()
-		 */
 		@Override
 		public final int hashCode()
 		{
 			return getClass().hashCode();
 		}
 		
-		/* (non-Javadoc)
-		 * @see java.lang.Object#equals(java.lang.Object)
-		 */
 		@Override
 		public final boolean equals(Object obj)
 		{
@@ -421,9 +406,6 @@ public abstract class L2Config
 	{
 		protected abstract String getFileName();
 		
-		/* (non-Javadoc)
-		 * @see com.l2jfree.L2Config.ConfigLoader#load()
-		 */
 		@Override
 		protected final void load() throws Exception
 		{
@@ -446,9 +428,6 @@ public abstract class L2Config
 	
 	protected static abstract class ConfigPropertiesLoader extends ConfigFileLoader
 	{
-		/* (non-Javadoc)
-		 * @see com.l2jfree.L2Config.ConfigFileLoader#getFileName()
-		 */
 		@Override
 		protected final String getFileName()
 		{
@@ -460,9 +439,6 @@ public abstract class L2Config
 			return new Class<?>[] { getClass().getEnclosingClass() };
 		}
 		
-		/* (non-Javadoc)
-		 * @see com.l2jfree.L2Config.ConfigFileLoader#loadReader(java.io.BufferedReader)
-		 */
 		@Override
 		protected final void loadReader(BufferedReader reader) throws Exception
 		{

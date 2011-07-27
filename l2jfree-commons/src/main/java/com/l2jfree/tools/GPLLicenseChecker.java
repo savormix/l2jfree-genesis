@@ -19,13 +19,14 @@ import java.io.FileFilter;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
 import com.l2jfree.L2Config;
+import com.l2jfree.lang.L2TextBuilder;
 
 /**
  * @author NB4L1
@@ -70,9 +71,6 @@ public final class GPLLicenseChecker extends L2Config
 	}
 	
 	private static final FileFilter FILTER = new FileFilter() {
-		/* (non-Javadoc)
-		 * @see java.io.FileFilter#accept(java.io.File)
-		 */
 		@Override
 		public boolean accept(File f)
 		{
@@ -95,33 +93,43 @@ public final class GPLLicenseChecker extends L2Config
 		}
 		else
 		{
-			List<String> tmpList = read(f);
+			final List<String> tmpList = read(f);
 			
+			// to skip the com.sun.script classes
 			if (tmpList == null)
 				return;
 			
-			List<String> list2 = new ArrayList<String>();
+			// GPL license check
+			final L2TextBuilder tb = L2TextBuilder.newInstance();
 			
 			for (String line : LICENSE)
-				list2.add(line);
+				tb.appendNewline(line);
 			
 			boolean foundPackageDeclaration = false;
 			for (String line : tmpList)
 				if (foundPackageDeclaration |= containsPackageName(line))
-					list2.add(line);
+					tb.appendNewline(line);
 			
-			PrintStream ps = null;
-			try
-			{
-				ps = new PrintStream(f);
-				
-				for (String line : list2)
-					ps.println(line);
-			}
-			finally
-			{
-				IOUtils.closeQuietly(ps);
-			}
+			// non-Javadoc check
+			final String content = tb.moveToString();
+			
+			String regex1 = "";
+			regex1 += "[ \t]+/\\* \\(non-Javadoc\\)\\r\\n";
+			regex1 += "[ \t]+\\* @see [^#]+#[^\\(]+\\([^\\)]*\\)\\r\\n";
+			regex1 += "[ \t]+\\*/\\r\\n";
+			
+			String regex2 = "";
+			regex2 += "[ \t]+/\\*\\r\\n";
+			regex2 += "[ \t]+\\* \\(non-Javadoc\\)\\r\\n";
+			regex2 += "[ \t]+\\* @see [^#]+#[^\\(]+\\([^\\)]*\\)\\r\\n";
+			regex2 += "[ \t]+\\*/\\r\\n";
+			
+			final String content2 = content.replaceAll(regex1, "").replaceAll(regex2, "");
+			
+			if (!content.equals(content2))
+				MODIFIED.add(f.getPath() + ": (non-Javadoc)");
+			
+			FileUtils.writeStringToFile(f, content2);
 		}
 	}
 	
@@ -143,7 +151,7 @@ public final class GPLLicenseChecker extends L2Config
 	
 	private static List<String> read(File f) throws IOException
 	{
-		List<String> list = new ArrayList<String>();
+		final List<String> list = new ArrayList<String>();
 		
 		LineNumberReader lnr = null;
 		try
@@ -179,7 +187,7 @@ public final class GPLLicenseChecker extends L2Config
 			return list;
 		}
 		
-		return null;
+		return list;
 	}
 	
 	private static final String[] WHOLE_PROJECT_PACKAGE_NAMES = {

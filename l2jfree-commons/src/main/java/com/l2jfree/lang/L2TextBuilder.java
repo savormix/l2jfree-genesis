@@ -40,6 +40,13 @@ public class L2TextBuilder extends TextBuilder
 		super(str);
 	}
 	
+	public L2TextBuilder appendNewline(Object obj)
+	{
+		append(obj);
+		append("\r\n");
+		return this;
+	}
+	
 	/**
 	 * Returns the String representation of this object and recycles it.
 	 * This builder is empty when the result is returned.
