@@ -41,18 +41,12 @@ public final class PlayerTraceRt extends L2GameServerPacket
 		_hops = new String[HOPS];
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.ReceivablePacket#getMinimumLength()
-	 */
 	@Override
 	protected int getMinimumLength()
 	{
 		return 1;
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.ReceivablePacket#read(com.l2jfree.network.mmocore.MMOBuffer)
-	 */
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException,
 			RuntimeException
@@ -63,9 +57,6 @@ public final class PlayerTraceRt extends L2GameServerPacket
 			_hops[i] = buf.readS();
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.ReceivablePacket#runImpl()
-	 */
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{

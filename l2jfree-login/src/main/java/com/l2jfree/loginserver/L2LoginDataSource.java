@@ -33,9 +33,6 @@ public class L2LoginDataSource implements DataSourceInitializer
 		_source = null;
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.sql.DataSourceInitializer#initDataSource()
-	 */
 	@Override
 	public ComboPooledDataSource initDataSource() throws Exception
 	{

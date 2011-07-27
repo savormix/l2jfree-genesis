@@ -41,9 +41,6 @@ public class L2OfflineGameServerView extends L2GameServerView
 		setBrackets(false);
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.loginserver.network.gameserver.L2GameServerView#update()
-	 */
 	@Override
 	public void update()
 	{

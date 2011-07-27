@@ -44,9 +44,6 @@ public final class ServerStatus extends L2GameServerPacket
 		_status = new HashMap<Integer, Integer>();
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.ReceivablePacket#getMinimumLength()
-	 */
 	@Override
 	protected int getMinimumLength()
 	{
@@ -54,9 +51,6 @@ public final class ServerStatus extends L2GameServerPacket
 		return 12;
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.ReceivablePacket#read(com.l2jfree.network.mmocore.MMOBuffer)
-	 */
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException,
 			RuntimeException
@@ -70,9 +64,6 @@ public final class ServerStatus extends L2GameServerPacket
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.ReceivablePacket#runImpl()
-	 */
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{

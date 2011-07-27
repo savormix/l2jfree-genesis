@@ -130,9 +130,6 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.AbstractSelectorThread#handle(java.nio.channels.SelectionKey)
-	 */
 	@Override
 	protected void handle(SelectionKey key)
 	{
@@ -156,9 +153,6 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.AbstractSelectorThread#cleanup()
-	 */
 	@Override
 	protected void cleanup()
 	{

@@ -37,9 +37,6 @@ public class L2LoginThreadPools implements ThreadPoolInitializer
 		_longRunningPools = null;
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.util.concurrent.ThreadPoolInitializer#initThreadPool()
-	 */
 	@Override
 	public void initThreadPool() throws Exception
 	{
@@ -49,27 +46,18 @@ public class L2LoginThreadPools implements ThreadPoolInitializer
 		_longRunningPools = new ThreadPoolExecutor[0];
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.util.concurrent.ThreadPoolInitializer#getScheduledPools()
-	 */
 	@Override
 	public ScheduledThreadPoolExecutor[] getScheduledPools()
 	{
 		return _scheduledPools;
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.util.concurrent.ThreadPoolInitializer#getInstantPools()
-	 */
 	@Override
 	public ThreadPoolExecutor[] getInstantPools()
 	{
 		return _instantPools;
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.util.concurrent.ThreadPoolInitializer#getLongRunningPools()
-	 */
 	@Override
 	public ThreadPoolExecutor[] getLongRunningPools()
 	{

@@ -78,9 +78,6 @@ public enum L2BanReason implements Reason
 		_id = id;
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.loginserver.network.client.packets.sendable.LoginFailure.Reason#getId()
-	 */
 	@Override
 	public int getId()
 	{

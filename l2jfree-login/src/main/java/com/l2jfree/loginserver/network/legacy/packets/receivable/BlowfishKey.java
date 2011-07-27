@@ -36,18 +36,12 @@ public final class BlowfishKey extends L2GameServerPacket
 	
 	private byte[] _enciphered;
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.ReceivablePacket#getMinimumLength()
-	 */
 	@Override
 	protected int getMinimumLength()
 	{
 		return 5;
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.ReceivablePacket#read(com.l2jfree.network.mmocore.MMOBuffer)
-	 */
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException,
 			RuntimeException
@@ -82,9 +76,6 @@ public final class BlowfishKey extends L2GameServerPacket
 		lgs.setState(L2LegacyState.KEYS_EXCHANGED);
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.ReceivablePacket#runImpl()
-	 */
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{

@@ -176,10 +176,6 @@ public class LookupTable<T> implements Iterable<T>
 	{
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Iterable#iterator()
-	 */
 	@Override
 	public Iterator<T> iterator()
 	{

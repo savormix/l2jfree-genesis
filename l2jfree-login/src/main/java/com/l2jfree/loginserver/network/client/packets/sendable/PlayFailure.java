@@ -36,18 +36,12 @@ public final class PlayFailure extends L2ServerPacket
 		_reason = reason.getId();
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.loginserver.network.client.packets.L2ServerPacket#getOpcode()
-	 */
 	@Override
 	protected int getOpcode()
 	{
 		return 0x06;
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.loginserver.network.client.packets.L2ServerPacket#writeImpl(com.l2jfree.loginserver.network.client.L2LoginClient, com.l2jfree.network.mmocore.MMOBuffer)
-	 */
 	@Override
 	protected void writeImpl(L2LoginClient client, MMOBuffer buf)
 	{

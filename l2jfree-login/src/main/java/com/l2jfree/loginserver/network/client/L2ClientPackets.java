@@ -41,9 +41,6 @@ public final class L2ClientPackets implements IPacketHandler<L2LoginClient, L2Cl
 		// singleton
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.IPacketHandler#handlePacket(java.nio.ByteBuffer, com.l2jfree.network.mmocore.MMOConnection, int)
-	 */
 	@Override
 	public L2ClientPacket handlePacket(ByteBuffer buf, L2LoginClient client,
 			int opcode)

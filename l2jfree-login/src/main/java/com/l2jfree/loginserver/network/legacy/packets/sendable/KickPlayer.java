@@ -35,18 +35,12 @@ public final class KickPlayer extends L2LoginServerPacket
 		_account = account;
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.loginserver.network.legacy.packets.L2LoginServerPacket#getOpcode()
-	 */
 	@Override
 	protected int getOpcode()
 	{
 		return 0x04;
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.loginserver.network.legacy.packets.L2LoginServerPacket#writeImpl(com.l2jfree.loginserver.network.legacy.L2GameServer, com.l2jfree.network.mmocore.MMOBuffer)
-	 */
 	@Override
 	protected void writeImpl(L2GameServer client, MMOBuffer buf)
 	{

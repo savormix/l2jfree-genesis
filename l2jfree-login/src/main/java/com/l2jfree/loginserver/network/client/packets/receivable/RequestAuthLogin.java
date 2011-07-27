@@ -61,18 +61,12 @@ public final class RequestAuthLogin extends L2ClientPacket
 	
 	private byte[] _enciphered;
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.ReceivablePacket#getMinimumLength()
-	 */
 	@Override
 	protected int getMinimumLength()
 	{
 		return 128;
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.ReceivablePacket#read(com.l2jfree.network.mmocore.MMOBuffer)
-	 */
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
@@ -80,9 +74,6 @@ public final class RequestAuthLogin extends L2ClientPacket
 		buf.skipAll();
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.ReceivablePacket#runImpl()
-	 */
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{

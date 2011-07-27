@@ -43,9 +43,6 @@ public abstract class L2ServerPacket extends SendablePacket<L2LoginClient, L2Cli
 	 */
 	protected abstract void writeImpl(L2LoginClient client, MMOBuffer buf);
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.SendablePacket#write(com.l2jfree.network.mmocore.MMOConnection, com.l2jfree.network.mmocore.MMOBuffer)
-	 */
 	@Override
 	protected final void write(L2LoginClient client, MMOBuffer buf) throws RuntimeException
 	{

@@ -35,18 +35,12 @@ public final class PlayerAuthRequest extends L2GameServerPacket
 	private long _activeSessionKey;
 	private long _oldSessionKey;
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.ReceivablePacket#getMinimumLength()
-	 */
 	@Override
 	protected int getMinimumLength()
 	{
 		return 20;
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.ReceivablePacket#read(com.l2jfree.network.mmocore.MMOBuffer)
-	 */
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException,
 			RuntimeException
@@ -56,9 +50,6 @@ public final class PlayerAuthRequest extends L2GameServerPacket
 		_oldSessionKey = buf.readQ();
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.ReceivablePacket#runImpl()
-	 */
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{

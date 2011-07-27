@@ -88,9 +88,6 @@ public abstract class ReceivablePacket<T extends MMOConnection<T, RP, SP>, RP ex
 	 */
 	protected abstract void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException;
 	
-	/* (non-Javadoc)
-	 * @see java.lang.Runnable#run()
-	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public final void run()

@@ -41,30 +41,18 @@ public class SynchronizedLookupTable<T> extends LookupTable<T>
 		super.clear(force);
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see com.l2jfree.util.LookupTable#get(int)
-	 */
 	@Override
 	public synchronized T get(final int key)
 	{
 		return super.get(key);
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see com.l2jfree.util.LookupTable#set(int, java.lang.Object)
-	 */
 	@Override
 	public synchronized void set(final int key, final T newValue)
 	{
 		super.set(key, newValue);
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see com.l2jfree.util.LookupTable#iterator()
-	 */
 	@Override
 	public synchronized Iterator<T> iterator()
 	{

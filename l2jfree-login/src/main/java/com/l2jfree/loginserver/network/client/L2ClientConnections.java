@@ -106,9 +106,6 @@ public final class L2ClientConnections extends MMOController<L2LoginClient, L2Cl
 			return (sk.getActiveKey() == activeKey && sk.getOldKey() == oldKey);
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.MMOController#createClient(java.nio.channels.SocketChannel)
-	 */
 	@Override
 	protected L2LoginClient createClient(SocketChannel socketChannel)
 			throws ClosedChannelException

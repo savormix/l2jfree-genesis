@@ -64,9 +64,6 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 		_account = null;
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.MMOConnection#onDisconnection()
-	 */
 	@Override
 	protected void onDisconnection()
 	{
@@ -74,9 +71,6 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 		
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.MMOConnection#onForcedDisconnection()
-	 */
 	@Override
 	protected void onForcedDisconnection()
 	{
@@ -84,9 +78,6 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 		
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.MMOConnection#decrypt(java.nio.ByteBuffer, int)
-	 */
 	@Override
 	protected boolean decipher(ByteBuffer buf, DataSizeHolder size)
 	{
@@ -111,9 +102,6 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 		return success;
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.MMOConnection#encrypt(java.nio.ByteBuffer, int)
-	 */
 	@Override
 	protected boolean encipher(ByteBuffer buf, int size)
 	{
@@ -132,9 +120,6 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 		return true;
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.MMOConnection#getDefaultClosePacket()
-	 */
 	@Override
 	protected L2ServerPacket getDefaultClosePacket()
 	{
@@ -144,9 +129,6 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 			return new LoginFailure(L2NoServiceReason.IGNORE);
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.MMOConnection#getUID()
-	 */
 	@Override
 	protected String getUID()
 	{

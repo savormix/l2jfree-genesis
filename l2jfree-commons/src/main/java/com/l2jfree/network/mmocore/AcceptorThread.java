@@ -58,9 +58,6 @@ final class AcceptorThread<T extends MMOConnection<T, RP, SP>, RP extends Receiv
 		selectable.register(getSelector(), SelectionKey.OP_ACCEPT);
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.AbstractSelectorThread#handle(java.nio.channels.SelectionKey)
-	 */
 	@Override
 	protected void handle(SelectionKey key)
 	{

@@ -34,18 +34,12 @@ public final class GameGuardSuccess extends L2ServerPacket
 		_sessionId = sessionId;
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.loginserver.network.client.packets.L2ServerPacket#getOpcode()
-	 */
 	@Override
 	protected int getOpcode()
 	{
 		return 0x0b;
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.loginserver.network.client.packets.L2ServerPacket#writeImpl(com.l2jfree.loginserver.network.client.L2LoginClient, com.l2jfree.network.mmocore.MMOBuffer)
-	 */
 	@Override
 	protected void writeImpl(L2LoginClient client, MMOBuffer buf)
 	{

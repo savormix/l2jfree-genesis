@@ -39,18 +39,12 @@ public final class PlayerAuthResponse extends L2LoginServerPacket
 		_log.info("PAR: " + account + " " + valid);
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.loginserver.network.legacy.packets.L2LoginServerPacket#getOpcode()
-	 */
 	@Override
 	protected int getOpcode()
 	{
 		return 0x03;
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.loginserver.network.legacy.packets.L2LoginServerPacket#writeImpl(com.l2jfree.loginserver.network.legacy.L2GameServer, com.l2jfree.network.mmocore.MMOBuffer)
-	 */
 	@Override
 	protected void writeImpl(L2GameServer client, MMOBuffer buf)
 	{
