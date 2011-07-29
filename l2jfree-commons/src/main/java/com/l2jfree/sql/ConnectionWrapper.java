@@ -31,7 +31,6 @@ import java.sql.Statement;
 import java.sql.Struct;
 import java.util.Map;
 import java.util.Properties;
-import java.util.concurrent.Executor;
 
 /**
  * @author NB4L1
@@ -342,6 +341,8 @@ public abstract class ConnectionWrapper implements Connection
 		return _connection.unwrap(iface);
 	}
 	
+	// FIXME Java 7
+	/*
 	@Override
 	public void setSchema(String schema) throws SQLException
 	{
@@ -371,4 +372,5 @@ public abstract class ConnectionWrapper implements Connection
 	{
 		return _connection.getNetworkTimeout();
 	}
+	*/
 }
