@@ -14,7 +14,6 @@
  */
 package com.l2jfree.loginserver.network.client;
 
-import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SocketChannel;
@@ -28,7 +27,10 @@ import com.l2jfree.loginserver.network.client.packets.sendable.PlayFailure;
 import com.l2jfree.network.mmocore.DataSizeHolder;
 import com.l2jfree.network.mmocore.MMOConnection;
 import com.l2jfree.network.mmocore.MMOController;
+import com.l2jfree.security.NewCipher;
 import com.l2jfree.security.ScrambledKeyPair;
+import com.l2jfree.util.HexUtil;
+import com.l2jfree.util.Rnd;
 import com.l2jfree.util.logging.L2Logger;
 
 /**
@@ -42,7 +44,8 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	private final int _sessionId;
 	private final int _protocol;
 	private final ScrambledKeyPair _keyPair;
-	private final L2ClientCipher _cipher;
+	private final NewCipher _cipher;
+	private boolean _firstTime;
 	
 	private L2LoginClientState _state;
 	private SessionKey _sessionKey;
@@ -58,7 +61,8 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 		_sessionId = sessionId;
 		_protocol = protocol;
 		_keyPair = keyPair;
-		_cipher = new L2ClientCipher(blowfishKey);
+		_cipher = new NewCipher(blowfishKey);
+		_firstTime = true;
 		_state = L2LoginClientState.CONNECTED;
 		_sessionKey = null;
 		_account = null;
@@ -81,40 +85,57 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	@Override
 	protected boolean decipher(ByteBuffer buf, DataSizeHolder size)
 	{
-		boolean success = false;
-		try
+		final int dataSize = size.getSize();
+		
+		size.decreaseSize(4); // checksum
+		size.setMaxPadding(8);
+		
+		getCipher().decipher(buf, dataSize);
+		
+		if (!NewCipher.verifyChecksum(buf, dataSize))
 		{
-			success = getCipher().decipher(buf.array(), buf.position(), size);
-		}
-		catch (IOException e)
-		{
-			_log.error("Failed to decipher received data!", e);
+			_log.warn("Could not decipher received data: checksum mismatch. " + this);
 			closeNow();
 			return false;
 		}
 		
-		if (!success)
-		{
-			_log.warn("Could not decipher received data: checksum mismatch. " + this);
-			closeNow();
-		}
-		
-		return success;
+		return true;
 	}
 	
 	@Override
 	protected boolean encipher(ByteBuffer buf, int size)
 	{
+		final boolean first = isFirstTime();
 		final int offset = buf.position();
-		try
+		
+		size += 4; // checksum
+		if (first)
+			size += 4; // XOR key
+		size += 8 - (size % 8); // padding
+		
+		if (first)
 		{
-			size = getCipher().encipher(buf.array(), offset, size);
+			int stop = size - 8; // reserved for checksum and key
+			int pos = offset;
+			int key = Rnd.get(Integer.MIN_VALUE, Integer.MAX_VALUE);
+			
+			while ((pos += 4) < stop)
+			{
+				int i = buf.getInt(pos);
+				key += i;
+				buf.putInt(pos, i ^ key);
+			}
+			buf.putInt(pos, key);
 		}
-		catch (IOException e)
-		{
-			_log.error("Failed to encipher sent data!", e);
-			return false;
-		}
+		else
+			NewCipher.appendChecksum(buf, size);
+		
+		final NewCipher cipher;
+		if (first)
+			cipher = new NewCipher(HexUtil.HexStringToBytes("6b 60 cb 5b 82 ce 90 b1 cc 2b 6c 55 6c 6c 6c 6c"));
+		else
+			cipher = getCipher();
+		cipher.encipher(buf, size);
 		
 		buf.position(offset + size);
 		return true;
@@ -184,9 +205,16 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 		return _keyPair;
 	}
 	
-	private L2ClientCipher getCipher()
+	private NewCipher getCipher()
 	{
 		return _cipher;
+	}
+	
+	private boolean isFirstTime()
+	{
+		boolean ft = _firstTime;
+		_firstTime = false;
+		return ft;
 	}
 	
 	/**
@@ -195,7 +223,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	 */
 	public byte[] getBlowfishKey()
 	{
-		return getCipher().getBlowfishCipher().getBlowfishKey();
+		return getCipher().getBlowfishKey();
 	}
 	
 	/**

@@ -14,7 +14,6 @@
  */
 package com.l2jfree.loginserver.network.legacy;
 
-import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SocketChannel;
@@ -31,6 +30,8 @@ import com.l2jfree.loginserver.network.legacy.status.L2LegacyStatus;
 import com.l2jfree.network.mmocore.DataSizeHolder;
 import com.l2jfree.network.mmocore.MMOConnection;
 import com.l2jfree.network.mmocore.MMOController;
+import com.l2jfree.security.NewCipher;
+import com.l2jfree.util.HexUtil;
 
 /**
  * @author savormix
@@ -39,7 +40,8 @@ import com.l2jfree.network.mmocore.MMOController;
 public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServerPacket, L2LoginServerPacket>
 {
 	private final KeyPair _keyPair;
-	private final L2LegacyCipher _cipher;
+	
+	private NewCipher _cipher;
 	
 	private L2LegacyGameServerView _view;
 	private L2LegacyState _state;
@@ -71,7 +73,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	{
 		super(mmoController, socketChannel);
 		_keyPair = keyPair;
-		_cipher = new L2LegacyCipher();
+		_cipher = new NewCipher(HexUtil.HexStringToBytes("5F 3B 76 2E 5D 30 35 2D 33 31 21 7C 2B 2D 25 78 54 21 5E 5B 24 00"));
 		
 		_state = L2LegacyState.CONNECTED;
 		_id = null;
@@ -99,40 +101,34 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	@Override
 	protected boolean decipher(ByteBuffer buf, DataSizeHolder size)
 	{
-		boolean success = false;
-		try
+		final int dataSize = size.getSize();
+		
+		size.decreaseSize(4); // checksum
+		size.setMaxPadding(8);
+		
+		getCipher().decipher(buf, dataSize);
+		
+		if (!NewCipher.verifyChecksum(buf, dataSize))
 		{
-			success = getCipher().decipher(buf.array(), buf.position(), size);
-		}
-		catch (IOException e)
-		{
-			_log.error("Failed to decipher received data!", e);
+			_log.warn("Could not decipher received data: checksum mismatch. " + this);
 			closeNow();
 			return false;
 		}
 		
-		if (!success)
-		{
-			_log.warn("Could not decipher received data: checksum mismatch. " + this);
-			closeNow();
-		}
-		
-		return success;
+		return true;
 	}
 	
 	@Override
 	protected boolean encipher(ByteBuffer buf, int size)
 	{
 		final int offset = buf.position();
-		try
-		{
-			size = getCipher().encipher(buf.array(), offset, size);
-		}
-		catch (IOException e)
-		{
-			_log.error("Failed to encipher sent data!", e);
-			return false;
-		}
+		
+		size += 4; // checksum
+		size += 8 - (size % 8); // padding
+		
+		NewCipher.appendChecksum(buf, size);
+		
+		getCipher().encipher(buf, size);
 		
 		buf.position(offset + size);
 		return true;
@@ -182,10 +178,19 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	}
 	
 	/**
+	 * Initializes the cipher with the Blowfish key received from the game server.
+	 * @param blowfishKey Blowfish Key
+	 */
+	public void initCipher(byte[] blowfishKey)
+	{
+		_cipher = new NewCipher(blowfishKey);
+	}
+	
+	/**
 	 * Returns the cipher.
 	 * @return cipher
 	 */
-	public L2LegacyCipher getCipher()
+	public NewCipher getCipher()
 	{
 		return _cipher;
 	}

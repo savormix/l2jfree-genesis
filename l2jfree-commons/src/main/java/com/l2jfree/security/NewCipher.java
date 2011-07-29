@@ -15,6 +15,7 @@
 package com.l2jfree.security;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
 /**
  * This class ...
@@ -65,9 +66,11 @@ public class NewCipher
 	
 	/**
 	 * Verifies a packet's checksum.
-	 * @param raw Packet body
+	 * @deprecated Legacy method
+	 * @param raw packet's body
 	 * @return whether packet integrity is OK or not
 	 */
+	@Deprecated
 	public static boolean verifyChecksum(byte[] raw)
 	{
 		return NewCipher.verifyChecksum(raw, 0, raw.length);
@@ -75,84 +78,124 @@ public class NewCipher
 	
 	/**
 	 * Verifies a packet's checksum.
-	 * @param raw Data
+	 * @deprecated Legacy method
+	 * @param raw data
+	 * @param offset offset to the packet's body
+	 * @param size packet's body size
+	 * @return whether packet integrity is OK or not
+	 */
+	@Deprecated
+	public static boolean verifyChecksum(byte[] raw, final int offset, final int size)
+	{
+		return verifyChecksum(ByteBuffer.wrap(raw, offset, size), size);
+	}
+	
+	/**
+	 * Verifies a packet's checksum.
+	 * <BR><BR>
+	 * It is assumed that the packet's body starts at current position.
+	 * @param buf byte buffer
+	 * @param size packet's body size
+	 * @return whether packet integrity is OK or not
+	 */
+	public static boolean verifyChecksum(ByteBuffer buf, final int size)
+	{
+		return verifyChecksum(buf, buf.position(), size);
+	}
+	
+	/**
+	 * Verifies a packet's checksum.
+	 * @param buf byte buffer
 	 * @param offset offset to a packet's body
 	 * @param size packet's body size
 	 * @return whether packet integrity is OK or not
 	 */
-	public static boolean verifyChecksum(byte[] raw, final int offset, final int size)
+	public static boolean verifyChecksum(ByteBuffer buf, final int offset, final int size)
 	{
 		// check if size is multiple of 4 (and > 0)
 		if ((size & 3) != 0 || size <= 4)
 			return false;
 		
-		long chksum = 0;
-		int end = (size - 4) + offset;
-		long check = -1;
-		int i;
+		int calculated = 0;
+		int end = offset + size - 4; // ignore embedded checksum
 		
-		for (i = offset; i < end; i += 4)
+		int pos;
+		for (pos = offset; pos < end; pos += 4)
 		{
-			check = raw[i] & 0xff;
-			check |= raw[i + 1] << 8 & 0xff00;
-			check |= raw[i + 2] << 0x10 & 0xff0000;
-			check |= raw[i + 3] << 0x18 & 0xff000000;
-			
-			chksum ^= check;
+			int i = buf.getInt(pos);
+			calculated ^= i;
 		}
 		
-		check = raw[i] & 0xff;
-		check |= raw[i + 1] << 8 & 0xff00;
-		check |= raw[i + 2] << 0x10 & 0xff0000;
-		check |= raw[i + 3] << 0x18 & 0xff000000;
-		
-		return check == chksum;
+		return (calculated == buf.getInt(pos));
 	}
 	
 	/**
-	 * Calculates and embeds packet's checksum.
-	 * @param raw Packet body with padding
+	 * Calculates and embeds a packet's checksum.
+	 * @deprecated Legacy method
+	 * @param raw packet's body with padding
 	 */
+	@Deprecated
 	public static void appendChecksum(byte[] raw)
 	{
 		NewCipher.appendChecksum(raw, 0, raw.length);
 	}
 	
 	/**
-	 * Calculates and embeds packet's checksum.
-	 * @param raw Data
+	 * Calculates and embeds a packet's checksum.
+	 * @deprecated Legacy method
+	 * @param raw data
 	 * @param offset offset to a packet's body
 	 * @param size packet's body size
 	 */
+	@Deprecated
 	public static void appendChecksum(byte[] raw, final int offset, final int size)
 	{
-		long chksum = 0;
-		int end = (size - 4) + offset;
-		long ecx;
-		int i;
+		appendChecksum(ByteBuffer.wrap(raw, offset, size), size);
+	}
+	
+	/**
+	 * Calculates and embeds a packet's checksum.<BR>
+	 * Buffer's position will not be changed.
+	 * <BR><BR>
+	 * It is assumed that the packet's body starts at current position.
+	 * @param buf byte buffer
+	 * @param size packet's body size
+	 */
+	public static void appendChecksum(ByteBuffer buf, final int size)
+	{
+		appendChecksum(buf, buf.position(), size);
+	}
+	
+	/**
+	 * Calculates and embeds a packet's checksum.<BR>
+	 * Buffer's position will not be changed.
+	 * @param buf byte buffer
+	 * @param offset offset to a packet's body
+	 * @param size packet's body size
+	 */
+	public static void appendChecksum(ByteBuffer buf, final int offset, final int size)
+	{
+		int checksum = 0;
+		int end = offset + size - 4; // ignore reserved bytes
 		
-		for (i = offset; i < end; i += 4)
+		int pos;
+		for (pos = offset; pos < end; pos += 4)
 		{
-			ecx = raw[i] & 0xff;
-			ecx |= raw[i + 1] << 8 & 0xff00;
-			ecx |= raw[i + 2] << 0x10 & 0xff0000;
-			ecx |= raw[i + 3] << 0x18 & 0xff000000;
-			
-			chksum ^= ecx;
+			int i = buf.getInt(pos);
+			checksum ^= i;
 		}
 		
-		raw[i] = (byte)(chksum & 0xff);
-		raw[i + 1] = (byte)(chksum >> 0x08 & 0xff);
-		raw[i + 2] = (byte)(chksum >> 0x10 & 0xff);
-		raw[i + 3] = (byte)(chksum >> 0x18 & 0xff);
+		buf.putInt(pos, checksum);
 	}
 	
 	/**
 	 * Packet is first XOR encoded with <code>key</code> Then, the last 4 bytes are overwritten with the the XOR "key". Thus this assume that there is enough room for the key to fit without overwriting data.
 	 * 
+	 * @deprecated Legacy method
 	 * @param raw The raw bytes to be encrypted
 	 * @param key The 4 bytes (int) XOR key
 	 */
+	@Deprecated
 	public static void encXORPass(byte[] raw, int key)
 	{
 		NewCipher.encXORPass(raw, 0, raw.length, key);
@@ -161,11 +204,13 @@ public class NewCipher
 	/**
 	 * Packet is first XOR encoded with <code>key</code> Then, the last 4 bytes are overwritten with the the XOR "key". Thus this assume that there is enough room for the key to fit without overwriting data.
 	 * 
+	 * @deprecated Legacy method
 	 * @param raw The raw bytes to be encrypted
 	 * @param offset The begining of the data to be encrypted
 	 * @param size Length of the data to be encrypted
 	 * @param key The 4 bytes (int) XOR key
 	 */
+	@Deprecated
 	public static void encXORPass(byte[] raw, final int offset, final int size, int key)
 	{
 		int stop = size - 8;
@@ -189,13 +234,23 @@ public class NewCipher
 			raw[pos++] = (byte)(edx >> 16 & 0xFF);
 			raw[pos++] = (byte)(edx >> 24 & 0xFF);
 		}
-		
+
 		raw[pos++] = (byte)(ecx & 0xFF);
 		raw[pos++] = (byte)(ecx >> 8 & 0xFF);
 		raw[pos++] = (byte)(ecx >> 16 & 0xFF);
 		raw[pos++] = (byte)(ecx >> 24 & 0xFF);
 	}
 	
+	/**
+	 * Deciphers given byte array in blocks of 8 bytes using a Blowfish key.
+	 * <BR><BR>
+	 * If the last block contains less than 8 bytes, they are not deciphered.
+	 * @deprecated Legacy method
+	 * @param raw data
+	 * @return deciphered data
+	 * @throws IOException not thrown by this method
+	 */
+	@Deprecated
 	public byte[] decrypt(byte[] raw) throws IOException
 	{
 		byte[] result = new byte[raw.length];
@@ -209,6 +264,17 @@ public class NewCipher
 		return result;
 	}
 	
+	/**
+	 * Deciphers given byte array in blocks of 8 bytes using a Blowfish key.
+	 * <BR><BR>
+	 * If the last block contains less than 8 bytes, they are not deciphered.
+	 * @deprecated Legacy method
+	 * @param raw data
+	 * @param offset offset to packet's body
+	 * @param size packet's body size
+	 * @throws IOException not thrown by this method
+	 */
+	@Deprecated
 	public void decrypt(byte[] raw, final int offset, final int size) throws IOException
 	{
 		byte[] result = new byte[size];
@@ -222,6 +288,16 @@ public class NewCipher
 		System.arraycopy(result, 0, raw, offset, size);
 	}
 	
+	/**
+	 * Enciphers given byte array in blocks of 8 bytes using a Blowfish key.
+	 * <BR><BR>
+	 * If the last block contains less than 8 bytes, they are not enciphered.
+	 * @deprecated Legacy method
+	 * @param raw data
+	 * @return deciphered data
+	 * @throws IOException not thrown by this method
+	 */
+	@Deprecated
 	public byte[] crypt(byte[] raw) throws IOException
 	{
 		int count = raw.length / 8;
@@ -235,6 +311,17 @@ public class NewCipher
 		return result;
 	}
 	
+	/**
+	 * Enciphers given byte array in blocks of 8 bytes using a Blowfish key.
+	 * <BR><BR>
+	 * If the last block contains less than 8 bytes, they are not enciphered.
+	 * @deprecated Legacy method
+	 * @param raw data
+	 * @param offset offset to packet's body
+	 * @param size packet's body size
+	 * @throws IOException not thrown by this method
+	 */
+	@Deprecated
 	public void crypt(byte[] raw, final int offset, final int size) throws IOException
 	{
 		int count = size / 8;
@@ -246,5 +333,67 @@ public class NewCipher
 		}
 		// TODO can the crypt and decrypt go direct to the array
 		System.arraycopy(result, 0, raw, offset, size);
+	}
+	
+	/**
+	 * Enciphers buffer's contents in blocks of 8 bytes using a Blowfish key.<BR>
+	 * Buffer's position will not be changed.
+	 * <BR><BR>
+	 * If the last block contains less than 8 bytes, they are not enciphered.
+	 * <BR><BR>
+	 * It is assumed that the packet's body starts at current position.
+	 * @param buf a byte buffer
+	 * @param size packet's size
+	 */
+	public void encipher(ByteBuffer buf, final int size)
+	{
+		encipher(buf, buf.position(), size);
+	}
+	
+	/**
+	 * Enciphers buffer's contents in blocks of 8 bytes using a Blowfish key.<BR>
+	 * Buffer's position will not be changed.
+	 * <BR><BR>
+	 * If the last block contains less than 8 bytes, they are not enciphered.
+	 * @param buf a byte buffer
+	 * @param offset offset to packet's body
+	 * @param size packet's size
+	 */
+	public void encipher(ByteBuffer buf, final int offset, final int size)
+	{
+		int count = size / 8;
+		for (int i = 0; i < count; i++)
+			_crypt.processBlock(buf, offset + i * 8);
+	}
+	
+	/**
+	 * Deciphers buffer's contents in blocks of 8 bytes using a Blowfish key.<BR>
+	 * Buffer's position will not be changed.
+	 * <BR><BR>
+	 * If the last block contains less than 8 bytes, they are not deciphered.
+	 * <BR><BR>
+	 * It is assumed that the packet's body starts at current position.
+	 * @param buf a byte buffer
+	 * @param size packet's size
+	 */
+	public void decipher(ByteBuffer buf, final int size)
+	{
+		decipher(buf, buf.position(), size);
+	}
+	
+	/**
+	 * Deciphers buffer's contents in blocks of 8 bytes using a Blowfish key.<BR>
+	 * Buffer's position will not be changed.
+	 * <BR><BR>
+	 * If the last block contains less than 8 bytes, they are not deciphered.
+	 * @param buf a byte buffer
+	 * @param offset offset to packet's body
+	 * @param size packet's size
+	 */
+	public void decipher(ByteBuffer buf, final int offset, final int size)
+	{
+		int count = size / 8;
+		for (int i = 0; i < count; i++)
+			_decrypt.processBlock(buf, offset);
 	}
 }

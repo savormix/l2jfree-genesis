@@ -108,10 +108,19 @@ public abstract class ReceivablePacket<T extends MMOConnection<T, RP, SP>, RP ex
 	
 	/**
 	 * Contains everything that this packet should do. Runs asynchronously in worker threads.
+	 * <BR><BR>
+	 * For <i>every</i> client, received packets are processed sequentially in the received
+	 * order (using an unbounded FIFO queue).
+	 * It is guaranteed that for any given client at any given time at most 1 packet will be
+	 * in the processing state.
+	 * <BR><BR>
+	 * For <i>all</i> clients, received packets are processed completely asynchronously
+	 * without any guarantees. Thus synchronization is necessary for all actions that
+	 * may directly or indirectly affect interactions between clients.
 	 * 
 	 * @throws InvalidPacketException if this packet turns out to be invalid<br>
 	 *             (either by time synchronization issues, either by purposeful exploitation, etc...)
-	 * @throws RuntimeException if a generic failure occurs while running the packet
+	 * @throws RuntimeException if a generic failure occurs while processing the packet
 	 */
 	protected abstract void runImpl() throws InvalidPacketException, RuntimeException;
 	

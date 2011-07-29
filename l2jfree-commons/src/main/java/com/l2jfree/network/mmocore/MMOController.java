@@ -43,6 +43,8 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 	private final FastList<ConnectorThread<T, RP, SP>> _connectorThreads = new FastList<ConnectorThread<T, RP, SP>>();
 	private final ReadWriteThread<T, RP, SP>[] _readWriteThreads;
 	
+	private volatile boolean _started;
+	
 	@SuppressWarnings("unchecked")
 	protected MMOController(MMOConfig config, IPacketHandler<T, RP, SP> packetHandler) throws IOException
 	{
@@ -61,6 +63,8 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 			
 			_readWriteThreads[i] = readWriteThread;
 		}
+		
+		_started = false;
 	}
 	
 	/**
@@ -96,11 +100,12 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 	 * 
 	 * @param address the address to connect to
 	 * @param port the port to connect to
+	 * @param persistent keep this connection alive during runtime
 	 * @throws UnknownHostException if an invalid address was given
 	 */
-	public final void connect(String address, int port) throws UnknownHostException
+	public final void connect(String address, int port, boolean persistent) throws UnknownHostException
 	{
-		connect(InetAddress.getByName(address), port);
+		connect(InetAddress.getByName(address), port, persistent);
 	}
 	
 	/**
@@ -108,10 +113,14 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 	 * 
 	 * @param address the address to connect to
 	 * @param port the port to connect to
+	 * @param persistent keep this connection alive during runtime
 	 */
-	public final void connect(InetAddress address, int port)
+	public final void connect(InetAddress address, int port, boolean persistent)
 	{
-		_connectorThreads.add(new ConnectorThread<T, RP, SP>(this, address, port));
+		ConnectorThread<T, RP, SP> ct = new ConnectorThread<T, RP, SP>(this, address, port, persistent);
+		_connectorThreads.add(ct);
+		if (_started)
+			ct.start();
 	}
 	
 	/**
@@ -135,6 +144,8 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 	 */
 	public final void start()
 	{
+		_started = true;
+		
 		if (_acceptorThread != null)
 			_acceptorThread.start();
 		

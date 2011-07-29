@@ -31,6 +31,7 @@ import java.sql.Statement;
 import java.sql.Struct;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.Executor;
 
 /**
  * @author NB4L1
@@ -39,6 +40,9 @@ public abstract class ConnectionWrapper implements Connection
 {
 	private final Connection _connection;
 	
+	/**
+	 * @param connection
+	 */
 	public ConnectionWrapper(Connection connection)
 	{
 		_connection = connection;
@@ -336,5 +340,35 @@ public abstract class ConnectionWrapper implements Connection
 	public <T> T unwrap(Class<T> iface) throws SQLException
 	{
 		return _connection.unwrap(iface);
+	}
+	
+	@Override
+	public void setSchema(String schema) throws SQLException
+	{
+		_connection.setSchema(schema);
+	}
+	
+	@Override
+	public String getSchema() throws SQLException
+	{
+		return _connection.getSchema();
+	}
+	
+	@Override
+	public void abort(Executor executor) throws SQLException
+	{
+		_connection.abort(executor);
+	}
+	
+	@Override
+	public void setNetworkTimeout(Executor executor, int milliseconds) throws SQLException
+	{
+		_connection.setNetworkTimeout(executor, milliseconds);
+	}
+	
+	@Override
+	public int getNetworkTimeout() throws SQLException
+	{
+		return _connection.getNetworkTimeout();
 	}
 }

@@ -138,6 +138,11 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 		return _inetAddress;
 	}
 	
+	/**
+	 * Returns the IP address as a string (w.x.y.z).
+	 * @return raw IP address
+	 * @see InetAddress#getHostAddress()
+	 */
 	public final String getHostAddress()
 	{
 		return _hostAddress;

@@ -15,6 +15,8 @@
 package com.l2jfree.security;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 /**
  * This file is based on the Blowfish Engine that is part of the BouncyCastle
@@ -448,5 +450,83 @@ public class BlowfishEngine {
 		b[offset + 1] = (byte) (in >> 8);
 		b[offset + 2] = (byte) (in >> 16);
 		b[offset + 3] = (byte) (in >> 24);
+	}
+
+	// ==================================
+	// L2JFree Implementation
+	// ==================================
+
+	/**
+	 * Processes (enciphers/deciphers) a single block of bytes (8).
+	 * @param buf a byte buffer
+	 * @param offset offset to processed block
+	 * @return block size (8)
+	 * @throws IllegalArgumentException not enough bytes in buffer
+	 * @throws IllegalStateException uninitialized, missing Blowfish key
+	 */
+	public final int processBlock(ByteBuffer buf, int offset) throws IllegalArgumentException, IllegalStateException {
+		if (workingKey == null)
+			throw new IllegalStateException("Blowfish not initialised");
+		else if ((offset + BLOCK_SIZE) > buf.limit())
+			throw new IllegalArgumentException("buffer too short");
+
+		if (encrypting)
+			encryptBlock(buf, offset);
+		else
+			decryptBlock(buf, offset);
+
+		return BLOCK_SIZE;
+	}
+
+	private int BytesTo32bits(ByteBuffer b, int i) {
+		ByteOrder bo = b.order();
+		b.order(ByteOrder.LITTLE_ENDIAN);
+
+		try
+		{
+			return b.getInt(i);
+		}
+		finally
+		{
+			b.order(bo);
+		}
+	}
+
+	private void Bits32ToBytes(int in, ByteBuffer b, int offset) {
+		ByteOrder bo = b.order();
+		b.order(ByteOrder.LITTLE_ENDIAN);
+
+		b.putInt(offset, in);
+		b.order(bo);
+	}
+
+	private void encryptBlock(ByteBuffer buf, int offset) {
+		int xl = BytesTo32bits(buf, offset);
+		int xr = BytesTo32bits(buf, offset + 4);
+
+		xl ^= P[0];
+		for (int i = 1; i < ROUNDS; i += 2) {
+			xr ^= F(xl) ^ P[i];
+			xl ^= F(xr) ^ P[i + 1];
+		}
+		xr ^= P[ROUNDS + 1];
+
+		Bits32ToBytes(xr, buf, offset);
+		Bits32ToBytes(xl, buf, offset + 4);
+	}
+
+	private void decryptBlock(ByteBuffer buf, int offset) {
+		int xl = BytesTo32bits(buf, offset);
+		int xr = BytesTo32bits(buf, offset + 4);
+
+		xl ^= P[ROUNDS + 1];
+		for (int i = ROUNDS; i > 0; i -= 2) {
+			xr ^= F(xl) ^ P[i];
+			xl ^= F(xr) ^ P[i - 1];
+		}
+		xr ^= P[0];
+
+		Bits32ToBytes(xr, buf, offset);
+		Bits32ToBytes(xl, buf, offset + 4);
 	}
 }

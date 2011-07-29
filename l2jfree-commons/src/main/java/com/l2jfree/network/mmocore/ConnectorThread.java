@@ -26,13 +26,16 @@ final class ConnectorThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 {
 	private final InetAddress _address;
 	private final int _port;
+	private final boolean _persistent;
 	
-	protected ConnectorThread(MMOController<T, RP, SP> mmoController, InetAddress address, int port)
+	protected ConnectorThread(MMOController<T, RP, SP> mmoController,
+			InetAddress address, int port, boolean persistent)
 	{
 		super(mmoController);
 		
 		_address = address;
 		_port = port;
+		_persistent = persistent;
 	}
 	
 	@Override
@@ -48,7 +51,8 @@ final class ConnectorThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 				
 				final SocketChannel selectable = SocketChannel.open();
 				selectable.configureBlocking(false);
-				selectable.connect(new InetSocketAddress(_address, _port));
+				if (!selectable.connect(new InetSocketAddress(_address, _port)))
+					selectable.finishConnect();
 				
 				final T con = getMMOController().createClient(selectable);
 				
@@ -76,6 +80,9 @@ final class ConnectorThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 			{
 				e.printStackTrace();
 			}
+			
+			if (!_persistent)
+				return;
 			
 			System.out.println("Disconnected, trying to reconnect in 5 sec!");
 			

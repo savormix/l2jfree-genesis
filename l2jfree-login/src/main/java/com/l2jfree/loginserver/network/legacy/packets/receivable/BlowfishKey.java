@@ -72,7 +72,7 @@ public final class BlowfishKey extends L2GameServerPacket
 		byte[] key = new byte[padded.length - i];
 		System.arraycopy(padded, i, key, 0, padded.length - i);
 		
-		lgs.getCipher().setBlowfishKey(key);
+		lgs.initCipher(key);
 		lgs.setState(L2LegacyState.KEYS_EXCHANGED);
 	}
 	
