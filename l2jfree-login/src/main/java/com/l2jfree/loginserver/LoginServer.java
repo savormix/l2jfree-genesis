@@ -40,7 +40,8 @@ public final class LoginServer extends Config
 	{
 		L2LoginIdentifier.getInstance().getUID();
 		
-		TableOptimizer.optimize(Config.DB_URL);
+		if (DB_OPTIMIZE)
+			TableOptimizer.optimize(Config.DB_URL);
 		
 		L2GameServerCache.getInstance();
 		
@@ -74,6 +75,8 @@ public final class LoginServer extends Config
 			Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
 			return;
 		}
+		
+		// TODO
 		
 		L2Config.onStartup();
 		

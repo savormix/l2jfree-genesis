@@ -27,7 +27,6 @@ import com.l2jfree.util.concurrent.L2ThreadPool;
  * @author savormix
  */
 // TODO should be sorted into groups and redone with annotation loaders
-@SuppressWarnings("synthetic-access")
 public class Config extends L2Config
 {
 	static

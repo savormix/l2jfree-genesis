@@ -15,11 +15,29 @@
 package com.l2jfree.gameserver;
 
 import com.l2jfree.L2Config;
+import com.l2jfree.sql.TableOptimizer;
 
-public final class GameServer extends L2Config
+/**
+ * This class contains the application entry point.
+ * 
+ * @author NB4L1
+ */
+public final class GameServer extends Config
 {
+	/**
+	 * Launches the game server.
+	 * 
+	 * @param args ignored
+	 */
 	public static void main(String[] args)
 	{
-		// ...
+		if (DB_OPTIMIZE)
+			TableOptimizer.optimize(Config.DB_URL);
+		
+		// TODO
+		
+		L2Config.onStartup();
+		
+		_log.info("Game server ready.");
 	}
 }
