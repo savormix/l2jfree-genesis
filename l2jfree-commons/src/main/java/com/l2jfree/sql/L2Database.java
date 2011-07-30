@@ -15,13 +15,9 @@
 package com.l2jfree.sql;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
@@ -30,9 +26,7 @@ import javax.persistence.Persistence;
 
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 
-import com.l2jfree.util.Rnd;
 import com.l2jfree.util.logging.L2Logger;
-import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 /**
  * Database access manager.
@@ -45,10 +39,9 @@ public final class L2Database
 	
 	public static final String DEFAULT_DATA_SOURCE_NAME = "default";
 	
-	private static ComboPooledDataSource _defaultDataSource;
+	private static L2DataSource _defaultDataSource;
 	private static EntityManagerFactory _defaultEntityManagerFactory;
-	private static final Map<String, ComboPooledDataSource> _dataSources = new HashMap<String, ComboPooledDataSource>();
-	private static final Map<String, SQLContext> _tableContexts = new HashMap<String, SQLContext>();
+	private static final Map<String, L2DataSource> _dataSources = new HashMap<String, L2DataSource>();
 	
 	public static void setDataSource(String dataSourceName, DataSourceInitializer initializer) throws Exception
 	{
@@ -56,7 +49,7 @@ public final class L2Database
 			throw new Exception("A data source with the given name has been already set!");
 		
 		// initialization of the ComboPooledDataSource
-		final ComboPooledDataSource dataSource = initializer.initDataSource();
+		final L2DataSource dataSource = L2DataSource.valueOf(dataSourceName, initializer.initDataSource());
 		
 		// test the connection
 		dataSource.getConnection().close();
@@ -78,140 +71,31 @@ public final class L2Database
 			_defaultEntityManagerFactory.createEntityManager().close();
 		}
 		
-		/**
-		 * Obtains <TT>CURRENT_DATABASE</TT> and <TT>CURRENT_SCHEMA</TT>
-		 * on an arbitrary DBMS.
-		 * @author savormix
-		 */
-		Connection con = null;
-		
-		// remove leftover tables
+		dataSource.initSQLContext();
+	}
+	
+	public static void optimize()
+	{
+		optimize(DEFAULT_DATA_SOURCE_NAME, _defaultDataSource);
+	}
+	
+	public static void optimize(String dataSourceName)
+	{
+		optimize(dataSourceName, _dataSources.get(dataSourceName));
+	}
+	
+	private static void optimize(String dataSourceName, L2DataSource dataSource)
+	{
 		try
 		{
-			con = L2Database.getConnection(dataSourceName);
-			PreparedStatement ps = con.prepareStatement("SELECT table_name FROM information_schema.tables WHERE table_type LIKE ? AND table_name LIKE ?");
-			ps.setString(1, "BASE_TABLE");
-			ps.setString(2, "zzz%");
-			ResultSet rs = ps.executeQuery();
+			if (dataSource == null)
+				throw new SQLException("Unknown data source!");
 			
-			List<String> left = new ArrayList<String>();
-			while (rs.next())
-				left.add(rs.getString("table_name"));
-			
-			rs.close();
-			ps.close();
-			
-			int size = left.size();
-			for (String table : left)
-			{
-				try
-				{
-					ps = con.prepareStatement("DROP TABLE " + table);
-					ps.executeUpdate();
-				}
-				catch (SQLException e)
-				{
-					// whatever...
-					size--;
-				}
-				finally
-				{
-					L2Database.closeQuietly(ps);
-				}
-			}
-			
-			if (size > 0)
-				_log.info("Removed " + size + " temporary tables.");
+			dataSource.optimize();
 		}
-		catch (SQLException e)
+		catch (Exception e)
 		{
-			// whatever...
-		}
-		finally
-		{
-			L2Database.close(con);
-		}
-		
-		try
-		{
-			con = L2Database.getConnection(dataSourceName);
-			String table = null;
-			while (true)
-			{
-				// generate a random table name
-				StringBuilder sb = new StringBuilder("zzz");
-				for (int i = 0; i < 5; i++)
-					sb.append((char) Rnd.get('a', 'z'));
-				table = sb.toString();
-				// DO NOT LOOK UP information_schema NOW
-				
-				// attempt to create in current schema instead
-				PreparedStatement ps = null;
-				try
-				{
-					ps = con.prepareStatement("CREATE TABLE " + table + " (x INT)");
-					ps.executeUpdate();
-				}
-				catch (SQLException e)
-				{
-					// already exists in current schema
-					continue;
-					// P.S. if DB doesn't have enough space for this table
-					// then administrator will have more important problems
-					// than this infinite cycle
-				}
-				finally
-				{
-					L2Database.closeQuietly(ps);
-				}
-				
-				// table did not exist in current schema
-				// we can look it up in information_schema now
-				
-				ps = con.prepareStatement("SELECT table_catalog, table_schema FROM information_schema.tables WHERE table_type LIKE ? AND table_name LIKE ?");
-				ps.setString(1, "BASE_TABLE");
-				ps.setString(2, table);
-				ResultSet rs = ps.executeQuery();
-				if (!rs.next())
-					throw new IllegalStateException("Table stolen."); // should never happen
-				String db = rs.getString("table_catalog");
-				String schema = rs.getString("table_schema");
-				
-				boolean ndr = rs.next(); // non-deterministic results
-				
-				rs.close();
-				ps.close();
-				
-				// remove table
-				try
-				{
-					ps = con.prepareStatement("DROP TABLE " + table);
-					ps.executeUpdate();
-				}
-				catch (SQLException e)
-				{
-					// whatever...
-				}
-				finally
-				{
-					L2Database.closeQuietly(ps);
-				}
-				
-				if (!ndr) // database and schema obtained
-				{
-					SQLContext sqlc = new SQLContext(db, schema);
-					_tableContexts.put(dataSourceName, sqlc);
-					break;
-				}
-			}
-		}
-		catch (SQLException e)
-		{
-			throw e;
-		}
-		finally
-		{
-			L2Database.close(con);
+			_log.fatal("L2Database: Failed to optimise the database tables of data source: " + dataSourceName, e);
 		}
 	}
 	
@@ -229,7 +113,7 @@ public final class L2Database
 		
 		try
 		{
-			for (ComboPooledDataSource dataSource : _dataSources.values())
+			for (L2DataSource dataSource : _dataSources.values())
 			{
 				try
 				{
@@ -257,8 +141,7 @@ public final class L2Database
 		return getConnection(dataSourceName, _dataSources.get(dataSourceName));
 	}
 	
-	private static Connection getConnection(String dataSourceName, ComboPooledDataSource dataSource)
-			throws SQLException
+	private static Connection getConnection(String dataSourceName, L2DataSource dataSource) throws SQLException
 	{
 		try
 		{
@@ -266,8 +149,6 @@ public final class L2Database
 				throw new SQLException("Unknown data source!");
 			
 			return dataSource.getConnection();
-			// TODO for debug purposes
-			//return new L2DBConnectionWrapper(dataSource.getConnection());
 		}
 		catch (SQLException e)
 		{
@@ -318,72 +199,29 @@ public final class L2Database
 	
 	public static boolean tableExists(String dataSourceName, String tableName)
 	{
-		boolean tableExists = false;
+		final L2DataSource dataSource = _dataSources.get(dataSourceName);
 		
-		Connection con = null;
-		try
+		if (dataSource == null)
 		{
-			con = L2Database.getConnection(dataSourceName);
-			
-			PreparedStatement ps = con
-					.prepareStatement("SELECT table_name FROM information_schema.tables WHERE table_type LIKE ? AND table_name LIKE ? AND table_schema LIKE ? AND table_catalog LIKE ?");
-			ps.setString(1, "BASE_TABLE");
-			ps.setString(2, tableName);
-			SQLContext sqlc = _tableContexts.get(dataSourceName);
-			ps.setString(3, sqlc.getSchema());
-			ps.setString(4, sqlc.getDatabase());
-			
-			ResultSet rs = ps.executeQuery();
-			
-			if (rs.next())
-				tableExists = true;
-			
-			rs.close();
-			ps.close();
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			L2Database.close(con);
+			_log.warn("", new SQLException("Unknown data source!"));
+			return false;
 		}
 		
-		return tableExists;
+		return dataSource.tableExists(tableName);
 	}
 	
-	private static void closeQuietly(Statement s)
+	public static void closeQuietly(Statement s)
 	{
+		if (s == null)
+			return;
+		
 		try
 		{
 			s.close();
 		}
-		catch (Exception e)
+		catch (SQLException e)
 		{
 			// ignore
-		}
-	}
-	
-	private static class SQLContext
-	{
-		private final String _database;
-		private final String _schema;
-		
-		private SQLContext(String database, String schema)
-		{
-			_database = database;
-			_schema = schema;
-		}
-		
-		public String getDatabase()
-		{
-			return _database;
-		}
-		
-		public String getSchema()
-		{
-			return _schema;
 		}
 	}
 }

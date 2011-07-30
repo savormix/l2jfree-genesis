@@ -15,7 +15,7 @@
 package com.l2jfree.gameserver;
 
 import com.l2jfree.L2Config;
-import com.l2jfree.sql.TableOptimizer;
+import com.l2jfree.sql.L2Database;
 
 /**
  * This class contains the application entry point.
@@ -32,7 +32,7 @@ public final class GameServer extends Config
 	public static void main(String[] args)
 	{
 		if (DB_OPTIMIZE)
-			TableOptimizer.optimize(Config.DB_URL);
+			L2Database.optimize();
 		
 		// TODO
 		

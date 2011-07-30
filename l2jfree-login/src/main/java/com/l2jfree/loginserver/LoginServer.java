@@ -22,7 +22,7 @@ import com.l2jfree.loginserver.network.client.L2ClientSecurity;
 import com.l2jfree.loginserver.network.gameserver.L2GameServerCache;
 import com.l2jfree.loginserver.network.legacy.L2LegacyConnections;
 import com.l2jfree.loginserver.network.legacy.L2LegacySecurity;
-import com.l2jfree.sql.TableOptimizer;
+import com.l2jfree.sql.L2Database;
 
 /**
  * This class contains the application entry point.
@@ -41,7 +41,7 @@ public final class LoginServer extends Config
 		L2LoginIdentifier.getInstance().getUID();
 		
 		if (DB_OPTIMIZE)
-			TableOptimizer.optimize(Config.DB_URL);
+			L2Database.optimize();
 		
 		L2GameServerCache.getInstance();
 		
