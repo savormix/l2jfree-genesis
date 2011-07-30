@@ -89,7 +89,17 @@ public abstract class L2EntityMap<T extends L2Entity<Integer>>
 	{
 		init();
 		
-		_map.put(obj.getPrimaryKey(), obj);
+		final Integer primaryKey = obj.getPrimaryKey();
+		final T oldValue = _map.get(primaryKey);
+		
+		if (oldValue == null || replace(primaryKey, oldValue, obj))
+			_map.put(primaryKey, obj);
+	}
+	
+	protected boolean replace(Integer primaryKey, T oldValue, T newValue)
+	{
+		throw new IllegalStateException("[" + oldValue + "] replaced with [" + newValue + "] - primaryKey: "
+				+ primaryKey + "!");
 	}
 	
 	public void remove(T obj)
