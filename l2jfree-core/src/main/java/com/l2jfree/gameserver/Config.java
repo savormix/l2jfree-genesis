@@ -1,3 +1,17 @@
+/*
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.l2jfree.gameserver;
 
 import com.l2jfree.L2Config;
@@ -9,14 +23,15 @@ import com.l2jfree.sql.L2DatabaseInstaller;
 import com.l2jfree.util.concurrent.L2ThreadPool;
 
 /**
- * @author NB4L1
+ * @author savormix
+ *
  */
-//TODO should be sorted into groups and redone with annotation loaders
 public class Config extends L2Config
 {
 	static
 	{
 		L2Config.registerConfig(new DatabaseConfig());
+		L2Config.registerConfig(new NetworkConfig());
 		
 		try
 		{
@@ -30,7 +45,7 @@ public class Config extends L2Config
 		
 		try
 		{
-			L2ThreadPool.initThreadPools(new L2GameThreadPools());
+			L2ThreadPool.initThreadPools(new L2CoreThreadPools());
 		}
 		catch (Exception e)
 		{
@@ -40,7 +55,7 @@ public class Config extends L2Config
 		
 		try
 		{
-			L2Database.setDataSource("default", new L2GameDataSource());
+			L2Database.setDataSource("default", new L2CoreDataSource());
 		}
 		catch (Exception e)
 		{
@@ -57,6 +72,11 @@ public class Config extends L2Config
 			_log.fatal("Could not initialize DB tables!", e);
 			Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
 		}
+	}
+	
+	protected Config()
+	{
+		super();
 	}
 	
 	/** Maximum amount of database connections in pool */
@@ -77,7 +97,7 @@ public class Config extends L2Config
 		@Override
 		protected void loadImpl(L2Properties properties)
 		{
-			DB_MAX_CONNECTIONS = properties.getInteger("MaxConnectionsInPool", 50);
+			DB_MAX_CONNECTIONS = properties.getInteger("MaxConnectionsInPool", 5);
 			DB_DRIVER = properties.getString("DriverClass");
 			
 			DB_URL = properties.getString("JdbcUrl");
@@ -99,6 +119,27 @@ public class Config extends L2Config
 		protected String getName()
 		{
 			return "database";
+		}
+	}
+	
+	/** Login server listens for client connections on this IP address */
+	public static String NET_LISTEN_IP;
+	/** Login server listens for client connections on this port */
+	public static int NET_LISTEN_PORT;
+	
+	private static final class NetworkConfig extends ConfigPropertiesLoader
+	{
+		@Override
+		protected void loadImpl(L2Properties properties)
+		{
+			NET_LISTEN_IP = properties.getString("ListenIP", "0.0.0.0");
+			NET_LISTEN_PORT = properties.getInteger("ListenPort", 7777);
+		}
+		
+		@Override
+		protected String getName()
+		{
+			return "network";
 		}
 	}
 }

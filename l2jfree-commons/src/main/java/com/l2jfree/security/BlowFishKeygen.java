@@ -20,7 +20,9 @@ import com.l2jfree.util.Rnd;
  * Blowfish keygen for GameServer client connections
  * 
  * @author KenM
+ * @deprecated Legacy class
  */
+@Deprecated
 public class BlowFishKeygen
 {
 	private static final int CRYPT_KEYS_SIZE = 20;
@@ -50,10 +52,9 @@ public class BlowFishKeygen
 		}
 	}
 	
-	// block instantiation
 	private BlowFishKeygen()
 	{
-		
+		// block instantiation
 	}
 	
 	/**

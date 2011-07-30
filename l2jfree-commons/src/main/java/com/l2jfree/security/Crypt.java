@@ -18,9 +18,10 @@ import java.nio.ByteBuffer;
 
 /**
  * This class ...
- * 
+ * @deprecated Legacy class
  * @version $Revision: 1.3.4.3 $ $Date: 2005/03/27 15:29:18 $
  */
+@Deprecated
 public class Crypt
 {
 	private final byte[] _key = new byte[16];

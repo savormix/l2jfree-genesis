@@ -89,6 +89,8 @@ public final class LoginServer extends Config
 				try
 				{
 					L2ClientConnections.getInstance().shutdown();
+					if (Config.NET_ENABLE_LEGACY || Config.SVC_FORCE_LEGACY)
+						L2LegacyConnections.getInstance().shutdown();
 				}
 				catch (Throwable t)
 				{

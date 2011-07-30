@@ -12,20 +12,19 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.loginserver.network.client;
+package com.l2jfree.gameserver.network.client.packets;
+
+import com.l2jfree.gameserver.network.client.L2CoreClient;
+import com.l2jfree.network.mmocore.ReceivablePacket;
 
 /**
+ * Just a wrapper class for convenience.
  * @author savormix
- *
  */
-public enum L2LoginClientState
+public abstract class L2ClientPacket extends ReceivablePacket<L2CoreClient, L2ClientPacket, L2ServerPacket>
 {
-	/** Connection between the client and login server has been established. */
-	CONNECTED,
-	/** Client has passed a GameGuard check. */
-	GAMEGUARD_PASSED,
-	/** Client has logged in with a valid account. */
-	LOGGED_IN,
-	/** Client has received the game server list. */
-	VIEWING_LIST;
+	protected L2ClientPacket()
+	{
+		super();
+	}
 }

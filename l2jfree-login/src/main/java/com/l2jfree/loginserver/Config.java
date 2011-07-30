@@ -76,6 +76,11 @@ public class Config extends L2Config
 		}
 	}
 	
+	protected Config()
+	{
+		super();
+	}
+	
 	/** Maximum amount of database connections in pool */
 	public static int DB_MAX_CONNECTIONS;
 	/** Database driver class */

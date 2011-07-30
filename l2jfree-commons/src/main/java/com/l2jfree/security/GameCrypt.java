@@ -15,8 +15,10 @@
 package com.l2jfree.security;
 
 /**
+ * @deprecated Legacy class
  * @author KenM
  */
+@Deprecated
 public class GameCrypt
 {
 	private final byte[] _inKey = new byte[16];

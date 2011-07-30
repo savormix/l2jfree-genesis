@@ -394,6 +394,6 @@ public class NewCipher
 	{
 		int count = size / 8;
 		for (int i = 0; i < count; i++)
-			_decrypt.processBlock(buf, offset);
+			_decrypt.processBlock(buf, offset + i * 8);
 	}
 }

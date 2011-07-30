@@ -21,6 +21,10 @@ import org.apache.commons.io.IOUtils;
 
 import com.l2jfree.config.L2Properties;
 
+/**
+ * @deprecated Legacy class
+ */
+@Deprecated
 public final class HexID
 {
 	/**
@@ -52,7 +56,7 @@ public final class HexID
 	
 	/**
 	 * Save hexadecimal ID of the server in the properties file.
-	 * 
+	 * @param serverId game server ID
 	 * @param hexId (String) : hexadecimal ID of the server to store
 	 * @param fileName (String) : name of the properties file
 	 */

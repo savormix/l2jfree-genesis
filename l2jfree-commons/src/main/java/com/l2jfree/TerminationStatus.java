@@ -65,7 +65,7 @@ public enum TerminationStatus
 	 * <B>Cause</B>: An [uncaught] error (other than {@link StackOverflowError}) occurred during runtime.<BR>
 	 * <B>Resolution</B>: Possibly inform the user about the occurred error and restart.
 	 */
-	RUNTIME_UNCAUGHT_ERROR(5, "shutting down, because an uncaught error occured during runtime"),
+	RUNTIME_UNCAUGHT_ERROR(5, "shutting down, because an uncaught error occurred during runtime"),
 	
 	/**
 	 * <B>Cause</B>: Configuration files could not be loaded.<BR>

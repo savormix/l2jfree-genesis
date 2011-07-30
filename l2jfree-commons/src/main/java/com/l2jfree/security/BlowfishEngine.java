@@ -265,6 +265,7 @@ public class BlowfishEngine {
 	private boolean encrypting = false;
 	private byte[] workingKey = null;
 
+	/** Creates an uninitialized Blowfish engine. */
 	public BlowfishEngine() {
 		S0 = new int[SBOX_SK];
 		S1 = new int[SBOX_SK];
@@ -276,7 +277,7 @@ public class BlowfishEngine {
 	/**
 	 * initialise a Blowfish cipher.
 	 * 
-	 * @param encryption
+	 * @param pEncrypting
 	 *            whether or not we are for encryption.
 	 * @param key
 	 *            the key used to set up the cipher.
@@ -290,10 +291,23 @@ public class BlowfishEngine {
 		return;
 	}
 
+	/**
+	 * Returns the name of the algorithm.
+	 * @return Blowfish
+	 */
 	public String getAlgorithmName() {
 		return "Blowfish";
 	}
 
+	/**
+	 * Processes one block of bytes (8) using the Blowfish algorithm.
+	 * @param in source array
+	 * @param inOff source array offset
+	 * @param out destination array
+	 * @param outOff destination array offset
+	 * @return {@link #getBlockSize()}
+	 * @throws IOException not enough bytes in <TT>in</TT> or <TT>out</TT>
+	 */
 	public final int processBlock(byte[] in, int inOff, byte[] out, int outOff)
 			throws IOException {
 		if (workingKey == null) {
@@ -313,9 +327,15 @@ public class BlowfishEngine {
 		return BLOCK_SIZE;
 	}
 
+	/** Resets the cipher to the initial state. */
 	public void reset() {
+		// Blowfish does not depend on previously ciphered bytes.
 	}
 
+	/**
+	 * Returns block size in bytes.
+	 * @return block size
+	 */
 	public int getBlockSize() {
 		return BLOCK_SIZE;
 	}

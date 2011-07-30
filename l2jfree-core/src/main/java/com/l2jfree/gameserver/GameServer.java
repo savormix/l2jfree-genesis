@@ -15,12 +15,18 @@
 package com.l2jfree.gameserver;
 
 import com.l2jfree.L2Config;
+import com.l2jfree.Shutdown;
+import com.l2jfree.TerminationStatus;
+import com.l2jfree.gameserver.network.client.L2ClientConnections;
+import com.l2jfree.gameserver.network.client.L2ClientSecurity;
 import com.l2jfree.sql.L2Database;
 
 /**
  * This class contains the application entry point.
  * 
  * @author NB4L1
+ * @author savormix
+ *
  */
 public final class GameServer extends Config
 {
@@ -31,13 +37,40 @@ public final class GameServer extends Config
 	 */
 	public static void main(String[] args)
 	{
-		if (DB_OPTIMIZE)
+		if (Config.DB_OPTIMIZE)
 			L2Database.optimize();
 		
-		// TODO
+		L2ClientSecurity.getInstance();
+		
+		try
+		{
+			L2ClientConnections.getInstance().openServerSocket(Config.NET_LISTEN_IP, Config.NET_LISTEN_PORT);
+			L2ClientConnections.getInstance().start();
+		}
+		catch (Throwable e)
+		{
+			_log.fatal("Could not start login server!", e);
+			Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
+			return;
+		}
 		
 		L2Config.onStartup();
 		
 		_log.info("Game server ready.");
+		
+		Shutdown.addShutdownHook(new Runnable() {
+			@Override
+			public void run()
+			{
+				try
+				{
+					L2ClientConnections.getInstance().shutdown();
+				}
+				catch (Throwable t)
+				{
+					_log.warn("Orderly shutdown sequence interrupted", t);
+				}
+			}
+		});
 	}
 }
