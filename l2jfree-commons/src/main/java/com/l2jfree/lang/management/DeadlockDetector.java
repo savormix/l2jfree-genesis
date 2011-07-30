@@ -26,7 +26,6 @@ import com.l2jfree.Util;
 import com.l2jfree.lang.L2Thread;
 import com.l2jfree.util.logging.L2Logger;
 
-
 public final class DeadlockDetector extends L2Thread
 {
 	private static final L2Logger _log = L2Logger.getLogger(DeadlockDetector.class);

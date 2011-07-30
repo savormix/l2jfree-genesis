@@ -44,6 +44,7 @@ import com.l2jfree.config.L2Properties;
 import com.l2jfree.io.BufferedRedirectingOutputStream;
 import com.l2jfree.lang.L2Math;
 import com.l2jfree.lang.L2TextBuilder;
+import com.l2jfree.lang.management.DeadlockDetector;
 import com.l2jfree.util.HandlerRegistry;
 import com.l2jfree.util.L2FastSet;
 import com.l2jfree.util.logging.L2Logger;
@@ -267,6 +268,8 @@ public abstract class L2Config
 		}));
 		
 		Shutdown.initShutdownHook();
+		
+		DeadlockDetector.getInstance();
 	}
 	
 	private static StackTraceElement getCaller()
