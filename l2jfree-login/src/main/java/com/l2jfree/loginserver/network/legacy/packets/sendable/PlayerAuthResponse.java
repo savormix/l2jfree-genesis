@@ -36,7 +36,6 @@ public final class PlayerAuthResponse extends L2LoginServerPacket
 	{
 		_account = account;
 		_valid = valid;
-		_log.info("PAR: " + account + " " + valid);
 	}
 	
 	@Override

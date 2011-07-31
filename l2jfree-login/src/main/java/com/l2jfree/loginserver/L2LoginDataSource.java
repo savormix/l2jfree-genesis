@@ -43,6 +43,12 @@ public final class L2LoginDataSource implements DataSourceInitializer
 		
 		source.setAcquireIncrement(5);
 		
+		// FIXME: Affects all DBMSes that allow multiple dbs and/or multiple schemas (so not SQLite)
+		// checks whether this table exists IN ANY DB (of >= 1), IN ANY SCHEMA (also of >= 1).
+		// if it exists, it MUST be readable (SELECT) to ALL USERS (that access that DBMS with c3p0),
+		// otherwise c3p0 will FAIL.
+		// dmd.getTables( null, null, automaticTestTable, new String[] {"TABLE"} )
+		// see C3P0PooledConnectionPoolManager#initializeAutomaticTestTable(String, DbAuth)
 		source.setAutomaticTestTable("_connection_test_table");
 		source.setTestConnectionOnCheckin(false);
 		

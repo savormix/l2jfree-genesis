@@ -30,19 +30,18 @@ public final class L2ClientSecurity
 	private static final int KEY_LENGTH = 16;
 	private static final int KEY_COUNT = 20;
 	
-	private final ByteBuffer[] _keys;
+	private final byte[][] _keys;
 	
 	private L2ClientSecurity()
 	{
-		_keys = new ByteBuffer[KEY_COUNT];
+		_keys = new byte[KEY_COUNT][KEY_LENGTH];
 		
 		for (int i = 0; i < KEY_COUNT; i++)
 		{
-			ByteBuffer buf = ByteBuffer.allocateDirect(KEY_LENGTH);
+			getKeys()[i] = new byte[KEY_LENGTH];
+			ByteBuffer buf = ByteBuffer.wrap(getKeys()[i]);
 			buf.putLong(Rnd.get(Long.MIN_VALUE, Long.MAX_VALUE));
 			buf.putLong(0xc8279301a16c3197L);
-			buf.clear();
-			getKeys()[i] = buf.asReadOnlyBuffer();
 		}
 		_log.info("Generated " + getKeys().length + " cipher keys (client).");
 	}
@@ -51,12 +50,12 @@ public final class L2ClientSecurity
 	 * Returns a read-only cipher key.
 	 * @return cipher key
 	 */
-	public ByteBuffer getKey()
+	public byte[] getKey()
 	{
 		return Rnd.get(getKeys());
 	}
 	
-	private ByteBuffer[] getKeys()
+	private byte[][] getKeys()
 	{
 		return _keys;
 	}

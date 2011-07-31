@@ -29,18 +29,20 @@ public class CoreCipher
 	private final ByteBuffer _decKey;
 	
 	/**
-	 * Constructs a cipher.
+	 * Constructs a cipher.<BR>
+	 * The given buffer's position and mark will be modified.
 	 * @param key a [read-only] cipher key
-	 * @throws IllegalArgumentException if <TT>key.remaining() != 16</TT>
+	 * @throws IllegalArgumentException if <TT>key.length != 16</TT>
 	 */
-	public CoreCipher(ByteBuffer key) throws IllegalArgumentException
+	public CoreCipher(byte[] key) throws IllegalArgumentException
 	{
-		if (key.remaining() != VALID_KEY_LENGTH)
+		if (key.length != VALID_KEY_LENGTH)
 			throw new IllegalArgumentException("Invalid key.");
 		
-		_encKey = ByteBuffer.allocateDirect(key.remaining());
+		// Reordering must be here, as the cipher depends upon it
+		_encKey = ByteBuffer.allocateDirect(VALID_KEY_LENGTH);
 		_encKey.order(ByteOrder.LITTLE_ENDIAN).put(key).clear();
-		_decKey = ByteBuffer.allocateDirect(key.remaining());
+		_decKey = ByteBuffer.allocateDirect(VALID_KEY_LENGTH);
 		_decKey.order(ByteOrder.LITTLE_ENDIAN).put(key).clear();
 	}
 	

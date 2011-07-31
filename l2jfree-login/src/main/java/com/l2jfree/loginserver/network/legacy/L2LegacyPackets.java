@@ -76,11 +76,11 @@ public final class L2LegacyPackets implements IPacketHandler<L2GameServer, L2Gam
 				return new PlayerTraceRt();
 			}
 			// unknown packet
-			_log.info("Unknown packet: 0x" + HexUtil.fillHex(opcode, 2));
+			_log.info("Unknown legacy packet: 0x" + HexUtil.fillHex(opcode, 2));
 			return null;
 		}
 		// invalid state
-		_log.info("Packet in invalid state: 0x" + HexUtil.fillHex(opcode, 2));
+		_log.info("Legacy packet in invalid state: 0x" + HexUtil.fillHex(opcode, 2));
 		return null;
 	}
 	

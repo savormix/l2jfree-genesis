@@ -35,7 +35,7 @@ public final class L2CoreClient extends MMOConnection<L2CoreClient, L2ClientPack
 	
 	private L2CoreClientState _state;
 	
-	protected L2CoreClient(SocketChannel socketChannel, ByteBuffer cipherKey) throws ClosedChannelException
+	protected L2CoreClient(SocketChannel socketChannel, byte[] cipherKey) throws ClosedChannelException
 	{
 		super(L2ClientConnections.getInstance(), socketChannel);
 		// TODO Auto-generated constructor stub
@@ -73,12 +73,10 @@ public final class L2CoreClient extends MMOConnection<L2CoreClient, L2ClientPack
 	protected boolean encipher(ByteBuffer buf, int size)
 	{
 		if (isFirstTime())
-		{
 			setFirstTime(false);
-			return true;
-		}
+		else
+			getCipher().encipher(buf, size);
 		
-		getCipher().encipher(buf, size);
 		buf.position(buf.position() + size);
 		return true;
 	}

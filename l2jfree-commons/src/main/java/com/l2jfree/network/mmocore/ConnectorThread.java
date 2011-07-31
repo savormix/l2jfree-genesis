@@ -51,8 +51,18 @@ final class ConnectorThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 				
 				final SocketChannel selectable = SocketChannel.open();
 				selectable.configureBlocking(false);
-				if (!selectable.connect(new InetSocketAddress(_address, _port)))
-					selectable.finishConnect();
+				selectable.connect(new InetSocketAddress(_address, _port));
+				while (!selectable.finishConnect())
+				{
+					try
+					{
+						Thread.sleep(100);
+					}
+					catch (InterruptedException e)
+					{
+						e.printStackTrace();
+					}
+				}
 				
 				final T con = getMMOController().createClient(selectable);
 				

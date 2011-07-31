@@ -69,11 +69,11 @@ public final class L2ClientPackets implements IPacketHandler<L2LoginClient, L2Cl
 			break;
 		default:
 			// unknown packet
-			_log.info("Unknown packet: 0x" + HexUtil.fillHex(opcode, 2));
+			_log.info("Unknown client packet: 0x" + HexUtil.fillHex(opcode, 2));
 			return null;
 		}
 		// invalid state
-		_log.info("Packet in invalid state: 0x" + HexUtil.fillHex(opcode, 2));
+		_log.info("Client packet in invalid state: 0x" + HexUtil.fillHex(opcode, 2));
 		return null;
 	}
 	
