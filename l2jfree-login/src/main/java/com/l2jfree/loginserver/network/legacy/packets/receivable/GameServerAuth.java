@@ -22,7 +22,7 @@ import java.sql.SQLException;
 import java.util.Set;
 import java.util.TreeSet;
 
-import com.l2jfree.loginserver.Config;
+import com.l2jfree.loginserver.Config.ServiceConfig;
 import com.l2jfree.loginserver.network.gameserver.L2GameServerCache;
 import com.l2jfree.loginserver.network.legacy.L2GameServer;
 import com.l2jfree.loginserver.network.legacy.L2LegacyConnections;
@@ -88,7 +88,7 @@ public final class GameServerAuth extends L2GameServerPacket
 		{
 			if (llc.getById(_desiredId) != null)
 			{
-				if (!_acceptAlternateId || Config.SVC_STRICT_AUTHORIZATION)
+				if (!_acceptAlternateId || ServiceConfig.SVC_STRICT_AUTHORIZATION)
 					// desired ID is not available
 					lgs.close(new LoginServerFail(L2NoServiceReason.ALREADY_LOGGED_IN));
 				else // game server can take any ID and login server may assign them
@@ -134,7 +134,7 @@ public final class GameServerAuth extends L2GameServerPacket
 					String hexId = HexUtil.bytesToHexString(_hexId);
 					if (!hexId.equals(auth)) // invalid authorization
 					{
-						if (!_acceptAlternateId || Config.SVC_STRICT_AUTHORIZATION)
+						if (!_acceptAlternateId || ServiceConfig.SVC_STRICT_AUTHORIZATION)
 							// desired ID is not available
 							lgs.close(new LoginServerFail(L2NoServiceReason.WRONG_HEXID));
 						else // game server can take any ID and login server may assign them
@@ -143,14 +143,14 @@ public final class GameServerAuth extends L2GameServerPacket
 					else // valid authorization
 						finishAuthorization(_desiredId, hexId, bans, lgs);
 				}
-				else if (Config.SVC_STRICT_AUTHORIZATION) // ID is free, but not available
+				else if (ServiceConfig.SVC_STRICT_AUTHORIZATION) // ID is free, but not available
 				{
 					lgs.close(new LoginServerFail(L2NoServiceReason.WRONG_HEXID));
 				}
 				else // ID is available for persistent use
 				{
 					String hexId = HexUtil.bytesToHexString(_hexId);
-					if (Config.SVC_SAVE_REQUESTS)
+					if (ServiceConfig.SVC_SAVE_REQUESTS)
 					{
 						try
 						{

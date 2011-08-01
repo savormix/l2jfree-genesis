@@ -79,19 +79,19 @@ public class Config extends L2Config
 		super();
 	}
 	
-	/** Maximum amount of database connections in pool */
-	public static int DB_MAX_CONNECTIONS;
-	/** Database JDBC URL */
-	public static String DB_URL;
-	/** Database login */
-	public static String DB_USER;
-	/** Database password */
-	public static String DB_PASSWORD;
-	/** Whether to optimize database tables on startup */
-	public static boolean DB_OPTIMIZE;
-	
-	private static final class DatabaseConfig extends ConfigPropertiesLoader
+	public static final class DatabaseConfig extends ConfigPropertiesLoader
 	{
+		/** Maximum amount of database connections in pool */
+		public static int DB_MAX_CONNECTIONS;
+		/** Database JDBC URL */
+		public static String DB_URL;
+		/** Database login */
+		public static String DB_USER;
+		/** Database password */
+		public static String DB_PASSWORD;
+		/** Whether to optimize database tables on startup */
+		public static boolean DB_OPTIMIZE;
+		
 		@Override
 		protected void loadImpl(L2Properties properties)
 		{
@@ -119,13 +119,13 @@ public class Config extends L2Config
 		}
 	}
 	
-	/** Login server listens for client connections on this IP address */
-	public static String NET_LISTEN_IP;
-	/** Login server listens for client connections on this port */
-	public static int NET_LISTEN_PORT;
-	
-	private static final class NetworkConfig extends ConfigPropertiesLoader
+	public static final class NetworkConfig extends ConfigPropertiesLoader
 	{
+		/** Login server listens for client connections on this IP address */
+		public static String NET_LISTEN_IP;
+		/** Login server listens for client connections on this port */
+		public static int NET_LISTEN_PORT;
+		
 		@Override
 		protected void loadImpl(L2Properties properties)
 		{

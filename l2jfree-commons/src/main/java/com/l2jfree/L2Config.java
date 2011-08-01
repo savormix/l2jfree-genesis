@@ -439,7 +439,7 @@ public abstract class L2Config
 		
 		protected Class<?>[] getAnnotatedClasses()
 		{
-			return new Class<?>[] { getClass().getEnclosingClass() };
+			return new Class<?>[] { getClass(), getClass().getEnclosingClass() };
 		}
 		
 		@Override
@@ -449,6 +449,9 @@ public abstract class L2Config
 			
 			for (Class<?> cl : getAnnotatedClasses())
 			{
+				if (cl == null)
+					continue;
+				
 				for (Field field : cl.getFields())
 				{
 					final ConfigProperty configProperty = field.getAnnotation(ConfigProperty.class);

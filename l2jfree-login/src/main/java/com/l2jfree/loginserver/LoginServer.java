@@ -40,18 +40,18 @@ public final class LoginServer extends Config
 	{
 		L2LoginIdentifier.getInstance().getUID();
 		
-		if (DB_OPTIMIZE)
+		if (DatabaseConfig.DB_OPTIMIZE)
 			L2Database.optimize();
 		
 		L2GameServerCache.getInstance();
 		
-		if (Config.NET_ENABLE_LEGACY || Config.SVC_FORCE_LEGACY)
+		if (NetworkConfig.NET_ENABLE_LEGACY || ServiceConfig.SVC_FORCE_LEGACY)
 		{
 			L2LegacySecurity.getInstance();
 			
 			try
 			{
-				L2LegacyConnections.getInstance().openServerSocket(Config.NET_LEGACY_LISTEN_IP, Config.NET_LEGACY_LISTEN_PORT);
+				L2LegacyConnections.getInstance().openServerSocket(NetworkConfig.NET_LEGACY_LISTEN_IP, NetworkConfig.NET_LEGACY_LISTEN_PORT);
 				L2LegacyConnections.getInstance().start();
 			}
 			catch (Throwable e)
@@ -66,7 +66,7 @@ public final class LoginServer extends Config
 		
 		try
 		{
-			L2ClientConnections.getInstance().openServerSocket(Config.NET_LISTEN_IP, Config.NET_LISTEN_PORT);
+			L2ClientConnections.getInstance().openServerSocket(NetworkConfig.NET_LISTEN_IP, NetworkConfig.NET_LISTEN_PORT);
 			L2ClientConnections.getInstance().start();
 		}
 		catch (Throwable e)
@@ -89,7 +89,7 @@ public final class LoginServer extends Config
 				try
 				{
 					L2ClientConnections.getInstance().shutdown();
-					if (Config.NET_ENABLE_LEGACY || Config.SVC_FORCE_LEGACY)
+					if (NetworkConfig.NET_ENABLE_LEGACY || ServiceConfig.SVC_FORCE_LEGACY)
 						L2LegacyConnections.getInstance().shutdown();
 				}
 				catch (Throwable t)

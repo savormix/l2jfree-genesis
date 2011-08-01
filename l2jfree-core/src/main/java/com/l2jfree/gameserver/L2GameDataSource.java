@@ -1,5 +1,6 @@
 package com.l2jfree.gameserver;
 
+import com.l2jfree.gameserver.Config.DatabaseConfig;
 import com.l2jfree.sql.DataSourceInitializer;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
@@ -13,7 +14,7 @@ public final class L2GameDataSource implements DataSourceInitializer
 	@Override
 	public ComboPooledDataSource initDataSource() throws Exception
 	{
-		if (Config.DB_MAX_CONNECTIONS < DB_MIN_CONNECTIONS)
+		if (DatabaseConfig.DB_MAX_CONNECTIONS < DB_MIN_CONNECTIONS)
 			throw new IllegalArgumentException("At least " + DB_MIN_CONNECTIONS + " required in pool.");
 		
 		ComboPooledDataSource source = new ComboPooledDataSource();
@@ -21,7 +22,7 @@ public final class L2GameDataSource implements DataSourceInitializer
 		
 		source.setInitialPoolSize(DB_MIN_CONNECTIONS);
 		source.setMinPoolSize(DB_MIN_CONNECTIONS);
-		source.setMaxPoolSize(Config.DB_MAX_CONNECTIONS);
+		source.setMaxPoolSize(DatabaseConfig.DB_MAX_CONNECTIONS);
 		
 		source.setAcquireRetryAttempts(0);
 		source.setAcquireRetryDelay(500);
@@ -39,9 +40,9 @@ public final class L2GameDataSource implements DataSourceInitializer
 		
 		source.setBreakAfterAcquireFailure(false);
 		
-		source.setJdbcUrl(Config.DB_URL);
-		source.setUser(Config.DB_USER);
-		source.setPassword(Config.DB_PASSWORD);
+		source.setJdbcUrl(DatabaseConfig.DB_URL);
+		source.setUser(DatabaseConfig.DB_USER);
+		source.setPassword(DatabaseConfig.DB_PASSWORD);
 		
 		return source;
 	}

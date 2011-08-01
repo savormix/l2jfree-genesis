@@ -29,7 +29,7 @@ import javax.crypto.Cipher;
 
 import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
-import com.l2jfree.loginserver.Config;
+import com.l2jfree.loginserver.Config.ServiceConfig;
 import com.l2jfree.loginserver.network.client.L2Account;
 import com.l2jfree.loginserver.network.client.L2BanReason;
 import com.l2jfree.loginserver.network.client.L2LoginClient;
@@ -152,7 +152,7 @@ public final class RequestAuthLogin extends L2ClientPacket
 									rs.getDate("birthDate"), rs.getInt("lastServerId"));
 							llc.setAccount(la);
 							
-							if (Config.SVC_SHOW_EULA)
+							if (ServiceConfig.SVC_SHOW_EULA)
 							{
 								llc.setState(L2LoginClientState.LOGGED_IN);
 								llc.sendPacket(new LoginSuccess(llc));

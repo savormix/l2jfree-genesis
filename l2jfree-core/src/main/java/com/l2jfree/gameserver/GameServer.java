@@ -37,14 +37,14 @@ public final class GameServer extends Config
 	 */
 	public static void main(String[] args)
 	{
-		if (Config.DB_OPTIMIZE)
+		if (DatabaseConfig.DB_OPTIMIZE)
 			L2Database.optimize();
 		
 		L2ClientSecurity.getInstance();
 		
 		try
 		{
-			L2ClientConnections.getInstance().openServerSocket(Config.NET_LISTEN_IP, Config.NET_LISTEN_PORT);
+			L2ClientConnections.getInstance().openServerSocket(NetworkConfig.NET_LISTEN_IP, NetworkConfig.NET_LISTEN_PORT);
 			L2ClientConnections.getInstance().start();
 		}
 		catch (Throwable e)
