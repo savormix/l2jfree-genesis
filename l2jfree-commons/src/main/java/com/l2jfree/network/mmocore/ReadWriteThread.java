@@ -20,6 +20,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
+import java.util.ArrayDeque;
 
 import javolution.util.FastList;
 
@@ -54,7 +55,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 	private final ByteBuffer _readBuffer;
 	
 	// ByteBuffers General Purpose Pool
-	private final FastList<ByteBuffer> _bufferPool;
+	private final ArrayDeque<ByteBuffer> _bufferPool;
 	
 	// wrapper for read and write operations
 	private final MMOBuffer _mmoBuffer;
@@ -76,7 +77,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		_writeBuffer = ByteBuffer.allocate(getBufferSize()).order(getByteOrder());
 		_readBuffer = ByteBuffer.allocate(getBufferSize()).order(getByteOrder());
 		
-		_bufferPool = FastList.newInstance();
+		_bufferPool = new ArrayDeque<ByteBuffer>();
 		initBufferPool();
 		_mmoBuffer = new MMOBuffer();
 		
@@ -92,10 +93,12 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 	
 	final ByteBuffer getPooledBuffer()
 	{
-		if (getFreeBuffers().isEmpty())
+		final ByteBuffer buffer = getFreeBuffers().pollFirst();
+		
+		if (buffer == null)
 			return ByteBuffer.allocate(getBufferSize()).order(getByteOrder());
 		else
-			return getFreeBuffers().removeFirst();
+			return buffer;
 	}
 	
 	final void recycleBuffer(ByteBuffer buf)
@@ -107,7 +110,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		}
 	}
 	
-	private FastList<ByteBuffer> getFreeBuffers()
+	private ArrayDeque<ByteBuffer> getFreeBuffers()
 	{
 		return _bufferPool;
 	}
@@ -479,12 +482,10 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 				
 				synchronized (con)
 				{
-					final FastList<SP> sendQueue = con.getSendQueue2();
+					sp = con.getSendQueue2().pollFirst();
 					
-					if (sendQueue.isEmpty())
+					if (sp == null)
 						break;
-					
-					sp = sendQueue.removeFirst();
 				}
 				
 				// put into WriteBuffer

@@ -24,8 +24,7 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 import java.nio.channels.WritableByteChannel;
-
-import javolution.util.FastList;
+import java.util.ArrayDeque;
 
 import com.l2jfree.util.concurrent.FIFORunnableQueue;
 import com.l2jfree.util.logging.L2Logger;
@@ -46,7 +45,7 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 	private InetAddress _inetAddress;
 	private String _hostAddress;
 	
-	private FastList<SP> _sendQueue;
+	private ArrayDeque<SP> _sendQueue;
 	private final SelectionKey _selectionKey;
 	
 	private ByteBuffer _readBuffer;
@@ -171,10 +170,10 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 		return _socket.getChannel();
 	}
 	
-	final FastList<SP> getSendQueue2()
+	final ArrayDeque<SP> getSendQueue2()
 	{
 		if (_sendQueue == null)
-			_sendQueue = new FastList<SP>();
+			_sendQueue = new ArrayDeque<SP>();
 		
 		return _sendQueue;
 	}
