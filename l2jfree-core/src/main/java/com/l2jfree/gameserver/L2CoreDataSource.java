@@ -64,7 +64,6 @@ public class L2CoreDataSource implements DataSourceInitializer
 		
 		_source.setBreakAfterAcquireFailure(false);
 		
-		_source.setDriverClass(Config.DB_DRIVER);
 		_source.setJdbcUrl(Config.DB_URL);
 		_source.setUser(Config.DB_USER);
 		_source.setPassword(Config.DB_PASSWORD);

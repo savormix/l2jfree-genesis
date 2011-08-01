@@ -30,9 +30,6 @@ public final class DefaultDataSourceInitializer implements DataSourceInitializer
 		@ConfigField(name = "DatabaseMaxConnection", value = "50", eternal = true)
 		public static int DATABASE_MAX_CONNECTIONS;
 		
-		@ConfigField(name = "DatabaseDriverClass", value = "com.mysql.jdbc.Driver", eternal = true)
-		public static String DATABASE_DRIVER_CLASS;
-		
 		@ConfigField(name = "DatabaseJdbcUrl", value = "jdbc:mysql://localhost/l2jdb", eternal = true)
 		public static String DATABASE_JDBC_URL;
 		
@@ -92,7 +89,6 @@ public final class DefaultDataSourceInitializer implements DataSourceInitializer
 		// till restart thus making acquire
 		// errors "FATAL" ... we don't want that
 		// it should be possible to recover
-		source.setDriverClass(DefaultDataSourceConfig.DATABASE_DRIVER_CLASS);
 		source.setJdbcUrl(DefaultDataSourceConfig.DATABASE_JDBC_URL);
 		source.setUser(DefaultDataSourceConfig.DATABASE_USER);
 		source.setPassword(DefaultDataSourceConfig.DATABASE_PASSWORD);

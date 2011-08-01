@@ -83,8 +83,6 @@ public class Config extends L2Config
 	
 	/** Maximum amount of database connections in pool */
 	public static int DB_MAX_CONNECTIONS;
-	/** Database driver class */
-	public static String DB_DRIVER;
 	/** Database JDBC URL */
 	public static String DB_URL;
 	/** Database login */
@@ -100,7 +98,6 @@ public class Config extends L2Config
 		protected void loadImpl(L2Properties properties)
 		{
 			DB_MAX_CONNECTIONS = properties.getInteger("MaxConnectionsInPool", 5);
-			DB_DRIVER = properties.getString("DriverClass");
 			
 			DB_URL = properties.getString("JdbcUrl");
 			if (!DB_URL.startsWith("jdbc:"))

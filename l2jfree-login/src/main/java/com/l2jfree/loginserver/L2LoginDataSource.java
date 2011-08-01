@@ -59,7 +59,6 @@ public final class L2LoginDataSource implements DataSourceInitializer
 		
 		source.setBreakAfterAcquireFailure(false);
 		
-		source.setDriverClass(Config.DB_DRIVER);
 		source.setJdbcUrl(Config.DB_URL);
 		source.setUser(Config.DB_USER);
 		source.setPassword(Config.DB_PASSWORD);
