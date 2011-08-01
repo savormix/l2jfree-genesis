@@ -54,6 +54,9 @@ public final class L2Database
 		// test the connection
 		dataSource.getConnection().close();
 		
+		// initialize the sql context
+		dataSource.initSQLContext();
+		
 		_dataSources.put(dataSourceName, dataSource);
 		
 		if (dataSourceName.equals(DEFAULT_DATA_SOURCE_NAME))
@@ -70,8 +73,6 @@ public final class L2Database
 			// test the entity manager
 			_defaultEntityManagerFactory.createEntityManager().close();
 		}
-		
-		dataSource.initSQLContext();
 	}
 	
 	public static void optimize()

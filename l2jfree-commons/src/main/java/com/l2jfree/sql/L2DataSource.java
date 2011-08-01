@@ -1,5 +1,6 @@
 package com.l2jfree.sql;
 
+import java.beans.PropertyVetoException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,18 +17,75 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 public abstract class L2DataSource implements DataSource
 {
+	public enum JDBCProvider
+	{
+		MySQL("mysql", "com.mysql.jdbc.Driver") {
+			@Override
+			public L2DataSource createDataSource(String name, ComboPooledDataSource dataSource)
+			{
+				return new L2DataSourceMySQL(name, dataSource);
+			}
+		},
+		PostgreSQL("postgresql", "org.postgresql.Driver") {
+			@Override
+			public L2DataSource createDataSource(String name, ComboPooledDataSource dataSource)
+			{
+				return new L2DataSourcePostgreSQL(name, dataSource);
+			}
+		},
+		SQLite("sqlite", "org.sqlite.JDBC") {
+			@Override
+			public L2DataSource createDataSource(String name, ComboPooledDataSource dataSource)
+			{
+				return new L2DataSourceSQLite(name, dataSource);
+			}
+		},
+		;
+		
+		private final String _protocol;
+		private final String _driverClass;
+		
+		private JDBCProvider(String protocol, String driverClass)
+		{
+			_protocol = protocol;
+			_driverClass = driverClass;
+		}
+		
+		public final String getProtocol()
+		{
+			return _protocol;
+		}
+		
+		public final String getDriverClass()
+		{
+			return _driverClass;
+		}
+		
+		public abstract L2DataSource createDataSource(String name, ComboPooledDataSource dataSource);
+	}
+	
 	protected static final L2Logger _log = L2Logger.getLog(L2DataSource.class);
 	
 	public static L2DataSource valueOf(String name, ComboPooledDataSource dataSource)
 	{
 		final String jdbcUrl = dataSource.getJdbcUrl().toLowerCase();
 		
-		if (jdbcUrl.contains("mysql"))
-			return new L2DataSourceMySQL(name, dataSource);
-		if (jdbcUrl.contains("postgresql"))
-			return new L2DataSourcePostgreSQL(name, dataSource);
-		if (jdbcUrl.contains("sqlite"))
-			return new L2DataSourceSQLite(name, dataSource);
+		for (JDBCProvider provider : JDBCProvider.values())
+		{
+			if (!jdbcUrl.contains(provider.getProtocol()))
+				continue;
+			
+			try
+			{
+				dataSource.setDriverClass(provider.getDriverClass());
+			}
+			catch (PropertyVetoException e)
+			{
+				throw new RuntimeException(e);
+			}
+			
+			return provider.createDataSource(name, dataSource);
+		}
 		
 		throw new IllegalArgumentException("Not supported JDBC provider!");
 	}
