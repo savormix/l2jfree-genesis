@@ -279,4 +279,10 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	{
 		_account = account;
 	}
+	
+	@Override
+	protected boolean isAuthed()
+	{
+		return getState() != L2LoginClientState.CONNECTED;
+	}
 }

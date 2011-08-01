@@ -65,6 +65,8 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 		_hostAddress = _inetAddress.getHostAddress();
 		_selectionKey = socketChannel.register(getReadWriteThread().getSelector(), SelectionKey.OP_READ);
 		_selectionKey.attach(this);
+		
+		UnauthedClientTimeoutChecker.getInstance().clientCreated(this);
 	}
 	
 	/**
@@ -357,4 +359,6 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 		
 		return _packetQueue;
 	}
+	
+	protected abstract boolean isAuthed();
 }

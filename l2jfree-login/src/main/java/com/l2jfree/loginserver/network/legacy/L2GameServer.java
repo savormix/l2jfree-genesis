@@ -430,4 +430,10 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	{
 		return _pvp;
 	}
+	
+	@Override
+	protected boolean isAuthed()
+	{
+		return getState() != L2LegacyState.CONNECTED;
+	}
 }

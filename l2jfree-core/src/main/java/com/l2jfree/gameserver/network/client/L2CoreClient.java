@@ -136,4 +136,10 @@ public final class L2CoreClient extends MMOConnection<L2CoreClient, L2ClientPack
 	{
 		_state = state;
 	}
+	
+	@Override
+	protected boolean isAuthed()
+	{
+		return getState() != L2CoreClientState.CONNECTED;
+	}
 }
