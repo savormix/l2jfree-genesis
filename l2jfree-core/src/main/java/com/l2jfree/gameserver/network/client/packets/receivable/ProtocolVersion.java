@@ -33,18 +33,12 @@ public final class ProtocolVersion extends L2ClientPacket
 	
 	private int _version;
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.ReceivablePacket#getMinimumLength()
-	 */
 	@Override
 	protected int getMinimumLength()
 	{
 		return 4;
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.ReceivablePacket#read(com.l2jfree.network.mmocore.MMOBuffer)
-	 */
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException,
 			RuntimeException
@@ -52,9 +46,6 @@ public final class ProtocolVersion extends L2ClientPacket
 		_version = buf.readD();
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.l2jfree.network.mmocore.ReceivablePacket#runImpl()
-	 */
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
