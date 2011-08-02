@@ -20,57 +20,44 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 /**
  * @author savormix
- *
  */
-public class L2CoreDataSource implements DataSourceInitializer
+public final class L2CoreDataSource implements DataSourceInitializer
 {
 	private static final int DB_MIN_CONNECTIONS = 10;
-	
-	private ComboPooledDataSource _source;
-	
-	/** Constructs a login server database initializer. */
-	public L2CoreDataSource()
-	{
-		_source = null;
-	}
 	
 	@Override
 	public ComboPooledDataSource initDataSource() throws Exception
 	{
-		// TODO Auto-generated method stub
 		if (DatabaseConfig.DB_MAX_CONNECTIONS < DB_MIN_CONNECTIONS)
-			throw new IllegalArgumentException("At least " + DB_MIN_CONNECTIONS +
-					" required in pool.");
+			throw new IllegalArgumentException("At least " + DB_MIN_CONNECTIONS + " required in pool.");
 		
-		_source = new ComboPooledDataSource();
-		_source.setAutoCommitOnClose(true);
+		ComboPooledDataSource source = new ComboPooledDataSource();
+		source.setAutoCommitOnClose(true);
 		
-		_source.setInitialPoolSize(DB_MIN_CONNECTIONS);
-		_source.setMinPoolSize(DB_MIN_CONNECTIONS);
-		_source.setMaxPoolSize(DatabaseConfig.DB_MAX_CONNECTIONS);
+		source.setInitialPoolSize(DB_MIN_CONNECTIONS);
+		source.setMinPoolSize(DB_MIN_CONNECTIONS);
+		source.setMaxPoolSize(DatabaseConfig.DB_MAX_CONNECTIONS);
 		
-		_source.setAcquireRetryAttempts(0);
-		_source.setAcquireRetryDelay(500);
-		_source.setCheckoutTimeout(0);
+		source.setAcquireRetryAttempts(0);
+		source.setAcquireRetryDelay(500);
+		source.setCheckoutTimeout(0);
 		
-		_source.setAcquireIncrement(5);
+		source.setAcquireIncrement(5);
 		
-		_source.setAutomaticTestTable("_connection_test_table");
-		_source.setTestConnectionOnCheckin(false);
+		source.setAutomaticTestTable("_connection_test_table");
+		source.setTestConnectionOnCheckin(false);
 		
-		_source.setIdleConnectionTestPeriod(3600);
-		_source.setMaxIdleTime(1800);
+		source.setIdleConnectionTestPeriod(3600);
+		source.setMaxIdleTime(1800);
 		
-		_source.setMaxStatementsPerConnection(100);
+		source.setMaxStatementsPerConnection(100);
 		
-		_source.setBreakAfterAcquireFailure(false);
+		source.setBreakAfterAcquireFailure(false);
 		
-		_source.setJdbcUrl(DatabaseConfig.DB_URL);
-		_source.setUser(DatabaseConfig.DB_USER);
-		_source.setPassword(DatabaseConfig.DB_PASSWORD);
+		source.setJdbcUrl(DatabaseConfig.DB_URL);
+		source.setUser(DatabaseConfig.DB_USER);
+		source.setPassword(DatabaseConfig.DB_PASSWORD);
 		
-		_source.getConnection().close();
-		
-		return _source;
+		return source;
 	}
 }
