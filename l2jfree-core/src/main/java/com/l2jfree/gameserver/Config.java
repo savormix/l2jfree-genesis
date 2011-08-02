@@ -95,7 +95,7 @@ public class Config extends L2Config
 		@Override
 		protected void loadImpl(L2Properties properties)
 		{
-			DB_MAX_CONNECTIONS = properties.getInteger("MaxConnectionsInPool", 5);
+			DB_MAX_CONNECTIONS = properties.getInteger("MaxConnectionsInPool", 50);
 			
 			DB_URL = properties.getString("JdbcUrl");
 			if (!DB_URL.startsWith("jdbc:"))
