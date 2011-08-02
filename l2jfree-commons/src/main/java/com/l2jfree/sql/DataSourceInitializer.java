@@ -38,15 +38,15 @@ public abstract class DataSourceInitializer
 		source.setJdbcUrl(getJdbcUrl());
 		/*
 		 * Default: null
-		 * For applications using ComboPooledDataSource or any c3p0-implemented unpooled DataSources —
-		 * DriverManagerDataSource or the DataSource returned by DataSources.unpooledDataSource() — defines the username
+		 * For applications using ComboPooledDataSource or any c3p0-implemented unpooled DataSources -
+		 * DriverManagerDataSource or the DataSource returned by DataSources.unpooledDataSource() - defines the username
 		 * that will be used for the DataSource's default getConnection() method. (See also password.)
 		 */
 		source.setUser(getUser());
 		/*
 		 * Default: null
-		 * For applications using ComboPooledDataSource or any c3p0-implemented unpooled DataSources —
-		 * DriverManagerDataSource or the DataSource returned by DataSources.unpooledDataSource( ... ) — defines the
+		 * For applications using ComboPooledDataSource or any c3p0-implemented unpooled DataSources -
+		 * DriverManagerDataSource or the DataSource returned by DataSources.unpooledDataSource( ... ) - defines the
 		 * password that will be used for the DataSource's default getConnection() method. (See also user.)
 		 */
 		source.setPassword(getPassword());
