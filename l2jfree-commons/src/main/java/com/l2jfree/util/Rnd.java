@@ -17,6 +17,8 @@ package com.l2jfree.util;
 import java.util.List;
 import java.util.Random;
 
+import com.l2jfree.lang.L2TextBuilder;
+
 public final class Rnd
 {
 	private static final class L2Random extends Random
@@ -187,5 +189,22 @@ public final class Rnd
 			return null;
 		else
 			return array[get(array.length)];
+	}
+	
+	public static final String DIGITS = "0123456789";
+	public static final String LOWER_CASE_LETTERS = "abcdefghijklmnopqrstuvwxyz";
+	public static final String UPPER_CASE_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	
+	public static final String LETTERS = LOWER_CASE_LETTERS + UPPER_CASE_LETTERS;
+	public static final String LETTERS_AND_DIGITS = LETTERS + DIGITS;
+	
+	public static String getString(int length, CharSequence source)
+	{
+		final L2TextBuilder tb = L2TextBuilder.newInstance(length);
+		
+		for (int i = 0; i < length; i++)
+			tb.append(source.charAt(Rnd.get(source.length())));
+		
+		return tb.moveToString();
 	}
 }

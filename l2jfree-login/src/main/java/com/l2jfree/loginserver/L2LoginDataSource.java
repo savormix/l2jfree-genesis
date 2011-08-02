@@ -16,54 +16,41 @@ package com.l2jfree.loginserver;
 
 import com.l2jfree.loginserver.Config.DatabaseConfig;
 import com.l2jfree.sql.DataSourceInitializer;
-import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 /**
  * @author savormix
  */
-public final class L2LoginDataSource implements DataSourceInitializer
+public final class L2LoginDataSource extends DataSourceInitializer
 {
 	private static final int DB_MIN_CONNECTIONS = 2;
 	
 	@Override
-	public ComboPooledDataSource initDataSource() throws Exception
+	protected String getJdbcUrl()
 	{
-		if (DatabaseConfig.DB_MAX_CONNECTIONS < DB_MIN_CONNECTIONS)
-			throw new IllegalArgumentException("At least " + DB_MIN_CONNECTIONS + " required in pool.");
-		
-		ComboPooledDataSource source = new ComboPooledDataSource();
-		source.setAutoCommitOnClose(true);
-		
-		source.setInitialPoolSize(DB_MIN_CONNECTIONS);
-		source.setMinPoolSize(DB_MIN_CONNECTIONS);
-		source.setMaxPoolSize(DatabaseConfig.DB_MAX_CONNECTIONS);
-		
-		source.setAcquireRetryAttempts(0);
-		source.setAcquireRetryDelay(500);
-		source.setCheckoutTimeout(0);
-		
-		source.setAcquireIncrement(5);
-		
-		// FIXME: Affects all DBMSes that allow multiple dbs and/or multiple schemas (so not SQLite)
-		// checks whether this table exists IN ANY DB (of >= 1), IN ANY SCHEMA (also of >= 1).
-		// if it exists, it MUST be readable (SELECT) to ALL USERS (that access that DBMS with c3p0),
-		// otherwise c3p0 will FAIL.
-		// dmd.getTables( null, null, automaticTestTable, new String[] {"TABLE"} )
-		// see C3P0PooledConnectionPoolManager#initializeAutomaticTestTable(String, DbAuth)
-		source.setAutomaticTestTable("_connection_test_table");
-		source.setTestConnectionOnCheckin(false);
-		
-		source.setIdleConnectionTestPeriod(3600);
-		source.setMaxIdleTime(1800);
-		
-		source.setMaxStatementsPerConnection(100);
-		
-		source.setBreakAfterAcquireFailure(false);
-		
-		source.setJdbcUrl(DatabaseConfig.DB_URL);
-		source.setUser(DatabaseConfig.DB_USER);
-		source.setPassword(DatabaseConfig.DB_PASSWORD);
-		
-		return source;
+		return DatabaseConfig.DB_URL;
+	}
+	
+	@Override
+	protected String getUser()
+	{
+		return DatabaseConfig.DB_USER;
+	}
+	
+	@Override
+	protected String getPassword()
+	{
+		return DatabaseConfig.DB_PASSWORD;
+	}
+	
+	@Override
+	protected int getMinConnections()
+	{
+		return DB_MIN_CONNECTIONS;
+	}
+	
+	@Override
+	protected int getMaxConnections()
+	{
+		return DatabaseConfig.DB_MAX_CONNECTIONS;
 	}
 }

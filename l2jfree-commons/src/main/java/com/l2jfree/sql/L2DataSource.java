@@ -175,10 +175,7 @@ public abstract class L2DataSource implements DataSource
 			con = getConnection();
 			
 			// generate a random table name
-			final StringBuilder sb = new StringBuilder("_zzz");
-			for (int i = 0; i < 5; i++)
-				sb.append((char)Rnd.get('a', 'z'));
-			final String table = sb.toString();
+			final String table = "_zzz" + Rnd.getString(5, Rnd.LOWER_CASE_LETTERS);
 			// DO NOT LOOK UP information_schema NOW
 			
 			// attempt to create in current schema instead

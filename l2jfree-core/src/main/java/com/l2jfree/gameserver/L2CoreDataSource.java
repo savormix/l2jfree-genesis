@@ -16,48 +16,41 @@ package com.l2jfree.gameserver;
 
 import com.l2jfree.gameserver.Config.DatabaseConfig;
 import com.l2jfree.sql.DataSourceInitializer;
-import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 /**
  * @author savormix
  */
-public final class L2CoreDataSource implements DataSourceInitializer
+public final class L2CoreDataSource extends DataSourceInitializer
 {
 	private static final int DB_MIN_CONNECTIONS = 10;
 	
 	@Override
-	public ComboPooledDataSource initDataSource() throws Exception
+	protected String getJdbcUrl()
 	{
-		if (DatabaseConfig.DB_MAX_CONNECTIONS < DB_MIN_CONNECTIONS)
-			throw new IllegalArgumentException("At least " + DB_MIN_CONNECTIONS + " required in pool.");
-		
-		ComboPooledDataSource source = new ComboPooledDataSource();
-		source.setAutoCommitOnClose(true);
-		
-		source.setInitialPoolSize(DB_MIN_CONNECTIONS);
-		source.setMinPoolSize(DB_MIN_CONNECTIONS);
-		source.setMaxPoolSize(DatabaseConfig.DB_MAX_CONNECTIONS);
-		
-		source.setAcquireRetryAttempts(0);
-		source.setAcquireRetryDelay(500);
-		source.setCheckoutTimeout(0);
-		
-		source.setAcquireIncrement(5);
-		
-		source.setAutomaticTestTable("_connection_test_table");
-		source.setTestConnectionOnCheckin(false);
-		
-		source.setIdleConnectionTestPeriod(3600);
-		source.setMaxIdleTime(1800);
-		
-		source.setMaxStatementsPerConnection(100);
-		
-		source.setBreakAfterAcquireFailure(false);
-		
-		source.setJdbcUrl(DatabaseConfig.DB_URL);
-		source.setUser(DatabaseConfig.DB_USER);
-		source.setPassword(DatabaseConfig.DB_PASSWORD);
-		
-		return source;
+		return DatabaseConfig.DB_URL;
+	}
+	
+	@Override
+	protected String getUser()
+	{
+		return DatabaseConfig.DB_USER;
+	}
+	
+	@Override
+	protected String getPassword()
+	{
+		return DatabaseConfig.DB_PASSWORD;
+	}
+	
+	@Override
+	protected int getMinConnections()
+	{
+		return DB_MIN_CONNECTIONS;
+	}
+	
+	@Override
+	protected int getMaxConnections()
+	{
+		return DatabaseConfig.DB_MAX_CONNECTIONS;
 	}
 }
