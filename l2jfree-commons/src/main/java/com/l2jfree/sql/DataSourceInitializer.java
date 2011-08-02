@@ -87,8 +87,8 @@ public abstract class DataSourceInitializer
 		/*
 		 * Default: 0
 		 * Seconds a Connection can remain pooled but unused before being discarded. Zero means idle connections never
-		 * expire. [See "Basic Pool Configuration"]
-		 */ //TODO: see
+		 * expire.
+		 */
 		source.setMaxIdleTime(1800);
 		/*
 		 * Default: 0
