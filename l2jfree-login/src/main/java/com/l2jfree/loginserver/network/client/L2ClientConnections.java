@@ -39,9 +39,8 @@ public final class L2ClientConnections extends MMOController<L2LoginClient, L2Cl
 		static
 		{
 			final MMOConfig cfg = new MMOConfig("Experimental Login");
-			cfg.setSelectorSleepTime(40 * 1000 * 1000);
+			cfg.setSelectorSleepTime(40);
 			cfg.setThreadCount(Math.min(2, Runtime.getRuntime().availableProcessors()));
-			cfg.setAcceptTimeout(5 * 1000);
 			
 			try
 			{

@@ -30,7 +30,6 @@ import com.l2jfree.network.mmocore.MMOController;
 
 /**
  * @author savormix
- *
  */
 public final class L2LegacyConnections extends MMOController<L2GameServer, L2GameServerPacket, L2LoginServerPacket>
 {
@@ -39,9 +38,8 @@ public final class L2LegacyConnections extends MMOController<L2GameServer, L2Gam
 		static
 		{
 			final MMOConfig cfg = new MMOConfig("Legacy Game Servers");
-			cfg.setSelectorSleepTime(25 * 1000 * 1000);
+			cfg.setSelectorSleepTime(25);
 			cfg.setThreadCount(1);
-			cfg.setAcceptTimeout(5 * 1000);
 			
 			try
 			{

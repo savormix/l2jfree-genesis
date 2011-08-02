@@ -25,7 +25,6 @@ import com.l2jfree.network.mmocore.MMOController;
 
 /**
  * @author savormix
- *
  */
 public final class L2ClientConnections extends MMOController<L2CoreClient, L2ClientPacket, L2ServerPacket>
 {
@@ -34,8 +33,7 @@ public final class L2ClientConnections extends MMOController<L2CoreClient, L2Cli
 		static
 		{
 			final MMOConfig cfg = new MMOConfig("Experimental Core");
-			cfg.setSelectorSleepTime(7 * 1000 * 1000);
-			cfg.setAcceptTimeout(5 * 1000);
+			cfg.setSelectorSleepTime(7);
 			
 			try
 			{

@@ -29,13 +29,11 @@ final class AcceptorThread<T extends MMOConnection<T, RP, SP>, RP extends Receiv
 		extends AbstractSelectorThread<T, RP, SP>
 {
 	private final int _bufferSize;
-	private final int _acceptTimeout;
 	
 	public AcceptorThread(MMOController<T, RP, SP> mmoController, MMOConfig config) throws IOException
 	{
 		super(mmoController, config);
 		_bufferSize = config.getBufferSize();
-		_acceptTimeout = config.getAcceptTimeout();
 	}
 	
 	public void openServerSocket(InetAddress address, int port) throws IOException
@@ -46,7 +44,6 @@ final class AcceptorThread<T extends MMOConnection<T, RP, SP>, RP extends Receiv
 		ServerSocket ss = selectable.socket();
 		ss.setReuseAddress(true);
 		ss.setReceiveBufferSize(getBufferSize());
-		ss.setSoTimeout(getAcceptTimeout());
 		if (address == null)
 		{
 			ss.bind(new InetSocketAddress(port));
@@ -92,10 +89,5 @@ final class AcceptorThread<T extends MMOConnection<T, RP, SP>, RP extends Receiv
 	private int getBufferSize()
 	{
 		return _bufferSize;
-	}
-	
-	private int getAcceptTimeout()
-	{
-		return _acceptTimeout;
 	}
 }

@@ -41,7 +41,6 @@ public final class MMOConfig
 	private boolean _modifiable;
 	
 	private int _bufferSize;
-	private int _acceptTimeout;
 	
 	private int _maxOutgoingPacketsPerPass;
 	private int _maxIncomingPacketsPerPass;
@@ -66,12 +65,11 @@ public final class MMOConfig
 		_name = name;
 		_modifiable = true;
 		_bufferSize = MINIMUM_BUFFER_SIZE;
-		_acceptTimeout = 0;
 		_maxOutgoingPacketsPerPass = Integer.MAX_VALUE;
 		_maxIncomingPacketsPerPass = Integer.MAX_VALUE;
 		_maxOutgoingBytesPerPass = Integer.MAX_VALUE;
 		_maxIncomingBytesPerPass = Integer.MAX_VALUE;
-		_selectorSleepTime = 10 * 1000 * 1000;
+		_selectorSleepTime = 10;
 		_helperBufferCount = 20;
 		_byteOrder = ByteOrder.LITTLE_ENDIAN;
 		_threadCount = Runtime.getRuntime().availableProcessors();
@@ -141,39 +139,6 @@ public final class MMOConfig
 	public int getBufferSize()
 	{
 		return _bufferSize;
-	}
-	
-	/**
-	 * Sets the maximum amount of time to wait for a pending connection to
-	 * be established after it is accepted, in milliseconds.
-	 * <BR><BR>
-	 * Defaults to 0 (disabled/infinite).
-	 * @param acceptTimeout connection establishment timeout
-	 * @throws IllegalArgumentException if <TT>acceptTimeout</TT> < 0
-	 * @throws IllegalStateException if this configuration is already in use
-	 * @see java.net.ServerSocket#setSoTimeout(int)
-	 */
-	public void setAcceptTimeout(int acceptTimeout)
-	throws IllegalArgumentException, IllegalStateException
-	{
-		tryModify();
-		
-		if (acceptTimeout < 0)
-			throw new IllegalArgumentException("Invalid accept timeout.");
-		
-		_acceptTimeout = acceptTimeout;
-	}
-	
-	/**
-	 * Returns the desired maximum amount of time to wait for a pending
-	 * connection to be established after it is accepted, in milliseconds.
-	 * <BR><BR>
-	 * Defaults to 0 (disabled/infinite).
-	 * @return connection establishment timeout
-	 */
-	public int getAcceptTimeout()
-	{
-		return _acceptTimeout;
 	}
 	
 	/**
@@ -385,7 +350,7 @@ public final class MMOConfig
 	
 	/**
 	 * Instructs the selector thread to sleep for {@code selectorSleepTime}
-	 * nanoseconds between iterations.<BR>
+	 * milliseconds between iterations.<BR>
 	 * Lower values decrease latency, higher values increase throughput.
 	 * <BR><BR>
 	 * Extremely low values (<= 1 ms) will provide nearly no latency at the cost
@@ -397,8 +362,8 @@ public final class MMOConfig
 	 * <LI>5-15 for any interactive service (Game Server <-> Client)</LI>
 	 * <LI>25-50 (or possibly higher) for an authorization service (Login Server <-> Client)</LI>
 	 * </UL>
-	 * Please review the code of {@link Thread#sleep(long, int)} before using this method.
-	 * @param selectorSleepTime selector wakeup interval in nanoseconds
+	 * 
+	 * @param selectorSleepTime selector wakeup interval in milliseconds
 	 * @throws IllegalArgumentException if <TT>selectorSleepTime</TT> < 1
 	 * @throws IllegalStateException if this configuration is already in use
 	 */
@@ -418,7 +383,7 @@ public final class MMOConfig
 	 * between iterations.
 	 * <BR><BR>
 	 * Defaults to 10 milliseconds.
-	 * @return selector wakeup interval in nanoseconds
+	 * @return selector wakeup interval in milliseconds
 	 */
 	public long getSelectorSleepTime()
 	{
