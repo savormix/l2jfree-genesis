@@ -44,6 +44,9 @@ public abstract class SQLQueryQueue implements Runnable
 	
 	public final void add(SQLQuery query)
 	{
+		if (query == null)
+			return;
+		
 		synchronized (_queue)
 		{
 			_queue.addLast(query);

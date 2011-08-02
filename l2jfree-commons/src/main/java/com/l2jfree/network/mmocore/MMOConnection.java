@@ -76,6 +76,9 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 	 */
 	public synchronized void sendPacket(SP sp)
 	{
+		if (sp == null)
+			return;
+		
 		if (isClosed())
 			return;
 		
