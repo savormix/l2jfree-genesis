@@ -100,6 +100,31 @@ public final class L2Database
 		}
 	}
 	
+	public static void backup()
+	{
+		backup(DEFAULT_DATA_SOURCE_NAME, _defaultDataSource);
+	}
+	
+	public static void backup(String dataSourceName)
+	{
+		backup(dataSourceName, _dataSources.get(dataSourceName));
+	}
+	
+	private static void backup(String dataSourceName, L2DataSource dataSource)
+	{
+		try
+		{
+			if (dataSource == null)
+				throw new SQLException("Unknown data source!");
+			
+			dataSource.backup();
+		}
+		catch (Exception e)
+		{
+			_log.fatal("L2Database: Failed to backup the database of data source: " + dataSourceName, e);
+		}
+	}
+	
 	public static void shutdown()
 	{
 		try

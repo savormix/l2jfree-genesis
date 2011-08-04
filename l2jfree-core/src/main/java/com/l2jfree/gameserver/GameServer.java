@@ -42,19 +42,24 @@ public final class GameServer extends Config
 		if (DatabaseConfig.DB_OPTIMIZE)
 			L2Database.optimize();
 		
-		L2ClientSecurity.getInstance();
+		if (DatabaseConfig.BACKUP_ON_STARTUP)
+			L2Database.backup();
 		
-		try
 		{
-			L2ClientConnections.getInstance().openServerSocket(NetworkConfig.NET_LISTEN_IP,
-					NetworkConfig.NET_LISTEN_PORT);
-			L2ClientConnections.getInstance().start();
-		}
-		catch (Throwable e)
-		{
-			_log.fatal("Could not start login server!", e);
-			Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
-			return;
+			L2ClientSecurity.getInstance();
+			
+			try
+			{
+				L2ClientConnections.getInstance().openServerSocket(NetworkConfig.NET_LISTEN_IP,
+						NetworkConfig.NET_LISTEN_PORT);
+				L2ClientConnections.getInstance().start();
+			}
+			catch (Throwable e)
+			{
+				_log.fatal("Could not start login server!", e);
+				Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
+				return;
+			}
 		}
 		
 		// TODO
@@ -84,6 +89,16 @@ public final class GameServer extends Config
 				try
 				{
 					L2ClientConnections.getInstance().shutdown();
+				}
+				catch (Throwable t)
+				{
+					_log.warn("Orderly shutdown sequence interrupted", t);
+				}
+				
+				try
+				{
+					if (DatabaseConfig.BACKUP_ON_SHUTDOWN)
+						L2Database.backup();
 				}
 				catch (Throwable t)
 				{

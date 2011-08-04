@@ -15,15 +15,26 @@
 package com.l2jfree.sql;
 
 import java.beans.PropertyVetoException;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.zip.Deflater;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.sql.DataSource;
+
+import org.apache.commons.io.IOUtils;
 
 import com.l2jfree.util.Rnd;
 import com.l2jfree.util.logging.L2Logger;
@@ -114,6 +125,11 @@ public abstract class L2DataSource implements DataSource
 	{
 		_name = name;
 		_dataSource = dataSource;
+	}
+	
+	protected final ComboPooledDataSource getComboPooledDataSource()
+	{
+		return _dataSource;
 	}
 	
 	protected String getInformationSchemaTables()
@@ -223,7 +239,75 @@ public abstract class L2DataSource implements DataSource
 		}
 	}
 	
-	public abstract void optimize() throws SQLException;
+	@SuppressWarnings("unused")
+	public void optimize() throws SQLException
+	{
+		_log.warn("L2DataSource: Provider (" + getClass().getSimpleName() + ") not yet supported.");
+	}
+	
+	protected final File createBackupFolder()
+	{
+		final File backupFolder = new File("backup/database");
+		backupFolder.mkdirs();
+		
+		if (!backupFolder.exists())
+			throw new RuntimeException("Could not create folder " + backupFolder.getAbsolutePath());
+		
+		return backupFolder;
+	}
+	
+	protected final boolean writeBackup(String databaseName, InputStream in) throws IOException
+	{
+		final File backupFolder = createBackupFolder();
+		final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+		final Date time = new Date();
+		
+		final File backupFile = new File(backupFolder, sdf.format(time) + ".zip");
+		if (!backupFile.createNewFile())
+			throw new IOException("Cannot create backup file: " + backupFile.getCanonicalPath());
+		
+		int written = 0;
+		ZipOutputStream out = null;
+		try
+		{
+			out = new ZipOutputStream(new FileOutputStream(backupFile));
+			out.setMethod(ZipOutputStream.DEFLATED);
+			out.setLevel(Deflater.BEST_COMPRESSION);
+			out.setComment("L2jFree Schema Backup Utility\r\n\r\nBackup date: "
+					+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS z").format(time));
+			out.putNextEntry(new ZipEntry(databaseName + ".sql"));
+			
+			byte[] buf = new byte[4096];
+			for (int read; (read = in.read(buf)) != -1;)
+			{
+				out.write(buf, 0, read);
+				
+				written += read;
+			}
+		}
+		finally
+		{
+			IOUtils.closeQuietly(in);
+			IOUtils.closeQuietly(out);
+		}
+		
+		
+		if (written == 0)
+		{
+			backupFile.delete();
+			return false;
+		}
+		
+		_log.info("L2DataSource: Schema `" + databaseName + "` backed up successfully in "
+				+ (System.currentTimeMillis() - time.getTime()) / 1000 + " s.");
+		return true;
+	}
+	
+	@SuppressWarnings("unused")
+	public void backup()
+	{
+		_log.warn("L2DataSource: Provider (" + getClass().getSimpleName() + ") not yet supported.");
+	}
 	
 	public final boolean tableExists(String tableName)
 	{

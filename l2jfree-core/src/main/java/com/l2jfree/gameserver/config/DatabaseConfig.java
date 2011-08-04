@@ -57,6 +57,18 @@ public final class DatabaseConfig extends ConfigPropertiesLoader
 	})
 	public static boolean DB_OPTIMIZE;
 	
+	@ConfigField(name = "BackupOnStartup", value = "true", eternal = true, comment = {
+			"Whether to backup tables during server startup or not.", //
+			"Currently only works with MySQL and SQLite.", //
+	})
+	public static boolean BACKUP_ON_STARTUP;
+	
+	@ConfigField(name = "BackupOnShutdown", value = "true", eternal = true, comment = {
+			"Whether to backup tables during server shutdown or not.", //
+			"Currently only works with MySQL and SQLite.", //
+	})
+	public static boolean BACKUP_ON_SHUTDOWN;
+	
 	@Override
 	protected void loadImpl(L2Properties properties)
 	{

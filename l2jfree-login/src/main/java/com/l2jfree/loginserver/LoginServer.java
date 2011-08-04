@@ -47,6 +47,9 @@ public final class LoginServer extends Config
 		if (DatabaseConfig.DB_OPTIMIZE)
 			L2Database.optimize();
 		
+		if (DatabaseConfig.BACKUP_ON_STARTUP)
+			L2Database.backup();
+		
 		L2GameServerCache.getInstance();
 		
 		if (NetworkConfig.NET_ENABLE_LEGACY || ServiceConfig.SVC_FORCE_LEGACY)
@@ -67,19 +70,21 @@ public final class LoginServer extends Config
 			}
 		}
 		
-		L2ClientSecurity.getInstance();
-		
-		try
 		{
-			L2ClientConnections.getInstance().openServerSocket(NetworkConfig.NET_LISTEN_IP,
-					NetworkConfig.NET_LISTEN_PORT);
-			L2ClientConnections.getInstance().start();
-		}
-		catch (Throwable e)
-		{
-			_log.fatal("Could not start login server!", e);
-			Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
-			return;
+			L2ClientSecurity.getInstance();
+			
+			try
+			{
+				L2ClientConnections.getInstance().openServerSocket(NetworkConfig.NET_LISTEN_IP,
+						NetworkConfig.NET_LISTEN_PORT);
+				L2ClientConnections.getInstance().start();
+			}
+			catch (Throwable e)
+			{
+				_log.fatal("Could not start login server!", e);
+				Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
+				return;
+			}
 		}
 		
 		// TODO
@@ -111,6 +116,16 @@ public final class LoginServer extends Config
 					L2ClientConnections.getInstance().shutdown();
 					if (NetworkConfig.NET_ENABLE_LEGACY || ServiceConfig.SVC_FORCE_LEGACY)
 						L2LegacyConnections.getInstance().shutdown();
+				}
+				catch (Throwable t)
+				{
+					_log.warn("Orderly shutdown sequence interrupted", t);
+				}
+				
+				try
+				{
+					if (DatabaseConfig.BACKUP_ON_SHUTDOWN)
+						L2Database.backup();
 				}
 				catch (Throwable t)
 				{

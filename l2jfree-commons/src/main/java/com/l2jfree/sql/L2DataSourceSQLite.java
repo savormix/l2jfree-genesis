@@ -14,9 +14,14 @@
  */
 package com.l2jfree.sql;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
+import org.apache.commons.io.IOUtils;
 
 import com.l2jfree.lang.L2TextBuilder;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
@@ -77,8 +82,33 @@ public final class L2DataSourceSQLite extends L2DataSource
 	}
 	
 	@Override
-	public void optimize()
+	public void backup()
 	{
-		_log.warn("L2DataSource: Provider (" + getClass().getSimpleName() + ") not yet supported.");
+		final String databaseName = getComboPooledDataSource().getJdbcUrl().replaceAll("^.*:", "");
+		
+		_log.info("DatabaseBackupManager: backing up `" + databaseName + "`...");
+		
+		try
+		{
+			InputStream in = null;
+			try
+			{
+				in = new FileInputStream(databaseName);
+				
+				writeBackup(databaseName, in);
+			}
+			catch (IOException e)
+			{
+				_log.warn("DatabaseBackupManager: Could not make backup:", e);
+			}
+			finally
+			{
+				IOUtils.closeQuietly(in);
+			}
+		}
+		catch (Exception e)
+		{
+			_log.warn("DatabaseBackupManager: Could not make backup: ", e);
+		}
 	}
 }
