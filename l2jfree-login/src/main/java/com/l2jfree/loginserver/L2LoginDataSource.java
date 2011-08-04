@@ -14,7 +14,7 @@
  */
 package com.l2jfree.loginserver;
 
-import com.l2jfree.loginserver.Config.DatabaseConfig;
+import com.l2jfree.loginserver.config.DatabaseConfig;
 import com.l2jfree.sql.DataSourceInitializer;
 
 /**

@@ -29,7 +29,7 @@ import javax.crypto.Cipher;
 
 import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
-import com.l2jfree.loginserver.Config.ServiceConfig;
+import com.l2jfree.loginserver.config.ServiceConfig;
 import com.l2jfree.loginserver.network.client.L2Account;
 import com.l2jfree.loginserver.network.client.L2BanReason;
 import com.l2jfree.loginserver.network.client.L2LoginClient;
