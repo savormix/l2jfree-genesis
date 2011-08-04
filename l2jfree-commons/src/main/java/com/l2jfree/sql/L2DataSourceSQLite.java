@@ -79,6 +79,6 @@ public final class L2DataSourceSQLite extends L2DataSource
 	@Override
 	public void optimize()
 	{
-		_log.warn("L2DataSource: Provider (" + getClass().getSimpleName() + ") not supported.");
+		_log.warn("L2DataSource: Provider (" + getClass().getSimpleName() + ") not yet supported.");
 	}
 }

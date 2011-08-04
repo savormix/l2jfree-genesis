@@ -42,7 +42,7 @@ public final class CoreInfo extends CommonsInfo
 	
 	public static String[] getFullVersionInfo()
 	{
-		return (String[])ArrayUtils.addAll(new String[] { "l2jfree-core :    " + CORE_VERSION.getFullVersionInfo() },
+		return (String[])ArrayUtils.addAll(new String[] { "l2jfree-core    :    " + CORE_VERSION.getFullVersionInfo() },
 				CommonsInfo.getFullVersionInfo());
 	}
 }

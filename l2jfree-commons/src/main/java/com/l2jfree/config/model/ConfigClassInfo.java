@@ -101,6 +101,17 @@ public final class ConfigClassInfo
 			_log.warn("Invalid config grouping!");
 		
 		store();
+		
+		try
+		{
+			// just in case it's missing
+			if (!getConfigFile().exists())
+				store(getConfigFile(), null);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	public ConfigClass getConfigClass()
@@ -189,24 +200,27 @@ public final class ConfigClassInfo
 		{
 			pw = new PrintWriter(configFile);
 			
-			pw.println("################################################################################");
-			switch (mode)
+			if (mode != null)
 			{
-				case MODIFIED:
-					pw.println("# This file should be modified in order to influence config variables.");
-					pw.println("# Contains only config variables differing from their default values.");
-					break;
-				case DEFAULT:
-					pw.println("# This file exists only for informational purposes.");
-					pw.println("# Contains every config variable with their default values.");
-					break;
-				case FULL:
-					pw.println("# This file exists only for informational purposes.");
-					pw.println("# Contains every config variable with their current values.");
-					break;
+				pw.println("################################################################################");
+				switch (mode)
+				{
+					case MODIFIED:
+						pw.println("# This file should be modified in order to influence config variables.");
+						pw.println("# Contains only config variables differing from their default values.");
+						break;
+					case DEFAULT:
+						pw.println("# This file exists only for informational purposes.");
+						pw.println("# Contains every config variable with their default values.");
+						break;
+					case FULL:
+						pw.println("# This file exists only for informational purposes.");
+						pw.println("# Contains every config variable with their current values.");
+						break;
+				}
+				pw.println("################################################################################");
+				pw.println();
 			}
-			pw.println("################################################################################");
-			pw.println();
 			
 			print(pw, mode);
 		}

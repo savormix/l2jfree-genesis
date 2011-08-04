@@ -45,6 +45,6 @@ public class CommonsInfo
 	
 	public static String[] getFullVersionInfo()
 	{
-		return new String[] { "l2j-commons  :    " + COMMONS_VERSION.getFullVersionInfo() };
+		return new String[] { "l2jfree-commons :    " + COMMONS_VERSION.getFullVersionInfo() };
 	}
 }

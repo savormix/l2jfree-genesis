@@ -14,33 +14,31 @@
  */
 package com.l2jfree.loginserver;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import com.l2jfree.util.concurrent.ThreadPoolInitializer;
+import com.l2jfree.loginserver.config.ThreadPoolConfig;
+import com.l2jfree.util.concurrent.AbstractThreadPoolInitializer;
 
 /**
  * @author savormix
  */
-public final class L2LoginThreadPools implements ThreadPoolInitializer
+public final class L2LoginThreadPools extends AbstractThreadPoolInitializer
 {
-	private final List<ScheduledThreadPoolExecutor> _scheduledPools = new ArrayList<ScheduledThreadPoolExecutor>();
-	private final List<ThreadPoolExecutor> _instantPools = new ArrayList<ThreadPoolExecutor>();
-	private final List<ThreadPoolExecutor> _longRunningPools = new ArrayList<ThreadPoolExecutor>();
-	
 	@Override
 	public void initThreadPool() throws Exception
 	{
-		// TODO Auto-generated method stub
-		_scheduledPools.add(new ScheduledThreadPoolExecutor( //
-				// int corePoolSize
-				4));
+		int threadPerScheduledThreadPool = ThreadPoolConfig.THREADS_PER_SCHEDULED_THREAD_POOL;
+		if (threadPerScheduledThreadPool == -1)
+			threadPerScheduledThreadPool = Runtime.getRuntime().availableProcessors();
 		
-		_instantPools.add(new ThreadPoolExecutor( //
+		addScheduledPool(new ScheduledThreadPoolExecutor( //
+				// int corePoolSize
+				threadPerScheduledThreadPool));
+		
+		addInstantPool(new ThreadPoolExecutor( //
 				// int corePoolSize
 				1,
 				// int maximumPoolSize
@@ -52,7 +50,7 @@ public final class L2LoginThreadPools implements ThreadPoolInitializer
 				// BlockingQueue<Runnable> workQueue
 				new SynchronousQueue<Runnable>()));
 		
-		_longRunningPools.add(new ThreadPoolExecutor( //
+		addLongRunningPool(new ThreadPoolExecutor( //
 				// int corePoolSize
 				0,
 				// int maximumPoolSize
@@ -63,23 +61,5 @@ public final class L2LoginThreadPools implements ThreadPoolInitializer
 				TimeUnit.SECONDS,
 				// BlockingQueue<Runnable> workQueue
 				new SynchronousQueue<Runnable>()));
-	}
-	
-	@Override
-	public ScheduledThreadPoolExecutor[] getScheduledPools()
-	{
-		return _scheduledPools.toArray(new ScheduledThreadPoolExecutor[_scheduledPools.size()]);
-	}
-	
-	@Override
-	public ThreadPoolExecutor[] getInstantPools()
-	{
-		return _instantPools.toArray(new ThreadPoolExecutor[_instantPools.size()]);
-	}
-	
-	@Override
-	public ThreadPoolExecutor[] getLongRunningPools()
-	{
-		return _longRunningPools.toArray(new ThreadPoolExecutor[_longRunningPools.size()]);
 	}
 }

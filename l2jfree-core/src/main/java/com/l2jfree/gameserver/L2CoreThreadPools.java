@@ -14,44 +14,46 @@
  */
 package com.l2jfree.gameserver;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import com.l2jfree.util.concurrent.ThreadPoolInitializer;
+import com.l2jfree.gameserver.config.ThreadPoolConfig;
+import com.l2jfree.util.concurrent.AbstractThreadPoolInitializer;
 
 /**
  * @author savormix
  */
-public final class L2CoreThreadPools implements ThreadPoolInitializer
+public final class L2CoreThreadPools extends AbstractThreadPoolInitializer
 {
-	private final List<ScheduledThreadPoolExecutor> _scheduledPools = new ArrayList<ScheduledThreadPoolExecutor>();
-	private final List<ThreadPoolExecutor> _instantPools = new ArrayList<ThreadPoolExecutor>();
-	private final List<ThreadPoolExecutor> _longRunningPools = new ArrayList<ThreadPoolExecutor>();
-	
 	@Override
 	public void initThreadPool() throws Exception
 	{
-		// TODO Auto-generated method stub
-		for (int i = 0; i < Runtime.getRuntime().availableProcessors(); i++)
+		int scheduledThreadPoolCount = ThreadPoolConfig.SCHEDULED_THREAD_POOL_COUNT;
+		if (scheduledThreadPoolCount == -1)
+			scheduledThreadPoolCount = Runtime.getRuntime().availableProcessors();
+		
+		for (int i = 0; i < scheduledThreadPoolCount; i++)
 		{
-			_scheduledPools.add(new ScheduledThreadPoolExecutor( //
+			addScheduledPool(new ScheduledThreadPoolExecutor( //
 					// int corePoolSize
-					4));
+					ThreadPoolConfig.THREADS_PER_SCHEDULED_THREAD_POOL));
 			
 		}
 		
-		for (int i = 0; i < Runtime.getRuntime().availableProcessors(); i++)
+		int instantThreadPoolCount = ThreadPoolConfig.INSTANT_THREAD_POOL_COUNT;
+		if (instantThreadPoolCount == -1)
+			instantThreadPoolCount = Runtime.getRuntime().availableProcessors();
+		
+		for (int i = 0; i < instantThreadPoolCount; i++)
 		{
-			_instantPools.add(new ThreadPoolExecutor( //
+			addInstantPool(new ThreadPoolExecutor( //
 					// int corePoolSize
-					2,
+					ThreadPoolConfig.THREADS_PER_INSTANT_THREAD_POOL,
 					// int maximumPoolSize
-					2,
+					ThreadPoolConfig.THREADS_PER_INSTANT_THREAD_POOL,
 					// long keepAliveTime
 					0,
 					// TimeUnit unit
@@ -61,7 +63,7 @@ public final class L2CoreThreadPools implements ThreadPoolInitializer
 			
 		}
 		
-		_longRunningPools.add(new ThreadPoolExecutor( //
+		addLongRunningPool(new ThreadPoolExecutor( //
 				// int corePoolSize
 				0,
 				// int maximumPoolSize
@@ -72,23 +74,5 @@ public final class L2CoreThreadPools implements ThreadPoolInitializer
 				TimeUnit.SECONDS,
 				// BlockingQueue<Runnable> workQueue
 				new SynchronousQueue<Runnable>()));
-	}
-	
-	@Override
-	public ScheduledThreadPoolExecutor[] getScheduledPools()
-	{
-		return _scheduledPools.toArray(new ScheduledThreadPoolExecutor[_scheduledPools.size()]);
-	}
-	
-	@Override
-	public ThreadPoolExecutor[] getInstantPools()
-	{
-		return _instantPools.toArray(new ThreadPoolExecutor[_instantPools.size()]);
-	}
-	
-	@Override
-	public ThreadPoolExecutor[] getLongRunningPools()
-	{
-		return _longRunningPools.toArray(new ThreadPoolExecutor[_longRunningPools.size()]);
 	}
 }

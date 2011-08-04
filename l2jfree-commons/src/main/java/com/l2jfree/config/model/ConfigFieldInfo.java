@@ -190,7 +190,8 @@ public final class ConfigFieldInfo
 			out.println("# ");
 			out.println("# Default: " + getDefaultValue());
 			out.println("# ");
-			out.println(getName() + " = " + (mode == PrintMode.DEFAULT ? getDefaultValue() : getCurrentValue()));
+			out.println(getName() + " = "
+					+ (mode == null || mode == PrintMode.DEFAULT ? getDefaultValue() : getCurrentValue()));
 			out.println();
 		}
 		
