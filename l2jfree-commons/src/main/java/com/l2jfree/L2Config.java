@@ -40,6 +40,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
 import com.l2jfree.config.ConfigProperty;
+import com.l2jfree.config.L2Parser;
 import com.l2jfree.config.L2Properties;
 import com.l2jfree.io.BufferedRedirectingOutputStream;
 import com.l2jfree.lang.L2Math;
@@ -465,7 +466,9 @@ public abstract class L2Config
 						continue;
 					}
 					
-					field.set(null, properties.getProperty(field.getType(), configProperty));
+					final String propertyValue = properties.getProperty(configProperty.name(), configProperty.value());
+					
+					field.set(null, L2Parser.get(field.getType(), propertyValue));
 				}
 			}
 			

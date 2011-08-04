@@ -109,7 +109,7 @@ public class Config extends L2Config
 			}
 			DB_PASSWORD = properties.getString("Password", "");
 			
-			DB_OPTIMIZE = properties.getBool("OptimizeTables", true);
+			DB_OPTIMIZE = properties.getBoolean("OptimizeTables", true);
 		}
 		
 		@Override

@@ -74,7 +74,7 @@ public abstract class StatusServer extends Thread
 	
 	protected StatusServer() throws IOException
 	{
-		_socket = new ServerSocket(Integer.parseInt(new L2Properties(L2Config.TELNET_FILE).getProperty("StatusPort")));
+		_socket = new ServerSocket(new L2Properties(L2Config.TELNET_FILE).getInteger("StatusPort"));
 		
 		addFilter(new FloodFilter());
 		addFilter(new HostFilter());

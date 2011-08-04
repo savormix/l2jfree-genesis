@@ -111,7 +111,7 @@ public class Config extends L2Config
 			}
 			DB_PASSWORD = properties.getString("Password", "");
 			
-			DB_OPTIMIZE = properties.getBool("OptimizeTables", true);
+			DB_OPTIMIZE = properties.getBoolean("OptimizeTables", true);
 		}
 		
 		@Override
@@ -141,7 +141,7 @@ public class Config extends L2Config
 			NET_LISTEN_IP = properties.getString("ListenIP", "0.0.0.0");
 			NET_LISTEN_PORT = properties.getInteger("ListenPort", 2106);
 			
-			NET_ENABLE_LEGACY = properties.getBool("EnableLegacyListener", true);
+			NET_ENABLE_LEGACY = properties.getBoolean("EnableLegacyListener", true);
 			NET_LEGACY_LISTEN_IP = properties.getString("LegacyListenIP", "127.0.0.1");
 			NET_LEGACY_LISTEN_PORT = properties.getInteger("LegacyListenPort", 9014);
 		}
@@ -171,13 +171,13 @@ public class Config extends L2Config
 		@Override
 		protected void loadImpl(L2Properties properties)
 		{
-			SVC_FORCE_LEGACY = properties.getBool("ForceLegacyMode", false);
+			SVC_FORCE_LEGACY = properties.getBoolean("ForceLegacyMode", false);
 			
-			SVC_CHECK_GAMEGUARD = properties.getBool("CheckGameGuard", true);
-			SVC_SHOW_EULA = properties.getBool("ShowEULA", false);
+			SVC_CHECK_GAMEGUARD = properties.getBoolean("CheckGameGuard", true);
+			SVC_SHOW_EULA = properties.getBoolean("ShowEULA", false);
 			
-			SVC_STRICT_AUTHORIZATION = properties.getBool("StrictAuthorization", true);
-			SVC_SAVE_REQUESTS = properties.getBool("PersistentRequests", false);
+			SVC_STRICT_AUTHORIZATION = properties.getBoolean("StrictAuthorization", true);
+			SVC_SAVE_REQUESTS = properties.getBoolean("PersistentRequests", false);
 		}
 		
 		@Override

@@ -14,6 +14,8 @@
  */
 package com.l2jfree.config.converters;
 
+import com.l2jfree.config.L2Parser;
+
 @SuppressWarnings("unchecked")
 public final class DefaultConverter implements Converter
 {
@@ -25,46 +27,7 @@ public final class DefaultConverter implements Converter
 		if (type.isArray())
 			return DefaultArrayConverter.INSTANCE.convertFromString(type, value);
 		
-		if (type == Boolean.class || type == Boolean.TYPE)
-		{
-			return Boolean.parseBoolean(value);
-		}
-		else if (type == Long.class || type == Long.TYPE)
-		{
-			return Long.decode(value);
-		}
-		else if (type == Integer.class || type == Integer.TYPE)
-		{
-			return Integer.decode(value);
-		}
-		else if (type == Short.class || type == Short.TYPE)
-		{
-			return Short.decode(value);
-		}
-		else if (type == Byte.class || type == Byte.TYPE)
-		{
-			return Byte.decode(value);
-		}
-		else if (type == Double.class || type == Double.TYPE)
-		{
-			return Double.parseDouble(value);
-		}
-		else if (type == Float.class || type == Float.TYPE)
-		{
-			return Float.parseFloat(value);
-		}
-		else if (type == String.class)
-		{
-			return value;
-		}
-		else if (type.isEnum())
-		{
-			return Enum.valueOf((Class<? extends Enum>)type, value);
-		}
-		else
-		{
-			throw new IllegalArgumentException("Not covered type: " + type + "!");
-		}
+		return L2Parser.get(type, value);
 	}
 	
 	@Override

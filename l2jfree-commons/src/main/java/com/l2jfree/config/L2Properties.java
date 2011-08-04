@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.util.Properties;
 
+import org.apache.commons.io.IOUtils;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
@@ -92,7 +93,7 @@ public final class L2Properties extends Properties
 		}
 		finally
 		{
-			inStream.close();
+			IOUtils.closeQuietly(inStream);
 		}
 	}
 	
@@ -105,7 +106,7 @@ public final class L2Properties extends Properties
 		}
 		finally
 		{
-			reader.close();
+			IOUtils.closeQuietly(reader);
 		}
 	}
 	
@@ -164,366 +165,201 @@ public final class L2Properties extends Properties
 	
 	// ===================================================================================
 	
-	@SuppressWarnings( { "unchecked", "rawtypes" })
-	public Object getProperty(Class<?> expectedType, ConfigProperty configProperty)
+	public boolean getBoolean(String name)
 	{
-		final String name = configProperty.name();
-		final String defaultValue = configProperty.value();
+		final String value = getProperty(name);
 		
-		if (expectedType == Boolean.class || expectedType == Boolean.TYPE)
-		{
-			return getBool(name, defaultValue);
-		}
-		else if (expectedType == Long.class || expectedType == Long.TYPE)
-		{
-			return getLong(name, defaultValue);
-		}
-		else if (expectedType == Integer.class || expectedType == Integer.TYPE)
-		{
-			return getInteger(name, defaultValue);
-		}
-		else if (expectedType == Short.class || expectedType == Short.TYPE)
-		{
-			return getShort(name, defaultValue);
-		}
-		else if (expectedType == Byte.class || expectedType == Byte.TYPE)
-		{
-			return getByte(name, defaultValue);
-		}
-		else if (expectedType == Double.class || expectedType == Double.TYPE)
-		{
-			return getDouble(name, defaultValue);
-		}
-		else if (expectedType == Float.class || expectedType == Float.TYPE)
-		{
-			return getFloat(name, defaultValue);
-		}
-		else if (expectedType == String.class)
-		{
-			return getString(name, defaultValue);
-		}
-		else if (expectedType.isEnum())
-		{
-			return getEnum(name, (Class<? extends Enum>)expectedType, defaultValue);
-		}
-		else
-		{
-			throw new IllegalStateException();
-		}
+		return L2Parser.getBoolean(value);
 	}
 	
-	// ===================================================================================
-	
-	public boolean getBool(String name)
+	public boolean getBoolean(String name, String defaultValue)
 	{
-		return getBool(name, null);
+		final String value = getProperty(name, defaultValue);
+		
+		return L2Parser.getBoolean(value);
 	}
 	
-	public boolean getBool(String name, String deflt)
+	public boolean getBoolean(String name, boolean defaultValue)
 	{
-		String val = getProperty(name, deflt);
-		if (val == null)
-			throw new IllegalArgumentException("Boolean value required, but not specified");
+		final String value = getProperty(name);
+		if (value == null)
+			return defaultValue;
 		
-		try
-		{
-			return Boolean.parseBoolean(val);
-		}
-		catch (Exception e)
-		{
-			throw new IllegalArgumentException("Boolean value required, but found: " + val);
-		}
-	}
-	
-	public boolean getBool(String name, boolean deflt)
-	{
-		String val = getProperty(name);
-		if (val == null)
-			return deflt;
-		
-		try
-		{
-			return Boolean.parseBoolean(val);
-		}
-		catch (Exception e)
-		{
-			throw new IllegalArgumentException("Boolean value required, but found: " + val);
-		}
+		return L2Parser.getBoolean(value);
 	}
 	
 	public byte getByte(String name)
 	{
-		return getByte(name, null);
+		final String value = getProperty(name);
+		
+		return L2Parser.getByte(value);
 	}
 	
-	public byte getByte(String name, String deflt)
+	public byte getByte(String name, String defaultValue)
 	{
-		String val = getProperty(name, deflt);
-		if (val == null)
-			throw new IllegalArgumentException("Byte value required, but not specified");
+		final String value = getProperty(name, defaultValue);
 		
-		try
-		{
-			return Byte.decode(val);
-		}
-		catch (Exception e)
-		{
-			throw new IllegalArgumentException("Byte value required, but found: " + val);
-		}
+		return L2Parser.getByte(value);
 	}
 	
-	public byte getByte(String name, byte deflt)
+	public byte getByte(String name, byte defaultValue)
 	{
-		String val = getProperty(name);
-		if (val == null)
-			return deflt;
+		final String value = getProperty(name);
+		if (value == null)
+			return defaultValue;
 		
-		try
-		{
-			return Byte.decode(val);
-		}
-		catch (Exception e)
-		{
-			throw new IllegalArgumentException("Byte value required, but found: " + val);
-		}
+		return L2Parser.getByte(value);
 	}
 	
 	public short getShort(String name)
 	{
-		return getShort(name, null);
+		final String value = getProperty(name);
+		
+		return L2Parser.getShort(value);
 	}
 	
-	public short getShort(String name, String deflt)
+	public short getShort(String name, String defaultValue)
 	{
-		String val = getProperty(name, deflt);
-		if (val == null)
-			throw new IllegalArgumentException("Short value required, but not specified");
+		final String value = getProperty(name, defaultValue);
 		
-		try
-		{
-			return Short.decode(val);
-		}
-		catch (Exception e)
-		{
-			throw new IllegalArgumentException("Short value required, but found: " + val);
-		}
+		return L2Parser.getShort(value);
 	}
 	
-	public short getShort(String name, short deflt)
+	public short getShort(String name, short defaultValue)
 	{
-		String val = getProperty(name);
-		if (val == null)
-			return deflt;
+		final String value = getProperty(name);
+		if (value == null)
+			return defaultValue;
 		
-		try
-		{
-			return Short.decode(val);
-		}
-		catch (Exception e)
-		{
-			throw new IllegalArgumentException("Short value required, but found: " + val);
-		}
+		return L2Parser.getShort(value);
 	}
 	
 	public int getInteger(String name)
 	{
-		return getInteger(name, null);
+		final String value = getProperty(name);
+		
+		return L2Parser.getInteger(value);
 	}
 	
-	public int getInteger(String name, String deflt)
+	public int getInteger(String name, String defaultValue)
 	{
-		String val = getProperty(name, deflt);
-		if (val == null)
-			throw new IllegalArgumentException("Integer value required, but not specified");
+		final String value = getProperty(name, defaultValue);
 		
-		try
-		{
-			return Integer.decode(val);
-		}
-		catch (Exception e)
-		{
-			throw new IllegalArgumentException("Integer value required, but found: " + val);
-		}
+		return L2Parser.getInteger(value);
 	}
 	
-	public int getInteger(String name, int deflt)
+	public int getInteger(String name, int defaultValue)
 	{
-		String val = getProperty(name);
-		if (val == null)
-			return deflt;
+		final String value = getProperty(name);
+		if (value == null)
+			return defaultValue;
 		
-		try
-		{
-			return Integer.decode(val);
-		}
-		catch (Exception e)
-		{
-			throw new IllegalArgumentException("Integer value required, but found: " + val);
-		}
+		return L2Parser.getInteger(value);
 	}
 	
 	public long getLong(String name)
 	{
-		return getLong(name, null);
+		final String value = getProperty(name);
+		
+		return L2Parser.getLong(value);
 	}
 	
-	public long getLong(String name, String deflt)
+	public long getLong(String name, String defaultValue)
 	{
-		String val = getProperty(name, deflt);
-		if (val == null)
-			throw new IllegalArgumentException("Integer value required, but not specified");
+		final String value = getProperty(name, defaultValue);
 		
-		try
-		{
-			return Long.decode(val);
-		}
-		catch (Exception e)
-		{
-			throw new IllegalArgumentException("Integer value required, but found: " + val);
-		}
+		return L2Parser.getLong(value);
 	}
 	
-	public long getLong(String name, long deflt)
+	public long getLong(String name, long defaultValue)
 	{
-		String val = getProperty(name);
-		if (val == null)
-			return deflt;
+		final String value = getProperty(name);
+		if (value == null)
+			return defaultValue;
 		
-		try
-		{
-			return Long.decode(val);
-		}
-		catch (Exception e)
-		{
-			throw new IllegalArgumentException("Integer value required, but found: " + val);
-		}
+		return L2Parser.getLong(value);
 	}
 	
 	public float getFloat(String name)
 	{
-		return getFloat(name, null);
+		final String value = getProperty(name);
+		
+		return L2Parser.getFloat(value);
 	}
 	
-	public float getFloat(String name, String deflt)
+	public float getFloat(String name, String defaultValue)
 	{
-		String val = getProperty(name, deflt);
-		if (val == null)
-			throw new IllegalArgumentException("Float value required, but not specified");
+		final String value = getProperty(name, defaultValue);
 		
-		try
-		{
-			return Float.parseFloat(val);
-		}
-		catch (Exception e)
-		{
-			throw new IllegalArgumentException("Float value required, but found: " + val);
-		}
+		return L2Parser.getFloat(value);
 	}
 	
-	public float getFloat(String name, float deflt)
+	public float getFloat(String name, float defaultValue)
 	{
-		String val = getProperty(name);
-		if (val == null)
-			return deflt;
+		final String value = getProperty(name);
+		if (value == null)
+			return defaultValue;
 		
-		try
-		{
-			return Float.parseFloat(val);
-		}
-		catch (Exception e)
-		{
-			throw new IllegalArgumentException("Float value required, but found: " + val);
-		}
+		return L2Parser.getFloat(value);
 	}
 	
 	public double getDouble(String name)
 	{
-		return getDouble(name, null);
+		final String value = getProperty(name);
+		
+		return L2Parser.getDouble(value);
 	}
 	
-	public double getDouble(String name, String deflt)
+	public double getDouble(String name, String defaultValue)
 	{
-		String val = getProperty(name, deflt);
-		if (val == null)
-			throw new IllegalArgumentException("Float value required, but not specified");
+		final String value = getProperty(name, defaultValue);
 		
-		try
-		{
-			return Double.parseDouble(val);
-		}
-		catch (Exception e)
-		{
-			throw new IllegalArgumentException("Float value required, but found: " + val);
-		}
+		return L2Parser.getDouble(value);
 	}
 	
-	public double getDouble(String name, double deflt)
+	public double getDouble(String name, double defaultValue)
 	{
-		String val = getProperty(name);
-		if (val == null)
-			return deflt;
+		final String value = getProperty(name);
+		if (value == null)
+			return defaultValue;
 		
-		try
-		{
-			return Double.parseDouble(val);
-		}
-		catch (Exception e)
-		{
-			throw new IllegalArgumentException("Float value required, but found: " + val);
-		}
+		return L2Parser.getDouble(value);
 	}
 	
 	public String getString(String name)
 	{
-		return getString(name, null);
+		final String value = getProperty(name);
+		
+		return L2Parser.getString(value);
 	}
 	
-	public String getString(String name, String deflt)
+	public String getString(String name, String defaultValue)
 	{
-		String val = getProperty(name, deflt);
-		if (val == null)
-			throw new IllegalArgumentException("String value required, but not specified");
+		final String value = getProperty(name, defaultValue);
 		
-		return String.valueOf(val);
+		return L2Parser.getString(value);
 	}
 	
 	public <T extends Enum<T>> T getEnum(String name, Class<T> enumClass)
 	{
-		return getEnum(name, enumClass, (String)null);
+		final String value = getProperty(name);
+		
+		return L2Parser.getEnum(enumClass, value);
 	}
 	
-	public <T extends Enum<T>> T getEnum(String name, Class<T> enumClass, String deflt)
+	public <T extends Enum<T>> T getEnum(Class<T> enumClass, String name, String defaultValue)
 	{
-		String val = getProperty(name, deflt);
-		if (val == null)
-			throw new IllegalArgumentException("Enum value of type " + enumClass.getName()
-					+ " required, but not specified");
+		final String value = getProperty(name, defaultValue);
 		
-		try
-		{
-			return Enum.valueOf(enumClass, String.valueOf(val));
-		}
-		catch (Exception e)
-		{
-			throw new IllegalArgumentException("Enum value of type " + enumClass.getName() + "required, but found: "
-					+ val);
-		}
+		return L2Parser.getEnum(enumClass, value);
 	}
 	
-	public <T extends Enum<T>> T getEnum(String name, Class<T> enumClass, T deflt)
+	public <T extends Enum<T>> T getEnum(Class<T> enumClass, String name, T defaultValue)
 	{
-		String val = getProperty(name);
-		if (val == null)
-			return deflt;
+		final String value = getProperty(name);
+		if (value == null)
+			return defaultValue;
 		
-		try
-		{
-			return Enum.valueOf(enumClass, String.valueOf(val));
-		}
-		catch (Exception e)
-		{
-			throw new IllegalArgumentException("Enum value of type " + enumClass.getName() + "required, but found: "
-					+ val);
-		}
+		return L2Parser.getEnum(enumClass, value);
 	}
 }
