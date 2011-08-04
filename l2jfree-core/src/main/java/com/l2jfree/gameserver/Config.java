@@ -18,6 +18,7 @@ import com.l2jfree.L2Config;
 import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
 import com.l2jfree.config.L2Properties;
+import com.l2jfree.config.annotation.ConfigClass;
 import com.l2jfree.sql.L2Database;
 import com.l2jfree.sql.L2DatabaseInstaller;
 import com.l2jfree.util.concurrent.L2ThreadPool;
@@ -79,6 +80,7 @@ public class Config extends L2Config
 		super();
 	}
 	
+	@ConfigClass(folderName = "config", fileName = "database")
 	public static final class DatabaseConfig extends ConfigPropertiesLoader
 	{
 		/** Maximum amount of database connections in pool */
@@ -111,14 +113,9 @@ public class Config extends L2Config
 			
 			DB_OPTIMIZE = properties.getBoolean("OptimizeTables", true);
 		}
-		
-		@Override
-		protected String getName()
-		{
-			return "database";
-		}
 	}
 	
+	@ConfigClass(folderName = "config", fileName = "network")
 	public static final class NetworkConfig extends ConfigPropertiesLoader
 	{
 		/** Login server listens for client connections on this IP address */
@@ -131,12 +128,6 @@ public class Config extends L2Config
 		{
 			NET_LISTEN_IP = properties.getString("ListenIP", "0.0.0.0");
 			NET_LISTEN_PORT = properties.getInteger("ListenPort", 7777);
-		}
-		
-		@Override
-		protected String getName()
-		{
-			return "network";
 		}
 	}
 }

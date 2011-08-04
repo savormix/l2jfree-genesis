@@ -20,8 +20,6 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.PrintStream;
 import java.lang.Thread.UncaughtExceptionHandler;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,9 +37,8 @@ import javolution.text.TextBuilder;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
-import com.l2jfree.config.ConfigProperty;
-import com.l2jfree.config.L2Parser;
 import com.l2jfree.config.L2Properties;
+import com.l2jfree.config.model.ConfigClassInfo;
 import com.l2jfree.io.BufferedRedirectingOutputStream;
 import com.l2jfree.lang.L2Math;
 import com.l2jfree.lang.L2TextBuilder;
@@ -408,22 +405,29 @@ public abstract class L2Config
 	
 	protected static abstract class ConfigFileLoader extends ConfigLoader
 	{
-		protected abstract String getFileName();
+		protected abstract File getFile();
 		
 		@Override
 		protected final void load() throws Exception
 		{
-			_log.info("loading '" + getFileName() + "'");
+			_log.info("loading '" + getFile() + "'");
 			
+			BufferedReader br = null;
 			try
 			{
-				loadReader(new BufferedReader(new FileReader(getFileName())));
+				br = new BufferedReader(new FileReader(getFile()));
+				
+				loadReader(br);
 			}
 			catch (Exception e)
 			{
-				_log.fatal("Failed to load '" + getFileName() + "'!", e);
+				_log.fatal("Failed to load '" + getFile() + "'!", e);
 				
-				throw new Exception("Failed to load '" + getFileName() + "'!");
+				throw new Exception("Failed to load '" + getFile() + "'!");
+			}
+			finally
+			{
+				IOUtils.closeQuietly(br);
 			}
 		}
 		
@@ -432,15 +436,33 @@ public abstract class L2Config
 	
 	protected static abstract class ConfigPropertiesLoader extends ConfigFileLoader
 	{
-		@Override
-		protected final String getFileName()
+		protected ConfigPropertiesLoader()
 		{
-			return "./config/" + getName().trim() + ".properties";
+			getConfigClassInfo();
 		}
 		
-		protected Class<?>[] getAnnotatedClasses()
+		@Override
+		protected final String getName()
 		{
-			return new Class<?>[] { getClass(), getClass().getEnclosingClass() };
+			return getConfigClassInfo().getConfigClass().fileName();
+		}
+		
+		@Override
+		protected final File getFile()
+		{
+			return getConfigClassInfo().getConfigFile();
+		}
+		
+		private ConfigClassInfo getConfigClassInfo()
+		{
+			try
+			{
+				return ConfigClassInfo.valueOf(getClass());
+			}
+			catch (Exception e)
+			{
+				throw new Error(e);
+			}
 		}
 		
 		@Override
@@ -448,29 +470,7 @@ public abstract class L2Config
 		{
 			final L2Properties properties = new L2Properties(reader);
 			
-			for (Class<?> cl : getAnnotatedClasses())
-			{
-				if (cl == null)
-					continue;
-				
-				for (Field field : cl.getFields())
-				{
-					final ConfigProperty configProperty = field.getAnnotation(ConfigProperty.class);
-					
-					if (configProperty == null || !configProperty.loader().equals(getName()))
-						continue;
-					
-					if (!Modifier.isStatic(field.getModifiers()) || Modifier.isFinal(field.getModifiers()))
-					{
-						_log.warn("Invalid modifiers for " + field);
-						continue;
-					}
-					
-					final String propertyValue = properties.getProperty(configProperty.name(), configProperty.value());
-					
-					field.set(null, L2Parser.get(field.getType(), propertyValue));
-				}
-			}
+			getConfigClassInfo().load(properties);
 			
 			loadImpl(properties);
 		}

@@ -18,6 +18,7 @@ import com.l2jfree.L2Config;
 import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
 import com.l2jfree.config.L2Properties;
+import com.l2jfree.config.annotation.ConfigClass;
 import com.l2jfree.sql.L2Database;
 import com.l2jfree.sql.L2DatabaseInstaller;
 import com.l2jfree.util.concurrent.L2ThreadPool;
@@ -81,6 +82,7 @@ public class Config extends L2Config
 		super();
 	}
 	
+	@ConfigClass(folderName = "config", fileName = "database")
 	public static final class DatabaseConfig extends ConfigPropertiesLoader
 	{
 		/** Maximum amount of database connections in pool */
@@ -113,14 +115,9 @@ public class Config extends L2Config
 			
 			DB_OPTIMIZE = properties.getBoolean("OptimizeTables", true);
 		}
-		
-		@Override
-		protected String getName()
-		{
-			return "database";
-		}
 	}
 	
+	@ConfigClass(folderName = "config", fileName = "network")
 	public static final class NetworkConfig extends ConfigPropertiesLoader
 	{
 		/** Login server listens for client connections on this IP address */
@@ -145,14 +142,9 @@ public class Config extends L2Config
 			NET_LEGACY_LISTEN_IP = properties.getString("LegacyListenIP", "127.0.0.1");
 			NET_LEGACY_LISTEN_PORT = properties.getInteger("LegacyListenPort", 9014);
 		}
-		
-		@Override
-		protected String getName()
-		{
-			return "network";
-		}
 	}
 	
+	@ConfigClass(folderName = "config", fileName = "service")
 	public static final class ServiceConfig extends ConfigPropertiesLoader
 	{
 		/** Whether to behave as a traditional login server */
@@ -178,12 +170,6 @@ public class Config extends L2Config
 			
 			SVC_STRICT_AUTHORIZATION = properties.getBoolean("StrictAuthorization", true);
 			SVC_SAVE_REQUESTS = properties.getBoolean("PersistentRequests", false);
-		}
-		
-		@Override
-		protected String getName()
-		{
-			return "service";
 		}
 	}
 }

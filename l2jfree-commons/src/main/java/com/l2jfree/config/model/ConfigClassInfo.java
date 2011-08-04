@@ -101,6 +101,11 @@ public final class ConfigClassInfo
 			_log.warn("Invalid config grouping!");
 	}
 	
+	public ConfigClass getConfigClass()
+	{
+		return _configClass;
+	}
+	
 	public File getConfigFile()
 	{
 		return new File(_configClass.folderName(), _configClass.fileName() + ".properties");
@@ -108,18 +113,23 @@ public final class ConfigClassInfo
 	
 	public File getDefaultConfigFile()
 	{
-		return new File(_configClass.folderName(), "_" + _configClass.fileName() + ".default.properties");
+		return new File(_configClass.folderName() + "/default", "_" + _configClass.fileName() + ".properties");
 	}
 	
 	public File getFullConfigFile()
 	{
-		return new File(_configClass.folderName(), "_" + _configClass.fileName() + ".full.properties");
+		return new File(_configClass.folderName() + "/full", "_" + _configClass.fileName() + ".properties");
 	}
 	
 	public synchronized void load() throws IOException
 	{
 		final L2Properties properties = new L2Properties().setLog(false);
 		
+		load(properties);
+	}
+	
+	public synchronized void load(L2Properties properties) throws IOException
+	{
 		// if config file is missing it will use default values everywhere
 		if (getConfigFile().exists())
 			properties.load(getConfigFile());
