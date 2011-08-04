@@ -14,7 +14,7 @@
  */
 package com.l2jfree.gameserver;
 
-import com.l2jfree.gameserver.Config.DatabaseConfig;
+import com.l2jfree.gameserver.config.DatabaseConfig;
 import com.l2jfree.sql.DataSourceInitializer;
 
 /**

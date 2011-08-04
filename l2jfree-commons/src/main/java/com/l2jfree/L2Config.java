@@ -45,6 +45,7 @@ import com.l2jfree.lang.L2TextBuilder;
 import com.l2jfree.lang.management.DeadlockDetector;
 import com.l2jfree.util.HandlerRegistry;
 import com.l2jfree.util.L2FastSet;
+import com.l2jfree.util.jar.ClassFinder;
 import com.l2jfree.util.logging.L2Logger;
 
 // TODO do we need commons logging?
@@ -352,6 +353,19 @@ public abstract class L2Config
 		_loaders.register(loader.getName(), loader);
 	}
 	
+	protected static void registerConfigClasses(String configPackageName) throws Exception
+	{
+		for (Class<?> clazz : ClassFinder.findClasses(configPackageName))
+		{
+			if (ConfigPropertiesLoader.class.isAssignableFrom(clazz))
+			{
+				ConfigPropertiesLoader config = (ConfigPropertiesLoader)clazz.newInstance();
+				
+				L2Config.registerConfig(config);
+			}
+		}
+	}
+	
 	/**
 	 * Load all available configuration files.
 	 * 
@@ -462,7 +476,7 @@ public abstract class L2Config
 		protected abstract void loadReader(BufferedReader reader) throws Exception;
 	}
 	
-	protected static abstract class ConfigPropertiesLoader extends ConfigFileLoader
+	public static abstract class ConfigPropertiesLoader extends ConfigFileLoader
 	{
 		protected ConfigPropertiesLoader()
 		{

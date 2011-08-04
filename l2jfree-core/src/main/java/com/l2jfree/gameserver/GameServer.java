@@ -17,6 +17,8 @@ package com.l2jfree.gameserver;
 import com.l2jfree.L2Config;
 import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
+import com.l2jfree.gameserver.config.DatabaseConfig;
+import com.l2jfree.gameserver.config.NetworkConfig;
 import com.l2jfree.gameserver.network.client.L2ClientConnections;
 import com.l2jfree.gameserver.network.client.L2ClientSecurity;
 import com.l2jfree.sql.L2Database;
