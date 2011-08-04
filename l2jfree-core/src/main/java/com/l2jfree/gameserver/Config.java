@@ -23,6 +23,7 @@ import com.l2jfree.util.concurrent.L2ThreadPool;
 
 /**
  * @author savormix
+ * @author NB4L1
  */
 public class Config extends L2Config
 {

@@ -22,7 +22,7 @@ import java.sql.SQLException;
 import java.util.Set;
 import java.util.TreeSet;
 
-import com.l2jfree.loginserver.Config.ServiceConfig;
+import com.l2jfree.loginserver.config.ServiceConfig;
 import com.l2jfree.loginserver.network.gameserver.L2GameServerCache;
 import com.l2jfree.loginserver.network.legacy.L2GameServer;
 import com.l2jfree.loginserver.network.legacy.L2LegacyConnections;

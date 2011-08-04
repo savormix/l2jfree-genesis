@@ -1,4 +1,4 @@
-package com.l2jfree.gameserver.config;
+package com.l2jfree.loginserver.config;
 
 import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
@@ -14,7 +14,7 @@ import com.l2jfree.config.converters.DefaultConverter;
 @ConfigClass(folderName = "config", fileName = "database")
 public final class DatabaseConfig extends ConfigPropertiesLoader
 {
-	@ConfigField(name = "JdbcUrl", value = "sqlite:l2jfree_core.db", eternal = true, converter = JdbcUrlConverter.class, comment = {
+	@ConfigField(name = "JdbcUrl", value = "sqlite:l2jfree_login.db", eternal = true, converter = JdbcUrlConverter.class, comment = {
 			"Specifies the JDBC URL of the database.", //
 			"Some URLs:", //
 			"MySQL: mysql://host.or.ip/database", //
@@ -31,9 +31,9 @@ public final class DatabaseConfig extends ConfigPropertiesLoader
 	@ConfigField(name = "Password", value = "", eternal = true, comment = { "Password for DB access" })
 	public static String DB_PASSWORD;
 	
-	@ConfigField(name = "MaxConnectionsInPool", value = "50", eternal = true, comment = {
+	@ConfigField(name = "MaxConnectionsInPool", value = "5", eternal = true, comment = {
 			"Specifies the maximum number of database connections active at once.", //
-			"At least 10 connections must be assigned.", //
+			"At least 2 connections must be assigned.", //
 	})
 	public static int DB_MAX_CONNECTIONS;
 	

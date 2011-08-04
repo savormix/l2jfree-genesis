@@ -16,7 +16,7 @@ package com.l2jfree.loginserver.network.client.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 
-import com.l2jfree.loginserver.Config.ServiceConfig;
+import com.l2jfree.loginserver.config.ServiceConfig;
 import com.l2jfree.loginserver.network.client.L2LoginClient;
 import com.l2jfree.loginserver.network.client.L2LoginClientState;
 import com.l2jfree.loginserver.network.client.L2NoServiceReason;
