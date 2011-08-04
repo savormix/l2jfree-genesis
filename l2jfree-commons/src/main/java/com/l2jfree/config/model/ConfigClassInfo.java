@@ -99,6 +99,8 @@ public final class ConfigClassInfo
 		
 		if (!activeGroups.isEmpty())
 			_log.warn("Invalid config grouping!");
+		
+		store();
 	}
 	
 	public ConfigClass getConfigClass()
@@ -111,14 +113,19 @@ public final class ConfigClassInfo
 		return new File(_configClass.folderName(), _configClass.fileName() + ".properties");
 	}
 	
+	public File getModifiedConfigFile()
+	{
+		return new File(_configClass.folderName() + "/modified", _configClass.fileName() + ".properties");
+	}
+	
 	public File getDefaultConfigFile()
 	{
-		return new File(_configClass.folderName() + "/default", "_" + _configClass.fileName() + ".properties");
+		return new File(_configClass.folderName() + "/default", _configClass.fileName() + ".properties");
 	}
 	
 	public File getFullConfigFile()
 	{
-		return new File(_configClass.folderName() + "/full", "_" + _configClass.fileName() + ".properties");
+		return new File(_configClass.folderName() + "/full", _configClass.fileName() + ".properties");
 	}
 	
 	public synchronized void load() throws IOException
@@ -138,11 +145,37 @@ public final class ConfigClassInfo
 			info.setCurrentValue(properties);
 	}
 	
-	public synchronized void store() throws IOException
+	public synchronized void store()
 	{
-		store(getConfigFile(), PrintMode.MODIFIED);
-		store(getDefaultConfigFile(), PrintMode.DEFAULT);
-		store(getFullConfigFile(), PrintMode.FULL);
+		for (PrintMode mode : PrintMode.values())
+			store(mode);
+	}
+	
+	public synchronized void store(PrintMode mode)
+	{
+		File configFile = null;
+		switch (mode)
+		{
+			case MODIFIED:
+				configFile = getModifiedConfigFile();
+				break;
+			case DEFAULT:
+				configFile = getDefaultConfigFile();
+				break;
+			case FULL:
+			default:
+				configFile = getFullConfigFile();
+				break;
+		}
+		
+		try
+		{
+			store(configFile, mode);
+		}
+		catch (IOException e)
+		{
+			_log.warn("Couldn't save " + mode + " config file to '" + configFile + "'!", e);
+		}
 	}
 	
 	private void store(File configFile, PrintMode mode) throws IOException

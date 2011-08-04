@@ -17,7 +17,7 @@ package com.l2jfree.config.converters;
 import com.l2jfree.config.L2Parser;
 
 @SuppressWarnings("unchecked")
-public final class DefaultConverter implements Converter
+public class DefaultConverter implements Converter
 {
 	public static final DefaultConverter INSTANCE = new DefaultConverter();
 	
@@ -37,7 +37,7 @@ public final class DefaultConverter implements Converter
 			return DefaultArrayConverter.INSTANCE.convertToString(type, obj);
 		
 		if (obj == null)
-			return null;
+			return "";
 		
 		return obj.toString();
 	}

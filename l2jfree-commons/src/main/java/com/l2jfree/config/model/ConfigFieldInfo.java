@@ -37,6 +37,8 @@ public final class ConfigFieldInfo
 	private final ConfigGroupBeginning _configGroupBeginning;
 	private final ConfigGroupEnding _configGroupEnding;
 	
+	private final String _defaultValue;
+	
 	private ConfigGroup _beginningGroup;
 	private ConfigGroup _endingGroup;
 	
@@ -49,6 +51,12 @@ public final class ConfigFieldInfo
 		_converter = getConfigField().converter().newInstance();
 		_configGroupBeginning = field.getAnnotation(ConfigGroupBeginning.class);
 		_configGroupEnding = field.getAnnotation(ConfigGroupEnding.class);
+		
+		// to standardize the default values (true, True -> true, etc..)
+		final String value = getConfigField().value();
+		final Object obj = getConverter().convertFromString(getField().getType(), value);
+		
+		_defaultValue = getConverter().convertToString(getField().getType(), obj);
 	}
 	
 	public Field getField()
@@ -110,7 +118,7 @@ public final class ConfigFieldInfo
 	
 	public String getDefaultValue()
 	{
-		return getConfigField().value();
+		return _defaultValue;
 	}
 	
 	public boolean isModified()
@@ -179,7 +187,9 @@ public final class ConfigFieldInfo
 				for (String line : getConfigField().comment())
 					out.println("# " + line);
 			
+			out.println("# ");
 			out.println("# Default: " + getDefaultValue());
+			out.println("# ");
 			out.println(getName() + " = " + (mode == PrintMode.DEFAULT ? getDefaultValue() : getCurrentValue()));
 			out.println();
 		}

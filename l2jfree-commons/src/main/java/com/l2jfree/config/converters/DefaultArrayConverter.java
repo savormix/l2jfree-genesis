@@ -47,7 +47,7 @@ public class DefaultArrayConverter implements Converter
 		final Class<?> componentType = type.getComponentType();
 		
 		if (obj == null)
-			return null;
+			return "";
 		
 		final int length = Array.getLength(obj);
 		final L2TextBuilder tb = L2TextBuilder.newInstance();

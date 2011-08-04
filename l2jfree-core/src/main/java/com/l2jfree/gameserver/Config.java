@@ -19,6 +19,8 @@ import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
 import com.l2jfree.config.L2Properties;
 import com.l2jfree.config.annotation.ConfigClass;
+import com.l2jfree.config.annotation.ConfigField;
+import com.l2jfree.config.converters.DefaultConverter;
 import com.l2jfree.sql.L2Database;
 import com.l2jfree.sql.L2DatabaseInstaller;
 import com.l2jfree.util.concurrent.L2ThreadPool;
@@ -83,51 +85,72 @@ public class Config extends L2Config
 	@ConfigClass(folderName = "config", fileName = "database")
 	public static final class DatabaseConfig extends ConfigPropertiesLoader
 	{
-		/** Maximum amount of database connections in pool */
-		public static int DB_MAX_CONNECTIONS;
-		/** Database JDBC URL */
+		@ConfigField(name = "JdbcUrl", value = "sqlite:l2jfree_core.db", eternal = true, converter = JdbcUrlConverter.class, comment = {
+				"Specifies the JDBC URL of the database.", //
+				"Some URLs:", //
+				"MySQL: mysql://host.or.ip/database", //
+				"PostgreSQL: postgresql://host.or.ip/database", //
+				"SQLite: sqlite:file.db", //
+		})
 		public static String DB_URL;
-		/** Database login */
+		
+		@ConfigField(name = "Login", value = "", eternal = true, comment = { "Username for DB access",
+				"The server will not start if a DBMS superuser account is used.", //
+		})
 		public static String DB_USER;
-		/** Database password */
+		
+		@ConfigField(name = "Password", value = "", eternal = true, comment = { "Password for DB access" })
 		public static String DB_PASSWORD;
-		/** Whether to optimize database tables on startup */
+		
+		@ConfigField(name = "MaxConnectionsInPool", value = "50", eternal = true, comment = {
+				"Specifies the maximum number of database connections active at once.", //
+				"At least 10 connections must be assigned.", //
+		})
+		public static int DB_MAX_CONNECTIONS;
+		
+		@ConfigField(name = "OptimizeTables", value = "true", eternal = true, comment = {
+				"Whether to optimize tables on startup.", //
+				"Currently only works with MySQL and PostgreSQL.", //
+		})
 		public static boolean DB_OPTIMIZE;
 		
 		@Override
 		protected void loadImpl(L2Properties properties)
 		{
-			DB_MAX_CONNECTIONS = properties.getInteger("MaxConnectionsInPool", 50);
-			
-			DB_URL = properties.getString("JdbcUrl");
-			if (!DB_URL.startsWith("jdbc:"))
-				DB_URL = "jdbc:" + DB_URL;
-			
-			DB_USER = properties.getString("Login");
 			if (DB_USER.equalsIgnoreCase("root") || DB_USER.equalsIgnoreCase("postgres"))
 			{
 				_log.info("L2jFree servers should not use DBMS superuser accounts ... exited.");
 				Shutdown.exit(TerminationStatus.ENVIRONMENT_SUPERUSER);
 			}
-			DB_PASSWORD = properties.getString("Password", "");
+		}
+		
+		public static final class JdbcUrlConverter extends DefaultConverter
+		{
+			@Override
+			public Object convertFromString(Class<?> type, String value)
+			{
+				return super.convertFromString(type, value.replace("jdbc:", ""));
+			}
 			
-			DB_OPTIMIZE = properties.getBoolean("OptimizeTables", true);
+			@Override
+			public String convertToString(Class<?> type, Object obj)
+			{
+				return "jdbc:" + super.convertToString(type, obj).replace("jdbc:", "");
+			}
 		}
 	}
 	
 	@ConfigClass(folderName = "config", fileName = "network")
 	public static final class NetworkConfig extends ConfigPropertiesLoader
 	{
-		/** Login server listens for client connections on this IP address */
+		@ConfigField(name = "ListenIP", value = "0.0.0.0", eternal = true, comment = {
+				"Login Server will accept CLIENT connections coming to this IP address only.", //
+				"Use 0.0.0.0 to listen on all available adapters.", //
+				"Specify a valid IP address if you require the game server to bind on a single IP.", //
+		})
 		public static String NET_LISTEN_IP;
-		/** Login server listens for client connections on this port */
-		public static int NET_LISTEN_PORT;
 		
-		@Override
-		protected void loadImpl(L2Properties properties)
-		{
-			NET_LISTEN_IP = properties.getString("ListenIP", "0.0.0.0");
-			NET_LISTEN_PORT = properties.getInteger("ListenPort", 7777);
-		}
+		@ConfigField(name = "ListenPort", value = "7777", eternal = true, comment = { "Login Server will listen for CLIENT connections on this port." })
+		public static int NET_LISTEN_PORT;
 	}
 }

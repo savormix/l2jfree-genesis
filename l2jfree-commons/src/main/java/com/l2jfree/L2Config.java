@@ -118,6 +118,9 @@ public abstract class L2Config
 			}
 		});
 		
+		for (Thread t : Thread.getAllStackTraces().keySet())
+			t.setUncaughtExceptionHandler(Thread.getDefaultUncaughtExceptionHandler());
+		
 		if (System.getProperty("user.name").equals("root") && System.getProperty("user.home").equals("/root"))
 		{
 			System.out.print("L2jFree servers should not run under root-account ... exited.");
@@ -286,6 +289,15 @@ public abstract class L2Config
 		return null;
 	}
 	
+	public static void flush()
+	{
+		System.out.flush();
+		System.err.flush();
+		
+		L2Config.out.flush();
+		L2Config.err.flush();
+	}
+	
 	/**
 	 * @return internet addresses that are allowed to connect via telnet
 	 */
@@ -351,6 +363,17 @@ public abstract class L2Config
 			loader.load();
 	}
 	
+	public static void storeConfigs()
+	{
+		for (ConfigLoader loader : _loaders.getHandlers().values())
+		{
+			final ConfigClassInfo info = loader.getConfigClassInfo();
+			
+			if (info != null)
+				info.store();
+		}
+	}
+	
 	/**
 	 * Load the specified configuration file.
 	 * 
@@ -387,6 +410,11 @@ public abstract class L2Config
 	protected static abstract class ConfigLoader
 	{
 		protected abstract String getName();
+		
+		protected ConfigClassInfo getConfigClassInfo()
+		{
+			return null;
+		}
 		
 		protected abstract void load() throws Exception;
 		
@@ -453,7 +481,8 @@ public abstract class L2Config
 			return getConfigClassInfo().getConfigFile();
 		}
 		
-		private ConfigClassInfo getConfigClassInfo()
+		@Override
+		protected final ConfigClassInfo getConfigClassInfo()
 		{
 			try
 			{
@@ -473,9 +502,13 @@ public abstract class L2Config
 			getConfigClassInfo().load(properties);
 			
 			loadImpl(properties);
+			
+			getConfigClassInfo().store();
 		}
 		
-		protected abstract void loadImpl(L2Properties properties);
+		protected void loadImpl(L2Properties properties)
+		{
+		}
 	}
 	
 	private static Set<StartupHook> _startupHooks = new L2FastSet<StartupHook>();

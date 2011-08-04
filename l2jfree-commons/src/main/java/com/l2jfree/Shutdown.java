@@ -195,6 +195,8 @@ public final class Shutdown
 				System.err.println(initiator + " issued a halt command: " + mode.getDescription() + "!");
 			else
 				System.err.println("A halt command was issued: " + mode.getDescription() + "!");
+			
+			L2Config.flush();
 		}
 		finally
 		{
@@ -208,7 +210,16 @@ public final class Shutdown
 			@Override
 			public void run()
 			{
-				runShutdownHooks();
+				try
+				{
+					runShutdownHooks();
+					
+					L2Config.flush();
+				}
+				finally
+				{
+					Runtime.getRuntime().halt(_mode.getStatusCode());
+				}
 			}
 		});
 	}
@@ -252,6 +263,6 @@ public final class Shutdown
 			t.printStackTrace();
 		}
 		
-		Runtime.getRuntime().halt(_mode.getStatusCode());
+		L2Config.storeConfigs();
 	}
 }
