@@ -29,6 +29,8 @@ public class Config extends L2Config
 {
 	static
 	{
+		LoginInfo.showStartupInfo();
+		
 		try
 		{
 			registerConfigClasses("com.l2jfree.loginserver.config");

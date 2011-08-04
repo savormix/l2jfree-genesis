@@ -43,9 +43,9 @@ public final class L2ThreadPool
 	private static ThreadPoolExecutor[] _instantPools = new ThreadPoolExecutor[0];
 	private static ThreadPoolExecutor[] _longRunningPools = new ThreadPoolExecutor[0];
 	
-	private static int getPoolSize(ThreadPoolExecutor[] threadPools)
+	private static long getPoolSize(ThreadPoolExecutor[] threadPools)
 	{
-		int result = 0;
+		long result = 0;
 		
 		for (ThreadPoolExecutor threadPool : threadPools)
 			result += threadPool.getPoolSize();
@@ -53,10 +53,20 @@ public final class L2ThreadPool
 		return result;
 	}
 	
+	private static long getMaximumPoolSize(ThreadPoolExecutor[] threadPools)
+	{
+		long result = 0;
+		
+		for (ThreadPoolExecutor threadPool : threadPools)
+			result += threadPool.getMaximumPoolSize();
+		
+		return result;
+	}
+	
 	public static void initThreadPools(ThreadPoolInitializer initializer) throws Exception
 	{
-		if (!ArrayUtils.isEmpty(_scheduledPools) || !ArrayUtils.isEmpty(_instantPools) ||
-				!ArrayUtils.isEmpty(_longRunningPools))
+		if (!ArrayUtils.isEmpty(_scheduledPools) || !ArrayUtils.isEmpty(_instantPools)
+				|| !ArrayUtils.isEmpty(_longRunningPools))
 			throw new Exception("The thread pool has been already set!");
 		
 		initializer.initThreadPool();
@@ -122,10 +132,11 @@ public final class L2ThreadPool
 			}
 		}, 60000, 60000);
 		
-		_log.info("L2ThreadPool: Initialized with ");
-		_log.info("\t... " + getPoolSize(_scheduledPools) + " scheduler,");
-		_log.info("\t... " + getPoolSize(_instantPools) + " instant,");
-		_log.info("\t... " + getPoolSize(_longRunningPools) + " long running thread(s).");
+		_log.info("L2ThreadPool: Initialized with");
+		_log.info("\t... " + getPoolSize(_scheduledPools) + "/" + getMaximumPoolSize(_scheduledPools) + " scheduler,");
+		_log.info("\t... " + getPoolSize(_instantPools) + "/" + getMaximumPoolSize(_instantPools) + " instant,");
+		_log.info("\t... " + getPoolSize(_longRunningPools) + "/" + getMaximumPoolSize(_longRunningPools)
+				+ " long running thread(s).");
 	}
 	
 	private static long validate(long delay)

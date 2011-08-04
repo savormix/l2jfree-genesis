@@ -14,6 +14,11 @@
  */
 package com.l2jfree;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
+import com.l2jfree.lang.L2System;
+
 /**
  */
 public final class Util
@@ -25,6 +30,7 @@ public final class Util
 	
 	/**
 	 * Prints a named section to log.
+	 * 
 	 * @param s Section name
 	 */
 	public static void printSection(String s)
@@ -34,6 +40,44 @@ public final class Util
 		while (s.length() < 160)
 			s = "-" + s;
 		
-		L2Config.out.println(s);
+		L2Config.err.println(s);
+	}
+	
+	// some sys info utils
+	public static int getAvailableProcessors()
+	{
+		Runtime rt = Runtime.getRuntime();
+		return rt.availableProcessors();
+	}
+	
+	public static String getOSName()
+	{
+		return System.getProperty("os.name");
+	}
+	
+	public static String getOSVersion()
+	{
+		return System.getProperty("os.version");
+	}
+	
+	public static String getOSArch()
+	{
+		return System.getProperty("os.arch");
+	}
+	
+	public static String[] getMemUsage()
+	{
+		return L2System.getMemoryUsageStatistics();
+	}
+	
+	/**
+	 * Returns a number formatted with "," delimiter
+	 * 
+	 * @param value
+	 * @return String formatted number
+	 */
+	public static String formatNumber(long value)
+	{
+		return NumberFormat.getInstance(Locale.ENGLISH).format(value);
 	}
 }

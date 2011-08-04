@@ -29,6 +29,8 @@ public class Config extends L2Config
 {
 	static
 	{
+		CoreInfo.showStartupInfo();
+		
 		try
 		{
 			registerConfigClasses("com.l2jfree.gameserver.config");

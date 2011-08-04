@@ -51,6 +51,10 @@ public class Version
 		try
 		{
 			jarName = Locator.getClassSource(c);
+			
+			if (!jarName.isFile())
+				return;
+			
 			JarFile jarFile = new JarFile(jarName);
 			
 			Attributes attrs = jarFile.getManifest().getMainAttributes();

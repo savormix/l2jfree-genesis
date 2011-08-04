@@ -17,6 +17,7 @@ package com.l2jfree.gameserver;
 import com.l2jfree.L2Config;
 import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
+import com.l2jfree.Util;
 import com.l2jfree.gameserver.config.DatabaseConfig;
 import com.l2jfree.gameserver.config.NetworkConfig;
 import com.l2jfree.gameserver.network.client.L2ClientConnections;
@@ -28,7 +29,6 @@ import com.l2jfree.sql.L2Database;
  * 
  * @author NB4L1
  * @author savormix
- *
  */
 public final class GameServer extends Config
 {
@@ -46,7 +46,8 @@ public final class GameServer extends Config
 		
 		try
 		{
-			L2ClientConnections.getInstance().openServerSocket(NetworkConfig.NET_LISTEN_IP, NetworkConfig.NET_LISTEN_PORT);
+			L2ClientConnections.getInstance().openServerSocket(NetworkConfig.NET_LISTEN_IP,
+					NetworkConfig.NET_LISTEN_PORT);
 			L2ClientConnections.getInstance().start();
 		}
 		catch (Throwable e)
@@ -56,9 +57,25 @@ public final class GameServer extends Config
 			return;
 		}
 		
+		// TODO
+		
 		L2Config.onStartup();
 		
-		_log.info("Game server ready.");
+		Util.printSection("l2jfree-core");
+		for (String line : CoreInfo.getFullVersionInfo())
+			_log.info(line);
+		_log.info("Operating System: " + Util.getOSName() + " " + Util.getOSVersion() + " " + Util.getOSArch());
+		_log.info("Available CPUs: " + Util.getAvailableProcessors());
+		
+		Util.printSection("Memory");
+		System.gc();
+		System.runFinalization();
+		
+		for (String line : Util.getMemUsage())
+			_log.info(line);
+		
+		_log.info("Server loaded in " + Util.formatNumber(System.currentTimeMillis() - L2Config.SERVER_STARTED)
+				+ " milliseconds.");
 		
 		Shutdown.addShutdownHook(new Runnable() {
 			@Override
