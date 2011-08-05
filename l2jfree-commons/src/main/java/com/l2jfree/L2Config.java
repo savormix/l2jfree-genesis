@@ -43,8 +43,13 @@ import com.l2jfree.io.BufferedRedirectingOutputStream;
 import com.l2jfree.lang.L2Math;
 import com.l2jfree.lang.L2TextBuilder;
 import com.l2jfree.lang.management.DeadlockDetector;
+import com.l2jfree.sql.DataSourceInitializer;
+import com.l2jfree.sql.L2Database;
+import com.l2jfree.sql.L2DatabaseInstaller;
 import com.l2jfree.util.HandlerRegistry;
 import com.l2jfree.util.L2FastSet;
+import com.l2jfree.util.concurrent.L2ThreadPool;
+import com.l2jfree.util.concurrent.ThreadPoolInitializer;
 import com.l2jfree.util.jar.ClassFinder;
 import com.l2jfree.util.logging.L2Logger;
 
@@ -268,10 +273,6 @@ public abstract class L2Config
 					_log.logp(Level.WARNING, caller.getClassName(), caller.getMethodName(), line);
 			}
 		}));
-		
-		Shutdown.initShutdownHook();
-		
-		DeadlockDetector.getInstance();
 	}
 	
 	private static StackTraceElement getCaller()
@@ -572,5 +573,115 @@ public abstract class L2Config
 		 * This method is called on an attached startup hook when/if the application has finished loading.
 		 */
 		public void onStartup();
+	}
+	
+	protected static void initApplication(String configPackageName,
+			Class<? extends ThreadPoolInitializer> threadPoolInitializerClass,
+			Class<? extends DataSourceInitializer> dataSourceInitializerClass)
+	{
+		try
+		{
+			L2Config.registerConfigClasses(configPackageName);
+		}
+		catch (Exception e)
+		{
+			_log.fatal("Could not load configuration classes!", e);
+			Shutdown.exit(TerminationStatus.RUNTIME_INVALID_CONFIGURATION);
+		}
+		
+		try
+		{
+			L2Config.loadConfigs();
+		}
+		catch (Exception e)
+		{
+			_log.fatal("Could not load configuration files!", e);
+			Shutdown.exit(TerminationStatus.RUNTIME_INVALID_CONFIGURATION);
+		}
+		
+		try
+		{
+			L2ThreadPool.initThreadPools(threadPoolInitializerClass.newInstance());
+		}
+		catch (Exception e)
+		{
+			_log.fatal("Could not initialize thread pools!", e);
+			Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
+		}
+		
+		try
+		{
+			L2Database.setDataSource("default", dataSourceInitializerClass.newInstance());
+		}
+		catch (Exception e)
+		{
+			_log.fatal("Could not initialize DB connections!", e);
+			Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
+		}
+		
+		try
+		{
+			L2DatabaseInstaller.check();
+		}
+		catch (Exception e)
+		{
+			_log.fatal("Could not initialize DB tables!", e);
+			Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
+		}
+		
+		Shutdown.initShutdownHook();
+		
+		DeadlockDetector.getInstance();
+	}
+	
+	protected static void applicationLoaded(String appName, String[] versionInfo)
+	{
+		L2Config.onStartup();
+		
+		Util.printSection(appName);
+		for (String line : versionInfo)
+			_log.info(line);
+		_log.info("Operating System: " + Util.getOSName() + " " + Util.getOSVersion() + " " + Util.getOSArch());
+		_log.info("Available CPUs: " + Util.getAvailableProcessors());
+		
+		Util.printSection("Memory");
+		System.gc();
+		System.runFinalization();
+		
+		for (String line : Util.getMemUsage())
+			_log.info(line);
+		
+		_log.info("Server loaded in " + Util.formatNumber(System.currentTimeMillis() - L2Config.SERVER_STARTED)
+				+ " milliseconds.");
+	}
+	
+	protected static void shutdownApplication()
+	{
+		try
+		{
+			L2Database.shutdown();
+		}
+		catch (Throwable t)
+		{
+			t.printStackTrace();
+		}
+		
+		try
+		{
+			L2ThreadPool.shutdown();
+		}
+		catch (Throwable t)
+		{
+			t.printStackTrace();
+		}
+		
+		try
+		{
+			L2Config.storeConfigs();
+		}
+		catch (Throwable t)
+		{
+			t.printStackTrace();
+		}
 	}
 }

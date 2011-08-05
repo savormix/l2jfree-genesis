@@ -15,11 +15,6 @@
 package com.l2jfree.gameserver;
 
 import com.l2jfree.L2Config;
-import com.l2jfree.Shutdown;
-import com.l2jfree.TerminationStatus;
-import com.l2jfree.sql.L2Database;
-import com.l2jfree.sql.L2DatabaseInstaller;
-import com.l2jfree.util.concurrent.L2ThreadPool;
 
 /**
  * @author savormix
@@ -31,55 +26,7 @@ public class Config extends L2Config
 	{
 		CoreInfo.showStartupInfo();
 		
-		try
-		{
-			registerConfigClasses("com.l2jfree.gameserver.config");
-		}
-		catch (Exception e)
-		{
-			_log.fatal("Could not load configuration classes!", e);
-			Shutdown.exit(TerminationStatus.RUNTIME_INVALID_CONFIGURATION);
-		}
-		
-		try
-		{
-			L2Config.loadConfigs();
-		}
-		catch (Exception e)
-		{
-			_log.fatal("Could not load configuration files!", e);
-			Shutdown.exit(TerminationStatus.RUNTIME_INVALID_CONFIGURATION);
-		}
-		
-		try
-		{
-			L2ThreadPool.initThreadPools(new L2CoreThreadPools());
-		}
-		catch (Exception e)
-		{
-			_log.fatal("Could not initialize thread pools!", e);
-			Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
-		}
-		
-		try
-		{
-			L2Database.setDataSource("default", new L2CoreDataSource());
-		}
-		catch (Exception e)
-		{
-			_log.fatal("Could not initialize DB connections!", e);
-			Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
-		}
-		
-		try
-		{
-			L2DatabaseInstaller.check();
-		}
-		catch (Exception e)
-		{
-			_log.fatal("Could not initialize DB tables!", e);
-			Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
-		}
+		initApplication("com.l2jfree.gameserver.config", L2CoreThreadPools.class, L2CoreDataSource.class);
 	}
 	
 	protected Config()

@@ -17,9 +17,6 @@ package com.l2jfree;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.l2jfree.sql.L2Database;
-import com.l2jfree.util.concurrent.L2ThreadPool;
-
 /**
  * This class provides the functions for shutting down and restarting the server.
  * 
@@ -245,24 +242,6 @@ public final class Shutdown
 			}
 		}
 		
-		try
-		{
-			L2ThreadPool.shutdown();
-		}
-		catch (Throwable t)
-		{
-			t.printStackTrace();
-		}
-		
-		try
-		{
-			L2Database.shutdown();
-		}
-		catch (Throwable t)
-		{
-			t.printStackTrace();
-		}
-		
-		L2Config.storeConfigs();
+		L2Config.shutdownApplication();
 	}
 }

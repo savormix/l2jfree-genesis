@@ -17,7 +17,6 @@ package com.l2jfree.loginserver;
 import com.l2jfree.L2Config;
 import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
-import com.l2jfree.Util;
 import com.l2jfree.loginserver.config.DatabaseConfig;
 import com.l2jfree.loginserver.config.NetworkConfig;
 import com.l2jfree.loginserver.config.ServiceConfig;
@@ -42,13 +41,13 @@ public final class LoginServer extends Config
 	 */
 	public static void main(String[] args)
 	{
-		L2LoginIdentifier.getInstance().getUID();
-		
 		if (DatabaseConfig.DB_OPTIMIZE)
 			L2Database.optimize();
 		
 		if (DatabaseConfig.BACKUP_ON_STARTUP)
 			L2Database.backup();
+		
+		L2LoginIdentifier.getInstance().getUID();
 		
 		L2GameServerCache.getInstance();
 		
@@ -89,24 +88,6 @@ public final class LoginServer extends Config
 		
 		// TODO
 		
-		L2Config.onStartup();
-		
-		Util.printSection("l2jfree-core");
-		for (String line : LoginInfo.getFullVersionInfo())
-			_log.info(line);
-		_log.info("Operating System: " + Util.getOSName() + " " + Util.getOSVersion() + " " + Util.getOSArch());
-		_log.info("Available CPUs: " + Util.getAvailableProcessors());
-		
-		Util.printSection("Memory");
-		System.gc();
-		System.runFinalization();
-		
-		for (String line : Util.getMemUsage())
-			_log.info(line);
-		
-		_log.info("Server loaded in " + Util.formatNumber(System.currentTimeMillis() - L2Config.SERVER_STARTED)
-				+ " milliseconds.");
-		
 		Shutdown.addShutdownHook(new Runnable() {
 			@Override
 			public void run()
@@ -114,6 +95,14 @@ public final class LoginServer extends Config
 				try
 				{
 					L2ClientConnections.getInstance().shutdown();
+				}
+				catch (Throwable t)
+				{
+					_log.warn("Orderly shutdown sequence interrupted", t);
+				}
+				
+				try
+				{
 					if (NetworkConfig.NET_ENABLE_LEGACY || ServiceConfig.SVC_FORCE_LEGACY)
 						L2LegacyConnections.getInstance().shutdown();
 				}
@@ -133,5 +122,7 @@ public final class LoginServer extends Config
 				}
 			}
 		});
+		
+		L2Config.applicationLoaded("l2jfree-login", LoginInfo.getFullVersionInfo());
 	}
 }
