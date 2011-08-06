@@ -579,6 +579,8 @@ public abstract class L2Config
 			Class<? extends ThreadPoolInitializer> threadPoolInitializerClass,
 			Class<? extends DataSourceInitializer> dataSourceInitializerClass)
 	{
+		Util.printSection("Config");
+		
 		try
 		{
 			L2Config.registerConfigClasses(configPackageName);
@@ -599,6 +601,8 @@ public abstract class L2Config
 			Shutdown.exit(TerminationStatus.RUNTIME_INVALID_CONFIGURATION);
 		}
 		
+		Util.printSection("Thread Pool");
+		
 		try
 		{
 			L2ThreadPool.initThreadPools(threadPoolInitializerClass.newInstance());
@@ -608,6 +612,8 @@ public abstract class L2Config
 			_log.fatal("Could not initialize thread pools!", e);
 			Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
 		}
+		
+		Util.printSection("Database");
 		
 		try
 		{
@@ -619,6 +625,8 @@ public abstract class L2Config
 			Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
 		}
 		
+		Util.printSection("Database Installer");
+		
 		try
 		{
 			L2DatabaseInstaller.check();
@@ -628,6 +636,8 @@ public abstract class L2Config
 			_log.fatal("Could not initialize DB tables!", e);
 			Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
 		}
+		
+		Util.printSection("Utility");
 		
 		Shutdown.initShutdownHook();
 		
