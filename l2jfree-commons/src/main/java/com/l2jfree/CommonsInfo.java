@@ -31,7 +31,6 @@ public class CommonsInfo
 	{
 		System.out.println("");
 		System.out.println("");
-		System.out.println("");
 		System.out.println(" ___       ___           ___");
 		System.out.println("/\\_ \\    /'___`\\   __  /'___\\");
 		System.out.println("\\//\\ \\  /\\_\\ /\\ \\ /\\_\\/\\ \\__/  _ __    __     __");
@@ -41,6 +40,8 @@ public class CommonsInfo
 		System.out.println("   \\/____/\\/_____//\\ \\_\\ \\/_/   \\/_/ \\/____/\\/____/");
 		System.out.println("                  \\ \\____/");
 		System.out.println("                   \\/___/  [starting version: " + version.getVersionNumber() + "]");
+		System.out.println("");
+		System.out.println("");
 	}
 	
 	public static String[] getFullVersionInfo()

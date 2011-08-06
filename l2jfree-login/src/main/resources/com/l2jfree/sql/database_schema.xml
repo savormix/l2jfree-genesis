@@ -52,12 +52,12 @@
 	-->
 	<table name="logins"
 		definition="
-		CREATE TABLE logins (
-			username	VARCHAR(45)	NOT NULL,
-			ipv4		CHAR(15)	NOT NULL,
-			date_		DATE		NOT NULL,
-			PRIMARY KEY (username, ipv4, date_)
-		);
+			CREATE TABLE logins (
+				username	VARCHAR(45)	NOT NULL,
+				ipv4		CHAR(15)	NOT NULL,
+				date_		DATE		NOT NULL,
+				PRIMARY KEY (username, ipv4, date_)
+			);
 	" />
 	<!-- 
 		* IPv4 - Connections from this IP address should be dropped.
@@ -69,10 +69,10 @@
 	<!-- Table may be preloaded to achieve better performance. -->
 	<table name="restriction"
 		definition="
-		CREATE TABLE restriction (
-			ipv4	CHAR(15)	NOT NULL,
-			expiry	BIGINT					DEFAULT NULL,
-			PRIMARY KEY (ipv4)
-		);
+			CREATE TABLE restriction (
+				ipv4	CHAR(15)	NOT NULL,
+				expiry	BIGINT					DEFAULT NULL,
+				PRIMARY KEY (ipv4)
+			);
 	" />
 </database>
