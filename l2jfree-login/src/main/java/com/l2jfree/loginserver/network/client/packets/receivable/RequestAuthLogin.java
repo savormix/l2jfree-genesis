@@ -152,7 +152,7 @@ public final class RequestAuthLogin extends L2ClientPacket
 									rs.getDate("birthDate"), rs.getInt("lastServerId"));
 							llc.setAccount(la);
 							
-							if (ServiceConfig.SVC_SHOW_EULA)
+							if (ServiceConfig.SHOW_EULA)
 							{
 								llc.setState(L2LoginClientState.LOGGED_IN);
 								llc.sendPacket(new LoginSuccess(llc));

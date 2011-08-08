@@ -15,6 +15,7 @@
 package com.l2jfree.gameserver;
 
 import com.l2jfree.L2Config;
+import com.l2jfree.gameserver.config.ConfigMarker;
 
 /**
  * @author savormix
@@ -26,7 +27,7 @@ public class Config extends L2Config
 	{
 		CoreInfo.showStartupInfo();
 		
-		initApplication("com.l2jfree.gameserver.config", L2CoreThreadPools.class, L2CoreDataSource.class);
+		initApplication(ConfigMarker.class.getPackage(), L2CoreThreadPools.class, L2CoreDataSource.class);
 	}
 	
 	protected Config()

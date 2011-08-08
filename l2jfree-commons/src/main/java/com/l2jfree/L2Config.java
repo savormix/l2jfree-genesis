@@ -62,6 +62,10 @@ public abstract class L2Config
 	/** Application's launch timestamp */
 	public static final long SERVER_STARTED = System.currentTimeMillis();
 	
+	/**
+	 * Returns application lifetime in an user-friendly string.
+	 * @return time since launch
+	 */
 	public static String getUptime()
 	{
 		final long uptimeInSec = (System.currentTimeMillis() - SERVER_STARTED) - 1000;
@@ -291,6 +295,7 @@ public abstract class L2Config
 		return null;
 	}
 	
+	/** Flushes all pending log entries. */
 	public static void flush()
 	{
 		System.out.flush();
@@ -378,6 +383,9 @@ public abstract class L2Config
 			loader.load();
 	}
 	
+	/**
+	 * Save all available configuration files.
+	 */
 	public static void storeConfigs()
 	{
 		for (ConfigLoader loader : _loaders.getHandlers().values())
@@ -477,6 +485,7 @@ public abstract class L2Config
 		protected abstract void loadReader(BufferedReader reader) throws Exception;
 	}
 	
+	/** This class defines how to load configuration properties from a file. */
 	public static abstract class ConfigPropertiesLoader extends ConfigFileLoader
 	{
 		protected ConfigPropertiesLoader()
@@ -523,6 +532,7 @@ public abstract class L2Config
 		
 		protected void loadImpl(L2Properties properties)
 		{
+			// load without annotations
 		}
 	}
 	
@@ -575,6 +585,26 @@ public abstract class L2Config
 		public void onStartup();
 	}
 	
+	protected static void initApplication(Package configPackage,
+			Class<? extends ThreadPoolInitializer> threadPoolInitializerClass)
+	{
+		initApplication(configPackage.getName(), threadPoolInitializerClass, null);
+	}
+	
+	protected static void initApplication(String configPackageName,
+			Class<? extends ThreadPoolInitializer> threadPoolInitializerClass)
+	{
+		initApplication(configPackageName, threadPoolInitializerClass, null);
+	}
+	
+	protected static void initApplication(Package configPackage,
+			Class<? extends ThreadPoolInitializer> threadPoolInitializerClass,
+			Class<? extends DataSourceInitializer> dataSourceInitializerClass)
+	{
+		initApplication(configPackage.getName(),
+				threadPoolInitializerClass, dataSourceInitializerClass);
+	}
+	
 	protected static void initApplication(String configPackageName,
 			Class<? extends ThreadPoolInitializer> threadPoolInitializerClass,
 			Class<? extends DataSourceInitializer> dataSourceInitializerClass)
@@ -613,28 +643,31 @@ public abstract class L2Config
 			Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
 		}
 		
-		Util.printSection("Database");
-		
-		try
+		if (dataSourceInitializerClass != null)
 		{
-			L2Database.setDataSource("default", dataSourceInitializerClass.newInstance());
-		}
-		catch (Exception e)
-		{
-			_log.fatal("Could not initialize DB connections!", e);
-			Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
-		}
-		
-		Util.printSection("Database Installer");
-		
-		try
-		{
-			L2DatabaseInstaller.check();
-		}
-		catch (Exception e)
-		{
-			_log.fatal("Could not initialize DB tables!", e);
-			Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
+			Util.printSection("Database");
+			
+			try
+			{
+				L2Database.setDataSource("default", dataSourceInitializerClass.newInstance());
+			}
+			catch (Exception e)
+			{
+				_log.fatal("Could not initialize DB connections!", e);
+				Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
+			}
+			
+			Util.printSection("Database Installer");
+			
+			try
+			{
+				L2DatabaseInstaller.check();
+			}
+			catch (Exception e)
+			{
+				_log.fatal("Could not initialize DB tables!", e);
+				Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
+			}
 		}
 		
 		Util.printSection("Utility");

@@ -59,7 +59,7 @@ public final class AuthGameGuard extends L2ClientPacket
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		L2LoginClient llc = getClient();
-		if (!ServiceConfig.SVC_CHECK_GAMEGUARD || llc.getSessionId() == _sessionId)
+		if (!ServiceConfig.CHECK_GAMEGUARD || llc.getSessionId() == _sessionId)
 		{
 			llc.setState(L2LoginClientState.GAMEGUARD_PASSED);
 			llc.sendPacket(new GameGuardSuccess(_sessionId));

@@ -71,12 +71,27 @@ public final class HexUtil
 	 */
 	public static String bytesToHexString(byte[] hex)
 	{
+		return bytesToHexString(hex, null);
+	}
+	
+	/**
+	 * Encodes a byte array to a string of hex octets.
+	 * @param hex a byte array
+	 * @param delimiter byte delimiter
+	 * @return encoded string
+	 */
+	public static String bytesToHexString(byte[] hex, CharSequence delimiter)
+	{
 		if (hex == null)
 			return "null";
 		
-		StringBuilder bytes = new StringBuilder();
-		for (int i : hex)
-			bytes.append(fillHex(i & 0xFF, 2));
+		StringBuilder bytes = new StringBuilder(fillHex(hex[0] & 0xFF, 2));
+		for (int i = 1; i < hex.length; i++)
+		{
+			if (delimiter != null)
+				bytes.append(delimiter);
+			bytes.append(fillHex(hex[i] & 0xFF, 2));
+		}
 		return bytes.toString().toUpperCase();
 	}
 	

@@ -160,6 +160,12 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 			return null;
 	}
 	
+	@Override
+	protected boolean isAuthed()
+	{
+		return getState() != L2LoginClientState.CONNECTED;
+	}
+	
 	/**
 	 * Returns the unique session ID.
 	 * @return session ID
@@ -278,11 +284,5 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	public void setAccount(L2Account account)
 	{
 		_account = account;
-	}
-	
-	@Override
-	protected boolean isAuthed()
-	{
-		return getState() != L2LoginClientState.CONNECTED;
 	}
 }

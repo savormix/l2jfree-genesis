@@ -363,5 +363,10 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 		return _packetQueue;
 	}
 	
+	/**
+	 * Returns whether anything meaningful happened since this connection was made.<BR>
+	 * A timeout is applied to idle connections.
+	 * @return whether the connection is not idle
+	 */
 	protected abstract boolean isAuthed();
 }

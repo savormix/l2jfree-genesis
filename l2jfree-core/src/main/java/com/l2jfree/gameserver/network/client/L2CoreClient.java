@@ -95,6 +95,12 @@ public final class L2CoreClient extends MMOConnection<L2CoreClient, L2ClientPack
 		return null;
 	}
 	
+	@Override
+	protected boolean isAuthed()
+	{
+		return getState() != L2CoreClientState.CONNECTED;
+	}
+	
 	/**
 	 * Returns the complete cipher's key.
 	 * @return cipher's key
@@ -135,11 +141,5 @@ public final class L2CoreClient extends MMOConnection<L2CoreClient, L2ClientPack
 	public void setState(L2CoreClientState state)
 	{
 		_state = state;
-	}
-	
-	@Override
-	protected boolean isAuthed()
-	{
-		return getState() != L2CoreClientState.CONNECTED;
 	}
 }

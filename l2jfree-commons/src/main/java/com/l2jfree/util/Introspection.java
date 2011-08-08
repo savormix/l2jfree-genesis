@@ -180,6 +180,14 @@ public final class Introspection
 				Object val = f.get(accessor);
 				if (accessor == val)
 					dest.append("this");
+				else if (val instanceof boolean[])
+					dest.append(Arrays.toString((boolean[]) val));
+				else if (val instanceof int[])
+					dest.append(Arrays.toString((int[]) val));
+				else if (val instanceof long[])
+					dest.append(Arrays.toString((long[]) val));
+				else if (val instanceof double[])
+					dest.append(Arrays.toString((double[]) val));
 				else if (val instanceof Object[])
 					dest.append(Arrays.deepToString((Object[]) val));
 				else

@@ -27,19 +27,19 @@ public final class L2LoginDataSource extends DataSourceInitializer
 	@Override
 	protected String getJdbcUrl()
 	{
-		return DatabaseConfig.DB_URL;
+		return DatabaseConfig.URL;
 	}
 	
 	@Override
 	protected String getUser()
 	{
-		return DatabaseConfig.DB_USER;
+		return DatabaseConfig.USER;
 	}
 	
 	@Override
 	protected String getPassword()
 	{
-		return DatabaseConfig.DB_PASSWORD;
+		return DatabaseConfig.PASSWORD;
 	}
 	
 	@Override
@@ -51,6 +51,6 @@ public final class L2LoginDataSource extends DataSourceInitializer
 	@Override
 	protected int getMaxConnections()
 	{
-		return DatabaseConfig.DB_MAX_CONNECTIONS;
+		return DatabaseConfig.MAX_CONNECTIONS;
 	}
 }

@@ -26,15 +26,21 @@ public final class LoginInfo extends CommonsInfo
 {
 	protected LoginInfo()
 	{
+		super();
 	}
 	
 	private static final FormattedVersion LOGIN_VERSION = new FormattedVersion(LoginServer.class);
 	
+	/** Shows startup and version information. */
 	public static void showStartupInfo()
 	{
 		CommonsInfo.showStartupInfo(LOGIN_VERSION);
 	}
 	
+	/**
+	 * Returns version information string.
+	 * @return version info
+	 */
 	public static String getVersionInfo()
 	{
 		return LOGIN_VERSION.getVersionInfo();

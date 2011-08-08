@@ -150,6 +150,12 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 			return String.valueOf(id);
 	}
 	
+	@Override
+	protected boolean isAuthed()
+	{
+		return getState() != L2LegacyState.CONNECTED;
+	}
+	
 	/**
 	 * Returns the public key.
 	 * @return public key
@@ -429,11 +435,5 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	public boolean isPvp()
 	{
 		return _pvp;
-	}
-	
-	@Override
-	protected boolean isAuthed()
-	{
-		return getState() != L2LegacyState.CONNECTED;
 	}
 }

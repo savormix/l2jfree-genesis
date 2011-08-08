@@ -12,26 +12,13 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.loginserver;
-
-import com.l2jfree.L2Config;
-import com.l2jfree.loginserver.config.ConfigMarker;
+package com.l2jfree.gameserver.config;
 
 /**
- * @author NB4L1
+ * Marks this package. It is essential to have non-hardcoded package definitions.
  * @author savormix
  */
-public class Config extends L2Config
+public interface ConfigMarker
 {
-	static
-	{
-		LoginInfo.showStartupInfo();
-		
-		initApplication(ConfigMarker.class.getPackage(), L2LoginThreadPools.class, L2LoginDataSource.class);
-	}
-	
-	protected Config()
-	{
-		super();
-	}
+	// marker
 }
