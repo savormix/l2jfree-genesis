@@ -19,7 +19,8 @@ import java.io.UnsupportedEncodingException;
 
 import com.l2jfree.util.logging.L2Logger;
 
-// FIXME new login server/protocol
+/** This packet was designed for non-nio LS<->GS connections. */
+@Deprecated
 public abstract class SendableBasePacket
 {
 	protected static final L2Logger _log = L2Logger.getLogger(SendableBasePacket.class);

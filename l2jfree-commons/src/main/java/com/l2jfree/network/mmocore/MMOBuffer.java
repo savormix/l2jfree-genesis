@@ -110,6 +110,15 @@ public final class MMOBuffer
 	 */
 	public int readC()
 	{
+		return _buffer.get();
+	}
+	
+	/**
+	 * Reads one byte (unsigned char in C) as an unsigned integer.
+	 * @return a number from the interval [0; 255]
+	 */
+	public int readUC()
+	{
 		return _buffer.get() & 0xFF;
 	}
 	
@@ -120,7 +129,16 @@ public final class MMOBuffer
 	 */
 	public int readH()
 	{
-		return _buffer.getShort() & 0xFFFF;
+		return _buffer.getShort();
+	}
+	
+	/**
+	 * Reads two bytes (a word) as an unsigned integer.
+	 * @return a number from the interval [0; 65535]
+	 */
+	public int readUH()
+	{
+		return _buffer.getChar();
 	}
 	
 	/**

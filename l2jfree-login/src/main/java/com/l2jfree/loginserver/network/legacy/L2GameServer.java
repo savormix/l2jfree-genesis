@@ -124,7 +124,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 		final int offset = buf.position();
 		
 		size += 4; // checksum
-		size += 8 - (size % 8); // padding
+		size += 8 - (size & 7); // padding
 		
 		NewCipher.appendChecksum(buf, size);
 		

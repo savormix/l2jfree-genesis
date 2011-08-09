@@ -111,7 +111,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 		size += 4; // checksum
 		if (first)
 			size += 4; // XOR key
-		size += 8 - (size % 8); // padding
+		size += 8 - (size & 7); // padding
 		
 		if (first)
 		{
