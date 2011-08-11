@@ -20,8 +20,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import javolution.util.FastMap;
 
@@ -49,6 +51,26 @@ public final class L2Properties implements Serializable
 		_warn = warn;
 		
 		return this;
+	}
+	
+	private String get(String key)
+	{
+		return _map.get(key);
+	}
+	
+	private String put(String key, String value)
+	{
+		return _map.put(key, value);
+	}
+	
+	public int size()
+	{
+		return _map.size();
+	}
+	
+	public Set<Map.Entry<String, String>> entrySet()
+	{
+		return Collections.unmodifiableSet(_map.entrySet());
 	}
 	
 	// ===================================================================================
@@ -149,7 +171,7 @@ public final class L2Properties implements Serializable
 	
 	public String getProperty(String key)
 	{
-		String property = _map.get(key);
+		String property = get(key);
 		
 		if (property == null)
 		{
@@ -192,12 +214,12 @@ public final class L2Properties implements Serializable
 	
 	// ===================================================================================
 	
-	public Object setProperty(String key, String value)
+	public String setProperty(String key, String value)
 	{
-		return _map.put(key, value);
+		return put(key, value);
 	}
 	
-	public Object setProperty(Object key, Object value)
+	public String setProperty(Object key, Object value)
 	{
 		return setProperty(String.valueOf(key), String.valueOf(value));
 	}
