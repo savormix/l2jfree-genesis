@@ -19,7 +19,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.io.Serializable;
+import java.util.Map;
 import java.util.Properties;
+
+import javolution.util.FastMap;
 
 import org.apache.commons.io.IOUtils;
 import org.w3c.dom.NamedNodeMap;
@@ -28,9 +32,11 @@ import org.w3c.dom.Node;
 /**
  * @author Noctarius
  */
-public final class L2Properties extends Properties
+public final class L2Properties implements Serializable
 {
 	private static final long serialVersionUID = -4599023842346938325L;
+	
+	private final Map<String, String> _map = new FastMap<String, String>();
 	
 	private boolean _warn = true;
 	
@@ -69,7 +75,12 @@ public final class L2Properties extends Properties
 	
 	public L2Properties(Node node)
 	{
-		loadAttributes(node);
+		load(node);
+	}
+	
+	public L2Properties(Properties properties)
+	{
+		load(properties);
 	}
 	
 	// ===================================================================================
@@ -84,33 +95,39 @@ public final class L2Properties extends Properties
 		load(new FileInputStream(file));
 	}
 	
-	@Override
 	public void load(InputStream inStream) throws IOException
 	{
+		final Properties prop = new Properties();
+		
 		try
 		{
-			super.load(inStream);
+			prop.load(inStream);
 		}
 		finally
 		{
 			IOUtils.closeQuietly(inStream);
 		}
+		
+		load(prop);
 	}
 	
-	@Override
 	public void load(Reader reader) throws IOException
 	{
+		final Properties prop = new Properties();
+		
 		try
 		{
-			super.load(reader);
+			prop.load(reader);
 		}
 		finally
 		{
 			IOUtils.closeQuietly(reader);
 		}
+		
+		load(prop);
 	}
 	
-	public void loadAttributes(Node node)
+	public void load(Node node)
 	{
 		final NamedNodeMap attrs = node.getAttributes();
 		
@@ -122,12 +139,17 @@ public final class L2Properties extends Properties
 		}
 	}
 	
+	public void load(Properties properties)
+	{
+		for (Map.Entry<Object, Object> entry : properties.entrySet())
+			setProperty(entry.getKey(), entry.getValue());
+	}
+	
 	// ===================================================================================
 	
-	@Override
 	public String getProperty(String key)
 	{
-		String property = super.getProperty(key);
+		String property = _map.get(key);
 		
 		if (property == null)
 		{
@@ -145,10 +167,12 @@ public final class L2Properties extends Properties
 		return getProperty(String.valueOf(key));
 	}
 	
-	@Override
 	public String getProperty(String key, String defaultValue)
 	{
-		String property = super.getProperty(key, defaultValue);
+		String property = getProperty(key);
+		
+		if (property == null)
+			property = defaultValue;
 		
 		if (property == null)
 		{
@@ -161,14 +185,19 @@ public final class L2Properties extends Properties
 		return property.trim();
 	}
 	
-	public String getProperty(Object key, String defaultValue)
+	public String getProperty(Object key, Object defaultValue)
 	{
-		return getProperty(String.valueOf(key), defaultValue);
+		return getProperty(String.valueOf(key), String.valueOf(defaultValue));
 	}
 	
 	// ===================================================================================
 	
-	public synchronized Object setProperty(Object key, Object value)
+	public Object setProperty(String key, String value)
+	{
+		return _map.put(key, value);
+	}
+	
+	public Object setProperty(Object key, Object value)
 	{
 		return setProperty(String.valueOf(key), String.valueOf(value));
 	}

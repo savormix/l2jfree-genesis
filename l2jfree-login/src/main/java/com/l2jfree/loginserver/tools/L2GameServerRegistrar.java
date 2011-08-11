@@ -23,13 +23,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Properties;
 
 import org.apache.commons.io.IOUtils;
 
 import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
 import com.l2jfree.Util;
-import com.l2jfree.config.L2Properties;
 import com.l2jfree.loginserver.Config;
 import com.l2jfree.sql.L2Database;
 import com.l2jfree.util.HexUtil;
@@ -202,8 +202,8 @@ public final class L2GameServerRegistrar extends Config
 								reg.setAuth(rs.getString("authData"));
 								byte[] b = HexUtil.HexStringToBytes(reg.getAuth());
 								
-								L2Properties pro = new L2Properties();
-								pro.setProperty("ServerID", reg.getId());
+								Properties pro = new Properties();
+								pro.setProperty("ServerID", String.valueOf(reg.getId()));
 								pro.setProperty("HexID", HexUtil.hexToString(b));
 								
 								BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream("hexid.txt"));

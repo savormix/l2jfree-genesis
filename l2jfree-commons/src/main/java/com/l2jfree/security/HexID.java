@@ -16,10 +16,9 @@ package com.l2jfree.security;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.Properties;
 
 import org.apache.commons.io.IOUtils;
-
-import com.l2jfree.config.L2Properties;
 
 /**
  * @deprecated Legacy class
@@ -40,7 +39,7 @@ public final class HexID
 		{
 			out = new FileOutputStream(fileName);
 			
-			final L2Properties hexSetting = new L2Properties();
+			final Properties hexSetting = new Properties();
 			hexSetting.setProperty("HexID", string);
 			hexSetting.store(out, "the hexID to auth into login");
 		}
@@ -67,7 +66,7 @@ public final class HexID
 		{
 			out = new FileOutputStream(fileName);
 			
-			final L2Properties hexSetting = new L2Properties();
+			final Properties hexSetting = new Properties();
 			hexSetting.setProperty("ServerID", String.valueOf(serverId));
 			hexSetting.setProperty("HexID", hexId);
 			hexSetting.store(out, "the hexID to auth into login");

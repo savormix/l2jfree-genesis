@@ -207,6 +207,8 @@ public final class Shutdown
 			@Override
 			public void run()
 			{
+				Util.printSection("Shutdown");
+				
 				try
 				{
 					runShutdownHooks();
