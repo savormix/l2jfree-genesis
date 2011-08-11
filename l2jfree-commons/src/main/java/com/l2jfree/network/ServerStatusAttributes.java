@@ -15,7 +15,8 @@
 package com.l2jfree.network;
 
 // Compatible, legacy values
-// FIXME new login server/protocol
+/** This enum was designed for non-nio LS<->GS connections. */
+@Deprecated
 public enum ServerStatusAttributes
 {
 	NONE,

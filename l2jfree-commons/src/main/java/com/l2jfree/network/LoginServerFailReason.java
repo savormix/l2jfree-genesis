@@ -14,7 +14,8 @@
  */
 package com.l2jfree.network;
 
-// FIXME new login server/protocol
+/** This enum was designed for non-nio LS<->GS connections. */
+@Deprecated
 public enum LoginServerFailReason
 {
 	REASON_NONE("None"), // 0x00

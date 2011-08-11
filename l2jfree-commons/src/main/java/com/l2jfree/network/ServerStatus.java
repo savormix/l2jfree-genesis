@@ -16,7 +16,8 @@ package com.l2jfree.network;
 
 // Good, Normal and Full are not used for years
 // Oh and they wont be used. ever.
-// FIXME new login server/protocol
+/** This enum was designed for non-nio LS<->GS connections. */
+@Deprecated
 public enum ServerStatus
 {
 	STATUS_AUTO,

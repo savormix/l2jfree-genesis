@@ -26,7 +26,9 @@ import com.l2jfree.security.NewCipher;
 import com.l2jfree.util.HexUtil;
 import com.l2jfree.util.logging.L2Logger;
 
-// FIXME new login server/protocol
+/** This thread was designed for non-nio LS<->GS connections. */
+@Deprecated
+@SuppressWarnings("deprecation")
 public abstract class NetworkThread extends Thread
 {
 	protected static final L2Logger _log = L2Logger.getLogger(NetworkThread.class);
