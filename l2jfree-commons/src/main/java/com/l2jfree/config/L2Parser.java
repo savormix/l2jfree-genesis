@@ -198,24 +198,22 @@ public final class L2Parser
 		
 		public L2ParserException()
 		{
+			super();
 		}
 		
 		public L2ParserException(String message)
 		{
-			this();
-			//super(message);
+			super(message);
 		}
 		
 		public L2ParserException(Class<?> requiredType)
 		{
-			this();
-			//super(requiredType.getSimpleName() + " value required, but not specified!");
+			super(requiredType + " value required, but not specified!");
 		}
 		
 		public L2ParserException(Class<?> requiredType, String value, RuntimeException cause)
 		{
-			this();
-			//super(requiredType.getSimpleName() + " value required, but found: '" + value + "'!", cause);
+			super(requiredType + " value required, but found: '" + value + "'!", cause);
 		}
 	}
 }

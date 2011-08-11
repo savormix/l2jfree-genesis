@@ -14,13 +14,13 @@
  */
 package com.l2jfree.loginserver.config;
 
-import com.l2jfree.L2Config.ConfigPropertiesLoader;
 import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
+import com.l2jfree.L2Config.ConfigPropertiesLoader;
 import com.l2jfree.config.L2Properties;
 import com.l2jfree.config.annotation.ConfigClass;
 import com.l2jfree.config.annotation.ConfigField;
-import com.l2jfree.config.converters.DefaultConverter;
+import com.l2jfree.config.converters.JdbcUrlConverter;
 
 /**
  * @author NB4L1
@@ -83,22 +83,6 @@ public final class DatabaseConfig extends ConfigPropertiesLoader
 		{
 			System.err.println("L2jFree servers should not use DBMS superuser accounts ... exited.");
 			Shutdown.exit(TerminationStatus.ENVIRONMENT_SUPERUSER);
-		}
-	}
-	
-	/** Defines JDBC URL conversions. */
-	public static final class JdbcUrlConverter extends DefaultConverter
-	{
-		@Override
-		public Object convertFromString(Class<?> type, String value)
-		{
-			return "jdbc:" + super.convertFromString(type, value.replace("jdbc:", ""));
-		}
-		
-		@Override
-		public String convertToString(Class<?> type, Object obj)
-		{
-			return super.convertToString(type, obj).replace("jdbc:", "");
 		}
 	}
 }

@@ -16,7 +16,6 @@ package com.l2jfree.config.converters;
 
 import com.l2jfree.config.L2Parser;
 
-@SuppressWarnings("unchecked")
 public class DefaultConverter implements Converter
 {
 	public static final DefaultConverter INSTANCE = new DefaultConverter();
@@ -25,7 +24,7 @@ public class DefaultConverter implements Converter
 	public Object convertFromString(Class<?> type, String value)
 	{
 		if (type.isArray())
-			return DefaultArrayConverter.INSTANCE.convertFromString(type, value);
+			return getArrayConverter().convertFromString(type, value);
 		
 		return L2Parser.get(type, value);
 	}
@@ -34,11 +33,16 @@ public class DefaultConverter implements Converter
 	public String convertToString(Class<?> type, Object obj)
 	{
 		if (type.isArray())
-			return DefaultArrayConverter.INSTANCE.convertToString(type, obj);
+			return getArrayConverter().convertToString(type, obj);
 		
 		if (obj == null)
 			return "";
 		
 		return obj.toString();
+	}
+	
+	protected Converter getArrayConverter()
+	{
+		return DefaultArrayConverter.INSTANCE;
 	}
 }

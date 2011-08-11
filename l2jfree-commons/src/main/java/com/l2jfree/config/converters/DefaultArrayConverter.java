@@ -35,7 +35,7 @@ public class DefaultArrayConverter implements Converter
 		
 		for (int i = 0; i < splitted.length; i++)
 		{
-			Array.set(array, i, DefaultConverter.INSTANCE.convertFromString(componentType, splitted[i]));
+			Array.set(array, i, getElementConverter().convertFromString(componentType, splitted[i]));
 		}
 		
 		return array;
@@ -57,9 +57,14 @@ public class DefaultArrayConverter implements Converter
 			if (i > 0)
 				tb.append(",");
 			
-			tb.append(DefaultConverter.INSTANCE.convertToString(componentType, Array.get(obj, i)));
+			tb.append(getElementConverter().convertToString(componentType, Array.get(obj, i)));
 		}
 		
 		return tb.moveToString();
+	}
+	
+	protected Converter getElementConverter()
+	{
+		return DefaultConverter.INSTANCE;
 	}
 }
