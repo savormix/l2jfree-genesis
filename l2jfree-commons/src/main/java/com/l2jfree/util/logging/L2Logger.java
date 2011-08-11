@@ -209,7 +209,6 @@ public class L2Logger extends Logger
 	 * Logs a message with <code>java.util.logging.Level.FINEST</code>.
 	 * 
 	 * @param message to log
-	 * @see org.apache.commons.logging.Log#trace(Object)
 	 */
 	public void trace(Object message)
 	{

@@ -30,7 +30,7 @@ public final class MMOBuffer
 	private ByteBuffer _buffer;
 	
 	/**
-	 * Creates a {@link java.nio#ByteBuffer} wrapper with
+	 * Creates a {@link java.nio.ByteBuffer} wrapper with
 	 * additional read methods.
 	 * <BR><BR>
 	 * Use {@link #setByteBuffer(ByteBuffer)} to dynamically

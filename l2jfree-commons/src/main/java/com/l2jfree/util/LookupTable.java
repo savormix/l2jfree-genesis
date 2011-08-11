@@ -141,7 +141,7 @@ public class LookupTable<T> implements Iterable<T>
 	/**
 	 * @param key
 	 * @param newValue
-	 * @return
+	 * @return oldValue
 	 */
 	public final T put(final int key, final T newValue)
 	{
@@ -154,7 +154,7 @@ public class LookupTable<T> implements Iterable<T>
 	
 	/**
 	 * @param key
-	 * @return
+	 * @return oldValue
 	 */
 	public final T remove(final int key)
 	{

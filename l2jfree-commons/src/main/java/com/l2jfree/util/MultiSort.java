@@ -93,7 +93,7 @@ public class MultiSort
 	/**
 	 * Definition of harmonic mean : http://en.wikipedia.org/wiki/Harmonic_mean should handle float value
 	 * 
-	 * @return
+	 * @return the harmonic mean
 	 */
 	public final double getHarmonicMean()
 	{

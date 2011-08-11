@@ -224,10 +224,10 @@ public abstract class Replaceable implements CharSequence
 	}
 	
 	/**
-	 * Inverse of {@link Matcher#quoteReplacement(String)}.
+	 * Inverse of {@link java.util.regex.Matcher#quoteReplacement(String)}.
 	 * 
 	 * @param s
-	 * @return
+	 * @return the replaced string
 	 */
 	public static String quoteReplacement(String s)
 	{

@@ -15,7 +15,7 @@
 package com.l2jfree.network.mmocore;
 
 /**
- * Exception thrown by {@link ReceivablePacket#runImpl()} to trigger {@link MMOController#report()}.
+ * Exception thrown by {@link ReceivablePacket#runImpl()} to trigger {@link MMOController#report(FloodManager.ErrorMode, MMOConnection, ReceivablePacket, Throwable)}.
  * 
  * @author NB4L1
  */
