@@ -22,7 +22,10 @@ public abstract class TypedConverter<T> implements Converter
 		if (getRequiredType() != type)
 			throw new ClassCastException(getRequiredType() + " type required, but found: " + type + "!");
 		
-		if (obj != null && !getRequiredType().isInstance(obj))
+		if (obj == null)
+			return "";
+		
+		if (!getRequiredType().isInstance(obj))
 			throw new ClassCastException(getRequiredType() + " value required, but found: '" + obj + "'!");
 		
 		final String value = convertToString(getRequiredType().cast(obj));

@@ -130,7 +130,7 @@ public final class L2WorldRegion
 		return _active;
 	}
 	
-	private void setActive(boolean active)
+	private synchronized void setActive(boolean active)
 	{
 		// it won't allow to deactive, while there are still players nearby
 		if (!active)
