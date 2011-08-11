@@ -29,8 +29,7 @@ public final class ServiceConfig extends ConfigPropertiesLoader
 	/** Whether to behave as a traditional login server */
 	@ConfigField(name = "ForceLegacyMode", value = "false", eternal = true, comment = {
 			"This server will behave as a traditional L2J login server.", //
-			"All additional features will be disabled/inaccessible.", //
-	})
+			"All additional features will be disabled/inaccessible." })
 	public static boolean FORCE_LEGACY;
 	
 	/** Whether to check for obvious signs that client has GameGuard disabled */
@@ -38,9 +37,7 @@ public final class ServiceConfig extends ConfigPropertiesLoader
 	@ConfigField(name = "CheckGameGuard", value = "false", eternal = true, comment = {
 			"Whether to do a basic check if a client is using GameGuard.", //
 			"Clients that do not pass this check are guaranteed to have GameGuard disabled and will", //
-			"not be allowed to log in.", //
-			
-	})
+			"not be allowed to log in." })
 	public static boolean CHECK_GAMEGUARD;
 	
 	/** Whether to show NCSoft's EULA before the game server list */
@@ -48,9 +45,7 @@ public final class ServiceConfig extends ConfigPropertiesLoader
 			"Whether to show NCSoft's EULA before showing the game server list.", //
 			"It is a bad idea to show it, as it must be accepted to continue.", //
 			"Implementation notice:", //
-			"A session key is exchanged in the background.", //
-			
-	})
+			"A session key is exchanged in the background." })
 	@ConfigGroupEnding(name = "CLIENT")
 	public static boolean SHOW_EULA;
 	
@@ -60,17 +55,14 @@ public final class ServiceConfig extends ConfigPropertiesLoader
 			"Only authorizes servers that supply a valid ID & HexID combination.", //
 			"All game servers must be registered in advance.", //
 			"If disabled, all game server requests will be served (as untrusted).", //
-			"If a requested ID is already registered or in use, another ID will be assigned.", //
-			
-	})
+			"If a requested ID is already registered or in use, another ID will be assigned." })
 	public static boolean STRICT_AUTHORIZATION;
 	
 	/** Whether to register game servers if they request an unused ID */
 	@ConfigField(name = "PersistentRequests", value = "false", eternal = true, comment = {
 			"Only effective when strict authorization is disabled.", //
 			"If a game server requests an ID that is not in use, it will be registered on that ID", //
-			"with the supplied HexID (as untrusted).", //
-	})
+			"with the supplied HexID (as untrusted)." })
 	@ConfigGroupEnding(name = "GAME SERVER")
 	public static boolean SAVE_REQUESTS;
 }

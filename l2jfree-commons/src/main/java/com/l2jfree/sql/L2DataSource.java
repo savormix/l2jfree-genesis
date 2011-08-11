@@ -407,13 +407,13 @@ public abstract class L2DataSource implements DataSource
 	@Override
 	public final boolean isWrapperFor(Class<?> iface) throws SQLException
 	{
-		return _dataSource.isWrapperFor(iface);
+		return ((DataSource)_dataSource).isWrapperFor(iface); // don't ask -.-
 	}
 	
 	@Override
 	public final <T> T unwrap(Class<T> iface) throws SQLException
 	{
-		return _dataSource.unwrap(iface);
+		return ((DataSource)_dataSource).unwrap(iface); // don't ask -.-
 	}
 	
 	public final void close()

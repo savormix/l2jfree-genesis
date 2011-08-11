@@ -28,8 +28,7 @@ public final class NetworkConfig extends ConfigPropertiesLoader
 	@ConfigField(name = "ListenIP", value = "0.0.0.0", eternal = true, comment = {
 			"Login Server will accept CLIENT connections coming to this IP address only.", //
 			"Use 0.0.0.0 to listen on all available adapters.", //
-			"Specify a valid IP address if you require the login server to bind on a single IP.", //
-	})
+			"Specify a valid IP address if you require the login server to bind on a single IP." })
 	public static String LISTEN_IP;
 	
 	/** Login server listens for client connections on this port */
@@ -39,8 +38,7 @@ public final class NetworkConfig extends ConfigPropertiesLoader
 	/** Whether to listen for legacy game servers */
 	@ConfigField(name = "EnableLegacyListener", value = "true", eternal = true, comment = {
 			"Whether to listen for old or non-l2jfree game servers.", //
-			"Disabling this will have no effect if legacy mode is forced.", //
-	})
+			"Disabling this will have no effect if legacy mode is forced." })
 	public static boolean ENABLE_LEGACY;
 	
 	/** Login server listens for legacy game server connections on this IP address */

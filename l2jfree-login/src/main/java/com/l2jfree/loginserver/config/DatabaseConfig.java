@@ -34,14 +34,12 @@ public final class DatabaseConfig extends ConfigPropertiesLoader
 			"Some URLs:", //
 			"MySQL: mysql://host.or.ip/database", //
 			"PostgreSQL: postgresql://host.or.ip/database", //
-			"SQLite: sqlite:file.db", //
-	})
+			"SQLite: sqlite:file.db" })
 	public static String URL;
 	
 	/** Database login */
 	@ConfigField(name = "Login", value = "", eternal = true, comment = { "Username for DB access",
-			"The server will not start if a DBMS superuser account is used.", //
-	})
+			"The server will not start if a DBMS superuser account is used." })
 	public static String USER;
 	
 	/** Database password */
@@ -51,29 +49,25 @@ public final class DatabaseConfig extends ConfigPropertiesLoader
 	/** Maximum amount of database connections in pool */
 	@ConfigField(name = "MaxConnectionsInPool", value = "5", eternal = true, comment = {
 			"Specifies the maximum number of database connections active at once.", //
-			"At least 2 connections must be assigned.", //
-	})
+			"At least 2 connections must be assigned." })
 	public static int MAX_CONNECTIONS;
 	
 	/** Whether to optimize database tables on startup */
 	@ConfigField(name = "OptimizeTables", value = "true", eternal = true, comment = {
 			"Whether to optimize tables on startup.", //
-			"Currently only works with MySQL and PostgreSQL.", //
-	})
+			"Currently only works with MySQL and PostgreSQL." })
 	public static boolean OPTIMIZE;
 	
 	/** Whether to backup database tables on startup */
 	@ConfigField(name = "BackupOnStartup", value = "true", eternal = true, comment = {
 			"Whether to backup tables during server startup or not.", //
-			"Currently only works with MySQL and SQLite.", //
-	})
+			"Currently only works with MySQL and SQLite." })
 	public static boolean BACKUP_ON_STARTUP;
-
+	
 	/** Whether to backup database tables on shutdown */
 	@ConfigField(name = "BackupOnShutdown", value = "true", eternal = true, comment = {
 			"Whether to backup tables during server shutdown or not.", //
-			"Currently only works with MySQL and SQLite.", //
-	})
+			"Currently only works with MySQL and SQLite." })
 	public static boolean BACKUP_ON_SHUTDOWN;
 	
 	@Override

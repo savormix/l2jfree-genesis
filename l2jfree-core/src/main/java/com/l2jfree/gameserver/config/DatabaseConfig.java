@@ -33,13 +33,11 @@ public final class DatabaseConfig extends ConfigPropertiesLoader
 			"Some URLs:", //
 			"MySQL: mysql://host.or.ip/database", //
 			"PostgreSQL: postgresql://host.or.ip/database", //
-			"SQLite: sqlite:file.db", //
-	})
+			"SQLite: sqlite:file.db" })
 	public static String DB_URL;
 	
 	@ConfigField(name = "Login", value = "", eternal = true, comment = { "Username for DB access",
-			"The server will not start if a DBMS superuser account is used.", //
-	})
+			"The server will not start if a DBMS superuser account is used." })
 	public static String DB_USER;
 	
 	@ConfigField(name = "Password", value = "", eternal = true, comment = { "Password for DB access" })
@@ -47,26 +45,22 @@ public final class DatabaseConfig extends ConfigPropertiesLoader
 	
 	@ConfigField(name = "MaxConnectionsInPool", value = "50", eternal = true, comment = {
 			"Specifies the maximum number of database connections active at once.", //
-			"At least 10 connections must be assigned.", //
-	})
+			"At least 10 connections must be assigned." })
 	public static int DB_MAX_CONNECTIONS;
 	
 	@ConfigField(name = "OptimizeTables", value = "true", eternal = true, comment = {
 			"Whether to optimize tables on startup.", //
-			"Currently only works with MySQL and PostgreSQL.", //
-	})
+			"Currently only works with MySQL and PostgreSQL." })
 	public static boolean DB_OPTIMIZE;
 	
 	@ConfigField(name = "BackupOnStartup", value = "true", eternal = true, comment = {
 			"Whether to backup tables during server startup or not.", //
-			"Currently only works with MySQL and SQLite.", //
-	})
+			"Currently only works with MySQL and SQLite." })
 	public static boolean BACKUP_ON_STARTUP;
 	
 	@ConfigField(name = "BackupOnShutdown", value = "true", eternal = true, comment = {
 			"Whether to backup tables during server shutdown or not.", //
-			"Currently only works with MySQL and SQLite.", //
-	})
+			"Currently only works with MySQL and SQLite." })
 	public static boolean BACKUP_ON_SHUTDOWN;
 	
 	@Override
