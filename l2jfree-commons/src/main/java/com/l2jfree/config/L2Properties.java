@@ -140,6 +140,11 @@ public final class L2Properties extends Properties
 		return property.trim();
 	}
 	
+	public String getProperty(Object key)
+	{
+		return getProperty(String.valueOf(key));
+	}
+	
 	@Override
 	public String getProperty(String key, String defaultValue)
 	{
@@ -156,30 +161,35 @@ public final class L2Properties extends Properties
 		return property.trim();
 	}
 	
-	// ===================================================================================
-	
-	public synchronized Object setProperty(String key, Object value)
+	public String getProperty(Object key, String defaultValue)
 	{
-		return setProperty(key, String.valueOf(value));
+		return getProperty(String.valueOf(key), defaultValue);
 	}
 	
 	// ===================================================================================
 	
-	public boolean getBoolean(String name)
+	public synchronized Object setProperty(Object key, Object value)
+	{
+		return setProperty(String.valueOf(key), String.valueOf(value));
+	}
+	
+	// ===================================================================================
+	
+	public boolean getBoolean(Object name)
 	{
 		final String value = getProperty(name);
 		
 		return L2Parser.getBoolean(value);
 	}
 	
-	public boolean getBoolean(String name, String defaultValue)
+	public boolean getBoolean(Object name, String defaultValue)
 	{
 		final String value = getProperty(name, defaultValue);
 		
 		return L2Parser.getBoolean(value);
 	}
 	
-	public boolean getBoolean(String name, boolean defaultValue)
+	public boolean getBoolean(Object name, boolean defaultValue)
 	{
 		final String value = getProperty(name);
 		if (value == null)
@@ -188,21 +198,21 @@ public final class L2Properties extends Properties
 		return L2Parser.getBoolean(value);
 	}
 	
-	public byte getByte(String name)
+	public byte getByte(Object name)
 	{
 		final String value = getProperty(name);
 		
 		return L2Parser.getByte(value);
 	}
 	
-	public byte getByte(String name, String defaultValue)
+	public byte getByte(Object name, String defaultValue)
 	{
 		final String value = getProperty(name, defaultValue);
 		
 		return L2Parser.getByte(value);
 	}
 	
-	public byte getByte(String name, byte defaultValue)
+	public byte getByte(Object name, byte defaultValue)
 	{
 		final String value = getProperty(name);
 		if (value == null)
@@ -211,21 +221,21 @@ public final class L2Properties extends Properties
 		return L2Parser.getByte(value);
 	}
 	
-	public short getShort(String name)
+	public short getShort(Object name)
 	{
 		final String value = getProperty(name);
 		
 		return L2Parser.getShort(value);
 	}
 	
-	public short getShort(String name, String defaultValue)
+	public short getShort(Object name, String defaultValue)
 	{
 		final String value = getProperty(name, defaultValue);
 		
 		return L2Parser.getShort(value);
 	}
 	
-	public short getShort(String name, short defaultValue)
+	public short getShort(Object name, short defaultValue)
 	{
 		final String value = getProperty(name);
 		if (value == null)
@@ -234,21 +244,21 @@ public final class L2Properties extends Properties
 		return L2Parser.getShort(value);
 	}
 	
-	public int getInteger(String name)
+	public int getInteger(Object name)
 	{
 		final String value = getProperty(name);
 		
 		return L2Parser.getInteger(value);
 	}
 	
-	public int getInteger(String name, String defaultValue)
+	public int getInteger(Object name, String defaultValue)
 	{
 		final String value = getProperty(name, defaultValue);
 		
 		return L2Parser.getInteger(value);
 	}
 	
-	public int getInteger(String name, int defaultValue)
+	public int getInteger(Object name, int defaultValue)
 	{
 		final String value = getProperty(name);
 		if (value == null)
@@ -257,21 +267,21 @@ public final class L2Properties extends Properties
 		return L2Parser.getInteger(value);
 	}
 	
-	public long getLong(String name)
+	public long getLong(Object name)
 	{
 		final String value = getProperty(name);
 		
 		return L2Parser.getLong(value);
 	}
 	
-	public long getLong(String name, String defaultValue)
+	public long getLong(Object name, String defaultValue)
 	{
 		final String value = getProperty(name, defaultValue);
 		
 		return L2Parser.getLong(value);
 	}
 	
-	public long getLong(String name, long defaultValue)
+	public long getLong(Object name, long defaultValue)
 	{
 		final String value = getProperty(name);
 		if (value == null)
@@ -280,21 +290,21 @@ public final class L2Properties extends Properties
 		return L2Parser.getLong(value);
 	}
 	
-	public float getFloat(String name)
+	public float getFloat(Object name)
 	{
 		final String value = getProperty(name);
 		
 		return L2Parser.getFloat(value);
 	}
 	
-	public float getFloat(String name, String defaultValue)
+	public float getFloat(Object name, String defaultValue)
 	{
 		final String value = getProperty(name, defaultValue);
 		
 		return L2Parser.getFloat(value);
 	}
 	
-	public float getFloat(String name, float defaultValue)
+	public float getFloat(Object name, float defaultValue)
 	{
 		final String value = getProperty(name);
 		if (value == null)
@@ -303,21 +313,21 @@ public final class L2Properties extends Properties
 		return L2Parser.getFloat(value);
 	}
 	
-	public double getDouble(String name)
+	public double getDouble(Object name)
 	{
 		final String value = getProperty(name);
 		
 		return L2Parser.getDouble(value);
 	}
 	
-	public double getDouble(String name, String defaultValue)
+	public double getDouble(Object name, String defaultValue)
 	{
 		final String value = getProperty(name, defaultValue);
 		
 		return L2Parser.getDouble(value);
 	}
 	
-	public double getDouble(String name, double defaultValue)
+	public double getDouble(Object name, double defaultValue)
 	{
 		final String value = getProperty(name);
 		if (value == null)
@@ -326,35 +336,35 @@ public final class L2Properties extends Properties
 		return L2Parser.getDouble(value);
 	}
 	
-	public String getString(String name)
+	public String getString(Object name)
 	{
 		final String value = getProperty(name);
 		
 		return L2Parser.getString(value);
 	}
 	
-	public String getString(String name, String defaultValue)
+	public String getString(Object name, String defaultValue)
 	{
 		final String value = getProperty(name, defaultValue);
 		
 		return L2Parser.getString(value);
 	}
 	
-	public <T extends Enum<T>> T getEnum(String name, Class<T> enumClass)
+	public <T extends Enum<T>> T getEnum(Object name, Class<T> enumClass)
 	{
 		final String value = getProperty(name);
 		
 		return L2Parser.getEnum(enumClass, value);
 	}
 	
-	public <T extends Enum<T>> T getEnum(Class<T> enumClass, String name, String defaultValue)
+	public <T extends Enum<T>> T getEnum(Class<T> enumClass, Object name, String defaultValue)
 	{
 		final String value = getProperty(name, defaultValue);
 		
 		return L2Parser.getEnum(enumClass, value);
 	}
 	
-	public <T extends Enum<T>> T getEnum(Class<T> enumClass, String name, T defaultValue)
+	public <T extends Enum<T>> T getEnum(Class<T> enumClass, Object name, T defaultValue)
 	{
 		final String value = getProperty(name);
 		if (value == null)
