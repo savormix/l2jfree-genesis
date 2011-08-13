@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.config;
+package com.l2jfree.loginserver.config;
 
 import com.l2jfree.L2Config.ConfigPropertiesLoader;
 import com.l2jfree.config.annotation.ConfigClass;
@@ -21,17 +21,14 @@ import com.l2jfree.config.annotation.ConfigField;
 /**
  * @author NB4L1
  */
-@ConfigClass(folderName = "config", fileName = "network")
-public final class NetworkConfig extends ConfigPropertiesLoader
+@ConfigClass(folderName = "config", fileName = "system")
+public final class SystemConfig extends ConfigPropertiesLoader
 {
-	/** Game server listens for client connections on this IP address */
-	@ConfigField(name = "ListenIP", value = "0.0.0.0", eternal = true, comment = {
-			"Game Server will accept CLIENT connections coming to this IP address only.", //
-			"Use 0.0.0.0 to listen on all available adapters.", //
-			"Specify a valid IP address if you require the game server to bind on a single IP." })
-	public static String LISTEN_IP;
+	/** Whether to dump heap after startup */
+	@ConfigField(name = "DumpHeapAfterStartup", value = "true", eternal = true, comment = { "Whether to dump heap after server startup or not." })
+	public static boolean DUMP_HEAP_AFTER_STARTUP;
 	
-	/** Game server listens for client connections on this port */
-	@ConfigField(name = "ListenPort", value = "7777", eternal = true, comment = { "Game Server will listen for CLIENT connections on this port." })
-	public static int LISTEN_PORT;
+	/** Whether to dump heap before shutdown */
+	@ConfigField(name = "DumpHeapBeforeShutdown", value = "true", eternal = true, comment = { "Whether to dump heap before server shutdown or not." })
+	public static boolean DUMP_HEAP_BEFORE_SHUTDOWN;
 }

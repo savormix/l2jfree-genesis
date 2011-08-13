@@ -20,6 +20,7 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.PrintStream;
 import java.lang.Thread.UncaughtExceptionHandler;
+import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,16 +60,14 @@ import com.l2jfree.util.logging.L2Logger;
  */
 public abstract class L2Config
 {
-	/** Application's launch timestamp */
-	public static final long SERVER_STARTED = System.currentTimeMillis();
-	
 	/**
 	 * Returns application lifetime in an user-friendly string.
+	 * 
 	 * @return time since launch
 	 */
 	public static String getUptime()
 	{
-		final long uptimeInSec = (System.currentTimeMillis() - SERVER_STARTED) - 1000;
+		final long uptimeInSec = ManagementFactory.getRuntimeMXBean().getUptime() / 1000;
 		
 		final long s = uptimeInSec / 1 % 60;
 		final long m = uptimeInSec / 60 % 60;
@@ -88,6 +87,37 @@ public abstract class L2Config
 		
 		if (s > 0 || tb.length() != 0)
 			tb.append(s + " second(s)");
+		
+		return tb.moveToString();
+	}
+	
+	/**
+	 * Returns application lifetime in a short string.
+	 * 
+	 * @return time since launch
+	 */
+	public static String getShortUptime()
+	{
+		final long uptimeInSec = ManagementFactory.getRuntimeMXBean().getUptime() / 1000;
+		
+		final long s = uptimeInSec / 1 % 60;
+		final long m = uptimeInSec / 60 % 60;
+		final long h = uptimeInSec / 3600 % 24;
+		final long d = uptimeInSec / 86400;
+		
+		final L2TextBuilder tb = L2TextBuilder.newInstance();
+		
+		if (d > 0)
+			tb.append(d + "d");
+		
+		if (h > 0 || tb.length() != 0)
+			tb.append(h + "h");
+		
+		if (m > 0 || tb.length() != 0)
+			tb.append(m + "m");
+		
+		if (s > 0 || tb.length() != 0)
+			tb.append(s + "s");
 		
 		return tb.moveToString();
 	}
@@ -694,7 +724,7 @@ public abstract class L2Config
 		for (String line : Util.getMemUsage())
 			_log.info(line);
 		
-		_log.info("Server loaded in " + Util.formatNumber(System.currentTimeMillis() - L2Config.SERVER_STARTED)
+		_log.info("Server loaded in " + Util.formatNumber(ManagementFactory.getRuntimeMXBean().getUptime())
 				+ " milliseconds.");
 	}
 	

@@ -137,6 +137,11 @@ public abstract class L2DataSource implements DataSource
 		return "information_schema.tables";
 	}
 	
+	protected String getProviderName()
+	{
+		return getClass().getSimpleName().replace(L2DataSource.class.getSimpleName(), "");
+	}
+	
 	public void initSQLContext() throws SQLException
 	{
 		/**
@@ -242,10 +247,10 @@ public abstract class L2DataSource implements DataSource
 	@SuppressWarnings("unused")
 	public void optimize() throws SQLException
 	{
-		_log.warn("L2DataSource: Provider (" + getClass().getSimpleName() + ") not yet supported.");
+		_log.warn("TableOptimizer: Provider (" + getProviderName() + ") not yet supported.");
 	}
 	
-	protected final File createBackupFolder()
+	protected final boolean writeBackup(String databaseName, InputStream in) throws IOException
 	{
 		final File backupFolder = new File("backup/database");
 		backupFolder.mkdirs();
@@ -253,12 +258,6 @@ public abstract class L2DataSource implements DataSource
 		if (!backupFolder.exists())
 			throw new RuntimeException("Could not create folder " + backupFolder.getAbsolutePath());
 		
-		return backupFolder;
-	}
-	
-	protected final boolean writeBackup(String databaseName, InputStream in) throws IOException
-	{
-		final File backupFolder = createBackupFolder();
 		final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 		final Date time = new Date();
 		
@@ -298,7 +297,7 @@ public abstract class L2DataSource implements DataSource
 			return false;
 		}
 		
-		_log.info("L2DataSource: Schema `" + databaseName + "` backed up successfully in "
+		_log.info("DatabaseBackupManager: Schema `" + databaseName + "` backed up successfully in "
 				+ (System.currentTimeMillis() - time.getTime()) / 1000 + " s.");
 		return true;
 	}
@@ -306,7 +305,7 @@ public abstract class L2DataSource implements DataSource
 	@SuppressWarnings("unused")
 	public void backup()
 	{
-		_log.warn("L2DataSource: Provider (" + getClass().getSimpleName() + ") not yet supported.");
+		_log.warn("DatabaseBackupManager: Provider (" + getProviderName() + ") not yet supported.");
 	}
 	
 	public final boolean tableExists(String tableName)

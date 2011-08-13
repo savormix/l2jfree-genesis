@@ -28,36 +28,43 @@ import com.l2jfree.config.converters.JdbcUrlConverter;
 @ConfigClass(folderName = "config", fileName = "database")
 public final class DatabaseConfig extends ConfigPropertiesLoader
 {
+	/** Database JDBC URL */
 	@ConfigField(name = "JdbcUrl", value = "sqlite:l2jfree_core.db", eternal = true, converter = JdbcUrlConverter.class, comment = {
 			"Specifies the JDBC URL of the database.", //
 			"Some URLs:", //
 			"MySQL: mysql://host.or.ip/database", //
 			"PostgreSQL: postgresql://host.or.ip/database", //
 			"SQLite: sqlite:file.db" })
-	public static String DB_URL;
+	public static String URL;
 	
+	/** Database login */
 	@ConfigField(name = "Login", value = "", eternal = true, comment = { "Username for DB access",
 			"The server will not start if a DBMS superuser account is used." })
-	public static String DB_USER;
+	public static String USER;
 	
+	/** Database password */
 	@ConfigField(name = "Password", value = "", eternal = true, comment = { "Password for DB access" })
-	public static String DB_PASSWORD;
+	public static String PASSWORD;
 	
+	/** Maximum amount of database connections in pool */
 	@ConfigField(name = "MaxConnectionsInPool", value = "50", eternal = true, comment = {
 			"Specifies the maximum number of database connections active at once.", //
 			"At least 10 connections must be assigned." })
-	public static int DB_MAX_CONNECTIONS;
+	public static int MAX_CONNECTIONS;
 	
+	/** Whether to optimize database tables on startup */
 	@ConfigField(name = "OptimizeTables", value = "true", eternal = true, comment = {
 			"Whether to optimize tables on startup.", //
 			"Currently only works with MySQL and PostgreSQL." })
-	public static boolean DB_OPTIMIZE;
+	public static boolean OPTIMIZE;
 	
+	/** Whether to backup database tables on startup */
 	@ConfigField(name = "BackupOnStartup", value = "true", eternal = true, comment = {
 			"Whether to backup tables during server startup or not.", //
 			"Currently only works with MySQL and SQLite." })
 	public static boolean BACKUP_ON_STARTUP;
 	
+	/** Whether to backup database tables on shutdown */
 	@ConfigField(name = "BackupOnShutdown", value = "true", eternal = true, comment = {
 			"Whether to backup tables during server shutdown or not.", //
 			"Currently only works with MySQL and SQLite." })
@@ -66,7 +73,7 @@ public final class DatabaseConfig extends ConfigPropertiesLoader
 	@Override
 	protected void loadImpl(L2Properties properties)
 	{
-		if (DB_USER.equalsIgnoreCase("root") || DB_USER.equalsIgnoreCase("postgres"))
+		if (USER.equalsIgnoreCase("root") || USER.equalsIgnoreCase("postgres"))
 		{
 			System.err.println("L2jFree servers should not use DBMS superuser accounts ... exited.");
 			Shutdown.exit(TerminationStatus.ENVIRONMENT_SUPERUSER);

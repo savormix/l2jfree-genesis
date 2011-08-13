@@ -17,9 +17,11 @@ package com.l2jfree.loginserver;
 import com.l2jfree.L2Config;
 import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
+import com.l2jfree.lang.L2System;
 import com.l2jfree.loginserver.config.DatabaseConfig;
 import com.l2jfree.loginserver.config.NetworkConfig;
 import com.l2jfree.loginserver.config.ServiceConfig;
+import com.l2jfree.loginserver.config.SystemConfig;
 import com.l2jfree.loginserver.network.client.L2ClientConnections;
 import com.l2jfree.loginserver.network.client.L2ClientSecurity;
 import com.l2jfree.loginserver.network.gameserver.L2GameServerCache;
@@ -74,8 +76,7 @@ public final class LoginServer extends Config
 			
 			try
 			{
-				L2ClientConnections.getInstance().openServerSocket(NetworkConfig.LISTEN_IP,
-						NetworkConfig.LISTEN_PORT);
+				L2ClientConnections.getInstance().openServerSocket(NetworkConfig.LISTEN_IP, NetworkConfig.LISTEN_PORT);
 				L2ClientConnections.getInstance().start();
 			}
 			catch (Throwable e)
@@ -92,6 +93,16 @@ public final class LoginServer extends Config
 			@Override
 			public void run()
 			{
+				try
+				{
+					if (SystemConfig.DUMP_HEAP_BEFORE_SHUTDOWN)
+						L2System.dumpHeap(true);
+				}
+				catch (Throwable t)
+				{
+					_log.warn("Orderly shutdown sequence interrupted", t);
+				}
+				
 				try
 				{
 					L2ClientConnections.getInstance().shutdown();
@@ -124,5 +135,8 @@ public final class LoginServer extends Config
 		});
 		
 		L2Config.applicationLoaded("l2jfree-login", LoginInfo.getFullVersionInfo());
+		
+		if (SystemConfig.DUMP_HEAP_AFTER_STARTUP)
+			L2System.dumpHeap(true);
 	}
 }

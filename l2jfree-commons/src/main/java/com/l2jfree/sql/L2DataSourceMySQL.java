@@ -169,7 +169,7 @@ public final class L2DataSourceMySQL extends L2DataSource
 		
 		if (run == null)
 		{
-			_log.warn("Could not execute mysqldump!");
+			_log.warn("DatabaseBackupManager: Could not execute mysqldump!");
 			return;
 		}
 		

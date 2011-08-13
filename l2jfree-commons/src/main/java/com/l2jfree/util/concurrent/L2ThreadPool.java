@@ -14,6 +14,7 @@
  */
 package com.l2jfree.util.concurrent;
 
+import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Future;
@@ -25,7 +26,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.ArrayUtils;
 
-import com.l2jfree.L2Config;
 import com.l2jfree.util.ArrayBunch;
 import com.l2jfree.util.concurrent.RunnableStatsManager.SortBy;
 import com.l2jfree.util.logging.L2Logger;
@@ -387,7 +387,7 @@ public final class L2ThreadPool
 			System.out.println("\t... " + getTaskCount(_instantPools) + " instant tasks left.");
 			System.out.println("\t... " + getTaskCount(_longRunningPools) + " long running tasks left.");
 			
-			if (TimeUnit.HOURS.toMillis(12) < (System.currentTimeMillis() - L2Config.SERVER_STARTED))
+			if (TimeUnit.HOURS.toMillis(12) < (ManagementFactory.getRuntimeMXBean().getUptime()))
 				RunnableStatsManager.dumpClassStats(SortBy.TOTAL);
 		}
 		catch (Throwable t)

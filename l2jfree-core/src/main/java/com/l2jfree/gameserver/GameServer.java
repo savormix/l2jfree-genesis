@@ -19,8 +19,10 @@ import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
 import com.l2jfree.gameserver.config.DatabaseConfig;
 import com.l2jfree.gameserver.config.NetworkConfig;
+import com.l2jfree.gameserver.config.SystemConfig;
 import com.l2jfree.gameserver.network.client.L2ClientConnections;
 import com.l2jfree.gameserver.network.client.L2ClientSecurity;
+import com.l2jfree.lang.L2System;
 import com.l2jfree.sql.L2Database;
 
 /**
@@ -38,7 +40,7 @@ public final class GameServer extends Config
 	 */
 	public static void main(String[] args)
 	{
-		if (DatabaseConfig.DB_OPTIMIZE)
+		if (DatabaseConfig.OPTIMIZE)
 			L2Database.optimize();
 		
 		if (DatabaseConfig.BACKUP_ON_STARTUP)
@@ -49,8 +51,7 @@ public final class GameServer extends Config
 			
 			try
 			{
-				L2ClientConnections.getInstance().openServerSocket(NetworkConfig.NET_LISTEN_IP,
-						NetworkConfig.NET_LISTEN_PORT);
+				L2ClientConnections.getInstance().openServerSocket(NetworkConfig.LISTEN_IP, NetworkConfig.LISTEN_PORT);
 				L2ClientConnections.getInstance().start();
 			}
 			catch (Throwable e)
@@ -67,6 +68,16 @@ public final class GameServer extends Config
 			@Override
 			public void run()
 			{
+				try
+				{
+					if (SystemConfig.DUMP_HEAP_BEFORE_SHUTDOWN)
+						L2System.dumpHeap(true);
+				}
+				catch (Throwable t)
+				{
+					_log.warn("Orderly shutdown sequence interrupted", t);
+				}
+				
 				try
 				{
 					L2ClientConnections.getInstance().shutdown();
@@ -89,5 +100,8 @@ public final class GameServer extends Config
 		});
 		
 		L2Config.applicationLoaded("l2jfree-core", CoreInfo.getFullVersionInfo());
+		
+		if (SystemConfig.DUMP_HEAP_AFTER_STARTUP)
+			L2System.dumpHeap(true);
 	}
 }

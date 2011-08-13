@@ -14,16 +14,27 @@
  */
 package com.l2jfree.lang;
 
+import java.io.File;
+import java.lang.management.ManagementFactory;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+
+import javax.management.MBeanServer;
+
+import com.sun.management.HotSpotDiagnosticMXBean;
+
+import com.l2jfree.L2Config;
+import com.l2jfree.util.logging.L2Logger;
 
 /**
  * @author NB4L1
  */
 public final class L2System
 {
+	private static final L2Logger _log = L2Logger.getLogger(L2System.class);
+	
 	private L2System()
 	{
 	}
@@ -94,5 +105,56 @@ public final class L2System
 	public static long usedMemory()
 	{
 		return (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576;
+	}
+	
+	public static void dumpHeap(boolean live)
+	{
+		try
+		{
+			final File dumpFolder = new File("backup/heap");
+			dumpFolder.mkdirs();
+			
+			if (!dumpFolder.exists())
+				throw new RuntimeException("Could not create folder " + dumpFolder.getAbsolutePath());
+			
+			final L2TextBuilder tb = L2TextBuilder.newInstance();
+			tb.append("backup/heap/");
+			tb.append(new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date()));
+			tb.append("_uptime-").append(L2Config.getShortUptime());
+			if (live)
+				tb.append("_live");
+			tb.append(".hprof");
+			
+			final String dumpFile = tb.moveToString();
+			
+			HotSpotDiagnosticMXBeanHolder.INSTANCE.dumpHeap(dumpFile, live);
+			
+			_log.info("L2System: JVM Heap successfully dumped to `" + dumpFile + "`!");
+		}
+		catch (Exception e)
+		{
+			_log.warn("L2System: Failed to dump heap:", e);
+		}
+	}
+	
+	private static final class HotSpotDiagnosticMXBeanHolder
+	{
+		static
+		{
+			try
+			{
+				final MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
+				final String mXBeanName = "com.sun.management:type=HotSpotDiagnostic";
+				final Class<HotSpotDiagnosticMXBean> mXBeanInterface = HotSpotDiagnosticMXBean.class;
+				
+				INSTANCE = ManagementFactory.newPlatformMXBeanProxy(mBeanServer, mXBeanName, mXBeanInterface);
+			}
+			catch (Exception e)
+			{
+				throw new Error(e);
+			}
+		}
+		
+		private static final HotSpotDiagnosticMXBean INSTANCE;
 	}
 }
