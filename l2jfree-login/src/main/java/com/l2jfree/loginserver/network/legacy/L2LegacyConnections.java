@@ -51,7 +51,7 @@ public final class L2LegacyConnections extends MMOController<L2GameServer, L2Gam
 			}
 		}
 		
-		private static final L2LegacyConnections INSTANCE;
+		public static final L2LegacyConnections INSTANCE;
 	}
 	
 	/**

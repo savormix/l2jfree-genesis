@@ -137,12 +137,11 @@ public final class L2LoginIdentifier
 	 */
 	public static L2LoginIdentifier getInstance()
 	{
-		return SingletonHolder._instance;
+		return SingletonHolder.INSTANCE;
 	}
 	
-	@SuppressWarnings("synthetic-access")
-	private static class SingletonHolder
+	private static final class SingletonHolder
 	{
-		static final L2LoginIdentifier _instance = new L2LoginIdentifier();
+		public static final L2LoginIdentifier INSTANCE = new L2LoginIdentifier();
 	}
 }

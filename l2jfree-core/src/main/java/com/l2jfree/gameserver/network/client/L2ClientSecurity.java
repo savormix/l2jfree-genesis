@@ -66,12 +66,11 @@ public final class L2ClientSecurity
 	 */
 	public static L2ClientSecurity getInstance()
 	{
-		return SingletonHolder._instance;
+		return SingletonHolder.INSTANCE;
 	}
 	
-	@SuppressWarnings("synthetic-access")
-	private static class SingletonHolder
+	private static final class SingletonHolder
 	{
-		static final L2ClientSecurity _instance = new L2ClientSecurity();
+		public static final L2ClientSecurity INSTANCE = new L2ClientSecurity();
 	}
 }

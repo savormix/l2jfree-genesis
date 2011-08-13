@@ -11,7 +11,7 @@ public abstract class TypedConverter<T> implements Converter
 		if (getRequiredType() != type)
 			throw new ClassCastException(getRequiredType() + " type required, but found: " + type + "!");
 		
-		value = (String)DefaultConverter.INSTANCE.convertFromString(String.class, value);
+		value = (String)DefaultConverter.getInstance().convertFromString(String.class, value);
 		
 		return convertFromString(value);
 	}
@@ -30,7 +30,7 @@ public abstract class TypedConverter<T> implements Converter
 		
 		final String value = convertToString(getRequiredType().cast(obj));
 		
-		return DefaultConverter.INSTANCE.convertToString(String.class, value);
+		return DefaultConverter.getInstance().convertToString(String.class, value);
 	}
 	
 	protected abstract T convertFromString(String value);

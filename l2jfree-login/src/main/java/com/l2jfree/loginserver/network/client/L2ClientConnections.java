@@ -52,7 +52,7 @@ public final class L2ClientConnections extends MMOController<L2LoginClient, L2Cl
 			}
 		}
 		
-		private static final L2ClientConnections INSTANCE;
+		public static final L2ClientConnections INSTANCE;
 	}
 	
 	/**

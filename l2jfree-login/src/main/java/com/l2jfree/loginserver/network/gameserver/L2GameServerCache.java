@@ -50,6 +50,8 @@ public class L2GameServerCache
 		_gameServers.setShared(true);
 		_authorizationLock = new Object();
 		_loaded = false;
+		
+		load();
 	}
 	
 	private synchronized L2GameServerCache load()
@@ -244,8 +246,8 @@ public class L2GameServerCache
 		return SingletonHolder.INSTANCE;
 	}
 	
-	private static class SingletonHolder
+	private static final class SingletonHolder
 	{
-		private static final L2GameServerCache INSTANCE = new L2GameServerCache().load();
+		public static final L2GameServerCache INSTANCE = new L2GameServerCache();
 	}
 }

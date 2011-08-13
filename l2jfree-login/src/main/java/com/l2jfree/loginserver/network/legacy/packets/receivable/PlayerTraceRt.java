@@ -15,6 +15,7 @@
 package com.l2jfree.loginserver.network.legacy.packets.receivable;
 
 import java.nio.BufferUnderflowException;
+import java.util.Arrays;
 
 import com.l2jfree.loginserver.network.legacy.packets.L2GameServerPacket;
 import com.l2jfree.network.mmocore.InvalidPacketException;
@@ -59,6 +60,6 @@ public final class PlayerTraceRt extends L2GameServerPacket
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		// TODO Auto-generated method stub
-		
+		System.out.println(getClient() + "|" + getType() + "|" + _account + "|" + _ip + "|" + Arrays.toString(_hops));
 	}
 }

@@ -26,7 +26,7 @@ public class UnauthedClientTimeoutChecker implements Runnable
 {
 	private static final class SingletonHolder
 	{
-		private static final UnauthedClientTimeoutChecker INSTANCE = new UnauthedClientTimeoutChecker();
+		public static final UnauthedClientTimeoutChecker INSTANCE = new UnauthedClientTimeoutChecker();
 	}
 	
 	public static UnauthedClientTimeoutChecker getInstance()

@@ -303,7 +303,6 @@ public abstract class L2DataSource implements DataSource
 		return true;
 	}
 	
-	@SuppressWarnings("unused")
 	public void backup()
 	{
 		_log.warn("DatabaseBackupManager: Provider (" + getProviderName() + ") not yet supported.");

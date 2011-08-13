@@ -37,7 +37,7 @@ public final class L2Collections
 	
 	private static final class EmptyListIterator implements ListIterator<Object>
 	{
-		private static final ListIterator<Object> INSTANCE = new EmptyListIterator();
+		public static final EmptyListIterator INSTANCE = new EmptyListIterator();
 		
 		@Override
 		public boolean hasNext()
@@ -96,7 +96,7 @@ public final class L2Collections
 	
 	private static class EmptyCollection implements Collection<Object>
 	{
-		private static final Collection<Object> INSTANCE = new EmptyCollection();
+		public static final EmptyCollection INSTANCE = new EmptyCollection();
 		
 		@Override
 		public boolean add(Object e)
@@ -187,12 +187,12 @@ public final class L2Collections
 	
 	private static final class EmptySet extends EmptyCollection implements Set<Object>
 	{
-		private static final Set<Object> INSTANCE = new EmptySet();
+		public static final EmptySet INSTANCE = new EmptySet();
 	}
 	
 	private static final class EmptyList extends EmptyCollection implements List<Object>
 	{
-		private static final List<Object> INSTANCE = new EmptyList();
+		public static final EmptyList INSTANCE = new EmptyList();
 		
 		@Override
 		public void add(int index, Object element)
@@ -257,7 +257,7 @@ public final class L2Collections
 	
 	private static final class EmptyMap implements Map<Object, Object>
 	{
-		private static final Map<Object, Object> INSTANCE = new EmptyMap();
+		public static final EmptyMap INSTANCE = new EmptyMap();
 		
 		@Override
 		public void clear()
@@ -339,7 +339,7 @@ public final class L2Collections
 	
 	private static final class EmptyBunch implements Bunch<Object>
 	{
-		private static final Bunch<Object> INSTANCE = new EmptyBunch();
+		public static final EmptyBunch INSTANCE = new EmptyBunch();
 		
 		@Override
 		public Bunch<Object> add(Object e)

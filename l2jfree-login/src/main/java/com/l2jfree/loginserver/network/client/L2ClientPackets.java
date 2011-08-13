@@ -83,12 +83,11 @@ public final class L2ClientPackets implements IPacketHandler<L2LoginClient, L2Cl
 	 */
 	public static L2ClientPackets getInstance()
 	{
-		return SingletonHolder._instance;
+		return SingletonHolder.INSTANCE;
 	}
 	
-	@SuppressWarnings("synthetic-access")
-	private static class SingletonHolder
+	private static final class SingletonHolder
 	{
-		protected static final L2ClientPackets _instance = new L2ClientPackets();
+		public static final L2ClientPackets INSTANCE = new L2ClientPackets();
 	}
 }

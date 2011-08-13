@@ -90,12 +90,11 @@ public final class L2LegacyPackets implements IPacketHandler<L2GameServer, L2Gam
 	 */
 	public static L2LegacyPackets getInstance()
 	{
-		return SingletonHolder._instance;
+		return SingletonHolder.INSTANCE;
 	}
 	
-	@SuppressWarnings("synthetic-access")
-	private static class SingletonHolder
+	private static final class SingletonHolder
 	{
-		protected static final L2LegacyPackets _instance = new L2LegacyPackets();
+		public static final L2LegacyPackets INSTANCE = new L2LegacyPackets();
 	}
 }

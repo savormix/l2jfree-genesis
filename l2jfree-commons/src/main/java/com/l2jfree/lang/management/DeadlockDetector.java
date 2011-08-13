@@ -29,7 +29,7 @@ public final class DeadlockDetector extends L2Thread
 {
 	private static final class SingletonHolder
 	{
-		private static final DeadlockDetector INSTANCE = new DeadlockDetector();
+		public static final DeadlockDetector INSTANCE = new DeadlockDetector();
 	}
 	
 	public static DeadlockDetector getInstance()

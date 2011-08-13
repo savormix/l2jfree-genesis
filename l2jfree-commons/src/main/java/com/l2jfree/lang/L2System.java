@@ -155,6 +155,6 @@ public final class L2System
 			}
 		}
 		
-		private static final HotSpotDiagnosticMXBean INSTANCE;
+		public static final HotSpotDiagnosticMXBean INSTANCE;
 	}
 }

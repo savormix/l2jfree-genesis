@@ -20,7 +20,15 @@ import com.l2jfree.lang.L2TextBuilder;
 
 public class DefaultArrayConverter implements Converter
 {
-	public static final DefaultArrayConverter INSTANCE = new DefaultArrayConverter();
+	private static final class SingletonHolder
+	{
+		public static final DefaultArrayConverter INSTANCE = new DefaultArrayConverter();
+	}
+	
+	public static DefaultArrayConverter getInstance()
+	{
+		return SingletonHolder.INSTANCE;
+	}
 	
 	@Override
 	public Object convertFromString(Class<?> type, String value)
@@ -65,6 +73,6 @@ public class DefaultArrayConverter implements Converter
 	
 	protected Converter getElementConverter()
 	{
-		return DefaultConverter.INSTANCE;
+		return DefaultConverter.getInstance();
 	}
 }

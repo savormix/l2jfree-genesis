@@ -78,7 +78,6 @@ public class ConfigTester extends L2Config
 	 * @param args ignored
 	 * @throws Exception if this test failed
 	 */
-	@SuppressWarnings("unused")
 	public static void main(String[] args) throws Exception
 	{
 		final ConfigClassInfo info = ConfigClassInfo.valueOf(ConfigTester.class);

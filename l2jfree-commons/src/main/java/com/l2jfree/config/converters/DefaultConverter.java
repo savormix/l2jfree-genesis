@@ -18,7 +18,15 @@ import com.l2jfree.config.L2Parser;
 
 public class DefaultConverter implements Converter
 {
-	public static final DefaultConverter INSTANCE = new DefaultConverter();
+	private static final class SingletonHolder
+	{
+		public static final DefaultConverter INSTANCE = new DefaultConverter();
+	}
+	
+	public static DefaultConverter getInstance()
+	{
+		return SingletonHolder.INSTANCE;
+	}
 	
 	@Override
 	public Object convertFromString(Class<?> type, String value)
@@ -43,6 +51,6 @@ public class DefaultConverter implements Converter
 	
 	protected Converter getArrayConverter()
 	{
-		return DefaultArrayConverter.INSTANCE;
+		return DefaultArrayConverter.getInstance();
 	}
 }

@@ -83,6 +83,12 @@ public final class L2WorldRegion
 		return _objects.toArray(L2Object.class);
 	}
 	
+	private boolean containsPlayer()
+	{
+		// TODO check if a player present
+		return true;
+	}
+	
 	/**
 	 * The task responsible for deactivating surrounding regions.
 	 */
@@ -136,7 +142,7 @@ public final class L2WorldRegion
 		if (!active)
 		{
 			for (L2WorldRegion region : getSurroundingRegions())
-				if (/* TODO check if a player present */true)
+				if (region.containsPlayer())
 					active = true;
 		}
 		
