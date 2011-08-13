@@ -28,8 +28,9 @@ import java.util.ArrayList;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
-import com.l2jfree.lang.L2TextBuilder;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+
+import com.l2jfree.lang.L2TextBuilder;
 
 /**
  * @author NB4L1

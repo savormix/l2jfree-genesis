@@ -23,8 +23,9 @@ import java.sql.SQLException;
 
 import org.apache.commons.io.IOUtils;
 
-import com.l2jfree.lang.L2TextBuilder;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+
+import com.l2jfree.lang.L2TextBuilder;
 
 /**
  * @author NB4L1

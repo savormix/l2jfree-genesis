@@ -36,9 +36,10 @@ import javax.sql.DataSource;
 
 import org.apache.commons.io.IOUtils;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+
 import com.l2jfree.util.Rnd;
 import com.l2jfree.util.logging.L2Logger;
-import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 public abstract class L2DataSource implements DataSource
 {
