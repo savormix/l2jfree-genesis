@@ -40,7 +40,7 @@ import com.l2jfree.util.logging.L2Logger;
  */
 public abstract class L2Thread extends Thread
 {
-	private static final L2Logger _log = L2Logger.getLogger(L2Thread.class);
+	protected static final L2Logger _log = L2Logger.getLogger(L2Thread.class);
 	
 	protected L2Thread()
 	{

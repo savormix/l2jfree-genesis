@@ -24,12 +24,9 @@ import javolution.util.FastSet;
 import com.l2jfree.Shutdown;
 import com.l2jfree.Util;
 import com.l2jfree.lang.L2Thread;
-import com.l2jfree.util.logging.L2Logger;
 
 public final class DeadlockDetector extends L2Thread
 {
-	private static final L2Logger _log = L2Logger.getLogger(DeadlockDetector.class);
-	
 	private static final class SingletonHolder
 	{
 		private static final DeadlockDetector INSTANCE = new DeadlockDetector();

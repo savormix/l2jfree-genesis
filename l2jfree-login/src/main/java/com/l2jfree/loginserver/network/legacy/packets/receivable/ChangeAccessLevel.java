@@ -27,7 +27,6 @@ import com.l2jfree.sql.L2Database;
 
 /**
  * @author savormix
- *
  */
 public final class ChangeAccessLevel extends L2GameServerPacket
 {
@@ -40,12 +39,11 @@ public final class ChangeAccessLevel extends L2GameServerPacket
 	@Override
 	protected int getMinimumLength()
 	{
-		return 5;
+		return READ_D + READ_S;
 	}
 	
 	@Override
-	protected void read(MMOBuffer buf) throws BufferUnderflowException,
-			RuntimeException
+	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		_level = buf.readD();
 		_account = buf.readS();

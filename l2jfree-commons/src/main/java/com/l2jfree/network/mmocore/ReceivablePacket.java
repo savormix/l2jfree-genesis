@@ -28,6 +28,19 @@ import com.l2jfree.network.mmocore.FloodManager.ErrorMode;
 public abstract class ReceivablePacket<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
 		extends AbstractPacket implements Runnable
 {
+	/** Represent the minimum amount of bytes required for {@link MMOBuffer#readC()}. */
+	protected static final int READ_C = 1;
+	/** Represent the minimum amount of bytes required for {@link MMOBuffer#readH()}. */
+	protected static final int READ_H = 2;
+	/** Represent the minimum amount of bytes required for {@link MMOBuffer#readD()}. */
+	protected static final int READ_D = 4;
+	/** Represent the minimum amount of bytes required for {@link MMOBuffer#readQ()}. */
+	protected static final int READ_Q = 8;
+	/** Represent the minimum amount of bytes required for {@link MMOBuffer#readF()}. */
+	protected static final int READ_F = 8;
+	/** Represent the minimum amount of bytes required for {@link MMOBuffer#readS()}. */
+	protected static final int READ_S = 2;
+	
 	protected ReceivablePacket()
 	{
 		super();

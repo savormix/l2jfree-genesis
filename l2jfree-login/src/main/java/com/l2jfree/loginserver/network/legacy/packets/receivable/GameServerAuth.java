@@ -35,18 +35,14 @@ import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 import com.l2jfree.sql.L2Database;
 import com.l2jfree.util.HexUtil;
-import com.l2jfree.util.logging.L2Logger;
 
 /**
  * @author savormix
- *
  */
 public final class GameServerAuth extends L2GameServerPacket
 {
 	/** Packet's identifier */
 	public static final int OPCODE = 0x01;
-	
-	private static final L2Logger _log = L2Logger.getLogger(GameServerAuth.class);
 	
 	private int _desiredId;
 	private boolean _acceptAlternateId;
@@ -59,12 +55,11 @@ public final class GameServerAuth extends L2GameServerPacket
 	@Override
 	protected int getMinimumLength()
 	{
-		return 17;
+		return READ_C + READ_C + READ_C + READ_H + READ_D + READ_D + READ_D;
 	}
 	
 	@Override
-	protected void read(MMOBuffer buf) throws BufferUnderflowException,
-			RuntimeException
+	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		_desiredId = buf.readC();
 		_acceptAlternateId = (buf.readC() == 0 ? false : true);

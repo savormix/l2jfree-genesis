@@ -24,7 +24,6 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix
- *
  */
 public final class PlayersInGame extends L2GameServerPacket
 {
@@ -36,12 +35,11 @@ public final class PlayersInGame extends L2GameServerPacket
 	@Override
 	protected int getMinimumLength()
 	{
-		return 2;
+		return READ_H;
 	}
 	
 	@Override
-	protected void read(MMOBuffer buf) throws BufferUnderflowException,
-			RuntimeException
+	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		int size = buf.readH();
 		_accounts = new ArrayList<String>(size);

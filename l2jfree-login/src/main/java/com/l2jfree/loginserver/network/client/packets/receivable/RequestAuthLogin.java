@@ -46,18 +46,14 @@ import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 import com.l2jfree.sql.L2Database;
 import com.l2jfree.util.HexUtil;
-import com.l2jfree.util.logging.L2Logger;
 
 /**
  * @author savormix
- *
  */
 public final class RequestAuthLogin extends L2ClientPacket
 {
 	/** Packet's identifier */
 	public static final int OPCODE = 0x00;
-	
-	private static final L2Logger _log = L2Logger.getLogger(RequestAuthLogin.class);
 	
 	private byte[] _enciphered;
 	

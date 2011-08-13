@@ -29,7 +29,6 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix
- *
  */
 public final class ServerStatus extends L2GameServerPacket
 {
@@ -48,12 +47,11 @@ public final class ServerStatus extends L2GameServerPacket
 	protected int getMinimumLength()
 	{
 		// a valid packet of 4 bytes does not need to be handled
-		return 12;
+		return READ_D + (READ_D + READ_D);
 	}
 	
 	@Override
-	protected void read(MMOBuffer buf) throws BufferUnderflowException,
-			RuntimeException
+	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		int size = buf.readD();
 		for (int i = 0; i < size; i++)
@@ -76,18 +74,18 @@ public final class ServerStatus extends L2GameServerPacket
 			
 			switch (llms)
 			{
-			case STATUS:
-				lgs.setStatus(L2LegacyStatus.getById(val));
-				break;
-			case TYPE:
-				lgs.setTypes(val);
-				break;
-			case BRACKETS:
-				lgs.setBrackets(val.intValue() == 0);
-				break;
-			case MAX_PLAYERS:
-				lgs.setMaxPlayers(val);
-				break;
+				case STATUS:
+					lgs.setStatus(L2LegacyStatus.getById(val));
+					break;
+				case TYPE:
+					lgs.setTypes(val);
+					break;
+				case BRACKETS:
+					lgs.setBrackets(val.intValue() == 0);
+					break;
+				case MAX_PLAYERS:
+					lgs.setMaxPlayers(val);
+					break;
 			case AGE_LIMIT:
 				lgs.setAge(val);
 				if (!L2LegacyAgeLimit.isDisplayed(lgs))

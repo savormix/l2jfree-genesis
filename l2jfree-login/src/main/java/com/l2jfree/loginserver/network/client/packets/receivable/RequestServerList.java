@@ -28,7 +28,6 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix
- *
  */
 public final class RequestServerList extends L2ClientPacket
 {
@@ -40,7 +39,7 @@ public final class RequestServerList extends L2ClientPacket
 	@Override
 	protected int getMinimumLength()
 	{
-		return 8;
+		return READ_Q;
 	}
 	
 	@Override

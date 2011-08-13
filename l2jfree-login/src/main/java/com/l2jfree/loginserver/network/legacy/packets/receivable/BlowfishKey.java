@@ -27,7 +27,6 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix
- *
  */
 public final class BlowfishKey extends L2GameServerPacket
 {
@@ -43,8 +42,7 @@ public final class BlowfishKey extends L2GameServerPacket
 	}
 	
 	@Override
-	protected void read(MMOBuffer buf) throws BufferUnderflowException,
-			RuntimeException
+	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		int size = buf.readD();
 		_enciphered = buf.readB(new byte[size]);

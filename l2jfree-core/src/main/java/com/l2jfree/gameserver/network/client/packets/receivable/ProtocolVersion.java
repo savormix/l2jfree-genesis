@@ -24,7 +24,6 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix
- *
  */
 public final class ProtocolVersion extends L2ClientPacket
 {
@@ -36,12 +35,11 @@ public final class ProtocolVersion extends L2ClientPacket
 	@Override
 	protected int getMinimumLength()
 	{
-		return 4;
+		return READ_D;
 	}
 	
 	@Override
-	protected void read(MMOBuffer buf) throws BufferUnderflowException,
-			RuntimeException
+	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		_version = buf.readD();
 	}

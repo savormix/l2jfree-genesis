@@ -31,6 +31,7 @@ import com.l2jfree.network.mmocore.MMOBuffer;
  * Client sends this packet automatically in response to
  * {@link Init} packet. Server replies with <TT>Unknown</TT>
  * or {@link GameGuardSuccess} based on this packet's data.
+ * 
  * @author savormix
  */
 public final class AuthGameGuard extends L2ClientPacket
@@ -43,7 +44,7 @@ public final class AuthGameGuard extends L2ClientPacket
 	@Override
 	protected int getMinimumLength()
 	{
-		return 20; // session ID and two longs
+		return READ_D + READ_Q + READ_Q; // session ID and two longs
 	}
 	
 	@Override

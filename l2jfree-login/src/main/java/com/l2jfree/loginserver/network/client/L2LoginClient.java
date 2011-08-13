@@ -31,7 +31,6 @@ import com.l2jfree.security.NewCipher;
 import com.l2jfree.security.ScrambledKeyPair;
 import com.l2jfree.util.HexUtil;
 import com.l2jfree.util.Rnd;
-import com.l2jfree.util.logging.L2Logger;
 
 /**
  * @author savormix
@@ -39,8 +38,6 @@ import com.l2jfree.util.logging.L2Logger;
  */
 public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPacket, L2ServerPacket>
 {
-	private static final L2Logger _log = L2Logger.getLogger(L2LoginClient.class);
-	
 	private final int _sessionId;
 	private final int _protocol;
 	private final ScrambledKeyPair _keyPair;

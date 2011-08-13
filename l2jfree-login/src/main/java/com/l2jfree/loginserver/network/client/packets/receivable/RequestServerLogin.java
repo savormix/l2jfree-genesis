@@ -31,15 +31,12 @@ import com.l2jfree.loginserver.network.legacy.status.L2LegacyStatus;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 import com.l2jfree.sql.L2Database;
-import com.l2jfree.util.logging.L2Logger;
 
 /**
  * @author savormix
- *
  */
 public final class RequestServerLogin extends L2ClientPacket
 {
-	private static final L2Logger _log = L2Logger.getLogger(RequestServerLogin.class);
 	/** Packet's identifier */
 	public static final int OPCODE = 0x02;
 	
@@ -49,12 +46,11 @@ public final class RequestServerLogin extends L2ClientPacket
 	@Override
 	protected int getMinimumLength()
 	{
-		return 9;
+		return READ_Q + READ_C;
 	}
 	
 	@Override
-	protected void read(MMOBuffer buf) throws BufferUnderflowException,
-			RuntimeException
+	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		_sessionKey = buf.readQ();
 		_serverId = buf.readC();
