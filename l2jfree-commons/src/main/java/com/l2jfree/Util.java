@@ -16,13 +16,18 @@ package com.l2jfree;
 
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
 
 import com.l2jfree.lang.L2System;
+import com.l2jfree.util.logging.L2Logger;
 
 /**
  */
 public final class Util
 {
+	private static final L2Logger _log = L2Logger.getLogger(Util.class);
+	
 	private Util()
 	{
 		// utility class
@@ -31,16 +36,29 @@ public final class Util
 	/**
 	 * Prints a named section to log.
 	 * 
-	 * @param s Section name
+	 * @param sectionName Section name
 	 */
-	public static void printSection(String s)
+	public static void printSection(String sectionName)
 	{
-		s = "={ " + s + " }";
+		final StringBuilder sb = new StringBuilder(160);
 		
-		while (s.length() < 160)
-			s = "-" + s;
+		for (int i = 0; i < (160 - 3 - sectionName.length() - 2); i++)
+			sb.append('-');
 		
-		L2Config.err.println(s);
+		sb.append("={ ").append(sectionName).append(" }");
+		
+		_log.log(new PrintSectionLogRecord(Level.INFO, sb.toString()));
+	}
+	
+	/** Helps to bypass the log formatters. */
+	public static final class PrintSectionLogRecord extends LogRecord
+	{
+		private static final long serialVersionUID = 8499381472396828554L;
+		
+		public PrintSectionLogRecord(Level level, String msg)
+		{
+			super(Level.INFO, msg);
+		}
 	}
 	
 	// some sys info utils

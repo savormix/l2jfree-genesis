@@ -23,6 +23,7 @@ import java.lang.Thread.UncaughtExceptionHandler;
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -30,8 +31,10 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 import javolution.text.TextBuilder;
 
@@ -325,11 +328,32 @@ public abstract class L2Config
 	}
 	
 	/** Flushes all pending log entries. */
+	// TODO: MMOLogger.flush()
 	public static void flush()
 	{
+		// those are redirected to loggers, so flush them first
 		System.out.flush();
 		System.err.flush();
 		
+		// then flush the loggers themselves
+		final LogManager logManager = LogManager.getLogManager();
+		
+		for (String loggerName : Collections.list(logManager.getLoggerNames()))
+		{
+			if (loggerName == null)
+				continue;
+			
+			final Logger logger = logManager.getLogger(loggerName);
+			
+			if (logger == null)
+				continue;
+			
+			for (Handler handler : logger.getHandlers())
+				if (handler != null)
+					handler.flush();
+		}
+		
+		// and finally the real console streams
 		L2Config.out.flush();
 		L2Config.err.flush();
 	}

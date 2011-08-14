@@ -25,6 +25,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
 import com.l2jfree.L2Config;
+import com.l2jfree.Util;
 
 /**
  * @author NB4L1
@@ -34,6 +35,12 @@ public abstract class L2RuntimeLogFormatter extends L2LogFormatter
 	@Override
 	protected final void format0(LogRecord record, TextBuilder tb)
 	{
+		if (record instanceof Util.PrintSectionLogRecord)
+		{
+			appendMessage(record, tb);
+			return;
+		}
+		
 		tb.append(record.getLevel()).append(" ");
 		
 		appendDate(record, tb);
