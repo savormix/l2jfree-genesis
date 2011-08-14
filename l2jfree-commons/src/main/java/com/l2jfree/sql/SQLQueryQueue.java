@@ -64,8 +64,11 @@ public abstract class SQLQueryQueue implements Runnable
 	@Override
 	public final synchronized void run()
 	{
-		if (_queue.isEmpty())
-			return;
+		synchronized (_queue)
+		{
+			if (_queue.isEmpty())
+				return;
+		}
 		
 		Connection con = null;
 		try

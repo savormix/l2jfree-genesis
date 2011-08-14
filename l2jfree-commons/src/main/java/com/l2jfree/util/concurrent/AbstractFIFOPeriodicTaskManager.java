@@ -14,6 +14,7 @@
  */
 package com.l2jfree.util.concurrent;
 
+import java.util.ArrayDeque;
 import java.util.Collection;
 
 import com.l2jfree.util.L2FastSet;
@@ -25,7 +26,7 @@ public abstract class AbstractFIFOPeriodicTaskManager<T> extends AbstractPeriodi
 {
 	private final L2FastSet<T> _queue = new L2FastSet<T>();
 	
-	private final L2FastSet<T> _activeTasks = new L2FastSet<T>();
+	private final ArrayDeque<T> _activeTasks = new ArrayDeque<T>();
 	
 	protected AbstractFIFOPeriodicTaskManager(int period)
 	{
@@ -73,7 +74,7 @@ public abstract class AbstractFIFOPeriodicTaskManager<T> extends AbstractPeriodi
 			writeUnlock();
 		}
 		
-		for (T task; (task = _activeTasks.removeFirst()) != null;)
+		for (T task; (task = _activeTasks.pollFirst()) != null;)
 		{
 			final long begin = System.nanoTime();
 			

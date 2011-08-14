@@ -14,16 +14,15 @@
  */
 package com.l2jfree.util.concurrent;
 
+import java.util.ArrayDeque;
 import java.util.Collection;
-
-import javolution.util.FastList;
 
 /**
  * @author NB4L1
  */
 public abstract class FIFOSimpleExecutableQueue<T> extends FIFOExecutableQueue
 {
-	private final FastList<T> _queue = new FastList<T>();
+	private final ArrayDeque<T> _queue = new ArrayDeque<T>();
 	
 	public final void execute(T t)
 	{
