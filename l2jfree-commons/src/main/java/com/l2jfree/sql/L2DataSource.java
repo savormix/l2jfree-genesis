@@ -34,10 +34,13 @@ import java.util.zip.ZipOutputStream;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
+import com.l2jfree.L2Config;
+import com.l2jfree.lang.L2TextBuilder;
 import com.l2jfree.util.Rnd;
 import com.l2jfree.util.logging.L2Logger;
 
@@ -253,18 +256,17 @@ public abstract class L2DataSource implements DataSource
 	
 	protected final boolean writeBackup(String databaseName, InputStream in) throws IOException
 	{
-		final File backupFolder = new File("backup/database");
-		backupFolder.mkdirs();
+		FileUtils.forceMkdir(new File("backup/database"));
 		
-		if (!backupFolder.exists())
-			throw new RuntimeException("Could not create folder " + backupFolder.getAbsolutePath());
-		
-		final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 		final Date time = new Date();
 		
-		final File backupFile = new File(backupFolder, sdf.format(time) + ".zip");
-		if (!backupFile.createNewFile())
-			throw new IOException("Cannot create backup file: " + backupFile.getCanonicalPath());
+		final L2TextBuilder tb = L2TextBuilder.newInstance();
+		tb.append("backup/database/DatabaseBackup_");
+		tb.append(new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date()));
+		tb.append("_uptime-").append(L2Config.getShortUptime());
+		tb.append(".zip");
+		
+		final File backupFile = new File(tb.moveToString());
 		
 		int written = 0;
 		ZipOutputStream out = null;
@@ -274,7 +276,7 @@ public abstract class L2DataSource implements DataSource
 			out.setMethod(ZipOutputStream.DEFLATED);
 			out.setLevel(Deflater.BEST_COMPRESSION);
 			out.setComment("L2jFree Schema Backup Utility\r\n\r\nBackup date: "
-					+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS z").format(time));
+					+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS z").format(new Date()));
 			out.putNextEntry(new ZipEntry(databaseName + ".sql"));
 			
 			byte[] buf = new byte[4096];

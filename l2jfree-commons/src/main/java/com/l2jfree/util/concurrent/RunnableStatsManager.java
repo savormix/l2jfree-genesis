@@ -14,11 +14,13 @@
  */
 package com.l2jfree.util.concurrent;
 
-import java.io.PrintStream;
+import java.io.File;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
@@ -29,9 +31,10 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javolution.text.TextBuilder;
 
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.ArrayUtils;
 
+import com.l2jfree.L2Config;
 import com.l2jfree.lang.L2TextBuilder;
 import com.l2jfree.util.logging.L2Logger;
 
@@ -382,21 +385,25 @@ public final class RunnableStatsManager
 		
 		lines.add("</entries>");
 		
-		PrintStream ps = null;
 		try
 		{
-			ps = new PrintStream("MethodStats-" + System.currentTimeMillis() + ".log");
+			FileUtils.forceMkdir(new File("log/methodstats"));
 			
-			for (String line : lines)
-				ps.println(line);
+			final L2TextBuilder tb = L2TextBuilder.newInstance();
+			tb.append("log/methodstats/MethodStats_");
+			tb.append(new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date()));
+			tb.append("_uptime-").append(L2Config.getShortUptime());
+			tb.append(".xml");
+			
+			final String dumpFile = tb.moveToString();
+			
+			FileUtils.writeLines(new File(dumpFile), lines);
+			
+			_log.info("RunnableStatsManager: Method stats successfully dumped to `" + dumpFile + "`!");
 		}
 		catch (Exception e)
 		{
 			_log.warn("", e);
-		}
-		finally
-		{
-			IOUtils.closeQuietly(ps);
 		}
 	}
 	

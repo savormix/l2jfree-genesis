@@ -15,8 +15,6 @@
 package com.l2jfree.lang;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.lang.management.LockInfo;
 import java.lang.management.ManagementFactory;
 import java.lang.management.MonitorInfo;
@@ -30,8 +28,9 @@ import java.util.TreeSet;
 
 import javolution.util.FastList;
 
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.FileUtils;
 
+import com.l2jfree.L2Config;
 import com.l2jfree.util.concurrent.RunnableStatsManager;
 import com.l2jfree.util.logging.L2Logger;
 
@@ -236,21 +235,25 @@ public abstract class L2Thread extends Thread
 	
 	public static void dumpThreads()
 	{
-		PrintWriter pw = null;
 		try
 		{
-			pw = new PrintWriter(new FileWriter("Thread-" + System.currentTimeMillis() + ".log"), true);
+			FileUtils.forceMkdir(new File("log/threadstats"));
 			
-			for (String line : getStats())
-				pw.println(line);
+			final L2TextBuilder tb = L2TextBuilder.newInstance();
+			tb.append("log/threadstats/ThreadStats_");
+			tb.append(new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date()));
+			tb.append("_uptime-").append(L2Config.getShortUptime());
+			tb.append(".log");
+			
+			final String dumpFile = tb.moveToString();
+			
+			FileUtils.writeLines(new File(dumpFile), getStats());
+			
+			_log.info("L2Thread: Thread stats successfully dumped to `" + dumpFile + "`!");
 		}
 		catch (Exception e)
 		{
 			_log.warn("", e);
-		}
-		finally
-		{
-			IOUtils.closeQuietly(pw);
 		}
 	}
 }

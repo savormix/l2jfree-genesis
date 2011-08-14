@@ -23,6 +23,8 @@ import java.util.concurrent.TimeUnit;
 
 import javax.management.MBeanServer;
 
+import org.apache.commons.io.FileUtils;
+
 import com.sun.management.HotSpotDiagnosticMXBean;
 
 import com.l2jfree.L2Config;
@@ -111,14 +113,10 @@ public final class L2System
 	{
 		try
 		{
-			final File dumpFolder = new File("backup/heap");
-			dumpFolder.mkdirs();
-			
-			if (!dumpFolder.exists())
-				throw new RuntimeException("Could not create folder " + dumpFolder.getAbsolutePath());
+			FileUtils.forceMkdir(new File("log/heapdumps"));
 			
 			final L2TextBuilder tb = L2TextBuilder.newInstance();
-			tb.append("backup/heap/");
+			tb.append("log/heapdumps/HeapDump_");
 			tb.append(new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date()));
 			tb.append("_uptime-").append(L2Config.getShortUptime());
 			if (live)
