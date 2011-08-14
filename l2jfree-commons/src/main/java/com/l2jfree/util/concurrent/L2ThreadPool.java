@@ -371,7 +371,7 @@ public final class L2ThreadPool
 			System.out.println("\t... " + getTaskCount(_instantPools) + " instant tasks left.");
 			System.out.println("\t... " + getTaskCount(_longRunningPools) + " long running tasks left.");
 			
-			if (TimeUnit.HOURS.toMillis(12) < (ManagementFactory.getRuntimeMXBean().getUptime()))
+			if (TimeUnit.MINUTES.toMillis(30) < ManagementFactory.getRuntimeMXBean().getUptime())
 				RunnableStatsManager.dumpClassStats(SortBy.TOTAL);
 		}
 		catch (Throwable t)
