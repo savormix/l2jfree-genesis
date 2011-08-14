@@ -14,42 +14,58 @@
  */
 package com.l2jfree.util.concurrent;
 
-import java.util.concurrent.TimeUnit;
-
-import com.l2jfree.lang.L2TextBuilder;
 import com.l2jfree.util.logging.L2Logger;
 
 /**
  * @author NB4L1
  */
-public class ExecuteWrapper implements Runnable
+public final class ExecuteWrapper
 {
 	private static final L2Logger _log = L2Logger.getLogger(ExecuteWrapper.class);
 	
-	private final Runnable _runnable;
-	
-	public ExecuteWrapper(Runnable runnable)
+	public static Runnable wrap(Runnable r)
 	{
-		_runnable = runnable;
+		return new TaskWrapper(r);
 	}
 	
-	@Override
-	public final void run()
+	public static Runnable wrapLongRunning(Runnable r)
 	{
-		ExecuteWrapper.execute(_runnable, getMaximumRuntimeInMillisecWithoutWarning());
+		return new LongRunningTaskWrapper(r);
 	}
 	
-	protected long getMaximumRuntimeInMillisecWithoutWarning()
+	public static final class TaskWrapper implements Runnable
 	{
-		return Long.MAX_VALUE;
+		private final Runnable _runnable;
+		
+		public TaskWrapper(Runnable runnable)
+		{
+			_runnable = runnable;
+		}
+		
+		@Override
+		public void run()
+		{
+			ExecuteWrapper.execute(_runnable);
+		}
+	}
+	
+	public static final class LongRunningTaskWrapper implements Runnable
+	{
+		private final Runnable _runnable;
+		
+		public LongRunningTaskWrapper(Runnable runnable)
+		{
+			_runnable = runnable;
+		}
+		
+		@Override
+		public void run()
+		{
+			ExecuteWrapper.executeLongRunning(_runnable);
+		}
 	}
 	
 	public static void execute(Runnable runnable)
-	{
-		execute(runnable, Long.MAX_VALUE);
-	}
-	
-	public static void execute(Runnable runnable, long maximumRuntimeInMillisecWithoutWarning)
 	{
 		long begin = System.nanoTime();
 		
@@ -63,24 +79,27 @@ public class ExecuteWrapper implements Runnable
 		}
 		finally
 		{
-			long runtimeInNanosec = System.nanoTime() - begin;
-			Class<? extends Runnable> clazz = runnable.getClass();
-			
-			RunnableStatsManager.handleStats(clazz, runtimeInNanosec);
-			
-			long runtimeInMillisec = TimeUnit.NANOSECONDS.toMillis(runtimeInNanosec);
-			
-			if (runtimeInMillisec > maximumRuntimeInMillisecWithoutWarning)
-			{
-				L2TextBuilder tb = L2TextBuilder.newInstance();
-				
-				tb.append(clazz);
-				tb.append(" - execution time: ");
-				tb.append(runtimeInMillisec);
-				tb.append("msec");
-				
-				_log.warn(tb.moveToString());
-			}
+			RunnableStatsManager.handleStats(runnable.getClass(), System.nanoTime() - begin);
 		}
 	}
+	
+	public static void executeLongRunning(Runnable runnable)
+	{
+		long begin = System.nanoTime();
+		
+		try
+		{
+			runnable.run();
+		}
+		catch (RuntimeException e)
+		{
+			_log.warn("Exception in a Runnable execution:", e);
+		}
+		finally
+		{
+			RunnableStatsManager.handleStats(runnable.getClass(), System.nanoTime() - begin,
+					RunnableStatsManager.MAXIMUM_RUNTIME_IN_MILLISEC_WITHOUT_WARNING_FOR_LONG_RUNNING_TASKS);
+		}
+	}
+	
 }

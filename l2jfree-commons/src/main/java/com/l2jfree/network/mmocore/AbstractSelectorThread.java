@@ -19,6 +19,8 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.util.Set;
 
+import com.l2jfree.util.concurrent.RunnableStatsManager;
+
 /**
  * @author NB4L1
  */
@@ -49,37 +51,47 @@ abstract class AbstractSelectorThread<T extends MMOConnection<T, RP, SP>, RP ext
 		// main loop
 		for (;;)
 		{
-			// check for shutdown
-			if (isShuttingDown())
-			{
-				close();
-				return;
-			}
-			
+			final long begin = System.nanoTime();
 			try
 			{
-				if (getSelector().selectNow() > 0)
+				cleanup();
+				
+				// check for shutdown
+				if (isShuttingDown())
 				{
-					Set<SelectionKey> keys = getSelector().selectedKeys();
-					
-					for (SelectionKey key : keys)
-					{
-						handle(key);
-					}
-					
-					keys.clear();
+					close();
+					return;
 				}
+				
+				try
+				{
+					if (getSelector().selectNow() > 0)
+					{
+						Set<SelectionKey> keys = getSelector().selectedKeys();
+						
+						for (SelectionKey key : keys)
+						{
+							handle(key);
+						}
+						
+						keys.clear();
+					}
+				}
+				catch (IOException e)
+				{
+					e.printStackTrace();
+				}
+				catch (RuntimeException e)
+				{
+					e.printStackTrace();
+				}
+				
+				cleanup();
 			}
-			catch (IOException e)
+			finally
 			{
-				e.printStackTrace();
+				RunnableStatsManager.handleStats(getClass(), "select()", System.nanoTime() - begin);
 			}
-			catch (RuntimeException e)
-			{
-				e.printStackTrace();
-			}
-			
-			cleanup();
 			
 			try
 			{
@@ -89,8 +101,6 @@ abstract class AbstractSelectorThread<T extends MMOConnection<T, RP, SP>, RP ext
 			{
 				e.printStackTrace();
 			}
-			
-			cleanup();
 		}
 	}
 	

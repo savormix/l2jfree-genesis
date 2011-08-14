@@ -28,8 +28,7 @@ final class ConnectorThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 	private final int _port;
 	private final boolean _persistent;
 	
-	protected ConnectorThread(MMOController<T, RP, SP> mmoController,
-			InetAddress address, int port, boolean persistent)
+	protected ConnectorThread(MMOController<T, RP, SP> mmoController, InetAddress address, int port, boolean persistent)
 	{
 		super(mmoController);
 		

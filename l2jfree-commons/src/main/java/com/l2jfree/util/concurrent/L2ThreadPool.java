@@ -35,8 +35,6 @@ public final class L2ThreadPool
 {
 	private static final L2Logger _log = L2Logger.getLogger(L2ThreadPool.class);
 	
-	public static final long MAXIMUM_RUNTIME_IN_MILLISEC_WITHOUT_WARNING = 5000;
-	
 	private static final long MAX_DELAY = TimeUnit.NANOSECONDS.toMillis(Long.MAX_VALUE - System.nanoTime()) / 2;
 	
 	private static ScheduledThreadPoolExecutor[] _scheduledPools = new ScheduledThreadPoolExecutor[0];
@@ -144,20 +142,6 @@ public final class L2ThreadPool
 		return Math.max(0, Math.min(MAX_DELAY, delay));
 	}
 	
-	private static final class ThreadPoolExecuteWrapper extends ExecuteWrapper
-	{
-		private ThreadPoolExecuteWrapper(Runnable runnable)
-		{
-			super(runnable);
-		}
-		
-		@Override
-		protected long getMaximumRuntimeInMillisecWithoutWarning()
-		{
-			return MAXIMUM_RUNTIME_IN_MILLISEC_WITHOUT_WARNING;
-		}
-	}
-	
 	private static int _threadPoolRandomizer;
 	
 	private static <T> T getRandomPool(T[] threadPools)
@@ -169,7 +153,7 @@ public final class L2ThreadPool
 	
 	public static ScheduledFuture<?> schedule(Runnable r, long delay)
 	{
-		r = new ThreadPoolExecuteWrapper(r);
+		r = ExecuteWrapper.wrap(r);
 		delay = validate(delay);
 		
 		final ScheduledThreadPoolExecutor stpe = getRandomPool(_scheduledPools);
@@ -182,7 +166,7 @@ public final class L2ThreadPool
 	
 	public static ScheduledFuture<?> scheduleAtFixedRate(Runnable r, long delay, long period)
 	{
-		r = new ThreadPoolExecuteWrapper(r);
+		r = ExecuteWrapper.wrap(r);
 		delay = validate(delay);
 		period = validate(period);
 		
@@ -196,7 +180,7 @@ public final class L2ThreadPool
 	
 	public static void execute(Runnable r)
 	{
-		r = new ThreadPoolExecuteWrapper(r);
+		r = ExecuteWrapper.wrap(r);
 		
 		final ThreadPoolExecutor tpe = getRandomPool(_instantPools);
 		tpe.execute(r);
@@ -204,7 +188,7 @@ public final class L2ThreadPool
 	
 	public static void executeLongRunning(Runnable r)
 	{
-		r = new ExecuteWrapper(r);
+		r = ExecuteWrapper.wrapLongRunning(r);
 		
 		final ThreadPoolExecutor tpe = getRandomPool(_longRunningPools);
 		tpe.execute(r);
@@ -214,7 +198,7 @@ public final class L2ThreadPool
 	
 	public static Future<?> submit(Runnable r)
 	{
-		r = new ThreadPoolExecuteWrapper(r);
+		r = ExecuteWrapper.wrap(r);
 		
 		final ThreadPoolExecutor tpe = getRandomPool(_instantPools);
 		final Future<?> f = tpe.submit(r);
@@ -224,7 +208,7 @@ public final class L2ThreadPool
 	
 	public static Future<?> submitLongRunning(Runnable r)
 	{
-		r = new ExecuteWrapper(r);
+		r = ExecuteWrapper.wrapLongRunning(r);
 		
 		final ThreadPoolExecutor tpe = getRandomPool(_longRunningPools);
 		final Future<?> f = tpe.submit(r);

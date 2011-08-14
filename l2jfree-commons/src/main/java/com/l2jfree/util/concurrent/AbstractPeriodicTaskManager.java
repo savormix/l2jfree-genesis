@@ -16,8 +16,8 @@ package com.l2jfree.util.concurrent;
 
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import com.l2jfree.L2Config;
-import com.l2jfree.L2Config.StartupHook;
+import com.l2jfree.Startup;
+import com.l2jfree.Startup.StartupHook;
 import com.l2jfree.util.Rnd;
 import com.l2jfree.util.logging.L2Logger;
 
@@ -38,7 +38,7 @@ abstract class AbstractPeriodicTaskManager implements Runnable, StartupHook
 	{
 		_period = period;
 		
-		L2Config.addStartupHook(this);
+		Startup.addStartupHook(this);
 		
 		_log.info(getClass().getSimpleName() + ": Initialized.");
 	}

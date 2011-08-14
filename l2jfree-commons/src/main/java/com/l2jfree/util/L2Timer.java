@@ -64,7 +64,7 @@ public final class L2Timer extends Timer
 		@Override
 		public void run()
 		{
-			ExecuteWrapper.execute(_runnable);
+			ExecuteWrapper.executeLongRunning(_runnable);
 		}
 	}
 }

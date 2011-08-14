@@ -20,8 +20,10 @@ import java.util.WeakHashMap;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import com.l2jfree.lang.L2Thread;
+import com.l2jfree.Startup;
+import com.l2jfree.Startup.StartupHook;
 import com.l2jfree.util.concurrent.EmptyLock;
+import com.l2jfree.util.concurrent.L2ThreadPool;
 
 /**
  * @author NB4L1
@@ -32,30 +34,28 @@ public abstract class ObjectPool<E> extends AbstractObjectPool<E>
 	
 	static
 	{
-		final L2Thread t = new L2Thread(ObjectPool.class.getName()) {
+		Startup.addStartupHook(new StartupHook() {
 			@Override
-			protected void runTurn()
+			public void onStartup()
 			{
-				try
-				{
-					for (ObjectPool<?> pool : POOLS.keySet())
-						if (pool != null)
-							pool.purge();
-				}
-				catch (ConcurrentModificationException e)
-				{
-					// skip it
-				}
+				L2ThreadPool.scheduleAtFixedRate(new Runnable() {
+					@Override
+					public void run()
+					{
+						try
+						{
+							for (ObjectPool<?> pool : POOLS.keySet())
+								if (pool != null)
+									pool.purge();
+						}
+						catch (ConcurrentModificationException e)
+						{
+							// skip it
+						}
+					}
+				}, 60000, 60000);
 			}
-			
-			@Override
-			protected void sleepTurn() throws InterruptedException
-			{
-				Thread.sleep(60000);
-			}
-		};
-		t.setDaemon(true);
-		t.start();
+		});
 	}
 	
 	private final Lock _lock;
@@ -73,7 +73,7 @@ public abstract class ObjectPool<E> extends AbstractObjectPool<E>
 	{
 		_lock = concurrent ? new ReentrantLock() : new EmptyLock();
 		
-		POOLS.put(this, POOLS);
+		POOLS.put(this, Boolean.TRUE);
 	}
 	
 	public int getCurrentSize()

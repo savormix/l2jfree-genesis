@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
 import javolution.text.TextBuilder;
@@ -31,6 +32,7 @@ import javolution.text.TextBuilder;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.ArrayUtils;
 
+import com.l2jfree.lang.L2TextBuilder;
 import com.l2jfree.util.logging.L2Logger;
 
 /**
@@ -40,6 +42,9 @@ import com.l2jfree.util.logging.L2Logger;
 public final class RunnableStatsManager
 {
 	private static final L2Logger _log = L2Logger.getLogger(RunnableStatsManager.class);
+	
+	public static final long MAXIMUM_RUNTIME_IN_MILLISEC_WITHOUT_WARNING_FOR_TASKS = 5000;
+	public static final long MAXIMUM_RUNTIME_IN_MILLISEC_WITHOUT_WARNING_FOR_LONG_RUNNING_TASKS = Long.MAX_VALUE;
 	
 	private static final Map<Class<?>, ClassStat> _classStats = new HashMap<Class<?>, ClassStat>();
 	
@@ -53,7 +58,7 @@ public final class RunnableStatsManager
 		
 		private ClassStat(Class<?> clazz)
 		{
-			_className = clazz.getName().replace("com.l2jfree.gameserver.", "");
+			_className = clazz.getName().replace("com.l2jfree.", "");
 			_runnableStat = new MethodStat(_className, "run()");
 			
 			_methodNames = new String[] { "run()" };
@@ -114,19 +119,33 @@ public final class RunnableStatsManager
 			_methodName = methodName;
 		}
 		
-		private void handleStats(long runTime)
+		private void handleStats(long runtimeInNanosec, long maximumRuntimeInMillisecWithoutWarning)
 		{
 			_lock.lock();
 			try
 			{
 				_count++;
-				_total += runTime;
-				_min = Math.min(_min, runTime);
-				_max = Math.max(_max, runTime);
+				_total += runtimeInNanosec;
+				_min = Math.min(_min, runtimeInNanosec);
+				_max = Math.max(_max, runtimeInNanosec);
 			}
 			finally
 			{
 				_lock.unlock();
+			}
+			
+			final long runtimeInMillisec = TimeUnit.NANOSECONDS.toMillis(runtimeInNanosec);
+			
+			if (runtimeInMillisec > maximumRuntimeInMillisecWithoutWarning)
+			{
+				final L2TextBuilder tb = L2TextBuilder.newInstance();
+				
+				tb.append(_className);
+				tb.append(" - execution time: ");
+				tb.append(runtimeInMillisec);
+				tb.append("msec");
+				
+				_log.warn(tb.moveToString());
 			}
 		}
 	}
@@ -149,14 +168,38 @@ public final class RunnableStatsManager
 		return new ClassStat(clazz);
 	}
 	
-	public static void handleStats(Class<? extends Runnable> clazz, long runTime)
+	public static void handleStats(Class<? extends Runnable> clazz, long runtimeInNanosec)
 	{
-		getClassStat(clazz, false).getRunnableStat().handleStats(runTime);
+		final ClassStat classStat = getClassStat(clazz, false);
+		final MethodStat methodStat = classStat.getRunnableStat();
+		
+		methodStat.handleStats(runtimeInNanosec, MAXIMUM_RUNTIME_IN_MILLISEC_WITHOUT_WARNING_FOR_TASKS);
 	}
 	
-	public static void handleStats(Class<?> clazz, String methodName, long runTime)
+	public static void handleStats(Class<? extends Runnable> clazz, long runtimeInNanosec,
+			long maximumRuntimeInMillisecWithoutWarning)
 	{
-		getClassStat(clazz, false).getMethodStat(methodName, false).handleStats(runTime);
+		final ClassStat classStat = getClassStat(clazz, false);
+		final MethodStat methodStat = classStat.getRunnableStat();
+		
+		methodStat.handleStats(runtimeInNanosec, maximumRuntimeInMillisecWithoutWarning);
+	}
+	
+	public static void handleStats(Class<?> clazz, String methodName, long runtimeInNanosec)
+	{
+		final ClassStat classStat = getClassStat(clazz, false);
+		final MethodStat methodStat = classStat.getMethodStat(methodName, false);
+		
+		methodStat.handleStats(runtimeInNanosec, MAXIMUM_RUNTIME_IN_MILLISEC_WITHOUT_WARNING_FOR_TASKS);
+	}
+	
+	public static void handleStats(Class<?> clazz, String methodName, long runtimeInNanosec,
+			long maximumRuntimeInMillisecWithoutWarning)
+	{
+		final ClassStat classStat = getClassStat(clazz, false);
+		final MethodStat methodStat = classStat.getMethodStat(methodName, false);
+		
+		methodStat.handleStats(runtimeInNanosec, maximumRuntimeInMillisecWithoutWarning);
 	}
 	
 	public static enum SortBy

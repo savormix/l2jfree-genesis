@@ -22,6 +22,6 @@ public abstract class FIFORunnableQueue<T extends Runnable> extends FIFOSimpleEx
 	@Override
 	protected final void removeAndExecuteFirst()
 	{
-		ExecuteWrapper.execute(removeFirst(), L2ThreadPool.MAXIMUM_RUNTIME_IN_MILLISEC_WITHOUT_WARNING);
+		ExecuteWrapper.execute(removeFirst());
 	}
 }
