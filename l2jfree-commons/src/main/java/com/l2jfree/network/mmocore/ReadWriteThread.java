@@ -332,6 +332,11 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		
 		if (client.decipher(buf, dsh) && buf.hasRemaining())
 		{
+			// remove useless bytes
+			dsh.decreaseSize(dsh.getMinPadding());
+			// calculate possibly remaining useless bytes
+			final int maxPossiblePadding = dsh.getMaxPadding() - dsh.getMinPadding();
+			
 			// apply limit
 			final int limit = buf.limit();
 			buf.limit(pos + dsh.getSize());
@@ -344,6 +349,18 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 				
 				if (cp != null)
 				{
+					// remove useless bytes #2, using packet specs
+					int maxLeftoverPadding = maxPossiblePadding;
+					final int overflow = buf.remaining() - cp.getMaximumLength();
+					if (maxPossiblePadding > 0 && // there may be useless bytes
+							overflow > 0) // and we have too much
+					{
+						// avoid any damage to the packet body
+						final int removable = Math.min(overflow, maxPossiblePadding);
+						buf.limit(buf.limit() - removable);
+						maxLeftoverPadding -= removable;
+					}
+					
 					getMmoBuffer().setByteBuffer(buf);
 					cp.setClient(client);
 					
@@ -363,7 +380,8 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 							
 							client.getPacketQueue().execute(cp);
 							
-							if (buf.hasRemaining() && buf.remaining() > dsh.getMaxPadding())
+							if (buf.hasRemaining() && // some unused data, a bad sign
+									buf.remaining() > maxLeftoverPadding) // and definitely not padded bytes
 							{
 								// TODO: disabled until packet structures updated properly
 								//report(ErrorMode.BUFFER_OVER_FLOW, client, cp, null);

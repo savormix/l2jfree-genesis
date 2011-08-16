@@ -23,10 +23,15 @@ public class CommonsInfo
 {
 	protected CommonsInfo()
 	{
+		// utility class
 	}
 	
 	private static final FormattedVersion COMMONS_VERSION = new FormattedVersion(L2Config.class);
 	
+	/**
+	 * Shows startup and version information.
+	 * @param version version info
+	 */
 	public static void showStartupInfo(FormattedVersion version)
 	{
 		System.out.println("");
@@ -44,6 +49,10 @@ public class CommonsInfo
 		System.out.println("");
 	}
 	
+	/**
+	 * Returns version information string.
+	 * @return version info
+	 */
 	public static String[] getFullVersionInfo()
 	{
 		return new String[] { "l2jfree-commons :    " + COMMONS_VERSION.getFullVersionInfo() };

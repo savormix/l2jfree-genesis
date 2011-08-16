@@ -19,27 +19,24 @@ import java.nio.ByteOrder;
 import com.l2jfree.util.Introspection;
 
 /**
- * @author KenM
+ * This class provides a convenient way to pass specific parameters to different
+ * parts of MMOCore as well as to document these parameters.
+ * @author KenM (reference)
+ * @author NB4L1 (l2jfree)
+ * @author savormix (l2jfree)
  */
 public final class MMOConfig
 {
 	/**
-	 * Specifies the minimum allowed buffer size.
-	 * <BR><BR>
-	 * It is generally accepted that this value should be equal to:<BR>
-	 * <I>Maximum length of a valid packet + 1</I><BR>
-	 * When a largest possible packet is read, the last byte helps
-	 * to identify whether there <U>may</U> be available bytes in
-	 * the channel/socket.
-	 * <BR><BR>
-	 * So if the packet's size field is a word, the minimum buffer
-	 * size should be <I>0xFFFF + 1 = 0x10000</I>.
+	 * Specifies the maximum packet size for a network protocol that
+	 * uses a word to declare the packet's size.
 	 */
-	public static final int MINIMUM_BUFFER_SIZE = 64 * 1024;
+	public static final int DEFAULT_MAX_PACKET_SIZE = 64 * 1024 - 1;
 	
 	private final String _name;
 	private boolean _modifiable;
 	
+	private final int _minBufferSize;
 	private int _bufferSize;
 	
 	private int _maxOutgoingPacketsPerPass;
@@ -57,14 +54,33 @@ public final class MMOConfig
 	private int _threadCount;
 	
 	/**
-	 * Creates a MMOCore configuration.
+	 * Creates a MMOCore configuration to be passed to a
+	 * {@link com.l2jfree.network.mmocore.MMOController}.
+	 * <BR><BR>
+	 * This configuration automatically picks an optimal buffer size based on
+	 * a rule of thumb that this value should be equal to:<BR>
+	 * <I>Maximum length of a valid packet + 1</I><BR>
+	 * When a largest possible packet is read, the last byte helps
+	 * to identify whether there <U>may</U> be available bytes in
+	 * the channel/socket.
+	 * <BR><BR>
+	 * Setting a higher buffer size via {@link #setBufferSize(int)} may
+	 * reduce network I/O load as less socket write/read calls will be done.
+	 * However, this is only useful in situations where large amounts of
+	 * [large] packets are being transfered AND the network throughput is
+	 * high (like <A href="http://www.infinibandta.org/">InfiniBand</A>).
 	 * @param name name of configuration
+	 * @param maxPacketSize maximum allowed packet size
 	 */
-	public MMOConfig(String name)
+	public MMOConfig(String name, int maxPacketSize)
 	{
+		if (maxPacketSize < 1)
+			throw new IllegalArgumentException("To ensure data flow, the maximum allowed packet size must be at least 1 byte.");
+		
 		_name = name;
 		_modifiable = true;
-		_bufferSize = MINIMUM_BUFFER_SIZE;
+		_minBufferSize = maxPacketSize;
+		_bufferSize = (maxPacketSize == Integer.MAX_VALUE ? Integer.MAX_VALUE : ++maxPacketSize);
 		_maxOutgoingPacketsPerPass = Integer.MAX_VALUE;
 		_maxIncomingPacketsPerPass = Integer.MAX_VALUE;
 		_maxOutgoingBytesPerPass = Integer.MAX_VALUE;
@@ -73,6 +89,19 @@ public final class MMOConfig
 		_helperBufferCount = 20;
 		_byteOrder = ByteOrder.LITTLE_ENDIAN;
 		_threadCount = Runtime.getRuntime().availableProcessors();
+	}
+	
+	/**
+	 * Creates a MMOCore configuration to be passed to a
+	 * {@link com.l2jfree.network.mmocore.MMOController}.
+	 * <BR><BR>
+	 * It is assumed that the maximum packet size is {@value #DEFAULT_MAX_PACKET_SIZE}.
+	 * @param name name of configuration
+	 * @see #MMOConfig(String, int)
+	 */
+	public MMOConfig(String name)
+	{
+		this(name, DEFAULT_MAX_PACKET_SIZE);
 	}
 	
 	/**
@@ -103,7 +132,7 @@ public final class MMOConfig
 	/**
 	 * Returns whether this configuration can be altered.
 	 * <BR><BR>
-	 * Already used configurations cannot be altered.
+	 * Configurations that have already been used cannot be altered.
 	 * @return is this configuration modifiable
 	 */
 	public boolean isModifiable()
@@ -112,11 +141,22 @@ public final class MMOConfig
 	}
 	
 	/**
+	 * Returns the minimum allowed size (in bytes) of byte buffers used in network I/O.
+	 * <BR><BR>
+	 * Defaults to the specified maximum packet size.
+	 * @return buffer's size in bytes
+	 */
+	public int getMinBufferSize()
+	{
+		return _minBufferSize;
+	}
+	
+	/**
 	 * Sets the size (in bytes) of byte buffers used in network I/O.
 	 * <BR><BR>
-	 * Defaults to {@link #MINIMUM_BUFFER_SIZE}.
+	 * Defaults to {@link #getMinBufferSize()} + 1.
 	 * @param bufferSize buffer's size in bytes
-	 * @throws IllegalArgumentException if <TT>bufferSize</TT> < {@value #MINIMUM_BUFFER_SIZE}
+	 * @throws IllegalArgumentException if <TT>bufferSize</TT> < {@link #getMinBufferSize()}
 	 * @throws IllegalStateException if this configuration is already in use
 	 */
 	public void setBufferSize(int bufferSize)
@@ -124,8 +164,8 @@ public final class MMOConfig
 	{
 		tryModify();
 		
-		if (bufferSize < MINIMUM_BUFFER_SIZE)
-			throw new IllegalArgumentException("Buffer's size too low.");
+		if (bufferSize < getMinBufferSize())
+			throw new IllegalArgumentException("Buffer's size is too low.");
 		
 		_bufferSize = bufferSize;
 	}
@@ -133,7 +173,7 @@ public final class MMOConfig
 	/**
 	 * Returns the desired size (in bytes) of byte buffers used in network I/O.
 	 * <BR><BR>
-	 * Defaults to {@value #MINIMUM_BUFFER_SIZE}.
+	 * Defaults to {@link #getMinBufferSize()} + 1.
 	 * @return buffer's size in bytes
 	 */
 	public int getBufferSize()
@@ -143,6 +183,8 @@ public final class MMOConfig
 	
 	/**
 	 * Sets the amount of "helper" byte buffers kept in cache for further usage.
+	 * <BR><BR>
+	 * Defaults to 20 byte buffers.
 	 * @param helperBufferCount count of additional byte buffers
 	 * @throws IllegalArgumentException if <TT>helperBufferCount</TT> < 0
 	 * @throws IllegalStateException if this configuration is already in use
@@ -160,6 +202,8 @@ public final class MMOConfig
 	/**
 	 * Returns the desired amount of "helper" byte buffers kept in cache for
 	 * further usage.
+	 * <BR><BR>
+	 * Defaults to 20 byte buffers.
 	 * @return count of additional byte buffers
 	 */
 	public int getHelperBufferCount()

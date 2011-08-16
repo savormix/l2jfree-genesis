@@ -32,11 +32,24 @@ public final class Shutdown
 	private static TerminationStatus _mode = TerminationStatus.INVALID;
 	private static ShutdownCounter _shutdownCounter;
 	
+	/**
+	 * Returns whether this application has been requested to end execution.
+	 * @return whether a shutdown was ordered
+	 */
 	public static boolean isInProgress()
 	{
 		return _shutdownCounter != null;
 	}
 	
+	/**
+	 * Requests this application to end execution after the specified number of seconds,
+	 * on behalf of <TT>initiator</TT>.
+	 * <BR><BR>
+	 * If there is a pending request, it will be overridden.
+	 * @param mode request type
+	 * @param seconds delay in seconds
+	 * @param initiator requestor (may be <TT>null</TT>)
+	 */
 	public static synchronized void start(TerminationStatus mode, int seconds, String initiator)
 	{
 		if (isInProgress())
@@ -55,6 +68,10 @@ public final class Shutdown
 		_shutdownCounter.start();
 	}
 	
+	/**
+	 * Cancels a requested shutdown on behalf of <TT>initiator</TT>.
+	 * @param initiator canceler (may be <TT>null</TT>)
+	 */
 	public static synchronized void abort(String initiator)
 	{
 		if (!isInProgress())
@@ -201,6 +218,10 @@ public final class Shutdown
 		}
 	}
 	
+	/**
+	 * Adds a global shutdown hook to run all registered shutdown hooks
+	 * sequentially in order they were registered.
+	 */
 	public static void initShutdownHook()
 	{
 		Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -225,6 +246,11 @@ public final class Shutdown
 	
 	private static final Set<Runnable> _shutdownHooks = new HashSet<Runnable>();
 	
+	/**
+	 * Adds a managed shutdown hook to be run before the application terminates
+	 * unless an uncaught termination signal is used.
+	 * @param hook shutdown hook
+	 */
 	public static synchronized void addShutdownHook(Runnable hook)
 	{
 		_shutdownHooks.add(hook);

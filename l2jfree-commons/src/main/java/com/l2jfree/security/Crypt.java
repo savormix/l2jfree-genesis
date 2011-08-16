@@ -27,12 +27,21 @@ public class Crypt
 	private final byte[] _key = new byte[16];
 	private boolean _isEnabled;
 	
+	/**
+	 * Specifies the key to be shared for both encryption and decryption.
+	 * @param key a key
+	 */
 	public void setKey(byte[] key)
 	{
 		System.arraycopy(key, 0, _key, 0, key.length);
 		_isEnabled = true;
 	}
 	
+	/**
+	 * Decrypts the given buffer contents starting at it's current
+	 * position and updates the shared key.
+	 * @param buf packet's body
+	 */
 	public void decrypt(ByteBuffer buf)
 	{
 		if (!_isEnabled)
@@ -60,6 +69,11 @@ public class Crypt
 		_key[11] = (byte)(old >> 0x18 & 0xff);
 	}
 	
+	/**
+	 * Encrypts the given buffer contents starting at it's current
+	 * position and updates the shared key.
+	 * @param buf packet's body
+	 */
 	public void encrypt(ByteBuffer buf)
 	{
 		if (!_isEnabled)

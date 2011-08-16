@@ -15,17 +15,20 @@
 package com.l2jfree.network.mmocore;
 
 /**
+ * This class provides a simple yet verbose way to strip certain elements that may
+ * be attached to the packet's body before sending (such as checksums).
  * @author savormix
- *
  */
 public class DataSizeHolder
 {
 	private int _size;
+	private int _minPadding;
 	private int _maxPadding;
 	
 	DataSizeHolder(int size)
 	{
 		_size = size;
+		_minPadding = 0;
 		_maxPadding = 0;
 	}
 	
@@ -40,6 +43,12 @@ public class DataSizeHolder
 	
 	/**
 	 * Decreases the effective data size.
+	 * <BR><BR>
+	 * This method should be used to remove certain elements, such as
+	 * checksums, that were deliberately attached AND meaningful AND
+	 * do not belong to the real packet's body.<BR>
+	 * To remove padded bytes (that serve no purpose other that sizing),
+	 * use {@link #setPadding(int, int)}.
 	 * @param diff difference in bytes
 	 */
 	public void decreaseSize(int diff)
@@ -49,8 +58,18 @@ public class DataSizeHolder
 	}
 	
 	/**
-	 * Returns the maximum number of bytes that may appear
-	 * after a valid packet's body.
+	 * Returns the number of padded bytes that are guaranteed
+	 * to trail a valid packet's body.
+	 * @return minimum number of padded bytes
+	 */
+	public int getMinPadding()
+	{
+		return _minPadding;
+	}
+	
+	/**
+	 * Returns the maximum number of padded bytes that may
+	 * trail a valid packet's body.
 	 * @return maximum number of padded bytes
 	 */
 	public int getMaxPadding()
@@ -59,11 +78,36 @@ public class DataSizeHolder
 	}
 	
 	/**
-	 * Sets the maximum number of bytes that may appear
-	 * after a valid packet's body.
-	 * @param maxPadding maximum number of padded bytes
+	 * Specifies the received packet's padding parameters.
+	 * <BR><BR>
+	 * This method should be used to notify the underlying networking layer
+	 * that this packet uses a padding scheme to achieve specific <U>sizes</U>.
+	 * The padded bytes serve no other purpose (are meaningless).
+	 * <BR><BR>
+	 * Based on the specified values, the underlying networking layer will
+	 * decide whether this packet is a valid packet and whether/how the
+	 * padded bytes should be removed.<BR>
+	 * <B>There is no guarantee that any padded bytes will be removed</B>.
+	 * <BR><BR>
+	 * To remove meaningful elements that have been attached to the
+	 * packet's body on any other purpose, use {@link #decreaseSize(int)}.<BR>
+	 * @param minBytes minimum number of padded bytes
+	 * @param maxBytes maximum number of padded bytes
 	 */
-	public void setMaxPadding(int maxPadding)
+	public void setPadding(int minBytes, int maxBytes)
+	{
+		maxBytes = Math.max(minBytes, maxBytes);
+		setMinPadding(minBytes);
+		setMaxPadding(maxBytes);
+	}
+	
+	private void setMinPadding(int minPadding)
+	{
+		if (minPadding > 0)
+			_minPadding = minPadding;
+	}
+	
+	private void setMaxPadding(int maxPadding)
 	{
 		if (maxPadding > 0)
 			_maxPadding = maxPadding;

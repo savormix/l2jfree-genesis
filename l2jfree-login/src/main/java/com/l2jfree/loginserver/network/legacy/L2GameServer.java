@@ -104,7 +104,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 		final int dataSize = size.getSize();
 		
 		size.decreaseSize(4); // checksum
-		size.setMaxPadding(8);
+		size.setPadding(1, 8);
 		
 		getCipher().decipher(buf, dataSize);
 		

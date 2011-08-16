@@ -60,6 +60,7 @@ public final class PlayerTraceRt extends L2GameServerPacket
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		// TODO Auto-generated method stub
+		// Unfortunately, these may all be easily spoofed
 		System.out.println(getClient() + "|" + getType() + "|" + _account + "|" + _ip + "|" + Arrays.toString(_hops));
 	}
 }

@@ -85,7 +85,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 		final int dataSize = size.getSize();
 		
 		size.decreaseSize(4); // checksum
-		size.setMaxPadding(8);
+		size.setPadding(1, 8);
 		
 		getCipher().decipher(buf, dataSize);
 		

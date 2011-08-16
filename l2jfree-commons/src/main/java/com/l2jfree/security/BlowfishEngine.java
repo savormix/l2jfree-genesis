@@ -498,26 +498,30 @@ public class BlowfishEngine {
 		return BLOCK_SIZE;
 	}
 
-	private int BytesTo32bits(ByteBuffer b, int i) {
-		ByteOrder bo = b.order();
-		b.order(ByteOrder.LITTLE_ENDIAN);
-
+	private int BytesTo32bits(ByteBuffer src, int pos) {
+		ByteOrder bo = src.order();
 		try
 		{
-			return b.getInt(i);
+			src.order(ByteOrder.LITTLE_ENDIAN);
+			return src.getInt(pos);
 		}
 		finally
 		{
-			b.order(bo);
+			src.order(bo);
 		}
 	}
 
-	private void Bits32ToBytes(int in, ByteBuffer b, int offset) {
-		ByteOrder bo = b.order();
-		b.order(ByteOrder.LITTLE_ENDIAN);
-
-		b.putInt(offset, in);
-		b.order(bo);
+	private void Bits32ToBytes(int val, ByteBuffer dest, int pos) {
+		ByteOrder bo = dest.order();
+		try
+		{
+			dest.order(ByteOrder.LITTLE_ENDIAN);
+			dest.putInt(pos, val);
+		}
+		finally
+		{
+			dest.order(bo);
+		}
 	}
 
 	private void encryptBlock(ByteBuffer buf, int offset) {

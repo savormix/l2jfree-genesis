@@ -25,12 +25,22 @@ public class GameCrypt
 	private final byte[] _outKey = new byte[16];
 	private boolean _isEnabled;
 	
+	/**
+	 * Specifies the key to be used for both encryption and decryption.
+	 * @param key a key
+	 */
 	public void setKey(byte[] key)
 	{
 		System.arraycopy(key, 0, _inKey, 0, 16);
 		System.arraycopy(key, 0, _outKey, 0, 16);
 	}
 	
+	/**
+	 * Decrypts the given byte array and updates the decryption key.
+	 * @param raw data
+	 * @param offset offset to packet body
+	 * @param size packet body size
+	 */
 	public void decrypt(byte[] raw, final int offset, final int size)
 	{
 		if (!_isEnabled)
@@ -57,6 +67,12 @@ public class GameCrypt
 		_inKey[11] = (byte)(old >> 0x18 & 0xff);
 	}
 	
+	/**
+	 * Encrypts the given byte array and updates the encryption key.
+	 * @param raw data
+	 * @param offset offset to packet body
+	 * @param size packet body size
+	 */
 	public void encrypt(byte[] raw, final int offset, final int size)
 	{
 		if (!_isEnabled)

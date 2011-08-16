@@ -47,7 +47,7 @@ public final class Util
 		
 		sb.append("={ ").append(sectionName).append(" }");
 		
-		_log.log(new PrintSectionLogRecord(Level.INFO, sb.toString()));
+		_log.log(new PrintSectionLogRecord(sb.toString()));
 	}
 	
 	/** Helps to bypass the log formatters. */
@@ -55,34 +55,60 @@ public final class Util
 	{
 		private static final long serialVersionUID = 8499381472396828554L;
 		
-		public PrintSectionLogRecord(Level level, String msg)
+		/**
+		 * Creates a default log record to be used in {@link Util#printSection(String)}.
+		 * @param msg message to be logged
+		 */
+		public PrintSectionLogRecord(String msg)
 		{
 			super(Level.INFO, msg);
 		}
 	}
 	
 	// some sys info utils
+	/**
+	 * Returns the number of CPU cores <U>currently</U> available to this application.
+	 * @return available CPU cores
+	 * @see Runtime#availableProcessors()
+	 */
 	public static int getAvailableProcessors()
 	{
 		Runtime rt = Runtime.getRuntime();
 		return rt.availableProcessors();
 	}
 	
+	/**
+	 * Returns the name of the underlying operating system.
+	 * @return OS name
+	 */
 	public static String getOSName()
 	{
 		return System.getProperty("os.name");
 	}
 	
+	/**
+	 * Returns the version info of the underlying operating system.
+	 * @return OS version
+	 */
 	public static String getOSVersion()
 	{
 		return System.getProperty("os.version");
 	}
 	
+	/**
+	 * Returns the information about the underlying CPU architecture that is
+	 * supported by the underlying operating system.
+	 * @return OS architecture
+	 */
 	public static String getOSArch()
 	{
 		return System.getProperty("os.arch");
 	}
 	
+	/**
+	 * Returns information about application's memory usage.
+	 * @return heap memory usage
+	 */
 	public static String[] getMemUsage()
 	{
 		return L2System.getMemoryUsageStatistics();
@@ -91,7 +117,7 @@ public final class Util
 	/**
 	 * Returns a number formatted with "," delimiter
 	 * 
-	 * @param value
+	 * @param value number
 	 * @return String formatted number
 	 */
 	public static String formatNumber(long value)

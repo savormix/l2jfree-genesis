@@ -187,6 +187,17 @@ public final class GPLLicenseChecker extends L2Config
 				return null;
 		
 		int i = 0;
+		if (!CLEARED)
+		{
+			for (; i < CONFIDENTIAL.length; i++)
+			{
+				if (!list.get(i).equals(CONFIDENTIAL[i]))
+				{
+					MODIFIED.add(f.getPath() + ":" + i);
+					return list;
+				}
+			}
+		}
 		for (; i < LICENSE.length; i++)
 		{
 			if (!list.get(i).equals(LICENSE[i]))
