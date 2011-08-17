@@ -79,7 +79,7 @@ public final class GPLLicenseChecker extends L2Config
 			if (f.isHidden())
 				return false;
 			// skip? package-info
-			else if (f.getName().charAt(0) == 'p')
+			else if (f.getName().equals("package-info.java"))
 				return false;
 			
 			return f.isDirectory() || f.getName().endsWith(".java");
