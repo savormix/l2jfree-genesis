@@ -33,7 +33,7 @@ import javolution.util.FastList;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public final class L2Collections
 {
-	private static final Object[] EMPTY_ARRAY = new Object[0];
+	public static final Object[] EMPTY_ARRAY = new Object[0];
 	
 	private static final class EmptyListIterator implements ListIterator<Object>
 	{
@@ -446,12 +446,12 @@ public final class L2Collections
 		}
 	}
 	
-	private static <T> ListIterator<T> emptyListIterator()
+	public static <T> ListIterator<T> emptyListIterator()
 	{
 		return (ListIterator<T>)EmptyListIterator.INSTANCE;
 	}
 	
-	private static <T> Collection<T> emptyCollection()
+	public static <T> Collection<T> emptyCollection()
 	{
 		return (Collection<T>)EmptyCollection.INSTANCE;
 	}

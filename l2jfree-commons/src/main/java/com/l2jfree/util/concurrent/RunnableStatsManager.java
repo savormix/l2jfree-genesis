@@ -70,12 +70,12 @@ public final class RunnableStatsManager
 			_classStats.put(clazz, this);
 		}
 		
-		private MethodStat getRunnableStat()
+		public MethodStat getRunnableStat()
 		{
 			return _runnableStat;
 		}
 		
-		private MethodStat getMethodStat(String methodName, boolean synchronizedAlready)
+		public MethodStat getMethodStat(String methodName, boolean synchronizedAlready)
 		{
 			// method names will be interned automatically because of compiling, so this gonna work
 			if (methodName == "run()")
@@ -122,7 +122,7 @@ public final class RunnableStatsManager
 			_methodName = methodName;
 		}
 		
-		private void handleStats(long runtimeInNanosec, long maximumRuntimeInMillisecWithoutWarning)
+		public void handleStats(long runtimeInNanosec, long maximumRuntimeInMillisecWithoutWarning)
 		{
 			_lock.lock();
 			try
