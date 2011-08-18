@@ -45,7 +45,7 @@ public final class ProtocolAnswer extends L2ServerPacket
 	}
 	
 	@Override
-	protected int getMainOpcode()
+	protected int getOpcode()
 	{
 		return 0x2e;
 	}

@@ -18,13 +18,11 @@ import com.l2jfree.loginserver.network.client.L2LoginClient;
 import com.l2jfree.network.mmocore.ReceivablePacket;
 
 /**
- * Just a wrapper class for convenience.
+ * Just for convenience.
+ * 
  * @author savormix
  */
 public abstract class L2ClientPacket extends ReceivablePacket<L2LoginClient, L2ClientPacket, L2ServerPacket>
 {
-	protected L2ClientPacket()
-	{
-		super();
-	}
+	// just for convenience
 }

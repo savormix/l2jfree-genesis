@@ -15,38 +15,14 @@
 package com.l2jfree.loginserver.network.client.packets;
 
 import com.l2jfree.loginserver.network.client.L2LoginClient;
-import com.l2jfree.network.mmocore.MMOBuffer;
-import com.l2jfree.network.mmocore.SendablePacket;
+import com.l2jfree.network.mmocore.DefaultSendablePacket;
 
 /**
- * Just a wrapper class for convenience.
+ * Just for convenience.
+ * 
  * @author savormix
  */
-public abstract class L2ServerPacket extends SendablePacket<L2LoginClient, L2ClientPacket, L2ServerPacket>
+public abstract class L2ServerPacket extends DefaultSendablePacket<L2LoginClient, L2ClientPacket, L2ServerPacket>
 {
-	protected L2ServerPacket()
-	{
-		super();
-	}
-	
-	/**
-	 * Returns this packet's identifier.
-	 * @return a number from the interval
-	 * 			[{@link java.lang.Byte#MIN_VALUE}; {@link java.lang.Byte#MAX_VALUE}]
-	 */
-	protected abstract int getOpcode();
-	
-	/**
-	 * Embed data into a packet.
-	 * @param client packet receiver
-	 * @param buf buffer for packet's data
-	 */
-	protected abstract void writeImpl(L2LoginClient client, MMOBuffer buf);
-	
-	@Override
-	protected final void write(L2LoginClient client, MMOBuffer buf) throws RuntimeException
-	{
-		buf.writeC(getOpcode());
-		writeImpl(client, buf);
-	}
+	// just for convenience
 }

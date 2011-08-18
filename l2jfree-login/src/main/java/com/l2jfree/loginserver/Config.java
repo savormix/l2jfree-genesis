@@ -29,9 +29,4 @@ public class Config extends L2Config
 		
 		initApplication(ConfigMarker.class.getPackage(), L2LoginThreadPools.class, L2LoginDataSource.class);
 	}
-	
-	protected Config()
-	{
-		super();
-	}
 }

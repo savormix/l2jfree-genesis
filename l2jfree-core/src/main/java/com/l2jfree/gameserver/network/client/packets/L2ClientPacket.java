@@ -18,13 +18,11 @@ import com.l2jfree.gameserver.network.client.L2CoreClient;
 import com.l2jfree.network.mmocore.ReceivablePacket;
 
 /**
- * Just a wrapper class for convenience.
+ * Just for convenience.
+ * 
  * @author savormix
  */
 public abstract class L2ClientPacket extends ReceivablePacket<L2CoreClient, L2ClientPacket, L2ServerPacket>
 {
-	protected L2ClientPacket()
-	{
-		super();
-	}
+	// just for convenience
 }

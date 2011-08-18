@@ -23,13 +23,9 @@ package com.l2jfree.network.mmocore;
 public abstract class SendablePacket<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
 		extends AbstractPacket
 {
-	protected SendablePacket()
-	{
-		super();
-	}
-	
 	/**
 	 * Embed data into a network packet.
+	 * 
 	 * @param client packet sender
 	 * @param buf buffer for packet's data
 	 * @throws RuntimeException if a generic failure occurs while writing

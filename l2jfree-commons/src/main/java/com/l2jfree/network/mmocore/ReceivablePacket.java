@@ -41,11 +41,6 @@ public abstract class ReceivablePacket<T extends MMOConnection<T, RP, SP>, RP ex
 	/** Represent the minimum amount of bytes required for {@link MMOBuffer#readS()}. */
 	protected static final int READ_S = 2;
 	
-	protected ReceivablePacket()
-	{
-		super();
-	}
-	
 	private T _client;
 	
 	final void setClient(T client)
