@@ -79,10 +79,10 @@ public final class L2System
 	
 	public static String[] getMemoryUsageStatistics()
 	{
-		double max = Runtime.getRuntime().maxMemory() / 1024; // maxMemory is the upper limit the jvm can use
-		double allocated = Runtime.getRuntime().totalMemory() / 1024; //totalMemory the size of the current allocation pool
+		double max = Runtime.getRuntime().maxMemory() / 1024.0; // maxMemory is the upper limit the jvm can use
+		double allocated = Runtime.getRuntime().totalMemory() / 1024.0; //totalMemory the size of the current allocation pool
 		double nonAllocated = max - allocated; //non allocated memory till jvm limit
-		double cached = Runtime.getRuntime().freeMemory() / 1024; // freeMemory the unused memory in the allocation pool
+		double cached = Runtime.getRuntime().freeMemory() / 1024.0; // freeMemory the unused memory in the allocation pool
 		double used = allocated - cached; // really used memory
 		double useable = max - used; //allocated, but non-used and non-allocated memory
 		

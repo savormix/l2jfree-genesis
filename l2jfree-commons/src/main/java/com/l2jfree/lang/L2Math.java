@@ -151,8 +151,9 @@ public final class L2Math
 	{
 		final long diffX = x1 - x2;
 		final long diffY = y1 - y2;
+		final long limit2 = limit;
 		
-		return diffX * diffX + diffY * diffY <= limit * limit;
+		return diffX * diffX + diffY * diffY <= limit2 * limit2;
 	}
 	
 	public static boolean isDistanceLessThan(int x1, int y1, int z1, int x2, int y2, int z2, int limit)
@@ -160,8 +161,9 @@ public final class L2Math
 		final long diffX = x1 - x2;
 		final long diffY = y1 - y2;
 		final long diffZ = z1 - z2;
+		final long limit2 = limit;
 		
-		return diffX * diffX + diffY * diffY + diffZ * diffZ <= limit * limit;
+		return diffX * diffX + diffY * diffY + diffZ * diffZ <= limit2 * limit2;
 	}
 	
 	public static boolean isDistanceLessThanSq(int x1, int y1, int x2, int y2, long limitSq)
