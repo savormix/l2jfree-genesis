@@ -38,14 +38,11 @@ public final class ServerList extends L2ServerPacket
 	 */
 	public ServerList()
 	{
-		_gameServers = new TreeSet<L2GameServerView>();
-		for (L2GameServerView lgsv : L2GameServerCache.getInstance().getRegisteredGameServers())
-			_gameServers.add(lgsv);
+		_gameServers = new TreeSet<L2GameServerView>(L2GameServerCache.getInstance().getRegisteredGameServers());
 		
-		Object[] authed = L2LegacyConnections.getInstance().getAuthorized().toArray();
-		for (int i = 0; i < authed.length; i++)
+		for (L2GameServer element : L2LegacyConnections.getInstance().getAuthorized())
 		{
-			L2GameServerView lgsv = ((L2GameServer) authed[i]).getView();
+			L2GameServerView lgsv = element.getView();
 			lgsv.update();
 			_gameServers.remove(lgsv); // cached empty view
 			_gameServers.add(lgsv); // up-to-date view

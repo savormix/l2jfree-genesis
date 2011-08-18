@@ -19,8 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.HashMap;
 
 import javolution.util.FastMap;
 
@@ -122,7 +121,7 @@ public class L2GameServerCache
 		@Override
 		public void run()
 		{
-			Set<GameServer> valid;
+			final HashMap<Integer, String> validGameservers = new HashMap<Integer, String>();
 			
 			Connection con = null;
 			try
@@ -131,30 +130,31 @@ public class L2GameServerCache
 				PreparedStatement ps = con.prepareStatement("SELECT id, authData FROM gameserver");
 				ResultSet rs = ps.executeQuery();
 				
-				valid = new TreeSet<GameServer>();
 				while (rs.next())
 				{
-					GameServer gs = new GameServer(rs.getInt("id"), rs.getString("authData"));
-					valid.add(gs); // a registered server
+					final int gameServerId = rs.getInt("id");
+					final String gameServerAuthData = rs.getString("authData");
+					
+					validGameservers.put(gameServerId, gameServerAuthData); // a registered server
 					// updates are quite rare, so stalling is OK
 					synchronized (getAuthorizationLock())
 					{
-						if (getGameServers().containsKey(gs.getId())) // cached
+						if (getGameServers().containsKey(gameServerId)) // cached
 						{
-							L2GameServer lgs = L2LegacyConnections.getInstance().getById(gs.getId());
-							if (lgs != null && !gs.getAuth().equals(lgs.getAuth()))
+							L2GameServer lgs = L2LegacyConnections.getInstance().getById(gameServerId);
+							if (lgs != null && !gameServerAuthData.equals(lgs.getAuth()))
 							{
 								// invalid authorization, impostor online
 								lgs.close(new LoginServerFail(L2NoServiceReason.NOT_AUTHED));
-								_log.info("Connection with game server on ID " + gs.getId() +
+								_log.info("Connection with game server on ID " + gameServerId +
 										" has been terminated: no longer authorized!");
 							}
 						}
 						else // not cached
 						{
-							getGameServers().put(gs.getId(),
-									new L2OfflineGameServerView(gs.getId()));
-							_log.info("Added a game server on ID " + gs.getId() +
+							getGameServers().put(gameServerId,
+									new L2OfflineGameServerView(gameServerId));
+							_log.info("Added a game server on ID " + gameServerId +
 									" to cache. Now it will be shown in the server list even if offline.");
 						}
 					}
@@ -174,66 +174,27 @@ public class L2GameServerCache
 			}
 			
 			// Let's see if cache is up-to-date
-			Object[] cached = getGameServers().keySet().toArray();
-			for (Object id : cached)
+			for (Integer gameServerId : getGameServers().keySet())
 			{
-				if (!valid.remove(new GameServer(id))) // was registered before this update
+				if (!validGameservers.containsKey(gameServerId)) // was registered before this update
 				{
 					// updates are quite rare, so stalling is OK
 					synchronized (getAuthorizationLock())
 					{
-						getGameServers().remove(id);
-						_log.info("Removed game server on ID " + id +
+						getGameServers().remove(gameServerId);
+						_log.info("Removed game server on ID " + gameServerId +
 								" from cache. It will no longer be shown in the server list.");
-						L2GameServer lgs = L2LegacyConnections.getInstance().getById((Integer) id);
+						L2GameServer lgs = L2LegacyConnections.getInstance().getById(gameServerId);
 						if (lgs != null && lgs.getAuth() != null) // was authorized based on old data
 						{
 							lgs.close(new LoginServerFail(L2NoServiceReason.NOT_AUTHED));
-							_log.info("Connection with game server on ID " + id +
+							_log.info("Connection with game server on ID " + gameServerId +
 									" has been terminated: no longer authorized!");
 						}
 						// otherwise login server assigned this ID temporarily
 					}
 				}
 			}
-		}
-	}
-	
-	private static class GameServer implements Comparable<GameServer>
-	{
-		private final Integer _id;
-		private final String _auth;
-		
-		private GameServer(Integer id, String auth)
-		{
-			_id = id;
-			_auth = auth;
-		}
-		
-		private GameServer(Object integer)
-		{
-			this((Integer) integer, null);
-		}
-		
-		public Integer getId()
-		{
-			return _id;
-		}
-		
-		public String getAuth()
-		{
-			return _auth;
-		}
-		
-		@Override
-		public int compareTo(GameServer gs)
-		{
-			final int id;
-			if (gs == null)
-				id = 0;
-			else
-				id = gs.getId();
-			return getId() - id;
 		}
 	}
 	

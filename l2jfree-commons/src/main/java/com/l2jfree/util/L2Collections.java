@@ -30,7 +30,7 @@ import javolution.util.FastList;
 /**
  * @author NB4L1
  */
-@SuppressWarnings({ "unchecked", "rawtypes" })
+@SuppressWarnings( { "unchecked", "rawtypes" })
 public final class L2Collections
 {
 	public static final Object[] EMPTY_ARRAY = new Object[0];
@@ -862,6 +862,19 @@ public final class L2Collections
 			final Object[] array = c.toArray();
 			
 			return array.length == 0 ? null : (T)array[Rnd.get(array.length)];
+		}
+	}
+	
+	public static <T> T[] toArray(Collection<? extends T> c, Class<T> clazz)
+	{
+		return c.toArray((T[])Array.newInstance(clazz, c.size()));
+	}
+	
+	public static <T> T[] toArraySynchronized(Collection<? extends T> c, Class<T> clazz)
+	{
+		synchronized (c)
+		{
+			return c.toArray((T[])Array.newInstance(clazz, c.size()));
 		}
 	}
 }
