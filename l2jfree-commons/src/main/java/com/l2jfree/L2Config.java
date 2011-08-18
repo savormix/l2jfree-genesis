@@ -39,7 +39,7 @@ import java.util.logging.Logger;
 import javolution.text.TextBuilder;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.l2jfree.config.L2Properties;
 import com.l2jfree.config.model.ConfigClassInfo;

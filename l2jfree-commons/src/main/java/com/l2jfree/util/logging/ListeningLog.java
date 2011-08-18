@@ -17,7 +17,7 @@ package com.l2jfree.util.logging;
 import java.util.logging.LogRecord;
 import java.util.logging.StreamHandler;
 
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 
 import com.l2jfree.io.BufferedRedirectingOutputStream;
 
@@ -39,7 +39,7 @@ public final class ListeningLog
 	
 	public static void addListener(LogListener listener)
 	{
-		_listeners = (LogListener[])ArrayUtils.add(_listeners, listener);
+		_listeners = ArrayUtils.add(_listeners, listener);
 	}
 	
 	private static void writeToListeners(String s)

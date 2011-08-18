@@ -14,19 +14,21 @@
  */
 package com.l2jfree.loginserver;
 
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 
 import com.l2jfree.CommonsInfo;
 import com.l2jfree.util.jar.FormattedVersion;
 
 /**
+ * Generic class to provide version info.
+ * 
  * @author noctarius
  */
 public final class LoginInfo extends CommonsInfo
 {
-	protected LoginInfo()
+	private LoginInfo()
 	{
-		super();
+		// utility class
 	}
 	
 	private static final FormattedVersion LOGIN_VERSION = new FormattedVersion(LoginServer.class);
@@ -39,6 +41,7 @@ public final class LoginInfo extends CommonsInfo
 	
 	/**
 	 * Returns version information string.
+	 * 
 	 * @return version info
 	 */
 	public static String getVersionInfo()
@@ -48,7 +51,7 @@ public final class LoginInfo extends CommonsInfo
 	
 	public static String[] getFullVersionInfo()
 	{
-		return (String[])ArrayUtils.addAll(new String[] { "l2jfree-login   :    " + LOGIN_VERSION.getFullVersionInfo() },
+		return ArrayUtils.addAll(new String[] { "l2jfree-login   :    " + LOGIN_VERSION.getFullVersionInfo() },
 				CommonsInfo.getFullVersionInfo());
 	}
 }

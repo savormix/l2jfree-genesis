@@ -14,27 +14,36 @@
  */
 package com.l2jfree.gameserver;
 
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 
 import com.l2jfree.CommonsInfo;
 import com.l2jfree.util.jar.FormattedVersion;
 
 /**
+ * Generic class to provide version info.
+ * 
  * @author noctarius
  */
 public final class CoreInfo extends CommonsInfo
 {
-	protected CoreInfo()
+	private CoreInfo()
 	{
+		// utility class
 	}
 	
 	private static final FormattedVersion CORE_VERSION = new FormattedVersion(GameServer.class);
 	
+	/** Shows startup and version information. */
 	public static void showStartupInfo()
 	{
 		CommonsInfo.showStartupInfo(CORE_VERSION);
 	}
 	
+	/**
+	 * Returns version information string.
+	 * 
+	 * @return version info
+	 */
 	public static String getVersionInfo()
 	{
 		return CORE_VERSION.getVersionInfo();
@@ -42,7 +51,7 @@ public final class CoreInfo extends CommonsInfo
 	
 	public static String[] getFullVersionInfo()
 	{
-		return (String[])ArrayUtils.addAll(new String[] { "l2jfree-core    :    " + CORE_VERSION.getFullVersionInfo() },
+		return ArrayUtils.addAll(new String[] { "l2jfree-core    :    " + CORE_VERSION.getFullVersionInfo() },
 				CommonsInfo.getFullVersionInfo());
 	}
 }

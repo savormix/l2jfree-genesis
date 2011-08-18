@@ -32,7 +32,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import javolution.text.TextBuilder;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 
 import com.l2jfree.L2Config;
 import com.l2jfree.lang.L2TextBuilder;
@@ -97,8 +97,8 @@ public final class RunnableStatsManager
 			
 			final MethodStat methodStat = new MethodStat(_className, methodName);
 			
-			_methodNames = (String[])ArrayUtils.add(_methodNames, methodName);
-			_methodStats = (MethodStat[])ArrayUtils.add(_methodStats, methodStat);
+			_methodNames = ArrayUtils.add(_methodNames, methodName);
+			_methodStats = ArrayUtils.add(_methodStats, methodStat);
 			
 			return methodStat;
 		}

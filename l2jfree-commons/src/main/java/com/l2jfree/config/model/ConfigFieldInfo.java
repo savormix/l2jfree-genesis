@@ -17,7 +17,7 @@ package com.l2jfree.config.model;
 import java.io.PrintWriter;
 import java.lang.reflect.Field;
 
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 
 import com.l2jfree.config.L2Properties;
 import com.l2jfree.config.annotation.ConfigField;

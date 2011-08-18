@@ -17,6 +17,8 @@ package com.l2jfree;
 import com.l2jfree.util.jar.FormattedVersion;
 
 /**
+ * Generic class to provide version info.
+ * 
  * @author noctarius
  */
 public class CommonsInfo
@@ -30,6 +32,7 @@ public class CommonsInfo
 	
 	/**
 	 * Shows startup and version information.
+	 * 
 	 * @param version version info
 	 */
 	public static void showStartupInfo(FormattedVersion version)
@@ -51,6 +54,7 @@ public class CommonsInfo
 	
 	/**
 	 * Returns version information string.
+	 * 
 	 * @return version info
 	 */
 	public static String[] getFullVersionInfo()

@@ -16,7 +16,7 @@ package com.l2jfree.status;
 
 import java.io.IOException;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.l2jfree.lang.L2System;
 import com.l2jfree.util.logging.L2Logger;

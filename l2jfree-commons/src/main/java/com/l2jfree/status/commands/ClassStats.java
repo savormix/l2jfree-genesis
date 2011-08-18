@@ -14,7 +14,7 @@
  */
 package com.l2jfree.status.commands;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.l2jfree.status.StatusCommand;
 import com.l2jfree.util.concurrent.RunnableStatsManager;
