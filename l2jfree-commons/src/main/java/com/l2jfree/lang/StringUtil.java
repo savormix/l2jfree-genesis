@@ -200,18 +200,18 @@ public final class StringUtil
 	/**
 	 * Concatenates strings.
 	 * 
-	 * @param strings
-	 *            strings to be concatenated
+	 * @param objects
+	 *            objects to be concatenated
 	 * 
 	 * @return concatenated string
 	 * 
 	 * @see StringUtil
 	 */
-	public static String concat(final Object... strings)
+	public static String concat(final Object... objects)
 	{
-		final L2TextBuilder tb = L2TextBuilder.newInstance(getLength(strings));
+		final L2TextBuilder tb = L2TextBuilder.newInstance(getLength(objects));
 		
-		for (final Object string : strings)
+		for (final Object string : objects)
 		{
 			tb.append(string);
 		}
@@ -226,19 +226,19 @@ public final class StringUtil
 	 * 
 	 * @param sizeHint
 	 *            hint for string builder size allocation
-	 * @param strings
-	 *            strings to be appended
+	 * @param objects
+	 *            objects to be appended
 	 * 
 	 * @return created string builder
 	 * 
 	 * @see StringUtil
 	 */
-	public static StringBuilder startAppend(final int sizeHint, final Object... strings)
+	public static StringBuilder startAppend(final int sizeHint, final Object... objects)
 	{
-		final int length = getLength(strings);
+		final int length = getLength(objects);
 		final StringBuilder sbString = new StringBuilder(sizeHint > length ? sizeHint : length);
 		
-		for (final Object string : strings)
+		for (final Object string : objects)
 		{
 			sbString.append(string);
 		}
@@ -251,16 +251,16 @@ public final class StringUtil
 	 * 
 	 * @param sbString
 	 *            string builder
-	 * @param strings
-	 *            strings to be appended
+	 * @param objects
+	 *            objects to be appended
 	 * 
 	 * @see StringUtil
 	 */
-	public static void append(final StringBuilder sbString, final Object... strings)
+	public static void append(final StringBuilder sbString, final Object... objects)
 	{
-		sbString.ensureCapacity(sbString.length() + getLength(strings));
+		sbString.ensureCapacity(sbString.length() + getLength(objects));
 		
-		for (final Object string : strings)
+		for (final Object string : objects)
 		{
 			sbString.append(string);
 		}
@@ -269,22 +269,22 @@ public final class StringUtil
 	/**
 	 * Counts total length of all the strings.
 	 * 
-	 * @param strings
-	 *            array of strings
+	 * @param objects
+	 *            array of objects
 	 * 
 	 * @return total length of all the strings
 	 */
-	private static int getLength(final Object... objs)
+	private static int getLength(final Object... objects)
 	{
 		int length = 0;
 		
-		for (int i = 0; i < objs.length; i++)
+		for (int i = 0; i < objects.length; i++)
 		{
-			final String string = String.valueOf(objs[i]);
+			final String string = String.valueOf(objects[i]);
 			
 			length += string.length();
 			
-			objs[i] = string;
+			objects[i] = string;
 		}
 		
 		return length;
