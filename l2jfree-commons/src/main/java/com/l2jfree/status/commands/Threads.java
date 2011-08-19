@@ -22,6 +22,7 @@ import com.l2jfree.status.StatusCommand;
  */
 public final class Threads extends StatusCommand
 {
+	/** Creates a command handler. */
 	public Threads()
 	{
 		super("dump thread stats", "threads");

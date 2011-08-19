@@ -21,6 +21,7 @@ import com.l2jfree.status.StatusCommand;
  */
 public final class GC extends StatusCommand
 {
+	/** Creates a command handler. */
 	public GC()
 	{
 		super("garbage collection and finalization", "gc");

@@ -22,6 +22,7 @@ import com.l2jfree.util.concurrent.L2ThreadPool;
  */
 public final class Purge extends StatusCommand
 {
+	/** Creates a command handler. */
 	public Purge()
 	{
 		super("purges the threadpool", "purge");

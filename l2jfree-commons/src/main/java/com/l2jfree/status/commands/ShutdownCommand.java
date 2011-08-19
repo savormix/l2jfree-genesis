@@ -23,6 +23,7 @@ import com.l2jfree.status.StatusCommand;
  */
 public final class ShutdownCommand extends StatusCommand
 {
+	/** Creates a command handler. */
 	public ShutdownCommand()
 	{
 		super("shuts down the server in [time] seconds", "shutdown");

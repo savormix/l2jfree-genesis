@@ -23,6 +23,7 @@ import com.l2jfree.status.StatusCommand;
  */
 public final class Restart extends StatusCommand
 {
+	/** Creates a command handler. */
 	public Restart()
 	{
 		super("restarts the server in [time] seconds", "restart");

@@ -23,6 +23,7 @@ import com.l2jfree.status.StatusCommand;
  */
 public final class Statistics extends StatusCommand
 {
+	/** Creates a command handler. */
 	public Statistics()
 	{
 		super("displays basic server statistics", "status", "stats");

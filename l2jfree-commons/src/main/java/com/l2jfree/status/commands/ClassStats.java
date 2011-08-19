@@ -25,6 +25,7 @@ import com.l2jfree.util.concurrent.RunnableStatsManager.SortBy;
  */
 public final class ClassStats extends StatusCommand
 {
+	/** Creates a command handler. */
 	public ClassStats()
 	{
 		super("dump runnable stats", "class");

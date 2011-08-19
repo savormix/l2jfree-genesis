@@ -21,6 +21,7 @@ import com.l2jfree.status.StatusCommand;
  */
 public final class MemoryStatistics extends StatusCommand
 {
+	/** Creates a command handler. */
 	public MemoryStatistics()
 	{
 		super("show memory stats", "printmemusage");

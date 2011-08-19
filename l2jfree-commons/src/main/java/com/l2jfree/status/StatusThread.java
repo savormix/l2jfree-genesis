@@ -227,18 +227,13 @@ public abstract class StatusThread extends Thread
 		println("No handler registered for '" + command + "'.");
 	}
 	
+	/** Closes this connection. */
 	public final void close()
 	{
 		IOUtils.closeQuietly(_in);
 		IOUtils.closeQuietly(_out);
 		
-		try
-		{
-			_socket.close();
-		}
-		catch (IOException e)
-		{
-		}
+		IOUtils.closeQuietly(_socket);
 	}
 	
 	private final class Quit extends StatusCommand

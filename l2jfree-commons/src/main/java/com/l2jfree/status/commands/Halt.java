@@ -23,6 +23,7 @@ import com.l2jfree.status.StatusCommand;
  */
 public final class Halt extends StatusCommand
 {
+	/** Creates a command handler. */
 	public Halt()
 	{
 		super("halts the server", "halt");

@@ -22,6 +22,7 @@ import com.l2jfree.status.StatusCommand;
  */
 public final class Abort extends StatusCommand
 {
+	/** Creates a command handler. */
 	public Abort()
 	{
 		super("aborts shutdown/restart", "abort");

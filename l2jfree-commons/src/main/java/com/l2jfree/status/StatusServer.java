@@ -35,8 +35,16 @@ import com.l2jfree.util.logging.L2Logger;
  */
 public abstract class StatusServer extends Thread
 {
+	/**
+	 * @author NB4L1
+	 */
 	public interface Filter
 	{
+		/**
+		 * Accepts or rejects a host address.
+		 * @param host host address
+		 * @return whether to accept or not
+		 */
 		public boolean accept(String host);
 	}
 	
@@ -141,26 +149,43 @@ public abstract class StatusServer extends Thread
 		}
 		catch (IOException e)
 		{
+			// ignore
 		}
 	}
 	
 	protected abstract StatusThread newStatusThread(Socket socket) throws IOException;
 	
+	/**
+	 * Adds a connection to the active connection list.
+	 * @param thread a connection
+	 */
 	public final void addStatusThread(StatusThread thread)
 	{
 		_threads.add(thread);
 	}
 	
+	/**
+	 * Removes a connection from the active connection list.
+	 * @param thread a connection
+	 */
 	public final void removeStatusThread(StatusThread thread)
 	{
 		_threads.remove(thread);
 	}
 	
+	/**
+	 * Returns all active connections.
+	 * @return active connections
+	 */
 	public final Set<StatusThread> getStatusThreads()
 	{
 		return _threads;
 	}
 	
+	/**
+	 * Broadcasts a message to all active connections.
+	 * @param message a message
+	 */
 	public final void broadcast(String message)
 	{
 		for (StatusThread thread : getStatusThreads())

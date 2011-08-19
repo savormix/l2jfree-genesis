@@ -22,6 +22,7 @@ import com.l2jfree.util.concurrent.L2ThreadPool;
  */
 public final class ThreadPool extends StatusCommand
 {
+	/** Creates a command handler. */
 	public ThreadPool()
 	{
 		super("shows threadpool statistics", "threadpool");

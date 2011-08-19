@@ -18,9 +18,20 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 /**
- * This class ...
- * 
- * @version $Revision: 1.3.4.1 $ $Date: 2005/03/27 15:30:09 $
+ * A blowfish cipher with additional features.
+ * Supports custom cyclic 32-bit packet checksum calculation/validation.
+ * Supports legacy packet XORing with a specified 32-bit key.
+ * <BR><BR>
+ * XORing was an application-specific feature, so the replacement methods
+ * are not present in this class.
+ * <BR><BR>
+ * Legacy methods may have out-of-date documentation. See the documentation
+ * of the replacement method instead.
+ * @see #encipher(ByteBuffer, int, int)
+ * @see #decipher(ByteBuffer, int, int)
+ * @see #appendChecksum(ByteBuffer, int, int)
+ * @see #verifyChecksum(ByteBuffer, int, int)
+ * @see #encXORPass(byte[], int, int, int)
  */
 public class NewCipher
 {
@@ -48,6 +59,7 @@ public class NewCipher
 	 * If the given string contains non-ASCII characters, the
 	 * cipher may not be initialized properly.
 	 * @param key An ASCII string
+	 * @see #NewCipher(byte[])
 	 */
 	@Deprecated
 	public NewCipher(String key)
@@ -69,6 +81,7 @@ public class NewCipher
 	 * @deprecated Legacy method
 	 * @param raw packet's body
 	 * @return whether packet integrity is OK or not
+	 * @see #verifyChecksum(ByteBuffer, int)
 	 */
 	@Deprecated
 	public static boolean verifyChecksum(byte[] raw)
@@ -83,6 +96,7 @@ public class NewCipher
 	 * @param offset offset to the packet's body
 	 * @param size packet's body size
 	 * @return whether packet integrity is OK or not
+	 * @see #verifyChecksum(ByteBuffer, int, int)
 	 */
 	@Deprecated
 	public static boolean verifyChecksum(byte[] raw, final int offset, final int size)
@@ -133,6 +147,7 @@ public class NewCipher
 	 * Calculates and embeds a packet's checksum.
 	 * @deprecated Legacy method
 	 * @param raw packet's body with padding
+	 * @see #appendChecksum(ByteBuffer, int)
 	 */
 	@Deprecated
 	public static void appendChecksum(byte[] raw)
@@ -146,6 +161,7 @@ public class NewCipher
 	 * @param raw data
 	 * @param offset offset to a packet's body
 	 * @param size packet's body size
+	 * @see #appendChecksum(ByteBuffer, int, int)
 	 */
 	@Deprecated
 	public static void appendChecksum(byte[] raw, final int offset, final int size)
@@ -249,6 +265,7 @@ public class NewCipher
 	 * @param raw data
 	 * @return deciphered data
 	 * @throws IOException not thrown by this method
+	 * @see #decipher(ByteBuffer, int)
 	 */
 	@Deprecated
 	public byte[] decrypt(byte[] raw) throws IOException
@@ -273,6 +290,7 @@ public class NewCipher
 	 * @param offset offset to packet's body
 	 * @param size packet's body size
 	 * @throws IOException not thrown by this method
+	 * @see #decipher(ByteBuffer, int, int)
 	 */
 	@Deprecated
 	public void decrypt(byte[] raw, final int offset, final int size) throws IOException
@@ -284,7 +302,7 @@ public class NewCipher
 		{
 			_decrypt.processBlock(raw, offset + i * 8, result, i * 8);
 		}
-		// TODO can the crypt and decrypt go direct to the array
+		// can the crypt and decrypt go direct to the array
 		System.arraycopy(result, 0, raw, offset, size);
 	}
 	
@@ -296,6 +314,7 @@ public class NewCipher
 	 * @param raw data
 	 * @return deciphered data
 	 * @throws IOException not thrown by this method
+	 * @see #encipher(ByteBuffer, int)
 	 */
 	@Deprecated
 	public byte[] crypt(byte[] raw) throws IOException
@@ -320,6 +339,7 @@ public class NewCipher
 	 * @param offset offset to packet's body
 	 * @param size packet's body size
 	 * @throws IOException not thrown by this method
+	 * @see #encipher(ByteBuffer, int, int)
 	 */
 	@Deprecated
 	public void crypt(byte[] raw, final int offset, final int size) throws IOException
@@ -331,7 +351,7 @@ public class NewCipher
 		{
 			_crypt.processBlock(raw, offset + i * 8, result, i * 8);
 		}
-		// TODO can the crypt and decrypt go direct to the array
+		// can the crypt and decrypt go direct to the array
 		System.arraycopy(result, 0, raw, offset, size);
 	}
 	

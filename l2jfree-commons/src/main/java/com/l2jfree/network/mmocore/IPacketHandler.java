@@ -17,6 +17,7 @@ package com.l2jfree.network.mmocore;
 import java.nio.ByteBuffer;
 
 /**
+ * Handles incoming packets.
  * @param <T> connection
  * @param <RP> receivable packet
  * @param <SP> sendable packet
@@ -25,10 +26,11 @@ import java.nio.ByteBuffer;
 public interface IPacketHandler<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
 {
 	/**
+	 * Chooses a suitable packet handler.
 	 * @param buf a byte buffer containing any further opcodes, and packet data
-	 * @param client a client that received the payload
-	 * @param opcode the first byte (opcode) of the payload
-	 * @return a recognized packet that represents the payload or null otherwise
+	 * @param client a client that received the packet
+	 * @param opcode the first byte (opcode) of the packet
+	 * @return a recognized packet that represents the packet body or null otherwise
 	 */
 	public RP handlePacket(ByteBuffer buf, T client, int opcode);
 }
