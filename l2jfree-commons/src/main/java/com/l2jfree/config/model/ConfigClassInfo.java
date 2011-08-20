@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.ArrayUtils;
 
 import com.l2jfree.config.L2Properties;
 import com.l2jfree.config.annotation.ConfigClass;
@@ -237,6 +238,13 @@ public final class ConfigClassInfo
 	
 	public synchronized void print(PrintWriter out, PrintMode mode)
 	{
+		if (!ArrayUtils.isEmpty(getConfigClass().comment()))
+		{
+			for (String line : getConfigClass().comment())
+				out.println(line);
+			out.println();
+		}
+		
 		for (ConfigFieldInfo info : _infos)
 			info.print(out, mode);
 	}

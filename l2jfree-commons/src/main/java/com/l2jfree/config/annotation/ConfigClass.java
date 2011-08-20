@@ -28,4 +28,6 @@ public @interface ConfigClass
 	public String folderName();
 	
 	public String fileName();
+	
+	public String[] comment() default {};
 }
