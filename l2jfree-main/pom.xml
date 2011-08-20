@@ -13,8 +13,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <scm>
-    <connection>scm:svn:http://svn.l2jfree.com/l2jfree</connection>
-    <url>http://code.l2jfree.com/changelog/l2jfree</url>
+    <connection>scm:svn:http://svn.l2jfree.com/l2jfree/branches/genesis/${project.artifactId}</connection>
+    <url>http://code.l2jfree.com/changelog/l2jfree/branches/genesis/${project.artifactId}</url>
   </scm>
   <build>
     <defaultGoal>compile</defaultGoal>
