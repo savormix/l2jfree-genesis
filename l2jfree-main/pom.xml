@@ -24,6 +24,17 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>buildnumber-maven-plugin</artifactId>
         <version>1.0</version>
+        <configuration>
+          <!-- Not yet :)
+          <doCheck>true</doCheck>
+           -->
+          <getRevisionOnlyOnce>true</getRevisionOnlyOnce>
+          <!-- Not yet :)
+          <providerImplementations>
+            <svn>javasvn</svn>
+          </providerImplementations>
+           -->
+        </configuration>
         <executions>
           <execution>
             <phase>validate</phase>
@@ -89,7 +100,7 @@
           <skip>false</skip>
           <quiet>false</quiet>
           
-          <javadocVersion>1.7</javadocVersion>
+          <javadocVersion>1.6</javadocVersion> <!-- FIXME Java 7 -->
           <charset>UTF-8</charset>
           <docencoding>UTF-8</docencoding>
           <!-- <encoding /> is derived from project.build.sourceEncoding -->
@@ -117,11 +128,11 @@
           <nohelp>false</nohelp>
           <excludePackageNames>com.sun.*</excludePackageNames>
           
-          <doctitle>${project.name} documentation</doctitle> <!-- Avoid double versionning -->
-          <windowtitle>${project.name} documentation</windowtitle>
-          <header><![CDATA[<a href="http://www.l2jfree.com">L2JFree<a>]]></header>
-          <footer><![CDATA[<a href="http://www.l2jfree.com">L2JFree<a>]]></footer>
-          <packagesheader><![CDATA[<a href="http://www.l2jfree.com">L2JFree<a>]]></packagesheader>
+          <doctitle>L2j Free ${project.version} r${buildNumber} documentation</doctitle>
+          <windowtitle>L2j Free ${project.version} r${buildNumber} documentation</windowtitle>
+          <header><![CDATA[<a href="http://www.l2jfree.com" target="_top">L2j Free Homepage<a>]]></header>
+          <footer><![CDATA[<a href="http://www.l2jfree.com" target="_top">L2j Free Homepage<a>]]></footer>
+          <packagesheader><![CDATA[<a href="http://www.l2jfree.com" target="_top">L2j Free Homepage<a>]]></packagesheader>
         </configuration>
       </plugin>
     </plugins>
