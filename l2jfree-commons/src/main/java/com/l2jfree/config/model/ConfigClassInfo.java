@@ -241,7 +241,7 @@ public final class ConfigClassInfo
 		if (!ArrayUtils.isEmpty(getConfigClass().comment()))
 		{
 			for (String line : getConfigClass().comment())
-				out.println(line);
+				out.println("# " + line);
 			out.println();
 		}
 		
