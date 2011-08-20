@@ -90,7 +90,13 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 	public final void openServerSocket(InetAddress address, int port) throws IOException
 	{
 		if (_acceptorThread == null)
-			_acceptorThread = new AcceptorThread<T, RP, SP>(this, _config);
+		{
+			final AcceptorThread<T, RP, SP> acceptor = new AcceptorThread<T, RP, SP>(this, _config);
+			if (_started)
+				acceptor.start();
+			
+			_acceptorThread = acceptor;
+		}
 		
 		_acceptorThread.openServerSocket(address, port);
 	}
@@ -117,10 +123,11 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 	 */
 	public final void connect(InetAddress address, int port, boolean persistent)
 	{
-		ConnectorThread<T, RP, SP> ct = new ConnectorThread<T, RP, SP>(this, address, port, persistent);
-		_connectorThreads.add(ct);
+		final ConnectorThread<T, RP, SP> connector = new ConnectorThread<T, RP, SP>(this, address, port, persistent);
 		if (_started)
-			ct.start();
+			connector.start();
+		
+		_connectorThreads.add(connector);
 	}
 	
 	/**
