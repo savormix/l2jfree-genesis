@@ -110,7 +110,7 @@ public final class DeadlockDetector extends L2Thread
 		{
 			try
 			{
-				sleep(40000);
+				Thread.sleep(40000);
 			}
 			catch (InterruptedException e)
 			{

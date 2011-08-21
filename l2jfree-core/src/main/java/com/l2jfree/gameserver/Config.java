@@ -27,6 +27,6 @@ public class Config extends L2Config
 	{
 		CoreInfo.showStartupInfo();
 		
-		initApplication(ConfigMarker.class.getPackage(), L2CoreThreadPools.class, L2CoreDataSource.class);
+		L2Config.initApplication(ConfigMarker.class.getPackage(), L2CoreThreadPools.class, L2CoreDataSource.class);
 	}
 }

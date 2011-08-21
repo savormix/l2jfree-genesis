@@ -27,6 +27,6 @@ public class Config extends L2Config
 	{
 		LoginInfo.showStartupInfo();
 		
-		initApplication(ConfigMarker.class.getPackage(), L2LoginThreadPools.class, L2LoginDataSource.class);
+		L2Config.initApplication(ConfigMarker.class.getPackage(), L2LoginThreadPools.class, L2LoginDataSource.class);
 	}
 }
