@@ -189,28 +189,28 @@ public final class GPLLicenseChecker extends L2Config
 			if (line.startsWith("package com.sun.script."))
 				return null;
 		
-		int i = 0;
+		int ln = 0;
 		if (!CLEARED)
 		{
-			for (; i < CONFIDENTIAL.length; i++)
+			for (int j = 0; j < CONFIDENTIAL.length; j++, ln++)
 			{
-				if (!list.get(i).equals(CONFIDENTIAL[i]))
+				if (!list.get(j).equals(CONFIDENTIAL[j]))
 				{
-					MODIFIED.add(f.getPath() + ":" + i);
+					MODIFIED.add(f.getPath() + ":" + ln);
 					return list;
 				}
 			}
 		}
-		for (; i < LICENSE.length; i++)
+		for (int j = 0; j < LICENSE.length; j++, ln++)
 		{
-			if (!list.get(i).equals(LICENSE[i]))
+			if (!list.get(ln).equals(LICENSE[j]))
 			{
-				MODIFIED.add(f.getPath() + ":" + i);
+				MODIFIED.add(f.getPath() + ":LI" + ln);
 				return list;
 			}
 		}
 		
-		if (!startsWithPackageName(list.get(i)))
+		if (!startsWithPackageName(list.get(ln)))
 		{
 			MODIFIED.add(f.getPath() + ":" + lnr.getLineNumber());
 			return list;

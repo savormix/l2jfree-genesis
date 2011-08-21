@@ -105,7 +105,7 @@ public final class RequestServerLogin extends L2ClientPacket
 			{
 				L2Database.close(con);
 			}
-			llc.sendPacket(new PlaySuccess(llc));
+			llc.close(new PlaySuccess(llc));
 		}
 	}
 }

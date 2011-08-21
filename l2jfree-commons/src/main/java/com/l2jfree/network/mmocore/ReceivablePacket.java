@@ -96,7 +96,7 @@ public abstract class ReceivablePacket<T extends MMOConnection<T, RP, SP>, RP ex
 	 * <br>
 	 * NOTE: All bytes should be read, even if they have no use when processing the packet.
 	 * 
-	 * @param buf the buffer, where the data should be read from
+	 * @param buf packet's body without the main opcode
 	 * @throws BufferUnderflowException if packet does not match the expected format
 	 * @throws RuntimeException if a generic failure occurs while reading
 	 */
