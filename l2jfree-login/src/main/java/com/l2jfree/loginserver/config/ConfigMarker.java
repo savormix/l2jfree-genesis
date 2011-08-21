@@ -16,6 +16,7 @@ package com.l2jfree.loginserver.config;
 
 /**
  * Marks this package. It is essential to have non-hardcoded package definitions.
+ * 
  * @author savormix
  */
 public interface ConfigMarker

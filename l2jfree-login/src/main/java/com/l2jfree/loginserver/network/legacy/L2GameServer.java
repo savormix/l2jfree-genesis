@@ -35,7 +35,6 @@ import com.l2jfree.util.HexUtil;
 
 /**
  * @author savormix
- * 
  */
 public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServerPacket, L2LoginServerPacket>
 {
@@ -67,13 +66,13 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	// unmanaged
 	private final boolean _pvp;
 	
-	protected L2GameServer(
-			MMOController<L2GameServer, L2GameServerPacket, L2LoginServerPacket> mmoController,
+	protected L2GameServer(MMOController<L2GameServer, L2GameServerPacket, L2LoginServerPacket> mmoController,
 			SocketChannel socketChannel, KeyPair keyPair) throws ClosedChannelException
 	{
 		super(mmoController, socketChannel);
 		_keyPair = keyPair;
-		_cipher = new NewCipher(HexUtil.HexStringToBytes("5F 3B 76 2E 5D 30 35 2D 33 31 21 7C 2B 2D 25 78 54 21 5E 5B 24 00"));
+		_cipher = new NewCipher(HexUtil
+				.HexStringToBytes("5F 3B 76 2E 5D 30 35 2D 33 31 21 7C 2B 2D 25 78 54 21 5E 5B 24 00"));
 		
 		_state = L2LegacyState.CONNECTED;
 		_id = null;
@@ -158,6 +157,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	
 	/**
 	 * Returns the public key.
+	 * 
 	 * @return public key
 	 */
 	public PublicKey getPublicKey()
@@ -167,6 +167,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	
 	/**
 	 * Returns the private key.
+	 * 
 	 * @return private key
 	 */
 	public PrivateKey getPrivateKey()
@@ -176,6 +177,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	
 	/**
 	 * Returns the scrambled RSA key pair.
+	 * 
 	 * @return key pair
 	 */
 	private KeyPair getKeyPair()
@@ -185,6 +187,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	
 	/**
 	 * Initializes the cipher with the Blowfish key received from the game server.
+	 * 
 	 * @param blowfishKey Blowfish Key
 	 */
 	public void initCipher(byte[] blowfishKey)
@@ -194,6 +197,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	
 	/**
 	 * Returns the cipher.
+	 * 
 	 * @return cipher
 	 */
 	public NewCipher getCipher()
@@ -203,6 +207,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	
 	/**
 	 * Returns a view over this game server.
+	 * 
 	 * @return view
 	 */
 	public L2LegacyGameServerView getView()
@@ -214,6 +219,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	
 	/**
 	 * Returns current connection's state.
+	 * 
 	 * @return connection's state
 	 */
 	public L2LegacyState getState()
@@ -223,6 +229,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	
 	/**
 	 * Changes the connection's state.
+	 * 
 	 * @param state connection's state
 	 */
 	public void setState(L2LegacyState state)
@@ -232,6 +239,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	
 	/**
 	 * Returns the assigned ID.
+	 * 
 	 * @return game server ID
 	 */
 	public Integer getId()
@@ -241,6 +249,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	
 	/**
 	 * Assigns a game server ID.
+	 * 
 	 * @param id game server ID
 	 */
 	public void setId(int id)
@@ -249,10 +258,11 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	}
 	
 	/**
-	 * Returns the game server's authorization string.
-	 * <BR><BR>
-	 * If login server [temporarily] assigned a free ID to this game server, then
-	 * <TT>null</TT> is returned instead.
+	 * Returns the game server's authorization string. <BR>
+	 * <BR>
+	 * If login server [temporarily] assigned a free ID to this game server, then <TT>null</TT> is
+	 * returned instead.
+	 * 
 	 * @return authorization data
 	 */
 	public String getAuth()
@@ -262,6 +272,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	
 	/**
 	 * Specifies the authorization string used by this game server.
+	 * 
 	 * @param auth authorization data
 	 */
 	public void setAuth(String auth)
@@ -270,8 +281,8 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	}
 	
 	/**
-	 * Returns whether account ban requests from this game server
-	 * should be served.
+	 * Returns whether account ban requests from this game server should be served.
+	 * 
 	 * @return can this game server ban accounts
 	 */
 	public boolean isAllowedToBan()
@@ -280,8 +291,8 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	}
 	
 	/**
-	 * Specifies whether account ban requests from this game server
-	 * should be served.
+	 * Specifies whether account ban requests from this game server should be served.
+	 * 
 	 * @param allowedToBan can this game server ban accounts
 	 */
 	public void setAllowedToBan(boolean allowedToBan)
@@ -291,6 +302,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	
 	/**
 	 * Returns the advertised listening IP.
+	 * 
 	 * @return the listening IP
 	 */
 	public String getHost()
@@ -300,6 +312,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	
 	/**
 	 * Sets the listening IP.
+	 * 
 	 * @param host game server's listening IP
 	 */
 	public void setHost(String host)
@@ -310,6 +323,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	
 	/**
 	 * Returns the advertised listening port.
+	 * 
 	 * @return game server's listening port
 	 */
 	public int getPort()
@@ -319,6 +333,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	
 	/**
 	 * Sets the listening port.
+	 * 
 	 * @param port game server's listening port
 	 */
 	public void setPort(int port)
@@ -328,6 +343,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	
 	/**
 	 * Returns how many players are allowed to be connected at any given time.
+	 * 
 	 * @return maximum players online
 	 */
 	public int getMaxPlayers()
@@ -337,6 +353,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	
 	/**
 	 * Sets the maximum number of players online.
+	 * 
 	 * @param maxPlayers maximum players online
 	 */
 	public void setMaxPlayers(int maxPlayers)
@@ -346,6 +363,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	
 	/**
 	 * Returns game server status to be displayed in the server list.
+	 * 
 	 * @return server status
 	 */
 	public L2LegacyStatus getStatus()
@@ -355,6 +373,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	
 	/**
 	 * Change game server status.
+	 * 
 	 * @param status server status
 	 */
 	public void setStatus(L2LegacyStatus status)
@@ -365,6 +384,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	
 	/**
 	 * Returns game server types to be displayed in the server list.
+	 * 
 	 * @return server types
 	 */
 	public int getTypes()
@@ -374,6 +394,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	
 	/**
 	 * Specify game server types to be displayed in the server list.
+	 * 
 	 * @param types server types
 	 */
 	public void setTypes(int types)
@@ -382,8 +403,9 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	}
 	
 	/**
-	 * Returns whether square brackets should be displayed before the game server's
-	 * name in the server list.
+	 * Returns whether square brackets should be displayed before the game server's name in the
+	 * server list.
+	 * 
 	 * @return whether to show square brackets
 	 */
 	public boolean isBrackets()
@@ -392,8 +414,9 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	}
 	
 	/**
-	 * Specify whether square brackets should be displayed before the game server's
-	 * name in the server list.
+	 * Specify whether square brackets should be displayed before the game server's name in the
+	 * server list.
+	 * 
 	 * @param brackets whether to show square brackets
 	 */
 	public void setBrackets(boolean brackets)
@@ -403,6 +426,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	
 	/**
 	 * Returns age required to play on this game server.
+	 * 
 	 * @return minimal player age
 	 */
 	public int getAge()
@@ -412,6 +436,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	
 	/**
 	 * Changes age required to play on this game server.
+	 * 
 	 * @param age minimal player age
 	 */
 	public void setAge(int age)
@@ -421,6 +446,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	
 	/**
 	 * Returns names of accounts logged into this game server.
+	 * 
 	 * @return online account names
 	 */
 	public FastSet<String> getOnlineAccounts()
@@ -430,6 +456,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	
 	/**
 	 * All legacy game servers allow PvP.
+	 * 
 	 * @return <TT>true</TT>
 	 */
 	public boolean isPvp()

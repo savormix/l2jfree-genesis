@@ -22,7 +22,6 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix
- *
  */
 public final class RequestSubmitCardNo extends L2ClientPacket
 {
@@ -37,8 +36,7 @@ public final class RequestSubmitCardNo extends L2ClientPacket
 	}
 	
 	@Override
-	protected void read(MMOBuffer buf) throws BufferUnderflowException,
-			RuntimeException
+	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		// TODO Auto-generated method stub
 		

@@ -19,12 +19,12 @@ import com.l2jfree.loginserver.network.legacy.status.L2LegacyType;
 
 /**
  * @author savormix
- *
  */
 public class L2OfflineGameServerView extends L2GameServerView
 {
 	/**
 	 * Creates a view for an offline server.
+	 * 
 	 * @param id game server ID
 	 */
 	public L2OfflineGameServerView(int id)

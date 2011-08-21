@@ -30,7 +30,6 @@ import com.l2jfree.util.logging.L2Logger;
 
 /**
  * @author savormix
- *
  */
 public class L2LegacySecurity
 {
@@ -48,8 +47,7 @@ public class L2LegacySecurity
 		try
 		{
 			rsa = KeyPairGenerator.getInstance("RSA");
-			AlgorithmParameterSpec spec = new RSAKeyGenParameterSpec(512,
-					RSAKeyGenParameterSpec.F4);
+			AlgorithmParameterSpec spec = new RSAKeyGenParameterSpec(512, RSAKeyGenParameterSpec.F4);
 			rsa.initialize(spec);
 		}
 		catch (GeneralSecurityException e)
@@ -83,6 +81,7 @@ public class L2LegacySecurity
 	
 	/**
 	 * Returns a RSA key pair.
+	 * 
 	 * @return a key pair
 	 */
 	public KeyPair getKeyPair()
@@ -97,6 +96,7 @@ public class L2LegacySecurity
 	
 	/**
 	 * Returns a singleton object.
+	 * 
 	 * @return an instance of this class
 	 */
 	public static L2LegacySecurity getInstance()

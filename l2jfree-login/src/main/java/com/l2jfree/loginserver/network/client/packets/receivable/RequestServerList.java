@@ -16,10 +16,10 @@ package com.l2jfree.loginserver.network.client.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 
-import com.l2jfree.loginserver.network.client.L2ClientSecurity.SessionKey;
 import com.l2jfree.loginserver.network.client.L2LoginClient;
 import com.l2jfree.loginserver.network.client.L2LoginClientState;
 import com.l2jfree.loginserver.network.client.L2NoServiceReason;
+import com.l2jfree.loginserver.network.client.L2ClientSecurity.SessionKey;
 import com.l2jfree.loginserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.loginserver.network.client.packets.sendable.LoginFailure;
 import com.l2jfree.loginserver.network.client.packets.sendable.ServerList;

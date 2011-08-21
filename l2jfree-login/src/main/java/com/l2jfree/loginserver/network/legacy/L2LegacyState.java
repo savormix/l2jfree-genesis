@@ -16,7 +16,6 @@ package com.l2jfree.loginserver.network.legacy;
 
 /**
  * @author savormix
- *
  */
 public enum L2LegacyState
 {

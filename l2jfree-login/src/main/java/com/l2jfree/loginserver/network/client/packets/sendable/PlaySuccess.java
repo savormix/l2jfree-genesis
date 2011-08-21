@@ -22,7 +22,6 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix
- *
  */
 public final class PlaySuccess extends L2ServerPacket
 {
@@ -30,6 +29,7 @@ public final class PlaySuccess extends L2ServerPacket
 	
 	/**
 	 * Constructs a packet to inform the client that it can now log into the game server.
+	 * 
 	 * @param llc a connection wrapper
 	 */
 	public PlaySuccess(L2LoginClient llc)

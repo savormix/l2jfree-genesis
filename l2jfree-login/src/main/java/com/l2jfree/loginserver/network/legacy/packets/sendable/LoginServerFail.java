@@ -21,7 +21,6 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix
- *
  */
 public final class LoginServerFail extends L2LoginServerPacket
 {
@@ -29,6 +28,7 @@ public final class LoginServerFail extends L2LoginServerPacket
 	
 	/**
 	 * Constructs a packet to inform about failed authentication.
+	 * 
 	 * @param reason failure reason
 	 */
 	public LoginServerFail(L2NoServiceReason reason)

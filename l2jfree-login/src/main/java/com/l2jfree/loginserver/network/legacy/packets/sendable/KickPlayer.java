@@ -20,7 +20,6 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix
- *
  */
 public final class KickPlayer extends L2LoginServerPacket
 {
@@ -28,6 +27,7 @@ public final class KickPlayer extends L2LoginServerPacket
 	
 	/**
 	 * Constructs a packet to inform about duplicate login.
+	 * 
 	 * @param account Account name
 	 */
 	public KickPlayer(String account)

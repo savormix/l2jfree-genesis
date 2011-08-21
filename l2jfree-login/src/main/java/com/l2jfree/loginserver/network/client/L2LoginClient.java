@@ -34,7 +34,6 @@ import com.l2jfree.util.Rnd;
 
 /**
  * @author savormix
- *
  */
 public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPacket, L2ServerPacket>
 {
@@ -49,10 +48,9 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	
 	private L2Account _account;
 	
-	protected L2LoginClient(
-			MMOController<L2LoginClient, L2ClientPacket, L2ServerPacket> mmoController,
-			SocketChannel socketChannel, int sessionId, int protocol,
-			ScrambledKeyPair keyPair, byte[] blowfishKey) throws ClosedChannelException
+	protected L2LoginClient(MMOController<L2LoginClient, L2ClientPacket, L2ServerPacket> mmoController,
+			SocketChannel socketChannel, int sessionId, int protocol, ScrambledKeyPair keyPair, byte[] blowfishKey)
+			throws ClosedChannelException
 	{
 		super(mmoController, socketChannel);
 		_sessionId = sessionId;
@@ -165,6 +163,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	
 	/**
 	 * Returns the unique session ID.
+	 * 
 	 * @return session ID
 	 */
 	public int getSessionId()
@@ -174,6 +173,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	
 	/**
 	 * Returns the network protocol version.
+	 * 
 	 * @return protocol version
 	 */
 	public int getProtocol()
@@ -183,6 +183,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	
 	/**
 	 * Returns the public key.
+	 * 
 	 * @return public key
 	 */
 	public byte[] getPublicKey()
@@ -192,6 +193,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	
 	/**
 	 * Returns the private key.
+	 * 
 	 * @return private key
 	 */
 	public PrivateKey getPrivateKey()
@@ -201,6 +203,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	
 	/**
 	 * Returns the scrambled RSA key pair.
+	 * 
 	 * @return key pair
 	 */
 	private ScrambledKeyPair getKeyPair()
@@ -222,6 +225,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	
 	/**
 	 * Returns the Blowfish key.
+	 * 
 	 * @return Blowfish key
 	 */
 	public byte[] getBlowfishKey()
@@ -231,6 +235,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	
 	/**
 	 * Returns current connection's state.
+	 * 
 	 * @return connection's state
 	 */
 	public L2LoginClientState getState()
@@ -240,6 +245,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	
 	/**
 	 * Changes the connection's state.
+	 * 
 	 * @param state connection's state
 	 */
 	public void setState(L2LoginClientState state)
@@ -249,6 +255,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	
 	/**
 	 * Returns the assigned session key.
+	 * 
 	 * @return session key
 	 */
 	public SessionKey getSessionKey()
@@ -258,6 +265,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	
 	/**
 	 * Assigns a session key.
+	 * 
 	 * @param sessionKey session key
 	 */
 	public void setSessionKey(SessionKey sessionKey)
@@ -267,6 +275,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	
 	/**
 	 * Returns the associated account.
+	 * 
 	 * @return account
 	 */
 	public L2Account getAccount()
@@ -276,6 +285,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	
 	/**
 	 * Associates an account with this connection.
+	 * 
 	 * @param account account
 	 */
 	public void setAccount(L2Account account)

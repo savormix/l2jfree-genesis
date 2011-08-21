@@ -27,6 +27,7 @@ public final class GameGuardSuccess extends L2ServerPacket
 	
 	/**
 	 * Constructs a packet to inform about successful GameGuard authorization.
+	 * 
 	 * @param sessionId session ID
 	 */
 	public GameGuardSuccess(int sessionId)

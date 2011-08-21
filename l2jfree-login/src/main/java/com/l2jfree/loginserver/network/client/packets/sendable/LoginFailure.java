@@ -20,7 +20,6 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix
- *
  */
 public final class LoginFailure extends L2ServerPacket
 {
@@ -28,6 +27,7 @@ public final class LoginFailure extends L2ServerPacket
 	
 	/**
 	 * Constructs a packet to inform about failed account login.
+	 * 
 	 * @param reason Client side message
 	 */
 	public LoginFailure(Reason reason)
@@ -54,6 +54,7 @@ public final class LoginFailure extends L2ServerPacket
 	{
 		/**
 		 * Returns the reason's ID.
+		 * 
 		 * @return reason's ID
 		 */
 		int getId();

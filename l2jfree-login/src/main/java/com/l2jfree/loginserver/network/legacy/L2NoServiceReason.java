@@ -16,7 +16,6 @@ package com.l2jfree.loginserver.network.legacy;
 
 /**
  * @author savormix
- *
  */
 public enum L2NoServiceReason
 {
@@ -33,8 +32,7 @@ public enum L2NoServiceReason
 	/** ??? */
 	NOT_AUTHED(6),
 	/** Already authorized */
-	ALREADY_LOGGED_IN(7),
-	;
+	ALREADY_LOGGED_IN(7), ;
 	
 	private final int _id;
 	
@@ -45,6 +43,7 @@ public enum L2NoServiceReason
 	
 	/**
 	 * Returns the reason's ID.
+	 * 
 	 * @return reason's ID
 	 */
 	public int getId()

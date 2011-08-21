@@ -21,7 +21,6 @@ import com.l2jfree.loginserver.network.legacy.status.L2LegacyStatus;
 
 /**
  * @author savormix
- *
  */
 public final class L2LegacyGameServerView extends L2GameServerView
 {
@@ -29,6 +28,7 @@ public final class L2LegacyGameServerView extends L2GameServerView
 	
 	/**
 	 * Creates a legacy game server's view.
+	 * 
 	 * @param gameServer legacy game server
 	 */
 	public L2LegacyGameServerView(L2GameServer gameServer)

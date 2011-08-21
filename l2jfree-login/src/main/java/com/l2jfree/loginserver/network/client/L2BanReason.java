@@ -18,22 +18,24 @@ import com.l2jfree.loginserver.network.client.packets.sendable.LoginFailure.Reas
 
 /**
  * @author savormix
- *
  */
 public enum L2BanReason implements Reason
 {
-	/** Your account information is incorrect. For more details, please contact our customer service center at http://support.plaync.com. */
+	/**
+	 * Your account information is incorrect. For more details, please contact our customer service
+	 * center at http://support.plaync.com.
+	 */
 	ACCOUNT_INFO_INCORRECT(5),
 	/**
-	 * Lineage II game services may be used by individuals 15 years of age or older except for PvP servers,
-	 * which may only be used by adults 18 years of age and older. (Korea Only)
+	 * Lineage II game services may be used by individuals 15 years of age or older except for PvP
+	 * servers, which may only be used by adults 18 years of age and older. (Korea Only)
 	 */
 	AGE_LIMITATION(12),
 	/** Please login after changing your temporary password. */
 	CHANGE_TEMP_PASSWORD(17),
 	/**
-	 * Your game time has expired. To continue playing, please purchase Lineage II either
-	 * directly from the PlayNC Store or from any leading games retailer.
+	 * Your game time has expired. To continue playing, please purchase Lineage II either directly
+	 * from the PlayNC Store or from any leading games retailer.
 	 */
 	GAME_TIME_EXPIRED(18),
 	/** There is no time left on this account. */
@@ -46,30 +48,33 @@ public enum L2BanReason implements Reason
 	WEEK_TIME_FINISHED(30),
 	/**
 	 * Your account is currently suspended because you have not logged into the game for some time.
-	 * You may reactivate your account by visiting the PlayNC website (http://www.plaync.com/us/support/).
+	 * You may reactivate your account by visiting the PlayNC website
+	 * (http://www.plaync.com/us/support/).
 	 */
 	SUSPENDED_INACTIVITY(36),
 	/**
-	 * A guardian's consent is required before this account can be used to play Lineage II.\n
-	 * Please try again after this consent is provided.
+	 * A guardian's consent is required before this account can be used to play Lineage II.\n Please
+	 * try again after this consent is provided.
 	 */
 	GUARDIANS_CONSENT_NEEDED(38),
 	/**
-	 * This account has declined the User Agreement or is pending a withdrawl request. \n
-	 * Please try again after cancelling this request.
+	 * This account has declined the User Agreement or is pending a withdrawl request. \n Please try
+	 * again after cancelling this request.
 	 */
 	PENDING_WITHDRAWL_REQUEST(39),
-	/** This account has been suspended. \nFor more information, please call the Customer's Center (Tel. 1600-0020). */
+	/**
+	 * This account has been suspended. \nFor more information, please call the Customer's Center
+	 * (Tel. 1600-0020).
+	 */
 	SUSPENDED_PHONE_CC(40),
 	/**
-	 * Your account can only be used after changing your password and quiz. \n
-	 * Services will be available after changing your password and quiz
-	 * from the PlayNC website (http://www.plaync.co.kr).
+	 * Your account can only be used after changing your password and quiz. \n Services will be
+	 * available after changing your password and quiz from the PlayNC website
+	 * (http://www.plaync.co.kr).
 	 */
 	CHANGE_PASSWORD_AND_QUIZ(41),
 	/** The master account of your account has been restricted. */
-	MASTER_ACCOUNT_RESTRICTED(43),
-	;
+	MASTER_ACCOUNT_RESTRICTED(43), ;
 	
 	private final int _id;
 	
@@ -85,10 +90,10 @@ public enum L2BanReason implements Reason
 	}
 	
 	/**
-	 * Returns a reason with the given ID.
-	 * <BR><BR>
-	 * If no matches are found, {@link #SUSPENDED_PHONE_CC}
-	 * is returned instead.
+	 * Returns a reason with the given ID. <BR>
+	 * <BR>
+	 * If no matches are found, {@link #SUSPENDED_PHONE_CC} is returned instead.
+	 * 
 	 * @param id Reason's ID
 	 * @return a reason
 	 */

@@ -120,7 +120,8 @@ public final class RequestAuthLogin extends L2ClientPacket
 			int ban = -1;
 			
 			con = L2Database.getConnection();
-			PreparedStatement ps = con.prepareStatement("SELECT password, superUser, birthDate, banReason, lastServerId FROM account WHERE username LIKE ?");
+			PreparedStatement ps = con
+					.prepareStatement("SELECT password, superUser, birthDate, banReason, lastServerId FROM account WHERE username LIKE ?");
 			ps.setString(1, user);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next())
@@ -144,8 +145,8 @@ public final class RequestAuthLogin extends L2ClientPacket
 						
 						if (offline)
 						{
-							L2Account la = new L2Account(user, rs.getBoolean("superUser"),
-									rs.getDate("birthDate"), rs.getInt("lastServerId"));
+							L2Account la = new L2Account(user, rs.getBoolean("superUser"), rs.getDate("birthDate"), rs
+									.getInt("lastServerId"));
 							llc.setAccount(la);
 							
 							if (ServiceConfig.SHOW_EULA)
@@ -160,13 +161,16 @@ public final class RequestAuthLogin extends L2ClientPacket
 							}
 						}
 					}
-					else // suspended
+					else
+						// suspended
 						llc.close(new LoginFailure(L2BanReason.getById(ban)));
 				}
-				else // wrong password
+				else
+					// wrong password
 					llc.close(new LoginFailure(L2NoServiceReason.PASSWORD_INCORRECT));
 			}
-			else // no such user
+			else
+				// no such user
 				llc.close(new LoginFailure(L2NoServiceReason.PASSWORD_INCORRECT));
 			rs.close();
 			ps.close();

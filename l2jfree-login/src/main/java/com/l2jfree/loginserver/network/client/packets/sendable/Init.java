@@ -20,9 +20,9 @@ import com.l2jfree.loginserver.network.client.packets.receivable.AuthGameGuard;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
- * This packet is sent by the login server immediately after
- * a connection is established. The client then replies with
- * {@link AuthGameGuard}.
+ * This packet is sent by the login server immediately after a connection is established. The client
+ * then replies with {@link AuthGameGuard}.
+ * 
  * @author savormix
  */
 public final class Init extends L2ServerPacket
@@ -33,19 +33,18 @@ public final class Init extends L2ServerPacket
 	private final byte[] _blowfishKey;
 	
 	/**
-	 * Creates a packet to inform about security parameters
-	 * used during communication.
+	 * Creates a packet to inform about security parameters used during communication.
+	 * 
 	 * @param llc a connection wrapper with assigned parameters
 	 */
 	public Init(L2LoginClient llc)
 	{
-		this(llc.getSessionId(), llc.getProtocol(),
-				llc.getPublicKey(), llc.getBlowfishKey());
+		this(llc.getSessionId(), llc.getProtocol(), llc.getPublicKey(), llc.getBlowfishKey());
 	}
 	
 	/**
-	 * Creates a packet to inform about security parameters
-	 * used in further communications.
+	 * Creates a packet to inform about security parameters used in further communications.
+	 * 
 	 * @param sessionId Session ID
 	 * @param protocol Protocol revision
 	 * @param publicKey Public key

@@ -18,7 +18,6 @@ import java.util.Date;
 
 /**
  * @author savormix
- *
  */
 public class L2Account
 {
@@ -29,6 +28,7 @@ public class L2Account
 	
 	/**
 	 * Creates an account to attach to a client connection wrapper.
+	 * 
 	 * @param account Account name
 	 * @param superUser Account privileges
 	 * @param dateOfBirth Account holder's DoB
@@ -44,6 +44,7 @@ public class L2Account
 	
 	/**
 	 * Returns the associated account name.
+	 * 
 	 * @return account name
 	 */
 	public String getAccount()
@@ -53,6 +54,7 @@ public class L2Account
 	
 	/**
 	 * Returns whether this client can login to any online server.
+	 * 
 	 * @return whether the associated account has superuser privileges
 	 */
 	public boolean isSuperUser()
@@ -62,6 +64,7 @@ public class L2Account
 	
 	/**
 	 * Returns account holder's birth date.
+	 * 
 	 * @return holder's DoB
 	 */
 	public Date getDateOfBirth()
@@ -71,6 +74,7 @@ public class L2Account
 	
 	/**
 	 * Returns the ID of a game server into which the associated account logged last.
+	 * 
 	 * @return last game server ID
 	 */
 	public int getLastServerId()

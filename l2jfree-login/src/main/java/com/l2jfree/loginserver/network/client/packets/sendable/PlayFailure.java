@@ -21,7 +21,6 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix
- *
  */
 public final class PlayFailure extends L2ServerPacket
 {
@@ -29,6 +28,7 @@ public final class PlayFailure extends L2ServerPacket
 	
 	/**
 	 * Constructs a packet to inform about failed game server login.
+	 * 
 	 * @param reason Client side message
 	 */
 	public PlayFailure(Reason reason)

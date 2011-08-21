@@ -28,9 +28,8 @@ import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
- * Client sends this packet automatically in response to
- * {@link Init} packet. Server replies with <TT>Unknown</TT>
- * or {@link GameGuardSuccess} based on this packet's data.
+ * Client sends this packet automatically in response to {@link Init} packet. Server replies with
+ * <TT>Unknown</TT> or {@link GameGuardSuccess} based on this packet's data.
  * 
  * @author savormix
  */

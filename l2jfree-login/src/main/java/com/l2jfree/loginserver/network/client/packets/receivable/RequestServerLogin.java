@@ -90,7 +90,8 @@ public final class RequestServerLogin extends L2ClientPacket
 			try
 			{
 				con = L2Database.getConnection();
-				PreparedStatement ps = con.prepareStatement("UPDATE account SET lastServerId = ? WHERE username LIKE ?");
+				PreparedStatement ps = con
+						.prepareStatement("UPDATE account SET lastServerId = ? WHERE username LIKE ?");
 				ps.setInt(1, _serverId);
 				ps.setString(2, acc.getAccount());
 				ps.executeUpdate();

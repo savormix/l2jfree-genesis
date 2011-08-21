@@ -57,6 +57,7 @@ public final class L2ClientConnections extends MMOController<L2LoginClient, L2Cl
 	
 	/**
 	 * Returns a singleton object.
+	 * 
 	 * @return an instance of this class
 	 */
 	public static L2ClientConnections getInstance()
@@ -75,6 +76,7 @@ public final class L2ClientConnections extends MMOController<L2LoginClient, L2Cl
 	
 	/**
 	 * Authorizes an account as logged in via this login server.
+	 * 
 	 * @param client connection
 	 */
 	public void authorize(L2LoginClient client)
@@ -89,8 +91,9 @@ public final class L2ClientConnections extends MMOController<L2LoginClient, L2Cl
 	
 	/**
 	 * Determines whether the given account has logged in via this login server.
+	 * 
 	 * @param account account name
-	 * @param activeKey	session key
+	 * @param activeKey session key
 	 * @param oldKey previous session key
 	 * @return is login valid
 	 */
@@ -106,12 +109,11 @@ public final class L2ClientConnections extends MMOController<L2LoginClient, L2Cl
 	}
 	
 	@Override
-	protected L2LoginClient createClient(SocketChannel socketChannel)
-			throws ClosedChannelException
+	protected L2LoginClient createClient(SocketChannel socketChannel) throws ClosedChannelException
 	{
 		L2ClientSecurity lcs = L2ClientSecurity.getInstance();
-		L2LoginClient llc = new L2LoginClient(this, socketChannel, lcs.getNextSessionId(),
-				PROTOCOL_VERSION, lcs.getKeyPair(), lcs.getBlowfishKey());
+		L2LoginClient llc = new L2LoginClient(this, socketChannel, lcs.getNextSessionId(), PROTOCOL_VERSION, lcs
+				.getKeyPair(), lcs.getBlowfishKey());
 		llc.sendPacket(new Init(llc));
 		return llc;
 	}

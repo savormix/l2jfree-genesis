@@ -18,13 +18,15 @@ import com.l2jfree.loginserver.network.client.packets.sendable.LoginFailure.Reas
 
 /**
  * @author savormix
- *
  */
 public enum L2NoServiceReason implements Reason
 {
 	/** There is a system error. Please log in again later. */
 	THERE_IS_A_SYSTEM_ERROR(1),
-	/** The password you have entered is incorrect. Confirm your account information and log in again later. */
+	/**
+	 * The password you have entered is incorrect. Confirm your account information and log in again
+	 * later.
+	 */
 	PASSWORD_INCORRECT(2), // also 3
 	/** Access failed. Please try again later. . */
 	ACCESS_FAILED_TRY_AGAIN(4), // also 6,8,9,10,11,13,14
@@ -43,20 +45,28 @@ public enum L2NoServiceReason implements Reason
 	/** <I>Shows a dialog to input a number.</I> */
 	// when using this, you mustn't terminate the connection!
 	INVALID_SECURITY_CARD_NO(31),
-	/** Users who have not verified their age may not log in between the hours of 10:00 p.m. and 6:00 a.m. */
+	/**
+	 * Users who have not verified their age may not log in between the hours of 10:00 p.m. and 6:00
+	 * a.m.
+	 */
 	TIME_LIMITATION_AGE_NOT_VERIFIED(32),
 	/** This server cannot be accessed by the coupon you are using. */
 	INCORRECT_COUPON_FOR_SERVER(33),
-	/** You are using a computer that does not allow you to log in with two accounts at the same time. */
+	/**
+	 * You are using a computer that does not allow you to log in with two accounts at the same
+	 * time.
+	 */
 	USING_A_COMPUTER_NO_DUAL_BOX(35),
 	/**
-	 * You must accept the User Agreement before this account can access Lineage II.\n
-	 * Please try again after accepting the agreement on the PlayNC website (http://www.plaync.co.kr).
+	 * You must accept the User Agreement before this account can access Lineage II.\n Please try
+	 * again after accepting the agreement on the PlayNC website (http://www.plaync.co.kr).
 	 */
 	MUST_ACCEPT_AGREEMENT(37),
-	/** You are currently logged into 10 of your accounts and can no longer access your other accounts. */
-	ACCOUNT_LIMITATION(42),
-	;
+	/**
+	 * You are currently logged into 10 of your accounts and can no longer access your other
+	 * accounts.
+	 */
+	ACCOUNT_LIMITATION(42), ;
 	
 	private final int _id;
 	

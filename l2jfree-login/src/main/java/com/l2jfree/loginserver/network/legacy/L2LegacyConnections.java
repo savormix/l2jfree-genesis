@@ -56,6 +56,7 @@ public final class L2LegacyConnections extends MMOController<L2GameServer, L2Gam
 	
 	/**
 	 * Returns a singleton object.
+	 * 
 	 * @return an instance of this class
 	 */
 	public static L2LegacyConnections getInstance()
@@ -65,8 +66,7 @@ public final class L2LegacyConnections extends MMOController<L2GameServer, L2Gam
 	
 	private final FastMap<Integer, L2GameServer> _gameServers;
 	
-	protected L2LegacyConnections(MMOConfig config)
-			throws IOException
+	protected L2LegacyConnections(MMOConfig config) throws IOException
 	{
 		super(config, L2LegacyPackets.getInstance());
 		_gameServers = FastMap.newInstance();
@@ -74,17 +74,17 @@ public final class L2LegacyConnections extends MMOController<L2GameServer, L2Gam
 	}
 	
 	@Override
-	protected L2GameServer createClient(SocketChannel socketChannel)
-			throws ClosedChannelException
+	protected L2GameServer createClient(SocketChannel socketChannel) throws ClosedChannelException
 	{
 		L2LegacySecurity lls = L2LegacySecurity.getInstance();
 		L2GameServer lgs = new L2GameServer(this, socketChannel, lls.getKeyPair());
-		lgs.sendPacket(new InitLS((RSAPublicKey) lgs.getPublicKey()));
+		lgs.sendPacket(new InitLS((RSAPublicKey)lgs.getPublicKey()));
 		return lgs;
 	}
 	
 	/**
 	 * Adds an authorized game server.
+	 * 
 	 * @param id game server ID
 	 * @param client game server
 	 */
@@ -95,6 +95,7 @@ public final class L2LegacyConnections extends MMOController<L2GameServer, L2Gam
 	
 	/**
 	 * Removes a possibly authorized game server.
+	 * 
 	 * @param client game server
 	 */
 	public void remGameServer(L2GameServer client)
@@ -106,6 +107,7 @@ public final class L2LegacyConnections extends MMOController<L2GameServer, L2Gam
 	
 	/**
 	 * Returns an authorized game server with the assigned ID.
+	 * 
 	 * @param id assigned ID
 	 * @return an authorized game server or <TT>null</TT>
 	 */
@@ -116,6 +118,7 @@ public final class L2LegacyConnections extends MMOController<L2GameServer, L2Gam
 	
 	/**
 	 * Returns authorized game servers.
+	 * 
 	 * @return authorized game servers
 	 */
 	public Collection<L2GameServer> getAuthorized()
@@ -125,6 +128,7 @@ public final class L2LegacyConnections extends MMOController<L2GameServer, L2Gam
 	
 	/**
 	 * Returns authorized game servers.
+	 * 
 	 * @return authorized game servers
 	 */
 	private FastMap<Integer, L2GameServer> getGameServers()

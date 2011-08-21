@@ -18,15 +18,12 @@ import com.l2jfree.util.logging.L2Logger;
 
 /**
  * @author savormix
- *
  */
 public abstract class L2GameServerView implements Comparable<L2GameServerView>
 {
 	protected static final L2Logger _log = L2Logger.getLogger(L2GameServerView.class);
 	/** Avoid redirecting to local server while this one is offline */
-	private static final byte[] UNKNOWN_IPV4 = {
-		0, 0, 0, 0
-	};
+	private static final byte[] UNKNOWN_IPV4 = { 0, 0, 0, 0 };
 	
 	private int _id;
 	private final byte[] _ipv4;
@@ -62,7 +59,7 @@ public abstract class L2GameServerView implements Comparable<L2GameServerView>
 	public boolean equals(Object o)
 	{
 		if (o instanceof L2GameServerView)
-			return getId() == ((L2GameServerView) o).getId();
+			return getId() == ((L2GameServerView)o).getId();
 		else
 			return false;
 	}
@@ -75,6 +72,7 @@ public abstract class L2GameServerView implements Comparable<L2GameServerView>
 	
 	/**
 	 * Returns the ID assigned to this game server.
+	 * 
 	 * @return ID
 	 */
 	public int getId()
@@ -84,6 +82,7 @@ public abstract class L2GameServerView implements Comparable<L2GameServerView>
 	
 	/**
 	 * Returns game server's listening IP.
+	 * 
 	 * @return IPv4 listening address
 	 */
 	public byte[] getIpv4()
@@ -93,6 +92,7 @@ public abstract class L2GameServerView implements Comparable<L2GameServerView>
 	
 	/**
 	 * Returns game server's listening port.
+	 * 
 	 * @return listening port
 	 */
 	public int getPort()
@@ -102,6 +102,7 @@ public abstract class L2GameServerView implements Comparable<L2GameServerView>
 	
 	/**
 	 * Returns player age requirement.
+	 * 
 	 * @return minimal player age
 	 */
 	public int getAge()
@@ -111,6 +112,7 @@ public abstract class L2GameServerView implements Comparable<L2GameServerView>
 	
 	/**
 	 * Returns whether PvP is allowed.
+	 * 
 	 * @return is PvP allowed
 	 */
 	public boolean isPvp()
@@ -120,6 +122,7 @@ public abstract class L2GameServerView implements Comparable<L2GameServerView>
 	
 	/**
 	 * Returns online player count.
+	 * 
 	 * @return online player count
 	 */
 	public int getOnlinePlayers()
@@ -129,6 +132,7 @@ public abstract class L2GameServerView implements Comparable<L2GameServerView>
 	
 	/**
 	 * Returns maximum online player count.
+	 * 
 	 * @return maximum online players
 	 */
 	public int getMaxPlayers()
@@ -138,6 +142,7 @@ public abstract class L2GameServerView implements Comparable<L2GameServerView>
 	
 	/**
 	 * Returns server status.
+	 * 
 	 * @return is online
 	 */
 	public boolean isOnline()
@@ -147,6 +152,7 @@ public abstract class L2GameServerView implements Comparable<L2GameServerView>
 	
 	/**
 	 * Returns all types of this game server.
+	 * 
 	 * @return game server types
 	 */
 	public int getTypes()
@@ -156,6 +162,7 @@ public abstract class L2GameServerView implements Comparable<L2GameServerView>
 	
 	/**
 	 * Returns whether to lead game server's name with square brackets.
+	 * 
 	 * @return show square brackets
 	 */
 	public boolean isBrackets()

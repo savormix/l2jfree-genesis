@@ -18,7 +18,6 @@ import com.l2jfree.loginserver.network.legacy.L2GameServer;
 
 /**
  * @author savormix
- *
  */
 public enum L2LegacyAgeLimit
 {
@@ -38,6 +37,7 @@ public enum L2LegacyAgeLimit
 	
 	/**
 	 * Returns age required to play.
+	 * 
 	 * @return minimal player age
 	 */
 	public int getMin()
@@ -47,6 +47,7 @@ public enum L2LegacyAgeLimit
 	
 	/**
 	 * Returns whether the game server's age limit is displayed in the server list.
+	 * 
 	 * @param lgs game server
 	 * @return whether the limit is visible or not
 	 */

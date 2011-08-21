@@ -33,6 +33,7 @@ import com.l2jfree.util.logging.L2Logger;
 
 /**
  * This class is designed to allow login server to function eternally.
+ * 
  * @author savormix
  */
 public class L2GameServerCache
@@ -89,6 +90,7 @@ public class L2GameServerCache
 	
 	/**
 	 * Returns possibly out-of-date empty views of all registered game servers.
+	 * 
 	 * @return empty registered game server views
 	 */
 	public Collection<L2GameServerView> getRegisteredGameServers()
@@ -102,8 +104,9 @@ public class L2GameServerCache
 	}
 	
 	/**
-	 * Returns the object onto which game server list related threads
-	 * must lock before attempting to authorize a game server.
+	 * Returns the object onto which game server list related threads must lock before attempting to
+	 * authorize a game server.
+	 * 
 	 * @return the game server authorization lock
 	 */
 	public Object getAuthorizationLock()
@@ -146,16 +149,16 @@ public class L2GameServerCache
 							{
 								// invalid authorization, impostor online
 								lgs.close(new LoginServerFail(L2NoServiceReason.NOT_AUTHED));
-								_log.info("Connection with game server on ID " + gameServerId +
-										" has been terminated: no longer authorized!");
+								_log.info("Connection with game server on ID " + gameServerId
+										+ " has been terminated: no longer authorized!");
 							}
 						}
-						else // not cached
+						else
+						// not cached
 						{
-							getGameServers().put(gameServerId,
-									new L2OfflineGameServerView(gameServerId));
-							_log.info("Added a game server on ID " + gameServerId +
-									" to cache. Now it will be shown in the server list even if offline.");
+							getGameServers().put(gameServerId, new L2OfflineGameServerView(gameServerId));
+							_log.info("Added a game server on ID " + gameServerId
+									+ " to cache. Now it will be shown in the server list even if offline.");
 						}
 					}
 				}
@@ -182,14 +185,14 @@ public class L2GameServerCache
 					synchronized (getAuthorizationLock())
 					{
 						getGameServers().remove(gameServerId);
-						_log.info("Removed game server on ID " + gameServerId +
-								" from cache. It will no longer be shown in the server list.");
+						_log.info("Removed game server on ID " + gameServerId
+								+ " from cache. It will no longer be shown in the server list.");
 						L2GameServer lgs = L2LegacyConnections.getInstance().getById(gameServerId);
 						if (lgs != null && lgs.getAuth() != null) // was authorized based on old data
 						{
 							lgs.close(new LoginServerFail(L2NoServiceReason.NOT_AUTHED));
-							_log.info("Connection with game server on ID " + gameServerId +
-									" has been terminated: no longer authorized!");
+							_log.info("Connection with game server on ID " + gameServerId
+									+ " has been terminated: no longer authorized!");
 						}
 						// otherwise login server assigned this ID temporarily
 					}
@@ -200,6 +203,7 @@ public class L2GameServerCache
 	
 	/**
 	 * Returns a singleton object.
+	 * 
 	 * @return an instance of this class
 	 */
 	public static L2GameServerCache getInstance()

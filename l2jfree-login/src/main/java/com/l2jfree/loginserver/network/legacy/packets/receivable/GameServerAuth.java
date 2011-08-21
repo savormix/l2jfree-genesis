@@ -86,10 +86,12 @@ public final class GameServerAuth extends L2GameServerPacket
 				if (!_acceptAlternateId || ServiceConfig.STRICT_AUTHORIZATION)
 					// desired ID is not available
 					lgs.close(new LoginServerFail(L2NoServiceReason.ALREADY_LOGGED_IN));
-				else // game server can take any ID and login server may assign them
+				else
+					// game server can take any ID and login server may assign them
 					tryAssignAvailableId(lgs);
 			}
-			else // no on-line game server on the desired ID
+			else
+			// no on-line game server on the desired ID
 			{
 				boolean reservedId = false;
 				String auth = null;
@@ -99,7 +101,8 @@ public final class GameServerAuth extends L2GameServerPacket
 				try
 				{
 					con = L2Database.getConnection();
-					PreparedStatement ps = con.prepareStatement("SELECT authData, allowBans FROM gameserver WHERE id = ?");
+					PreparedStatement ps = con
+							.prepareStatement("SELECT authData, allowBans FROM gameserver WHERE id = ?");
 					ps.setInt(1, _desiredId);
 					ResultSet rs = ps.executeQuery();
 					
@@ -132,17 +135,20 @@ public final class GameServerAuth extends L2GameServerPacket
 						if (!_acceptAlternateId || ServiceConfig.STRICT_AUTHORIZATION)
 							// desired ID is not available
 							lgs.close(new LoginServerFail(L2NoServiceReason.WRONG_HEXID));
-						else // game server can take any ID and login server may assign them
+						else
+							// game server can take any ID and login server may assign them
 							tryAssignAvailableId(lgs);
 					}
-					else // valid authorization
+					else
+						// valid authorization
 						finishAuthorization(_desiredId, hexId, bans, lgs);
 				}
 				else if (ServiceConfig.STRICT_AUTHORIZATION) // ID is free, but not available
 				{
 					lgs.close(new LoginServerFail(L2NoServiceReason.WRONG_HEXID));
 				}
-				else // ID is available for persistent use
+				else
+				// ID is available for persistent use
 				{
 					String hexId = HexUtil.bytesToHexString(_hexId);
 					if (ServiceConfig.SAVE_REQUESTS)
@@ -150,7 +156,8 @@ public final class GameServerAuth extends L2GameServerPacket
 						try
 						{
 							con = L2Database.getConnection();
-							PreparedStatement ps = con.prepareStatement("INSERT INTO gameserver (id, authData, allowBans) VALUES (?, ?, ?)");
+							PreparedStatement ps = con
+									.prepareStatement("INSERT INTO gameserver (id, authData, allowBans) VALUES (?, ?, ?)");
 							ps.setInt(1, _desiredId);
 							ps.setString(2, hexId);
 							ps.setBoolean(3, false);
@@ -193,8 +200,8 @@ public final class GameServerAuth extends L2GameServerPacket
 			_log.info("Game server on ID " + _desiredId + " did not specify a default IP!");
 		}
 		else
-			_log.info("Authorized legacy/compatible game server on ID " + _desiredId +
-					", advertised IP: " + lgs.getHost());
+			_log.info("Authorized legacy/compatible game server on ID " + _desiredId + ", advertised IP: "
+					+ lgs.getHost());
 		// <-- REGRESSION
 		lgs.setPort(_port);
 		lgs.setMaxPlayers(_maxPlayers);
@@ -239,9 +246,10 @@ public final class GameServerAuth extends L2GameServerPacket
 		{
 			if (reserved.remove(newId) || // Cannot use a registered ID
 					L2LegacyConnections.getInstance().getById(newId) != null)
-					// Cannot use an ID in use
+				// Cannot use an ID in use
 				continue;
-			else // can use this ID
+			else
+			// can use this ID
 			{
 				available = true;
 				break;
@@ -250,7 +258,8 @@ public final class GameServerAuth extends L2GameServerPacket
 		
 		if (available)
 			finishAuthorization(newId, null, false, lgs);
-		else // all IDs registered or in use
+		else
+			// all IDs registered or in use
 			lgs.close(new LoginServerFail(L2NoServiceReason.NO_FREE_ID));
 	}
 }

@@ -21,7 +21,6 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix
- *
  */
 public final class LoginSuccess extends L2ServerPacket
 {
@@ -29,6 +28,7 @@ public final class LoginSuccess extends L2ServerPacket
 	
 	/**
 	 * Constructs a packet to inform the client to show the EULA.
+	 * 
 	 * @param llc a connection wrapper
 	 */
 	public LoginSuccess(L2LoginClient llc)

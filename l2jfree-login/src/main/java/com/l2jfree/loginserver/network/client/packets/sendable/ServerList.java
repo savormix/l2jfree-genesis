@@ -27,7 +27,6 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix
- *
  */
 public final class ServerList extends L2ServerPacket
 {

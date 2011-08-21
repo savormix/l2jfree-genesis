@@ -18,7 +18,6 @@ import com.l2jfree.util.logging.L2Logger;
 
 /**
  * @author savormix
- *
  */
 public enum L2LegacyStatus
 {
@@ -48,6 +47,7 @@ public enum L2LegacyStatus
 	
 	/**
 	 * Returns status value ID.
+	 * 
 	 * @return status ID
 	 */
 	public int getId()
@@ -57,6 +57,7 @@ public enum L2LegacyStatus
 	
 	/**
 	 * Returns displayable status string.
+	 * 
 	 * @return status string
 	 */
 	public String getStatus()
@@ -66,6 +67,7 @@ public enum L2LegacyStatus
 	
 	/**
 	 * Returns a legacy status with the given ID.
+	 * 
 	 * @param id status ID
 	 * @return legacy status
 	 */

@@ -16,7 +16,6 @@ package com.l2jfree.loginserver.network.legacy.status;
 
 /**
  * @author savormix
- *
  */
 public enum L2LegacyManagedState
 {
@@ -40,6 +39,7 @@ public enum L2LegacyManagedState
 	
 	/**
 	 * Returns the state's type ID.
+	 * 
 	 * @return state ID
 	 */
 	public Integer getId()

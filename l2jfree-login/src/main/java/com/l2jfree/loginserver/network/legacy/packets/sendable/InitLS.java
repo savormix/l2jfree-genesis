@@ -22,7 +22,6 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix
- *
  */
 public final class InitLS extends L2LoginServerPacket
 {
@@ -32,6 +31,7 @@ public final class InitLS extends L2LoginServerPacket
 	
 	/**
 	 * Constructs the packet to transmit the public key.
+	 * 
 	 * @param publicKey public key
 	 */
 	public InitLS(RSAPublicKey publicKey)

@@ -86,20 +86,18 @@ public final class ServerStatus extends L2GameServerPacket
 				case MAX_PLAYERS:
 					lgs.setMaxPlayers(val);
 					break;
-			case AGE_LIMIT:
-				lgs.setAge(val);
-				if (!L2LegacyAgeLimit.isDisplayed(lgs))
-					_log.info("Game server on ID " + lgs.getId() +
-							" specified an invisible age limit.");
-				break;
-			default:
-				_log.warn("Unhandled legacy managed state: " + llms);
-				break;
+				case AGE_LIMIT:
+					lgs.setAge(val);
+					if (!L2LegacyAgeLimit.isDisplayed(lgs))
+						_log.info("Game server on ID " + lgs.getId() + " specified an invisible age limit.");
+					break;
+				default:
+					_log.warn("Unhandled legacy managed state: " + llms);
+					break;
 			}
 		}
 		
 		for (Entry<Integer, Integer> e : _status.entrySet())
-			_log.warn("Unknown legacy managed state! Type: " +
-					e.getKey() + " value: " + e.getValue());
+			_log.warn("Unknown legacy managed state! Type: " + e.getKey() + " value: " + e.getValue());
 	}
 }

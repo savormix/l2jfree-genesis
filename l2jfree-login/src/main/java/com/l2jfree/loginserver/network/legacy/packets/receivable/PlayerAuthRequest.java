@@ -51,8 +51,7 @@ public final class PlayerAuthRequest extends L2GameServerPacket
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		boolean valid = L2ClientConnections.getInstance().isAuthorized(_account,
-				_activeSessionKey, _oldSessionKey);
+		boolean valid = L2ClientConnections.getInstance().isAuthorized(_account, _activeSessionKey, _oldSessionKey);
 		sendPacket(new PlayerAuthResponse(_account, valid));
 	}
 }

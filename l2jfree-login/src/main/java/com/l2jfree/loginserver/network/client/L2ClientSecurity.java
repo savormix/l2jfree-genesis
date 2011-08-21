@@ -31,7 +31,6 @@ import com.l2jfree.util.logging.L2Logger;
 
 /**
  * @author savormix
- *
  */
 public class L2ClientSecurity
 {
@@ -57,8 +56,7 @@ public class L2ClientSecurity
 		try
 		{
 			rsa = KeyPairGenerator.getInstance("RSA");
-			AlgorithmParameterSpec spec = new RSAKeyGenParameterSpec(1024,
-					RSAKeyGenParameterSpec.F4);
+			AlgorithmParameterSpec spec = new RSAKeyGenParameterSpec(1024, RSAKeyGenParameterSpec.F4);
 			rsa.initialize(spec);
 		}
 		catch (GeneralSecurityException e)
@@ -96,6 +94,7 @@ public class L2ClientSecurity
 	
 	/**
 	 * Generates a session ID.
+	 * 
 	 * @return a session ID
 	 */
 	public int getNextSessionId()
@@ -105,6 +104,7 @@ public class L2ClientSecurity
 	
 	/**
 	 * Assigns a session key to an authorized client connection.
+	 * 
 	 * @param client logged in client
 	 * @return the assigned session key
 	 */
@@ -122,6 +122,7 @@ public class L2ClientSecurity
 	
 	/**
 	 * Returns a scrambled RSA key pair.
+	 * 
 	 * @return a key pair
 	 */
 	public ScrambledKeyPair getKeyPair()
@@ -131,6 +132,7 @@ public class L2ClientSecurity
 	
 	/**
 	 * Returns a Blowfish key.
+	 * 
 	 * @return a Blowfish key
 	 */
 	public byte[] getBlowfishKey()
@@ -155,6 +157,7 @@ public class L2ClientSecurity
 	
 	/**
 	 * Returns a singleton object.
+	 * 
 	 * @return an instance of this class
 	 */
 	public static L2ClientSecurity getInstance()
@@ -169,6 +172,7 @@ public class L2ClientSecurity
 	
 	/**
 	 * A session key to be assigned to an account via a client connection.
+	 * 
 	 * @author savormix
 	 */
 	public static class SessionKey
@@ -190,6 +194,7 @@ public class L2ClientSecurity
 		
 		/**
 		 * Returns the current session key.
+		 * 
 		 * @return session key
 		 */
 		public long getActiveKey()
@@ -199,6 +204,7 @@ public class L2ClientSecurity
 		
 		/**
 		 * Returns the previous session key.
+		 * 
 		 * @return session key
 		 */
 		public long getOldKey()

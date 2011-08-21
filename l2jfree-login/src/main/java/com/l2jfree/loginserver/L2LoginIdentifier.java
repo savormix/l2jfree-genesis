@@ -27,9 +27,10 @@ import com.l2jfree.util.Rnd;
 import com.l2jfree.util.logging.L2Logger;
 
 /**
- * The purpose of this class is classified.
- * <BR><BR>
+ * The purpose of this class is classified. <BR>
+ * <BR>
  * Pun intended.
+ * 
  * @author savormix
  */
 public final class L2LoginIdentifier
@@ -48,6 +49,7 @@ public final class L2LoginIdentifier
 	
 	/**
 	 * Returns the unique identifier for this login server.
+	 * 
 	 * @return unique identifier
 	 */
 	public long getUID()
@@ -133,6 +135,7 @@ public final class L2LoginIdentifier
 	
 	/**
 	 * Returns a singleton object.
+	 * 
 	 * @return an instance of this class
 	 */
 	public static L2LoginIdentifier getInstance()

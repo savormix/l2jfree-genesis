@@ -18,7 +18,6 @@ import com.l2jfree.loginserver.network.legacy.L2GameServer;
 
 /**
  * @author savormix
- *
  */
 public enum L2LegacyType
 {
@@ -46,6 +45,7 @@ public enum L2LegacyType
 	
 	/**
 	 * Returns type bit mask.
+	 * 
 	 * @return type mask
 	 */
 	public int getMask()
@@ -55,6 +55,7 @@ public enum L2LegacyType
 	
 	/**
 	 * Determines whether the given game server is of a specific type.
+	 * 
 	 * @param lgs game server
 	 * @param type type
 	 * @return if the server is of given type

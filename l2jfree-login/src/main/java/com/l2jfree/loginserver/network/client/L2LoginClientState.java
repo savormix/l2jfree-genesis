@@ -16,7 +16,6 @@ package com.l2jfree.loginserver.network.client;
 
 /**
  * @author savormix
- *
  */
 public enum L2LoginClientState
 {

@@ -32,7 +32,6 @@ import com.l2jfree.util.logging.L2Logger;
 
 /**
  * @author savormix
- *
  */
 public final class L2LegacyPackets implements IPacketHandler<L2GameServer, L2GameServerPacket, L2LoginServerPacket>
 {
@@ -44,40 +43,39 @@ public final class L2LegacyPackets implements IPacketHandler<L2GameServer, L2Gam
 	}
 	
 	@Override
-	public L2GameServerPacket handlePacket(ByteBuffer buf, L2GameServer client,
-			int opcode)
+	public L2GameServerPacket handlePacket(ByteBuffer buf, L2GameServer client, int opcode)
 	{
 		switch (opcode)
 		{
-		case BlowfishKey.OPCODE:
-			if (client.getState() == L2LegacyState.CONNECTED)
-				return new BlowfishKey();
-			break;
-		case GameServerAuth.OPCODE:
-			if (client.getState() == L2LegacyState.KEYS_EXCHANGED)
-				return new GameServerAuth();
-			break;
-		default:
-			if (client.getState() != L2LegacyState.AUTHED)
+			case BlowfishKey.OPCODE:
+				if (client.getState() == L2LegacyState.CONNECTED)
+					return new BlowfishKey();
 				break;
-			switch (opcode)
-			{
-			case PlayersInGame.OPCODE:
-				return new PlayersInGame();
-			case PlayerLogout.OPCODE:
-				return new PlayerLogout();
-			case ChangeAccessLevel.OPCODE:
-				return new ChangeAccessLevel();
-			case PlayerAuthRequest.OPCODE:
-				return new PlayerAuthRequest();
-			case ServerStatus.OPCODE:
-				return new ServerStatus();
-			case PlayerTraceRt.OPCODE:
-				return new PlayerTraceRt();
-			}
-			// unknown packet
-			_log.info("Unknown legacy packet: 0x" + HexUtil.fillHex(opcode, 2));
-			return null;
+			case GameServerAuth.OPCODE:
+				if (client.getState() == L2LegacyState.KEYS_EXCHANGED)
+					return new GameServerAuth();
+				break;
+			default:
+				if (client.getState() != L2LegacyState.AUTHED)
+					break;
+				switch (opcode)
+				{
+					case PlayersInGame.OPCODE:
+						return new PlayersInGame();
+					case PlayerLogout.OPCODE:
+						return new PlayerLogout();
+					case ChangeAccessLevel.OPCODE:
+						return new ChangeAccessLevel();
+					case PlayerAuthRequest.OPCODE:
+						return new PlayerAuthRequest();
+					case ServerStatus.OPCODE:
+						return new ServerStatus();
+					case PlayerTraceRt.OPCODE:
+						return new PlayerTraceRt();
+				}
+				// unknown packet
+				_log.info("Unknown legacy packet: 0x" + HexUtil.fillHex(opcode, 2));
+				return null;
 		}
 		// invalid state
 		_log.info("Legacy packet in invalid state: 0x" + HexUtil.fillHex(opcode, 2));
@@ -86,6 +84,7 @@ public final class L2LegacyPackets implements IPacketHandler<L2GameServer, L2Gam
 	
 	/**
 	 * Returns a singleton object.
+	 * 
 	 * @return an instance of this class
 	 */
 	public static L2LegacyPackets getInstance()

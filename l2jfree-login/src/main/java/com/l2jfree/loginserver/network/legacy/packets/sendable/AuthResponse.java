@@ -20,7 +20,6 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix
- *
  */
 public final class AuthResponse extends L2LoginServerPacket
 {
@@ -29,6 +28,7 @@ public final class AuthResponse extends L2LoginServerPacket
 	
 	/**
 	 * Constructs a packet to inform about successful authorization.
+	 * 
 	 * @param lgs an authorized game server
 	 */
 	public AuthResponse(L2GameServer lgs)
