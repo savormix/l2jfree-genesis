@@ -35,14 +35,9 @@ public class HandlerRegistry<K, V>
 		_map = map;
 	}
 	
-	public HandlerRegistry(boolean sorted)
-	{
-		this(sorted ? new TreeMap<K, V>() : new HashMap<K, V>());
-	}
-	
 	public HandlerRegistry()
 	{
-		this(false);
+		this(new HashMap<K, V>());
 	}
 	
 	protected K standardizeKey(K key)
@@ -76,8 +71,11 @@ public class HandlerRegistry<K, V>
 		return _map.size();
 	}
 	
-	public final Map<K, V> getHandlers()
+	public final Map<K, V> getHandlers(boolean sorted)
 	{
+		if (sorted)
+			return new TreeMap<K, V>(_map);
+		
 		return Collections.unmodifiableMap(_map);
 	}
 	

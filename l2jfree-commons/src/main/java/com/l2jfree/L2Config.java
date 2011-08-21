@@ -131,7 +131,8 @@ public abstract class L2Config
 	public static final String TELNET_FILE = "./config/telnet.properties";
 	
 	/**
-	 * Defines the type of log entries that should be followed by a complete stack trace, regardless if an exception is attached.
+	 * Defines the type of log entries that should be followed by a complete stack trace, regardless
+	 * if an exception is attached.
 	 */
 	public static Level EXTENDED_LOG_LEVEL = Level.OFF;
 	
@@ -398,8 +399,7 @@ public abstract class L2Config
 	}
 	
 	// TODO make sure to fit new config scheme, and move to config related classes
-	private static final HandlerRegistry<String, ConfigLoader> _loaders = new HandlerRegistry<String, ConfigLoader>(
-			true) {
+	private static final HandlerRegistry<String, ConfigLoader> _loaders = new HandlerRegistry<String, ConfigLoader>() {
 		@Override
 		public String standardizeKey(String key)
 		{
@@ -432,7 +432,7 @@ public abstract class L2Config
 	 */
 	public static void loadConfigs() throws Exception
 	{
-		for (ConfigLoader loader : _loaders.getHandlers().values())
+		for (ConfigLoader loader : _loaders.getHandlers(true).values())
 			loader.load();
 	}
 	
@@ -441,7 +441,7 @@ public abstract class L2Config
 	 */
 	public static void storeConfigs()
 	{
-		for (ConfigLoader loader : _loaders.getHandlers().values())
+		for (ConfigLoader loader : _loaders.getHandlers(true).values())
 		{
 			final ConfigClassInfo info = loader.getConfigClassInfo();
 			
@@ -480,7 +480,7 @@ public abstract class L2Config
 	 */
 	public static String getLoaderNames()
 	{
-		return StringUtils.join(_loaders.getHandlers().keySet().iterator(), "|");
+		return StringUtils.join(_loaders.getHandlers(true).keySet().iterator(), "|");
 	}
 	
 	protected static abstract class ConfigLoader
@@ -605,8 +605,7 @@ public abstract class L2Config
 			Class<? extends ThreadPoolInitializer> threadPoolInitializerClass,
 			Class<? extends DataSourceInitializer> dataSourceInitializerClass)
 	{
-		initApplication(configPackage.getName(),
-				threadPoolInitializerClass, dataSourceInitializerClass);
+		initApplication(configPackage.getName(), threadPoolInitializerClass, dataSourceInitializerClass);
 	}
 	
 	protected static void initApplication(String configPackageName,

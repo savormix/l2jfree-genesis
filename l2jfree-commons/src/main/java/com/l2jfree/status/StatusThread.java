@@ -263,7 +263,7 @@ public abstract class StatusThread extends Thread
 			final Map<String, StatusCommand> handlers = new TreeMap<String, StatusCommand>();
 			
 			int length = 20;
-			for (StatusCommand handler : _handlers.getHandlers().values())
+			for (StatusCommand handler : _handlers.getHandlers(true).values())
 			{
 				final String commands = handler.listCommands();
 				

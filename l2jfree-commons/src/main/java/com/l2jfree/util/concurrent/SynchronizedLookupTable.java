@@ -21,7 +21,7 @@ import com.l2jfree.util.LookupTable;
 /**
  * @author NB4L1
  */
-public class SynchronizedLookupTable<T> extends LookupTable<T>
+public class SynchronizedLookupTable<E> extends LookupTable<E>
 {
 	@Override
 	public synchronized int size()
@@ -42,19 +42,19 @@ public class SynchronizedLookupTable<T> extends LookupTable<T>
 	}
 	
 	@Override
-	public synchronized T get(final int key)
+	public synchronized E get(final int key)
 	{
 		return super.get(key);
 	}
 	
 	@Override
-	public synchronized void set(final int key, final T newValue)
+	public synchronized void set(final int key, final E newValue)
 	{
 		super.set(key, newValue);
 	}
 	
 	@Override
-	public synchronized Iterator<T> iterator()
+	public synchronized Iterator<E> iterator()
 	{
 		return super.iterator(); // TODO implement
 	}

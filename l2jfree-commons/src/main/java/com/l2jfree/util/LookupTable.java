@@ -14,6 +14,7 @@
  */
 package com.l2jfree.util;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -21,7 +22,7 @@ import java.util.Iterator;
  * @author NB4L1
  */
 @SuppressWarnings("unchecked")
-public class LookupTable<T> implements Iterable<T>
+public class LookupTable<E> implements Iterable<E>
 {
 	private static final Object[] EMPTY_ARRAY = new Object[0];
 	
@@ -61,14 +62,14 @@ public class LookupTable<T> implements Iterable<T>
 	 * @param key
 	 * @return the mapped value if exists, or null if not
 	 */
-	public T get(final int key)
+	public E get(final int key)
 	{
 		final int index = key + _offset;
 		
 		if (index < 0 || _array.length <= index)
 			return null;
 		
-		return (T)_array[index];
+		return (E)_array[index];
 	}
 	
 	/**
@@ -93,13 +94,13 @@ public class LookupTable<T> implements Iterable<T>
 	 * @param key
 	 * @param newValue
 	 */
-	public void set(final int key, final T newValue)
+	public void set(final int key, final E newValue)
 	{
 		final int index = key + _offset;
 		
 		if (0 <= index && index < _array.length)
 		{
-			final T oldValue = (T)_array[index];
+			final E oldValue = (E)_array[index];
 			
 			_array[index] = newValue;
 			
@@ -148,9 +149,9 @@ public class LookupTable<T> implements Iterable<T>
 	 * @param newValue
 	 * @return oldValue
 	 */
-	public final T put(final int key, final T newValue)
+	public final E put(final int key, final E newValue)
 	{
-		final T oldValue = get(key);
+		final E oldValue = get(key);
 		
 		set(key, newValue);
 		
@@ -161,9 +162,9 @@ public class LookupTable<T> implements Iterable<T>
 	 * @param key
 	 * @return oldValue
 	 */
-	public final T remove(final int key)
+	public final E remove(final int key)
 	{
-		final T oldValue = get(key);
+		final E oldValue = get(key);
 		
 		set(key, null);
 		
@@ -177,13 +178,31 @@ public class LookupTable<T> implements Iterable<T>
 	 * @param oldValue
 	 * @param newValue
 	 */
-	protected void replacedValue(final int key, final T oldValue, final T newValue)
+	protected void replacedValue(final int key, final E oldValue, final E newValue)
 	{
 	}
 	
 	@Override
-	public Iterator<T> iterator()
+	public Iterator<E> iterator()
 	{
 		return L2Arrays.iterator(_array, false);
+	}
+	
+	public <T> T[] toArray(Class<T> clazz)
+	{
+		return toArray((T[])Array.newInstance(clazz, size()));
+	}
+	
+	public <T> T[] toArray(T[] array)
+	{
+		if (array.length != size())
+			array = (T[])Array.newInstance(array.getClass().getComponentType(), size());
+		
+		int i = 0;
+		for (Object element : _array)
+			if (element != null)
+				array[i++] = (T)element;
+		
+		return array;
 	}
 }
