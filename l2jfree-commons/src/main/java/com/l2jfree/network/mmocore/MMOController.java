@@ -16,6 +16,7 @@ package com.l2jfree.network.mmocore;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SocketChannel;
@@ -124,11 +125,32 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 	 */
 	public final void connect(InetAddress address, int port, boolean persistent)
 	{
-		final ConnectorThread<T, RP, SP> connector = new ConnectorThread<T, RP, SP>(this, address, port, persistent);
+		connect(new InetSocketAddress(address, port), persistent);
+	}
+	
+	/**
+	 * Connects to the given address and port as a client.
+	 * 
+	 * @param socketAddress the socket address (adress and port) to connect to
+	 * @param persistent keep this connection alive during runtime
+	 */
+	public final void connect(InetSocketAddress socketAddress, boolean persistent)
+	{
+		final ConnectorThread<T, RP, SP> connector = new ConnectorThread<T, RP, SP>(this, socketAddress, persistent);
 		if (_started)
 			connector.start();
 		
 		_connectorThreads.add(connector);
+	}
+	
+	/**
+	 * Removes the non-persistent thread from the list once it's finished.
+	 * 
+	 * @param connector
+	 */
+	final void removeConnectorThread(ConnectorThread<T, RP, SP> connector)
+	{
+		_connectorThreads.remove(connector);
 	}
 	
 	/**

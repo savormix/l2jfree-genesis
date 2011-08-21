@@ -14,7 +14,6 @@
  */
 package com.l2jfree.network.mmocore;
 
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.nio.channels.SocketChannel;
 
@@ -24,16 +23,14 @@ import java.nio.channels.SocketChannel;
 final class ConnectorThread<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
 		extends WorkerThread<T, RP, SP>
 {
-	private final InetAddress _address;
-	private final int _port;
+	private final InetSocketAddress _address;
 	private final boolean _persistent;
 	
-	protected ConnectorThread(MMOController<T, RP, SP> mmoController, InetAddress address, int port, boolean persistent)
+	protected ConnectorThread(MMOController<T, RP, SP> mmoController, InetSocketAddress address, boolean persistent)
 	{
 		super(mmoController);
 		
 		_address = address;
-		_port = port;
 		_persistent = persistent;
 	}
 	
@@ -46,11 +43,11 @@ final class ConnectorThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 			try
 			{
 				// Connection
-				System.out.println("Connecting to " + _address + ":" + _port);
+				System.out.println("Connecting to " + _address.getAddress() + ":" + _address.getPort());
 				
 				final SocketChannel selectable = SocketChannel.open();
 				selectable.configureBlocking(false);
-				selectable.connect(new InetSocketAddress(_address, _port));
+				selectable.connect(_address);
 				while (!selectable.finishConnect())
 				{
 					try
@@ -91,7 +88,10 @@ final class ConnectorThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 			}
 			
 			if (!_persistent)
+			{
+				getMMOController().removeConnectorThread(this);
 				return;
+			}
 			
 			System.out.println("Disconnected, trying to reconnect in 5 sec!");
 			
