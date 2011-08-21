@@ -110,7 +110,7 @@ public final class MemoryJavaFileManager extends EclipseFileManager
 	 */
 	private class ClassOutputBuffer extends SimpleJavaFileObject
 	{
-		private String name;
+		private final String name;
 		
 		ClassOutputBuffer(String name)
 		{

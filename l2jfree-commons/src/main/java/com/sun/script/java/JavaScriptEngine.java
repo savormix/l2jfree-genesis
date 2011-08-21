@@ -53,7 +53,7 @@ import javax.script.SimpleBindings;
 public class JavaScriptEngine extends AbstractScriptEngine implements Compilable
 {
 	// Java compiler
-	private JavaCompiler compiler;
+	private final JavaCompiler compiler;
 	
 	public JavaScriptEngine()
 	{
@@ -66,7 +66,7 @@ public class JavaScriptEngine extends AbstractScriptEngine implements Compilable
 	// my implementation for CompiledScript
 	private class JavaCompiledScript extends CompiledScript
 	{
-		private Class<?> clazz;
+		private final Class<?> clazz;
 		
 		JavaCompiledScript(Class<?> clazz)
 		{

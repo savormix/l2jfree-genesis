@@ -164,10 +164,10 @@ public class JavaScriptEngineFactory implements ScriptEngineFactory
 		buf.append("    public static void main(String[] args) {\n");
 		if (statements.length != 0)
 		{
-			for (int i = 0; i < statements.length; i++)
+			for (String element : statements)
 			{
 				buf.append("        ");
-				buf.append(statements[i]);
+				buf.append(element);
 				buf.append(";\n");
 			}
 		}

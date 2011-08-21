@@ -43,7 +43,7 @@ import java.util.StringTokenizer;
  */
 public final class MemoryClassLoader extends URLClassLoader
 {
-	private Map<String, byte[]> classBytes;
+	private final Map<String, byte[]> classBytes;
 	
 	public MemoryClassLoader(Map<String, byte[]> classBytes, String classPath, ClassLoader parent)
 	{

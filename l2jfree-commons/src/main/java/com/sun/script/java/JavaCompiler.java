@@ -47,7 +47,7 @@ import org.eclipse.jdt.internal.compiler.tool.EclipseCompiler;
  */
 public class JavaCompiler
 {
-	private javax.tools.JavaCompiler tool;
+	private final javax.tools.JavaCompiler tool;
 	
 	public JavaCompiler()
 	{
