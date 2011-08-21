@@ -27,7 +27,6 @@ import com.l2jfree.util.logging.L2Logger;
 
 /**
  * @author savormix
- *
  */
 public final class L2ClientPackets implements IPacketHandler<L2CoreClient, L2ClientPacket, L2ServerPacket>
 {
@@ -43,14 +42,14 @@ public final class L2ClientPackets implements IPacketHandler<L2CoreClient, L2Cli
 	{
 		switch (opcode)
 		{
-		// TODO Auto-generated method stub
-		case ProtocolVersion.OPCODE:
-			if (isCorrectState(client, CONNECTED))
-				return new ProtocolVersion();
-			break;
-		default:
-			_log.info("Unhandled client packet: 0x" + HexUtil.fillHex(opcode, 2));
-			return null;
+			// TODO Auto-generated method stub
+			case ProtocolVersion.OPCODE:
+				if (isCorrectState(client, CONNECTED))
+					return new ProtocolVersion();
+				break;
+			default:
+				_log.info("Unhandled client packet: 0x" + HexUtil.fillHex(opcode, 2));
+				return null;
 		}
 		_log.info("Packet in invalid state: 0x" + HexUtil.fillHex(opcode, 2));
 		return null;
@@ -75,6 +74,7 @@ public final class L2ClientPackets implements IPacketHandler<L2CoreClient, L2Cli
 	
 	/**
 	 * Returns a singleton object.
+	 * 
 	 * @return an instance of this class
 	 */
 	public static L2ClientPackets getInstance()

@@ -50,6 +50,7 @@ public final class L2ClientConnections extends MMOController<L2CoreClient, L2Cli
 	
 	/**
 	 * Returns a singleton object.
+	 * 
 	 * @return an instance of this class
 	 */
 	public static L2ClientConnections getInstance()
@@ -57,16 +58,14 @@ public final class L2ClientConnections extends MMOController<L2CoreClient, L2Cli
 		return SingletonHolder.INSTANCE;
 	}
 	
-	protected L2ClientConnections(MMOConfig config)
-			throws IOException
+	protected L2ClientConnections(MMOConfig config) throws IOException
 	{
 		super(config, L2ClientPackets.getInstance());
 		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
-	protected L2CoreClient createClient(SocketChannel socketChannel)
-			throws ClosedChannelException
+	protected L2CoreClient createClient(SocketChannel socketChannel) throws ClosedChannelException
 	{
 		L2ClientSecurity lcs = L2ClientSecurity.getInstance();
 		L2CoreClient lcc = new L2CoreClient(socketChannel, lcs.getKey());

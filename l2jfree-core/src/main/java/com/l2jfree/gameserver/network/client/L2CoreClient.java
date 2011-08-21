@@ -26,7 +26,6 @@ import com.l2jfree.security.CoreCipher;
 
 /**
  * @author savormix
- *
  */
 public final class L2CoreClient extends MMOConnection<L2CoreClient, L2ClientPacket, L2ServerPacket>
 {
@@ -103,6 +102,7 @@ public final class L2CoreClient extends MMOConnection<L2CoreClient, L2ClientPack
 	
 	/**
 	 * Returns the complete cipher's key.
+	 * 
 	 * @return cipher's key
 	 */
 	public ByteBuffer getCipherKey()
@@ -127,6 +127,7 @@ public final class L2CoreClient extends MMOConnection<L2CoreClient, L2ClientPack
 	
 	/**
 	 * Returns current connection's state.
+	 * 
 	 * @return connection's state
 	 */
 	public L2CoreClientState getState()
@@ -136,6 +137,7 @@ public final class L2CoreClient extends MMOConnection<L2CoreClient, L2ClientPack
 	
 	/**
 	 * Changes the connection's state.
+	 * 
 	 * @param state connection's state
 	 */
 	public void setState(L2CoreClientState state)

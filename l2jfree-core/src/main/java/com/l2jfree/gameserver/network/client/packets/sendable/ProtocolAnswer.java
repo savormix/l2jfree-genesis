@@ -22,6 +22,7 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * The original name was <TT>KeyPacket</TT>.
+ * 
  * @author savormix
  */
 public final class ProtocolAnswer extends L2ServerPacket
@@ -32,8 +33,9 @@ public final class ProtocolAnswer extends L2ServerPacket
 	private final byte[] _key;
 	
 	/**
-	 * Constructs a packet to inform the client about protocol compatibility and
-	 * key to be used for further communications.
+	 * Constructs a packet to inform the client about protocol compatibility and key to be used for
+	 * further communications.
+	 * 
 	 * @param compatible whether protocol versions are compatible
 	 * @param key complete cipher's key
 	 */

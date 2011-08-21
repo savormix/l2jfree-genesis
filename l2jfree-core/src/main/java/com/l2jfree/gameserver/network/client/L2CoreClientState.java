@@ -16,7 +16,6 @@ package com.l2jfree.gameserver.network.client;
 
 /**
  * @author savormix
- *
  */
 public enum L2CoreClientState
 {

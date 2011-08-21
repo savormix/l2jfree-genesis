@@ -116,7 +116,8 @@ public final class L2WorldRegion
 	}
 	
 	/**
-	 * When the last player leaves a region, schedules a task to deactive the empty surrounding regions after a cooldown period.
+	 * When the last player leaves a region, schedules a task to deactive the empty surrounding
+	 * regions after a cooldown period.
 	 */
 	private void startDeactivation()
 	{

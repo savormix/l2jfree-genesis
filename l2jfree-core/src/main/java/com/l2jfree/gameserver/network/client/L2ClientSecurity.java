@@ -21,7 +21,6 @@ import com.l2jfree.util.logging.L2Logger;
 
 /**
  * @author savormix
- *
  */
 public final class L2ClientSecurity
 {
@@ -48,6 +47,7 @@ public final class L2ClientSecurity
 	
 	/**
 	 * Returns a read-only cipher key.
+	 * 
 	 * @return cipher key
 	 */
 	public byte[] getKey()
@@ -62,6 +62,7 @@ public final class L2ClientSecurity
 	
 	/**
 	 * Returns a singleton object.
+	 * 
 	 * @return an instance of this class
 	 */
 	public static L2ClientSecurity getInstance()
