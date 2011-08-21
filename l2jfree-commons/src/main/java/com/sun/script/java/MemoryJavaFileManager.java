@@ -135,7 +135,7 @@ public final class MemoryJavaFileManager extends EclipseFileManager
 	
 	@Override
 	public JavaFileObject getJavaFileForOutput(JavaFileManager.Location location, String className, Kind kind,
-		FileObject sibling) throws IOException
+			FileObject sibling) throws IOException
 	{
 		if (kind == Kind.CLASS)
 		{

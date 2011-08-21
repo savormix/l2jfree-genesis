@@ -57,6 +57,7 @@ public final class Util
 		
 		/**
 		 * Creates a default log record to be used in {@link Util#printSection(String)}.
+		 * 
 		 * @param msg message to be logged
 		 */
 		public PrintSectionLogRecord(String msg)
@@ -68,6 +69,7 @@ public final class Util
 	// some sys info utils
 	/**
 	 * Returns the number of CPU cores <U>currently</U> available to this application.
+	 * 
 	 * @return available CPU cores
 	 * @see Runtime#availableProcessors()
 	 */
@@ -79,6 +81,7 @@ public final class Util
 	
 	/**
 	 * Returns the name of the underlying operating system.
+	 * 
 	 * @return OS name
 	 */
 	public static String getOSName()
@@ -88,6 +91,7 @@ public final class Util
 	
 	/**
 	 * Returns the version info of the underlying operating system.
+	 * 
 	 * @return OS version
 	 */
 	public static String getOSVersion()
@@ -96,8 +100,9 @@ public final class Util
 	}
 	
 	/**
-	 * Returns the information about the underlying CPU architecture that is
-	 * supported by the underlying operating system.
+	 * Returns the information about the underlying CPU architecture that is supported by the
+	 * underlying operating system.
+	 * 
 	 * @return OS architecture
 	 */
 	public static String getOSArch()
@@ -107,6 +112,7 @@ public final class Util
 	
 	/**
 	 * Returns information about application's memory usage.
+	 * 
 	 * @return heap memory usage
 	 */
 	public static String[] getMemUsage()

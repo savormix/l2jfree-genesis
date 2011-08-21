@@ -61,7 +61,8 @@ public abstract class L2RuntimeLogFormatter extends L2LogFormatter
 		{
 			if (record.getLevel().intValue() >= L2Config.EXTENDED_LOG_LEVEL.intValue())
 				throwable = new ExtendedLog();
-			else if (record.getMessage() != null && record.getMessage().contains("Unevenly distributed hash code - Degraded Preformance"))
+			else if (record.getMessage() != null
+					&& record.getMessage().contains("Unevenly distributed hash code - Degraded Preformance"))
 				throwable = new ExtendedLog();
 		}
 		
@@ -93,7 +94,8 @@ public abstract class L2RuntimeLogFormatter extends L2LogFormatter
 		
 		private ExtendedLog()
 		{
-			super("This is just an extended feature of logging to show the stacktrace! It's not a real exception to report!");
+			super("This is just an extended feature of logging to show the stacktrace!"
+					+ " It's not a real exception to report!");
 		}
 	}
 }

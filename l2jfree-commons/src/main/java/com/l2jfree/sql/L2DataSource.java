@@ -293,7 +293,6 @@ public abstract class L2DataSource implements DataSource
 			IOUtils.closeQuietly(out);
 		}
 		
-		
 		if (written == 0)
 		{
 			backupFile.delete();

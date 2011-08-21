@@ -20,14 +20,16 @@ import com.l2jfree.util.L2Collections.Filter;
 
 /**
  * <p>
- * This is a very special "collection" - made for a special purpose. There is a lot of unnecessary garbage created by
- * collections during normal execution. Collections used ONLY locally ONLY to collect objects temporarily should be
- * replaced with this. The implementations MUST reuse inner structures created for storing.
+ * This is a very special "collection" - made for a special purpose. There is a lot of unnecessary
+ * garbage created by collections during normal execution. Collections used ONLY locally ONLY to
+ * collect objects temporarily should be replaced with this. The implementations MUST reuse inner
+ * structures created for storing.
  * </p>
  * <p>
- * It's default usage is to create it, add/remove elements, and finally "clean it up", with one of the
- * {@link #moveToArray()}, {@link #moveToArray(Object[])}, {@link #moveToList(List)} methods. During that method it
- * fills up the returned array/list with the values of it, and reuses inner objects.
+ * It's default usage is to create it, add/remove elements, and finally "clean it up", with one of
+ * the {@link #moveToArray()}, {@link #moveToArray(Object[])}, {@link #moveToList(List)} methods.
+ * During that method it fills up the returned array/list with the values of it, and reuses inner
+ * objects.
  * </p>
  * <br>
  * <font color=#FF0000>IMPORTANT RULES:</font>

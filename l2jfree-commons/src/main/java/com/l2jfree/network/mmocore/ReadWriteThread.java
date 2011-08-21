@@ -60,8 +60,8 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 	// wrapper for read and write operations
 	private final MMOBuffer _mmoBuffer;
 	
-	public ReadWriteThread(MMOController<T, RP, SP> mmoController, MMOConfig config, IPacketHandler<T, RP, SP> packetHandler)
-			throws IOException
+	public ReadWriteThread(MMOController<T, RP, SP> mmoController, MMOConfig config,
+			IPacketHandler<T, RP, SP> packetHandler) throws IOException
 	{
 		super(mmoController, config);
 		
@@ -234,8 +234,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 					{
 						final int startPos = buf.position();
 						
-						if (readPackets >= getMaxIncomingPacketsPerPass() ||
-								readBytes >= getMaxIncomingBytesPerPass())
+						if (readPackets >= getMaxIncomingPacketsPerPass() || readBytes >= getMaxIncomingBytesPerPass())
 							break;
 						
 						if (!tryReadPacket2(con, buf))
@@ -249,8 +248,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 			}
 			
 			// stop reading, if we have reached a config limit
-			if (readPackets >= getMaxIncomingPacketsPerPass() ||
-					readBytes >= getMaxIncomingBytesPerPass())
+			if (readPackets >= getMaxIncomingPacketsPerPass() || readBytes >= getMaxIncomingBytesPerPass())
 				break;
 			
 			// if the buffer wasn't filled completely, we should stop trying as the input channel is empty
@@ -386,8 +384,8 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 								// TODO: disabled until packet structures updated properly
 								//report(ErrorMode.BUFFER_OVER_FLOW, client, cp, null);
 								
-								MMOController._log.info("Invalid packet format (buf: " + buf + ", dataSize: " + dataSize
-										+ ", pos: " + pos + ", limit: " + limit + ", opcode: " + opcode
+								MMOController._log.info("Invalid packet format (buf: " + buf + ", dataSize: "
+										+ dataSize + ", pos: " + pos + ", limit: " + limit + ", opcode: " + opcode
 										+ ") used for reading - " + client + " - " + cp.getType() + " - "
 										+ getMMOController().getVersionInfo());
 							}
@@ -451,8 +449,8 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 							con.disableWriteInterest();
 							return;
 						}
-						else if (wrotePackets >= getMaxOutgoingPacketsPerPass() ||
-								wroteBytes >= getMaxOutgoingBytesPerPass())
+						else if (wrotePackets >= getMaxOutgoingPacketsPerPass()
+								|| wroteBytes >= getMaxOutgoingBytesPerPass())
 							return;
 					}
 				}
@@ -492,8 +490,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 			{
 				final int startPos = getDirectWriteBuffer().position();
 				
-				if (wrotePackets >= getMaxOutgoingPacketsPerPass() ||
-						wroteBytes >= getMaxOutgoingBytesPerPass())
+				if (wrotePackets >= getMaxOutgoingPacketsPerPass() || wroteBytes >= getMaxOutgoingBytesPerPass())
 					break;
 				
 				final SP sp;
@@ -561,7 +558,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		
 		// prepend header
 		getWriteBuffer().position(0);
-		getWriteBuffer().putChar((char) (PACKET_HEADER_SIZE + dataSize));
+		getWriteBuffer().putChar((char)(PACKET_HEADER_SIZE + dataSize));
 		
 		getWriteBuffer().position(PACKET_HEADER_SIZE + dataSize);
 		
@@ -684,7 +681,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 	{
 		return _readBuffer;
 	}
-
+	
 	private MMOBuffer getMmoBuffer()
 	{
 		return _mmoBuffer;

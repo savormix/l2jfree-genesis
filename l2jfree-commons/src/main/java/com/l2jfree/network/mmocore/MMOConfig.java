@@ -19,8 +19,9 @@ import java.nio.ByteOrder;
 import com.l2jfree.util.Introspection;
 
 /**
- * This class provides a convenient way to pass specific parameters to different
- * parts of MMOCore as well as to document these parameters.
+ * This class provides a convenient way to pass specific parameters to different parts of MMOCore as
+ * well as to document these parameters.
+ * 
  * @author KenM (reference)
  * @author NB4L1 (l2jfree)
  * @author savormix (l2jfree)
@@ -28,8 +29,8 @@ import com.l2jfree.util.Introspection;
 public final class MMOConfig
 {
 	/**
-	 * Specifies the maximum packet size for a network protocol that
-	 * uses a word to declare the packet's size.
+	 * Specifies the maximum packet size for a network protocol that uses a word to declare the
+	 * packet's size.
 	 */
 	public static final int DEFAULT_MAX_PACKET_SIZE = 64 * 1024 - 1;
 	
@@ -55,27 +56,27 @@ public final class MMOConfig
 	
 	/**
 	 * Creates a MMOCore configuration to be passed to a
-	 * {@link com.l2jfree.network.mmocore.MMOController}.
-	 * <BR><BR>
-	 * This configuration automatically picks an optimal buffer size based on
-	 * a rule of thumb that this value should be equal to:<BR>
+	 * {@link com.l2jfree.network.mmocore.MMOController}. <BR>
+	 * <BR>
+	 * This configuration automatically picks an optimal buffer size based on a rule of thumb that
+	 * this value should be equal to:<BR>
 	 * <I>Maximum length of a valid packet + 1</I><BR>
-	 * When a largest possible packet is read, the last byte helps
-	 * to identify whether there <U>may</U> be available bytes in
-	 * the channel/socket.
-	 * <BR><BR>
-	 * Setting a higher buffer size via {@link #setBufferSize(int)} may
-	 * reduce network I/O load as less socket write/read calls will be done.
-	 * However, this is only useful in situations where large amounts of
-	 * [large] packets are being transfered AND the network throughput is
-	 * high (like <A href="http://www.infinibandta.org/">InfiniBand</A>).
+	 * When a largest possible packet is read, the last byte helps to identify whether there <U>may</U>
+	 * be available bytes in the channel/socket. <BR>
+	 * <BR>
+	 * Setting a higher buffer size via {@link #setBufferSize(int)} may reduce network I/O load as
+	 * less socket write/read calls will be done. However, this is only useful in situations where
+	 * large amounts of [large] packets are being transfered AND the network throughput is high
+	 * (like <A href="http://www.infinibandta.org/">InfiniBand</A>).
+	 * 
 	 * @param name name of configuration
 	 * @param maxPacketSize maximum allowed packet size
 	 */
 	public MMOConfig(String name, int maxPacketSize)
 	{
 		if (maxPacketSize < 1)
-			throw new IllegalArgumentException("To ensure data flow, the maximum allowed packet size must be at least 1 byte.");
+			throw new IllegalArgumentException(
+					"To ensure data flow, the maximum allowed packet size must be at least 1 byte.");
 		
 		_name = name;
 		_modifiable = true;
@@ -93,9 +94,10 @@ public final class MMOConfig
 	
 	/**
 	 * Creates a MMOCore configuration to be passed to a
-	 * {@link com.l2jfree.network.mmocore.MMOController}.
-	 * <BR><BR>
+	 * {@link com.l2jfree.network.mmocore.MMOController}. <BR>
+	 * <BR>
 	 * It is assumed that the maximum packet size is {@value #DEFAULT_MAX_PACKET_SIZE}.
+	 * 
 	 * @param name name of configuration
 	 * @see #MMOConfig(String, int)
 	 */
@@ -106,6 +108,7 @@ public final class MMOConfig
 	
 	/**
 	 * Returns the name of this configuration.
+	 * 
 	 * @return name of configuration
 	 */
 	public String getName()
@@ -121,6 +124,7 @@ public final class MMOConfig
 	
 	/**
 	 * Allows or prevents modification of this configuration.
+	 * 
 	 * @param modifiable whether to allow modification
 	 */
 	void setModifiable(boolean modifiable)
@@ -130,9 +134,10 @@ public final class MMOConfig
 	}
 	
 	/**
-	 * Returns whether this configuration can be altered.
-	 * <BR><BR>
+	 * Returns whether this configuration can be altered. <BR>
+	 * <BR>
 	 * Configurations that have already been used cannot be altered.
+	 * 
 	 * @return is this configuration modifiable
 	 */
 	public boolean isModifiable()
@@ -141,9 +146,10 @@ public final class MMOConfig
 	}
 	
 	/**
-	 * Returns the minimum allowed size (in bytes) of byte buffers used in network I/O.
-	 * <BR><BR>
+	 * Returns the minimum allowed size (in bytes) of byte buffers used in network I/O. <BR>
+	 * <BR>
 	 * Defaults to the specified maximum packet size.
+	 * 
 	 * @return buffer's size in bytes
 	 */
 	public int getMinBufferSize()
@@ -152,15 +158,15 @@ public final class MMOConfig
 	}
 	
 	/**
-	 * Sets the size (in bytes) of byte buffers used in network I/O.
-	 * <BR><BR>
+	 * Sets the size (in bytes) of byte buffers used in network I/O. <BR>
+	 * <BR>
 	 * Defaults to {@link #getMinBufferSize()} + 1.
+	 * 
 	 * @param bufferSize buffer's size in bytes
 	 * @throws IllegalArgumentException if <TT>bufferSize</TT> < {@link #getMinBufferSize()}
 	 * @throws IllegalStateException if this configuration is already in use
 	 */
-	public void setBufferSize(int bufferSize)
-	throws IllegalArgumentException, IllegalStateException
+	public void setBufferSize(int bufferSize) throws IllegalArgumentException, IllegalStateException
 	{
 		tryModify();
 		
@@ -171,9 +177,10 @@ public final class MMOConfig
 	}
 	
 	/**
-	 * Returns the desired size (in bytes) of byte buffers used in network I/O.
-	 * <BR><BR>
+	 * Returns the desired size (in bytes) of byte buffers used in network I/O. <BR>
+	 * <BR>
 	 * Defaults to {@link #getMinBufferSize()} + 1.
+	 * 
 	 * @return buffer's size in bytes
 	 */
 	public int getBufferSize()
@@ -182,9 +189,10 @@ public final class MMOConfig
 	}
 	
 	/**
-	 * Sets the amount of "helper" byte buffers kept in cache for further usage.
-	 * <BR><BR>
+	 * Sets the amount of "helper" byte buffers kept in cache for further usage. <BR>
+	 * <BR>
 	 * Defaults to 20 byte buffers.
+	 * 
 	 * @param helperBufferCount count of additional byte buffers
 	 * @throws IllegalArgumentException if <TT>helperBufferCount</TT> < 0
 	 * @throws IllegalStateException if this configuration is already in use
@@ -200,10 +208,10 @@ public final class MMOConfig
 	}
 	
 	/**
-	 * Returns the desired amount of "helper" byte buffers kept in cache for
-	 * further usage.
-	 * <BR><BR>
+	 * Returns the desired amount of "helper" byte buffers kept in cache for further usage. <BR>
+	 * <BR>
 	 * Defaults to 20 byte buffers.
+	 * 
 	 * @return count of additional byte buffers
 	 */
 	public int getHelperBufferCount()
@@ -212,11 +220,12 @@ public final class MMOConfig
 	}
 	
 	/**
-	 * Sets the byte order of byte buffers used in network I/O.
-	 * <BR><BR>
+	 * Sets the byte order of byte buffers used in network I/O. <BR>
+	 * <BR>
 	 * Defaults to {@link java.nio.ByteOrder#LITTLE_ENDIAN}.
-	 * @param byteOrder {@link java.nio.ByteOrder#BIG_ENDIAN}
-	 * 			or {@link java.nio.ByteOrder#LITTLE_ENDIAN}
+	 * 
+	 * @param byteOrder {@link java.nio.ByteOrder#BIG_ENDIAN} or
+	 *            {@link java.nio.ByteOrder#LITTLE_ENDIAN}
 	 * @throws IllegalStateException if this configuration is already in use
 	 * @see java.nio.ByteOrder#nativeOrder()
 	 */
@@ -227,9 +236,10 @@ public final class MMOConfig
 	}
 	
 	/**
-	 * Returns the desired byte order of byte buffers used in network I/O.
-	 * <BR><BR>
+	 * Returns the desired byte order of byte buffers used in network I/O. <BR>
+	 * <BR>
 	 * Defaults to {@link java.nio.ByteOrder#LITTLE_ENDIAN}.
+	 * 
 	 * @return buffer's byte order
 	 */
 	public ByteOrder getByteOrder()
@@ -238,22 +248,21 @@ public final class MMOConfig
 	}
 	
 	/**
-	 * Instructs server to send at most {@code maxOutgoingPacketsPerPass} packets
-	 * in a single socket write call.
-	 * <BR><BR>
-	 * Less packets may be sent if the connection drops, the underlying
-	 * channel's send buffer is completely filled or the number
-	 * of outgoing bytes reaches the configured limit.
-	 * <BR><BR>
+	 * Instructs server to send at most {@code maxOutgoingPacketsPerPass} packets in a single socket
+	 * write call. <BR>
+	 * <BR>
+	 * Less packets may be sent if the connection drops, the underlying channel's send buffer is
+	 * completely filled or the number of outgoing bytes reaches the configured limit. <BR>
+	 * <BR>
 	 * Defaults to {@link java.lang.Integer#MAX_VALUE}.
-	 * @param maxOutgoingPacketsPerPass maximum number of packets to
-	 * 			be sent at once
+	 * 
+	 * @param maxOutgoingPacketsPerPass maximum number of packets to be sent at once
 	 * @throws IllegalArgumentException if <TT>maxOutgoingPacketsPerPass</TT> < 1
 	 * @throws IllegalStateException if this configuration is already in use
 	 * @see #setMaxOutgoingBytesPerPass(int)
 	 */
-	public void setMaxOutgoingPacketsPerPass(int maxOutgoingPacketsPerPass)
-	throws IllegalArgumentException, IllegalStateException
+	public void setMaxOutgoingPacketsPerPass(int maxOutgoingPacketsPerPass) throws IllegalArgumentException,
+			IllegalStateException
 	{
 		tryModify();
 		
@@ -264,10 +273,10 @@ public final class MMOConfig
 	}
 	
 	/**
-	 * Returns the desired maximum amount of packets to be sent in
-	 * a single socket write call.
-	 * <BR><BR>
+	 * Returns the desired maximum amount of packets to be sent in a single socket write call. <BR>
+	 * <BR>
 	 * Defaults to {@link java.lang.Integer#MAX_VALUE}.
+	 * 
 	 * @return maximum number of packets to be sent at once
 	 * @see #getMaxOutgoingBytesPerPass()
 	 */
@@ -277,21 +286,21 @@ public final class MMOConfig
 	}
 	
 	/**
-	 * Instructs server to read at most {@code maxIncomingPacketsPerPass} packets
-	 * in a single socket read call.
-	 * <BR><BR>
-	 * Less packets may be read if the connection drops, the underlying
-	 * channel's read buffer is completely exhausted or the number
-	 * of incoming bytes reaches the configured limit.
-	 * <BR><BR>
+	 * Instructs server to read at most {@code maxIncomingPacketsPerPass} packets in a single socket
+	 * read call. <BR>
+	 * <BR>
+	 * Less packets may be read if the connection drops, the underlying channel's read buffer is
+	 * completely exhausted or the number of incoming bytes reaches the configured limit. <BR>
+	 * <BR>
 	 * Defaults to {@link java.lang.Integer#MAX_VALUE}.
+	 * 
 	 * @param maxIncomingPacketsPerPass maximum number of packets to read at once
 	 * @throws IllegalArgumentException if <TT>maxIncomingPacketsPerPass</TT> < 1
 	 * @throws IllegalStateException if this configuration is already in use
 	 * @see #setMaxIncomingBytesPerPass(int)
 	 */
-	public void setMaxIncomingPacketsPerPass(int maxIncomingPacketsPerPass)
-	throws IllegalArgumentException, IllegalStateException
+	public void setMaxIncomingPacketsPerPass(int maxIncomingPacketsPerPass) throws IllegalArgumentException,
+			IllegalStateException
 	{
 		tryModify();
 		
@@ -302,10 +311,10 @@ public final class MMOConfig
 	}
 	
 	/**
-	 * Returns the desired maximum amount of packets to be read in
-	 * a single socket read call.
-	 * <BR><BR>
+	 * Returns the desired maximum amount of packets to be read in a single socket read call. <BR>
+	 * <BR>
 	 * Defaults to {@link java.lang.Integer#MAX_VALUE}.
+	 * 
 	 * @return maximum number of packets to read at once
 	 * @see #getMaxIncomingBytesPerPass()
 	 */
@@ -315,22 +324,21 @@ public final class MMOConfig
 	}
 	
 	/**
-	 * Instructs server to send at most {@code maxOutgoingBytesPerPass} bytes
-	 * in a single socket write call.
-	 * <BR><BR>
-	 * Less bytes may be sent if the connection drops, the underlying
-	 * channel's send buffer is completely filled or the number
-	 * of outgoing packets reaches the configured limit.
-	 * <BR><BR>
+	 * Instructs server to send at most {@code maxOutgoingBytesPerPass} bytes in a single socket
+	 * write call. <BR>
+	 * <BR>
+	 * Less bytes may be sent if the connection drops, the underlying channel's send buffer is
+	 * completely filled or the number of outgoing packets reaches the configured limit. <BR>
+	 * <BR>
 	 * Defaults to {@link java.lang.Integer#MAX_VALUE}.
-	 * @param maxOutgoingBytesPerPass maximum number of bytes to be sent at
-	 * 			once
+	 * 
+	 * @param maxOutgoingBytesPerPass maximum number of bytes to be sent at once
 	 * @throws IllegalArgumentException if <TT>maxOutgoingBytesPerPass</TT> < 1
 	 * @throws IllegalStateException if this configuration is already in use
 	 * @see #setMaxOutgoingPacketsPerPass(int)
 	 */
-	public void setMaxOutgoingBytesPerPass(int maxOutgoingBytesPerPass)
-	throws IllegalArgumentException, IllegalStateException
+	public void setMaxOutgoingBytesPerPass(int maxOutgoingBytesPerPass) throws IllegalArgumentException,
+			IllegalStateException
 	{
 		tryModify();
 		
@@ -341,10 +349,10 @@ public final class MMOConfig
 	}
 	
 	/**
-	 * Returns the desired maximum amount of bytes to be sent in
-	 * a single socket write call.
-	 * <BR><BR>
+	 * Returns the desired maximum amount of bytes to be sent in a single socket write call. <BR>
+	 * <BR>
 	 * Defaults to {@link java.lang.Integer#MAX_VALUE}.
+	 * 
 	 * @return maximum number of bytes to be sent at once
 	 * @see #getMaxOutgoingPacketsPerPass()
 	 */
@@ -354,22 +362,21 @@ public final class MMOConfig
 	}
 	
 	/**
-	 * Instructs server to read at most {@code maxIncomingBytesPerPass} bytes
-	 * in a single socket read call.
-	 * <BR><BR>
-	 * Less bytes may be read if the connection drops, the underlying
-	 * channel's read buffer is completely exhausted or the number
-	 * of incoming packets reaches the configured limit.
-	 * <BR><BR>
+	 * Instructs server to read at most {@code maxIncomingBytesPerPass} bytes in a single socket
+	 * read call. <BR>
+	 * <BR>
+	 * Less bytes may be read if the connection drops, the underlying channel's read buffer is
+	 * completely exhausted or the number of incoming packets reaches the configured limit. <BR>
+	 * <BR>
 	 * Defaults to {@link java.lang.Integer#MAX_VALUE}.
-	 * @param maxIncomingBytesPerPass maximum number of bytes to be sent at
-	 * 			once
+	 * 
+	 * @param maxIncomingBytesPerPass maximum number of bytes to be sent at once
 	 * @throws IllegalArgumentException if <TT>maxIncomingBytesPerPass</TT> < 1
 	 * @throws IllegalStateException if this configuration is already in use
 	 * @see #setMaxIncomingPacketsPerPass(int)
 	 */
-	public void setMaxIncomingBytesPerPass(int maxIncomingBytesPerPass)
-	throws IllegalArgumentException, IllegalStateException
+	public void setMaxIncomingBytesPerPass(int maxIncomingBytesPerPass) throws IllegalArgumentException,
+			IllegalStateException
 	{
 		tryModify();
 		
@@ -380,10 +387,10 @@ public final class MMOConfig
 	}
 	
 	/**
-	 * Returns the desired maximum amount of bytes to be read in
-	 * a single socket read call.
-	 * <BR><BR>
+	 * Returns the desired maximum amount of bytes to be read in a single socket read call. <BR>
+	 * <BR>
 	 * Defaults to {@link java.lang.Integer#MAX_VALUE}.
+	 * 
 	 * @return maximum number of bytes to be read at once
 	 * @see #getMaxIncomingPacketsPerPass()
 	 */
@@ -393,14 +400,14 @@ public final class MMOConfig
 	}
 	
 	/**
-	 * Instructs the selector thread to sleep for {@code selectorSleepTime}
-	 * milliseconds between iterations.<BR>
-	 * Lower values decrease latency, higher values increase throughput.
-	 * <BR><BR>
-	 * Extremely low values (<= 1 ms) will provide nearly no latency at the cost
-	 * of wasting CPU time due to very frequent network I/O.<BR>
-	 * High values (> 100 ms) tend to give noticeable latency and CPU usage
-	 * spikes due to longer I/O coupled with longer idle times.
+	 * Instructs the selector thread to sleep for {@code selectorSleepTime} milliseconds between
+	 * iterations.<BR>
+	 * Lower values decrease latency, higher values increase throughput. <BR>
+	 * <BR>
+	 * Extremely low values (<= 1 ms) will provide nearly no latency at the cost of wasting CPU
+	 * time due to very frequent network I/O.<BR>
+	 * High values (> 100 ms) tend to give noticeable latency and CPU usage spikes due to longer I/O
+	 * coupled with longer idle times.
 	 * <UL>
 	 * <LI>5 or less for a [pseudo] real-time service (Geo/PF/Login Server <-> Game Server)</LI>
 	 * <LI>5-15 for any interactive service (Game Server <-> Client)</LI>
@@ -411,8 +418,7 @@ public final class MMOConfig
 	 * @throws IllegalArgumentException if <TT>selectorSleepTime</TT> < 1
 	 * @throws IllegalStateException if this configuration is already in use
 	 */
-	public void setSelectorSleepTime(long selectorSleepTime)
-	throws IllegalArgumentException, IllegalStateException
+	public void setSelectorSleepTime(long selectorSleepTime) throws IllegalArgumentException, IllegalStateException
 	{
 		tryModify();
 		
@@ -423,10 +429,10 @@ public final class MMOConfig
 	}
 	
 	/**
-	 * Returns the desired selector thread's sleep (idling) time
-	 * between iterations.
-	 * <BR><BR>
+	 * Returns the desired selector thread's sleep (idling) time between iterations. <BR>
+	 * <BR>
 	 * Defaults to 10 milliseconds.
+	 * 
 	 * @return selector wakeup interval in milliseconds
 	 */
 	public long getSelectorSleepTime()
@@ -435,15 +441,15 @@ public final class MMOConfig
 	}
 	
 	/**
-	 * Sets the amount of network I/O threads.
-	 * <BR><BR>
+	 * Sets the amount of network I/O threads. <BR>
+	 * <BR>
 	 * Defaults to {@link java.lang.Runtime#availableProcessors()}.
+	 * 
 	 * @param threadCount network thread count
 	 * @throws IllegalArgumentException if <TT>threadCount</TT> < 1
 	 * @throws IllegalStateException if this configuration is already in use
 	 */
-	public void setThreadCount(int threadCount)
-	throws IllegalArgumentException, IllegalStateException
+	public void setThreadCount(int threadCount) throws IllegalArgumentException, IllegalStateException
 	{
 		tryModify();
 		
@@ -454,9 +460,10 @@ public final class MMOConfig
 	}
 	
 	/**
-	 * Returns the desired amount of network I/O threads.
-	 * <BR><BR>
+	 * Returns the desired amount of network I/O threads. <BR>
+	 * <BR>
 	 * Defaults to {@link java.lang.Runtime#availableProcessors()}.
+	 * 
 	 * @return network thread count
 	 */
 	public int getThreadCount()
@@ -465,7 +472,8 @@ public final class MMOConfig
 	}
 	
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return Introspection.toString(this);
 	}
 }

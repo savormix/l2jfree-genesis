@@ -19,10 +19,10 @@ import java.lang.reflect.Modifier;
 import java.util.Arrays;
 
 /**
- * This class provides advanced object status reporting capabilities.
- * <BR><BR>
- * Allows inspecting objects that do not extend the
- * {@code IntrospectiveObject} class.
+ * This class provides advanced object status reporting capabilities. <BR>
+ * <BR>
+ * Allows inspecting objects that do not extend the {@code IntrospectiveObject} class.
+ * 
  * @author savormix
  */
 public final class Introspection
@@ -35,21 +35,21 @@ public final class Introspection
 	}
 	
 	/**
-	 * Returns a single line string representing a subset of this object's status.
-	 * <BR><BR>
-	 * The string consists of the simple name of the given class followed by all
-	 * non-static fields of that class in name = value pairs, separated with
-	 * comma followed by a space and enclosed in simple parenthesis. If that class
-	 * does not declare any non-static fields, no parenthesis are added.
+	 * Returns a single line string representing a subset of this object's status. <BR>
 	 * <BR>
-	 * If the given class is {@code null}, then the complete status is reported,
-	 * as in {@link #toString(Object)}.
-	 * <BR><BR>
+	 * The string consists of the simple name of the given class followed by all non-static fields
+	 * of that class in name = value pairs, separated with comma followed by a space and enclosed in
+	 * simple parenthesis. If that class does not declare any non-static fields, no parenthesis are
+	 * added. <BR>
+	 * If the given class is {@code null}, then the complete status is reported, as in
+	 * {@link #toString(Object)}. <BR>
+	 * <BR>
 	 * Example outputs could be:<BR>
 	 * <CODE>
 	 * SomeClass<BR>
 	 * SomeClass(number = 15, object = this)
 	 * </CODE>
+	 * 
 	 * @param o an object (of type {@code T})
 	 * @param c {@code Class<T>} or {@code Class<? super T>}
 	 * @return a textual representation of the given object
@@ -75,19 +75,19 @@ public final class Introspection
 	}
 	
 	/**
-	 * Returns a single line string representing the complete status of this object.
-	 * <BR><BR>
-	 * The string consists of the simple name of the object's reported class
-	 * followed by all non-static fields in name = value pairs, separated with
-	 * comma followed by a space and enclosed in simple parenthesis. If all
-	 * classes in hierarchy do not declare any non-static fields, no parenthesis
-	 * are added.
-	 * <BR><BR>
+	 * Returns a single line string representing the complete status of this object. <BR>
+	 * <BR>
+	 * The string consists of the simple name of the object's reported class followed by all
+	 * non-static fields in name = value pairs, separated with comma followed by a space and
+	 * enclosed in simple parenthesis. If all classes in hierarchy do not declare any non-static
+	 * fields, no parenthesis are added. <BR>
+	 * <BR>
 	 * Example outputs could be:<BR>
 	 * <CODE>
 	 * SomeClass<BR>
 	 * SomeClass(number = 15, object = this)
 	 * </CODE>
+	 * 
 	 * @param o an object
 	 * @return a textual representation of the given object
 	 */
@@ -97,17 +97,15 @@ public final class Introspection
 	}
 	
 	/**
-	 * Returns the complete status of the given object in a multi-line string.
-	 * <BR><BR>
-	 * The beginning and the end of the string are separated with '=' lines.
-	 * First, the object's own class is reported in a canonical form and all
-	 * non-static object's own class fields are reported in name = value pairs.
-	 * The value is reported using {@link String#valueOf(Object)} except if
-	 * {@code o == Object}, when 'this' is reported instead.
-	 * Then, the same is done for each superclass in the class hierarchy.
-	 * Superclass info is separated by a line of '-'s before the line with the
-	 * canonical name.
-	 * <BR><BR>
+	 * Returns the complete status of the given object in a multi-line string. <BR>
+	 * <BR>
+	 * The beginning and the end of the string are separated with '=' lines. First, the object's own
+	 * class is reported in a canonical form and all non-static object's own class fields are
+	 * reported in name = value pairs. The value is reported using {@link String#valueOf(Object)}
+	 * except if {@code o == Object}, when 'this' is reported instead. Then, the same is done for
+	 * each superclass in the class hierarchy. Superclass info is separated by a line of '-'s before
+	 * the line with the canonical name. <BR>
+	 * <BR>
 	 * An example output could be:<BR>
 	 * <CODE>
 	 * =================================================<BR>
@@ -120,6 +118,7 @@ public final class Introspection
 	 * Superclass: java.lang.Object<BR>
 	 * =================================================<BR>
 	 * </CODE>
+	 * 
 	 * @param o an object
 	 * @return a textual representation of the given object
 	 */
@@ -156,8 +155,7 @@ public final class Introspection
 		return sb.toString();
 	}
 	
-	private static boolean writeFields(Class<?> c, Object accessor,
-			StringBuilder dest, String eol, boolean init)
+	private static boolean writeFields(Class<?> c, Object accessor, StringBuilder dest, String eol, boolean init)
 	{
 		if (c == null)
 			throw new IllegalArgumentException("No class specified.");
@@ -181,15 +179,15 @@ public final class Introspection
 				if (accessor == val)
 					dest.append("this");
 				else if (val instanceof boolean[])
-					dest.append(Arrays.toString((boolean[]) val));
+					dest.append(Arrays.toString((boolean[])val));
 				else if (val instanceof int[])
-					dest.append(Arrays.toString((int[]) val));
+					dest.append(Arrays.toString((int[])val));
 				else if (val instanceof long[])
-					dest.append(Arrays.toString((long[]) val));
+					dest.append(Arrays.toString((long[])val));
 				else if (val instanceof double[])
-					dest.append(Arrays.toString((double[]) val));
+					dest.append(Arrays.toString((double[])val));
 				else if (val instanceof Object[])
-					dest.append(Arrays.deepToString((Object[]) val));
+					dest.append(Arrays.deepToString((Object[])val));
 				else
 					dest.append(val);
 			}

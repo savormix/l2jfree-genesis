@@ -185,8 +185,8 @@ public final class FloodManager
 			}
 			else if (_lastTick > currentTick)
 			{
-				MMOController._log.warn("The current tick (" + currentTick + ") is smaller than the last ("
-						+ _lastTick + ")!", new IllegalStateException());
+				MMOController._log.warn("The current tick (" + currentTick + ") is smaller than the last (" + _lastTick
+						+ ")!", new IllegalStateException());
 				
 				_lastTick = currentTick;
 			}

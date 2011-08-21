@@ -22,7 +22,8 @@ import com.l2jfree.util.L2Collections.Filter;
 
 /**
  * <p>
- * An implementation of {@link Bunch} backed by a {@link List}, which is reused, so garbage is reduced heavily.
+ * An implementation of {@link Bunch} backed by a {@link List}, which is reused, so garbage is
+ * reduced heavily.
  * </p>
  * 
  * @author NB4L1

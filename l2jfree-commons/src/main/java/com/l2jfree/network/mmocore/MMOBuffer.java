@@ -20,7 +20,8 @@ import java.nio.ByteBuffer;
 import com.l2jfree.lang.L2Math;
 
 /**
- * A wrapper class around a {@link ByteBuffer} to implement the "usual" API for reading-writing data.
+ * A wrapper class around a {@link ByteBuffer} to implement the "usual" API for reading-writing
+ * data.
  * 
  * @author NB4L1
  */
@@ -30,11 +31,9 @@ public final class MMOBuffer
 	private ByteBuffer _buffer;
 	
 	/**
-	 * Creates a {@link java.nio.ByteBuffer} wrapper with
-	 * additional read methods.
-	 * <BR><BR>
-	 * Use {@link #setByteBuffer(ByteBuffer)} to dynamically
-	 * wrap buffers.
+	 * Creates a {@link java.nio.ByteBuffer} wrapper with additional read methods. <BR>
+	 * <BR>
+	 * Use {@link #setByteBuffer(ByteBuffer)} to dynamically wrap buffers.
 	 */
 	public MMOBuffer()
 	{
@@ -43,6 +42,7 @@ public final class MMOBuffer
 	
 	/**
 	 * Attaches a byte buffer to be wrapped.
+	 * 
 	 * @param buffer a byte buffer
 	 */
 	public void setByteBuffer(ByteBuffer buffer)
@@ -52,6 +52,7 @@ public final class MMOBuffer
 	
 	/**
 	 * Returns the number of available bytes in the wrapped buffer.
+	 * 
 	 * @return number of bytes available
 	 * @see java.nio.ByteBuffer#remaining()
 	 */
@@ -62,6 +63,7 @@ public final class MMOBuffer
 	
 	/**
 	 * Discards the following <TT>byteCount</TT> bytes.
+	 * 
 	 * @param byteCount number of bytes to skip
 	 */
 	public void skip(int byteCount)
@@ -80,6 +82,7 @@ public final class MMOBuffer
 	
 	/**
 	 * Reads <TT>dst.length</TT> bytes into the given array.
+	 * 
 	 * @param dst a byte array
 	 * @return <TT>dst</TT>
 	 * @see java.nio.ByteBuffer#get(byte[])
@@ -91,8 +94,8 @@ public final class MMOBuffer
 	}
 	
 	/**
-	 * Reads <TT>len</TT> bytes into the given array starting at
-	 * <TT>dst[offset]</TT>.
+	 * Reads <TT>len</TT> bytes into the given array starting at <TT>dst[offset]</TT>.
+	 * 
 	 * @param dst a byte array
 	 * @param offset array offset
 	 * @param len number of bytes to read
@@ -105,8 +108,9 @@ public final class MMOBuffer
 	
 	/**
 	 * Reads one byte (char in C) as a signed integer.
-	 * @return a number from the interval
-	 * 			[{@link java.lang.Byte#MIN_VALUE}; {@link java.lang.Byte#MAX_VALUE}]
+	 * 
+	 * @return a number from the interval [{@link java.lang.Byte#MIN_VALUE};
+	 *         {@link java.lang.Byte#MAX_VALUE}]
 	 */
 	public int readC()
 	{
@@ -115,6 +119,7 @@ public final class MMOBuffer
 	
 	/**
 	 * Reads one byte (unsigned char in C) as an unsigned integer.
+	 * 
 	 * @return a number from the interval [0; 255]
 	 */
 	public int readUC()
@@ -124,8 +129,9 @@ public final class MMOBuffer
 	
 	/**
 	 * Reads two bytes (a word) as a signed integer.
-	 * @return a number from the interval
-	 * 			[{@link java.lang.Short#MIN_VALUE}; {@link java.lang.Short#MAX_VALUE}]
+	 * 
+	 * @return a number from the interval [{@link java.lang.Short#MIN_VALUE};
+	 *         {@link java.lang.Short#MAX_VALUE}]
 	 */
 	public int readH()
 	{
@@ -134,6 +140,7 @@ public final class MMOBuffer
 	
 	/**
 	 * Reads two bytes (a word) as an unsigned integer.
+	 * 
 	 * @return a number from the interval [0; 65535]
 	 */
 	public int readUH()
@@ -143,8 +150,9 @@ public final class MMOBuffer
 	
 	/**
 	 * Reads four bytes (two words, a dword) as a signed integer.
-	 * @return a number from the interval
-	 * 			[{@link java.lang.Integer#MIN_VALUE}; {@link java.lang.Integer#MAX_VALUE}]
+	 * 
+	 * @return a number from the interval [{@link java.lang.Integer#MIN_VALUE};
+	 *         {@link java.lang.Integer#MAX_VALUE}]
 	 */
 	public int readD()
 	{
@@ -153,8 +161,9 @@ public final class MMOBuffer
 	
 	/**
 	 * Reads eight bytes (four words, a qword) as a signed integer.
-	 * @return a number from the interval
-	 * 			[{@link java.lang.Long#MIN_VALUE}; {@link java.lang.Long#MAX_VALUE}]
+	 * 
+	 * @return a number from the interval [{@link java.lang.Long#MIN_VALUE};
+	 *         {@link java.lang.Long#MAX_VALUE}]
 	 */
 	public long readQ()
 	{
@@ -163,8 +172,9 @@ public final class MMOBuffer
 	
 	/**
 	 * Reads eight bytes as a signed floating point number.
-	 * @return a number from the interval
-	 * 			[{@link java.lang.Double#MIN_VALUE}; {@link java.lang.Double#MAX_VALUE}]
+	 * 
+	 * @return a number from the interval [{@link java.lang.Double#MIN_VALUE};
+	 *         {@link java.lang.Double#MAX_VALUE}]
 	 */
 	public double readF()
 	{
@@ -172,9 +182,10 @@ public final class MMOBuffer
 	}
 	
 	/**
-	 * Reads an UTF-16 encoded C string.
-	 * <BR><BR>
+	 * Reads an UTF-16 encoded C string. <BR>
+	 * <BR>
 	 * <I>NOTE: The read string remains in memory until this method is called again.</I>
+	 * 
 	 * @return a string
 	 */
 	public String readS()
@@ -190,6 +201,7 @@ public final class MMOBuffer
 	
 	/**
 	 * Writes <TT>count</TT> null bytes.
+	 * 
 	 * @param count byte count
 	 */
 	public void write0(int count)
@@ -199,19 +211,21 @@ public final class MMOBuffer
 	
 	/**
 	 * Writes a boolean as a single byte.
+	 * 
 	 * @param value <TT>true</TT> or <TT>false</TT>
 	 */
 	public void writeC(boolean value)
 	{
-		_buffer.put((byte) (value ? 1 : 0));
+		_buffer.put((byte)(value ? 1 : 0));
 	}
 	
 	/**
-	 * Writes a signed integer as a single byte.
-	 * <BR><BR>
+	 * Writes a signed integer as a single byte. <BR>
+	 * <BR>
 	 * If the given value is out of bounds, it is truncated.
-	 * @param value a number from the interval
-	 * 			[{@link java.lang.Byte#MIN_VALUE}; {@link java.lang.Byte#MAX_VALUE}]
+	 * 
+	 * @param value a number from the interval [{@link java.lang.Byte#MIN_VALUE};
+	 *            {@link java.lang.Byte#MAX_VALUE}]
 	 */
 	public void writeC(int value)
 	{
@@ -220,27 +234,30 @@ public final class MMOBuffer
 	
 	/**
 	 * Writes a boolean as a word (two bytes).
+	 * 
 	 * @param value <TT>true</TT> or <TT>false</TT>
 	 */
 	public void writeH(boolean value)
 	{
-		_buffer.putShort((short) (value ? 1 : 0));
+		_buffer.putShort((short)(value ? 1 : 0));
 	}
 	
 	/**
-	 * Writes a signed integer as a word (two bytes).
-	 * <BR><BR>
+	 * Writes a signed integer as a word (two bytes). <BR>
+	 * <BR>
 	 * If the given value is out of bounds, it is truncated.
-	 * @param value a number from the interval
-	 * 			[{@link java.lang.Short#MIN_VALUE}; {@link java.lang.Short#MAX_VALUE}]
+	 * 
+	 * @param value a number from the interval [{@link java.lang.Short#MIN_VALUE};
+	 *            {@link java.lang.Short#MAX_VALUE}]
 	 */
 	public void writeH(int value)
 	{
-		_buffer.putShort((short) value);
+		_buffer.putShort((short)value);
 	}
 	
 	/**
 	 * Writes a boolean as a dword (four bytes).
+	 * 
 	 * @param value <TT>true</TT> or <TT>false</TT>
 	 */
 	public void writeD(boolean value)
@@ -250,8 +267,9 @@ public final class MMOBuffer
 	
 	/**
 	 * Writes a signed integer as a dword (four bytes).
-	 * @param value a number from the interval
-	 * 			[{@link java.lang.Integer#MIN_VALUE}; {@link java.lang.Integer#MAX_VALUE}]
+	 * 
+	 * @param value a number from the interval [{@link java.lang.Integer#MIN_VALUE};
+	 *            {@link java.lang.Integer#MAX_VALUE}]
 	 */
 	public void writeD(int value)
 	{
@@ -259,11 +277,11 @@ public final class MMOBuffer
 	}
 	
 	/**
-	 * Writes a signed integer as a dword (four bytes).
-	 * If the given value is not from the interval [{@link java.lang.Integer#MIN_VALUE};
+	 * Writes a signed integer as a dword (four bytes). If the given value is not from the interval [{@link java.lang.Integer#MIN_VALUE};
 	 * {@link java.lang.Integer#MAX_VALUE}], then it is increased/decreased to fit.
-	 * @param value a number from the interval
-	 * 			[{@link java.lang.Long#MIN_VALUE}; {@link java.lang.Long#MAX_VALUE}]
+	 * 
+	 * @param value a number from the interval [{@link java.lang.Long#MIN_VALUE};
+	 *            {@link java.lang.Long#MAX_VALUE}]
 	 */
 	public void writeD(long value)
 	{
@@ -272,6 +290,7 @@ public final class MMOBuffer
 	
 	/**
 	 * Writes a boolean as a qword (eight bytes).
+	 * 
 	 * @param value <TT>true</TT> or <TT>false</TT>
 	 */
 	public void writeQ(boolean value)
@@ -281,8 +300,9 @@ public final class MMOBuffer
 	
 	/**
 	 * Writes a signed integer as a qword (eight bytes).
-	 * @param value a number from the interval
-	 * 			[{@link java.lang.Long#MIN_VALUE}; {@link java.lang.Long#MAX_VALUE}]
+	 * 
+	 * @param value a number from the interval [{@link java.lang.Long#MIN_VALUE};
+	 *            {@link java.lang.Long#MAX_VALUE}]
 	 */
 	public void writeQ(long value)
 	{
@@ -291,8 +311,9 @@ public final class MMOBuffer
 	
 	/**
 	 * Writes a signed floating point number into eight bytes.
-	 * @param value a number from the interval
-	 * 			[{@link java.lang.Double#MIN_VALUE}; {@link java.lang.Double#MAX_VALUE}]
+	 * 
+	 * @param value a number from the interval [{@link java.lang.Double#MIN_VALUE};
+	 *            {@link java.lang.Double#MAX_VALUE}]
 	 */
 	public void writeF(double value)
 	{
@@ -301,6 +322,7 @@ public final class MMOBuffer
 	
 	/**
 	 * Writes <TT>data.length</TT> bytes from the given array.
+	 * 
 	 * @param data a byte array
 	 */
 	public void writeB(byte[] data)
@@ -309,12 +331,13 @@ public final class MMOBuffer
 	}
 	
 	/**
-	 * Writes an unterminated character sequence.
-	 * <BR><BR>
-	 * A convenience method to write a part of the string to avoid
-	 * instantiating numerous objects when concatenating.
-	 * <BR><BR>
+	 * Writes an unterminated character sequence. <BR>
+	 * <BR>
+	 * A convenience method to write a part of the string to avoid instantiating numerous objects
+	 * when concatenating. <BR>
+	 * <BR>
 	 * You <U>MUST</U> terminate this character sequence manually.
+	 * 
 	 * @param charSequence a character sequence
 	 * @return <TT>this</TT>
 	 * @see #writeS(CharSequence)
@@ -328,11 +351,12 @@ public final class MMOBuffer
 	}
 	
 	/**
-	 * Writes a C string.
-	 * <BR><BR>
-	 * Given character sequences are written one after another in the given order.
-	 * <BR><BR>
+	 * Writes a C string. <BR>
+	 * <BR>
+	 * Given character sequences are written one after another in the given order. <BR>
+	 * <BR>
 	 * A convenience method to write all parts of a string without concatenating.
+	 * 
 	 * @param charSequences parts of a string in the correct order
 	 * @see #append(CharSequence)
 	 * @see #writeS(CharSequence)
@@ -348,6 +372,7 @@ public final class MMOBuffer
 	
 	/**
 	 * Writes a C string.
+	 * 
 	 * @param charSequence a character sequence
 	 * @see #append(CharSequence)
 	 * @see #writeS(CharSequence[])

@@ -42,6 +42,7 @@ public abstract class StatusServer extends Thread
 	{
 		/**
 		 * Accepts or rejects a host address.
+		 * 
 		 * @param host host address
 		 * @return whether to accept or not
 		 */
@@ -157,6 +158,7 @@ public abstract class StatusServer extends Thread
 	
 	/**
 	 * Adds a connection to the active connection list.
+	 * 
 	 * @param thread a connection
 	 */
 	public final void addStatusThread(StatusThread thread)
@@ -166,6 +168,7 @@ public abstract class StatusServer extends Thread
 	
 	/**
 	 * Removes a connection from the active connection list.
+	 * 
 	 * @param thread a connection
 	 */
 	public final void removeStatusThread(StatusThread thread)
@@ -175,6 +178,7 @@ public abstract class StatusServer extends Thread
 	
 	/**
 	 * Returns all active connections.
+	 * 
 	 * @return active connections
 	 */
 	public final Set<StatusThread> getStatusThreads()
@@ -184,6 +188,7 @@ public abstract class StatusServer extends Thread
 	
 	/**
 	 * Broadcasts a message to all active connections.
+	 * 
 	 * @param message a message
 	 */
 	public final void broadcast(String message)

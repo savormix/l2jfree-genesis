@@ -144,6 +144,7 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 	
 	/**
 	 * Returns the IP address as a string (w.x.y.z).
+	 * 
 	 * @return raw IP address
 	 * @see InetAddress#getHostAddress()
 	 */
@@ -280,7 +281,8 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 	/**
 	 * Clears the packet queue, and closes the client with the given packet.<br>
 	 * <br>
-	 * NOTE: It allows a longer timeout (10 sec), to let the client have the chance to get all of the packets.
+	 * NOTE: It allows a longer timeout (10 sec), to let the client have the chance to get all of
+	 * the packets.
 	 */
 	@SuppressWarnings("unchecked")
 	public synchronized void close(SP sp)
@@ -325,7 +327,8 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 	protected abstract void onDisconnection();
 	
 	/**
-	 * Called <b><font color="red">ONLY on FORCED - most likely Exception caused - </font></b> disconnection.
+	 * Called <b><font color="red">ONLY on FORCED - most likely Exception caused - </font></b>
+	 * disconnection.
 	 */
 	protected abstract void onForcedDisconnection();
 	
@@ -340,7 +343,8 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 	
 	/**
 	 * @return a String used to identify the "real" user "behind" the client for flood protection<br>
-	 *         it must stay the same after a disconnection (for example it could be the account name)
+	 *         it must stay the same after a disconnection (for example it could be the account
+	 *         name)
 	 */
 	protected abstract String getUID();
 	
@@ -366,6 +370,7 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 	/**
 	 * Returns whether anything meaningful happened since this connection was made.<BR>
 	 * A timeout is applied to idle connections.
+	 * 
 	 * @return whether the connection is not idle
 	 */
 	protected abstract boolean isAuthed();

@@ -26,7 +26,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * This class is used to show how you can sort a java.uti.Map for values. This also takes care of null and duplicate values present in the map.
+ * This class is used to show how you can sort a java.uti.Map for values. This also takes care of
+ * null and duplicate values present in the map.
  */
 @SuppressWarnings( { "unchecked", "rawtypes" })
 public class ValueSortMap
@@ -37,8 +38,10 @@ public class ValueSortMap
 	}
 	
 	/**
-	 * This method returns the new LinkedHashMap sorted with values for passed Comparater. If null values exist they will be put in the last of the returned LinkedHashMap. If there are duplicate values they will come together at the values ordering order but ordering between same multiple values is
-	 * ramdom. Passed Map will be intect.
+	 * This method returns the new LinkedHashMap sorted with values for passed Comparater. If null
+	 * values exist they will be put in the last of the returned LinkedHashMap. If there are
+	 * duplicate values they will come together at the values ordering order but ordering between
+	 * same multiple values is ramdom. Passed Map will be intect.
 	 * 
 	 * @param inMap Map to be sorted
 	 * @param comparator Values will be sorted as per passed Comparater
@@ -50,8 +53,11 @@ public class ValueSortMap
 	}
 	
 	/**
-	 * This method returns the new LinkedHashMap sorted with values for passed ascendingOrder. If null values exist they will be put in the last for true value of ascendingOrder or will be put on top of the returned LinkedHashMap for false value of ascendingOrder. If there are duplicate values they
-	 * will come together at the values ordering order but ordering between same multiple values is ramdom. Passed Map will be intect.
+	 * This method returns the new LinkedHashMap sorted with values for passed ascendingOrder. If
+	 * null values exist they will be put in the last for true value of ascendingOrder or will be
+	 * put on top of the returned LinkedHashMap for false value of ascendingOrder. If there are
+	 * duplicate values they will come together at the values ordering order but ordering between
+	 * same multiple values is ramdom. Passed Map will be intect.
 	 * 
 	 * @param inMap Map to be sorted
 	 * @param ascendingOrder Values will be sorted as per value of ascendingOrder
@@ -63,8 +69,10 @@ public class ValueSortMap
 	}
 	
 	/**
-	 * This method returns the new LinkedHashMap sorted with values in ascending order. If null values exist they will be put in the last of the returned LinkedHashMap. If there are duplicate values they will come together at the values ordering order but ordering between same multiple values is
-	 * ramdom. Passed Map will be intect.
+	 * This method returns the new LinkedHashMap sorted with values in ascending order. If null
+	 * values exist they will be put in the last of the returned LinkedHashMap. If there are
+	 * duplicate values they will come together at the values ordering order but ordering between
+	 * same multiple values is ramdom. Passed Map will be intect.
 	 * 
 	 * @param inMap Map to be sorted
 	 * @return LinkedHashMap Sorted new LinkedHashMap
@@ -75,8 +83,12 @@ public class ValueSortMap
 	}
 	
 	/**
-	 * This method returns the new LinkedHashMap sorted with values. Values will be sorted as value of passed comparator if ascendingOrder is null or in order of passed ascendingOrder if it is not null. If null values exist they will be put in the last for true value of ascendingOrder or will be put
-	 * on top of the returned LinkedHashMap for false value of ascendingOrder. If there are duplicate values they will come together at the values ordering order but ordering between same multiple values is ramdom. Passed Map will be intect.
+	 * This method returns the new LinkedHashMap sorted with values. Values will be sorted as value
+	 * of passed comparator if ascendingOrder is null or in order of passed ascendingOrder if it is
+	 * not null. If null values exist they will be put in the last for true value of ascendingOrder
+	 * or will be put on top of the returned LinkedHashMap for false value of ascendingOrder. If
+	 * there are duplicate values they will come together at the values ordering order but ordering
+	 * between same multiple values is ramdom. Passed Map will be intect.
 	 * 
 	 * @param inMap Map to be sorted
 	 * @param comparator Values will be sorted as per passed Comparater

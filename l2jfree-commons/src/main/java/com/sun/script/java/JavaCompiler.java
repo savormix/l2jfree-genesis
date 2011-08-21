@@ -110,7 +110,7 @@ public class JavaCompiler
 		
 		// create a compilation task
 		javax.tools.JavaCompiler.CompilationTask task = tool.getTask(err, manager, diagnostics, options, null,
-			compUnits);
+				compUnits);
 		
 		if (task.call() == false)
 		{

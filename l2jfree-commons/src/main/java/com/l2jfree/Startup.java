@@ -26,9 +26,11 @@ public final class Startup
 	private static Set<StartupHook> _startupHooks = new L2FastSet<StartupHook>();
 	
 	/**
-	 * While application is loading, returns {@code false}. After the application finishes loading, returns {@code true}.<BR>
+	 * While application is loading, returns {@code false}. After the application finishes loading,
+	 * returns {@code true}.<BR>
 	 * <BR>
-	 * If calling this method resulted in {@code true}, all following invocations are guaranteed to result in {@code true}.
+	 * If calling this method resulted in {@code true}, all following invocations are guaranteed to
+	 * result in {@code true}.
 	 * 
 	 * @return whether the application has finished loading
 	 */
@@ -67,7 +69,8 @@ public final class Startup
 	public interface StartupHook
 	{
 		/**
-		 * This method is called on an attached startup hook when/if the application has finished loading.
+		 * This method is called on an attached startup hook when/if the application has finished
+		 * loading.
 		 */
 		public void onStartup();
 	}

@@ -83,7 +83,8 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 	/**
 	 * Opens a server socket, to accept incoming connections.
 	 * 
-	 * @param address the address to listen on (should be null in order to listen on all available addresses)
+	 * @param address the address to listen on (should be null in order to listen on all available
+	 *            addresses)
 	 * @param port the port to listen on
 	 * @throws IOException if any problem occurs while opening the acceptor
 	 */
@@ -132,6 +133,7 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 	
 	/**
 	 * Returns the name of this controller's configuration.
+	 * 
 	 * @return configuration's name
 	 */
 	public String getName()
@@ -224,7 +226,8 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 	}
 	
 	/**
-	 * An easy way to apply any special limitations on incoming connections. At default it contains a flood protection.<br>
+	 * An easy way to apply any special limitations on incoming connections. At default it contains
+	 * a flood protection.<br>
 	 * Overriding implementations should call the super method before anything else gets checked.<br>
 	 * <br>
 	 * NOTE: Uses a special way of logging to avoid console flood.
@@ -303,7 +306,8 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 	}
 	
 	/**
-	 * An easy way to apply any special limitations on incoming packets. At default it contains a flood protection.<br>
+	 * An easy way to apply any special limitations on incoming packets. At default it contains a
+	 * flood protection.<br>
 	 * Overriding implementations should call the super method before anything else gets checked.<br>
 	 * <br>
 	 * NOTE: Uses a special way of logging to avoid console flood.

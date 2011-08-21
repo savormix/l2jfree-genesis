@@ -101,7 +101,8 @@ public final class L2DatabaseInstaller
 			else
 				insertRevision(updates.lastKey());
 		}
-		else // check for possibly required updates
+		else
+		// check for possibly required updates
 		{
 			for (Entry<String, String> table : tables.entrySet())
 			{
@@ -259,7 +260,8 @@ public final class L2DatabaseInstaller
 			con = L2Database.getConnection();
 			
 			// FIXME: non-standard SQL
-			PreparedStatement ps = con.prepareStatement("SELECT revision FROM _revision ORDER BY revision DESC LIMIT 1");
+			PreparedStatement ps = con
+					.prepareStatement("SELECT revision FROM _revision ORDER BY revision DESC LIMIT 1");
 			ResultSet rs = ps.executeQuery();
 			
 			if (rs.next())

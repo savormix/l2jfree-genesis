@@ -34,6 +34,7 @@ public final class Shutdown
 	
 	/**
 	 * Returns whether this application has been requested to end execution.
+	 * 
 	 * @return whether a shutdown was ordered
 	 */
 	public static boolean isInProgress()
@@ -42,10 +43,11 @@ public final class Shutdown
 	}
 	
 	/**
-	 * Requests this application to end execution after the specified number of seconds,
-	 * on behalf of <TT>initiator</TT>.
-	 * <BR><BR>
+	 * Requests this application to end execution after the specified number of seconds, on behalf
+	 * of <TT>initiator</TT>. <BR>
+	 * <BR>
 	 * If there is a pending request, it will be overridden.
+	 * 
 	 * @param mode request type
 	 * @param seconds delay in seconds
 	 * @param initiator requestor (may be <TT>null</TT>)
@@ -70,6 +72,7 @@ public final class Shutdown
 	
 	/**
 	 * Cancels a requested shutdown on behalf of <TT>initiator</TT>.
+	 * 
 	 * @param initiator canceler (may be <TT>null</TT>)
 	 */
 	public static synchronized void abort(String initiator)
@@ -219,8 +222,8 @@ public final class Shutdown
 	}
 	
 	/**
-	 * Adds a global shutdown hook to run all registered shutdown hooks
-	 * sequentially in order they were registered.
+	 * Adds a global shutdown hook to run all registered shutdown hooks sequentially in order they
+	 * were registered.
 	 */
 	public static void initShutdownHook()
 	{
@@ -247,8 +250,9 @@ public final class Shutdown
 	private static final Set<Runnable> _shutdownHooks = new HashSet<Runnable>();
 	
 	/**
-	 * Adds a managed shutdown hook to be run before the application terminates
-	 * unless an uncaught termination signal is used.
+	 * Adds a managed shutdown hook to be run before the application terminates unless an uncaught
+	 * termination signal is used.
+	 * 
 	 * @param hook shutdown hook
 	 */
 	public static synchronized void addShutdownHook(Runnable hook)

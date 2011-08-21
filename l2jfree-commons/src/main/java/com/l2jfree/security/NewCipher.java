@@ -18,15 +18,15 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 /**
- * A blowfish cipher with additional features.
- * Supports custom cyclic 32-bit packet checksum calculation/validation.
- * Supports legacy packet XORing with a specified 32-bit key.
- * <BR><BR>
- * XORing was an application-specific feature, so the replacement methods
- * are not present in this class.
- * <BR><BR>
- * Legacy methods may have out-of-date documentation. See the documentation
- * of the replacement method instead.
+ * A blowfish cipher with additional features. Supports custom cyclic 32-bit packet checksum
+ * calculation/validation. Supports legacy packet XORing with a specified 32-bit key. <BR>
+ * <BR>
+ * XORing was an application-specific feature, so the replacement methods are not present in this
+ * class. <BR>
+ * <BR>
+ * Legacy methods may have out-of-date documentation. See the documentation of the replacement
+ * method instead.
+ * 
  * @see #encipher(ByteBuffer, int, int)
  * @see #decipher(ByteBuffer, int, int)
  * @see #appendChecksum(ByteBuffer, int, int)
@@ -42,6 +42,7 @@ public class NewCipher
 	
 	/**
 	 * Constructs a Blowfish cipher.
+	 * 
 	 * @param blowfishKey Blowfish key
 	 */
 	public NewCipher(byte[] blowfishKey)
@@ -54,10 +55,11 @@ public class NewCipher
 	}
 	
 	/**
-	 * An inherently unsafe method to initialize a Blowfish cipher.
-	 * <BR><BR>
-	 * If the given string contains non-ASCII characters, the
-	 * cipher may not be initialized properly.
+	 * An inherently unsafe method to initialize a Blowfish cipher. <BR>
+	 * <BR>
+	 * If the given string contains non-ASCII characters, the cipher may not be initialized
+	 * properly.
+	 * 
 	 * @param key An ASCII string
 	 * @see #NewCipher(byte[])
 	 */
@@ -69,6 +71,7 @@ public class NewCipher
 	
 	/**
 	 * Returns the associated Blowfish key.
+	 * 
 	 * @return Blowfish key
 	 */
 	public byte[] getBlowfishKey()
@@ -78,6 +81,7 @@ public class NewCipher
 	
 	/**
 	 * Verifies a packet's checksum.
+	 * 
 	 * @deprecated Legacy method
 	 * @param raw packet's body
 	 * @return whether packet integrity is OK or not
@@ -91,6 +95,7 @@ public class NewCipher
 	
 	/**
 	 * Verifies a packet's checksum.
+	 * 
 	 * @deprecated Legacy method
 	 * @param raw data
 	 * @param offset offset to the packet's body
@@ -105,9 +110,10 @@ public class NewCipher
 	}
 	
 	/**
-	 * Verifies a packet's checksum.
-	 * <BR><BR>
+	 * Verifies a packet's checksum. <BR>
+	 * <BR>
 	 * It is assumed that the packet's body starts at current position.
+	 * 
 	 * @param buf byte buffer
 	 * @param size packet's body size
 	 * @return whether packet integrity is OK or not
@@ -119,6 +125,7 @@ public class NewCipher
 	
 	/**
 	 * Verifies a packet's checksum.
+	 * 
 	 * @param buf byte buffer
 	 * @param offset offset to a packet's body
 	 * @param size packet's body size
@@ -145,6 +152,7 @@ public class NewCipher
 	
 	/**
 	 * Calculates and embeds a packet's checksum.
+	 * 
 	 * @deprecated Legacy method
 	 * @param raw packet's body with padding
 	 * @see #appendChecksum(ByteBuffer, int)
@@ -157,6 +165,7 @@ public class NewCipher
 	
 	/**
 	 * Calculates and embeds a packet's checksum.
+	 * 
 	 * @deprecated Legacy method
 	 * @param raw data
 	 * @param offset offset to a packet's body
@@ -171,9 +180,10 @@ public class NewCipher
 	
 	/**
 	 * Calculates and embeds a packet's checksum.<BR>
-	 * Buffer's position will not be changed.
-	 * <BR><BR>
+	 * Buffer's position will not be changed. <BR>
+	 * <BR>
 	 * It is assumed that the packet's body starts at current position.
+	 * 
 	 * @param buf byte buffer
 	 * @param size packet's body size
 	 */
@@ -185,6 +195,7 @@ public class NewCipher
 	/**
 	 * Calculates and embeds a packet's checksum.<BR>
 	 * Buffer's position will not be changed.
+	 * 
 	 * @param buf byte buffer
 	 * @param offset offset to a packet's body
 	 * @param size packet's body size
@@ -205,7 +216,9 @@ public class NewCipher
 	}
 	
 	/**
-	 * Packet is first XOR encoded with <code>key</code> Then, the last 4 bytes are overwritten with the the XOR "key". Thus this assume that there is enough room for the key to fit without overwriting data.
+	 * Packet is first XOR encoded with <code>key</code> Then, the last 4 bytes are overwritten
+	 * with the the XOR "key". Thus this assume that there is enough room for the key to fit without
+	 * overwriting data.
 	 * 
 	 * @deprecated Legacy method
 	 * @param raw The raw bytes to be encrypted
@@ -218,7 +231,9 @@ public class NewCipher
 	}
 	
 	/**
-	 * Packet is first XOR encoded with <code>key</code> Then, the last 4 bytes are overwritten with the the XOR "key". Thus this assume that there is enough room for the key to fit without overwriting data.
+	 * Packet is first XOR encoded with <code>key</code> Then, the last 4 bytes are overwritten
+	 * with the the XOR "key". Thus this assume that there is enough room for the key to fit without
+	 * overwriting data.
 	 * 
 	 * @deprecated Legacy method
 	 * @param raw The raw bytes to be encrypted
@@ -250,7 +265,7 @@ public class NewCipher
 			raw[pos++] = (byte)(edx >> 16 & 0xFF);
 			raw[pos++] = (byte)(edx >> 24 & 0xFF);
 		}
-
+		
 		raw[pos++] = (byte)(ecx & 0xFF);
 		raw[pos++] = (byte)(ecx >> 8 & 0xFF);
 		raw[pos++] = (byte)(ecx >> 16 & 0xFF);
@@ -258,9 +273,10 @@ public class NewCipher
 	}
 	
 	/**
-	 * Deciphers given byte array in blocks of 8 bytes using a Blowfish key.
-	 * <BR><BR>
+	 * Deciphers given byte array in blocks of 8 bytes using a Blowfish key. <BR>
+	 * <BR>
 	 * If the last block contains less than 8 bytes, they are not deciphered.
+	 * 
 	 * @deprecated Legacy method
 	 * @param raw data
 	 * @return deciphered data
@@ -282,9 +298,10 @@ public class NewCipher
 	}
 	
 	/**
-	 * Deciphers given byte array in blocks of 8 bytes using a Blowfish key.
-	 * <BR><BR>
+	 * Deciphers given byte array in blocks of 8 bytes using a Blowfish key. <BR>
+	 * <BR>
 	 * If the last block contains less than 8 bytes, they are not deciphered.
+	 * 
 	 * @deprecated Legacy method
 	 * @param raw data
 	 * @param offset offset to packet's body
@@ -307,9 +324,10 @@ public class NewCipher
 	}
 	
 	/**
-	 * Enciphers given byte array in blocks of 8 bytes using a Blowfish key.
-	 * <BR><BR>
+	 * Enciphers given byte array in blocks of 8 bytes using a Blowfish key. <BR>
+	 * <BR>
 	 * If the last block contains less than 8 bytes, they are not enciphered.
+	 * 
 	 * @deprecated Legacy method
 	 * @param raw data
 	 * @return deciphered data
@@ -331,9 +349,10 @@ public class NewCipher
 	}
 	
 	/**
-	 * Enciphers given byte array in blocks of 8 bytes using a Blowfish key.
-	 * <BR><BR>
+	 * Enciphers given byte array in blocks of 8 bytes using a Blowfish key. <BR>
+	 * <BR>
 	 * If the last block contains less than 8 bytes, they are not enciphered.
+	 * 
 	 * @deprecated Legacy method
 	 * @param raw data
 	 * @param offset offset to packet's body
@@ -357,11 +376,12 @@ public class NewCipher
 	
 	/**
 	 * Enciphers buffer's contents in blocks of 8 bytes using a Blowfish key.<BR>
-	 * Buffer's position will not be changed.
-	 * <BR><BR>
-	 * If the last block contains less than 8 bytes, they are not enciphered.
-	 * <BR><BR>
+	 * Buffer's position will not be changed. <BR>
+	 * <BR>
+	 * If the last block contains less than 8 bytes, they are not enciphered. <BR>
+	 * <BR>
 	 * It is assumed that the packet's body starts at current position.
+	 * 
 	 * @param buf a byte buffer
 	 * @param size packet's size
 	 */
@@ -372,9 +392,10 @@ public class NewCipher
 	
 	/**
 	 * Enciphers buffer's contents in blocks of 8 bytes using a Blowfish key.<BR>
-	 * Buffer's position will not be changed.
-	 * <BR><BR>
+	 * Buffer's position will not be changed. <BR>
+	 * <BR>
 	 * If the last block contains less than 8 bytes, they are not enciphered.
+	 * 
 	 * @param buf a byte buffer
 	 * @param offset offset to packet's body
 	 * @param size packet's size
@@ -388,11 +409,12 @@ public class NewCipher
 	
 	/**
 	 * Deciphers buffer's contents in blocks of 8 bytes using a Blowfish key.<BR>
-	 * Buffer's position will not be changed.
-	 * <BR><BR>
-	 * If the last block contains less than 8 bytes, they are not deciphered.
-	 * <BR><BR>
+	 * Buffer's position will not be changed. <BR>
+	 * <BR>
+	 * If the last block contains less than 8 bytes, they are not deciphered. <BR>
+	 * <BR>
 	 * It is assumed that the packet's body starts at current position.
+	 * 
 	 * @param buf a byte buffer
 	 * @param size packet's size
 	 */
@@ -403,9 +425,10 @@ public class NewCipher
 	
 	/**
 	 * Deciphers buffer's contents in blocks of 8 bytes using a Blowfish key.<BR>
-	 * Buffer's position will not be changed.
-	 * <BR><BR>
+	 * Buffer's position will not be changed. <BR>
+	 * <BR>
 	 * If the last block contains less than 8 bytes, they are not deciphered.
+	 * 
 	 * @param buf a byte buffer
 	 * @param offset offset to packet's body
 	 * @param size packet's size

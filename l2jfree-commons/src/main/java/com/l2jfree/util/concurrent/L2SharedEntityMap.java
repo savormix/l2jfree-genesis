@@ -21,7 +21,8 @@ import com.l2jfree.lang.L2Entity;
 /**
  * @author NB4L1
  */
-public final class L2SharedEntityMap<T extends L2Entity<Integer>> extends L2EntityMap<T> implements Iterable<T>, ForEachExecutor<T>
+public final class L2SharedEntityMap<T extends L2Entity<Integer>> extends L2EntityMap<T> implements Iterable<T>,
+		ForEachExecutor<T>
 {
 	public L2SharedEntityMap()
 	{

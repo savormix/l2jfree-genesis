@@ -179,7 +179,9 @@ public final class Locator
 	}
 	
 	/**
-	 * Get the File necessary to load the Sun compiler tools. If the classes are available to this class, then no additional URL is required and null is returned. This may be because the classes are explicitly in the class path or provided by the JVM directly.
+	 * Get the File necessary to load the Sun compiler tools. If the classes are available to this
+	 * class, then no additional URL is required and null is returned. This may be because the
+	 * classes are explicitly in the class path or provided by the JVM directly.
 	 * 
 	 * @return the tools jar as a File if required, null otherwise.
 	 */
@@ -226,7 +228,9 @@ public final class Locator
 	}
 	
 	/**
-	 * Get an array of URLs representing all of the jar files in the given location. If the location is a file, it is returned as the only element of the array. If the location is a directory, it is scanned for jar files.
+	 * Get an array of URLs representing all of the jar files in the given location. If the location
+	 * is a file, it is returned as the only element of the array. If the location is a directory,
+	 * it is scanned for jar files.
 	 * 
 	 * @param location the location to scan for Jars.
 	 * @return an array of URLs for all jars in the given location.
@@ -238,7 +242,9 @@ public final class Locator
 	}
 	
 	/**
-	 * Get an array of URLs representing all of the files of a given set of extensions in the given location. If the location is a file, it is returned as the only element of the array. If the location is a directory, it is scanned for matching files.
+	 * Get an array of URLs representing all of the files of a given set of extensions in the given
+	 * location. If the location is a file, it is returned as the only element of the array. If the
+	 * location is a directory, it is scanned for matching files.
 	 * 
 	 * @param location the location to scan for files.
 	 * @param extensions an array of extension that are to match in the directory search.

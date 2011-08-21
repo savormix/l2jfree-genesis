@@ -23,7 +23,8 @@ import java.util.Map;
 import javolution.util.FastList;
 
 /**
- * Descending Integer Sort Algorithm - Fast ordering system. - Can easily be ported elsewhere. - Can handle any number of values, from a list or even from a map. - Handles duplicate values.
+ * Descending Integer Sort Algorithm - Fast ordering system. - Can easily be ported elsewhere. - Can
+ * handle any number of values, from a list or even from a map. - Handles duplicate values.
  * 
  * @author Tempy
  */
@@ -91,7 +92,8 @@ public class MultiSort
 	}
 	
 	/**
-	 * Definition of harmonic mean : http://en.wikipedia.org/wiki/Harmonic_mean should handle float value
+	 * Definition of harmonic mean : http://en.wikipedia.org/wiki/Harmonic_mean should handle float
+	 * value
 	 * 
 	 * @return the harmonic mean
 	 */

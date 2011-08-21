@@ -11,14 +11,16 @@ public abstract class DefaultSendablePacket<T extends MMOConnection<T, RP, SP>, 
 	/**
 	 * Returns this packet's identifier.
 	 * 
-	 * @return a number from the interval [{@link java.lang.Byte#MIN_VALUE}; {@link java.lang.Byte#MAX_VALUE}]
+	 * @return a number from the interval [{@link java.lang.Byte#MIN_VALUE};
+	 *         {@link java.lang.Byte#MAX_VALUE}]
 	 */
 	protected abstract int getOpcode();
 	
 	/**
 	 * Returns this packet's additional identifiers, if any, an empty array otherwise.
 	 * 
-	 * @return an array filled with numbers from the interval [{@link java.lang.Byte#MIN_VALUE}; {@link java.lang.Byte#MAX_VALUE}]
+	 * @return an array filled with numbers from the interval [{@link java.lang.Byte#MIN_VALUE};
+	 *         {@link java.lang.Byte#MAX_VALUE}]
 	 */
 	protected int[] getAdditionalOpcodes()
 	{

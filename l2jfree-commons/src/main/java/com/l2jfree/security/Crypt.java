@@ -18,6 +18,7 @@ import java.nio.ByteBuffer;
 
 /**
  * This class ...
+ * 
  * @deprecated Legacy class
  * @version $Revision: 1.3.4.3 $ $Date: 2005/03/27 15:29:18 $
  */
@@ -29,6 +30,7 @@ public class Crypt
 	
 	/**
 	 * Specifies the key to be shared for both encryption and decryption.
+	 * 
 	 * @param key a key
 	 */
 	public void setKey(byte[] key)
@@ -38,8 +40,9 @@ public class Crypt
 	}
 	
 	/**
-	 * Decrypts the given buffer contents starting at it's current
-	 * position and updates the shared key.
+	 * Decrypts the given buffer contents starting at it's current position and updates the shared
+	 * key.
+	 * 
 	 * @param buf packet's body
 	 */
 	public void decrypt(ByteBuffer buf)
@@ -70,8 +73,9 @@ public class Crypt
 	}
 	
 	/**
-	 * Encrypts the given buffer contents starting at it's current
-	 * position and updates the shared key.
+	 * Encrypts the given buffer contents starting at it's current position and updates the shared
+	 * key.
+	 * 
 	 * @param buf packet's body
 	 */
 	public void encrypt(ByteBuffer buf)

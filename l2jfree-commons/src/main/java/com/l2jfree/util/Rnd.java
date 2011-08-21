@@ -165,6 +165,7 @@ public final class Rnd
 	
 	/**
 	 * Returns a randomly selected element taken from the given list.
+	 * 
 	 * @param <T> type of list elements
 	 * @param list a list
 	 * @return a randomly selected element
@@ -179,6 +180,7 @@ public final class Rnd
 	
 	/**
 	 * Returns a randomly selected element taken from the given array.
+	 * 
 	 * @param <T> type of array elements
 	 * @param array an array
 	 * @return a randomly selected element

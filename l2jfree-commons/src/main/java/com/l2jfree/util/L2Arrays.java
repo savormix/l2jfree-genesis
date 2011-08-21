@@ -54,7 +54,8 @@ public final class L2Arrays
 	/**
 	 * @param <T>
 	 * @param array to remove null elements from
-	 * @return an array without null elements - can be the same, if the original contains no null elements
+	 * @return an array without null elements - can be the same, if the original contains no null
+	 *         elements
 	 * @throws NullPointerException if array is null
 	 */
 	public static <T> T[] compact(T[] array)
@@ -78,8 +79,8 @@ public final class L2Arrays
 	/**
 	 * @param <T>
 	 * @param array to create a list from
-	 * @return a List&lt;T&gt;, which will NOT throw ConcurrentModificationException, if an element gets removed inside
-	 *         a foreach loop, and supports addition
+	 * @return a List&lt;T&gt;, which will NOT throw ConcurrentModificationException, if an element
+	 *         gets removed inside a foreach loop, and supports addition
 	 */
 	public static <T> List<T> asForeachSafeList(T... array)
 	{
@@ -90,8 +91,8 @@ public final class L2Arrays
 	 * @param <T>
 	 * @param allowAddition determines that list MUST support add operation or not
 	 * @param array to create a list from
-	 * @return a List&lt;T&gt;, which will NOT throw ConcurrentModificationException, if an element gets removed inside
-	 *         a foreach loop, and supports addition if required
+	 * @return a List&lt;T&gt;, which will NOT throw ConcurrentModificationException, if an element
+	 *         gets removed inside a foreach loop, and supports addition if required
 	 */
 	public static <T> List<T> asForeachSafeList(boolean allowAddition, T... array)
 	{

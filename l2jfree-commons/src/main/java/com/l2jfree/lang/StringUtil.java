@@ -16,10 +16,12 @@ package com.l2jfree.lang;
 
 /**
  * String utilities optimized for the best performance.
- * 
- * <h1>How to Use It</h1> <h2>concat() or append()</h2> If concatenating strings
- * in single call, use StringUtil.concat(), otherwise use StringUtil.append()
- * and its variants. <h2>Minimum Calls</h2> Bad:
+ * <h1>How to Use It</h1>
+ * <h2>concat() or append()</h2>
+ * If concatenating strings in single call, use StringUtil.concat(), otherwise use
+ * StringUtil.append() and its variants.
+ * <h2>Minimum Calls</h2>
+ * Bad:
  * 
  * <pre>
  * final StringBuilder sbString = new StringBuilder();
@@ -34,11 +36,13 @@ package com.l2jfree.lang;
  * StringUtil.append(sbString, &quot;text 1&quot;, String.valueOf(npcId), &quot;text 2&quot;);
  * </pre>
  * 
- * Why?<br/>
- * Because the less calls you do, the less memory re-allocations have to be done
- * so the whole text fits into the memory and less array copy tasks has to be
- * performed. So if using less calls, less memory is used and string
- * concatenation is faster. <h2>Size Hints for Loops</h2> Bad:
+ * <br>
+ * Why?<br>
+ * Because the less calls you do, the less memory re-allocations have to be done so the whole text
+ * fits into the memory and less array copy tasks has to be performed. So if using less calls, less
+ * memory is used and string concatenation is faster.
+ * <h2>Size Hints for Loops</h2>
+ * Bad:
  * 
  * <pre>
  * final StringBuilder sbString = new StringBuilder();
@@ -59,18 +63,18 @@ package com.l2jfree.lang;
  * }
  * </pre>
  * 
- * Why?<br/>
- * When using StringUtil.append(), memory is only allocated to fit in the
- * strings in method argument. So on each loop new memory for the string has to
- * be allocated and old string has to be copied to the new string. With size
- * hint, even if the size hint is above the needed memory, memory is saved
- * because new memory has not to be allocated on each cycle. Also it is much
- * faster if no string copy tasks has to be performed. So if concatenating
- * strings in a loop, count approximately the size and set it as the hint for
- * the string builder size. It's better to make the size hint little bit larger
- * rather than smaller.<br/>
+ * Why?<br>
+ * When using StringUtil.append(), memory is only allocated to fit in the strings in method
+ * argument. So on each loop new memory for the string has to be allocated and old string has to be
+ * copied to the new string. With size hint, even if the size hint is above the needed memory,
+ * memory is saved because new memory has not to be allocated on each cycle. Also it is much faster
+ * if no string copy tasks has to be performed. So if concatenating strings in a loop, count
+ * approximately the size and set it as the hint for the string builder size. It's better to make
+ * the size hint little bit larger rather than smaller.<br>
  * In case there is no text appended before the cycle, just use <code>new
- * StringBuilder(1300)</code>. <h2>Concatenation and Constants</h2> Bad:
+ * StringBuilder(1300)</code>.
+ * <h2>Concatenation and Constants</h2>
+ * Bad:
  * 
  * <pre>
  * StringUtil.concat(&quot;text 1 &quot;, &quot;text 2&quot;, String.valueOf(npcId));
@@ -88,12 +92,12 @@ package com.l2jfree.lang;
  * StringUtil.concat(&quot;text 1 text 2&quot;, String.valueOf(npcId));
  * </pre>
  * 
- * Why?<br/>
- * It saves some cycles when determining size of memory that needs to be
- * allocated because less strings are passed to concat() method. But do not use
- * + for concatenation of non-constant strings, that degrades performance and
- * makes extra memory allocations needed. <h2>Concatenation and Constant
- * Variables</h2> Bad:
+ * Why?<br>
+ * It saves some cycles when determining size of memory that needs to be allocated because less
+ * strings are passed to concat() method. But do not use + for concatenation of non-constant
+ * strings, that degrades performance and makes extra memory allocations needed.
+ * <h2>Concatenation and Constant Variables</h2>
+ * Bad:
  * 
  * <pre>
  * String glue = &quot;some glue&quot;;
@@ -107,13 +111,14 @@ package com.l2jfree.lang;
  * StringUtil.concat(&quot;text 1&quot; + glue + &quot;text2&quot; + glue, String.valueOf(npcId));
  * </pre>
  * 
- * Why? Because when using <code>final</code> keyword, the <code>glue</code> is
- * marked as constant string and compiler treats it as a constant string so it
- * is able to create string "text1some gluetext2some glue" during the
- * compilation. But this only works in case the value is known at compilation
- * time, so this cannot be used for cases like
+ * Why? Because when using <code>final</code> keyword, the <code>glue</code> is marked as
+ * constant string and compiler treats it as a constant string so it is able to create string
+ * "text1some gluetext2some glue" during the compilation. But this only works in case the value is
+ * known at compilation time, so this cannot be used for cases like
  * <code>final String objectIdString =
- * String.valueOf(getObjectId)</code>. <h2>StringBuilder Reuse</h2> Bad:
+ * String.valueOf(getObjectId)</code>.
+ * <h2>StringBuilder Reuse</h2>
+ * Bad:
  * 
  * <pre>
  * final StringBuilder sbString1 = new StringBuilder();
@@ -133,22 +138,22 @@ package com.l2jfree.lang;
  * StringUtil.append(sbString, &quot;text 3&quot;, String.valueOf(npcId), &quot;text 4&quot;);
  * </pre>
  * 
- * Why?</br> In first case, new memory has to be allocated for the second
- * string. In second case already allocated memory is reused, but only in case
- * the new string is not longer than the previously allocated string. Anyway,
- * the second way is better because the string either fits in the memory and
- * some memory is saved, or it does not fit in the memory, and in that case it
- * works as in the first case. <h2>Primitives to Strings</h2> To convert
- * primitives to string, use String.valueOf(). <h2>How much faster is it?</h2>
- * Here are some results of my tests. Count is number of strings concatenated.
- * Don't take the numbers as 100% true as the numbers are affected by other
- * programs running on my computer at the same time. Anyway, from the results it
- * is obvious that using StringBuilder with predefined size is the fastest (and
- * also most memory efficient) solution. It is about 5 times faster when
- * concatenating 7 strings, compared to TextBuilder. Also, with more strings
- * concatenated, the difference between StringBuilder and TextBuilder gets
- * larger. In code, there are many cases, where there are concatenated 50+
- * strings so the time saving is even greater.
+ * Why?<br>
+ * In first case, new memory has to be allocated for the second string. In second case already
+ * allocated memory is reused, but only in case the new string is not longer than the previously
+ * allocated string. Anyway, the second way is better because the string either fits in the memory
+ * and some memory is saved, or it does not fit in the memory, and in that case it works as in the
+ * first case.
+ * <h2>Primitives to Strings</h2>
+ * To convert primitives to string, use String.valueOf().
+ * <h2>How much faster is it?</h2>
+ * Here are some results of my tests. Count is number of strings concatenated. Don't take the
+ * numbers as 100% true as the numbers are affected by other programs running on my computer at the
+ * same time. Anyway, from the results it is obvious that using StringBuilder with predefined size
+ * is the fastest (and also most memory efficient) solution. It is about 5 times faster when
+ * concatenating 7 strings, compared to TextBuilder. Also, with more strings concatenated, the
+ * difference between StringBuilder and TextBuilder gets larger. In code, there are many cases,
+ * where there are concatenated 50+ strings so the time saving is even greater.
  * 
  * <pre>
  * Count: 2
@@ -200,11 +205,8 @@ public final class StringUtil
 	/**
 	 * Concatenates strings.
 	 * 
-	 * @param objects
-	 *            objects to be concatenated
-	 * 
+	 * @param objects objects to be concatenated
 	 * @return concatenated string
-	 * 
 	 * @see StringUtil
 	 */
 	public static String concat(final Object... objects)
@@ -220,17 +222,12 @@ public final class StringUtil
 	}
 	
 	/**
-	 * Creates new string builder with size initializated to
-	 * <code>sizeHint</code>, unless total length of strings is greater than
-	 * <code>sizeHint</code>.
+	 * Creates new string builder with size initializated to <code>sizeHint</code>, unless total
+	 * length of strings is greater than <code>sizeHint</code>.
 	 * 
-	 * @param sizeHint
-	 *            hint for string builder size allocation
-	 * @param objects
-	 *            objects to be appended
-	 * 
+	 * @param sizeHint hint for string builder size allocation
+	 * @param objects objects to be appended
 	 * @return created string builder
-	 * 
 	 * @see StringUtil
 	 */
 	public static StringBuilder startAppend(final int sizeHint, final Object... objects)
@@ -249,11 +246,8 @@ public final class StringUtil
 	/**
 	 * Appends strings to existing string builder.
 	 * 
-	 * @param sbString
-	 *            string builder
-	 * @param objects
-	 *            objects to be appended
-	 * 
+	 * @param sbString string builder
+	 * @param objects objects to be appended
 	 * @see StringUtil
 	 */
 	public static void append(final StringBuilder sbString, final Object... objects)
@@ -269,9 +263,7 @@ public final class StringUtil
 	/**
 	 * Counts total length of all the strings.
 	 * 
-	 * @param objects
-	 *            array of objects
-	 * 
+	 * @param objects array of objects
 	 * @return total length of all the strings
 	 */
 	private static int getLength(final Object... objects)

@@ -27,6 +27,7 @@ public class GameCrypt
 	
 	/**
 	 * Specifies the key to be used for both encryption and decryption.
+	 * 
 	 * @param key a key
 	 */
 	public void setKey(byte[] key)
@@ -37,6 +38,7 @@ public class GameCrypt
 	
 	/**
 	 * Decrypts the given byte array and updates the decryption key.
+	 * 
 	 * @param raw data
 	 * @param offset offset to packet body
 	 * @param size packet body size
@@ -69,6 +71,7 @@ public class GameCrypt
 	
 	/**
 	 * Encrypts the given byte array and updates the encryption key.
+	 * 
 	 * @param raw data
 	 * @param offset offset to packet body
 	 * @param size packet body size

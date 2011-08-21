@@ -19,7 +19,6 @@ import java.nio.ByteOrder;
 
 /**
  * @author savormix
- *
  */
 public class CoreCipher
 {
@@ -31,6 +30,7 @@ public class CoreCipher
 	/**
 	 * Constructs a cipher.<BR>
 	 * The given buffer's position and mark will be modified.
+	 * 
 	 * @param key a [read-only] cipher key
 	 * @throws IllegalArgumentException if <TT>key.length != 16</TT>
 	 */
@@ -48,6 +48,7 @@ public class CoreCipher
 	
 	/**
 	 * Returns the current encryption key.
+	 * 
 	 * @return cipher's key
 	 */
 	public ByteBuffer getKey()
@@ -57,9 +58,10 @@ public class CoreCipher
 	
 	/**
 	 * Enciphers buffer's contents using the given key.<BR>
-	 * Buffer's position will not be changed.
-	 * <BR><BR>
+	 * Buffer's position will not be changed. <BR>
+	 * <BR>
 	 * It is assumed that the packet's body starts at current position.
+	 * 
 	 * @param buf a byte buffer
 	 * @param size packet's size
 	 */
@@ -71,6 +73,7 @@ public class CoreCipher
 	/**
 	 * Enciphers buffer's contents using the given key.<BR>
 	 * Buffer's position will not be changed.
+	 * 
 	 * @param buf a byte buffer
 	 * @param offset offset to packet's body
 	 * @param size packet's size
@@ -83,7 +86,7 @@ public class CoreCipher
 			final int pos = offset + i;
 			int temp2 = buf.get(pos) & 0xFF;
 			temp = temp2 ^ _encKey.get(i & 15) ^ temp;
-			buf.put(pos, (byte) temp);
+			buf.put(pos, (byte)temp);
 		}
 		
 		_encKey.putInt(8, _encKey.getInt(8) + size);
@@ -91,9 +94,10 @@ public class CoreCipher
 	
 	/**
 	 * Deciphers buffer's contents using the given key.<BR>
-	 * Buffer's position will not be changed.
-	 * <BR><BR>
+	 * Buffer's position will not be changed. <BR>
+	 * <BR>
 	 * It is assumed that the packet's body starts at current position.
+	 * 
 	 * @param buf a byte buffer
 	 * @param size packet's size
 	 */
@@ -105,6 +109,7 @@ public class CoreCipher
 	/**
 	 * Deciphers buffer's contents using the given key.<BR>
 	 * Buffer's position will not be changed.
+	 * 
 	 * @param buf a byte buffer
 	 * @param offset offset to packet's body
 	 * @param size packet's size
@@ -116,7 +121,7 @@ public class CoreCipher
 		{
 			final int pos = offset + i;
 			int temp2 = buf.get(pos) & 0xFF;
-			buf.put(pos, (byte) (temp2 ^ _decKey.get(i & 15) ^ temp));
+			buf.put(pos, (byte)(temp2 ^ _decKey.get(i & 15) ^ temp));
 			temp = temp2;
 		}
 		

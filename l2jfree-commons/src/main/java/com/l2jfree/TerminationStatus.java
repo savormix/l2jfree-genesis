@@ -15,9 +15,9 @@
 package com.l2jfree;
 
 /**
- * This class contains status codes to be passed to
- * {@link Shutdown#exit(TerminationStatus)} and
+ * This class contains status codes to be passed to {@link Shutdown#exit(TerminationStatus)} and
  * {@link Shutdown#halt(TerminationStatus)} methods.
+ * 
  * @author savormix
  */
 public enum TerminationStatus
@@ -42,13 +42,15 @@ public enum TerminationStatus
 	
 	/**
 	 * <B>Cause</B>: Server detected superuser privileges.<BR>
-	 * <B>Resolution</B>: Inform the user that the server must be run on a normal user account and terminate.
+	 * <B>Resolution</B>: Inform the user that the server must be run on a normal user account and
+	 * terminate.
 	 */
 	ENVIRONMENT_SUPERUSER(2, "shutting down, because the server has detected superuser privileges"),
 	
 	/**
 	 * <B>Cause</B>: Server detected a classpath conflict.<BR>
-	 * <B>Resolution</B>: Inform the user that the reported classpath conflicts must be resolved and terminate.
+	 * <B>Resolution</B>: Inform the user that the reported classpath conflicts must be resolved
+	 * and terminate.
 	 */
 	ENVIRONMENT_CP_CONFLICT(3, "shutting down, because the server has detected a classpath conflict"),
 	
@@ -62,7 +64,8 @@ public enum TerminationStatus
 			"shutting down, because the server needs a specific object or function, but it is not provided"),
 	
 	/**
-	 * <B>Cause</B>: An [uncaught] error (other than {@link StackOverflowError}) occurred during runtime.<BR>
+	 * <B>Cause</B>: An [uncaught] error (other than {@link StackOverflowError}) occurred during
+	 * runtime.<BR>
 	 * <B>Resolution</B>: Possibly inform the user about the occurred error and restart.
 	 */
 	RUNTIME_UNCAUGHT_ERROR(5, "shutting down, because an uncaught error occurred during runtime"),
@@ -74,12 +77,11 @@ public enum TerminationStatus
 	RUNTIME_INVALID_CONFIGURATION(6, "shutting down, because configuration could not be loaded"),
 	
 	/**
-	 * <B>Cause</B>: Common services, such as binding to socket, thread or
-	 * database connection pooling could not be initialized.<BR>
+	 * <B>Cause</B>: Common services, such as binding to socket, thread or database connection
+	 * pooling could not be initialized.<BR>
 	 * <B>Resolution</B>: Inform the user about the issue and terminate.
 	 */
-	RUNTIME_INITIALIZATION_FAILURE(7, "shutting down, because required services could not be initialized"),
-	;
+	RUNTIME_INITIALIZATION_FAILURE(7, "shutting down, because required services could not be initialized");
 	
 	private final int _statusCode;
 	private final String _description;
@@ -92,6 +94,7 @@ public enum TerminationStatus
 	
 	/**
 	 * Returns the application's exit code.
+	 * 
 	 * @return exit code
 	 */
 	public int getStatusCode()
@@ -101,6 +104,7 @@ public enum TerminationStatus
 	
 	/**
 	 * Returns the description of this status code.
+	 * 
 	 * @return a message
 	 */
 	public String getDescription()
