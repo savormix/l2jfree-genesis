@@ -27,6 +27,9 @@ import javolution.util.FastList;
 import com.l2jfree.network.mmocore.FloodManager.ErrorMode;
 
 /**
+ * {@link MMOController} associated {@link WorkerThread} responsible for read-write operations, and
+ * also for closing connections.
+ * 
  * @author NB4L1
  */
 final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>

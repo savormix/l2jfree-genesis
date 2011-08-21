@@ -27,11 +27,24 @@ import com.l2jfree.network.mmocore.FloodManager.ErrorMode;
 import com.l2jfree.network.mmocore.FloodManager.Result;
 
 /**
+ * The main class of the MMOCore responsible for controlling basically everything :) The required
+ * behaviours should be reached through subclasses.
+ * 
+ * @see #start()
+ * @see #openServerSocket(InetAddress, int)
+ * @see #acceptConnectionFrom(SocketChannel)
+ * @see #connect(InetSocketAddress, boolean)
+ * @see #createClient(SocketChannel)
+ * @see #canReceivePacketFrom(MMOConnection, int)
+ * @see #report(ErrorMode, MMOConnection, ReceivablePacket, Throwable)
+ * @see #shutdown()
  * @param <T> connection
  * @param <RP> receivable packet
  * @param <SP> sendable packet
- * @author KenM<BR>
+ * @author KenM (reference)<BR>
  *         Parts of design based on networkcore from WoodenGil
+ * @author NB4L1 (l2jfree)
+ * @author savormix (l2jfree)
  */
 public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
 {

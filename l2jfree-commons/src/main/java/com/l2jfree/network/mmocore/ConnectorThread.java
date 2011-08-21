@@ -18,6 +18,8 @@ import java.net.InetSocketAddress;
 import java.nio.channels.SocketChannel;
 
 /**
+ * {@link MMOController} associated {@link WorkerThread} responsible for connecting to other hosts.
+ * 
  * @author NB4L1
  */
 final class ConnectorThread<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>

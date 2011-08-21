@@ -24,6 +24,9 @@ import javolution.util.FastMap.Entry;
 import com.l2jfree.util.concurrent.L2ThreadPool;
 
 /**
+ * A flood-protected logger, which collects log entries, and flushes them periodically by grouping
+ * similar entries, in order to save up resources.
+ * 
  * @author NB4L1
  */
 public final class MMOLogger

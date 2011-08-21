@@ -30,10 +30,13 @@ import com.l2jfree.util.concurrent.FIFORunnableQueue;
 import com.l2jfree.util.logging.L2Logger;
 
 /**
+ * Baseclass for all client connections.
+ * 
  * @param <T> connection
  * @param <RP> receivable packet
  * @param <SP> sendable packet
- * @author KenM
+ * @author KenM (reference)
+ * @author NB4L1 (l2jfree)
  */
 public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
 {

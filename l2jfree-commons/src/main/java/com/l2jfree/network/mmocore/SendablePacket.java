@@ -15,10 +15,13 @@
 package com.l2jfree.network.mmocore;
 
 /**
+ * Baseclass for all all sendable packets.
+ * 
  * @param <T> connection
  * @param <RP> receivable packet
  * @param <SP> sendable packet
- * @author KenM
+ * @author KenM (reference)
+ * @author NB4L1 (l2jfree)
  */
 public abstract class SendablePacket<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
 		extends AbstractPacket

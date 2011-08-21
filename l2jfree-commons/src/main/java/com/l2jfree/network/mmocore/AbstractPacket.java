@@ -17,7 +17,9 @@ package com.l2jfree.network.mmocore;
 import com.l2jfree.util.logging.L2Logger;
 
 /**
- * @author KenM
+ * Baseclass of all packets.
+ * 
+ * @author KenM (reference)
  */
 abstract class AbstractPacket
 {

@@ -20,10 +20,13 @@ import java.nio.BufferUnderflowException;
 import com.l2jfree.network.mmocore.FloodManager.ErrorMode;
 
 /**
+ * Baseclass for all receivable packets.
+ * 
  * @param <T> Connection
  * @param <RP> Receivable packet
  * @param <SP> Sendable packet
- * @author KenM
+ * @author KenM (reference)
+ * @author NB4L1 (l2jfree)
  */
 public abstract class ReceivablePacket<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
 		extends AbstractPacket implements Runnable

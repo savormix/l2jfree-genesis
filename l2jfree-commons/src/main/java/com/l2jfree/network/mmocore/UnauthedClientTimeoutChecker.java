@@ -22,7 +22,12 @@ import javolution.util.FastMap;
 
 import com.l2jfree.util.concurrent.L2ThreadPool;
 
-public class UnauthedClientTimeoutChecker implements Runnable
+/**
+ * Responsible for closing timeouted, non-authed connections.
+ * 
+ * @author NB4L1
+ */
+public final class UnauthedClientTimeoutChecker implements Runnable
 {
 	private static final class SingletonHolder
 	{
@@ -42,6 +47,11 @@ public class UnauthedClientTimeoutChecker implements Runnable
 		L2ThreadPool.scheduleAtFixedRate(this, 1000, 1000);
 	}
 	
+	/**
+	 * Registers a client for timeout check.
+	 * 
+	 * @param client
+	 */
 	public void clientCreated(MMOConnection<?, ?, ?> client)
 	{
 		_lock.lock();
@@ -55,6 +65,9 @@ public class UnauthedClientTimeoutChecker implements Runnable
 		}
 	}
 	
+	/**
+	 * Closes invalid (non-authed, timeouted) connections.
+	 */
 	@Override
 	public void run()
 	{

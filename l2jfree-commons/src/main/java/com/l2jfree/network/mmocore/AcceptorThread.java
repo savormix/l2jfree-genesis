@@ -23,6 +23,8 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
 /**
+ * {@link MMOController} associated {@link WorkerThread} responsible for accepting new connections.
+ * 
  * @author NB4L1
  */
 final class AcceptorThread<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>

@@ -15,6 +15,8 @@
 package com.l2jfree.network.mmocore;
 
 /**
+ * Baseclass of {@link MMOController} associated threads. which are responsible for various tasks.
+ * 
  * @author NB4L1
  */
 abstract class WorkerThread<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
