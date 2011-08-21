@@ -66,7 +66,7 @@ public enum L2NoServiceReason implements Reason
 	 * You are currently logged into 10 of your accounts and can no longer access your other
 	 * accounts.
 	 */
-	ACCOUNT_LIMITATION(42), ;
+	ACCOUNT_LIMITATION(42);
 	
 	private final int _id;
 	

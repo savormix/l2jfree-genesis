@@ -74,7 +74,7 @@ public enum L2BanReason implements Reason
 	 */
 	CHANGE_PASSWORD_AND_QUIZ(41),
 	/** The master account of your account has been restricted. */
-	MASTER_ACCOUNT_RESTRICTED(43), ;
+	MASTER_ACCOUNT_RESTRICTED(43);
 	
 	private final int _id;
 	

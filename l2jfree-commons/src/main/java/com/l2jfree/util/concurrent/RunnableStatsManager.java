@@ -213,7 +213,7 @@ public final class RunnableStatsManager
 		NAME("class"),
 		METHOD("method"),
 		MIN("min"),
-		MAX("max"), ;
+		MAX("max");
 		
 		private final String _xmlAttributeName;
 		
