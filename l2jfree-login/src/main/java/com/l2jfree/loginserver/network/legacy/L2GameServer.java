@@ -222,6 +222,8 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	 * 
 	 * @return connection's state
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public L2LegacyState getState()
 	{
 		return _state;

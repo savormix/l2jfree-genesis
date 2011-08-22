@@ -130,6 +130,8 @@ public final class L2CoreClient extends MMOConnection<L2CoreClient, L2ClientPack
 	 * 
 	 * @return connection's state
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public L2CoreClientState getState()
 	{
 		return _state;

@@ -38,7 +38,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 	private static final int PACKET_HEADER_SIZE = 2;
 	
 	// Implementations
-	private final IPacketHandler<T, RP, SP> _packetHandler;
+	private final PacketHandler<T, RP, SP> _packetHandler;
 	
 	// Pending Close
 	private final FastList<T> _pendingClose;
@@ -64,7 +64,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 	private final MMOBuffer _mmoBuffer;
 	
 	public ReadWriteThread(MMOController<T, RP, SP> mmoController, MMOConfig config,
-			IPacketHandler<T, RP, SP> packetHandler) throws IOException
+			PacketHandler<T, RP, SP> packetHandler) throws IOException
 	{
 		super(mmoController, config);
 		
@@ -123,7 +123,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		return _pendingClose;
 	}
 	
-	public IPacketHandler<T, RP, SP> getPacketHandler()
+	public PacketHandler<T, RP, SP> getPacketHandler()
 	{
 		return _packetHandler;
 	}

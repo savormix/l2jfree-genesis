@@ -377,4 +377,39 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 	 * @return whether the connection is not idle
 	 */
 	protected abstract boolean isAuthed();
+	
+	/**
+	 * To avoid accidental NPEs by returning null through {@link MMOConnection#getState()}.
+	 */
+	private static enum DummyState
+	{
+		NONE;
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected <E extends Enum<E>> E getState()
+	{
+		return (E)DummyState.NONE;
+	}
+	
+	public final <E extends Enum<E>> boolean stateEquals(E expextedState1)
+	{
+		final E currentState = getState();
+		
+		return currentState == expextedState1;
+	}
+	
+	public final <E extends Enum<E>> boolean stateEquals(E expextedState1, E expextedState2)
+	{
+		final E currentState = getState();
+		
+		return currentState == expextedState1 || currentState == expextedState2;
+	}
+	
+	public final <E extends Enum<E>> boolean stateEquals(E expextedState1, E expextedState2, E expextedState3)
+	{
+		final E currentState = getState();
+		
+		return currentState == expextedState1 || currentState == expextedState2 || currentState == expextedState3;
+	}
 }

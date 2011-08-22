@@ -238,6 +238,8 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	 * 
 	 * @return connection's state
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public L2LoginClientState getState()
 	{
 		return _state;

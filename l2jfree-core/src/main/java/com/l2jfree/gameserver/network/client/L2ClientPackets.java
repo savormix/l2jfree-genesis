@@ -21,17 +21,13 @@ import java.nio.ByteBuffer;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.gameserver.network.client.packets.receivable.ProtocolVersion;
-import com.l2jfree.network.mmocore.IPacketHandler;
-import com.l2jfree.util.HexUtil;
-import com.l2jfree.util.logging.L2Logger;
+import com.l2jfree.network.mmocore.PacketHandler;
 
 /**
  * @author savormix
  */
-public final class L2ClientPackets implements IPacketHandler<L2CoreClient, L2ClientPacket, L2ServerPacket>
+public final class L2ClientPackets extends PacketHandler<L2CoreClient, L2ClientPacket, L2ServerPacket>
 {
-	private static final L2Logger _log = L2Logger.getLogger(L2ClientPackets.class);
-	
 	private L2ClientPackets()
 	{
 		// singleton
@@ -44,32 +40,13 @@ public final class L2ClientPackets implements IPacketHandler<L2CoreClient, L2Cli
 		{
 			// TODO Auto-generated method stub
 			case ProtocolVersion.OPCODE:
-				if (isCorrectState(client, CONNECTED))
+				if (client.stateEquals(CONNECTED))
 					return new ProtocolVersion();
-				break;
+				return invalidState(client, ProtocolVersion.class, opcode);
+				
 			default:
-				_log.info("Unhandled client packet: 0x" + HexUtil.fillHex(opcode, 2));
-				return null;
+				return unknown(buf, client, opcode);
 		}
-		_log.info("Packet in invalid state: 0x" + HexUtil.fillHex(opcode, 2));
-		return null;
-	}
-	
-	private boolean isCorrectState(L2CoreClient client, L2CoreClientState expectedState,
-			L2CoreClientState... additionalStates)
-	{
-		if (client == null)
-			return false;
-		
-		L2CoreClientState state = client.getState();
-		if (state == expectedState)
-			return true;
-		
-		for (L2CoreClientState lccs : additionalStates)
-			if (state == lccs)
-				return true;
-		
-		return false;
 	}
 	
 	/**

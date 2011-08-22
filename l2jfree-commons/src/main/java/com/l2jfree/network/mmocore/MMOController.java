@@ -60,7 +60,7 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 	private volatile boolean _started;
 	
 	@SuppressWarnings("unchecked")
-	protected MMOController(MMOConfig config, IPacketHandler<T, RP, SP> packetHandler) throws IOException
+	protected MMOController(MMOConfig config, PacketHandler<T, RP, SP> packetHandler) throws IOException
 	{
 		_config = config;
 		_config.setModifiable(false);

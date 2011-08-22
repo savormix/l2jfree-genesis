@@ -6,9 +6,9 @@
  * In order to make use of this networking layer when creating a server/client application that uses
  * a packet-based protocol, you will need to extend/implement these classes:
  * <UL>
- * <LI>{@link com.l2jfree.network.mmocore.IPacketHandler}</LI>
  * <LI>{@link com.l2jfree.network.mmocore.MMOConnection}</LI>
  * <LI>{@link com.l2jfree.network.mmocore.MMOController}</LI>
+ * <LI>{@link com.l2jfree.network.mmocore.PacketHandler}</LI>
  * <LI>{@link com.l2jfree.network.mmocore.ReceivablePacket}</LI>
  * <LI>{@link com.l2jfree.network.mmocore.SendablePacket}</LI>
  * </UL>

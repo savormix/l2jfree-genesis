@@ -23,19 +23,15 @@ import com.l2jfree.loginserver.network.client.packets.receivable.RequestAuthLogi
 import com.l2jfree.loginserver.network.client.packets.receivable.RequestServerList;
 import com.l2jfree.loginserver.network.client.packets.receivable.RequestServerLogin;
 import com.l2jfree.loginserver.network.client.packets.receivable.RequestSubmitCardNo;
-import com.l2jfree.network.mmocore.IPacketHandler;
-import com.l2jfree.util.HexUtil;
-import com.l2jfree.util.logging.L2Logger;
+import com.l2jfree.network.mmocore.PacketHandler;
 
 /**
  * This class maps Lineage II game client packet opcodes to login server's receivable packets.
  * 
  * @author savormix
  */
-public final class L2ClientPackets implements IPacketHandler<L2LoginClient, L2ClientPacket, L2ServerPacket>
+public final class L2ClientPackets extends PacketHandler<L2LoginClient, L2ClientPacket, L2ServerPacket>
 {
-	private static final L2Logger _log = L2Logger.getLogger(L2ClientPackets.class);
-	
 	private L2ClientPackets()
 	{
 		// singleton
@@ -47,33 +43,33 @@ public final class L2ClientPackets implements IPacketHandler<L2LoginClient, L2Cl
 		switch (opcode)
 		{
 			case AuthGameGuard.OPCODE:
-				if (client.getState() == L2LoginClientState.CONNECTED)
+				if (client.stateEquals(L2LoginClientState.CONNECTED))
 					return new AuthGameGuard();
-				break;
+				return invalidState(client, AuthGameGuard.class, opcode);
+				
 			case RequestAuthLogin.OPCODE:
-				if (client.getState() == L2LoginClientState.GAMEGUARD_PASSED)
+				if (client.stateEquals(L2LoginClientState.GAMEGUARD_PASSED))
 					return new RequestAuthLogin();
-				break;
+				return invalidState(client, RequestAuthLogin.class, opcode);
+				
 			case RequestSubmitCardNo.OPCODE:
-				if (client.getState() == L2LoginClientState.LOGGED_IN)
+				if (client.stateEquals(L2LoginClientState.LOGGED_IN))
 					return new RequestSubmitCardNo();
-				break;
+				return invalidState(client, RequestSubmitCardNo.class, opcode);
+				
 			case RequestServerList.OPCODE:
-				if (client.getState() == L2LoginClientState.LOGGED_IN)
+				if (client.stateEquals(L2LoginClientState.LOGGED_IN))
 					return new RequestServerList();
-				break;
+				return invalidState(client, RequestServerList.class, opcode);
+				
 			case RequestServerLogin.OPCODE:
-				if (client.getState() == L2LoginClientState.VIEWING_LIST)
+				if (client.stateEquals(L2LoginClientState.VIEWING_LIST))
 					return new RequestServerLogin();
-				break;
+				return invalidState(client, RequestServerLogin.class, opcode);
+				
 			default:
-				// unknown packet
-				_log.info("Unknown client packet: 0x" + HexUtil.fillHex(opcode, 2));
-				return null;
+				return unknown(buf, client, opcode);
 		}
-		// invalid state
-		_log.info("Client packet in invalid state: 0x" + HexUtil.fillHex(opcode, 2));
-		return null;
 	}
 	
 	/**
