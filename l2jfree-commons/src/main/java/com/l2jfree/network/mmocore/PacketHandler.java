@@ -17,6 +17,7 @@ package com.l2jfree.network.mmocore;
 import java.nio.ByteBuffer;
 
 import com.l2jfree.lang.L2TextBuilder;
+import com.l2jfree.network.mmocore.FloodManager.ErrorMode;
 import com.l2jfree.util.HexUtil;
 
 /**
@@ -42,18 +43,21 @@ public abstract class PacketHandler<T extends MMOConnection<T, RP, SP>, RP exten
 	protected final RP unknown(ByteBuffer buf, T client, int opcode, int... additionalOpcodes)
 	{
 		logUnexpectedBehaviour("Unknown packet", buf, client, null, opcode, additionalOpcodes);
+		
+		client.getMMOController().report(ErrorMode.INVALID_OPCODE, client, null, null);
 		return null;
 	}
 	
 	protected final RP invalidState(T client, int opcode, int... additionalOpcodes)
 	{
-		logUnexpectedBehaviour("Packet in invalid state", null, client, null, opcode, additionalOpcodes);
-		return null;
+		return invalidState(client, null, opcode, additionalOpcodes);
 	}
 	
 	protected final RP invalidState(T client, Class<? extends RP> packetClazz, int opcode, int... additionalOpcodes)
 	{
 		logUnexpectedBehaviour("Packet in invalid state", null, client, packetClazz, opcode, additionalOpcodes);
+		
+		client.getMMOController().report(ErrorMode.INVALID_STATE, client, null, null);
 		return null;
 	}
 	

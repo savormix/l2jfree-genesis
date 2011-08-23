@@ -31,6 +31,7 @@ public final class FloodManager
 	public static enum ErrorMode
 	{
 		INVALID_OPCODE,
+		INVALID_STATE,
 		BUFFER_UNDER_FLOW,
 		BUFFER_OVER_FLOW,
 		FAILED_READING,
