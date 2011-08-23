@@ -20,8 +20,9 @@ package com.l2jfree.util.concurrent;
 public abstract class FIFORunnableQueue<T extends Runnable> extends FIFOSimpleExecutableQueue<T>
 {
 	@Override
-	protected final void removeAndExecuteFirst()
+	protected final void removeAndExecuteAll()
 	{
-		ExecuteWrapper.execute(removeFirst());
+		for (T t; (t = removeFirst()) != null;)
+			ExecuteWrapper.execute(t);
 	}
 }

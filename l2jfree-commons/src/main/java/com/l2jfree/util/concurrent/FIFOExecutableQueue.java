@@ -47,6 +47,24 @@ public abstract class FIFOExecutableQueue implements Runnable
 		L2ThreadPool.execute(this);
 	}
 	
+	protected final void executeNow()
+	{
+		lock();
+		try
+		{
+			if (_state != NONE)
+				return;
+			
+			_state = QUEUED;
+		}
+		finally
+		{
+			unlock();
+		}
+		
+		run();
+	}
+	
 	public final void lock()
 	{
 		_lock.lock();
@@ -68,8 +86,7 @@ public abstract class FIFOExecutableQueue implements Runnable
 				
 				try
 				{
-					while (!isEmpty())
-						removeAndExecuteFirst();
+					removeAndExecuteAll();
 				}
 				finally
 				{
@@ -101,5 +118,5 @@ public abstract class FIFOExecutableQueue implements Runnable
 	
 	protected abstract boolean isEmpty();
 	
-	protected abstract void removeAndExecuteFirst();
+	protected abstract void removeAndExecuteAll();
 }

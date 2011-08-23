@@ -15,75 +15,56 @@
 package com.l2jfree.sql;
 
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.ArrayDeque;
 
+import com.l2jfree.util.concurrent.FIFOSimpleExecutableQueue;
+import com.l2jfree.util.concurrent.RunnableStatsManager;
 import com.l2jfree.util.logging.L2Logger;
 
 /**
  * @author DiezelMax, NB4L1
  */
-public abstract class SQLQueryQueue implements Runnable
+public final class SQLQueryQueue extends FIFOSimpleExecutableQueue<SQLQuery>
 {
 	private static final L2Logger _log = L2Logger.getLogger(SQLQueryQueue.class);
 	
-	private final ArrayDeque<SQLQuery> _queue = new ArrayDeque<SQLQuery>();
-	
-	public SQLQueryQueue()
+	private static final class SingletonHolder
 	{
+		public static final SQLQueryQueue INSTANCE = new SQLQueryQueue();
 	}
 	
-	protected abstract Connection getConnection() throws SQLException;
-	
-	public final void execute(SQLQuery query)
+	public static SQLQueryQueue getInstance()
 	{
-		add(query);
-		
-		run();
+		return SingletonHolder.INSTANCE;
 	}
 	
-	public final void add(SQLQuery query)
+	private SQLQueryQueue()
 	{
-		if (query == null)
-			return;
-		
-		synchronized (_queue)
-		{
-			_queue.addLast(query);
-		}
-	}
-	
-	private SQLQuery getNextQuery()
-	{
-		synchronized (_queue)
-		{
-			return _queue.pollFirst();
-		}
+		// singleton
 	}
 	
 	@Override
-	public final synchronized void run()
+	protected void removeAndExecuteAll()
 	{
-		synchronized (_queue)
-		{
-			if (_queue.isEmpty())
-				return;
-		}
-		
 		Connection con = null;
 		try
 		{
-			con = getConnection();
+			con = L2Database.getConnection();
 			
-			for (SQLQuery query; (query = getNextQuery()) != null;)
+			for (SQLQuery query; (query = removeFirst()) != null;)
 			{
+				final long begin = System.nanoTime();
+				
 				try
 				{
 					query.execute(con);
 				}
-				catch (Exception e)
+				catch (RuntimeException e)
 				{
-					_log.fatal("", e);
+					_log.warn("Exception in a SQLQuery execution:", e);
+				}
+				finally
+				{
+					RunnableStatsManager.handleStats(query.getClass(), "execute(Connection)", System.nanoTime() - begin);
 				}
 			}
 		}

@@ -24,24 +24,48 @@ public abstract class FIFOSimpleExecutableQueue<T> extends FIFOExecutableQueue
 {
 	private final ArrayDeque<T> _queue = new ArrayDeque<T>();
 	
-	public final void execute(T t)
+	public final void add(T t)
 	{
 		synchronized (_queue)
 		{
 			_queue.addLast(t);
 		}
+	}
+	
+	public final void addAll(Collection<T> c)
+	{
+		synchronized (_queue)
+		{
+			_queue.addAll(c);
+		}
+	}
+	
+	public final void execute(T t)
+	{
+		add(t);
 		
 		execute();
 	}
 	
 	public final void executeAll(Collection<T> c)
 	{
-		synchronized (_queue)
-		{
-			_queue.addAll(c);
-		}
+		addAll(c);
 		
 		execute();
+	}
+	
+	public final void executeNow(T t)
+	{
+		add(t);
+		
+		executeNow();
+	}
+	
+	public final void executeAllNow(Collection<T> c)
+	{
+		addAll(c);
+		
+		executeNow();
 	}
 	
 	public final void remove(T t)
@@ -65,10 +89,10 @@ public abstract class FIFOSimpleExecutableQueue<T> extends FIFOExecutableQueue
 	{
 		synchronized (_queue)
 		{
-			return _queue.removeFirst();
+			return _queue.pollFirst();
 		}
 	}
 	
 	@Override
-	protected abstract void removeAndExecuteFirst();
+	protected abstract void removeAndExecuteAll();
 }

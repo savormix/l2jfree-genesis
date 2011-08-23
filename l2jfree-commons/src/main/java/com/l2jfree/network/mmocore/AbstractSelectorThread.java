@@ -55,6 +55,7 @@ abstract class AbstractSelectorThread<T extends MMOConnection<T, RP, SP>, RP ext
 		for (;;)
 		{
 			final long begin = System.nanoTime();
+			
 			try
 			{
 				cleanup();
@@ -93,7 +94,7 @@ abstract class AbstractSelectorThread<T extends MMOConnection<T, RP, SP>, RP ext
 			}
 			finally
 			{
-				RunnableStatsManager.handleStats(getClass(), "select()", System.nanoTime() - begin);
+				RunnableStatsManager.handleStats(getClass(), "selectNow()", System.nanoTime() - begin);
 			}
 			
 			try
