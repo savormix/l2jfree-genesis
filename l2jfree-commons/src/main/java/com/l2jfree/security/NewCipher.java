@@ -17,6 +17,8 @@ package com.l2jfree.security;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
+import com.l2jfree.util.LookupTable;
+
 /**
  * A blowfish cipher with additional features. Supports custom cyclic 32-bit packet checksum
  * calculation/validation. Supports legacy packet XORing with a specified 32-bit key. <BR>
@@ -29,16 +31,18 @@ import java.nio.ByteBuffer;
  * 
  * @see #encipher(ByteBuffer, int, int)
  * @see #decipher(ByteBuffer, int, int)
- * @see #appendChecksum(ByteBuffer, int, int)
- * @see #verifyChecksum(ByteBuffer, int, int)
+ * @see #appendChecksum(ByteBuffer, int, int, boolean)
+ * @see #verifyChecksum(ByteBuffer, int, int, boolean)
  * @see #encXORPass(byte[], int, int, int)
  */
 public class NewCipher
 {
+	private static final LookupTable<Integer> _checks = new LookupTable<Integer>();
+	
 	private final byte[] _blowfishKey;
 	
-	BlowfishEngine _crypt;
-	BlowfishEngine _decrypt;
+	private final BlowfishEngine _crypt;
+	private final BlowfishEngine _decrypt;
 	
 	/**
 	 * Constructs a Blowfish cipher.
@@ -101,7 +105,7 @@ public class NewCipher
 	 * @param offset offset to the packet's body
 	 * @param size packet's body size
 	 * @return whether packet integrity is OK or not
-	 * @see #verifyChecksum(ByteBuffer, int, int)
+	 * @see #verifyChecksum(ByteBuffer, int, int, boolean)
 	 */
 	@Deprecated
 	public static boolean verifyChecksum(byte[] raw, final int offset, final int size)
@@ -120,7 +124,7 @@ public class NewCipher
 	 */
 	public static boolean verifyChecksum(ByteBuffer buf, final int size)
 	{
-		return verifyChecksum(buf, buf.position(), size);
+		return verifyChecksum(buf, buf.position(), size, false);
 	}
 	
 	/**
@@ -129,9 +133,10 @@ public class NewCipher
 	 * @param buf byte buffer
 	 * @param offset offset to a packet's body
 	 * @param size packet's body size
+	 * @param experimental undocumented experimental features
 	 * @return whether packet integrity is OK or not
 	 */
-	public static boolean verifyChecksum(ByteBuffer buf, final int offset, final int size)
+	public static boolean verifyChecksum(ByteBuffer buf, final int offset, final int size, boolean experimental)
 	{
 		// check if size is multiple of 4 (and > 0)
 		if ((size & 3) != 0 || size <= 4)
@@ -147,7 +152,11 @@ public class NewCipher
 			calculated ^= i;
 		}
 		
-		return (calculated == buf.getInt(pos));
+		int real = buf.getInt(pos);
+		if (experimental && calculated != real) // someone knows a better scheme?
+			_checks.put(buf.get(offset), real); // let them have it
+		
+		return (calculated == real);
 	}
 	
 	/**
@@ -170,7 +179,7 @@ public class NewCipher
 	 * @param raw data
 	 * @param offset offset to a packet's body
 	 * @param size packet's body size
-	 * @see #appendChecksum(ByteBuffer, int, int)
+	 * @see #appendChecksum(ByteBuffer, int, int, boolean)
 	 */
 	@Deprecated
 	public static void appendChecksum(byte[] raw, final int offset, final int size)
@@ -189,7 +198,7 @@ public class NewCipher
 	 */
 	public static void appendChecksum(ByteBuffer buf, final int size)
 	{
-		appendChecksum(buf, buf.position(), size);
+		appendChecksum(buf, buf.position(), size, false);
 	}
 	
 	/**
@@ -199,8 +208,9 @@ public class NewCipher
 	 * @param buf byte buffer
 	 * @param offset offset to a packet's body
 	 * @param size packet's body size
+	 * @param experimental undocumented experimental features
 	 */
-	public static void appendChecksum(ByteBuffer buf, final int offset, final int size)
+	public static void appendChecksum(ByteBuffer buf, final int offset, final int size, boolean experimental)
 	{
 		int checksum = 0;
 		int end = offset + size - 4; // ignore reserved bytes
@@ -213,6 +223,13 @@ public class NewCipher
 		}
 		
 		buf.putInt(pos, checksum);
+		
+		if (experimental)
+		{
+			Integer real = _checks.get(buf.get(offset));
+			if (real != null) // someone knows a better scheme?
+				buf.putInt(pos, real); // let them have it
+		}
 	}
 	
 	/**
