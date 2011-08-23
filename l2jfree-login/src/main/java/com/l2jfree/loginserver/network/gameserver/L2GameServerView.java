@@ -21,6 +21,7 @@ import com.l2jfree.util.logging.L2Logger;
  */
 public abstract class L2GameServerView implements Comparable<L2GameServerView>
 {
+	/** Default logger for game server attribute views. */
 	protected static final L2Logger _log = L2Logger.getLogger(L2GameServerView.class);
 	/** Avoid redirecting to local server while this one is offline */
 	private static final byte[] UNKNOWN_IPV4 = { 0, 0, 0, 0 };
@@ -36,6 +37,7 @@ public abstract class L2GameServerView implements Comparable<L2GameServerView>
 	private int _types;
 	private boolean _brackets;
 	
+	/** Creates a default (uninitialized) game server view. */
 	protected L2GameServerView()
 	{
 		_ipv4 = new byte[4];
@@ -170,53 +172,93 @@ public abstract class L2GameServerView implements Comparable<L2GameServerView>
 		return _brackets;
 	}
 	
-	protected final byte[] getDefaultIp()
-	{
-		return UNKNOWN_IPV4;
-	}
-	
+	/**
+	 * Changes game server ID.
+	 * @param id new ID
+	 */
 	protected void setId(int id)
 	{
 		_id = id;
 	}
 	
+	/**
+	 * Changes listening port.
+	 * @param port new port
+	 */
 	protected void setPort(int port)
 	{
 		_port = port;
 	}
 	
+	/**
+	 * Changes age restriction.
+	 * @param age minimum age
+	 */
 	protected void setAge(int age)
 	{
 		_age = age;
 	}
 	
+	/**
+	 * Changes PvP status
+	 * @param pvp whether PvP is allowed
+	 */
 	protected void setPvp(boolean pvp)
 	{
 		_pvp = pvp;
 	}
 	
+	/**
+	 * Changes online player count.
+	 * @param onlinePlayers online player count.
+	 */
 	protected void setOnlinePlayers(int onlinePlayers)
 	{
 		_onlinePlayers = onlinePlayers;
 	}
 	
+	/**
+	 * Changes maximum online player count.
+	 * @param maxPlayers maximum player count
+	 */
 	protected void setMaxPlayers(int maxPlayers)
 	{
 		_maxPlayers = maxPlayers;
 	}
 	
+	/**
+	 * Changes game server status.
+	 * @param online whether on or off
+	 */
 	protected void setOnline(boolean online)
 	{
 		_online = online;
 	}
 	
+	/**
+	 * Change game server types.
+	 * @param types server types
+	 */
 	protected void setTypes(int types)
 	{
 		_types = types;
 	}
 	
+	/**
+	 * Changes bracket status.
+	 * @param brackets whether to show brackets
+	 */
 	protected void setBrackets(boolean brackets)
 	{
 		_brackets = brackets;
+	}
+	
+	/**
+	 * Returns 0.0.0.0 (uninitialized IP).
+	 * @return 0.0.0.0
+	 */
+	protected static final byte[] getDefaultIp()
+	{
+		return UNKNOWN_IPV4;
 	}
 }

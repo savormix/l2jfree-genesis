@@ -26,16 +26,19 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 public final class PlaySuccess extends L2ServerPacket
 {
 	private final long _sessionKey;
+	private final int _server;
 	
 	/**
 	 * Constructs a packet to inform the client that it can now log into the game server.
 	 * 
 	 * @param llc a connection wrapper
+	 * @param server game server ID
 	 */
-	public PlaySuccess(L2LoginClient llc)
+	public PlaySuccess(L2LoginClient llc, int server)
 	{
 		_sessionKey = L2ClientSecurity.getInstance().assignSessionKey(llc);
 		L2ClientConnections.getInstance().authorize(llc);
+		_server = server;
 	}
 	
 	@Override
@@ -48,5 +51,6 @@ public final class PlaySuccess extends L2ServerPacket
 	protected void writeImpl(L2LoginClient client, MMOBuffer buf)
 	{
 		buf.writeQ(_sessionKey);
+		buf.writeC(_server);
 	}
 }

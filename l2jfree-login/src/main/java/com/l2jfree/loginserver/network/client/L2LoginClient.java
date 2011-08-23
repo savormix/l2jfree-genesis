@@ -48,11 +48,23 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	
 	private L2Account _account;
 	
+	/**
+	 * Creates an internal object representing a login client connection.
+	 * 
+	 * @param mmoController connection manager
+	 * @param socketChannel connection
+	 * @param sessionId connection's ID
+	 * @param protocol network protocol version
+	 * @param keyPair key pair for authorization data
+	 * @param blowfishKey blowfish key for network comms
+	 * @throws ClosedChannelException if the given channel was closed during operations
+	 */
 	protected L2LoginClient(MMOController<L2LoginClient, L2ClientPacket, L2ServerPacket> mmoController,
 			SocketChannel socketChannel, int sessionId, int protocol, ScrambledKeyPair keyPair, byte[] blowfishKey)
 			throws ClosedChannelException
 	{
 		super(mmoController, socketChannel);
+		
 		_sessionId = sessionId;
 		_protocol = protocol;
 		_keyPair = keyPair;

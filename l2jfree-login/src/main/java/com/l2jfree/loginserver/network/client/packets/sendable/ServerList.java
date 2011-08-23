@@ -57,7 +57,8 @@ public final class ServerList extends L2ServerPacket
 	@Override
 	protected void writeImpl(L2LoginClient client, MMOBuffer buf)
 	{
-		buf.writeC(_gameServers.size());
+		final int count = _gameServers.size();
+		buf.writeC(count);
 		buf.writeC(client.getAccount().getLastServerId());
 		
 		for (L2GameServerView gsv : _gameServers)
@@ -73,6 +74,21 @@ public final class ServerList extends L2ServerPacket
 			buf.writeC(gsv.isOnline());
 			buf.writeD(gsv.getTypes());
 			buf.writeC(gsv.isBrackets());
+		}
+		
+		final int totalChars = 0; // total player's characters (on a GS)
+		final int pendingRemoval = 0; // player's characters pending removal (on a GS)
+		final int bytesize = 1 + count * 3 + pendingRemoval * 4;
+		
+		buf.writeH(bytesize);
+		buf.writeC(count);
+		for (L2GameServerView gsv : _gameServers)
+		{
+			buf.writeC(gsv.getId());
+			buf.writeC(totalChars);
+			buf.writeC(pendingRemoval);
+			for (int i = 0; i < pendingRemoval; i++)
+				buf.writeD(0); // time of removal
 		}
 	}
 }

@@ -68,9 +68,10 @@ public final class L2ClientConnections extends MMOController<L2LoginClient, L2Cl
 	
 	private final FastMap<String, SessionKey> _authorized;
 	
-	protected L2ClientConnections(MMOConfig config) throws IOException
+	private L2ClientConnections(MMOConfig config) throws IOException
 	{
 		super(config, L2ClientPackets.getInstance());
+		
 		_authorized = FastMap.newInstance();
 		_authorized.setShared(true);
 	}

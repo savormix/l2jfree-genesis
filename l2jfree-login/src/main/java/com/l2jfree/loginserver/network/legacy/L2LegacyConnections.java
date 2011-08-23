@@ -67,9 +67,10 @@ public final class L2LegacyConnections extends MMOController<L2GameServer, L2Gam
 	
 	private final FastMap<Integer, L2GameServer> _gameServers;
 	
-	protected L2LegacyConnections(MMOConfig config) throws IOException
+	private L2LegacyConnections(MMOConfig config) throws IOException
 	{
 		super(config, L2LegacyPackets.getInstance());
+		
 		_gameServers = FastMap.newInstance();
 		_gameServers.setShared(true);
 	}

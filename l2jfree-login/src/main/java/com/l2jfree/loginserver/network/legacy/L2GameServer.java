@@ -66,10 +66,19 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	// unmanaged
 	private final boolean _pvp;
 	
+	/**
+	 * Creates an internal object representing a game server connection.
+	 * 
+	 * @param mmoController connection manager
+	 * @param socketChannel connection
+	 * @param keyPair key pair for network comms
+	 * @throws ClosedChannelException if the given channel was closed during operations
+	 */
 	protected L2GameServer(MMOController<L2GameServer, L2GameServerPacket, L2LoginServerPacket> mmoController,
 			SocketChannel socketChannel, KeyPair keyPair) throws ClosedChannelException
 	{
 		super(mmoController, socketChannel);
+		
 		_keyPair = keyPair;
 		_cipher = new NewCipher(HexUtil
 				.HexStringToBytes("5F 3B 76 2E 5D 30 35 2D 33 31 21 7C 2B 2D 25 78 54 21 5E 5B 24 00"));
