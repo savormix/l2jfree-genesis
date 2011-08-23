@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SocketChannel;
 
+import com.l2jfree.gameserver.CoreInfo;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOConfig;
@@ -71,5 +72,11 @@ public final class L2ClientConnections extends MMOController<L2CoreClient, L2Cli
 		L2CoreClient lcc = new L2CoreClient(socketChannel, lcs.getKey());
 		// TODO Auto-generated method stub
 		return lcc;
+	}
+	
+	@Override
+	protected String getVersionInfo()
+	{
+		return super.getVersionInfo() + " - " + CoreInfo.getVersionInfo();
 	}
 }

@@ -171,7 +171,7 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 	 * 
 	 * @return configuration's name
 	 */
-	public String getName()
+	public final String getName()
 	{
 		return _name;
 	}
@@ -235,20 +235,27 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 	
 	// ==============================================
 	
-	private final FloodManager _accepts;
-	private final FloodManager _packets;
-	private final FloodManager _errors;
+	// TODO fine tune
+	private final FloodManager _accepts = initAcceptsFloodManager();
+	private final FloodManager _packets = initPacketsFloodManager();
+	private final FloodManager _errors = initErrorsFloodManager();
 	
+	protected FloodManager initAcceptsFloodManager()
 	{
-		// TODO fine tune
-		_accepts = new FloodManager(1000, // 1000 msec per tick
+		return new FloodManager(1000, // 1000 msec per tick
 				new FloodManager.FloodFilter(10, 20, 10), // short period
 				new FloodManager.FloodFilter(30, 60, 60)); // long period
-		
-		_packets = new FloodManager(1000, // 1000 msec per tick
+	}
+	
+	protected FloodManager initPacketsFloodManager()
+	{
+		return new FloodManager(1000, // 1000 msec per tick
 				new FloodManager.FloodFilter(250, 300, 2));
-		
-		_errors = new FloodManager(200, // 200 msec per tick
+	}
+	
+	protected FloodManager initErrorsFloodManager()
+	{
+		return new FloodManager(200, // 200 msec per tick
 				new FloodManager.FloodFilter(10, 10, 1));
 	}
 	
@@ -257,7 +264,7 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 	 */
 	protected String getVersionInfo()
 	{
-		return "";
+		return getClass().getSimpleName() + " - " + getName();
 	}
 	
 	/**

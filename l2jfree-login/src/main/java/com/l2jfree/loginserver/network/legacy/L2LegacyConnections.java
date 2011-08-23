@@ -22,6 +22,7 @@ import java.util.Collection;
 
 import javolution.util.FastMap;
 
+import com.l2jfree.loginserver.LoginInfo;
 import com.l2jfree.loginserver.network.legacy.packets.L2GameServerPacket;
 import com.l2jfree.loginserver.network.legacy.packets.L2LoginServerPacket;
 import com.l2jfree.loginserver.network.legacy.packets.sendable.InitLS;
@@ -134,5 +135,11 @@ public final class L2LegacyConnections extends MMOController<L2GameServer, L2Gam
 	private FastMap<Integer, L2GameServer> getGameServers()
 	{
 		return _gameServers;
+	}
+	
+	@Override
+	protected String getVersionInfo()
+	{
+		return super.getVersionInfo() + " - " + LoginInfo.getVersionInfo();
 	}
 }

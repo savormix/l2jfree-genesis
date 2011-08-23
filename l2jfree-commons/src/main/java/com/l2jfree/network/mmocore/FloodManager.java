@@ -53,6 +53,8 @@ public final class FloodManager
 		}
 	}
 	
+	public static final FloodManager EMPTY_FLOOD_MANAGER = new FloodManager(1000);
+	
 	private static final long ZERO = System.currentTimeMillis() - TimeUnit.DAYS.toMillis(1);
 	
 	private final Map<String, LogEntry> _entries = new HashMap<String, LogEntry>();
