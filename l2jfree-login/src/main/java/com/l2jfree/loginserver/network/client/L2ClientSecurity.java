@@ -17,7 +17,6 @@ package com.l2jfree.loginserver.network.client;
 import java.security.GeneralSecurityException;
 import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
-import java.security.spec.AlgorithmParameterSpec;
 import java.security.spec.RSAKeyGenParameterSpec;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -26,6 +25,7 @@ import javax.crypto.Cipher;
 import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
 import com.l2jfree.security.ScrambledKeyPair;
+import com.l2jfree.util.RescheduleableTask;
 import com.l2jfree.util.Rnd;
 import com.l2jfree.util.logging.L2Logger;
 
@@ -42,36 +42,15 @@ public class L2ClientSecurity
 	
 	private final AtomicInteger _sessionId;
 	
-	private final ScrambledKeyPair[] _keyPairs;
-	private final byte[][] _blowfishKeys;
+	private ScrambledKeyPair[] _keyPairs;
+	private byte[][] _blowfishKeys;
 	
 	private L2ClientSecurity()
 	{
 		_sessionId = new AtomicInteger();
 		
-		_keyPairs = new ScrambledKeyPair[RSA_KEY_PAIR_COUNT];
-		_blowfishKeys = new byte[BLOWFISH_KEY_COUNT][BLOWFISH_KEY_LENGTH];
-		
-		KeyPairGenerator rsa = null;
-		try
-		{
-			rsa = KeyPairGenerator.getInstance("RSA");
-			AlgorithmParameterSpec spec = new RSAKeyGenParameterSpec(1024, RSAKeyGenParameterSpec.F4);
-			rsa.initialize(spec);
-		}
-		catch (GeneralSecurityException e)
-		{
-			_log.fatal("Could not generate RSA key pairs!", e);
-			Shutdown.exit(TerminationStatus.ENVIRONMENT_MISSING_COMPONENT_OR_SERVICE);
-			return;
-		}
-		
-		for (int i = 0; i < getKeyPairs().length; i++)
-			getKeyPairs()[i] = new ScrambledKeyPair(rsa.generateKeyPair());
+		new Updater();
 		_log.info("Generated " + getKeyPairs().length + " RSA key pairs (client).");
-		
-		for (int i = 0; i < BLOWFISH_KEY_COUNT; i++)
-			Rnd.nextBytes(getBlowfishKeys()[i]);
 		_log.info("Generated " + getBlowfishKeys().length + " Blowfish keys (client).");
 		
 		try
@@ -210,6 +189,52 @@ public class L2ClientSecurity
 		public long getOldKey()
 		{
 			return _oldKey;
+		}
+	}
+	
+	/**
+	 * Periodically generates new keys to replace the old ones.
+	 * 
+	 * @author NB4L1
+	 */
+	private final class Updater extends RescheduleableTask
+	{
+		@Override
+		protected void runImpl()
+		{
+			final KeyPairGenerator rsa;
+			try
+			{
+				rsa = KeyPairGenerator.getInstance("RSA");
+				rsa.initialize(new RSAKeyGenParameterSpec(1024, RSAKeyGenParameterSpec.F4));
+			}
+			catch (GeneralSecurityException e)
+			{
+				_log.fatal("Could not generate RSA key pairs!", e);
+				Shutdown.exit(TerminationStatus.ENVIRONMENT_MISSING_COMPONENT_OR_SERVICE);
+				return; // never happens
+			}
+			
+			final int count = Rnd.get(RSA_KEY_PAIR_COUNT / 2, RSA_KEY_PAIR_COUNT * 3 / 2); // so clients will never know if they have all of them or not
+			final ScrambledKeyPair[] result = new ScrambledKeyPair[count];
+			
+			for (int i = 0; i < count; i++)
+				result[i] = new ScrambledKeyPair(rsa.generateKeyPair());
+			
+			_keyPairs = result;
+			
+			final int count2 = Rnd.get(BLOWFISH_KEY_COUNT / 2, BLOWFISH_KEY_COUNT * 3 / 2); // so clients will never know if they have all of them or not
+			byte[][] result2 = new byte[count2][BLOWFISH_KEY_LENGTH];
+			for (int i = 0; i < count2; i++)
+				Rnd.nextBytes(result2[i]);
+			
+			_blowfishKeys = result2;
+		}
+		
+		@Override
+		protected long getScheduleDelay()
+		{
+			return _keyPairs.length * 60 * 1000;
 		}
 	}
 }

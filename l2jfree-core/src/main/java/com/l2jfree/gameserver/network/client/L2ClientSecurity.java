@@ -16,6 +16,7 @@ package com.l2jfree.gameserver.network.client;
 
 import java.nio.ByteBuffer;
 
+import com.l2jfree.util.RescheduleableTask;
 import com.l2jfree.util.Rnd;
 import com.l2jfree.util.logging.L2Logger;
 
@@ -29,19 +30,11 @@ public final class L2ClientSecurity
 	private static final int KEY_LENGTH = 16;
 	private static final int KEY_COUNT = 20;
 	
-	private final byte[][] _keys;
+	private byte[][] _keys;
 	
 	private L2ClientSecurity()
 	{
-		_keys = new byte[KEY_COUNT][KEY_LENGTH];
-		
-		for (int i = 0; i < KEY_COUNT; i++)
-		{
-			getKeys()[i] = new byte[KEY_LENGTH];
-			ByteBuffer buf = ByteBuffer.wrap(getKeys()[i]);
-			buf.putLong(Rnd.get(Long.MIN_VALUE, Long.MAX_VALUE));
-			buf.putLong(0xc8279301a16c3197L);
-		}
+		new Updater();
 		_log.info("Generated " + getKeys().length + " cipher keys (client).");
 	}
 	
@@ -73,5 +66,36 @@ public final class L2ClientSecurity
 	private static final class SingletonHolder
 	{
 		public static final L2ClientSecurity INSTANCE = new L2ClientSecurity();
+	}
+	
+	/**
+	 * Periodically generates new keys to replace the old ones.
+	 * 
+	 * @author NB4L1
+	 */
+	private final class Updater extends RescheduleableTask
+	{
+		@Override
+		protected void runImpl()
+		{
+			final int count = Rnd.get(KEY_COUNT / 2, KEY_COUNT * 3 / 2); // so clients will never know if they have all of them or not
+			final byte[][] result = new byte[count][KEY_LENGTH];
+			
+			for (int i = 0; i < count; i++)
+			{
+				final ByteBuffer buf = ByteBuffer.wrap(result[i]);
+				
+				buf.putLong(Rnd.get(Long.MIN_VALUE, Long.MAX_VALUE));
+				buf.putLong(0xc8279301a16c3197L);
+			}
+			
+			_keys = result;
+		}
+		
+		@Override
+		protected long getScheduleDelay()
+		{
+			return _keys.length * 60 * 1000;
+		}
 	}
 }

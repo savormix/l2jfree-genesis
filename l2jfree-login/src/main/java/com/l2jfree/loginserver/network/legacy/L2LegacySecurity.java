@@ -18,13 +18,13 @@ import java.security.GeneralSecurityException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
-import java.security.spec.AlgorithmParameterSpec;
 import java.security.spec.RSAKeyGenParameterSpec;
 
 import javax.crypto.Cipher;
 
 import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
+import com.l2jfree.util.RescheduleableTask;
 import com.l2jfree.util.Rnd;
 import com.l2jfree.util.logging.L2Logger;
 
@@ -37,28 +37,11 @@ public class L2LegacySecurity
 	
 	private static final int RSA_KEY_PAIR_COUNT = 10;
 	
-	private final KeyPair[] _keyPairs;
+	private KeyPair[] _keyPairs;
 	
 	private L2LegacySecurity()
 	{
-		_keyPairs = new KeyPair[RSA_KEY_PAIR_COUNT];
-		
-		KeyPairGenerator rsa = null;
-		try
-		{
-			rsa = KeyPairGenerator.getInstance("RSA");
-			AlgorithmParameterSpec spec = new RSAKeyGenParameterSpec(512, RSAKeyGenParameterSpec.F4);
-			rsa.initialize(spec);
-		}
-		catch (GeneralSecurityException e)
-		{
-			_log.fatal("Could not generate RSA key pairs!", e);
-			Shutdown.exit(TerminationStatus.ENVIRONMENT_MISSING_COMPONENT_OR_SERVICE);
-			return;
-		}
-		
-		for (int i = 0; i < getKeyPairs().length; i++)
-			getKeyPairs()[i] = rsa.generateKeyPair();
+		new Updater();
 		_log.info("Generated " + getKeyPairs().length + " RSA key pairs (legacy game server).");
 		
 		try
@@ -107,5 +90,44 @@ public class L2LegacySecurity
 	private static final class SingletonHolder
 	{
 		public static final L2LegacySecurity INSTANCE = new L2LegacySecurity();
+	}
+	
+	/**
+	 * Periodically generates new keys to replace the old ones.
+	 * 
+	 * @author NB4L1
+	 */
+	private final class Updater extends RescheduleableTask
+	{
+		@Override
+		protected void runImpl()
+		{
+			final KeyPairGenerator rsa;
+			try
+			{
+				rsa = KeyPairGenerator.getInstance("RSA");
+				rsa.initialize(new RSAKeyGenParameterSpec(512, RSAKeyGenParameterSpec.F4));
+			}
+			catch (GeneralSecurityException e)
+			{
+				_log.fatal("Could not generate RSA key pairs!", e);
+				Shutdown.exit(TerminationStatus.ENVIRONMENT_MISSING_COMPONENT_OR_SERVICE);
+				return; // never happens
+			}
+			
+			final int count = Rnd.get(RSA_KEY_PAIR_COUNT / 2, RSA_KEY_PAIR_COUNT * 3 / 2); // so clients will never know if they have all of them or not
+			final KeyPair[] result = new KeyPair[count];
+			
+			for (int i = 0; i < count; i++)
+				result[i] = rsa.generateKeyPair();
+			
+			_keyPairs = result;
+		}
+		
+		@Override
+		protected long getScheduleDelay()
+		{
+			return _keyPairs.length * 60 * 1000;
+		}
 	}
 }
