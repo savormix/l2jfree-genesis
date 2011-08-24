@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.network;
+package com.l2jfree.network.legacy;
 
 // Good, Normal and Full are not used for years
 // Oh and they wont be used. ever.
