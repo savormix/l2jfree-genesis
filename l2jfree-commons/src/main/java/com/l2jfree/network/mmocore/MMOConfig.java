@@ -20,7 +20,8 @@ import com.l2jfree.util.Introspection;
 
 /**
  * This class provides a convenient way to pass specific parameters to different parts of MMOCore as
- * well as to document these parameters.
+ * well as to document these parameters. Once the {@link MMOController} has been initialized with a
+ * {@link MMOConfig} instance, it has no further use, and simply dropped.
  * 
  * @author KenM (reference)
  * @author NB4L1 (l2jfree)

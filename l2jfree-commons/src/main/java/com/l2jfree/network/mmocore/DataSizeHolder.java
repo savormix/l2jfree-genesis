@@ -20,17 +20,23 @@ package com.l2jfree.network.mmocore;
  * 
  * @author savormix
  */
-public class DataSizeHolder
+public final class DataSizeHolder
 {
 	private int _size;
 	private int _minPadding;
 	private int _maxPadding;
 	
-	DataSizeHolder(int size)
+	DataSizeHolder()
+	{
+		// init empty instance
+	}
+	
+	DataSizeHolder init(int size)
 	{
 		_size = size;
 		_minPadding = 0;
 		_maxPadding = 0;
+		return this;
 	}
 	
 	/**

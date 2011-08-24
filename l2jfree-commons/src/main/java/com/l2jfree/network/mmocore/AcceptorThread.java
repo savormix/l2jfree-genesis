@@ -35,6 +35,7 @@ final class AcceptorThread<T extends MMOConnection<T, RP, SP>, RP extends Receiv
 	public AcceptorThread(MMOController<T, RP, SP> mmoController, MMOConfig config) throws IOException
 	{
 		super(mmoController, config);
+		
 		_bufferSize = config.getBufferSize();
 	}
 	

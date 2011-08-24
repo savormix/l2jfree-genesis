@@ -62,6 +62,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 	
 	// wrapper for read and write operations
 	private final MMOBuffer _mmoBuffer;
+	private final DataSizeHolder _dataSizeHolder;
 	
 	public ReadWriteThread(MMOController<T, RP, SP> mmoController, MMOConfig config,
 			PacketHandler<T, RP, SP> packetHandler) throws IOException
@@ -80,18 +81,14 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		_writeBuffer = ByteBuffer.allocate(getBufferSize()).order(getByteOrder());
 		_readBuffer = ByteBuffer.allocate(getBufferSize()).order(getByteOrder());
 		
-		_bufferPool = new ArrayDeque<ByteBuffer>();
-		initBufferPool();
+		_bufferPool = new ArrayDeque<ByteBuffer>(getHelperBufferCount());
+		for (int i = 0; i < getHelperBufferCount(); i++)
+			getFreeBuffers().addLast(ByteBuffer.allocate(getBufferSize()).order(getByteOrder()));
 		_mmoBuffer = new MMOBuffer();
+		_dataSizeHolder = new DataSizeHolder();
 		
 		_packetHandler = packetHandler;
 		_pendingClose = FastList.newInstance();
-	}
-	
-	private void initBufferPool()
-	{
-		for (int i = 0; i < getHelperBufferCount(); i++)
-			getFreeBuffers().addLast(ByteBuffer.allocate(getBufferSize()).order(getByteOrder()));
 	}
 	
 	final ByteBuffer getPooledBuffer()
@@ -155,6 +152,9 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 				// key might have been invalidated on writePacket
 				if (key.isValid())
 					readPacket(key);
+				break;
+			default:
+				System.err.println("Unknown readyOps: " + key.readyOps() + " for " + key.attachment());
 				break;
 		}
 	}
@@ -328,8 +328,8 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 	
 	private void parseClientPacket(ByteBuffer buf, int dataSize, T client)
 	{
-		int pos = buf.position();
-		DataSizeHolder dsh = new DataSizeHolder(dataSize);
+		final int pos = buf.position();
+		final DataSizeHolder dsh = getDataSizeHolder().init(dataSize);
 		
 		if (client.decipher(buf, dsh) && buf.hasRemaining())
 		{
@@ -688,5 +688,10 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 	private MMOBuffer getMmoBuffer()
 	{
 		return _mmoBuffer;
+	}
+	
+	private DataSizeHolder getDataSizeHolder()
+	{
+		return _dataSizeHolder;
 	}
 }
