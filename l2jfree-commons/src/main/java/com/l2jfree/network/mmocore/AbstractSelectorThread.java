@@ -24,8 +24,11 @@ import com.l2jfree.util.concurrent.RunnableStatsManager;
 /**
  * Baseclass of {@link MMOController} associated threads executing periodic NIO selections.
  * 
- * @see {@link Selector#selectNow()}
+ * @see Selector#selectNow()
  * @author NB4L1
+ * @param <T>
+ * @param <RP>
+ * @param <SP>
  */
 abstract class AbstractSelectorThread<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
 		extends WorkerThread<T, RP, SP>

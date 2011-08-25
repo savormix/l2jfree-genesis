@@ -387,6 +387,7 @@ public class Base64 {
 	 * 
 	 * @param source
 	 *            The data to convert
+	 * @return String
 	 * @since 1.4
 	 */
 	public static String encodeBytes(byte[] source) {
@@ -415,6 +416,7 @@ public class Base64 {
 	 *            The data to convert
 	 * @param options
 	 *            Specified options
+	 * @return string
 	 * @see Base64#GZIP
 	 * @see Base64#DONT_BREAK_LINES
 	 * @since 2.0
@@ -432,6 +434,7 @@ public class Base64 {
 	 *            Offset in array where conversion should begin
 	 * @param len
 	 *            Length of data to convert
+	 * @return string
 	 * @since 1.4
 	 */
 	public static String encodeBytes(byte[] source, int off, int len) {
@@ -464,6 +467,7 @@ public class Base64 {
 	 *            Length of data to convert
 	 * @param options
 	 *            Specified options
+	 * @return String
 	 * @see Base64#GZIP
 	 * @see Base64#DONT_BREAK_LINES
 	 * @since 2.0
@@ -991,7 +995,7 @@ public class Base64 {
 		} // end read
 
 		/**
-		 * Calls {@link #read} repeatedly until the end of stream is reached or
+		 * Calls {@link #read()} repeatedly until the end of stream is reached or
 		 * <var>len</var> bytes are read. Returns number of bytes read into
 		 * array or -1 if end of stream is encountered.
 		 * 
@@ -1156,7 +1160,7 @@ public class Base64 {
 		} // end write
 
 		/**
-		 * Calls {@link #write} repeatedly until <var>len</var> bytes are
+		 * Calls {@link #write(int)} repeatedly until <var>len</var> bytes are
 		 * written.
 		 * 
 		 * @param theBytes
@@ -1185,6 +1189,7 @@ public class Base64 {
 		/**
 		 * Method added by PHIL. [Thanks, PHIL. -Rob] This pads the buffer
 		 * without closing the stream.
+		 * @throws java.io.IOException
 		 */
 		public void flushBase64() throws java.io.IOException {
 			if (position > 0) {
@@ -1221,6 +1226,7 @@ public class Base64 {
 		/**
 		 * Suspends encoding of the stream. May be helpful if you need to embed
 		 * a piece of base640-encoded data in a stream.
+		 * @throws java.io.IOException
 		 * 
 		 * @since 1.5.1
 		 */

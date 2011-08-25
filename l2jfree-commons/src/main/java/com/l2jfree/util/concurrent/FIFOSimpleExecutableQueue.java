@@ -19,6 +19,7 @@ import java.util.Collection;
 
 /**
  * @author NB4L1
+ * @param <T>
  */
 public abstract class FIFOSimpleExecutableQueue<T> extends FIFOExecutableQueue
 {

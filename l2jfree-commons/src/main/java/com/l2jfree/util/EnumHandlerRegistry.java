@@ -18,6 +18,8 @@ import java.util.EnumMap;
 
 /**
  * @author NB4L1
+ * @param <E>
+ * @param <V>
  */
 public class EnumHandlerRegistry<E extends Enum<E>, V> extends HandlerRegistry<E, V>
 {

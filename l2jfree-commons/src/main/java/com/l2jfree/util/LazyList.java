@@ -22,6 +22,7 @@ import javolution.util.FastList;
 
 /**
  * @author NB4L1
+ * @param <E>
  */
 public final class LazyList<E> extends LazyCollection<E, List<E>> implements List<E>
 {

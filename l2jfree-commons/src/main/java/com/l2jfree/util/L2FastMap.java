@@ -18,6 +18,8 @@ import java.util.Map;
 
 /**
  * @author NB4L1
+ * @param <K>
+ * @param <V>
  */
 public abstract class L2FastMap<K, V> implements Map<K, V>
 {

@@ -39,6 +39,7 @@ import com.l2jfree.util.L2Collections.Filter;
  * </ul>
  * 
  * @author NB4L1
+ * @param <E>
  */
 public interface Bunch<E>
 {

@@ -20,6 +20,7 @@ import com.l2jfree.util.logging.L2Logger;
 
 /**
  * @author NB4L1
+ * @param <E>
  */
 @SuppressWarnings("unchecked")
 public abstract class AbstractBunch<E> implements Bunch<E>

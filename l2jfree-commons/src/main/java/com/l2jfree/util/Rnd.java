@@ -71,6 +71,7 @@ public final class Rnd
 	
 	/**
 	 * Get random number from 0.0 to 1.0
+	 * @return double
 	 */
 	public static double nextDouble()
 	{
@@ -79,6 +80,8 @@ public final class Rnd
 	
 	/**
 	 * Get random number from 0 to n-1
+	 * @param n
+	 * @return int
 	 */
 	public static int nextInt(int n)
 	{
@@ -87,6 +90,8 @@ public final class Rnd
 	
 	/**
 	 * Get random number from 0 to n-1
+	 * @param n
+	 * @return int
 	 */
 	public static int get(int n)
 	{
@@ -95,6 +100,9 @@ public final class Rnd
 	
 	/**
 	 * Get random number from min to max <b>(not max-1)</b>
+	 * @param min
+	 * @param max
+	 * @return int
 	 */
 	public static int get(int min, int max)
 	{
@@ -106,6 +114,8 @@ public final class Rnd
 	
 	/**
 	 * Get random number from 0 to n-1
+	 * @param n
+	 * @return long
 	 */
 	public static long nextLong(long n)
 	{
@@ -114,6 +124,8 @@ public final class Rnd
 	
 	/**
 	 * Get random number from 0 to n-1
+	 * @param n
+	 * @return long
 	 */
 	public static long get(long n)
 	{
@@ -122,6 +134,9 @@ public final class Rnd
 	
 	/**
 	 * Get random number from min to max <b>(not max-1)</b>
+	 * @param min
+	 * @param max
+	 * @return long
 	 */
 	public static long get(long min, long max)
 	{

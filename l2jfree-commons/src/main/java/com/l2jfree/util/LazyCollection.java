@@ -19,6 +19,8 @@ import java.util.Iterator;
 
 /**
  * @author NB4L1
+ * @param <E>
+ * @param <C>
  */
 public abstract class LazyCollection<E, C extends Collection<E>> implements Collection<E>
 {

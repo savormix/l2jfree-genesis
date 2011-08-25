@@ -26,6 +26,9 @@ import java.nio.channels.SocketChannel;
  * {@link MMOController} associated {@link WorkerThread} responsible for accepting new connections.
  * 
  * @author NB4L1
+ * @param <T>
+ * @param <RP>
+ * @param <SP>
  */
 final class AcceptorThread<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
 		extends AbstractSelectorThread<T, RP, SP>

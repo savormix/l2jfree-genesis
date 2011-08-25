@@ -21,6 +21,7 @@ import com.l2jfree.util.L2FastSet;
 
 /**
  * @author NB4L1
+ * @param <T>
  */
 public abstract class AbstractFIFOPeriodicTaskManager<T> extends AbstractPeriodicTaskManager
 {

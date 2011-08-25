@@ -18,6 +18,7 @@ import com.l2jfree.lang.L2Integer;
 
 /**
  * @author NB4L1
+ * @param <V>
  */
 public class NumberHandlerRegistry<V> extends HandlerRegistry<Integer, V>
 {

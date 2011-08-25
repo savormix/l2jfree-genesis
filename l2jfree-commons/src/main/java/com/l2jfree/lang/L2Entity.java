@@ -16,6 +16,7 @@ package com.l2jfree.lang;
 
 /**
  * @author NB4L1
+ * @param <T>
  */
 public interface L2Entity<T>
 {

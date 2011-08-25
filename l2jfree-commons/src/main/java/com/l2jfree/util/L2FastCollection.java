@@ -24,6 +24,7 @@ import javolution.util.FastCollection.Record;
 
 /**
  * @author NB4L1
+ * @param <E>
  */
 @SuppressWarnings("unchecked")
 public abstract class L2FastCollection<E> implements Collection<E>

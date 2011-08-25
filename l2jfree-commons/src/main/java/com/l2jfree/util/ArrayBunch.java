@@ -21,6 +21,7 @@ import java.util.List;
  * An implementation of {@link AbstractListBunch} backed by an {@link ArrayList}.
  * 
  * @author NB4L1
+ * @param <E>
  */
 public final class ArrayBunch<E> extends AbstractListBunch<E>
 {

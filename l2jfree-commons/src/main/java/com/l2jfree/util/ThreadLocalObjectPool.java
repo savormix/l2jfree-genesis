@@ -16,6 +16,7 @@ package com.l2jfree.util;
 
 /**
  * @author NB4L1
+ * @param <E>
  */
 public abstract class ThreadLocalObjectPool<E> extends AbstractObjectPool<E>
 {

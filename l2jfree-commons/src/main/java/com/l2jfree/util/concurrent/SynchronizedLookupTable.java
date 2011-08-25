@@ -20,6 +20,7 @@ import com.l2jfree.util.LookupTable;
 
 /**
  * @author NB4L1
+ * @param <E>
  */
 public class SynchronizedLookupTable<E> extends LookupTable<E>
 {

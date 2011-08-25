@@ -20,6 +20,7 @@ import java.util.Iterator;
 
 /**
  * @author NB4L1
+ * @param <E>
  */
 @SuppressWarnings("unchecked")
 public class LookupTable<E> implements Iterable<E>

@@ -78,6 +78,7 @@ public class JavaCompiler
 	 * @param err error writer where diagnostic messages are written
 	 * @param sourcePath location of additional .java source files
 	 * @param classPath location of additional .class files
+	 * @return classBytes
 	 */
 	public Map<String, byte[]> compile(String fileName, String source, Writer err, String sourcePath, String classPath)
 	{

@@ -28,6 +28,7 @@ import com.l2jfree.util.L2Collections;
 
 /**
  * @author NB4L1
+ * @param <T>
  */
 public abstract class L2EntityMap<T extends L2Entity<Integer>>
 {

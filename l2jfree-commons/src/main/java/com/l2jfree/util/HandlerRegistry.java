@@ -23,6 +23,8 @@ import com.l2jfree.util.logging.L2Logger;
 
 /**
  * @author NB4L1
+ * @param <K>
+ * @param <V>
  */
 public class HandlerRegistry<K, V>
 {

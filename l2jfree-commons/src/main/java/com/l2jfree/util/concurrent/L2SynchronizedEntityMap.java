@@ -18,6 +18,7 @@ import com.l2jfree.lang.L2Entity;
 
 /**
  * @author NB4L1
+ * @param <T>
  */
 public final class L2SynchronizedEntityMap<T extends L2Entity<Integer>> extends L2EntityMap<T>
 {

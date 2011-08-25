@@ -18,6 +18,7 @@ import java.util.Set;
 
 /**
  * @author NB4L1
+ * @param <E>
  */
 public final class LazySet<E> extends LazyCollection<E, Set<E>> implements Set<E>
 {

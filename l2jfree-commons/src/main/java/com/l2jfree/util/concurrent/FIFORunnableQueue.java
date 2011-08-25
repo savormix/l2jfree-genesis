@@ -16,6 +16,7 @@ package com.l2jfree.util.concurrent;
 
 /**
  * @author NB4L1
+ * @param <T>
  */
 public abstract class FIFORunnableQueue<T extends Runnable> extends FIFOSimpleExecutableQueue<T>
 {

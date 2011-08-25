@@ -27,6 +27,7 @@ import com.l2jfree.util.concurrent.L2ThreadPool;
 
 /**
  * @author NB4L1
+ * @param <E>
  */
 public abstract class ObjectPool<E> extends AbstractObjectPool<E>
 {

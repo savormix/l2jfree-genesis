@@ -18,6 +18,7 @@ import java.util.List;
 
 /**
  * @author NB4L1
+ * @param <E>
  */
 public abstract class L2FastList<E> extends L2FastCollection<E> implements List<E>
 {

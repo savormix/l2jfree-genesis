@@ -22,6 +22,7 @@ import javolution.util.FastCollection.Record;
 
 /**
  * @author NB4L1
+ * @param <E>
  */
 @SuppressWarnings("unchecked")
 public class L2FastSet<E> extends L2FastCollection<E> implements Set<E>

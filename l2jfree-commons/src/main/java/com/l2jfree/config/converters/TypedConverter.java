@@ -16,6 +16,7 @@ package com.l2jfree.config.converters;
 
 /**
  * @author NB4L1
+ * @param <T>
  */
 public abstract class TypedConverter<T> implements Converter
 {

@@ -64,7 +64,10 @@ public final class L2System
 	*/
 
 	/**
-	 * Copy of HashMap.hash().
+	 * Copy of HashMap.hash(int).
+	 * 
+	 * @param h
+	 * @return hash
 	 */
 	public static int hash(int h)
 	{

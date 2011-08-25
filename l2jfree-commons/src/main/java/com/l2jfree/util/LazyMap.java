@@ -22,6 +22,8 @@ import javolution.util.FastMap;
 
 /**
  * @author NB4L1
+ * @param <K>
+ * @param <V>
  */
 public final class LazyMap<K, V> implements Map<K, V>
 {

@@ -22,6 +22,7 @@ import javolution.util.FastList;
  * An implementation of {@link AbstractListBunch} backed by a {@link FastList}.
  * 
  * @author NB4L1
+ * @param <E>
  */
 public final class FastBunch<E> extends AbstractListBunch<E>
 {

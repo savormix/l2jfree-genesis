@@ -16,6 +16,9 @@ package com.l2jfree.network.mmocore;
 
 /**
  * @author NB4L1
+ * @param <T>
+ * @param <RP>
+ * @param <SP>
  */
 public abstract class DefaultSendablePacket<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
 		extends SendablePacket<T, RP, SP>

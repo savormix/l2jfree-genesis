@@ -31,6 +31,9 @@ import com.l2jfree.network.mmocore.FloodManager.ErrorMode;
  * also for closing connections.
  * 
  * @author NB4L1
+ * @param <T>
+ * @param <RP>
+ * @param <SP>
  */
 final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>>
 		extends AbstractSelectorThread<T, RP, SP>

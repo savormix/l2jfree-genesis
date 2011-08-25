@@ -27,6 +27,7 @@ import com.l2jfree.util.L2Collections.Filter;
  * </p>
  * 
  * @author NB4L1
+ * @param <E>
  */
 public abstract class AbstractListBunch<E> extends AbstractBunch<E>
 {
