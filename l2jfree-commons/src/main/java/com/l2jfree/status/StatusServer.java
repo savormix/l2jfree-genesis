@@ -15,8 +15,10 @@
 package com.l2jfree.status;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -24,7 +26,6 @@ import java.util.Set;
 import javolution.util.FastList;
 import javolution.util.FastMap;
 
-import com.l2jfree.L2Config;
 import com.l2jfree.config.L2Properties;
 import com.l2jfree.util.L2FastSet;
 import com.l2jfree.util.Rnd;
@@ -35,6 +36,9 @@ import com.l2jfree.util.logging.L2Logger;
  */
 public abstract class StatusServer extends Thread
 {
+	/** Telnet configuration file */
+	public static final String TELNET_CONFIG_FILE = "./config/telnet.properties";
+	
 	/**
 	 * @author NB4L1
 	 */
@@ -67,7 +71,7 @@ public abstract class StatusServer extends Thread
 		@Override
 		public boolean accept(String host)
 		{
-			for (String hostAddress : L2Config.getAllowedTelnetHostAddresses())
+			for (String hostAddress : getAllowedTelnetHostAddresses())
 				if (host.equals(hostAddress))
 					return true;
 			
@@ -83,7 +87,7 @@ public abstract class StatusServer extends Thread
 	
 	protected StatusServer() throws IOException
 	{
-		_socket = new ServerSocket(new L2Properties(L2Config.TELNET_FILE).getInteger("StatusPort"));
+		_socket = new ServerSocket(new L2Properties(TELNET_CONFIG_FILE).getInteger("StatusPort"));
 		
 		addFilter(new FloodFilter());
 		addFilter(new HostFilter());
@@ -207,5 +211,43 @@ public abstract class StatusServer extends Thread
 			sb.append(chars.charAt(Rnd.get(chars.length())));
 		
 		return sb.toString();
+	}
+	
+	/**
+	 * @return internet addresses that are allowed to connect via telnet
+	 */
+	public static Set<String> getAllowedTelnetHostAddresses()
+	{
+		final Set<String> set = new HashSet<String>();
+		
+		try
+		{
+			set.add(InetAddress.getLocalHost().getHostAddress());
+		}
+		catch (Exception e)
+		{
+			_log.warn("", e);
+		}
+		
+		try
+		{
+			for (String host : new L2Properties(TELNET_CONFIG_FILE).getProperty("ListOfHosts").split(","))
+			{
+				try
+				{
+					set.add(InetAddress.getByName(host.trim()).getHostAddress());
+				}
+				catch (Exception e)
+				{
+					_log.warn("", e);
+				}
+			}
+		}
+		catch (Exception e)
+		{
+			_log.warn("", e);
+		}
+		
+		return set;
 	}
 }

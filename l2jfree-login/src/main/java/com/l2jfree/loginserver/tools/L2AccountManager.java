@@ -122,7 +122,7 @@ public final class L2AccountManager extends Config
 	 */
 	public static void main(String[] args)
 	{
-		// TODO rework this crap
+		// LOW rework this crap
 		Util.printSection("Account Management");
 		
 		_log.info("Please choose:");

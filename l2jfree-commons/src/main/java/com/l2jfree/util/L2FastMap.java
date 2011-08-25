@@ -23,5 +23,5 @@ import java.util.Map;
  */
 public abstract class L2FastMap<K, V> implements Map<K, V>
 {
-	// TODO implement
+	// LOW implement
 }

@@ -43,7 +43,7 @@ public final class L2LegacyGameServerView extends L2GameServerView
 		setId(gs.getId());
 		try
 		{
-			// TODO subnet-based hosts
+			// FIXME subnet-based hosts
 			// REGRESSION -->
 			byte[] ip = InetAddress.getByName(gs.getHost()).getAddress();
 			System.arraycopy(ip, 0, getIpv4(), 0, getIpv4().length);

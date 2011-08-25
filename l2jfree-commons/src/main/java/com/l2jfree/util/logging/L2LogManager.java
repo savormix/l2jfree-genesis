@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 /**
  * @author NB4L1
  */
-// TODO there must be a more elegant way to use a subclass instead of a Logger instance itselfg
+// FIXME there must be a more elegant way to use a subclass instead of a Logger instance itself
 public final class L2LogManager extends LogManager
 {
 	static

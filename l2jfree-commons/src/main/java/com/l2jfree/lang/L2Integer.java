@@ -14,9 +14,9 @@
  */
 package com.l2jfree.lang;
 
+import java.util.HashMap;
 import java.util.Map;
-
-import javolution.util.FastMap;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author NB4L1
@@ -24,7 +24,8 @@ import javolution.util.FastMap;
 // TODO check if this really gives the advantage it's supposed to
 public final class L2Integer
 {
-	private static final Map<Integer, Integer> MAP = new FastMap<Integer, Integer>();
+	private static final ReentrantLock _lock = new ReentrantLock();
+	private static final Map<Integer, Integer> _map = new HashMap<Integer, Integer>();
 	
 	private static final int MIN = -1000;
 	private static final int MAX = 100000;
@@ -48,16 +49,21 @@ public final class L2Integer
 		if (MIN <= intValue && intValue <= MAX)
 			return ARRAY[intValue - MIN];
 		
-		Integer integerValue = intValue;
+		final Integer integerValue = intValue;
 		
-		synchronized (MAP)
+		_lock.lock();
+		try
 		{
-			Integer cachedInteger = MAP.get(integerValue);
+			final Integer cachedInteger = _map.get(integerValue);
 			
 			if (cachedInteger != null)
 				return cachedInteger;
 			
-			MAP.put(integerValue, integerValue);
+			_map.put(integerValue, integerValue);
+		}
+		finally
+		{
+			_lock.unlock();
 		}
 		
 		return integerValue;

@@ -21,7 +21,7 @@ import com.l2jfree.util.ObjectPool;
 /**
  * @author NB4L1
  */
-// TODO: check org.apache.commons.lang3.text.StrBuilder
+// LOW check org.apache.commons.lang3.text.StrBuilder
 public class L2TextBuilder extends TextBuilder
 {
 	private static final long serialVersionUID = -4689463504223014731L;

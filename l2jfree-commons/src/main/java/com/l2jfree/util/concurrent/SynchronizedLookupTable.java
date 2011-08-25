@@ -57,6 +57,6 @@ public class SynchronizedLookupTable<E> extends LookupTable<E>
 	@Override
 	public synchronized Iterator<E> iterator()
 	{
-		return super.iterator(); // TODO implement
+		return super.iterator(); // FIXME implement
 	}
 }

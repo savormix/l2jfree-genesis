@@ -100,7 +100,7 @@ public final class L2GameServerRegistrar extends Config
 	 */
 	public static void main(String[] args)
 	{
-		// TODO rework this crap
+		// LOW rework this crap
 		Util.printSection("Game Server Registration");
 		_log.info("Please choose:");
 		_log.info("list - list registered game servers");

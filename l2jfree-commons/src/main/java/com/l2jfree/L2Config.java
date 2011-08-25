@@ -21,7 +21,6 @@ import java.io.FileReader;
 import java.io.PrintStream;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.lang.management.ManagementFactory;
-import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -56,8 +55,7 @@ import com.l2jfree.util.concurrent.ThreadPoolInitializer;
 import com.l2jfree.util.jar.ClassFinder;
 import com.l2jfree.util.logging.L2Logger;
 
-// TODO do we need commons logging?
-// TODO fill /doc folder
+// LOW fill /doc folder
 /**
  */
 public abstract class L2Config
@@ -126,9 +124,6 @@ public abstract class L2Config
 	
 	/** Logging configuration file */
 	public static final String LOG_FILE = "./config/logging.properties";
-	/** Telnet configuration file */
-	// TODO move from here
-	public static final String TELNET_FILE = "./config/telnet.properties";
 	
 	/**
 	 * Defines the type of log entries that should be followed by a complete stack trace, regardless
@@ -329,7 +324,7 @@ public abstract class L2Config
 	}
 	
 	/** Flushes all pending log entries. */
-	// TODO: MMOLogger.flush()
+	// FIXME MMOLogger.flush()
 	public static void flush()
 	{
 		// those are redirected to loggers, so flush them first
@@ -357,45 +352,6 @@ public abstract class L2Config
 		// and finally the real console streams
 		L2Config.out.flush();
 		L2Config.err.flush();
-	}
-	
-	/**
-	 * @return internet addresses that are allowed to connect via telnet
-	 */
-	// TODO move to telnet related classes
-	public static Set<String> getAllowedTelnetHostAddresses()
-	{
-		final Set<String> set = new HashSet<String>();
-		
-		try
-		{
-			set.add(InetAddress.getLocalHost().getHostAddress());
-		}
-		catch (Exception e)
-		{
-			_log.warn("", e);
-		}
-		
-		try
-		{
-			for (String host : new L2Properties(L2Config.TELNET_FILE).getProperty("ListOfHosts").split(","))
-			{
-				try
-				{
-					set.add(InetAddress.getByName(host.trim()).getHostAddress());
-				}
-				catch (Exception e)
-				{
-					_log.warn("", e);
-				}
-			}
-		}
-		catch (Exception e)
-		{
-			_log.warn("", e);
-		}
-		
-		return set;
 	}
 	
 	// TODO make sure to fit new config scheme, and move to config related classes

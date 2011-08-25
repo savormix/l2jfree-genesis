@@ -94,7 +94,7 @@ public final class Configurator extends JFrame
 				{
 					final ConfigFieldInfoView view = new ConfigFieldInfoView(info);
 					
-					// TODO
+					// LOW implement
 					
 					jPanel.add(view);
 				}
@@ -121,7 +121,7 @@ public final class Configurator extends JFrame
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					// TODO
+					// LOW implement
 				}
 			});
 			
@@ -143,7 +143,7 @@ public final class Configurator extends JFrame
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					// TODO
+					// LOW implement
 				}
 			});
 			
@@ -165,7 +165,7 @@ public final class Configurator extends JFrame
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					// TODO
+					// LOW implement
 				}
 			});
 			
@@ -187,7 +187,7 @@ public final class Configurator extends JFrame
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					// TODO
+					// LOW implement
 				}
 			});
 			
@@ -210,7 +210,7 @@ public final class Configurator extends JFrame
 			setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 			setLayout(new BorderLayout());
 			
-			// TODO: just placeholder currently
+			// LOW just placeholder currently
 			final JTextPane jTextPane = new JTextPane();
 			
 			{

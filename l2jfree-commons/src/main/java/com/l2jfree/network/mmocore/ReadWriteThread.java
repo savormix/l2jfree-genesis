@@ -387,7 +387,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 							if (buf.hasRemaining() && // some unused data, a bad sign
 									buf.remaining() > maxLeftoverPadding) // and definitely not padded bytes
 							{
-								// TODO: disabled until packet structures updated properly
+								// FIXME disabled until packet structures updated properly
 								//report(ErrorMode.BUFFER_OVER_FLOW, client, cp, null);
 								
 								MMOController._log.info("Invalid packet format (buf: " + buf + ", dataSize: "

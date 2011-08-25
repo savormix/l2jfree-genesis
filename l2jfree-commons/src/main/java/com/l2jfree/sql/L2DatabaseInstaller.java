@@ -37,7 +37,7 @@ import com.l2jfree.util.L2XML;
 /**
  * @author NB4L1
  */
-// FIXME: error management, rollback, etc
+// FIXME error management, rollback, etc
 public final class L2DatabaseInstaller
 {
 	public static void check() throws SAXException, IOException, ParserConfigurationException
@@ -46,7 +46,7 @@ public final class L2DatabaseInstaller
 		final TreeMap<Double, String> updates = new TreeMap<Double, String>();
 		
 		final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		factory.setValidating(false); // FIXME: add validation
+		factory.setValidating(false); // FIXME add validation
 		factory.setIgnoringComments(true);
 		
 		final Document doc;
@@ -259,7 +259,7 @@ public final class L2DatabaseInstaller
 		{
 			con = L2Database.getConnection();
 			
-			// FIXME: non-standard SQL
+			// FIXME non-standard SQL
 			PreparedStatement ps = con
 					.prepareStatement("SELECT revision FROM _revision ORDER BY revision DESC LIMIT 1");
 			ResultSet rs = ps.executeQuery();

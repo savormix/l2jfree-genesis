@@ -186,7 +186,7 @@ public final class GameServerAuth extends L2LegacyGameServerPacket
 		lgs.setAuth(auth);
 		lgs.setAllowedToBan(trusted);
 		
-		// TODO subnet-based hosts
+		// FIXME subnet-based hosts
 		// REGRESSION -->
 		lgs.setHost(null);
 		for (int i = 0; i < _hosts.length; i++)

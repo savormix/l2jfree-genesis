@@ -111,7 +111,7 @@ public abstract class DataSourceInitializer
 		 * should be strictly for c3p0's use in testing your Connection. (If you define your own ConnectionTester, it
 		 * must implement the QueryConnectionTester interface for this parameter to be useful.)
 		 */
-		// FIXME: Affects all DBMSes that allow multiple dbs and/or multiple schemas (so not SQLite)
+		// FIXME Affects all DBMSes that allow multiple dbs and/or multiple schemas (so not SQLite)
 		// checks whether this table exists IN ANY DB (of >= 1), IN ANY SCHEMA (also of >= 1).
 		// if it exists, it MUST be readable (SELECT) to ALL USERS (that access that DBMS with c3p0),
 		// otherwise c3p0 will FAIL.
