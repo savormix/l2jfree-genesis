@@ -389,7 +389,7 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 	}
 	
 	@SuppressWarnings("unchecked")
-	protected <E extends Enum<E>> E getState()
+	protected <E extends Enum<?>> E getState()
 	{
 		return (E)DummyState.NONE;
 	}
