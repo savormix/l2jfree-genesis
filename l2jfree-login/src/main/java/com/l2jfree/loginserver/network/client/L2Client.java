@@ -26,7 +26,6 @@ import com.l2jfree.loginserver.network.client.packets.sendable.LoginFailure;
 import com.l2jfree.loginserver.network.client.packets.sendable.PlayFailure;
 import com.l2jfree.network.mmocore.DataSizeHolder;
 import com.l2jfree.network.mmocore.MMOConnection;
-import com.l2jfree.network.mmocore.MMOController;
 import com.l2jfree.security.NewCipher;
 import com.l2jfree.security.ScrambledKeyPair;
 import com.l2jfree.util.HexUtil;
@@ -53,22 +52,18 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	 * 
 	 * @param mmoController connection manager
 	 * @param socketChannel connection
-	 * @param sessionId connection's ID
 	 * @param protocol network protocol version
-	 * @param keyPair key pair for authorization data
-	 * @param blowfishKey blowfish key for network comms
 	 * @throws ClosedChannelException if the given channel was closed during operations
 	 */
-	protected L2Client(MMOController<L2Client, L2ClientPacket, L2ServerPacket> mmoController,
-			SocketChannel socketChannel, int sessionId, int protocol, ScrambledKeyPair keyPair, byte[] blowfishKey)
+	protected L2Client(L2ClientController mmoController, SocketChannel socketChannel, int protocol)
 			throws ClosedChannelException
 	{
 		super(mmoController, socketChannel);
 		
-		_sessionId = sessionId;
+		_sessionId = L2ClientSecurity.getInstance().getNextSessionId();
 		_protocol = protocol;
-		_keyPair = keyPair;
-		_cipher = new NewCipher(blowfishKey);
+		_keyPair = L2ClientSecurity.getInstance().getKeyPair();
+		_cipher = new NewCipher(L2ClientSecurity.getInstance().getBlowfishKey());
 		_firstTime = true;
 		_state = L2ClientState.CONNECTED;
 		_sessionKey = null;

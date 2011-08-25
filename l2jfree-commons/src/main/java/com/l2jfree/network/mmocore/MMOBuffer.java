@@ -331,6 +331,18 @@ public final class MMOBuffer
 	}
 	
 	/**
+	 * Writes <TT>length</TT> bytes from the given array starting at the given <TT>offset</TT>.
+	 * 
+	 * @param data
+	 * @param offset
+	 * @param length
+	 */
+	public void writeB(byte[] data, int offset, int length)
+	{
+		_buffer.put(data, offset, length);
+	}
+	
+	/**
 	 * Writes an unterminated character sequence. <BR>
 	 * <BR>
 	 * A convenience method to write a part of the string to avoid instantiating numerous objects

@@ -14,8 +14,8 @@
  */
 package com.l2jfree.loginserver.network.client.packets.sendable;
 
-import com.l2jfree.loginserver.network.client.L2ClientSecurity;
 import com.l2jfree.loginserver.network.client.L2Client;
+import com.l2jfree.loginserver.network.client.L2ClientSecurity;
 import com.l2jfree.loginserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
@@ -29,11 +29,11 @@ public final class LoginSuccess extends L2ServerPacket
 	/**
 	 * Constructs a packet to inform the client to show the EULA.
 	 * 
-	 * @param llc a connection wrapper
+	 * @param client a connection wrapper
 	 */
-	public LoginSuccess(L2Client llc)
+	public LoginSuccess(L2Client client)
 	{
-		_sessionKey = L2ClientSecurity.getInstance().assignSessionKey(llc);
+		_sessionKey = L2ClientSecurity.getInstance().assignSessionKey(client);
 	}
 	
 	@Override

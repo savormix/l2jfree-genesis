@@ -286,6 +286,8 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 	 * <br>
 	 * NOTE: It allows a longer timeout (10 sec), to let the client have the chance to get all of
 	 * the packets.
+	 * 
+	 * @param sp the packet to be closed with
 	 */
 	@SuppressWarnings("unchecked")
 	public synchronized void close(SP sp)

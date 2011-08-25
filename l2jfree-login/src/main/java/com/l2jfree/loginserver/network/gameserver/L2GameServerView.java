@@ -174,6 +174,7 @@ public abstract class L2GameServerView implements Comparable<L2GameServerView>
 	
 	/**
 	 * Changes game server ID.
+	 * 
 	 * @param id new ID
 	 */
 	protected void setId(int id)
@@ -183,6 +184,7 @@ public abstract class L2GameServerView implements Comparable<L2GameServerView>
 	
 	/**
 	 * Changes listening port.
+	 * 
 	 * @param port new port
 	 */
 	protected void setPort(int port)
@@ -192,6 +194,7 @@ public abstract class L2GameServerView implements Comparable<L2GameServerView>
 	
 	/**
 	 * Changes age restriction.
+	 * 
 	 * @param age minimum age
 	 */
 	protected void setAge(int age)
@@ -201,6 +204,7 @@ public abstract class L2GameServerView implements Comparable<L2GameServerView>
 	
 	/**
 	 * Changes PvP status
+	 * 
 	 * @param pvp whether PvP is allowed
 	 */
 	protected void setPvp(boolean pvp)
@@ -210,6 +214,7 @@ public abstract class L2GameServerView implements Comparable<L2GameServerView>
 	
 	/**
 	 * Changes online player count.
+	 * 
 	 * @param onlinePlayers online player count.
 	 */
 	protected void setOnlinePlayers(int onlinePlayers)
@@ -219,6 +224,7 @@ public abstract class L2GameServerView implements Comparable<L2GameServerView>
 	
 	/**
 	 * Changes maximum online player count.
+	 * 
 	 * @param maxPlayers maximum player count
 	 */
 	protected void setMaxPlayers(int maxPlayers)
@@ -228,6 +234,7 @@ public abstract class L2GameServerView implements Comparable<L2GameServerView>
 	
 	/**
 	 * Changes game server status.
+	 * 
 	 * @param online whether on or off
 	 */
 	protected void setOnline(boolean online)
@@ -237,6 +244,7 @@ public abstract class L2GameServerView implements Comparable<L2GameServerView>
 	
 	/**
 	 * Change game server types.
+	 * 
 	 * @param types server types
 	 */
 	protected void setTypes(int types)
@@ -246,6 +254,7 @@ public abstract class L2GameServerView implements Comparable<L2GameServerView>
 	
 	/**
 	 * Changes bracket status.
+	 * 
 	 * @param brackets whether to show brackets
 	 */
 	protected void setBrackets(boolean brackets)
@@ -255,6 +264,7 @@ public abstract class L2GameServerView implements Comparable<L2GameServerView>
 	
 	/**
 	 * Returns 0.0.0.0 (uninitialized IP).
+	 * 
 	 * @return 0.0.0.0
 	 */
 	protected static final byte[] getDefaultIp()

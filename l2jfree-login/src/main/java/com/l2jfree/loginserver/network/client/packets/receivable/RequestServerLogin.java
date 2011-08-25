@@ -60,29 +60,29 @@ public final class RequestServerLogin extends L2ClientPacket
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		L2Client llc = getClient();
-		if (llc.getSessionKey() != null && llc.getSessionKey().getActiveKey() != _sessionKey)
+		final L2Client client = getClient();
+		if (client.getSessionKey() != null && client.getSessionKey().getActiveKey() != _sessionKey)
 		{
-			llc.close(new PlayFailure(L2NoServiceReason.ACCESS_FAILED_TRY_AGAIN));
+			client.close(new PlayFailure(L2NoServiceReason.ACCESS_FAILED_TRY_AGAIN));
 			return;
 		}
 		
 		L2LegacyGameServer lgs = L2LegacyGameServerController.getInstance().getById(_serverId);
 		if (lgs == null || lgs.getStatus() == L2LegacyStatus.DOWN) // server down
 		{
-			llc.close(new PlayFailure(L2NoServiceReason.MAINTENANCE_UNDERGOING));
+			client.close(new PlayFailure(L2NoServiceReason.MAINTENANCE_UNDERGOING));
 			return;
 		}
 		
-		L2Account acc = llc.getAccount();
+		L2Account acc = client.getAccount();
 		if (acc == null) // should never happen
-			llc.close(new PlayFailure(L2NoServiceReason.THERE_IS_A_SYSTEM_ERROR));
-		else if (!llc.getAccount().isSuperUser()) // normal account
+			client.close(new PlayFailure(L2NoServiceReason.THERE_IS_A_SYSTEM_ERROR));
+		else if (!client.getAccount().isSuperUser()) // normal account
 		{
 			if (lgs.getStatus() == L2LegacyStatus.GM_ONLY) // restricted access
-				llc.close(new PlayFailure(L2NoServiceReason.MAINTENANCE_UNDERGOING));
+				client.close(new PlayFailure(L2NoServiceReason.MAINTENANCE_UNDERGOING));
 			else if (lgs.getOnlineAccounts().size() >= lgs.getMaxPlayers()) // server full
-				llc.close(new PlayFailure(L2NoServiceReason.TOO_HIGH_TRAFFIC));
+				client.close(new PlayFailure(L2NoServiceReason.TOO_HIGH_TRAFFIC));
 		}
 		else
 		{
@@ -105,7 +105,7 @@ public final class RequestServerLogin extends L2ClientPacket
 			{
 				L2Database.close(con);
 			}
-			llc.close(new PlaySuccess(llc, _serverId));
+			client.close(new PlaySuccess(client, _serverId));
 		}
 	}
 }

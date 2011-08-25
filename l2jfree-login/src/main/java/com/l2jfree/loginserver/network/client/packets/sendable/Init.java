@@ -35,11 +35,11 @@ public final class Init extends L2ServerPacket
 	/**
 	 * Creates a packet to inform about security parameters used during communication.
 	 * 
-	 * @param llc a connection wrapper with assigned parameters
+	 * @param client a connection wrapper with assigned parameters
 	 */
-	public Init(L2Client llc)
+	public Init(L2Client client)
 	{
-		this(llc.getSessionId(), llc.getProtocol(), llc.getPublicKey(), llc.getBlowfishKey());
+		this(client.getSessionId(), client.getProtocol(), client.getPublicKey(), client.getBlowfishKey());
 	}
 	
 	/**

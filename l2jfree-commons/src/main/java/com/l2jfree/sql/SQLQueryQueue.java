@@ -64,7 +64,8 @@ public final class SQLQueryQueue extends FIFOSimpleExecutableQueue<SQLQuery>
 				}
 				finally
 				{
-					RunnableStatsManager.handleStats(query.getClass(), "execute(Connection)", System.nanoTime() - begin);
+					RunnableStatsManager
+							.handleStats(query.getClass(), "execute(Connection)", System.nanoTime() - begin);
 				}
 			}
 		}

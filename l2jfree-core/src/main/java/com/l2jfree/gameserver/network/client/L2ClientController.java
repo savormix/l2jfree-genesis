@@ -68,10 +68,9 @@ public final class L2ClientController extends MMOController<L2Client, L2ClientPa
 	@Override
 	protected L2Client createClient(SocketChannel socketChannel) throws ClosedChannelException
 	{
-		L2ClientSecurity lcs = L2ClientSecurity.getInstance();
-		L2Client lcc = new L2Client(socketChannel, lcs.getKey());
+		L2Client client = new L2Client(this, socketChannel);
 		// TODO Auto-generated method stub
-		return lcc;
+		return client;
 	}
 	
 	@Override

@@ -49,7 +49,7 @@ public final class ProtocolVersion extends L2ClientPacket
 	{
 		_log.info("Protocol: " + _version);
 		
-		L2Client lcc = getClient();
-		lcc.close(new ProtocolAnswer(false, lcc.getCipherKey()));
+		final L2Client client = getClient();
+		client.close(new ProtocolAnswer(false, client.getCipherKey()));
 	}
 }

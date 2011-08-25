@@ -34,11 +34,11 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	
 	private L2ClientState _state;
 	
-	protected L2Client(SocketChannel socketChannel, byte[] cipherKey) throws ClosedChannelException
+	protected L2Client(L2ClientController mmoController, SocketChannel socketChannel) throws ClosedChannelException
 	{
-		super(L2ClientController.getInstance(), socketChannel);
+		super(mmoController, socketChannel);
 		// TODO Auto-generated constructor stub
-		_cipher = new CoreCipher(cipherKey);
+		_cipher = new CoreCipher(L2ClientSecurity.getInstance().getKey());
 		_firstTime = true;
 		
 		_state = L2ClientState.CONNECTED;

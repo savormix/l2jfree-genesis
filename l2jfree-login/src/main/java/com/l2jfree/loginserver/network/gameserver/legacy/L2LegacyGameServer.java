@@ -29,14 +29,14 @@ import com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable.LoginS
 import com.l2jfree.loginserver.network.gameserver.legacy.status.L2LegacyStatus;
 import com.l2jfree.network.mmocore.DataSizeHolder;
 import com.l2jfree.network.mmocore.MMOConnection;
-import com.l2jfree.network.mmocore.MMOController;
 import com.l2jfree.security.NewCipher;
 import com.l2jfree.util.HexUtil;
 
 /**
  * @author savormix
  */
-public final class L2LegacyGameServer extends MMOConnection<L2LegacyGameServer, L2LegacyGameServerPacket, L2LegacyLoginServerPacket>
+public final class L2LegacyGameServer extends
+		MMOConnection<L2LegacyGameServer, L2LegacyGameServerPacket, L2LegacyLoginServerPacket>
 {
 	private final KeyPair _keyPair;
 	
@@ -71,15 +71,14 @@ public final class L2LegacyGameServer extends MMOConnection<L2LegacyGameServer, 
 	 * 
 	 * @param mmoController connection manager
 	 * @param socketChannel connection
-	 * @param keyPair key pair for network comms
 	 * @throws ClosedChannelException if the given channel was closed during operations
 	 */
-	protected L2LegacyGameServer(MMOController<L2LegacyGameServer, L2LegacyGameServerPacket, L2LegacyLoginServerPacket> mmoController,
-			SocketChannel socketChannel, KeyPair keyPair) throws ClosedChannelException
+	protected L2LegacyGameServer(L2LegacyGameServerController mmoController, SocketChannel socketChannel)
+			throws ClosedChannelException
 	{
 		super(mmoController, socketChannel);
 		
-		_keyPair = keyPair;
+		_keyPair = L2LegacyGameServerSecurity.getInstance().getKeyPair();
 		_cipher = new NewCipher(HexUtil
 				.HexStringToBytes("5F 3B 76 2E 5D 30 35 2D 33 31 21 7C 2B 2D 25 78 54 21 5E 5B 24 00"));
 		

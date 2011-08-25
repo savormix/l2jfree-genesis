@@ -32,7 +32,8 @@ import com.l2jfree.network.mmocore.MMOController;
 /**
  * @author savormix
  */
-public final class L2LegacyGameServerController extends MMOController<L2LegacyGameServer, L2LegacyGameServerPacket, L2LegacyLoginServerPacket>
+public final class L2LegacyGameServerController extends
+		MMOController<L2LegacyGameServer, L2LegacyGameServerPacket, L2LegacyLoginServerPacket>
 {
 	private static final class SingletonHolder
 	{
@@ -78,8 +79,7 @@ public final class L2LegacyGameServerController extends MMOController<L2LegacyGa
 	@Override
 	protected L2LegacyGameServer createClient(SocketChannel socketChannel) throws ClosedChannelException
 	{
-		L2LegacyGameServerSecurity lls = L2LegacyGameServerSecurity.getInstance();
-		L2LegacyGameServer lgs = new L2LegacyGameServer(this, socketChannel, lls.getKeyPair());
+		L2LegacyGameServer lgs = new L2LegacyGameServer(this, socketChannel);
 		lgs.sendPacket(new InitLS((RSAPublicKey)lgs.getPublicKey()));
 		return lgs;
 	}

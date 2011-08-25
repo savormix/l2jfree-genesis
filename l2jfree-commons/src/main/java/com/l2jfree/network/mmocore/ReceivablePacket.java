@@ -142,12 +142,34 @@ public abstract class ReceivablePacket<T extends MMOConnection<T, RP, SP>, RP ex
 	protected abstract void runImpl() throws InvalidPacketException, RuntimeException;
 	
 	/**
-	 * Send a packet to the client, which this packet belongs to.
+	 * Send a packet to the client - which this packet belongs to -.
 	 * 
+	 * @see MMOConnection#sendPacket(SendablePacket)
 	 * @param sp the packet to be sent
 	 */
 	protected final void sendPacket(SP sp)
 	{
 		getClient().sendPacket(sp);
+	}
+	
+	/**
+	 * Close the client - which this packet belongs to - with the default close packet.<br>
+	 * 
+	 * @see MMOConnection#closeNow()
+	 */
+	protected final void closeNow()
+	{
+		getClient().closeNow();
+	}
+	
+	/**
+	 * Close the client - which this packet belongs to - with the given packet.
+	 * 
+	 * @see MMOConnection#close(SendablePacket)
+	 * @param sp the packet to be closed with
+	 */
+	protected final void close(SP sp)
+	{
+		getClient().close(sp);
 	}
 }

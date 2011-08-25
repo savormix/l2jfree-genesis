@@ -77,11 +77,10 @@ public final class GameServerAuth extends L2LegacyGameServerPacket
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		L2LegacyGameServer lgs = getClient();
-		L2LegacyGameServerController llc = L2LegacyGameServerController.getInstance();
+		final L2LegacyGameServer lgs = getClient();
 		synchronized (L2GameServerCache.getInstance().getAuthorizationLock())
 		{
-			if (llc.getById(_desiredId) != null)
+			if (L2LegacyGameServerController.getInstance().getById(_desiredId) != null)
 			{
 				if (!_acceptAlternateId || ServiceConfig.STRICT_AUTHORIZATION)
 					// desired ID is not available

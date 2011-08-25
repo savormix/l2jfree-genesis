@@ -14,9 +14,9 @@
  */
 package com.l2jfree.loginserver.network.client.packets.sendable;
 
+import com.l2jfree.loginserver.network.client.L2Client;
 import com.l2jfree.loginserver.network.client.L2ClientController;
 import com.l2jfree.loginserver.network.client.L2ClientSecurity;
-import com.l2jfree.loginserver.network.client.L2Client;
 import com.l2jfree.loginserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
@@ -31,13 +31,13 @@ public final class PlaySuccess extends L2ServerPacket
 	/**
 	 * Constructs a packet to inform the client that it can now log into the game server.
 	 * 
-	 * @param llc a connection wrapper
+	 * @param client a connection wrapper
 	 * @param server game server ID
 	 */
-	public PlaySuccess(L2Client llc, int server)
+	public PlaySuccess(L2Client client, int server)
 	{
-		_sessionKey = L2ClientSecurity.getInstance().assignSessionKey(llc);
-		L2ClientController.getInstance().authorize(llc);
+		_sessionKey = L2ClientSecurity.getInstance().assignSessionKey(client);
+		L2ClientController.getInstance().authorize(client);
 		_server = server;
 	}
 	

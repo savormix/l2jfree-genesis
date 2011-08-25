@@ -155,7 +155,7 @@ public class NewCipher
 		int real = buf.getInt(pos);
 		if (experimental && calculated != real) // someone knows a better scheme?
 			_checks.put(buf.get(offset), real); // let them have it
-		
+			
 		return (calculated == real);
 	}
 	

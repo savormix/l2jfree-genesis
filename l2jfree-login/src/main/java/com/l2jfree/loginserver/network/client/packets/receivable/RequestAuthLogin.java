@@ -73,18 +73,18 @@ public final class RequestAuthLogin extends L2ClientPacket
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		L2Client llc = getClient();
+		final L2Client client = getClient();
 		byte[] deciphered;
 		try
 		{
 			Cipher rsa = Cipher.getInstance("RSA/ECB/nopadding");
-			rsa.init(Cipher.DECRYPT_MODE, llc.getPrivateKey());
+			rsa.init(Cipher.DECRYPT_MODE, client.getPrivateKey());
 			deciphered = rsa.doFinal(_enciphered, 0, getMinimumLength());
 		}
 		catch (GeneralSecurityException e)
 		{
 			_log.error("Failed to decipher account credentials!", e);
-			llc.close(new LoginFailure(L2NoServiceReason.THERE_IS_A_SYSTEM_ERROR));
+			client.close(new LoginFailure(L2NoServiceReason.THERE_IS_A_SYSTEM_ERROR));
 			return;
 		}
 		
@@ -102,14 +102,14 @@ public final class RequestAuthLogin extends L2ClientPacket
 		catch (NoSuchAlgorithmException e)
 		{
 			_log.fatal("SHA1 is not available!", e);
-			llc.close(new LoginFailure(L2NoServiceReason.SYSTEM_ERROR));
+			client.close(new LoginFailure(L2NoServiceReason.SYSTEM_ERROR));
 			Shutdown.exit(TerminationStatus.ENVIRONMENT_MISSING_COMPONENT_OR_SERVICE);
 			return;
 		}
 		catch (UnsupportedEncodingException e)
 		{
 			_log.fatal("ASCII is not available!", e);
-			llc.close(new LoginFailure(L2NoServiceReason.SYSTEM_ERROR));
+			client.close(new LoginFailure(L2NoServiceReason.SYSTEM_ERROR));
 			Shutdown.exit(TerminationStatus.ENVIRONMENT_MISSING_COMPONENT_OR_SERVICE);
 			return;
 		}
@@ -138,7 +138,7 @@ public final class RequestAuthLogin extends L2ClientPacket
 							{
 								offline = false;
 								lgs.sendPacket(new KickPlayer(user));
-								llc.close(new LoginFailure(L2NoServiceReason.ALREADY_IN_USE));
+								client.close(new LoginFailure(L2NoServiceReason.ALREADY_IN_USE));
 								break;
 							}
 						}
@@ -147,31 +147,31 @@ public final class RequestAuthLogin extends L2ClientPacket
 						{
 							L2Account la = new L2Account(user, rs.getBoolean("superUser"), rs.getDate("birthDate"), rs
 									.getInt("lastServerId"));
-							llc.setAccount(la);
+							client.setAccount(la);
 							
 							if (ServiceConfig.SHOW_EULA)
 							{
-								llc.setState(L2ClientState.LOGGED_IN);
-								llc.sendPacket(new LoginSuccess(llc));
+								client.setState(L2ClientState.LOGGED_IN);
+								client.sendPacket(new LoginSuccess(client));
 							}
 							else
 							{
-								llc.setState(L2ClientState.VIEWING_LIST);
-								llc.sendPacket(new ServerList());
+								client.setState(L2ClientState.VIEWING_LIST);
+								client.sendPacket(new ServerList());
 							}
 						}
 					}
 					else
 						// suspended
-						llc.close(new LoginFailure(L2BanReason.getById(ban)));
+						client.close(new LoginFailure(L2BanReason.getById(ban)));
 				}
 				else
 					// wrong password
-					llc.close(new LoginFailure(L2NoServiceReason.PASSWORD_INCORRECT));
+					client.close(new LoginFailure(L2NoServiceReason.PASSWORD_INCORRECT));
 			}
 			else
 				// no such user
-				llc.close(new LoginFailure(L2NoServiceReason.PASSWORD_INCORRECT));
+				client.close(new LoginFailure(L2NoServiceReason.PASSWORD_INCORRECT));
 			rs.close();
 			ps.close();
 			
@@ -186,7 +186,7 @@ public final class RequestAuthLogin extends L2ClientPacket
 				{
 					ps = con.prepareStatement("INSERT INTO logins (username, ipv4, date_) VALUES (?, ?, ?)");
 					ps.setString(1, user);
-					ps.setString(2, llc.getHostAddress());
+					ps.setString(2, client.getHostAddress());
 					ps.setDate(3, new Date(System.currentTimeMillis()));
 					ps.executeUpdate();
 					ps.close();
@@ -200,7 +200,7 @@ public final class RequestAuthLogin extends L2ClientPacket
 		catch (SQLException e)
 		{
 			_log.error("Could not validate login credentials!", e);
-			llc.close(new LoginFailure(L2NoServiceReason.THERE_IS_A_SYSTEM_ERROR));
+			client.close(new LoginFailure(L2NoServiceReason.THERE_IS_A_SYSTEM_ERROR));
 		}
 		finally
 		{

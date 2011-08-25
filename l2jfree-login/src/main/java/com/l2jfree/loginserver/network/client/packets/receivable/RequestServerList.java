@@ -52,14 +52,14 @@ public final class RequestServerList extends L2ClientPacket
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		L2Client llc = getClient();
-		SessionKey sk = llc.getSessionKey();
+		final L2Client client = getClient();
+		SessionKey sk = client.getSessionKey();
 		if (sk != null && sk.getActiveKey() == _sessionKey)
 		{
-			llc.setState(L2ClientState.VIEWING_LIST);
-			llc.sendPacket(new ServerList());
+			client.setState(L2ClientState.VIEWING_LIST);
+			client.sendPacket(new ServerList());
 		}
 		else
-			llc.close(new LoginFailure(L2NoServiceReason.ACCESS_FAILED_TRY_AGAIN));
+			client.close(new LoginFailure(L2NoServiceReason.ACCESS_FAILED_TRY_AGAIN));
 	}
 }

@@ -18,6 +18,7 @@ import java.nio.BufferUnderflowException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServer;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyGameServerPacket;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
@@ -50,7 +51,8 @@ public final class PlayersInGame extends L2LegacyGameServerPacket
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
+		final L2LegacyGameServer lgs = getClient();
 		for (String s : _accounts)
-			getClient().getOnlineAccounts().add(s);
+			lgs.getOnlineAccounts().add(s);
 	}
 }

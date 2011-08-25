@@ -31,7 +31,8 @@ import com.l2jfree.network.mmocore.PacketHandler;
 /**
  * @author savormix
  */
-public final class L2LegacyGameServerPacketHandler extends PacketHandler<L2LegacyGameServer, L2LegacyGameServerPacket, L2LegacyLoginServerPacket>
+public final class L2LegacyGameServerPacketHandler extends
+		PacketHandler<L2LegacyGameServer, L2LegacyGameServerPacket, L2LegacyLoginServerPacket>
 {
 	private L2LegacyGameServerPacketHandler()
 	{

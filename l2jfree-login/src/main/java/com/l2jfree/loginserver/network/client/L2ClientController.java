@@ -113,11 +113,9 @@ public final class L2ClientController extends MMOController<L2Client, L2ClientPa
 	@Override
 	protected L2Client createClient(SocketChannel socketChannel) throws ClosedChannelException
 	{
-		L2ClientSecurity lcs = L2ClientSecurity.getInstance();
-		L2Client llc = new L2Client(this, socketChannel, lcs.getNextSessionId(), PROTOCOL_VERSION, lcs
-				.getKeyPair(), lcs.getBlowfishKey());
-		llc.sendPacket(new Init(llc));
-		return llc;
+		L2Client client = new L2Client(this, socketChannel, PROTOCOL_VERSION);
+		client.sendPacket(new Init(client));
+		return client;
 	}
 	
 	private FastMap<String, SessionKey> getAuthorized()
