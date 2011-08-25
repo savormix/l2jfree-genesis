@@ -142,7 +142,7 @@
         <version>2.3</version>
         <executions>
           <execution>
-            <phase>validate</phase>
+            <phase>compile</phase>
             <goals>
               <goal>sources</goal>
             </goals>
