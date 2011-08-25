@@ -22,11 +22,11 @@ import com.l2jfree.loginserver.config.DatabaseConfig;
 import com.l2jfree.loginserver.config.NetworkConfig;
 import com.l2jfree.loginserver.config.ServiceConfig;
 import com.l2jfree.loginserver.config.SystemConfig;
-import com.l2jfree.loginserver.network.client.L2ClientConnections;
+import com.l2jfree.loginserver.network.client.L2ClientController;
 import com.l2jfree.loginserver.network.client.L2ClientSecurity;
 import com.l2jfree.loginserver.network.gameserver.L2GameServerCache;
-import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyConnections;
-import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacySecurity;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServerController;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServerSecurity;
 import com.l2jfree.sql.L2Database;
 
 /**
@@ -55,13 +55,13 @@ public final class LoginServer extends Config
 		
 		if (NetworkConfig.ENABLE_LEGACY || ServiceConfig.FORCE_LEGACY)
 		{
-			L2LegacySecurity.getInstance();
+			L2LegacyGameServerSecurity.getInstance();
 			
 			try
 			{
-				L2LegacyConnections.getInstance().openServerSocket(NetworkConfig.LEGACY_LISTEN_IP,
+				L2LegacyGameServerController.getInstance().openServerSocket(NetworkConfig.LEGACY_LISTEN_IP,
 						NetworkConfig.LEGACY_LISTEN_PORT);
-				L2LegacyConnections.getInstance().start();
+				L2LegacyGameServerController.getInstance().start();
 			}
 			catch (Throwable e)
 			{
@@ -76,8 +76,8 @@ public final class LoginServer extends Config
 			
 			try
 			{
-				L2ClientConnections.getInstance().openServerSocket(NetworkConfig.LISTEN_IP, NetworkConfig.LISTEN_PORT);
-				L2ClientConnections.getInstance().start();
+				L2ClientController.getInstance().openServerSocket(NetworkConfig.LISTEN_IP, NetworkConfig.LISTEN_PORT);
+				L2ClientController.getInstance().start();
 			}
 			catch (Throwable e)
 			{
@@ -105,7 +105,7 @@ public final class LoginServer extends Config
 				
 				try
 				{
-					L2ClientConnections.getInstance().shutdown();
+					L2ClientController.getInstance().shutdown();
 				}
 				catch (Throwable t)
 				{
@@ -115,7 +115,7 @@ public final class LoginServer extends Config
 				try
 				{
 					if (NetworkConfig.ENABLE_LEGACY || ServiceConfig.FORCE_LEGACY)
-						L2LegacyConnections.getInstance().shutdown();
+						L2LegacyGameServerController.getInstance().shutdown();
 				}
 				catch (Throwable t)
 				{

@@ -14,7 +14,7 @@
  */
 package com.l2jfree.loginserver.network.client.packets;
 
-import com.l2jfree.loginserver.network.client.L2LoginClient;
+import com.l2jfree.loginserver.network.client.L2Client;
 import com.l2jfree.network.mmocore.ReceivablePacket;
 
 /**
@@ -22,7 +22,7 @@ import com.l2jfree.network.mmocore.ReceivablePacket;
  * 
  * @author savormix
  */
-public abstract class L2ClientPacket extends ReceivablePacket<L2LoginClient, L2ClientPacket, L2ServerPacket>
+public abstract class L2ClientPacket extends ReceivablePacket<L2Client, L2ClientPacket, L2ServerPacket>
 {
 	// just for convenience
 }

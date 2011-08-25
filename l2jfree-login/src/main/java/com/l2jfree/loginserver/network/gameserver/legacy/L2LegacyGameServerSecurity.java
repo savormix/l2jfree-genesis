@@ -31,15 +31,15 @@ import com.l2jfree.util.logging.L2Logger;
 /**
  * @author savormix
  */
-public class L2LegacySecurity
+public final class L2LegacyGameServerSecurity
 {
-	private static final L2Logger _log = L2Logger.getLogger(L2LegacySecurity.class);
+	private static final L2Logger _log = L2Logger.getLogger(L2LegacyGameServerSecurity.class);
 	
 	private static final int RSA_KEY_PAIR_COUNT = 10;
 	
 	private KeyPair[] _keyPairs;
 	
-	private L2LegacySecurity()
+	private L2LegacyGameServerSecurity()
 	{
 		new Updater();
 		_log.info("Generated " + getKeyPairs().length + " RSA key pairs (legacy game server).");
@@ -82,14 +82,14 @@ public class L2LegacySecurity
 	 * 
 	 * @return an instance of this class
 	 */
-	public static L2LegacySecurity getInstance()
+	public static L2LegacyGameServerSecurity getInstance()
 	{
 		return SingletonHolder.INSTANCE;
 	}
 	
 	private static final class SingletonHolder
 	{
-		public static final L2LegacySecurity INSTANCE = new L2LegacySecurity();
+		public static final L2LegacyGameServerSecurity INSTANCE = new L2LegacyGameServerSecurity();
 	}
 	
 	/**

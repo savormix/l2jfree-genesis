@@ -17,8 +17,8 @@ package com.l2jfree.loginserver.network.client.packets.receivable;
 import java.nio.BufferUnderflowException;
 
 import com.l2jfree.loginserver.config.ServiceConfig;
-import com.l2jfree.loginserver.network.client.L2LoginClient;
-import com.l2jfree.loginserver.network.client.L2LoginClientState;
+import com.l2jfree.loginserver.network.client.L2Client;
+import com.l2jfree.loginserver.network.client.L2ClientState;
 import com.l2jfree.loginserver.network.client.L2NoServiceReason;
 import com.l2jfree.loginserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.loginserver.network.client.packets.sendable.GameGuardSuccess;
@@ -58,10 +58,10 @@ public final class AuthGameGuard extends L2ClientPacket
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		L2LoginClient llc = getClient();
+		L2Client llc = getClient();
 		if (!ServiceConfig.CHECK_GAMEGUARD || llc.getSessionId() == _sessionId)
 		{
-			llc.setState(L2LoginClientState.GAMEGUARD_PASSED);
+			llc.setState(L2ClientState.GAMEGUARD_PASSED);
 			llc.sendPacket(new GameGuardSuccess(_sessionId));
 		}
 		else

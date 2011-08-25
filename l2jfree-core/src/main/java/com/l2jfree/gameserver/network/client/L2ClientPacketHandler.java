@@ -14,7 +14,7 @@
  */
 package com.l2jfree.gameserver.network.client;
 
-import static com.l2jfree.gameserver.network.client.L2CoreClientState.CONNECTED;
+import static com.l2jfree.gameserver.network.client.L2ClientState.CONNECTED;
 
 import java.nio.ByteBuffer;
 
@@ -26,15 +26,15 @@ import com.l2jfree.network.mmocore.PacketHandler;
 /**
  * @author savormix
  */
-public final class L2ClientPackets extends PacketHandler<L2CoreClient, L2ClientPacket, L2ServerPacket>
+public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2ClientPacket, L2ServerPacket>
 {
-	private L2ClientPackets()
+	private L2ClientPacketHandler()
 	{
 		// singleton
 	}
 	
 	@Override
-	public L2ClientPacket handlePacket(ByteBuffer buf, L2CoreClient client, int opcode)
+	public L2ClientPacket handlePacket(ByteBuffer buf, L2Client client, int opcode)
 	{
 		switch (opcode)
 		{
@@ -54,13 +54,13 @@ public final class L2ClientPackets extends PacketHandler<L2CoreClient, L2ClientP
 	 * 
 	 * @return an instance of this class
 	 */
-	public static L2ClientPackets getInstance()
+	public static L2ClientPacketHandler getInstance()
 	{
 		return SingletonHolder.INSTANCE;
 	}
 	
 	private static final class SingletonHolder
 	{
-		public static final L2ClientPackets INSTANCE = new L2ClientPackets();
+		public static final L2ClientPacketHandler INSTANCE = new L2ClientPacketHandler();
 	}
 }

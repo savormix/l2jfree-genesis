@@ -19,8 +19,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.l2jfree.loginserver.network.gameserver.legacy.L2GameServer;
-import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2GameServerPacket;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServer;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyGameServerPacket;
 import com.l2jfree.loginserver.network.gameserver.legacy.status.L2LegacyAgeLimit;
 import com.l2jfree.loginserver.network.gameserver.legacy.status.L2LegacyManagedState;
 import com.l2jfree.loginserver.network.gameserver.legacy.status.L2LegacyStatus;
@@ -30,7 +30,7 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 /**
  * @author savormix
  */
-public final class ServerStatus extends L2GameServerPacket
+public final class ServerStatus extends L2LegacyGameServerPacket
 {
 	/** Packet's identifier */
 	public static final int OPCODE = 0x06;
@@ -65,7 +65,7 @@ public final class ServerStatus extends L2GameServerPacket
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		L2GameServer lgs = getClient();
+		L2LegacyGameServer lgs = getClient();
 		for (L2LegacyManagedState llms : L2LegacyManagedState.values())
 		{
 			Integer val = _status.remove(llms.getId());

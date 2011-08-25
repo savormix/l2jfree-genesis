@@ -17,12 +17,12 @@ package com.l2jfree.loginserver.network.client.packets.sendable;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import com.l2jfree.loginserver.network.client.L2LoginClient;
+import com.l2jfree.loginserver.network.client.L2Client;
 import com.l2jfree.loginserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.loginserver.network.gameserver.L2GameServerCache;
 import com.l2jfree.loginserver.network.gameserver.L2GameServerView;
-import com.l2jfree.loginserver.network.gameserver.legacy.L2GameServer;
-import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyConnections;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServer;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServerController;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
@@ -39,7 +39,7 @@ public final class ServerList extends L2ServerPacket
 	{
 		_gameServers = new TreeSet<L2GameServerView>(L2GameServerCache.getInstance().getRegisteredGameServers());
 		
-		for (L2GameServer element : L2LegacyConnections.getInstance().getAuthorized())
+		for (L2LegacyGameServer element : L2LegacyGameServerController.getInstance().getAuthorized())
 		{
 			L2GameServerView lgsv = element.getView();
 			lgsv.update();
@@ -55,7 +55,7 @@ public final class ServerList extends L2ServerPacket
 	}
 	
 	@Override
-	protected void writeImpl(L2LoginClient client, MMOBuffer buf)
+	protected void writeImpl(L2Client client, MMOBuffer buf)
 	{
 		final int count = _gameServers.size();
 		buf.writeC(count);

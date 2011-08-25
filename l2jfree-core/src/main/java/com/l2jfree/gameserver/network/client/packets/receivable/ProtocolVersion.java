@@ -16,7 +16,7 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 
-import com.l2jfree.gameserver.network.client.L2CoreClient;
+import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.sendable.ProtocolAnswer;
 import com.l2jfree.network.mmocore.InvalidPacketException;
@@ -49,7 +49,7 @@ public final class ProtocolVersion extends L2ClientPacket
 	{
 		_log.info("Protocol: " + _version);
 		
-		L2CoreClient lcc = getClient();
+		L2Client lcc = getClient();
 		lcc.close(new ProtocolAnswer(false, lcc.getCipherKey()));
 	}
 }

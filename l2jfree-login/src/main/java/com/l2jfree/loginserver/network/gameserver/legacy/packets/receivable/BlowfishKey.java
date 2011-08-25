@@ -19,16 +19,16 @@ import java.security.GeneralSecurityException;
 
 import javax.crypto.Cipher;
 
-import com.l2jfree.loginserver.network.gameserver.legacy.L2GameServer;
-import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyState;
-import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2GameServerPacket;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServer;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServerState;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyGameServerPacket;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix
  */
-public final class BlowfishKey extends L2GameServerPacket
+public final class BlowfishKey extends L2LegacyGameServerPacket
 {
 	/** Packet's identifier */
 	public static final int OPCODE = 0x00;
@@ -48,7 +48,7 @@ public final class BlowfishKey extends L2GameServerPacket
 		_enciphered = buf.readB(new byte[size]);
 		
 		// Must stall any packets queued for read!
-		L2GameServer lgs = getClient();
+		L2LegacyGameServer lgs = getClient();
 		byte[] padded;
 		try
 		{
@@ -71,7 +71,7 @@ public final class BlowfishKey extends L2GameServerPacket
 		System.arraycopy(padded, i, key, 0, padded.length - i);
 		
 		lgs.initCipher(key);
-		lgs.setState(L2LegacyState.KEYS_EXCHANGED);
+		lgs.setState(L2LegacyGameServerState.KEYS_EXCHANGED);
 	}
 	
 	@Override

@@ -23,8 +23,8 @@ import java.security.PublicKey;
 
 import javolution.util.FastSet;
 
-import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2GameServerPacket;
-import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LoginServerPacket;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyGameServerPacket;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyLoginServerPacket;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable.LoginServerFail;
 import com.l2jfree.loginserver.network.gameserver.legacy.status.L2LegacyStatus;
 import com.l2jfree.network.mmocore.DataSizeHolder;
@@ -36,14 +36,14 @@ import com.l2jfree.util.HexUtil;
 /**
  * @author savormix
  */
-public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServerPacket, L2LoginServerPacket>
+public final class L2LegacyGameServer extends MMOConnection<L2LegacyGameServer, L2LegacyGameServerPacket, L2LegacyLoginServerPacket>
 {
 	private final KeyPair _keyPair;
 	
 	private NewCipher _cipher;
 	
 	private L2LegacyGameServerView _view;
-	private L2LegacyState _state;
+	private L2LegacyGameServerState _state;
 	private Integer _id;
 	private String _auth;
 	private boolean _allowedToBan;
@@ -74,7 +74,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	 * @param keyPair key pair for network comms
 	 * @throws ClosedChannelException if the given channel was closed during operations
 	 */
-	protected L2GameServer(MMOController<L2GameServer, L2GameServerPacket, L2LoginServerPacket> mmoController,
+	protected L2LegacyGameServer(MMOController<L2LegacyGameServer, L2LegacyGameServerPacket, L2LegacyLoginServerPacket> mmoController,
 			SocketChannel socketChannel, KeyPair keyPair) throws ClosedChannelException
 	{
 		super(mmoController, socketChannel);
@@ -83,7 +83,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 		_cipher = new NewCipher(HexUtil
 				.HexStringToBytes("5F 3B 76 2E 5D 30 35 2D 33 31 21 7C 2B 2D 25 78 54 21 5E 5B 24 00"));
 		
-		_state = L2LegacyState.CONNECTED;
+		_state = L2LegacyGameServerState.CONNECTED;
 		_id = null;
 		_allowedToBan = false;
 		
@@ -97,13 +97,13 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	@Override
 	protected void onDisconnection()
 	{
-		L2LegacyConnections.getInstance().remGameServer(this);
+		L2LegacyGameServerController.getInstance().remGameServer(this);
 	}
 	
 	@Override
 	protected void onForcedDisconnection()
 	{
-		L2LegacyConnections.getInstance().remGameServer(this);
+		L2LegacyGameServerController.getInstance().remGameServer(this);
 	}
 	
 	@Override
@@ -143,7 +143,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	}
 	
 	@Override
-	protected L2LoginServerPacket getDefaultClosePacket()
+	protected L2LegacyLoginServerPacket getDefaultClosePacket()
 	{
 		return new LoginServerFail(L2NoServiceReason.NO_FREE_ID);
 	}
@@ -161,7 +161,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	@Override
 	protected boolean isAuthed()
 	{
-		return getState() != L2LegacyState.CONNECTED;
+		return getState() != L2LegacyGameServerState.CONNECTED;
 	}
 	
 	/**
@@ -233,7 +233,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public L2LegacyState getState()
+	public L2LegacyGameServerState getState()
 	{
 		return _state;
 	}
@@ -243,7 +243,7 @@ public final class L2GameServer extends MMOConnection<L2GameServer, L2GameServer
 	 * 
 	 * @param state connection's state
 	 */
-	public void setState(L2LegacyState state)
+	public void setState(L2LegacyGameServerState state)
 	{
 		_state = state;
 	}

@@ -14,7 +14,7 @@
  */
 package com.l2jfree.loginserver.network.gameserver.legacy.status;
 
-import com.l2jfree.loginserver.network.gameserver.legacy.L2GameServer;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServer;
 
 /**
  * @author savormix
@@ -60,7 +60,7 @@ public enum L2LegacyType
 	 * @param type type
 	 * @return if the server is of given type
 	 */
-	public static boolean isOfType(L2GameServer lgs, L2LegacyType type)
+	public static boolean isOfType(L2LegacyGameServer lgs, L2LegacyType type)
 	{
 		return isOfType(lgs.getTypes(), type);
 	}

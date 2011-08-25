@@ -27,7 +27,7 @@ import com.l2jfree.network.mmocore.MMOController;
 /**
  * @author savormix
  */
-public final class L2ClientConnections extends MMOController<L2CoreClient, L2ClientPacket, L2ServerPacket>
+public final class L2ClientController extends MMOController<L2Client, L2ClientPacket, L2ServerPacket>
 {
 	private static final class SingletonHolder
 	{
@@ -38,7 +38,7 @@ public final class L2ClientConnections extends MMOController<L2CoreClient, L2Cli
 			
 			try
 			{
-				INSTANCE = new L2ClientConnections(cfg);
+				INSTANCE = new L2ClientController(cfg);
 			}
 			catch (IOException e)
 			{
@@ -46,7 +46,7 @@ public final class L2ClientConnections extends MMOController<L2CoreClient, L2Cli
 			}
 		}
 		
-		public static final L2ClientConnections INSTANCE;
+		public static final L2ClientController INSTANCE;
 	}
 	
 	/**
@@ -54,22 +54,22 @@ public final class L2ClientConnections extends MMOController<L2CoreClient, L2Cli
 	 * 
 	 * @return an instance of this class
 	 */
-	public static L2ClientConnections getInstance()
+	public static L2ClientController getInstance()
 	{
 		return SingletonHolder.INSTANCE;
 	}
 	
-	protected L2ClientConnections(MMOConfig config) throws IOException
+	protected L2ClientController(MMOConfig config) throws IOException
 	{
-		super(config, L2ClientPackets.getInstance());
+		super(config, L2ClientPacketHandler.getInstance());
 		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
-	protected L2CoreClient createClient(SocketChannel socketChannel) throws ClosedChannelException
+	protected L2Client createClient(SocketChannel socketChannel) throws ClosedChannelException
 	{
 		L2ClientSecurity lcs = L2ClientSecurity.getInstance();
-		L2CoreClient lcc = new L2CoreClient(socketChannel, lcs.getKey());
+		L2Client lcc = new L2Client(socketChannel, lcs.getKey());
 		// TODO Auto-generated method stub
 		return lcc;
 	}

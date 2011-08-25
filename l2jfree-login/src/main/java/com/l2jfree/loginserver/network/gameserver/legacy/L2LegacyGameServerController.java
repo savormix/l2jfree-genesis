@@ -23,8 +23,8 @@ import java.util.Collection;
 import javolution.util.FastMap;
 
 import com.l2jfree.loginserver.LoginInfo;
-import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2GameServerPacket;
-import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LoginServerPacket;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyGameServerPacket;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyLoginServerPacket;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable.InitLS;
 import com.l2jfree.network.mmocore.MMOConfig;
 import com.l2jfree.network.mmocore.MMOController;
@@ -32,7 +32,7 @@ import com.l2jfree.network.mmocore.MMOController;
 /**
  * @author savormix
  */
-public final class L2LegacyConnections extends MMOController<L2GameServer, L2GameServerPacket, L2LoginServerPacket>
+public final class L2LegacyGameServerController extends MMOController<L2LegacyGameServer, L2LegacyGameServerPacket, L2LegacyLoginServerPacket>
 {
 	private static final class SingletonHolder
 	{
@@ -44,7 +44,7 @@ public final class L2LegacyConnections extends MMOController<L2GameServer, L2Gam
 			
 			try
 			{
-				INSTANCE = new L2LegacyConnections(cfg);
+				INSTANCE = new L2LegacyGameServerController(cfg);
 			}
 			catch (IOException e)
 			{
@@ -52,7 +52,7 @@ public final class L2LegacyConnections extends MMOController<L2GameServer, L2Gam
 			}
 		}
 		
-		public static final L2LegacyConnections INSTANCE;
+		public static final L2LegacyGameServerController INSTANCE;
 	}
 	
 	/**
@@ -60,26 +60,26 @@ public final class L2LegacyConnections extends MMOController<L2GameServer, L2Gam
 	 * 
 	 * @return an instance of this class
 	 */
-	public static L2LegacyConnections getInstance()
+	public static L2LegacyGameServerController getInstance()
 	{
 		return SingletonHolder.INSTANCE;
 	}
 	
-	private final FastMap<Integer, L2GameServer> _gameServers;
+	private final FastMap<Integer, L2LegacyGameServer> _gameServers;
 	
-	private L2LegacyConnections(MMOConfig config) throws IOException
+	private L2LegacyGameServerController(MMOConfig config) throws IOException
 	{
-		super(config, L2LegacyPackets.getInstance());
+		super(config, L2LegacyGameServerPacketHandler.getInstance());
 		
 		_gameServers = FastMap.newInstance();
 		_gameServers.setShared(true);
 	}
 	
 	@Override
-	protected L2GameServer createClient(SocketChannel socketChannel) throws ClosedChannelException
+	protected L2LegacyGameServer createClient(SocketChannel socketChannel) throws ClosedChannelException
 	{
-		L2LegacySecurity lls = L2LegacySecurity.getInstance();
-		L2GameServer lgs = new L2GameServer(this, socketChannel, lls.getKeyPair());
+		L2LegacyGameServerSecurity lls = L2LegacyGameServerSecurity.getInstance();
+		L2LegacyGameServer lgs = new L2LegacyGameServer(this, socketChannel, lls.getKeyPair());
 		lgs.sendPacket(new InitLS((RSAPublicKey)lgs.getPublicKey()));
 		return lgs;
 	}
@@ -90,7 +90,7 @@ public final class L2LegacyConnections extends MMOController<L2GameServer, L2Gam
 	 * @param id game server ID
 	 * @param client game server
 	 */
-	public void addGameServer(int id, L2GameServer client)
+	public void addGameServer(int id, L2LegacyGameServer client)
 	{
 		getGameServers().put(id, client);
 	}
@@ -100,7 +100,7 @@ public final class L2LegacyConnections extends MMOController<L2GameServer, L2Gam
 	 * 
 	 * @param client game server
 	 */
-	public void remGameServer(L2GameServer client)
+	public void remGameServer(L2LegacyGameServer client)
 	{
 		Integer id = client.getId();
 		if (id != null)
@@ -113,7 +113,7 @@ public final class L2LegacyConnections extends MMOController<L2GameServer, L2Gam
 	 * @param id assigned ID
 	 * @return an authorized game server or <TT>null</TT>
 	 */
-	public L2GameServer getById(int id)
+	public L2LegacyGameServer getById(int id)
 	{
 		return getGameServers().get(id);
 	}
@@ -123,7 +123,7 @@ public final class L2LegacyConnections extends MMOController<L2GameServer, L2Gam
 	 * 
 	 * @return authorized game servers
 	 */
-	public Collection<L2GameServer> getAuthorized()
+	public Collection<L2LegacyGameServer> getAuthorized()
 	{
 		return getGameServers().values();
 	}
@@ -133,7 +133,7 @@ public final class L2LegacyConnections extends MMOController<L2GameServer, L2Gam
 	 * 
 	 * @return authorized game servers
 	 */
-	private FastMap<Integer, L2GameServer> getGameServers()
+	private FastMap<Integer, L2LegacyGameServer> getGameServers()
 	{
 		return _gameServers;
 	}

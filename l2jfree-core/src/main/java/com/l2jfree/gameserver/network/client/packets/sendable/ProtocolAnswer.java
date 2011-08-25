@@ -16,7 +16,7 @@ package com.l2jfree.gameserver.network.client.packets.sendable;
 
 import java.nio.ByteBuffer;
 
-import com.l2jfree.gameserver.network.client.L2CoreClient;
+import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
@@ -53,7 +53,7 @@ public final class ProtocolAnswer extends L2ServerPacket
 	}
 	
 	@Override
-	protected void writeImpl(L2CoreClient client, MMOBuffer buf)
+	protected void writeImpl(L2Client client, MMOBuffer buf)
 	{
 		buf.writeC(_compatible);
 		buf.writeB(_key);

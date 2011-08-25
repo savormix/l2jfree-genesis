@@ -14,7 +14,7 @@
  */
 package com.l2jfree.loginserver.network.client.packets.sendable;
 
-import com.l2jfree.loginserver.network.client.L2LoginClient;
+import com.l2jfree.loginserver.network.client.L2Client;
 import com.l2jfree.loginserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.loginserver.network.client.packets.sendable.LoginFailure.Reason;
 import com.l2jfree.network.mmocore.MMOBuffer;
@@ -43,7 +43,7 @@ public final class PlayFailure extends L2ServerPacket
 	}
 	
 	@Override
-	protected void writeImpl(L2LoginClient client, MMOBuffer buf)
+	protected void writeImpl(L2Client client, MMOBuffer buf)
 	{
 		buf.writeC(_reason);
 	}

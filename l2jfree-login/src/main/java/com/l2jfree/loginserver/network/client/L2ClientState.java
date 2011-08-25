@@ -12,18 +12,19 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.loginserver.network.gameserver.legacy.packets;
-
-import com.l2jfree.loginserver.network.gameserver.legacy.L2GameServer;
-import com.l2jfree.network.mmocore.DefaultSendablePacket;
+package com.l2jfree.loginserver.network.client;
 
 /**
- * Just for convenience.
- * 
  * @author savormix
  */
-public abstract class L2LoginServerPacket extends
-		DefaultSendablePacket<L2GameServer, L2GameServerPacket, L2LoginServerPacket>
+public enum L2ClientState
 {
-	// just for convenience
+	/** Connection between the client and login server has been established. */
+	CONNECTED,
+	/** Client has passed a GameGuard check. */
+	GAMEGUARD_PASSED,
+	/** Client has logged in with a valid account. */
+	LOGGED_IN,
+	/** Client has received the game server list. */
+	VIEWING_LIST;
 }

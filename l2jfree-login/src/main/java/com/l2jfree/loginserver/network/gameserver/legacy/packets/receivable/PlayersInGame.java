@@ -18,14 +18,14 @@ import java.nio.BufferUnderflowException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2GameServerPacket;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyGameServerPacket;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix
  */
-public final class PlayersInGame extends L2GameServerPacket
+public final class PlayersInGame extends L2LegacyGameServerPacket
 {
 	/** Packet's identifier */
 	public static final int OPCODE = 0x02;

@@ -31,7 +31,7 @@ import com.l2jfree.network.mmocore.MMOController;
 /**
  * @author savormix
  */
-public final class L2ClientConnections extends MMOController<L2LoginClient, L2ClientPacket, L2ServerPacket>
+public final class L2ClientController extends MMOController<L2Client, L2ClientPacket, L2ServerPacket>
 {
 	private static final int PROTOCOL_VERSION = 0xc621;
 	
@@ -45,7 +45,7 @@ public final class L2ClientConnections extends MMOController<L2LoginClient, L2Cl
 			
 			try
 			{
-				INSTANCE = new L2ClientConnections(cfg);
+				INSTANCE = new L2ClientController(cfg);
 			}
 			catch (IOException e)
 			{
@@ -53,7 +53,7 @@ public final class L2ClientConnections extends MMOController<L2LoginClient, L2Cl
 			}
 		}
 		
-		public static final L2ClientConnections INSTANCE;
+		public static final L2ClientController INSTANCE;
 	}
 	
 	/**
@@ -61,16 +61,16 @@ public final class L2ClientConnections extends MMOController<L2LoginClient, L2Cl
 	 * 
 	 * @return an instance of this class
 	 */
-	public static L2ClientConnections getInstance()
+	public static L2ClientController getInstance()
 	{
 		return SingletonHolder.INSTANCE;
 	}
 	
 	private final FastMap<String, SessionKey> _authorized;
 	
-	private L2ClientConnections(MMOConfig config) throws IOException
+	private L2ClientController(MMOConfig config) throws IOException
 	{
-		super(config, L2ClientPackets.getInstance());
+		super(config, L2ClientPacketHandler.getInstance());
 		
 		_authorized = FastMap.newInstance();
 		_authorized.setShared(true);
@@ -81,7 +81,7 @@ public final class L2ClientConnections extends MMOController<L2LoginClient, L2Cl
 	 * 
 	 * @param client connection
 	 */
-	public void authorize(L2LoginClient client)
+	public void authorize(L2Client client)
 	{
 		if (client == null)
 			return;
@@ -111,10 +111,10 @@ public final class L2ClientConnections extends MMOController<L2LoginClient, L2Cl
 	}
 	
 	@Override
-	protected L2LoginClient createClient(SocketChannel socketChannel) throws ClosedChannelException
+	protected L2Client createClient(SocketChannel socketChannel) throws ClosedChannelException
 	{
 		L2ClientSecurity lcs = L2ClientSecurity.getInstance();
-		L2LoginClient llc = new L2LoginClient(this, socketChannel, lcs.getNextSessionId(), PROTOCOL_VERSION, lcs
+		L2Client llc = new L2Client(this, socketChannel, lcs.getNextSessionId(), PROTOCOL_VERSION, lcs
 				.getKeyPair(), lcs.getBlowfishKey());
 		llc.sendPacket(new Init(llc));
 		return llc;

@@ -35,7 +35,7 @@ import com.l2jfree.util.Rnd;
 /**
  * @author savormix
  */
-public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPacket, L2ServerPacket>
+public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2ServerPacket>
 {
 	private final int _sessionId;
 	private final int _protocol;
@@ -43,7 +43,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	private final NewCipher _cipher;
 	private boolean _firstTime;
 	
-	private L2LoginClientState _state;
+	private L2ClientState _state;
 	private SessionKey _sessionKey;
 	
 	private L2Account _account;
@@ -59,7 +59,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	 * @param blowfishKey blowfish key for network comms
 	 * @throws ClosedChannelException if the given channel was closed during operations
 	 */
-	protected L2LoginClient(MMOController<L2LoginClient, L2ClientPacket, L2ServerPacket> mmoController,
+	protected L2Client(MMOController<L2Client, L2ClientPacket, L2ServerPacket> mmoController,
 			SocketChannel socketChannel, int sessionId, int protocol, ScrambledKeyPair keyPair, byte[] blowfishKey)
 			throws ClosedChannelException
 	{
@@ -70,7 +70,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 		_keyPair = keyPair;
 		_cipher = new NewCipher(blowfishKey);
 		_firstTime = true;
-		_state = L2LoginClientState.CONNECTED;
+		_state = L2ClientState.CONNECTED;
 		_sessionKey = null;
 		_account = null;
 	}
@@ -151,7 +151,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	@Override
 	protected L2ServerPacket getDefaultClosePacket()
 	{
-		if (getState() == L2LoginClientState.VIEWING_LIST)
+		if (getState() == L2ClientState.VIEWING_LIST)
 			return new PlayFailure(L2NoServiceReason.IGNORE);
 		else
 			return new LoginFailure(L2NoServiceReason.IGNORE);
@@ -170,7 +170,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	@Override
 	protected boolean isAuthed()
 	{
-		return getState() != L2LoginClientState.CONNECTED;
+		return getState() != L2ClientState.CONNECTED;
 	}
 	
 	/**
@@ -252,7 +252,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public L2LoginClientState getState()
+	public L2ClientState getState()
 	{
 		return _state;
 	}
@@ -262,7 +262,7 @@ public final class L2LoginClient extends MMOConnection<L2LoginClient, L2ClientPa
 	 * 
 	 * @param state connection's state
 	 */
-	public void setState(L2LoginClientState state)
+	public void setState(L2ClientState state)
 	{
 		_state = state;
 	}

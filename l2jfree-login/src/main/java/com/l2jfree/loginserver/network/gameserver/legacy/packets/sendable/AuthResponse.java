@@ -14,14 +14,14 @@
  */
 package com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable;
 
-import com.l2jfree.loginserver.network.gameserver.legacy.L2GameServer;
-import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LoginServerPacket;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServer;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyLoginServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix
  */
-public final class AuthResponse extends L2LoginServerPacket
+public final class AuthResponse extends L2LegacyLoginServerPacket
 {
 	private final int _id;
 	private final String _name;
@@ -31,7 +31,7 @@ public final class AuthResponse extends L2LoginServerPacket
 	 * 
 	 * @param lgs an authorized game server
 	 */
-	public AuthResponse(L2GameServer lgs)
+	public AuthResponse(L2LegacyGameServer lgs)
 	{
 		// TODO Auto-generated method stub
 		_id = lgs.getId();
@@ -45,7 +45,7 @@ public final class AuthResponse extends L2LoginServerPacket
 	}
 	
 	@Override
-	protected void writeImpl(L2GameServer client, MMOBuffer buf)
+	protected void writeImpl(L2LegacyGameServer client, MMOBuffer buf)
 	{
 		buf.writeC(_id);
 		buf.writeS(_name);

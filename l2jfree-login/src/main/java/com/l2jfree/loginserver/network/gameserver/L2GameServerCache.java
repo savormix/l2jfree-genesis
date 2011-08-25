@@ -23,8 +23,8 @@ import java.util.HashMap;
 
 import javolution.util.FastMap;
 
-import com.l2jfree.loginserver.network.gameserver.legacy.L2GameServer;
-import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyConnections;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServer;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServerController;
 import com.l2jfree.loginserver.network.gameserver.legacy.L2NoServiceReason;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable.LoginServerFail;
 import com.l2jfree.sql.L2Database;
@@ -144,7 +144,7 @@ public class L2GameServerCache
 					{
 						if (getGameServers().containsKey(gameServerId)) // cached
 						{
-							L2GameServer lgs = L2LegacyConnections.getInstance().getById(gameServerId);
+							L2LegacyGameServer lgs = L2LegacyGameServerController.getInstance().getById(gameServerId);
 							if (lgs != null && !gameServerAuthData.equals(lgs.getAuth()))
 							{
 								// invalid authorization, impostor online
@@ -187,7 +187,7 @@ public class L2GameServerCache
 						getGameServers().remove(gameServerId);
 						_log.info("Removed game server on ID " + gameServerId
 								+ " from cache. It will no longer be shown in the server list.");
-						L2GameServer lgs = L2LegacyConnections.getInstance().getById(gameServerId);
+						L2LegacyGameServer lgs = L2LegacyGameServerController.getInstance().getById(gameServerId);
 						if (lgs != null && lgs.getAuth() != null) // was authorized based on old data
 						{
 							lgs.close(new LoginServerFail(L2NoServiceReason.NOT_AUTHED));

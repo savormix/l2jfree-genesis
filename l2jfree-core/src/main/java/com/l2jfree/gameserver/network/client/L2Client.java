@@ -27,21 +27,21 @@ import com.l2jfree.security.CoreCipher;
 /**
  * @author savormix
  */
-public final class L2CoreClient extends MMOConnection<L2CoreClient, L2ClientPacket, L2ServerPacket>
+public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2ServerPacket>
 {
 	private final CoreCipher _cipher;
 	private boolean _firstTime;
 	
-	private L2CoreClientState _state;
+	private L2ClientState _state;
 	
-	protected L2CoreClient(SocketChannel socketChannel, byte[] cipherKey) throws ClosedChannelException
+	protected L2Client(SocketChannel socketChannel, byte[] cipherKey) throws ClosedChannelException
 	{
-		super(L2ClientConnections.getInstance(), socketChannel);
+		super(L2ClientController.getInstance(), socketChannel);
 		// TODO Auto-generated constructor stub
 		_cipher = new CoreCipher(cipherKey);
 		_firstTime = true;
 		
-		_state = L2CoreClientState.CONNECTED;
+		_state = L2ClientState.CONNECTED;
 	}
 	
 	@Override
@@ -97,7 +97,7 @@ public final class L2CoreClient extends MMOConnection<L2CoreClient, L2ClientPack
 	@Override
 	protected boolean isAuthed()
 	{
-		return getState() != L2CoreClientState.CONNECTED;
+		return getState() != L2ClientState.CONNECTED;
 	}
 	
 	/**
@@ -132,7 +132,7 @@ public final class L2CoreClient extends MMOConnection<L2CoreClient, L2ClientPack
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public L2CoreClientState getState()
+	public L2ClientState getState()
 	{
 		return _state;
 	}
@@ -142,7 +142,7 @@ public final class L2CoreClient extends MMOConnection<L2CoreClient, L2ClientPack
 	 * 
 	 * @param state connection's state
 	 */
-	public void setState(L2CoreClientState state)
+	public void setState(L2ClientState state)
 	{
 		_state = state;
 	}

@@ -16,8 +16,8 @@ package com.l2jfree.loginserver.network.gameserver.legacy;
 
 import java.nio.ByteBuffer;
 
-import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2GameServerPacket;
-import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LoginServerPacket;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyGameServerPacket;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyLoginServerPacket;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable.BlowfishKey;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable.ChangeAccessLevel;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable.GameServerAuth;
@@ -31,30 +31,30 @@ import com.l2jfree.network.mmocore.PacketHandler;
 /**
  * @author savormix
  */
-public final class L2LegacyPackets extends PacketHandler<L2GameServer, L2GameServerPacket, L2LoginServerPacket>
+public final class L2LegacyGameServerPacketHandler extends PacketHandler<L2LegacyGameServer, L2LegacyGameServerPacket, L2LegacyLoginServerPacket>
 {
-	private L2LegacyPackets()
+	private L2LegacyGameServerPacketHandler()
 	{
 		// singleton
 	}
 	
 	@Override
-	public L2GameServerPacket handlePacket(ByteBuffer buf, L2GameServer client, int opcode)
+	public L2LegacyGameServerPacket handlePacket(ByteBuffer buf, L2LegacyGameServer client, int opcode)
 	{
 		switch (opcode)
 		{
 			case BlowfishKey.OPCODE:
-				if (client.stateEquals(L2LegacyState.CONNECTED))
+				if (client.stateEquals(L2LegacyGameServerState.CONNECTED))
 					return new BlowfishKey();
 				return invalidState(client, BlowfishKey.class, opcode);
 				
 			case GameServerAuth.OPCODE:
-				if (client.stateEquals(L2LegacyState.KEYS_EXCHANGED))
+				if (client.stateEquals(L2LegacyGameServerState.KEYS_EXCHANGED))
 					return new GameServerAuth();
 				return invalidState(client, GameServerAuth.class, opcode);
 				
 			default:
-				if (!client.stateEquals(L2LegacyState.AUTHED))
+				if (!client.stateEquals(L2LegacyGameServerState.AUTHED))
 					return invalidState(client, opcode);
 				
 				switch (opcode)
@@ -88,13 +88,13 @@ public final class L2LegacyPackets extends PacketHandler<L2GameServer, L2GameSer
 	 * 
 	 * @return an instance of this class
 	 */
-	public static L2LegacyPackets getInstance()
+	public static L2LegacyGameServerPacketHandler getInstance()
 	{
 		return SingletonHolder.INSTANCE;
 	}
 	
 	private static final class SingletonHolder
 	{
-		public static final L2LegacyPackets INSTANCE = new L2LegacyPackets();
+		public static final L2LegacyGameServerPacketHandler INSTANCE = new L2LegacyGameServerPacketHandler();
 	}
 }

@@ -16,8 +16,8 @@ package com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 
-import com.l2jfree.loginserver.network.client.L2ClientConnections;
-import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2GameServerPacket;
+import com.l2jfree.loginserver.network.client.L2ClientController;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyGameServerPacket;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable.PlayerAuthResponse;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
@@ -25,7 +25,7 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 /**
  * @author savormix
  */
-public final class PlayerAuthRequest extends L2GameServerPacket
+public final class PlayerAuthRequest extends L2LegacyGameServerPacket
 {
 	/** Packet's identifier */
 	public static final int OPCODE = 0x05;
@@ -51,7 +51,7 @@ public final class PlayerAuthRequest extends L2GameServerPacket
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		boolean valid = L2ClientConnections.getInstance().isAuthorized(_account, _activeSessionKey, _oldSessionKey);
+		boolean valid = L2ClientController.getInstance().isAuthorized(_account, _activeSessionKey, _oldSessionKey);
 		sendPacket(new PlayerAuthResponse(_account, valid));
 	}
 }

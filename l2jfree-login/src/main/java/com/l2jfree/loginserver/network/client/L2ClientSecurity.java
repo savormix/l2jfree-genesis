@@ -32,7 +32,7 @@ import com.l2jfree.util.logging.L2Logger;
 /**
  * @author savormix
  */
-public class L2ClientSecurity
+public final class L2ClientSecurity
 {
 	private static final L2Logger _log = L2Logger.getLogger(L2ClientSecurity.class);
 	
@@ -87,7 +87,7 @@ public class L2ClientSecurity
 	 * @param client logged in client
 	 * @return the assigned session key
 	 */
-	public long assignSessionKey(L2LoginClient client)
+	public long assignSessionKey(L2Client client)
 	{
 		if (client == null || client.getAccount() == null)
 			throw new IllegalStateException("Client not authorized.");

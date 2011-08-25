@@ -14,16 +14,16 @@
  */
 package com.l2jfree.loginserver.network.gameserver.legacy.packets;
 
-import com.l2jfree.loginserver.network.gameserver.legacy.L2GameServer;
-import com.l2jfree.network.mmocore.ReceivablePacket;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServer;
+import com.l2jfree.network.mmocore.DefaultSendablePacket;
 
 /**
  * Just for convenience.
  * 
  * @author savormix
  */
-public abstract class L2GameServerPacket extends
-		ReceivablePacket<L2GameServer, L2GameServerPacket, L2LoginServerPacket>
+public abstract class L2LegacyLoginServerPacket extends
+		DefaultSendablePacket<L2LegacyGameServer, L2LegacyGameServerPacket, L2LegacyLoginServerPacket>
 {
 	// just for convenience
 }

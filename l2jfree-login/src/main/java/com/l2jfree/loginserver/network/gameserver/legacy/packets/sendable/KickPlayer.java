@@ -14,14 +14,14 @@
  */
 package com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable;
 
-import com.l2jfree.loginserver.network.gameserver.legacy.L2GameServer;
-import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LoginServerPacket;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServer;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyLoginServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix
  */
-public final class KickPlayer extends L2LoginServerPacket
+public final class KickPlayer extends L2LegacyLoginServerPacket
 {
 	private final String _account;
 	
@@ -42,7 +42,7 @@ public final class KickPlayer extends L2LoginServerPacket
 	}
 	
 	@Override
-	protected void writeImpl(L2GameServer client, MMOBuffer buf)
+	protected void writeImpl(L2LegacyGameServer client, MMOBuffer buf)
 	{
 		buf.writeS(_account);
 	}

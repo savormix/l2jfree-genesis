@@ -24,11 +24,11 @@ import java.util.TreeSet;
 
 import com.l2jfree.loginserver.config.ServiceConfig;
 import com.l2jfree.loginserver.network.gameserver.L2GameServerCache;
-import com.l2jfree.loginserver.network.gameserver.legacy.L2GameServer;
-import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyConnections;
-import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyState;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServer;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServerController;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServerState;
 import com.l2jfree.loginserver.network.gameserver.legacy.L2NoServiceReason;
-import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2GameServerPacket;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyGameServerPacket;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable.AuthResponse;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable.LoginServerFail;
 import com.l2jfree.network.mmocore.InvalidPacketException;
@@ -39,7 +39,7 @@ import com.l2jfree.util.HexUtil;
 /**
  * @author savormix
  */
-public final class GameServerAuth extends L2GameServerPacket
+public final class GameServerAuth extends L2LegacyGameServerPacket
 {
 	/** Packet's identifier */
 	public static final int OPCODE = 0x01;
@@ -77,8 +77,8 @@ public final class GameServerAuth extends L2GameServerPacket
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		L2GameServer lgs = getClient();
-		L2LegacyConnections llc = L2LegacyConnections.getInstance();
+		L2LegacyGameServer lgs = getClient();
+		L2LegacyGameServerController llc = L2LegacyGameServerController.getInstance();
 		synchronized (L2GameServerCache.getInstance().getAuthorizationLock())
 		{
 			if (llc.getById(_desiredId) != null)
@@ -181,7 +181,7 @@ public final class GameServerAuth extends L2GameServerPacket
 		}
 	}
 	
-	private void finishAuthorization(int id, String auth, boolean trusted, L2GameServer lgs)
+	private void finishAuthorization(int id, String auth, boolean trusted, L2LegacyGameServer lgs)
 	{
 		lgs.setId(id);
 		lgs.setAuth(auth);
@@ -206,12 +206,12 @@ public final class GameServerAuth extends L2GameServerPacket
 		lgs.setPort(_port);
 		lgs.setMaxPlayers(_maxPlayers);
 		
-		L2LegacyConnections.getInstance().addGameServer(_desiredId, lgs);
-		lgs.setState(L2LegacyState.AUTHED);
+		L2LegacyGameServerController.getInstance().addGameServer(_desiredId, lgs);
+		lgs.setState(L2LegacyGameServerState.AUTHED);
 		lgs.sendPacket(new AuthResponse(lgs));
 	}
 	
-	private void tryAssignAvailableId(L2GameServer lgs)
+	private void tryAssignAvailableId(L2LegacyGameServer lgs)
 	{
 		Set<Integer> reserved;
 		
@@ -245,7 +245,7 @@ public final class GameServerAuth extends L2GameServerPacket
 		for (newId = 1; newId < Byte.MAX_VALUE; newId++)
 		{
 			if (reserved.remove(newId) || // Cannot use a registered ID
-					L2LegacyConnections.getInstance().getById(newId) != null)
+					L2LegacyGameServerController.getInstance().getById(newId) != null)
 				// Cannot use an ID in use
 				continue;
 			else

@@ -20,7 +20,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
 
-import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2GameServerPacket;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyGameServerPacket;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 import com.l2jfree.sql.L2Database;
@@ -28,7 +28,7 @@ import com.l2jfree.sql.L2Database;
 /**
  * @author savormix
  */
-public final class ChangeAccessLevel extends L2GameServerPacket
+public final class ChangeAccessLevel extends L2LegacyGameServerPacket
 {
 	/** Packet's identifier */
 	public static final int OPCODE = 0x04;

@@ -14,7 +14,7 @@
  */
 package com.l2jfree.loginserver.network.gameserver.legacy.status;
 
-import com.l2jfree.loginserver.network.gameserver.legacy.L2GameServer;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServer;
 
 /**
  * @author savormix
@@ -51,7 +51,7 @@ public enum L2LegacyAgeLimit
 	 * @param lgs game server
 	 * @return whether the limit is visible or not
 	 */
-	public static boolean isDisplayed(L2GameServer lgs)
+	public static boolean isDisplayed(L2LegacyGameServer lgs)
 	{
 		for (L2LegacyAgeLimit llal : values())
 			if (lgs.getAge() == llal.getMin())

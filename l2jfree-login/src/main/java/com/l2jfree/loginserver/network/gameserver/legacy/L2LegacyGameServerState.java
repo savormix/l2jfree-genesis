@@ -12,19 +12,23 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.network.client;
+package com.l2jfree.loginserver.network.gameserver.legacy;
 
 /**
  * @author savormix
  */
-public enum L2CoreClientState
+public enum L2LegacyGameServerState
 {
-	/** Connection between the client and game server has been established. */
+	/**
+	 * Connection between the game server and login server has been established.
+	 */
 	CONNECTED,
-	/** Client uses a supported protocol version. */
-	PROTOCOL_OK,
-	/** Client has logged in with a valid account. */
-	CHARACTER_MANAGEMENT,
-	/** Client has logged into the game world with a character. */
-	LOGGED_IN;
+	/**
+	 * Servers know how to encipher data.
+	 */
+	KEYS_EXCHANGED,
+	/**
+	 * An ID was successfully assigned to the game server.
+	 */
+	AUTHED;
 }

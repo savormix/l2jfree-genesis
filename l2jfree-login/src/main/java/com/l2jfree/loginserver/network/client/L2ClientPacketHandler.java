@@ -30,40 +30,40 @@ import com.l2jfree.network.mmocore.PacketHandler;
  * 
  * @author savormix
  */
-public final class L2ClientPackets extends PacketHandler<L2LoginClient, L2ClientPacket, L2ServerPacket>
+public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2ClientPacket, L2ServerPacket>
 {
-	private L2ClientPackets()
+	private L2ClientPacketHandler()
 	{
 		// singleton
 	}
 	
 	@Override
-	public L2ClientPacket handlePacket(ByteBuffer buf, L2LoginClient client, int opcode)
+	public L2ClientPacket handlePacket(ByteBuffer buf, L2Client client, int opcode)
 	{
 		switch (opcode)
 		{
 			case AuthGameGuard.OPCODE:
-				if (client.stateEquals(L2LoginClientState.CONNECTED))
+				if (client.stateEquals(L2ClientState.CONNECTED))
 					return new AuthGameGuard();
 				return invalidState(client, AuthGameGuard.class, opcode);
 				
 			case RequestAuthLogin.OPCODE:
-				if (client.stateEquals(L2LoginClientState.GAMEGUARD_PASSED))
+				if (client.stateEquals(L2ClientState.GAMEGUARD_PASSED))
 					return new RequestAuthLogin();
 				return invalidState(client, RequestAuthLogin.class, opcode);
 				
 			case RequestSubmitCardNo.OPCODE:
-				if (client.stateEquals(L2LoginClientState.LOGGED_IN))
+				if (client.stateEquals(L2ClientState.LOGGED_IN))
 					return new RequestSubmitCardNo();
 				return invalidState(client, RequestSubmitCardNo.class, opcode);
 				
 			case RequestServerList.OPCODE:
-				if (client.stateEquals(L2LoginClientState.LOGGED_IN))
+				if (client.stateEquals(L2ClientState.LOGGED_IN))
 					return new RequestServerList();
 				return invalidState(client, RequestServerList.class, opcode);
 				
 			case RequestServerLogin.OPCODE:
-				if (client.stateEquals(L2LoginClientState.VIEWING_LIST))
+				if (client.stateEquals(L2ClientState.VIEWING_LIST))
 					return new RequestServerLogin();
 				return invalidState(client, RequestServerLogin.class, opcode);
 				
@@ -77,13 +77,13 @@ public final class L2ClientPackets extends PacketHandler<L2LoginClient, L2Client
 	 * 
 	 * @return an instance of this class
 	 */
-	public static L2ClientPackets getInstance()
+	public static L2ClientPacketHandler getInstance()
 	{
 		return SingletonHolder.INSTANCE;
 	}
 	
 	private static final class SingletonHolder
 	{
-		public static final L2ClientPackets INSTANCE = new L2ClientPackets();
+		public static final L2ClientPacketHandler INSTANCE = new L2ClientPacketHandler();
 	}
 }

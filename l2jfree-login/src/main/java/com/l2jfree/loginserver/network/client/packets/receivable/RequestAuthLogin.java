@@ -32,15 +32,15 @@ import com.l2jfree.TerminationStatus;
 import com.l2jfree.loginserver.config.ServiceConfig;
 import com.l2jfree.loginserver.network.client.L2Account;
 import com.l2jfree.loginserver.network.client.L2BanReason;
-import com.l2jfree.loginserver.network.client.L2LoginClient;
-import com.l2jfree.loginserver.network.client.L2LoginClientState;
+import com.l2jfree.loginserver.network.client.L2Client;
+import com.l2jfree.loginserver.network.client.L2ClientState;
 import com.l2jfree.loginserver.network.client.L2NoServiceReason;
 import com.l2jfree.loginserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.loginserver.network.client.packets.sendable.LoginFailure;
 import com.l2jfree.loginserver.network.client.packets.sendable.LoginSuccess;
 import com.l2jfree.loginserver.network.client.packets.sendable.ServerList;
-import com.l2jfree.loginserver.network.gameserver.legacy.L2GameServer;
-import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyConnections;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServer;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServerController;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable.KickPlayer;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
@@ -73,7 +73,7 @@ public final class RequestAuthLogin extends L2ClientPacket
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		L2LoginClient llc = getClient();
+		L2Client llc = getClient();
 		byte[] deciphered;
 		try
 		{
@@ -132,7 +132,7 @@ public final class RequestAuthLogin extends L2ClientPacket
 					if (ban == 0)
 					{
 						boolean offline = true;
-						for (L2GameServer lgs : L2LegacyConnections.getInstance().getAuthorized())
+						for (L2LegacyGameServer lgs : L2LegacyGameServerController.getInstance().getAuthorized())
 						{
 							if (lgs.getOnlineAccounts().contains(user))
 							{
@@ -151,12 +151,12 @@ public final class RequestAuthLogin extends L2ClientPacket
 							
 							if (ServiceConfig.SHOW_EULA)
 							{
-								llc.setState(L2LoginClientState.LOGGED_IN);
+								llc.setState(L2ClientState.LOGGED_IN);
 								llc.sendPacket(new LoginSuccess(llc));
 							}
 							else
 							{
-								llc.setState(L2LoginClientState.VIEWING_LIST);
+								llc.setState(L2ClientState.VIEWING_LIST);
 								llc.sendPacket(new ServerList());
 							}
 						}

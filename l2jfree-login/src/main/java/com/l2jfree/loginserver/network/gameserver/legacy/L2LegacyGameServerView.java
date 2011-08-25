@@ -24,14 +24,14 @@ import com.l2jfree.loginserver.network.gameserver.legacy.status.L2LegacyStatus;
  */
 public final class L2LegacyGameServerView extends L2GameServerView
 {
-	private final L2GameServer _gameServer;
+	private final L2LegacyGameServer _gameServer;
 	
 	/**
 	 * Creates a legacy game server's view.
 	 * 
 	 * @param gameServer legacy game server
 	 */
-	public L2LegacyGameServerView(L2GameServer gameServer)
+	public L2LegacyGameServerView(L2LegacyGameServer gameServer)
 	{
 		_gameServer = gameServer;
 	}
@@ -39,7 +39,7 @@ public final class L2LegacyGameServerView extends L2GameServerView
 	@Override
 	public void update()
 	{
-		L2GameServer gs = getGameServer();
+		L2LegacyGameServer gs = getGameServer();
 		setId(gs.getId());
 		try
 		{
@@ -64,7 +64,7 @@ public final class L2LegacyGameServerView extends L2GameServerView
 		setBrackets(gs.isBrackets());
 	}
 	
-	private L2GameServer getGameServer()
+	private L2LegacyGameServer getGameServer()
 	{
 		return _gameServer;
 	}

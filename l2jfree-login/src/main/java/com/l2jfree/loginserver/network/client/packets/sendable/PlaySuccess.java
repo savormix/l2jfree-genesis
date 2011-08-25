@@ -14,9 +14,9 @@
  */
 package com.l2jfree.loginserver.network.client.packets.sendable;
 
-import com.l2jfree.loginserver.network.client.L2ClientConnections;
+import com.l2jfree.loginserver.network.client.L2ClientController;
 import com.l2jfree.loginserver.network.client.L2ClientSecurity;
-import com.l2jfree.loginserver.network.client.L2LoginClient;
+import com.l2jfree.loginserver.network.client.L2Client;
 import com.l2jfree.loginserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
@@ -34,10 +34,10 @@ public final class PlaySuccess extends L2ServerPacket
 	 * @param llc a connection wrapper
 	 * @param server game server ID
 	 */
-	public PlaySuccess(L2LoginClient llc, int server)
+	public PlaySuccess(L2Client llc, int server)
 	{
 		_sessionKey = L2ClientSecurity.getInstance().assignSessionKey(llc);
-		L2ClientConnections.getInstance().authorize(llc);
+		L2ClientController.getInstance().authorize(llc);
 		_server = server;
 	}
 	
@@ -48,7 +48,7 @@ public final class PlaySuccess extends L2ServerPacket
 	}
 	
 	@Override
-	protected void writeImpl(L2LoginClient client, MMOBuffer buf)
+	protected void writeImpl(L2Client client, MMOBuffer buf)
 	{
 		buf.writeQ(_sessionKey);
 		buf.writeC(_server);

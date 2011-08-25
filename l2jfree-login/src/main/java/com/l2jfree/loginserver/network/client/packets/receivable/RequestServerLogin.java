@@ -20,13 +20,13 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import com.l2jfree.loginserver.network.client.L2Account;
-import com.l2jfree.loginserver.network.client.L2LoginClient;
+import com.l2jfree.loginserver.network.client.L2Client;
 import com.l2jfree.loginserver.network.client.L2NoServiceReason;
 import com.l2jfree.loginserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.loginserver.network.client.packets.sendable.PlayFailure;
 import com.l2jfree.loginserver.network.client.packets.sendable.PlaySuccess;
-import com.l2jfree.loginserver.network.gameserver.legacy.L2GameServer;
-import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyConnections;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServer;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServerController;
 import com.l2jfree.loginserver.network.gameserver.legacy.status.L2LegacyStatus;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
@@ -60,14 +60,14 @@ public final class RequestServerLogin extends L2ClientPacket
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		L2LoginClient llc = getClient();
+		L2Client llc = getClient();
 		if (llc.getSessionKey() != null && llc.getSessionKey().getActiveKey() != _sessionKey)
 		{
 			llc.close(new PlayFailure(L2NoServiceReason.ACCESS_FAILED_TRY_AGAIN));
 			return;
 		}
 		
-		L2GameServer lgs = L2LegacyConnections.getInstance().getById(_serverId);
+		L2LegacyGameServer lgs = L2LegacyGameServerController.getInstance().getById(_serverId);
 		if (lgs == null || lgs.getStatus() == L2LegacyStatus.DOWN) // server down
 		{
 			llc.close(new PlayFailure(L2NoServiceReason.MAINTENANCE_UNDERGOING));
