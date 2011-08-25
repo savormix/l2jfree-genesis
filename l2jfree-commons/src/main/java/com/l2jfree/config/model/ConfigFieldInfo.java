@@ -25,6 +25,7 @@ import com.l2jfree.config.annotation.ConfigGroupBeginning;
 import com.l2jfree.config.annotation.ConfigGroupEnding;
 import com.l2jfree.config.converters.Converter;
 import com.l2jfree.config.model.ConfigClassInfo.PrintMode;
+import com.l2jfree.config.postloadhooks.PostLoadHook;
 import com.l2jfree.util.logging.L2Logger;
 
 public final class ConfigFieldInfo
@@ -34,6 +35,7 @@ public final class ConfigFieldInfo
 	private final Field _field;
 	private final ConfigField _configField;
 	private final Converter _converter;
+	private final PostLoadHook _postLoadHook;
 	private final ConfigGroupBeginning _configGroupBeginning;
 	private final ConfigGroupEnding _configGroupEnding;
 	
@@ -49,6 +51,7 @@ public final class ConfigFieldInfo
 		_field = field;
 		_configField = field.getAnnotation(ConfigField.class);
 		_converter = getConfigField().converter().newInstance();
+		_postLoadHook = getConfigField().postLoadHook().newInstance();
 		_configGroupBeginning = field.getAnnotation(ConfigGroupBeginning.class);
 		_configGroupEnding = field.getAnnotation(ConfigGroupEnding.class);
 		
@@ -97,6 +100,8 @@ public final class ConfigFieldInfo
 		}
 		
 		_fieldValueLoaded = true;
+		
+		getPostLoadHook().valueLoaded(obj);
 	}
 	
 	public void setCurrentValue(L2Properties properties)
@@ -135,6 +140,11 @@ public final class ConfigFieldInfo
 	public Converter getConverter()
 	{
 		return _converter;
+	}
+	
+	public PostLoadHook getPostLoadHook()
+	{
+		return _postLoadHook;
 	}
 	
 	public ConfigGroupBeginning getConfigGroupBeginning()

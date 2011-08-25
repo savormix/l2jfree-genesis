@@ -22,6 +22,8 @@ import java.lang.annotation.Target;
 
 import com.l2jfree.config.converters.Converter;
 import com.l2jfree.config.converters.DefaultConverter;
+import com.l2jfree.config.postloadhooks.DefaultPostLoadHook;
+import com.l2jfree.config.postloadhooks.PostLoadHook;
 
 @Documented
 @Target(ElementType.FIELD)
@@ -38,5 +40,5 @@ public @interface ConfigField
 	
 	public Class<? extends Converter> converter() default DefaultConverter.class;
 	
-	// LOW post load hook
+	public Class<? extends PostLoadHook> postLoadHook() default DefaultPostLoadHook.class;
 }

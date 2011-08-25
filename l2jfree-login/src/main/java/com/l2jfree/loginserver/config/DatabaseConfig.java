@@ -14,13 +14,11 @@
  */
 package com.l2jfree.loginserver.config;
 
-import com.l2jfree.Shutdown;
-import com.l2jfree.TerminationStatus;
 import com.l2jfree.L2Config.ConfigPropertiesLoader;
-import com.l2jfree.config.L2Properties;
 import com.l2jfree.config.annotation.ConfigClass;
 import com.l2jfree.config.annotation.ConfigField;
 import com.l2jfree.config.converters.JdbcUrlConverter;
+import com.l2jfree.config.postloadhooks.SuperUserValidator;
 
 /**
  * @author NB4L1
@@ -38,7 +36,8 @@ public final class DatabaseConfig extends ConfigPropertiesLoader
 	public static String URL;
 	
 	/** Database login */
-	@ConfigField(name = "Login", value = "", eternal = true, comment = { "Username for DB access",
+	@ConfigField(name = "Login", value = "", eternal = true, postLoadHook = SuperUserValidator.class, comment = {
+			"Username for DB access", //
 			"The server will not start if a DBMS superuser account is used." })
 	public static String USER;
 	
@@ -69,14 +68,4 @@ public final class DatabaseConfig extends ConfigPropertiesLoader
 			"Whether to backup tables during server shutdown or not.", //
 			"Currently only works with MySQL and SQLite." })
 	public static boolean BACKUP_ON_SHUTDOWN;
-	
-	@Override
-	protected void loadImpl(L2Properties properties)
-	{
-		if (USER.equalsIgnoreCase("root") || USER.equalsIgnoreCase("postgres"))
-		{
-			System.err.println("L2jFree servers should not use DBMS superuser accounts ... exited.");
-			Shutdown.exit(TerminationStatus.ENVIRONMENT_SUPERUSER);
-		}
-	}
 }
