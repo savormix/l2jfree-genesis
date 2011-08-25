@@ -23,10 +23,10 @@ import java.util.HashMap;
 
 import javolution.util.FastMap;
 
-import com.l2jfree.loginserver.network.legacy.L2GameServer;
-import com.l2jfree.loginserver.network.legacy.L2LegacyConnections;
-import com.l2jfree.loginserver.network.legacy.L2NoServiceReason;
-import com.l2jfree.loginserver.network.legacy.packets.sendable.LoginServerFail;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2GameServer;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyConnections;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2NoServiceReason;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable.LoginServerFail;
 import com.l2jfree.sql.L2Database;
 import com.l2jfree.util.concurrent.L2ThreadPool;
 import com.l2jfree.util.logging.L2Logger;

@@ -12,39 +12,39 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.loginserver.network.legacy.packets.receivable;
+package com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable;
 
-import java.nio.BufferUnderflowException;
-
-import com.l2jfree.loginserver.network.legacy.packets.L2GameServerPacket;
-import com.l2jfree.network.mmocore.InvalidPacketException;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2GameServer;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2NoServiceReason;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LoginServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix
  */
-public final class PlayerLogout extends L2GameServerPacket
+public final class LoginServerFail extends L2LoginServerPacket
 {
-	/** Packet's identifier */
-	public static final int OPCODE = 0x03;
+	private final int _reason;
 	
-	private String _account;
-	
-	@Override
-	protected int getMinimumLength()
+	/**
+	 * Constructs a packet to inform about failed authentication.
+	 * 
+	 * @param reason failure reason
+	 */
+	public LoginServerFail(L2NoServiceReason reason)
 	{
-		return READ_S;
+		_reason = reason.getId();
 	}
 	
 	@Override
-	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
+	protected int getOpcode()
 	{
-		_account = buf.readS();
+		return 0x01;
 	}
 	
 	@Override
-	protected void runImpl() throws InvalidPacketException, RuntimeException
+	protected void writeImpl(L2GameServer client, MMOBuffer buf)
 	{
-		getClient().getOnlineAccounts().remove(_account);
+		buf.writeC(_reason);
 	}
 }

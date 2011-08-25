@@ -12,46 +12,45 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.loginserver.network.legacy.packets.receivable;
+package com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable;
 
 import java.nio.BufferUnderflowException;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.l2jfree.loginserver.network.client.L2ClientConnections;
-import com.l2jfree.loginserver.network.legacy.packets.L2GameServerPacket;
-import com.l2jfree.loginserver.network.legacy.packets.sendable.PlayerAuthResponse;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2GameServerPacket;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix
  */
-public final class PlayerAuthRequest extends L2GameServerPacket
+public final class PlayersInGame extends L2GameServerPacket
 {
 	/** Packet's identifier */
-	public static final int OPCODE = 0x05;
+	public static final int OPCODE = 0x02;
 	
-	private String _account;
-	private long _activeSessionKey;
-	private long _oldSessionKey;
+	private List<String> _accounts;
 	
 	@Override
 	protected int getMinimumLength()
 	{
-		return READ_S + READ_Q + READ_Q;
+		return READ_H;
 	}
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
-		_account = buf.readS();
-		_activeSessionKey = buf.readQ();
-		_oldSessionKey = buf.readQ();
+		int size = buf.readH();
+		_accounts = new ArrayList<String>(size);
+		for (int i = 0; i < size; i++)
+			_accounts.add(buf.readS());
 	}
 	
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		boolean valid = L2ClientConnections.getInstance().isAuthorized(_account, _activeSessionKey, _oldSessionKey);
-		sendPacket(new PlayerAuthResponse(_account, valid));
+		for (String s : _accounts)
+			getClient().getOnlineAccounts().add(s);
 	}
 }

@@ -12,12 +12,12 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.loginserver.network.legacy.packets.sendable;
+package com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable;
 
 import java.security.interfaces.RSAPublicKey;
 
-import com.l2jfree.loginserver.network.legacy.L2GameServer;
-import com.l2jfree.loginserver.network.legacy.packets.L2LoginServerPacket;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2GameServer;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LoginServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**

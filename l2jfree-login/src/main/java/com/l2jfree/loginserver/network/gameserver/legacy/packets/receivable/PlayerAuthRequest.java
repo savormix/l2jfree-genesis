@@ -12,55 +12,46 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.loginserver.network.legacy.packets.receivable;
+package com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable;
 
 import java.nio.BufferUnderflowException;
-import java.util.Arrays;
 
-import com.l2jfree.loginserver.network.legacy.packets.L2GameServerPacket;
+import com.l2jfree.loginserver.network.client.L2ClientConnections;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2GameServerPacket;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable.PlayerAuthResponse;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix
  */
-public final class PlayerTraceRt extends L2GameServerPacket
+public final class PlayerAuthRequest extends L2GameServerPacket
 {
 	/** Packet's identifier */
-	public static final int OPCODE = 0x07;
-	
-	private static final int HOPS = 4;
+	public static final int OPCODE = 0x05;
 	
 	private String _account;
-	private String _ip;
-	private final String[] _hops;
-	
-	/** Constructs this packet. */
-	public PlayerTraceRt()
-	{
-		_hops = new String[HOPS];
-	}
+	private long _activeSessionKey;
+	private long _oldSessionKey;
 	
 	@Override
 	protected int getMinimumLength()
 	{
-		return READ_S + READ_S + HOPS * READ_S;
+		return READ_S + READ_Q + READ_Q;
 	}
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		_account = buf.readS();
-		_ip = buf.readS();
-		for (int i = 0; i < _hops.length; i++)
-			_hops[i] = buf.readS();
+		_activeSessionKey = buf.readQ();
+		_oldSessionKey = buf.readQ();
 	}
 	
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		// TODO Auto-generated method stub
-		// Unfortunately, these may all be easily spoofed
-		System.out.println(getClient() + "|" + getType() + "|" + _account + "|" + _ip + "|" + Arrays.toString(_hops));
+		boolean valid = L2ClientConnections.getInstance().isAuthorized(_account, _activeSessionKey, _oldSessionKey);
+		sendPacket(new PlayerAuthResponse(_account, valid));
 	}
 }

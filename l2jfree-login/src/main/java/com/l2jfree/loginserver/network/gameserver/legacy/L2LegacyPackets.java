@@ -12,20 +12,20 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.loginserver.network.legacy;
+package com.l2jfree.loginserver.network.gameserver.legacy;
 
 import java.nio.ByteBuffer;
 
-import com.l2jfree.loginserver.network.legacy.packets.L2GameServerPacket;
-import com.l2jfree.loginserver.network.legacy.packets.L2LoginServerPacket;
-import com.l2jfree.loginserver.network.legacy.packets.receivable.BlowfishKey;
-import com.l2jfree.loginserver.network.legacy.packets.receivable.ChangeAccessLevel;
-import com.l2jfree.loginserver.network.legacy.packets.receivable.GameServerAuth;
-import com.l2jfree.loginserver.network.legacy.packets.receivable.PlayerAuthRequest;
-import com.l2jfree.loginserver.network.legacy.packets.receivable.PlayerLogout;
-import com.l2jfree.loginserver.network.legacy.packets.receivable.PlayerTraceRt;
-import com.l2jfree.loginserver.network.legacy.packets.receivable.PlayersInGame;
-import com.l2jfree.loginserver.network.legacy.packets.receivable.ServerStatus;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2GameServerPacket;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LoginServerPacket;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable.BlowfishKey;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable.ChangeAccessLevel;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable.GameServerAuth;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable.PlayerAuthRequest;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable.PlayerLogout;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable.PlayerTraceRt;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable.PlayersInGame;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable.ServerStatus;
 import com.l2jfree.network.mmocore.PacketHandler;
 
 /**

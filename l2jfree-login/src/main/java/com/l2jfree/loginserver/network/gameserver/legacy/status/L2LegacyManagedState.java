@@ -12,23 +12,38 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.loginserver.network.legacy;
+package com.l2jfree.loginserver.network.gameserver.legacy.status;
 
 /**
  * @author savormix
  */
-public enum L2LegacyState
+public enum L2LegacyManagedState
 {
+	/** Online status */
+	STATUS(1),
+	/** Server types */
+	TYPE(2),
+	/** Square brackets */
+	BRACKETS(3),
+	/** Maximum online players */
+	MAX_PLAYERS(4),
+	/** Minimal player age */
+	AGE_LIMIT(5);
+	
+	private final Integer _id;
+	
+	private L2LegacyManagedState(int id)
+	{
+		_id = id;
+	}
+	
 	/**
-	 * Connection between the game server and login server has been established.
+	 * Returns the state's type ID.
+	 * 
+	 * @return state ID
 	 */
-	CONNECTED,
-	/**
-	 * Servers know how to encipher data.
-	 */
-	KEYS_EXCHANGED,
-	/**
-	 * An ID was successfully assigned to the game server.
-	 */
-	AUTHED;
+	public Integer getId()
+	{
+		return _id;
+	}
 }

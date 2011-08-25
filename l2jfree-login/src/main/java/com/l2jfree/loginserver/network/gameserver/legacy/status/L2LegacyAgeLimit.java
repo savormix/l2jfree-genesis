@@ -12,9 +12,9 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.loginserver.network.legacy.status;
+package com.l2jfree.loginserver.network.gameserver.legacy.status;
 
-import com.l2jfree.loginserver.network.legacy.L2GameServer;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2GameServer;
 
 /**
  * @author savormix

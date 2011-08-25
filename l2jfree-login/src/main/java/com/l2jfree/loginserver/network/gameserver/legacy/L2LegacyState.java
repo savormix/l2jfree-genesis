@@ -12,18 +12,23 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.loginserver.network.legacy.packets;
-
-import com.l2jfree.loginserver.network.legacy.L2GameServer;
-import com.l2jfree.network.mmocore.ReceivablePacket;
+package com.l2jfree.loginserver.network.gameserver.legacy;
 
 /**
- * Just for convenience.
- * 
  * @author savormix
  */
-public abstract class L2GameServerPacket extends
-		ReceivablePacket<L2GameServer, L2GameServerPacket, L2LoginServerPacket>
+public enum L2LegacyState
 {
-	// just for convenience
+	/**
+	 * Connection between the game server and login server has been established.
+	 */
+	CONNECTED,
+	/**
+	 * Servers know how to encipher data.
+	 */
+	KEYS_EXCHANGED,
+	/**
+	 * An ID was successfully assigned to the game server.
+	 */
+	AUTHED;
 }

@@ -14,8 +14,8 @@
  */
 package com.l2jfree.loginserver.network.gameserver;
 
-import com.l2jfree.loginserver.network.legacy.status.L2LegacyAgeLimit;
-import com.l2jfree.loginserver.network.legacy.status.L2LegacyType;
+import com.l2jfree.loginserver.network.gameserver.legacy.status.L2LegacyAgeLimit;
+import com.l2jfree.loginserver.network.gameserver.legacy.status.L2LegacyType;
 
 /**
  * @author savormix

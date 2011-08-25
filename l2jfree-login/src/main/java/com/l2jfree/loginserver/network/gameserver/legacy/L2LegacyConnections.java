@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.loginserver.network.legacy;
+package com.l2jfree.loginserver.network.gameserver.legacy;
 
 import java.io.IOException;
 import java.nio.channels.ClosedChannelException;
@@ -23,9 +23,9 @@ import java.util.Collection;
 import javolution.util.FastMap;
 
 import com.l2jfree.loginserver.LoginInfo;
-import com.l2jfree.loginserver.network.legacy.packets.L2GameServerPacket;
-import com.l2jfree.loginserver.network.legacy.packets.L2LoginServerPacket;
-import com.l2jfree.loginserver.network.legacy.packets.sendable.InitLS;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2GameServerPacket;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LoginServerPacket;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable.InitLS;
 import com.l2jfree.network.mmocore.MMOConfig;
 import com.l2jfree.network.mmocore.MMOController;
 

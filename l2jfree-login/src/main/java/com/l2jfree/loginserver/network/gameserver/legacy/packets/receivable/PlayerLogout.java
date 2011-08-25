@@ -12,38 +12,39 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.loginserver.network.legacy.packets.sendable;
+package com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable;
 
-import com.l2jfree.loginserver.network.legacy.L2GameServer;
-import com.l2jfree.loginserver.network.legacy.packets.L2LoginServerPacket;
+import java.nio.BufferUnderflowException;
+
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2GameServerPacket;
+import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix
  */
-public final class KickPlayer extends L2LoginServerPacket
+public final class PlayerLogout extends L2GameServerPacket
 {
-	private final String _account;
+	/** Packet's identifier */
+	public static final int OPCODE = 0x03;
 	
-	/**
-	 * Constructs a packet to inform about duplicate login.
-	 * 
-	 * @param account Account name
-	 */
-	public KickPlayer(String account)
+	private String _account;
+	
+	@Override
+	protected int getMinimumLength()
 	{
-		_account = account;
+		return READ_S;
 	}
 	
 	@Override
-	protected int getOpcode()
+	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
-		return 0x04;
+		_account = buf.readS();
 	}
 	
 	@Override
-	protected void writeImpl(L2GameServer client, MMOBuffer buf)
+	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		buf.writeS(_account);
+		getClient().getOnlineAccounts().remove(_account);
 	}
 }

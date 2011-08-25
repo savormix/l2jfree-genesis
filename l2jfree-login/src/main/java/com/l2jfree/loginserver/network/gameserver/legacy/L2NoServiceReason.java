@@ -12,18 +12,42 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.loginserver.network.legacy.packets;
-
-import com.l2jfree.loginserver.network.legacy.L2GameServer;
-import com.l2jfree.network.mmocore.DefaultSendablePacket;
+package com.l2jfree.loginserver.network.gameserver.legacy;
 
 /**
- * Just for convenience.
- * 
  * @author savormix
  */
-public abstract class L2LoginServerPacket extends
-		DefaultSendablePacket<L2GameServer, L2GameServerPacket, L2LoginServerPacket>
+public enum L2NoServiceReason
 {
-	// just for convenience
+	/** No game servers accepted from this IP */
+	IP_BANNED(1),
+	/** ??? */
+	IP_RESERVED(2),
+	/** Wrong HexID provided */
+	WRONG_HEXID(3),
+	/** Requested ID not available */
+	ID_RESERVED(4),
+	/** No IDs available */
+	NO_FREE_ID(5),
+	/** ??? */
+	NOT_AUTHED(6),
+	/** Already authorized */
+	ALREADY_LOGGED_IN(7);
+	
+	private final int _id;
+	
+	private L2NoServiceReason(int id)
+	{
+		_id = id;
+	}
+	
+	/**
+	 * Returns the reason's ID.
+	 * 
+	 * @return reason's ID
+	 */
+	public int getId()
+	{
+		return _id;
+	}
 }

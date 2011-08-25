@@ -12,42 +12,42 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.loginserver.network.legacy.packets.sendable;
+package com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable;
 
-import com.l2jfree.loginserver.network.legacy.L2GameServer;
-import com.l2jfree.loginserver.network.legacy.packets.L2LoginServerPacket;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2GameServer;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LoginServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix
  */
-public final class AuthResponse extends L2LoginServerPacket
+public final class PlayerAuthResponse extends L2LoginServerPacket
 {
-	private final int _id;
-	private final String _name;
+	private final String _account;
+	private final boolean _valid;
 	
 	/**
-	 * Constructs a packet to inform about successful authorization.
+	 * Constructs a packet to confirm/deny account login to a game server.
 	 * 
-	 * @param lgs an authorized game server
+	 * @param account account name
+	 * @param valid is login valid
 	 */
-	public AuthResponse(L2GameServer lgs)
+	public PlayerAuthResponse(String account, boolean valid)
 	{
-		// TODO Auto-generated method stub
-		_id = lgs.getId();
-		_name = "Unknown";
+		_account = account;
+		_valid = valid;
 	}
 	
 	@Override
 	protected int getOpcode()
 	{
-		return 0x02;
+		return 0x03;
 	}
 	
 	@Override
 	protected void writeImpl(L2GameServer client, MMOBuffer buf)
 	{
-		buf.writeC(_id);
-		buf.writeS(_name);
+		buf.writeS(_account);
+		buf.writeC(_valid);
 	}
 }

@@ -12,39 +12,38 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.loginserver.network.legacy.packets.sendable;
+package com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable;
 
-import com.l2jfree.loginserver.network.legacy.L2GameServer;
-import com.l2jfree.loginserver.network.legacy.L2NoServiceReason;
-import com.l2jfree.loginserver.network.legacy.packets.L2LoginServerPacket;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2GameServer;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LoginServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix
  */
-public final class LoginServerFail extends L2LoginServerPacket
+public final class KickPlayer extends L2LoginServerPacket
 {
-	private final int _reason;
+	private final String _account;
 	
 	/**
-	 * Constructs a packet to inform about failed authentication.
+	 * Constructs a packet to inform about duplicate login.
 	 * 
-	 * @param reason failure reason
+	 * @param account Account name
 	 */
-	public LoginServerFail(L2NoServiceReason reason)
+	public KickPlayer(String account)
 	{
-		_reason = reason.getId();
+		_account = account;
 	}
 	
 	@Override
 	protected int getOpcode()
 	{
-		return 0x01;
+		return 0x04;
 	}
 	
 	@Override
 	protected void writeImpl(L2GameServer client, MMOBuffer buf)
 	{
-		buf.writeC(_reason);
+		buf.writeS(_account);
 	}
 }

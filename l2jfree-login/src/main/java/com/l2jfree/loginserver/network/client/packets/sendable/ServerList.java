@@ -21,8 +21,8 @@ import com.l2jfree.loginserver.network.client.L2LoginClient;
 import com.l2jfree.loginserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.loginserver.network.gameserver.L2GameServerCache;
 import com.l2jfree.loginserver.network.gameserver.L2GameServerView;
-import com.l2jfree.loginserver.network.legacy.L2GameServer;
-import com.l2jfree.loginserver.network.legacy.L2LegacyConnections;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2GameServer;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyConnections;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**

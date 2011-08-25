@@ -25,8 +25,8 @@ import com.l2jfree.loginserver.config.SystemConfig;
 import com.l2jfree.loginserver.network.client.L2ClientConnections;
 import com.l2jfree.loginserver.network.client.L2ClientSecurity;
 import com.l2jfree.loginserver.network.gameserver.L2GameServerCache;
-import com.l2jfree.loginserver.network.legacy.L2LegacyConnections;
-import com.l2jfree.loginserver.network.legacy.L2LegacySecurity;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyConnections;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacySecurity;
 import com.l2jfree.sql.L2Database;
 
 /**

@@ -12,45 +12,68 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.loginserver.network.legacy.packets.receivable;
+package com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable;
 
 import java.nio.BufferUnderflowException;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Types;
 
-import com.l2jfree.loginserver.network.legacy.packets.L2GameServerPacket;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2GameServerPacket;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
+import com.l2jfree.sql.L2Database;
 
 /**
  * @author savormix
  */
-public final class PlayersInGame extends L2GameServerPacket
+public final class ChangeAccessLevel extends L2GameServerPacket
 {
 	/** Packet's identifier */
-	public static final int OPCODE = 0x02;
+	public static final int OPCODE = 0x04;
 	
-	private List<String> _accounts;
+	private String _account;
+	private int _level;
 	
 	@Override
 	protected int getMinimumLength()
 	{
-		return READ_H;
+		return READ_D + READ_S;
 	}
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
-		int size = buf.readH();
-		_accounts = new ArrayList<String>(size);
-		for (int i = 0; i < size; i++)
-			_accounts.add(buf.readS());
+		_level = buf.readD();
+		_account = buf.readS();
 	}
 	
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		for (String s : _accounts)
-			getClient().getOnlineAccounts().add(s);
+		Connection con = null;
+		try
+		{
+			con = L2Database.getConnection();
+			PreparedStatement ps = con
+					.prepareStatement("UPDATE account SET banReason = ?, superUser = ? WHERE username LIKE ?");
+			if (_level < 0)
+				ps.setInt(1, -_level);
+			else
+				ps.setNull(1, Types.INTEGER);
+			ps.setBoolean(2, _level > 0);
+			ps.setString(3, _account);
+			ps.executeUpdate();
+			ps.close();
+		}
+		catch (SQLException e)
+		{
+			_log.error("Could not change account access level!", e);
+		}
+		finally
+		{
+			L2Database.close(con);
+		}
 	}
 }

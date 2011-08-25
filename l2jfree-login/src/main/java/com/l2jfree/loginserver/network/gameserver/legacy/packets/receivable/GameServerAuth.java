@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.loginserver.network.legacy.packets.receivable;
+package com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 import java.sql.Connection;
@@ -24,13 +24,13 @@ import java.util.TreeSet;
 
 import com.l2jfree.loginserver.config.ServiceConfig;
 import com.l2jfree.loginserver.network.gameserver.L2GameServerCache;
-import com.l2jfree.loginserver.network.legacy.L2GameServer;
-import com.l2jfree.loginserver.network.legacy.L2LegacyConnections;
-import com.l2jfree.loginserver.network.legacy.L2LegacyState;
-import com.l2jfree.loginserver.network.legacy.L2NoServiceReason;
-import com.l2jfree.loginserver.network.legacy.packets.L2GameServerPacket;
-import com.l2jfree.loginserver.network.legacy.packets.sendable.AuthResponse;
-import com.l2jfree.loginserver.network.legacy.packets.sendable.LoginServerFail;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2GameServer;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyConnections;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyState;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2NoServiceReason;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2GameServerPacket;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable.AuthResponse;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable.LoginServerFail;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 import com.l2jfree.sql.L2Database;

@@ -12,38 +12,18 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.loginserver.network.legacy.status;
+package com.l2jfree.loginserver.network.gameserver.legacy.packets;
+
+import com.l2jfree.loginserver.network.gameserver.legacy.L2GameServer;
+import com.l2jfree.network.mmocore.ReceivablePacket;
 
 /**
+ * Just for convenience.
+ * 
  * @author savormix
  */
-public enum L2LegacyManagedState
+public abstract class L2GameServerPacket extends
+		ReceivablePacket<L2GameServer, L2GameServerPacket, L2LoginServerPacket>
 {
-	/** Online status */
-	STATUS(1),
-	/** Server types */
-	TYPE(2),
-	/** Square brackets */
-	BRACKETS(3),
-	/** Maximum online players */
-	MAX_PLAYERS(4),
-	/** Minimal player age */
-	AGE_LIMIT(5);
-	
-	private final Integer _id;
-	
-	private L2LegacyManagedState(int id)
-	{
-		_id = id;
-	}
-	
-	/**
-	 * Returns the state's type ID.
-	 * 
-	 * @return state ID
-	 */
-	public Integer getId()
-	{
-		return _id;
-	}
+	// just for convenience
 }

@@ -12,18 +12,18 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.loginserver.network.legacy.packets.receivable;
+package com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.l2jfree.loginserver.network.legacy.L2GameServer;
-import com.l2jfree.loginserver.network.legacy.packets.L2GameServerPacket;
-import com.l2jfree.loginserver.network.legacy.status.L2LegacyAgeLimit;
-import com.l2jfree.loginserver.network.legacy.status.L2LegacyManagedState;
-import com.l2jfree.loginserver.network.legacy.status.L2LegacyStatus;
+import com.l2jfree.loginserver.network.gameserver.legacy.L2GameServer;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2GameServerPacket;
+import com.l2jfree.loginserver.network.gameserver.legacy.status.L2LegacyAgeLimit;
+import com.l2jfree.loginserver.network.gameserver.legacy.status.L2LegacyManagedState;
+import com.l2jfree.loginserver.network.gameserver.legacy.status.L2LegacyStatus;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
