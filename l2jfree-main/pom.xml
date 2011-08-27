@@ -135,7 +135,7 @@
           <footer><![CDATA[<a href="http://www.l2jfree.com" target="_top">L2j Free Homepage<a>]]></footer>
           <packagesheader><![CDATA[<a href="http://www.l2jfree.com" target="_top">L2j Free Homepage<a>]]></packagesheader>
         </configuration>
-      </plugin>
+      </plugin><!--
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
@@ -152,7 +152,7 @@
             </configuration>
           </execution>
         </executions>
-      </plugin>
+      </plugin> -->
     </plugins>
     <pluginManagement>
       <plugins>
