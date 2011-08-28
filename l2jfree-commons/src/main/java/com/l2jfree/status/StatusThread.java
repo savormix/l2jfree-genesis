@@ -281,8 +281,8 @@ public abstract class StatusThread extends Thread
 				
 				final String parameterUsage = entry.getValue().getParameterUsage();
 				if (parameterUsage != null)
-					print(String.format(format, "")).print("   \t").print(entry.getKey()).print(" <").print(
-							parameterUsage).println(">");
+					print(String.format(format, "")).print("   \t").print(entry.getKey()).print(" <")
+							.print(parameterUsage).println(">");
 			}
 			println();
 		}

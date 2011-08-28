@@ -62,8 +62,8 @@ public final class MMOConfig
 	 * This configuration automatically picks an optimal buffer size based on a rule of thumb that
 	 * this value should be equal to:<BR>
 	 * <I>Maximum length of a valid packet + 1</I><BR>
-	 * When a largest possible packet is read, the last byte helps to identify whether there <U>may</U>
-	 * be available bytes in the channel/socket. <BR>
+	 * When a largest possible packet is read, the last byte helps to identify whether there
+	 * <U>may</U> be available bytes in the channel/socket. <BR>
 	 * <BR>
 	 * Setting a higher buffer size via {@link #setBufferSize(int)} may reduce network I/O load as
 	 * less socket write/read calls will be done. However, this is only useful in situations where
@@ -405,8 +405,8 @@ public final class MMOConfig
 	 * iterations.<BR>
 	 * Lower values decrease latency, higher values increase throughput. <BR>
 	 * <BR>
-	 * Extremely low values (<= 1 ms) will provide nearly no latency at the cost of wasting CPU
-	 * time due to very frequent network I/O.<BR>
+	 * Extremely low values (<= 1 ms) will provide nearly no latency at the cost of wasting CPU time
+	 * due to very frequent network I/O.<BR>
 	 * High values (> 100 ms) tend to give noticeable latency and CPU usage spikes due to longer I/O
 	 * coupled with longer idle times.
 	 * <UL>

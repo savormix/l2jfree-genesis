@@ -30,7 +30,7 @@ import javolution.util.FastList;
 /**
  * @author NB4L1
  */
-@SuppressWarnings( { "unchecked", "rawtypes" })
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public final class L2Collections
 {
 	public static final Object[] EMPTY_ARRAY = new Object[0];

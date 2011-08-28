@@ -38,7 +38,7 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 	{
 		switch (opcode)
 		{
-			// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
 			case ProtocolVersion.OPCODE:
 				if (client.stateEquals(CONNECTED))
 					return new ProtocolVersion();

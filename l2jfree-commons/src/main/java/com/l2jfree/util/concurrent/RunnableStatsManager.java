@@ -41,7 +41,7 @@ import com.l2jfree.util.logging.L2Logger;
 /**
  * @author NB4L1
  */
-@SuppressWarnings( { "unchecked", "rawtypes" })
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public final class RunnableStatsManager
 {
 	private static final L2Logger _log = L2Logger.getLogger(RunnableStatsManager.class);
@@ -358,12 +358,12 @@ public final class RunnableStatsManager
 				{
 					case NAME:
 					case METHOD:
-						appendAttribute(sb, SortBy.NAME, values[SortBy.NAME.ordinal()][k], maxLength[SortBy.NAME
-								.ordinal()]);
+						appendAttribute(sb, SortBy.NAME, values[SortBy.NAME.ordinal()][k],
+								maxLength[SortBy.NAME.ordinal()]);
 						set.remove(SortBy.NAME);
 						
-						appendAttribute(sb, SortBy.METHOD, values[SortBy.METHOD.ordinal()][k], maxLength[SortBy.METHOD
-								.ordinal()]);
+						appendAttribute(sb, SortBy.METHOD, values[SortBy.METHOD.ordinal()][k],
+								maxLength[SortBy.METHOD.ordinal()]);
 						set.remove(SortBy.METHOD);
 						break;
 					default:

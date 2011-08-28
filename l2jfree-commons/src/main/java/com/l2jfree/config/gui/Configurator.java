@@ -35,8 +35,8 @@ import javax.swing.border.BevelBorder;
 import org.apache.commons.io.IOUtils;
 
 import com.l2jfree.config.model.ConfigClassInfo;
-import com.l2jfree.config.model.ConfigFieldInfo;
 import com.l2jfree.config.model.ConfigClassInfo.PrintMode;
+import com.l2jfree.config.model.ConfigFieldInfo;
 
 public final class Configurator extends JFrame
 {

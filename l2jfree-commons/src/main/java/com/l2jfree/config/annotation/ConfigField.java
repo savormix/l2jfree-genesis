@@ -34,7 +34,7 @@ public @interface ConfigField
 	
 	public String value();
 	
-	public String[] comment() default {};
+	public String[] comment() default { };
 	
 	public boolean eternal() default false;
 	

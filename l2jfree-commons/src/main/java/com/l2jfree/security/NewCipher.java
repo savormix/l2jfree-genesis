@@ -233,8 +233,8 @@ public class NewCipher
 	}
 	
 	/**
-	 * Packet is first XOR encoded with <code>key</code> Then, the last 4 bytes are overwritten
-	 * with the the XOR "key". Thus this assume that there is enough room for the key to fit without
+	 * Packet is first XOR encoded with <code>key</code> Then, the last 4 bytes are overwritten with
+	 * the the XOR "key". Thus this assume that there is enough room for the key to fit without
 	 * overwriting data.
 	 * 
 	 * @deprecated Legacy method
@@ -248,8 +248,8 @@ public class NewCipher
 	}
 	
 	/**
-	 * Packet is first XOR encoded with <code>key</code> Then, the last 4 bytes are overwritten
-	 * with the the XOR "key". Thus this assume that there is enough room for the key to fit without
+	 * Packet is first XOR encoded with <code>key</code> Then, the last 4 bytes are overwritten with
+	 * the the XOR "key". Thus this assume that there is enough room for the key to fit without
 	 * overwriting data.
 	 * 
 	 * @deprecated Legacy method

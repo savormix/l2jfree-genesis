@@ -89,8 +89,8 @@ public final class DataSizeHolder
 	 * Specifies the received packet's padding parameters. <BR>
 	 * <BR>
 	 * This method should be used to notify the underlying networking layer that this packet uses a
-	 * padding scheme to achieve specific <U>sizes</U>. The padded bytes serve no other purpose
-	 * (are meaningless). <BR>
+	 * padding scheme to achieve specific <U>sizes</U>. The padded bytes serve no other purpose (are
+	 * meaningless). <BR>
 	 * <BR>
 	 * Based on the specified values, the underlying networking layer will decide whether this
 	 * packet is a valid packet and whether/how the padded bytes should be removed.<BR>

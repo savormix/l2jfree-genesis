@@ -49,8 +49,8 @@ public enum TerminationStatus
 	
 	/**
 	 * <B>Cause</B>: Server detected a classpath conflict.<BR>
-	 * <B>Resolution</B>: Inform the user that the reported classpath conflicts must be resolved
-	 * and terminate.
+	 * <B>Resolution</B>: Inform the user that the reported classpath conflicts must be resolved and
+	 * terminate.
 	 */
 	ENVIRONMENT_CP_CONFLICT(3, "shutting down, because the server has detected a classpath conflict"),
 	

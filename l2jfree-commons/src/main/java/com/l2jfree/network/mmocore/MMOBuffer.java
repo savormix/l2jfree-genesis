@@ -277,8 +277,9 @@ public final class MMOBuffer
 	}
 	
 	/**
-	 * Writes a signed integer as a dword (four bytes). If the given value is not from the interval [{@link java.lang.Integer#MIN_VALUE};
-	 * {@link java.lang.Integer#MAX_VALUE}], then it is increased/decreased to fit.
+	 * Writes a signed integer as a dword (four bytes). If the given value is not from the interval
+	 * [{@link java.lang.Integer#MIN_VALUE}; {@link java.lang.Integer#MAX_VALUE}], then it is
+	 * increased/decreased to fit.
 	 * 
 	 * @param value a number from the interval [{@link java.lang.Long#MIN_VALUE};
 	 *            {@link java.lang.Long#MAX_VALUE}]

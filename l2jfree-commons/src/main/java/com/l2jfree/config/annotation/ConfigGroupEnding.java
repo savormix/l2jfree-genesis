@@ -27,5 +27,5 @@ public @interface ConfigGroupEnding
 {
 	public String name();
 	
-	public String[] comment() default {};
+	public String[] comment() default { };
 }

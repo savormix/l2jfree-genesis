@@ -3,24 +3,24 @@
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation, either version 3 of the License, or (at your option) any later
  * version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.l2jfree.lang;
 
 /**
- * String utilities optimized for the best performance.
- * <h1>How to Use It</h1>
- * <h2>concat() or append()</h2>
+ * String utilities optimized for the best performance.<br>
+ * <h1>How to Use It</h1><br>
+ * <h2>concat() or append()</h2><br>
  * If concatenating strings in single call, use StringUtil.concat(), otherwise use
- * StringUtil.append() and its variants.
- * <h2>Minimum Calls</h2>
+ * StringUtil.append() and its variants.<br>
+ * <h2>Minimum Calls</h2><br>
  * Bad:
  * 
  * <pre>
@@ -40,8 +40,8 @@ package com.l2jfree.lang;
  * Why?<br>
  * Because the less calls you do, the less memory re-allocations have to be done so the whole text
  * fits into the memory and less array copy tasks has to be performed. So if using less calls, less
- * memory is used and string concatenation is faster.
- * <h2>Size Hints for Loops</h2>
+ * memory is used and string concatenation is faster.<br>
+ * <h2>Size Hints for Loops</h2><br>
  * Bad:
  * 
  * <pre>
@@ -72,8 +72,8 @@ package com.l2jfree.lang;
  * approximately the size and set it as the hint for the string builder size. It's better to make
  * the size hint little bit larger rather than smaller.<br>
  * In case there is no text appended before the cycle, just use <code>new
- * StringBuilder(1300)</code>.
- * <h2>Concatenation and Constants</h2>
+ * StringBuilder(1300)</code>.<br>
+ * <h2>Concatenation and Constants</h2><br>
  * Bad:
  * 
  * <pre>
@@ -95,8 +95,8 @@ package com.l2jfree.lang;
  * Why?<br>
  * It saves some cycles when determining size of memory that needs to be allocated because less
  * strings are passed to concat() method. But do not use + for concatenation of non-constant
- * strings, that degrades performance and makes extra memory allocations needed.
- * <h2>Concatenation and Constant Variables</h2>
+ * strings, that degrades performance and makes extra memory allocations needed.<br>
+ * <h2>Concatenation and Constant Variables</h2><br>
  * Bad:
  * 
  * <pre>
@@ -111,13 +111,13 @@ package com.l2jfree.lang;
  * StringUtil.concat(&quot;text 1&quot; + glue + &quot;text2&quot; + glue, String.valueOf(npcId));
  * </pre>
  * 
- * Why? Because when using <code>final</code> keyword, the <code>glue</code> is marked as
- * constant string and compiler treats it as a constant string so it is able to create string
+ * Why? Because when using <code>final</code> keyword, the <code>glue</code> is marked as constant
+ * string and compiler treats it as a constant string so it is able to create string
  * "text1some gluetext2some glue" during the compilation. But this only works in case the value is
  * known at compilation time, so this cannot be used for cases like
  * <code>final String objectIdString =
- * String.valueOf(getObjectId)</code>.
- * <h2>StringBuilder Reuse</h2>
+ * String.valueOf(getObjectId)</code>.<br>
+ * <h2>StringBuilder Reuse</h2><br>
  * Bad:
  * 
  * <pre>
@@ -143,10 +143,10 @@ package com.l2jfree.lang;
  * allocated memory is reused, but only in case the new string is not longer than the previously
  * allocated string. Anyway, the second way is better because the string either fits in the memory
  * and some memory is saved, or it does not fit in the memory, and in that case it works as in the
- * first case.
- * <h2>Primitives to Strings</h2>
- * To convert primitives to string, use String.valueOf().
- * <h2>How much faster is it?</h2>
+ * first case.<br>
+ * <h2>Primitives to Strings</h2><br>
+ * To convert primitives to string, use String.valueOf().<br>
+ * <h2>How much faster is it?</h2><br>
  * Here are some results of my tests. Count is number of strings concatenated. Don't take the
  * numbers as 100% true as the numbers are affected by other programs running on my computer at the
  * same time. Anyway, from the results it is obvious that using StringBuilder with predefined size

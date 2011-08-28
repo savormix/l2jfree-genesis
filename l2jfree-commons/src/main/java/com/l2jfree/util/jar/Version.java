@@ -69,7 +69,8 @@ public class Version
 		catch (Exception e) // IOException | RuntimeException
 		{
 			if (_log.isErrorEnabled())
-				_log.error("Unable to get Soft information\nFile name '"
+				_log.error(
+						"Unable to get Soft information\nFile name '"
 								+ (jarName == null ? "null" : jarName.getAbsolutePath()) + "' isn't a valid jar", e);
 		}
 		

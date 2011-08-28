@@ -68,8 +68,8 @@ public abstract class ReceivablePacket<T extends MMOConnection<T, RP, SP>, RP ex
 	 * <BR>
 	 * The main purpose of this value is to help identify malformed packets and/or outdated packet
 	 * formats,<br>
-	 * and also to avoid throwing a {@link BufferUnderflowException}, by simply skipping the
-	 * invalid - shorter - packets.
+	 * and also to avoid throwing a {@link BufferUnderflowException}, by simply skipping the invalid
+	 * - shorter - packets.
 	 * 
 	 * @return size of the shortest valid packet
 	 * @see #getMaximumLength()
@@ -83,8 +83,8 @@ public abstract class ReceivablePacket<T extends MMOConnection<T, RP, SP>, RP ex
 	 * <BR>
 	 * The main purpose of this value is to help identify malformed packets and/or outdated packet
 	 * formats,<br>
-	 * and also to avoid throwing a {@link BufferOverflowException}, by simply skipping the invalid -
-	 * longer - packets.
+	 * and also to avoid throwing a {@link BufferOverflowException}, by simply skipping the invalid
+	 * - longer - packets.
 	 * 
 	 * @return size of the longest valid packet
 	 * @see #getMinimumLength()

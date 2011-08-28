@@ -159,6 +159,7 @@ public class L2Logger extends Logger
 	
 	/**
 	 * Is debug logging currently enabled?
+	 * 
 	 * @return boolean
 	 */
 	public boolean isDebugEnabled()
@@ -168,6 +169,7 @@ public class L2Logger extends Logger
 	
 	/**
 	 * Is error logging currently enabled?
+	 * 
 	 * @return boolean
 	 */
 	public boolean isErrorEnabled()
@@ -177,6 +179,7 @@ public class L2Logger extends Logger
 	
 	/**
 	 * Is fatal logging currently enabled?
+	 * 
 	 * @return boolean
 	 */
 	public boolean isFatalEnabled()
@@ -186,6 +189,7 @@ public class L2Logger extends Logger
 	
 	/**
 	 * Is info logging currently enabled?
+	 * 
 	 * @return boolean
 	 */
 	public boolean isInfoEnabled()
@@ -195,6 +199,7 @@ public class L2Logger extends Logger
 	
 	/**
 	 * Is trace logging currently enabled?
+	 * 
 	 * @return boolean
 	 */
 	public boolean isTraceEnabled()
@@ -204,6 +209,7 @@ public class L2Logger extends Logger
 	
 	/**
 	 * Is warn logging currently enabled?
+	 * 
 	 * @return boolean
 	 */
 	public boolean isWarnEnabled()

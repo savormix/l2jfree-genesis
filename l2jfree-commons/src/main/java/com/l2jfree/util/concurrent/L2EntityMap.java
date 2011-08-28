@@ -20,8 +20,8 @@ import java.util.Iterator;
 import java.util.Map;
 
 import javolution.util.FastCollection;
-import javolution.util.FastMap;
 import javolution.util.FastCollection.Record;
+import javolution.util.FastMap;
 
 import com.l2jfree.lang.L2Entity;
 import com.l2jfree.util.L2Collections;

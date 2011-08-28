@@ -29,5 +29,5 @@ public @interface ConfigClass
 	
 	public String fileName();
 	
-	public String[] comment() default {};
+	public String[] comment() default { };
 }
