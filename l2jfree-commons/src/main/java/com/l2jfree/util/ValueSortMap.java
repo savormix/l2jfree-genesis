@@ -29,7 +29,7 @@ import java.util.Set;
  * This class is used to show how you can sort a java.uti.Map for values. This also takes care of
  * null and duplicate values present in the map.
  */
-@SuppressWarnings( { "unchecked", "rawtypes" })
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class ValueSortMap
 {
 	public Map<Integer, Integer> sortThis(Map<Integer, Integer> map, boolean asc)
@@ -183,7 +183,7 @@ public class ValueSortMap
 				sortedMap.put(key, value);
 			}
 			
-			if (ascendingOrder == null || ascendingOrder)
+			if (ascendingOrder == null || ascendingOrder.booleanValue())
 			{
 				// Add Null Values in the last of the LinkedHasMap
 				sortedMap.putAll(hmNullValueMap);

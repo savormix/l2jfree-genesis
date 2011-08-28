@@ -15,7 +15,6 @@
 package com.l2jfree.util.jar;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 
@@ -67,11 +66,11 @@ public class Version
 			
 			setVersionNumber(attrs);
 		}
-		catch (IOException e)
+		catch (Exception e) // IOException | RuntimeException
 		{
 			if (_log.isErrorEnabled())
 				_log.error("Unable to get Soft information\nFile name '"
-						+ (jarName == null ? "null" : jarName.getAbsolutePath()) + "' isn't a valid jar", e);
+								+ (jarName == null ? "null" : jarName.getAbsolutePath()) + "' isn't a valid jar", e);
 		}
 		
 	}

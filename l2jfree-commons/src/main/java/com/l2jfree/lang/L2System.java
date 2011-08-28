@@ -62,7 +62,7 @@ public final class L2System
 		return TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - ZERO);
 	}
 	*/
-
+	
 	/**
 	 * Copy of HashMap.hash(int).
 	 * 
@@ -112,6 +112,7 @@ public final class L2System
 		return (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576;
 	}
 	
+	@SuppressWarnings("restriction")
 	public static void dumpHeap(boolean live)
 	{
 		try
@@ -138,6 +139,7 @@ public final class L2System
 		}
 	}
 	
+	@SuppressWarnings("restriction")
 	private static final class HotSpotDiagnosticMXBeanHolder
 	{
 		static
