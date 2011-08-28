@@ -232,7 +232,7 @@ public class ValueSortMap
 				}
 			}
 			
-			if (ascendingOrder == null || ascendingOrder)
+			if (ascendingOrder == null || ascendingOrder.booleanValue())
 			{
 				// Add Null Values in the last of the LinkedHasMap
 				sortedMap.putAll(hmNullValueMap);

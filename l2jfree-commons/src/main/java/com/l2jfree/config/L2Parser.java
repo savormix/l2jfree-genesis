@@ -19,7 +19,7 @@ package com.l2jfree.config;
  */
 public final class L2Parser
 {
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static Object get(Class<?> type, String value)
 	{
 		if (type == Boolean.class || type == Boolean.TYPE)

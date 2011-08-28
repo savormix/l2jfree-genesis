@@ -33,6 +33,7 @@ import com.l2jfree.util.logging.L2Logger;
 /**
  * @author NB4L1
  */
+@SuppressWarnings("restriction")
 public final class L2System
 {
 	private static final L2Logger _log = L2Logger.getLogger(L2System.class);
@@ -112,7 +113,6 @@ public final class L2System
 		return (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576;
 	}
 	
-	@SuppressWarnings("restriction")
 	public static void dumpHeap(boolean live)
 	{
 		try
@@ -139,7 +139,6 @@ public final class L2System
 		}
 	}
 	
-	@SuppressWarnings("restriction")
 	private static final class HotSpotDiagnosticMXBeanHolder
 	{
 		static

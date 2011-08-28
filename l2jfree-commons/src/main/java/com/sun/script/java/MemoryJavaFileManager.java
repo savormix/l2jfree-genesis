@@ -44,8 +44,8 @@ import java.util.Map;
 import javax.tools.FileObject;
 import javax.tools.JavaFileManager;
 import javax.tools.JavaFileObject;
-import javax.tools.SimpleJavaFileObject;
 import javax.tools.JavaFileObject.Kind;
+import javax.tools.SimpleJavaFileObject;
 
 import org.eclipse.jdt.internal.compiler.tool.EclipseFileManager;
 
@@ -99,7 +99,10 @@ public final class MemoryJavaFileManager extends EclipseFileManager
 			return CharBuffer.wrap(code);
 		}
 		
-		public Reader openReader()
+		@Override
+		// most likely this was wrong
+		//public Reader openReader()
+		public Reader openReader(boolean ignoreEncodingErrors) throws IOException
 		{
 			return new StringReader(code);
 		}
