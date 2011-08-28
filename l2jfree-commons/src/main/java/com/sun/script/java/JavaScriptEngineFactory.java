@@ -41,31 +41,37 @@ import javax.script.ScriptEngineFactory;
  */
 public class JavaScriptEngineFactory implements ScriptEngineFactory
 {
+	@Override
 	public String getEngineName()
 	{
 		return "java";
 	}
 	
+	@Override
 	public String getEngineVersion()
 	{
 		return "1.6";
 	}
 	
+	@Override
 	public List<String> getExtensions()
 	{
 		return extensions;
 	}
 	
+	@Override
 	public String getLanguageName()
 	{
 		return "java";
 	}
 	
+	@Override
 	public String getLanguageVersion()
 	{
 		return "1.6";
 	}
 	
+	@Override
 	public String getMethodCallSyntax(String obj, String m, String... args)
 	{
 		StringBuilder buf = new StringBuilder();
@@ -86,16 +92,19 @@ public class JavaScriptEngineFactory implements ScriptEngineFactory
 		return buf.toString();
 	}
 	
+	@Override
 	public List<String> getMimeTypes()
 	{
 		return mimeTypes;
 	}
 	
+	@Override
 	public List<String> getNames()
 	{
 		return names;
 	}
 	
+	@Override
 	public String getOutputStatement(String toDisplay)
 	{
 		StringBuilder buf = new StringBuilder();
@@ -121,6 +130,7 @@ public class JavaScriptEngineFactory implements ScriptEngineFactory
 		return buf.toString();
 	}
 	
+	@Override
 	public String getParameter(String key)
 	{
 		if (key.equals(ScriptEngine.ENGINE))
@@ -153,6 +163,7 @@ public class JavaScriptEngineFactory implements ScriptEngineFactory
 		}
 	}
 	
+	@Override
 	public String getProgram(String... statements)
 	{
 		// we generate a Main class with main method
@@ -176,6 +187,7 @@ public class JavaScriptEngineFactory implements ScriptEngineFactory
 		return buf.toString();
 	}
 	
+	@Override
 	public ScriptEngine getScriptEngine()
 	{
 		JavaScriptEngine engine = new JavaScriptEngine();

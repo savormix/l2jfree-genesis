@@ -19,6 +19,7 @@ package com.l2jfree.config.postloadhooks;
  */
 public final class DefaultPostLoadHook implements PostLoadHook
 {
+	@Override
 	public void valueLoaded(Object obj)
 	{
 		// do nothing

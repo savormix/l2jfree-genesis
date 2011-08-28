@@ -86,28 +86,33 @@ public class JavaScriptEngine extends AbstractScriptEngine implements Compilable
 		}
 	}
 	
+	@Override
 	public CompiledScript compile(String script) throws ScriptException
 	{
 		Class<?> clazz = parse(script, context);
 		return new JavaCompiledScript(clazz);
 	}
 	
+	@Override
 	public CompiledScript compile(Reader reader) throws ScriptException
 	{
 		return compile(readFully(reader));
 	}
 	
+	@Override
 	public Object eval(String str, ScriptContext ctx) throws ScriptException
 	{
 		Class<?> clazz = parse(str, ctx);
 		return evalClass(clazz, ctx);
 	}
 	
+	@Override
 	public Object eval(Reader reader, ScriptContext ctx) throws ScriptException
 	{
 		return eval(readFully(reader), ctx);
 	}
 	
+	@Override
 	public ScriptEngineFactory getFactory()
 	{
 		synchronized (this)
@@ -120,6 +125,7 @@ public class JavaScriptEngine extends AbstractScriptEngine implements Compilable
 		return factory;
 	}
 	
+	@Override
 	public Bindings createBindings()
 	{
 		return new SimpleBindings();
