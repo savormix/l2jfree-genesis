@@ -1,0 +1,25 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.l2jfree.com"
+	xmlns="http://www.l2jfree.com" elementFormDefault="qualified">
+	<xs:element name="database">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:sequence>
+					<xs:element name="table" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:attribute name="name" type="xs:string" use="required" />
+							<xs:attribute name="definition" type="xs:string" use="required" />
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:sequence>
+					<xs:element name="update" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:attribute name="revision" type="xs:string" use="required" />
+							<xs:attribute name="query" type="xs:string" use="required" />
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
