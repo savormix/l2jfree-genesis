@@ -64,7 +64,7 @@ public abstract class PacketHandler<T extends MMOConnection<T, RP, SP>, RP exten
 	private void logUnexpectedBehaviour(String message, ByteBuffer buf, T client, Class<? extends RP> packetClazz,
 			int opcode, int... additionalOpcodes)
 	{
-		final L2TextBuilder sb = L2TextBuilder.newInstance();
+		final L2TextBuilder sb = new L2TextBuilder();
 		
 		sb.append(getClass().getSimpleName()).append(": ").append(message).append(": ");
 		

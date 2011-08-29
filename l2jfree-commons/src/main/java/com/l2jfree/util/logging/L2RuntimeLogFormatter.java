@@ -3,12 +3,12 @@
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation, either version 3 of the License, or (at your option) any later
  * version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -19,13 +19,12 @@ import java.io.StringWriter;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
-import javolution.text.TextBuilder;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.l2jfree.L2Config;
 import com.l2jfree.Util;
+import com.l2jfree.lang.L2TextBuilder;
 
 /**
  * @author NB4L1
@@ -33,7 +32,7 @@ import com.l2jfree.Util;
 public abstract class L2RuntimeLogFormatter extends L2LogFormatter
 {
 	@Override
-	protected final void format0(LogRecord record, TextBuilder tb)
+	protected final void format0(LogRecord record, L2TextBuilder tb)
 	{
 		if (record instanceof Util.PrintSectionLogRecord)
 		{
@@ -53,7 +52,7 @@ public abstract class L2RuntimeLogFormatter extends L2LogFormatter
 		appendThrown(record, tb);
 	}
 	
-	protected final void appendThrown(LogRecord record, TextBuilder tb)
+	protected final void appendThrown(LogRecord record, L2TextBuilder tb)
 	{
 		Throwable throwable = record.getThrown();
 		

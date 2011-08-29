@@ -48,7 +48,7 @@ public abstract class L2Object implements L2Entity<Integer>
 	@Override
 	public String toString()
 	{
-		final L2TextBuilder tb = L2TextBuilder.newInstance();
+		final L2TextBuilder tb = new L2TextBuilder();
 		tb.append("(");
 		tb.append(getClass().getSimpleName());
 		tb.append(") ");

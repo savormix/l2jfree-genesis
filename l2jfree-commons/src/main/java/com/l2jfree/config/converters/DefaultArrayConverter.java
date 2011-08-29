@@ -58,7 +58,7 @@ public class DefaultArrayConverter implements Converter
 			return "";
 		
 		final int length = Array.getLength(obj);
-		final L2TextBuilder tb = L2TextBuilder.newInstance();
+		final L2TextBuilder tb = new L2TextBuilder();
 		
 		for (int i = 0; i < length; i++)
 		{

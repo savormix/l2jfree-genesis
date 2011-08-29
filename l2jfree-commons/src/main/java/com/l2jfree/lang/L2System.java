@@ -119,7 +119,7 @@ public final class L2System
 		{
 			FileUtils.forceMkdir(new File("log/heapdumps"));
 			
-			final L2TextBuilder tb = L2TextBuilder.newInstance();
+			final L2TextBuilder tb = new L2TextBuilder();
 			tb.append("log/heapdumps/HeapDump_");
 			tb.append(new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date()));
 			tb.append("_uptime-").append(L2Config.getShortUptime());

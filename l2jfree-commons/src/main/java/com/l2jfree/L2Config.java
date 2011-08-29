@@ -3,12 +3,12 @@
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation, either version 3 of the License, or (at your option) any later
  * version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -34,8 +34,6 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
-
-import javolution.text.TextBuilder;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -74,7 +72,7 @@ public abstract class L2Config
 		final long h = uptimeInSec / 3600 % 24;
 		final long d = uptimeInSec / 86400;
 		
-		final L2TextBuilder tb = L2TextBuilder.newInstance();
+		final L2TextBuilder tb = new L2TextBuilder();
 		
 		if (d > 0)
 			tb.append(d + " day(s), ");
@@ -105,7 +103,7 @@ public abstract class L2Config
 		final long h = uptimeInSec / 3600 % 24;
 		final long d = uptimeInSec / 86400;
 		
-		final L2TextBuilder tb = L2TextBuilder.newInstance();
+		final L2TextBuilder tb = new L2TextBuilder();
 		
 		if (d > 0)
 			tb.append(d + "d");
@@ -189,7 +187,7 @@ public abstract class L2Config
 			if (!f.getName().endsWith("jar"))
 				continue;
 			
-			final TextBuilder sb = TextBuilder.newInstance();
+			final L2TextBuilder sb = new L2TextBuilder();
 			
 			final StringTokenizer st = new StringTokenizer(f.getName(), "-");
 			
@@ -215,8 +213,7 @@ public abstract class L2Config
 				sb.append(token);
 			}
 			
-			String str = sb.toString();
-			TextBuilder.recycle(sb);
+			String str = sb.moveToString();
 			List<String> list = libs.get(str);
 			
 			if (list == null)

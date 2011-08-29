@@ -154,7 +154,7 @@ public final class L2DataSourceMySQL extends L2DataSource
 		Process run = null;
 		try
 		{
-			final L2TextBuilder tb = L2TextBuilder.newInstance();
+			final L2TextBuilder tb = new L2TextBuilder();
 			tb.append("mysqldump");
 			tb.append(" --user=").append(getComboPooledDataSource().getUser());
 			tb.append(" --password=").append(getComboPooledDataSource().getPassword());

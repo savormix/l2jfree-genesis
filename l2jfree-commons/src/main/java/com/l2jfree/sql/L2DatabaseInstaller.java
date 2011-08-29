@@ -228,7 +228,7 @@ public final class L2DatabaseInstaller
 		{
 			con = L2Database.getConnection();
 			
-			L2TextBuilder tb = L2TextBuilder.newInstance();
+			L2TextBuilder tb = new L2TextBuilder();
 			tb.append("CREATE TABLE _revision (");
 			tb.append("  revision DECIMAL NOT NULL,");
 			tb.append("  date BIGINT NOT NULL,");

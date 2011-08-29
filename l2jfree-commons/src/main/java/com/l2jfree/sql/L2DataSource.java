@@ -260,7 +260,7 @@ public abstract class L2DataSource implements DataSource
 		
 		final Date time = new Date();
 		
-		final L2TextBuilder tb = L2TextBuilder.newInstance();
+		final L2TextBuilder tb = new L2TextBuilder();
 		tb.append("backup/database/DatabaseBackup_");
 		tb.append(new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date()));
 		tb.append("_uptime-").append(L2Config.getShortUptime());

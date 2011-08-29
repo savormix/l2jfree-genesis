@@ -211,7 +211,7 @@ public final class StringUtil
 	 */
 	public static String concat(final Object... objects)
 	{
-		final L2TextBuilder tb = L2TextBuilder.newInstance(getLength(objects));
+		final L2TextBuilder tb = new L2TextBuilder(getLength(objects));
 		
 		for (final Object string : objects)
 		{

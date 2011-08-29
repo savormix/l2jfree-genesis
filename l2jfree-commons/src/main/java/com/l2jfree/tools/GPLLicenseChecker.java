@@ -104,7 +104,7 @@ public final class GPLLicenseChecker extends L2Config
 				return;
 			
 			// GPL license check
-			final L2TextBuilder tb = L2TextBuilder.newInstance();
+			final L2TextBuilder tb = new L2TextBuilder();
 			
 			if (!CLEARED)
 				for (String line : CONFIDENTIAL)

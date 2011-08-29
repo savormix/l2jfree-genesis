@@ -56,7 +56,7 @@ public final class L2DataSourceSQLite extends L2DataSource
 			ps1.close();
 			
 			// source: http://www.sqlite.org/cvstrac/wiki?p=InformationSchema
-			final L2TextBuilder tb = L2TextBuilder.newInstance();
+			final L2TextBuilder tb = new L2TextBuilder();
 			tb.append("CREATE VIEW INFORMATION_SCHEMA_TABLES AS");
 			tb.append("    SELECT 'main'     AS TABLE_CATALOG,");
 			tb.append("           'sqlite'   AS TABLE_SCHEMA,");

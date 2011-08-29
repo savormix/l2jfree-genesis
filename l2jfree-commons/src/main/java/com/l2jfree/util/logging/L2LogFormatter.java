@@ -3,12 +3,12 @@
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation, either version 3 of the License, or (at your option) any later
  * version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -18,8 +18,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
-
-import javolution.text.TextBuilder;
 
 import com.l2jfree.lang.L2TextBuilder;
 
@@ -33,7 +31,7 @@ public abstract class L2LogFormatter extends Formatter
 	@Override
 	public final String format(LogRecord record)
 	{
-		L2TextBuilder tb = L2TextBuilder.newInstance();
+		L2TextBuilder tb = new L2TextBuilder();
 		
 		format0(record, tb);
 		
@@ -42,19 +40,19 @@ public abstract class L2LogFormatter extends Formatter
 		return tb.moveToString();
 	}
 	
-	protected abstract void format0(LogRecord record, TextBuilder tb);
+	protected abstract void format0(LogRecord record, L2TextBuilder tb);
 	
-	protected final void appendDate(LogRecord record, TextBuilder tb)
+	protected final void appendDate(LogRecord record, L2TextBuilder tb)
 	{
 		tb.append("[").append(DATE_FORMAT.format(new Date(record.getMillis()))).append("] ");
 	}
 	
-	protected final void appendMessage(LogRecord record, TextBuilder tb)
+	protected final void appendMessage(LogRecord record, L2TextBuilder tb)
 	{
 		tb.append(record.getMessage());
 	}
 	
-	protected final void appendParameters(LogRecord record, TextBuilder tb, String separator, boolean before)
+	protected final void appendParameters(LogRecord record, L2TextBuilder tb, String separator, boolean before)
 	{
 		if (record.getParameters() != null)
 		{
@@ -77,7 +75,7 @@ public abstract class L2LogFormatter extends Formatter
 		}
 	}
 	
-	protected final void appendNewline(TextBuilder tb)
+	protected final void appendNewline(L2TextBuilder tb)
 	{
 		tb.append("\r\n");
 	}

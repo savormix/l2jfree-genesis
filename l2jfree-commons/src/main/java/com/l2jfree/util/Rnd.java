@@ -224,7 +224,7 @@ public final class Rnd
 	
 	public static String getString(int length, CharSequence source)
 	{
-		final L2TextBuilder tb = L2TextBuilder.newInstance(length);
+		final L2TextBuilder tb = new L2TextBuilder(length);
 		
 		for (int i = 0; i < length; i++)
 			tb.append(source.charAt(Rnd.get(source.length())));
