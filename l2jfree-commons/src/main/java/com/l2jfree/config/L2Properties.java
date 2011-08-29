@@ -401,7 +401,7 @@ public final class L2Properties implements Serializable
 		return L2Parser.getString(value);
 	}
 	
-	public <T extends Enum<T>> T getEnum(Object name, Class<T> enumClass)
+	public <T extends Enum<T>> T getEnum(Class<T> enumClass, Object name)
 	{
 		final String value = getProperty(name);
 		
