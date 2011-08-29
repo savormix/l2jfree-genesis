@@ -21,7 +21,7 @@ import com.l2jfree.util.logging.L2Logger;
 
 public final class L2World
 {
-	private static final L2Logger _log = L2Logger.getLog(L2World.class);
+	private static final L2Logger _log = L2Logger.getLogger(L2World.class);
 	
 	public static final int MAP_MIN_X = -327680; // ((10 - 19) - 1) * 32768
 	public static final int MAP_MAX_X = 229376; // ((26 - 19)) * 32768

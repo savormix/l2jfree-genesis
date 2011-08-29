@@ -281,12 +281,7 @@ public abstract class L2Config
 			@Override
 			protected void handleLine(String line)
 			{
-				final StackTraceElement caller = getCaller();
-				
-				if (caller == null)
-					_log.logp(Level.INFO, "", "", line);
-				else
-					_log.logp(Level.INFO, caller.getClassName(), caller.getMethodName(), line);
+				_log.logp(Level.INFO, getCaller(), line);
 			}
 		}));
 		
@@ -294,12 +289,7 @@ public abstract class L2Config
 			@Override
 			protected void handleLine(String line)
 			{
-				final StackTraceElement caller = getCaller();
-				
-				if (caller == null)
-					_log.logp(Level.WARNING, "", "", line);
-				else
-					_log.logp(Level.WARNING, caller.getClassName(), caller.getMethodName(), line);
+				_log.logp(Level.WARNING, getCaller(), line);
 			}
 		}));
 	}

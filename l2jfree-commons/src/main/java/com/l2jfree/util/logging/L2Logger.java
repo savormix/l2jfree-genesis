@@ -15,6 +15,7 @@
 package com.l2jfree.util.logging;
 
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 /**
@@ -22,55 +23,92 @@ import java.util.logging.Logger;
  * 
  * @author NB4L1
  */
-public class L2Logger extends Logger
+public final class L2Logger
 {
 	public static L2Logger getLogger(Class<?> clazz)
 	{
-		return (L2Logger)Logger.getLogger(clazz.getName());
+		return new L2Logger(clazz.getName());
 	}
 	
 	public static L2Logger getLogger(String name)
 	{
-		return (L2Logger)Logger.getLogger(name);
+		return new L2Logger(name);
 	}
 	
-	public static L2Logger getLog(Class<?> clazz)
+	private final Logger _logger;
+	
+	private L2Logger(String name)
 	{
-		return (L2Logger)Logger.getLogger(clazz.getName());
+		_logger = Logger.getLogger(name);
 	}
 	
-	public static L2Logger getLog(String name)
+	/**
+	 * Log a LogRecord.
+	 * 
+	 * @param record the LogRecord to be published
+	 */
+	public void log(LogRecord record)
 	{
-		return (L2Logger)Logger.getLogger(name);
+		_logger.log(record);
 	}
 	
-	public L2Logger(String name, String resourceBundleName)
+	private void log0(Level level, StackTraceElement caller, Object message, Throwable exception)
 	{
-		super(name, resourceBundleName);
+		if (!_logger.isLoggable(level))
+			return;
+		
+		if (caller == null)
+			caller = new Throwable().getStackTrace()[2];
+		
+		_logger.logp(level, caller.getClassName(), caller.getMethodName(), String.valueOf(message), exception);
 	}
 	
-	private void log0(Level level, String msg, Throwable ex)
+	/**
+	 * Logs a message.
+	 * 
+	 * @param level log at this level
+	 * @param message to log
+	 */
+	public void log(Level level, Object message)
 	{
-		if (isLoggable(level))
-		{
-			// Hack (?) to get the stack trace.
-			StackTraceElement locations[] = new Throwable().getStackTrace();
-			
-			// Caller will be the third element
-			String cname = "unknown";
-			String method = "unknown";
-			if (locations != null && locations.length > 2)
-			{
-				StackTraceElement caller = locations[2];
-				cname = caller.getClassName();
-				method = caller.getMethodName();
-			}
-			
-			if (ex == null)
-				logp(level, cname, method, msg);
-			else
-				logp(level, cname, method, msg, ex);
-		}
+		log0(level, null, message, null);
+	}
+	
+	/**
+	 * Logs a message.
+	 * 
+	 * @param level log at this level
+	 * @param message to log
+	 * @param exception log this cause
+	 */
+	public void log(Level level, Object message, Throwable exception)
+	{
+		log0(level, null, message, exception);
+	}
+	
+	/**
+	 * Logs a message.
+	 * 
+	 * @param level log at this level
+	 * @param caller location of code that issued the logging request
+	 * @param message to log
+	 */
+	public void logp(Level level, StackTraceElement caller, Object message)
+	{
+		log0(level, caller, message, null);
+	}
+	
+	/**
+	 * Logs a message.
+	 * 
+	 * @param level log at this level
+	 * @param caller location of code that issued the logging request
+	 * @param message to log
+	 * @param exception log this cause
+	 */
+	public void logp(Level level, StackTraceElement caller, Object message, Throwable exception)
+	{
+		log0(level, caller, message, exception);
 	}
 	
 	/**
@@ -80,7 +118,7 @@ public class L2Logger extends Logger
 	 */
 	public void debug(Object message)
 	{
-		log0(Level.FINE, String.valueOf(message), null);
+		log0(Level.FINE, null, message, null);
 	}
 	
 	/**
@@ -91,7 +129,7 @@ public class L2Logger extends Logger
 	 */
 	public void debug(Object message, Throwable exception)
 	{
-		log0(Level.FINE, String.valueOf(message), exception);
+		log0(Level.FINE, null, message, exception);
 	}
 	
 	/**
@@ -101,7 +139,7 @@ public class L2Logger extends Logger
 	 */
 	public void error(Object message)
 	{
-		log0(Level.SEVERE, String.valueOf(message), null);
+		log0(Level.SEVERE, null, message, null);
 	}
 	
 	/**
@@ -112,7 +150,7 @@ public class L2Logger extends Logger
 	 */
 	public void error(Object message, Throwable exception)
 	{
-		log0(Level.SEVERE, String.valueOf(message), exception);
+		log0(Level.SEVERE, null, message, exception);
 	}
 	
 	/**
@@ -122,7 +160,7 @@ public class L2Logger extends Logger
 	 */
 	public void fatal(Object message)
 	{
-		log0(Level.SEVERE, String.valueOf(message), null);
+		log0(Level.SEVERE, null, message, null);
 	}
 	
 	/**
@@ -133,7 +171,7 @@ public class L2Logger extends Logger
 	 */
 	public void fatal(Object message, Throwable exception)
 	{
-		log0(Level.SEVERE, String.valueOf(message), exception);
+		log0(Level.SEVERE, null, message, exception);
 	}
 	
 	/**
@@ -143,7 +181,7 @@ public class L2Logger extends Logger
 	 */
 	public void info(Object message)
 	{
-		log0(Level.INFO, String.valueOf(message), null);
+		log0(Level.INFO, null, message, null);
 	}
 	
 	/**
@@ -154,7 +192,18 @@ public class L2Logger extends Logger
 	 */
 	public void info(Object message, Throwable exception)
 	{
-		log0(Level.INFO, String.valueOf(message), exception);
+		log0(Level.INFO, null, message, exception);
+	}
+	
+	/**
+	 * Is logging currently enabled at the given level?
+	 * 
+	 * @param level the level to check
+	 * @return boolean
+	 */
+	public boolean isLoggable(Level level)
+	{
+		return _logger.isLoggable(level);
 	}
 	
 	/**
@@ -224,7 +273,7 @@ public class L2Logger extends Logger
 	 */
 	public void trace(Object message)
 	{
-		log0(Level.FINEST, String.valueOf(message), null);
+		log0(Level.FINEST, null, message, null);
 	}
 	
 	/**
@@ -235,7 +284,7 @@ public class L2Logger extends Logger
 	 */
 	public void trace(Object message, Throwable exception)
 	{
-		log0(Level.FINEST, String.valueOf(message), exception);
+		log0(Level.FINEST, null, message, exception);
 	}
 	
 	/**
@@ -245,7 +294,7 @@ public class L2Logger extends Logger
 	 */
 	public void warn(Object message)
 	{
-		log0(Level.WARNING, String.valueOf(message), null);
+		log0(Level.WARNING, null, message, null);
 	}
 	
 	/**
@@ -256,6 +305,6 @@ public class L2Logger extends Logger
 	 */
 	public void warn(Object message, Throwable exception)
 	{
-		log0(Level.WARNING, String.valueOf(message), exception);
+		log0(Level.WARNING, null, message, exception);
 	}
 }

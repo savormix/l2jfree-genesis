@@ -93,7 +93,7 @@ public abstract class L2DataSource implements DataSource
 		public abstract L2DataSource createDataSource(String name, ComboPooledDataSource dataSource);
 	}
 	
-	protected static final L2Logger _log = L2Logger.getLog(L2DataSource.class);
+	protected static final L2Logger _log = L2Logger.getLogger(L2DataSource.class);
 	
 	public static L2DataSource valueOf(String name, ComboPooledDataSource dataSource)
 	{
