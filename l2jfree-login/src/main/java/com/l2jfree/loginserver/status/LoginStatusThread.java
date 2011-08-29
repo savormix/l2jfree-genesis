@@ -24,6 +24,13 @@ import com.l2jfree.status.StatusThread;
  */
 public final class LoginStatusThread extends StatusThread
 {
+	/**
+	 * Constructs a thread that handles a connection.
+	 * 
+	 * @param server server
+	 * @param socket connection
+	 * @throws IOException if thread creation failed
+	 */
 	public LoginStatusThread(LoginStatusServer server, Socket socket) throws IOException
 	{
 		super(server, socket);

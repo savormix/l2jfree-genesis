@@ -49,7 +49,7 @@ public final class L2ClientSecurity
 	{
 		_sessionId = new AtomicInteger();
 		
-		new Updater();
+		new Updater().hashCode();
 		_log.info("Generated " + getKeyPairs().length + " RSA key pairs (client).");
 		_log.info("Generated " + getBlowfishKeys().length + " Blowfish keys (client).");
 		

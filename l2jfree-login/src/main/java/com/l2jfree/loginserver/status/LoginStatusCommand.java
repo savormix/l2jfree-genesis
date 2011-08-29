@@ -21,6 +21,12 @@ import com.l2jfree.status.StatusCommand;
  */
 public abstract class LoginStatusCommand extends StatusCommand
 {
+	/**
+	 * Creates a telnet command handler.
+	 * 
+	 * @param description command description
+	 * @param commands handled commands
+	 */
 	protected LoginStatusCommand(String description, String... commands)
 	{
 		super(description, commands);

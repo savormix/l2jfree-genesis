@@ -41,7 +41,7 @@ public final class L2LegacyGameServerSecurity
 	
 	private L2LegacyGameServerSecurity()
 	{
-		new Updater();
+		new Updater().hashCode();
 		_log.info("Generated " + getKeyPairs().length + " RSA key pairs (legacy game server).");
 		
 		try

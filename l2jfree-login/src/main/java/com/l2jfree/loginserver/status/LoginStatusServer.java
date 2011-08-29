@@ -27,12 +27,22 @@ public final class LoginStatusServer extends StatusServer
 {
 	private static LoginStatusServer _instance;
 	
+	/**
+	 * Lazy instantiator.
+	 * 
+	 * @throws IOException if instantiation failed
+	 */
 	public static void initInstance() throws IOException
 	{
 		if (_instance == null)
 			_instance = new LoginStatusServer();
 	}
 	
+	/**
+	 * Broadcasts a message to all connections.
+	 * 
+	 * @param message message
+	 */
 	public static void tryBroadcast(String message)
 	{
 		if (_instance != null)
