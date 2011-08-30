@@ -35,7 +35,7 @@ public abstract class L2LogFormatter extends Formatter
 		
 		format0(record, tb);
 		
-		appendNewline(tb);
+		tb.appendNewline();
 		
 		return tb.moveToString();
 	}
@@ -73,10 +73,5 @@ public abstract class L2LogFormatter extends Formatter
 				}
 			}
 		}
-	}
-	
-	protected final void appendNewline(L2TextBuilder tb)
-	{
-		tb.append("\r\n");
 	}
 }

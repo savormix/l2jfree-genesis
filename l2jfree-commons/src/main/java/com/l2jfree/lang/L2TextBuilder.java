@@ -45,9 +45,21 @@ public final class L2TextBuilder implements Serializable
 		_builder.append(str);
 	}
 	
+	public L2TextBuilder appendln()
+	{
+		append("\r\n");
+		return this;
+	}
+	
 	public L2TextBuilder appendln(Object obj)
 	{
 		append(obj);
+		appendln();
+		return this;
+	}
+	
+	public L2TextBuilder appendNewline()
+	{
 		append("\r\n");
 		return this;
 	}
@@ -55,7 +67,7 @@ public final class L2TextBuilder implements Serializable
 	public L2TextBuilder appendNewline(Object obj)
 	{
 		append(obj);
-		append("\r\n");
+		appendNewline();
 		return this;
 	}
 	

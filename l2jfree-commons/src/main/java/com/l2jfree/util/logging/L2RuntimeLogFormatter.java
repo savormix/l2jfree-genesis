@@ -76,7 +76,7 @@ public abstract class L2RuntimeLogFormatter extends L2LogFormatter
 				
 				throwable.printStackTrace(pw);
 				
-				appendNewline(tb);
+				tb.appendNewline();
 				tb.append(sw);
 			}
 			finally
