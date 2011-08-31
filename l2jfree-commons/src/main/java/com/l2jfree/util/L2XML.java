@@ -46,7 +46,7 @@ public final class L2XML
 		
 		/**
 		 * @param node
-		 * @return
+		 * @return boolean
 		 */
 		@SuppressWarnings("static-method")
 		protected boolean accept(Node node)

@@ -182,7 +182,7 @@ public final class L2Arrays
 		
 		/**
 		 * @param obj
-		 * @return
+		 * @return boolean
 		 */
 		@SuppressWarnings("static-method")
 		boolean allowElement(Object obj)
