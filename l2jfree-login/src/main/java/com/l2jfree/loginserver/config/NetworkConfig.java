@@ -32,7 +32,8 @@ public final class NetworkConfig extends ConfigPropertiesLoader
 	public static String LISTEN_IP;
 	
 	/** Login server listens for client connections on this port */
-	@ConfigField(name = "ListenPort", value = "2106", eternal = true, comment = { "Login Server will listen for CLIENT connections on this port." })
+	@ConfigField(name = "ListenPort", value = "2106", eternal = true,
+			comment = { "Login Server will listen for CLIENT connections on this port." })
 	public static int LISTEN_PORT;
 	
 	/** Whether to listen for legacy game servers */
@@ -42,10 +43,12 @@ public final class NetworkConfig extends ConfigPropertiesLoader
 	public static boolean ENABLE_LEGACY;
 	
 	/** Login server listens for legacy game server connections on this IP address */
-	@ConfigField(name = "LegacyListenIP", value = "127.0.0.1", eternal = true, comment = { "Login Server will accept LEGACY GAME SERVER connections coming to this IP address only." })
+	@ConfigField(name = "LegacyListenIP", value = "127.0.0.1", eternal = true,
+			comment = { "Login Server will accept LEGACY GAME SERVER connections coming to this IP address only." })
 	public static String LEGACY_LISTEN_IP;
 	
 	/** Login server listens for legacy game server connections on this port */
-	@ConfigField(name = "LegacyListenPort", value = "9014", eternal = true, comment = { "Login Server will listen for LEGACY GAME SERVER connections on this port." })
+	@ConfigField(name = "LegacyListenPort", value = "9014", eternal = true,
+			comment = { "Login Server will listen for LEGACY GAME SERVER connections on this port." })
 	public static int LEGACY_LISTEN_PORT;
 }

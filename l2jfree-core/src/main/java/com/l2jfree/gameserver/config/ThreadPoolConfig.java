@@ -26,7 +26,8 @@ public final class ThreadPoolConfig extends ConfigPropertiesLoader
 {
 	@ConfigField(name = "ScheduledThreadPoolCount", value = "-1", eternal = true, comment = {
 			"Determines the amount of created scheduled thread pools", //
-			"If set to -1 (which is recommended), the server will decide the amount depending on the available processors" })
+			"If set to -1 (which is recommended), "
+					+ "the server will decide the amount depending on the available processors" })
 	public static int SCHEDULED_THREAD_POOL_COUNT;
 	
 	@ConfigField(name = "ThreadsPerScheduledThreadPool", value = "4", eternal = true, comment = {
@@ -36,7 +37,8 @@ public final class ThreadPoolConfig extends ConfigPropertiesLoader
 	
 	@ConfigField(name = "InstantThreadPoolCount", value = "-1", eternal = true, comment = {
 			"Determines the amount of created instant thread pools", //
-			"If set to -1 (which is recommended), the server will decide the amount depending on the available processors" })
+			"If set to -1 (which is recommended), "
+					+ "the server will decide the amount depending on the available processors" })
 	public static int INSTANT_THREAD_POOL_COUNT;
 	
 	@ConfigField(name = "ThreadsPerInstantThreadPool", value = "2", eternal = true, comment = {

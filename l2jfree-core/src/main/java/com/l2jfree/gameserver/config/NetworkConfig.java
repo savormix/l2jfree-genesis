@@ -32,6 +32,7 @@ public final class NetworkConfig extends ConfigPropertiesLoader
 	public static String LISTEN_IP;
 	
 	/** Game server listens for client connections on this port */
-	@ConfigField(name = "ListenPort", value = "7777", eternal = true, comment = { "Game Server will listen for CLIENT connections on this port." })
+	@ConfigField(name = "ListenPort", value = "7777", eternal = true,
+			comment = { "Game Server will listen for CLIENT connections on this port." })
 	public static int LISTEN_PORT;
 }

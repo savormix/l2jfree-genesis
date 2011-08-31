@@ -27,12 +27,12 @@ import com.l2jfree.config.postloadhooks.SuperUserValidator;
 public final class DatabaseConfig extends ConfigPropertiesLoader
 {
 	/** Database JDBC URL */
-	@ConfigField(name = "JdbcUrl", value = "sqlite:l2jfree_login.db", eternal = true, converter = JdbcUrlConverter.class, comment = {
-			"Specifies the JDBC URL of the database.", //
-			"Some URLs:", //
-			"MySQL: mysql://host.or.ip/database", //
-			"PostgreSQL: postgresql://host.or.ip/database", //
-			"SQLite: sqlite:file.db" })
+	@ConfigField(name = "JdbcUrl", value = "sqlite:l2jfree_login.db", eternal = true,
+			converter = JdbcUrlConverter.class, comment = { "Specifies the JDBC URL of the database.", //
+					"Some URLs:", //
+					"MySQL: mysql://host.or.ip/database", //
+					"PostgreSQL: postgresql://host.or.ip/database", //
+					"SQLite: sqlite:file.db" })
 	public static String URL;
 	
 	/** Database login */

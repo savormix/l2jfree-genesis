@@ -26,7 +26,8 @@ import com.l2jfree.config.annotation.ConfigField;
 @ConfigClass(folderName = "config", fileName = "reported")
 public final class ReportedConfig extends ConfigPropertiesLoader
 {
-	@ConfigField(name = "ServerID", value = "1", eternal = true, comment = { "Server's name shown in the server list depends on this ID." })
+	@ConfigField(name = "ServerID", value = "1", eternal = true,
+			comment = { "Server's name shown in the server list depends on this ID." })
 	public static int ID;
 	
 	// TODO: when reloading, notify login servers
@@ -36,13 +37,15 @@ public final class ReportedConfig extends ConfigPropertiesLoader
 	@ConfigField(name = "AllowPvP", value = "true", comment = { "Whether PvP/PK is allowed in this server.",
 			"If disabled, players will not be allowed to engage in PvP."
 	// TODO: what about sieges, TW, cleft, arenas?
-	})
+			})
 	public static boolean PVP;
 	
-	@ConfigField(name = "MaxPlayers", value = "100", comment = { "Maximum number of players allowed to connect to this game server simultaneously." })
+	@ConfigField(name = "MaxPlayers", value = "100",
+			comment = { "Maximum number of players allowed to connect to this game server simultaneously." })
 	public static int MAX_ONLINE;
 	
-	@ConfigField(name = "Types", value = "0", comment = { "Server type bitmask, some of them show icons next to the server, like relax=clock, free=F, etc." })
+	@ConfigField(name = "Types", value = "0", comment = { "Server type bitmask, "
+			+ "some of them show icons next to the server, like relax=clock, free=F, etc." })
 	public static int TYPES;
 	
 	@ConfigField(name = "Brackets", value = "false", comment = { "Whether to show brackets before the server's name." })

@@ -25,10 +25,12 @@ import com.l2jfree.config.annotation.ConfigField;
 public final class SystemConfig extends ConfigPropertiesLoader
 {
 	/** Whether to dump heap after startup */
-	@ConfigField(name = "DumpHeapAfterStartup", value = "true", eternal = true, comment = { "Whether to dump heap after server startup or not." })
+	@ConfigField(name = "DumpHeapAfterStartup", value = "true", eternal = true,
+			comment = { "Whether to dump heap after server startup or not." })
 	public static boolean DUMP_HEAP_AFTER_STARTUP;
 	
 	/** Whether to dump heap before shutdown */
-	@ConfigField(name = "DumpHeapBeforeShutdown", value = "true", eternal = true, comment = { "Whether to dump heap before server shutdown or not." })
+	@ConfigField(name = "DumpHeapBeforeShutdown", value = "true", eternal = true,
+			comment = { "Whether to dump heap before server shutdown or not." })
 	public static boolean DUMP_HEAP_BEFORE_SHUTDOWN;
 }
