@@ -261,8 +261,8 @@ public final class L2DatabaseInstaller
 			con = L2Database.getConnection();
 			
 			// FIXME non-standard SQL
-			PreparedStatement ps = con
-					.prepareStatement("SELECT revision FROM _revision ORDER BY revision DESC LIMIT 1");
+			PreparedStatement ps =
+					con.prepareStatement("SELECT revision FROM _revision ORDER BY revision DESC LIMIT 1");
 			ResultSet rs = ps.executeQuery();
 			
 			if (rs.next())

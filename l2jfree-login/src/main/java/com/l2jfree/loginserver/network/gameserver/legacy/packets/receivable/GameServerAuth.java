@@ -100,8 +100,8 @@ public final class GameServerAuth extends L2LegacyGameServerPacket
 				try
 				{
 					con = L2Database.getConnection();
-					PreparedStatement ps = con
-							.prepareStatement("SELECT authData, allowBans FROM gameserver WHERE id = ?");
+					PreparedStatement ps =
+							con.prepareStatement("SELECT authData, allowBans FROM gameserver WHERE id = ?");
 					ps.setInt(1, _desiredId);
 					ResultSet rs = ps.executeQuery();
 					
@@ -155,8 +155,8 @@ public final class GameServerAuth extends L2LegacyGameServerPacket
 						try
 						{
 							con = L2Database.getConnection();
-							PreparedStatement ps = con
-									.prepareStatement("INSERT INTO gameserver (id, authData, allowBans) VALUES (?, ?, ?)");
+							PreparedStatement ps =
+									con.prepareStatement("INSERT INTO gameserver (id, authData, allowBans) VALUES (?, ?, ?)");
 							ps.setInt(1, _desiredId);
 							ps.setString(2, hexId);
 							ps.setBoolean(3, false);

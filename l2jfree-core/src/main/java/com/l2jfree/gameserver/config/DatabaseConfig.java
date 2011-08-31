@@ -29,7 +29,7 @@ public final class DatabaseConfig extends ConfigPropertiesLoader
 	/** Database JDBC URL */
 	@ConfigField(name = "JdbcUrl", value = "sqlite:l2jfree_core.db", eternal = true,
 			converter = JdbcUrlConverter.class, comment = { "Specifies the JDBC URL of the database.", //
-					"Some URLs:", // 
+					"Some URLs:", //
 					"MySQL: mysql://host.or.ip/database", //
 					"PostgreSQL: postgresql://host.or.ip/database", //
 					"SQLite: sqlite:file.db" })

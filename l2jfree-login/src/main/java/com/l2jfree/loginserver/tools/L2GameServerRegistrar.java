@@ -141,8 +141,8 @@ public final class L2GameServerRegistrar extends Config
 							try
 							{
 								con = L2Database.getConnection();
-								PreparedStatement ps = con
-										.prepareStatement("SELECT allowBans FROM gameserver WHERE id = ?");
+								PreparedStatement ps =
+										con.prepareStatement("SELECT allowBans FROM gameserver WHERE id = ?");
 								ps.setInt(1, reg.getId());
 								ResultSet rs = ps.executeQuery();
 								if (rs.next())
@@ -194,8 +194,8 @@ public final class L2GameServerRegistrar extends Config
 							try
 							{
 								con = L2Database.getConnection();
-								PreparedStatement ps = con
-										.prepareStatement("SELECT authData FROM gameserver WHERE id = ?");
+								PreparedStatement ps =
+										con.prepareStatement("SELECT authData FROM gameserver WHERE id = ?");
 								ps.setInt(1, reg.getId());
 								ResultSet rs = ps.executeQuery();
 								
@@ -208,8 +208,8 @@ public final class L2GameServerRegistrar extends Config
 									pro.setProperty("ServerID", String.valueOf(reg.getId()));
 									pro.setProperty("HexID", HexUtil.hexToString(b));
 									
-									BufferedOutputStream os = new BufferedOutputStream(
-											new FileOutputStream("hexid.txt"));
+									BufferedOutputStream os =
+											new BufferedOutputStream(new FileOutputStream("hexid.txt"));
 									pro.store(os, "the hexID to auth into login");
 									IOUtils.closeQuietly(os);
 									_log.info("hexid.txt has been generated.");
@@ -250,8 +250,8 @@ public final class L2GameServerRegistrar extends Config
 							try
 							{
 								con = L2Database.getConnection();
-								PreparedStatement ps = con
-										.prepareStatement("INSERT INTO gameserver (id, authData, allowBans) VALUES (?, ?, ?)");
+								PreparedStatement ps =
+										con.prepareStatement("INSERT INTO gameserver (id, authData, allowBans) VALUES (?, ?, ?)");
 								ps.setInt(1, reg.getId());
 								ps.setString(2, reg.getAuth());
 								ps.setBoolean(3, reg.isTrusted());

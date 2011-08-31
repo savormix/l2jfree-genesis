@@ -152,8 +152,8 @@ public final class L2AccountManager extends Config
 						try
 						{
 							con = L2Database.getConnection();
-							PreparedStatement ps = con
-									.prepareStatement("SELECT superuser FROM account WHERE username LIKE ?");
+							PreparedStatement ps =
+									con.prepareStatement("SELECT superuser FROM account WHERE username LIKE ?");
 							ps.setString(1, line);
 							ResultSet rs = ps.executeQuery();
 							if (!rs.next())
@@ -251,8 +251,8 @@ public final class L2AccountManager extends Config
 							try
 							{
 								con = L2Database.getConnection();
-								PreparedStatement ps = con
-										.prepareStatement("INSERT INTO account (username, password, superuser, birthDate, banReason) VALUES (?, ?, ?, ?, ?)");
+								PreparedStatement ps =
+										con.prepareStatement("INSERT INTO account (username, password, superuser, birthDate, banReason) VALUES (?, ?, ?, ?, ?)");
 								ps.setString(1, acm.getUser());
 								ps.setString(2, acm.getPass());
 								ps.setBoolean(3, acm.isSuper());
@@ -310,8 +310,8 @@ public final class L2AccountManager extends Config
 						try
 						{
 							con = L2Database.getConnection();
-							PreparedStatement ps = con
-									.prepareStatement("UPDATE account SET superuser = ? WHERE username LIKE ?");
+							PreparedStatement ps =
+									con.prepareStatement("UPDATE account SET superuser = ? WHERE username LIKE ?");
 							ps.setBoolean(1, true);
 							ps.setString(2, acm.getUser());
 							int cnt = ps.executeUpdate();
@@ -336,8 +336,8 @@ public final class L2AccountManager extends Config
 						try
 						{
 							con = L2Database.getConnection();
-							PreparedStatement ps = con
-									.prepareStatement("UPDATE account SET superuser = ? WHERE username LIKE ?");
+							PreparedStatement ps =
+									con.prepareStatement("UPDATE account SET superuser = ? WHERE username LIKE ?");
 							ps.setBoolean(1, false);
 							ps.setString(2, acm.getUser());
 							int cnt = ps.executeUpdate();
@@ -362,8 +362,8 @@ public final class L2AccountManager extends Config
 						try
 						{
 							con = L2Database.getConnection();
-							PreparedStatement ps = con
-									.prepareStatement("UPDATE account SET banReason = ? WHERE username LIKE ?");
+							PreparedStatement ps =
+									con.prepareStatement("UPDATE account SET banReason = ? WHERE username LIKE ?");
 							ps.setNull(1, Types.INTEGER);
 							ps.setString(2, acm.getUser());
 							int cnt = ps.executeUpdate();
@@ -388,8 +388,8 @@ public final class L2AccountManager extends Config
 						try
 						{
 							con = L2Database.getConnection();
-							PreparedStatement ps = con
-									.prepareStatement("SELECT superuser FROM account WHERE username LIKE ?");
+							PreparedStatement ps =
+									con.prepareStatement("SELECT superuser FROM account WHERE username LIKE ?");
 							ps.setString(1, line);
 							ResultSet rs = ps.executeQuery();
 							if (rs.next())
@@ -422,8 +422,8 @@ public final class L2AccountManager extends Config
 						{
 							int ban = Integer.parseInt(line);
 							con = L2Database.getConnection();
-							PreparedStatement ps = con
-									.prepareStatement("UPDATE account SET banReason = ? WHERE username LIKE ?");
+							PreparedStatement ps =
+									con.prepareStatement("UPDATE account SET banReason = ? WHERE username LIKE ?");
 							ps.setInt(1, ban);
 							ps.setString(2, acm.getUser());
 							ps.executeUpdate();

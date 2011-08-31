@@ -164,8 +164,9 @@ public abstract class L2DataSource implements DataSource
 			final List<String> tables = new ArrayList<String>();
 			
 			{
-				final PreparedStatement ps = con.prepareStatement("SELECT table_name FROM "
-						+ getInformationSchemaTables() + " WHERE table_type LIKE ? AND table_name LIKE ?");
+				final PreparedStatement ps =
+						con.prepareStatement("SELECT table_name FROM " + getInformationSchemaTables()
+								+ " WHERE table_type LIKE ? AND table_name LIKE ?");
 				ps.setString(1, "BASE_TABLE");
 				ps.setString(2, "_zzz%");
 				
@@ -214,8 +215,9 @@ public abstract class L2DataSource implements DataSource
 			// table did not exist in current schema
 			// we can look it up in information_schema now
 			{
-				final PreparedStatement ps = con.prepareStatement("SELECT table_catalog, table_schema FROM "
-						+ getInformationSchemaTables() + " WHERE table_type LIKE ? AND table_name LIKE ?");
+				final PreparedStatement ps =
+						con.prepareStatement("SELECT table_catalog, table_schema FROM " + getInformationSchemaTables()
+								+ " WHERE table_type LIKE ? AND table_name LIKE ?");
 				ps.setString(1, "BASE_TABLE");
 				ps.setString(2, table);
 				
@@ -319,8 +321,8 @@ public abstract class L2DataSource implements DataSource
 		{
 			con = getConnection();
 			
-			final PreparedStatement ps = con
-					.prepareStatement("SELECT table_name FROM "
+			final PreparedStatement ps =
+					con.prepareStatement("SELECT table_name FROM "
 							+ getInformationSchemaTables()
 							+ " WHERE table_type LIKE ? AND table_name LIKE ? AND table_schema LIKE ? AND table_catalog LIKE ?");
 			ps.setString(1, "BASE_TABLE");

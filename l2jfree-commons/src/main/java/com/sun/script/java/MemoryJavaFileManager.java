@@ -100,9 +100,9 @@ public final class MemoryJavaFileManager extends EclipseFileManager
 			return CharBuffer.wrap(code);
 		}
 		
-		@Override
 		// most likely this was wrong
 		//public Reader openReader()
+		@Override
 		public Reader openReader(boolean ignoreEncodingErrors) throws IOException
 		{
 			return new StringReader(code);

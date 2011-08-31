@@ -56,8 +56,8 @@ public final class ChangeAccessLevel extends L2LegacyGameServerPacket
 		try
 		{
 			con = L2Database.getConnection();
-			PreparedStatement ps = con
-					.prepareStatement("UPDATE account SET banReason = ?, superUser = ? WHERE username LIKE ?");
+			PreparedStatement ps =
+					con.prepareStatement("UPDATE account SET banReason = ?, superUser = ? WHERE username LIKE ?");
 			if (_level < 0)
 				ps.setInt(1, -_level);
 			else
