@@ -16,6 +16,7 @@ package com.l2jfree.gameserver.network.client.packets.sendable;
 
 import java.nio.ByteBuffer;
 
+import com.l2jfree.gameserver.config.ReportedConfig;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
@@ -27,23 +28,47 @@ import com.l2jfree.network.mmocore.MMOBuffer;
  */
 public final class ProtocolAnswer extends L2ServerPacket
 {
+	/** Default response to unsupported protocol versions. */
+	public static final ProtocolAnswer INCOMPATIBLE = new ProtocolAnswer();
+	
 	private static final int CLIENT_KEY_LENGTH = 8;
 	
 	private final boolean _compatible;
 	private final byte[] _key;
+	private final int _obfusKey;
 	
 	/**
-	 * Constructs a packet to inform the client about protocol compatibility and key to be used for
+	 * Constructs a packet to inform the client about protocol compatibility and keys to be used in
+	 * further communications.
+	 * 
+	 * @param key complete cipher's key
+	 * @param obfusKey client packet opcode obfuscation key
+	 */
+	public ProtocolAnswer(ByteBuffer key, int obfusKey)
+	{
+		this(true, key, obfusKey);
+	}
+	
+	/**
+	 * Constructs a packet to inform the client about protocol compatibility and keys to be used in
 	 * further communications.
 	 * 
 	 * @param compatible whether protocol versions are compatible
 	 * @param key complete cipher's key
+	 * @param obfusKey client packet opcode obfuscation key
 	 */
-	public ProtocolAnswer(boolean compatible, ByteBuffer key)
+	private ProtocolAnswer(boolean compatible, ByteBuffer key, int obfusKey)
 	{
 		_compatible = compatible;
 		_key = new byte[CLIENT_KEY_LENGTH];
 		key.get(_key, 0, _key.length);
+		_obfusKey = obfusKey;
+	}
+	
+	/** Constructs a packet to inform the client about protocol incompatibility. */
+	private ProtocolAnswer()
+	{
+		this(false, ByteBuffer.allocate(CLIENT_KEY_LENGTH), 0);
 	}
 	
 	@Override
@@ -59,8 +84,9 @@ public final class ProtocolAnswer extends L2ServerPacket
 		buf.writeB(_key);
 		
 		buf.writeD(0x01);
-		buf.writeD(0x01);
+		buf.writeD(ReportedConfig.ID);
 		buf.writeC(0x01);
-		buf.writeD(0x00);
+		
+		buf.writeD(_obfusKey);
 	}
 }

@@ -18,45 +18,56 @@ import java.nio.BufferUnderflowException;
 
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
-import com.l2jfree.gameserver.network.client.packets.sendable.ProtocolAnswer;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
+ * Client sends this packet in response to a compatible <TT>ProtocolAnswer</TT>.
+ * 
  * @author savormix
  */
-public final class ProtocolVersion extends L2ClientPacket
+@SuppressWarnings("unused")
+public final class RequestAuthorization extends L2ClientPacket
 {
-	/** Packet's identifier */
-	public static final int OPCODE = 0x0e;
-	
-	private int _version;
+	private String _account;
+	private int _accountId1;
+	private int _currentKey;
+	private int _accountId2;
+	private int _previousKey;
+	private int _unk1;
+	private int _bitsInBlock;
+	private long _unk2;
 	
 	@Override
 	protected int getMinimumLength()
 	{
-		return READ_D;
+		return (READ_S * 2) + READ_D + READ_D + READ_D + READ_D + READ_D + READ_D + READ_Q;
 	}
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
-		_version = buf.readD();
+		_account = buf.readS();
+		_accountId1 = buf.readD();
+		_currentKey = buf.readD();
+		_accountId2 = buf.readD();
+		_previousKey = buf.readD();
+		
+		_unk1 = buf.readD();
+		_bitsInBlock = buf.readD();
+		_unk2 = buf.readQ();
 	}
 	
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		_log.info("Protocol: " + _version);
+		//if (_accountId1 != _accountId2 || _unk1 != 1 || _bitsInBlock & 7 != 0 || _unk2 != 0)
 		
+		// TODO Auto-generated method stub
 		final L2Client client = getClient();
-		client.close(ProtocolAnswer.INCOMPATIBLE);
-		
-		/* TODO: after verifying
-		final int seed = Rnd.get(Integer.MIN_VALUE, Integer.MAX_VALUE);
-		client.getDeobfuscator().init(seed);
-		client.setState(L2ClientState.PROTOCOL_OK);
-		sendPacket(new ProtocolAnswer(true, client.getCipherKey(), seed));
-		*/
+		client.closeNow();
+		//client.setBitsInBlock(_bitsInBlock);
+		//client.setState(L2ClientState.CHARACTER_MANAGEMENT);
+		//sendPacket(new AvailableCharacters([...]));
 	}
 }

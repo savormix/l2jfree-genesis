@@ -23,6 +23,7 @@ import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.DataSizeHolder;
 import com.l2jfree.network.mmocore.MMOConnection;
 import com.l2jfree.security.CoreCipher;
+import com.l2jfree.security.ObfuscationService;
 
 /**
  * @author savormix
@@ -32,16 +33,29 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	private final CoreCipher _cipher;
 	private boolean _firstTime;
 	
-	private L2ClientState _state;
+	private final ObfuscationService _deobfuscator;
 	
-	protected L2Client(L2ClientController mmoController, SocketChannel socketChannel) throws ClosedChannelException
+	private L2ClientState _state;
+	private int _bitsInBlock;
+	
+	/**
+	 * Creates an internal object representing a game client connection.
+	 * 
+	 * @param mmoController connection manager
+	 * @param socketChannel connection
+	 * @throws ClosedChannelException if the given channel was closed during operations
+	 */
+	protected L2Client(L2ClientConnections mmoController, SocketChannel socketChannel) throws ClosedChannelException
 	{
 		super(mmoController, socketChannel);
 		// TODO Auto-generated constructor stub
 		_cipher = new CoreCipher(L2ClientSecurity.getInstance().getKey());
 		_firstTime = true;
 		
+		_deobfuscator = new ObfuscationService();
+		
 		_state = L2ClientState.CONNECTED;
+		_bitsInBlock = 0;
 	}
 	
 	@Override
@@ -65,6 +79,8 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 			return true;
 		
 		getCipher().decipher(buf, size.getSize());
+		
+		getDeobfuscator().decodeOpcodes(buf, size.getSize());
 		return true;
 	}
 	
@@ -126,6 +142,16 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	}
 	
 	/**
+	 * Returns the packet opcode deobfuscator.
+	 * 
+	 * @return opcode deobfuscator
+	 */
+	public ObfuscationService getDeobfuscator()
+	{
+		return _deobfuscator;
+	}
+	
+	/**
 	 * Returns current connection's state.
 	 * 
 	 * @return connection's state
@@ -145,5 +171,25 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	public void setState(L2ClientState state)
 	{
 		_state = state;
+	}
+	
+	/**
+	 * Returns how many bits to demand client to process in regular intervals.
+	 * 
+	 * @return bits in block
+	 */
+	public int getBitsInBlock()
+	{
+		return _bitsInBlock;
+	}
+	
+	/**
+	 * Changes how many bits to demand client to process in regular intervals.
+	 * 
+	 * @param bitsInBlock bit count (should be <TT>bitsInBlock & 7 == 0</TT>)
+	 */
+	public void setBitsInBlock(int bitsInBlock)
+	{
+		_bitsInBlock = bitsInBlock;
 	}
 }

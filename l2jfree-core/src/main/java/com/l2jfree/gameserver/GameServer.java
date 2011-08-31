@@ -20,7 +20,7 @@ import com.l2jfree.TerminationStatus;
 import com.l2jfree.gameserver.config.DatabaseConfig;
 import com.l2jfree.gameserver.config.NetworkConfig;
 import com.l2jfree.gameserver.config.SystemConfig;
-import com.l2jfree.gameserver.network.client.L2ClientController;
+import com.l2jfree.gameserver.network.client.L2ClientConnections;
 import com.l2jfree.gameserver.network.client.L2ClientSecurity;
 import com.l2jfree.lang.L2System;
 import com.l2jfree.sql.L2Database;
@@ -51,8 +51,8 @@ public final class GameServer extends Config
 			
 			try
 			{
-				L2ClientController.getInstance().openServerSocket(NetworkConfig.LISTEN_IP, NetworkConfig.LISTEN_PORT);
-				L2ClientController.getInstance().start();
+				L2ClientConnections.getInstance().openServerSocket(NetworkConfig.LISTEN_IP, NetworkConfig.LISTEN_PORT);
+				L2ClientConnections.getInstance().start();
 			}
 			catch (Throwable e)
 			{
@@ -80,7 +80,7 @@ public final class GameServer extends Config
 				
 				try
 				{
-					L2ClientController.getInstance().shutdown();
+					L2ClientConnections.getInstance().shutdown();
 				}
 				catch (Throwable t)
 				{

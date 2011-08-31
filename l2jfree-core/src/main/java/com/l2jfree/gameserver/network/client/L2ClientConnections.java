@@ -25,9 +25,11 @@ import com.l2jfree.network.mmocore.MMOConfig;
 import com.l2jfree.network.mmocore.MMOController;
 
 /**
+ * Manages incoming L2 client connections.
+ * 
  * @author savormix
  */
-public final class L2ClientController extends MMOController<L2Client, L2ClientPacket, L2ServerPacket>
+public final class L2ClientConnections extends MMOController<L2Client, L2ClientPacket, L2ServerPacket>
 {
 	private static final class SingletonHolder
 	{
@@ -38,7 +40,7 @@ public final class L2ClientController extends MMOController<L2Client, L2ClientPa
 			
 			try
 			{
-				INSTANCE = new L2ClientController(cfg);
+				INSTANCE = new L2ClientConnections(cfg);
 			}
 			catch (IOException e)
 			{
@@ -46,7 +48,7 @@ public final class L2ClientController extends MMOController<L2Client, L2ClientPa
 			}
 		}
 		
-		public static final L2ClientController INSTANCE;
+		public static final L2ClientConnections INSTANCE;
 	}
 	
 	/**
@@ -54,12 +56,12 @@ public final class L2ClientController extends MMOController<L2Client, L2ClientPa
 	 * 
 	 * @return an instance of this class
 	 */
-	public static L2ClientController getInstance()
+	public static L2ClientConnections getInstance()
 	{
 		return SingletonHolder.INSTANCE;
 	}
 	
-	protected L2ClientController(MMOConfig config) throws IOException
+	private L2ClientConnections(MMOConfig config) throws IOException
 	{
 		super(config, L2ClientPacketHandler.getInstance());
 		// TODO Auto-generated constructor stub

@@ -34,7 +34,7 @@ public final class L2ClientSecurity
 	
 	private L2ClientSecurity()
 	{
-		new Updater();
+		new Updater().hashCode();
 		_log.info("Generated " + getKeys().length + " cipher keys (client).");
 	}
 	
