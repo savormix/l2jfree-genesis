@@ -53,6 +53,18 @@ public final class ProjectSettingsSynchronizer
 			
 			for (File dest : destinations)
 			{
+				if (dest.getName().endsWith("-main"))
+				{
+					final ArrayList<String> tmp = new ArrayList<String>();
+					
+					for (String line : lines)
+						if (!line.contains("classpathentry"))
+							tmp.add(line);
+					
+					writeLines(dest, ".classpath", tmp);
+					continue;
+				}
+				
 				writeLines(dest, ".classpath", lines);
 			}
 		}
