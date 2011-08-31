@@ -124,8 +124,8 @@ public final class ObfuscationService
 		int pos;
 		int cpos;
 		
-		_s1 = 0xD0; // No CP has a higher main opcode, and will (probably) never have
-		_s2 = 0xFF; // High Five last part. My > 100MB of logs contain obfuscated D0's 2nd ops as high as 255.
+		_s1 = 0xD0;
+		_s2 = 0x97; // High Five last part, perhaps more
 		_s3 = 0x64; // O_o TODO: GF+ triple opcodes
 		
 		_decodeTable1 = new byte[_s1 + 1];
@@ -161,6 +161,7 @@ public final class ObfuscationService
 			_decodeTable2[i] = tmp;
 		}
 		
+		// non-obfuscated main opcodes
 		cpos = 0;
 		while (_decodeTable1[cpos] != 0x12)
 			cpos++;
@@ -175,6 +176,21 @@ public final class ObfuscationService
 		_decodeTable1[0xB1] = (byte)0xB1;
 		_decodeTable1[cpos] = tmp;
 		
+		cpos = 0;
+		while (_decodeTable1[cpos] != 0x11)
+			cpos++;
+		tmp = _decodeTable1[0x11];
+		_decodeTable1[0x11] = 0x11;
+		_decodeTable1[cpos] = tmp;
+		
+		cpos = 0;
+		while (_decodeTable1[cpos] != (byte)0xD0)
+			cpos++;
+		tmp = _decodeTable1[0xD0];
+		_decodeTable1[0xD0] = (byte)0xD0;
+		_decodeTable1[cpos] = tmp;
+		
+		// mirrored obfuscation tables
 		_encodeTable1 = new byte[_s1 + 1];
 		_encodeTable2 = new byte[_s2 + 1];
 		_encodeTable3 = new byte[_s3 + 1];
@@ -225,15 +241,16 @@ public final class ObfuscationService
 				return;
 			}
 			
-			body.position(mainPos);
 			final int op1 = _decodeTable1[obOp1] & 0xFF;
+			
+			body.position(mainPos);
 			buf.writeC(op1);
 			
 			if (_log.isDebugEnabled())
 				_log.debug("Decoded " + HexUtil.fillHex(obOp1, 2) + " to " + HexUtil.fillHex(op1, 2) + " using seed "
 						+ _seed);
 			
-			if (size > 1 && op1 == HAS_SECOND)
+			if (op1 == HAS_SECOND && size > 1)
 			{
 				final int secondPos = body.position();
 				
@@ -290,15 +307,16 @@ public final class ObfuscationService
 				return;
 			}
 			
-			body.position(mainPos);
 			final int obOp1 = _encodeTable1[op1] & 0xFF;
+			
+			body.position(mainPos);
 			buf.writeC(obOp1);
 			
 			if (_log.isDebugEnabled())
 				_log.debug("Encoded " + HexUtil.fillHex(op1, 2) + " to " + HexUtil.fillHex(obOp1, 2) + " using seed "
 						+ _seed);
 			
-			if (size > 1 && op1 == HAS_SECOND)
+			if (op1 == HAS_SECOND && size > 1)
 			{
 				final int secondPos = body.position();
 				
