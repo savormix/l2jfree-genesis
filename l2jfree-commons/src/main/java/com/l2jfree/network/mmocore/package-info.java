@@ -17,4 +17,3 @@
  * (currently managed by <A href="http://www.l2jserver.com/">L2JServer</A>).
  */
 package com.l2jfree.network.mmocore;
-

@@ -5,4 +5,3 @@
  * {@link com.l2jfree.tools.NewLineChecker} sanitizes source files enforcing same line separators.
  */
 package com.l2jfree.tools;
-

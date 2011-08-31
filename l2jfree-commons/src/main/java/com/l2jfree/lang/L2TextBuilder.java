@@ -103,7 +103,7 @@ public final class L2TextBuilder implements Serializable
 	};
 	
 	// ===================================================================================
-	// StringBuilder delegate methods 
+	// StringBuilder delegate methods
 	
 	/**
 	 * @return

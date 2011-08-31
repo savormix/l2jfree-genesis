@@ -3,4 +3,3 @@
  * @deprecated Legacy package
  */
 package com.l2jfree.network.legacy;
-

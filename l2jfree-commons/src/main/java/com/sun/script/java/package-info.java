@@ -24,4 +24,3 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 package com.sun.script.java;
-

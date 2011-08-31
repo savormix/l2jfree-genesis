@@ -9,4 +9,3 @@
  * The rest are legacy classes.
  */
 package com.l2jfree.security;
-
