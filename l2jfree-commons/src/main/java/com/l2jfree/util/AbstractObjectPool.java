@@ -24,11 +24,13 @@ public abstract class AbstractObjectPool<E>
 	{
 	}
 	
+	@SuppressWarnings("static-method")
 	protected int getMaximumSize()
 	{
 		return Integer.MAX_VALUE;
 	}
 	
+	@SuppressWarnings("static-method")
 	protected long getMaxLifeTime()
 	{
 		return 120000; // 2 min
@@ -41,6 +43,7 @@ public abstract class AbstractObjectPool<E>
 	 */
 	protected void reset(E e)
 	{
+		// do nothing at default
 	}
 	
 	public abstract E get();

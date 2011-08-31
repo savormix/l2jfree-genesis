@@ -49,6 +49,7 @@ public class DefaultConverter implements Converter
 		return obj.toString();
 	}
 	
+	@SuppressWarnings("static-method")
 	protected Converter getArrayConverter()
 	{
 		return DefaultArrayConverter.getInstance();

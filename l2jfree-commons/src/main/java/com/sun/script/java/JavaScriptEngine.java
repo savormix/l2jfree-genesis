@@ -245,6 +245,7 @@ public class JavaScriptEngine extends AbstractScriptEngine implements Compilable
 		}
 		catch (NoSuchMethodException nsme)
 		{
+			// ignore
 		}
 		return null;
 	}
@@ -263,6 +264,7 @@ public class JavaScriptEngine extends AbstractScriptEngine implements Compilable
 		}
 		catch (NoSuchMethodException nsme)
 		{
+			// ignore
 		}
 		return null;
 	}

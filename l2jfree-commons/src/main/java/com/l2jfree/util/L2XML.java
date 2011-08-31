@@ -48,6 +48,7 @@ public final class L2XML
 		 * @param node
 		 * @return
 		 */
+		@SuppressWarnings("static-method")
 		protected boolean accept(Node node)
 		{
 			return true;

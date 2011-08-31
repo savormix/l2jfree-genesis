@@ -44,6 +44,6 @@ public class L2OfflineGameServerView extends L2GameServerView
 	@Override
 	public void update()
 	{
-		// do nothing
+		// do nothing at all
 	}
 }

@@ -113,6 +113,7 @@ public final class L2Collections
 		@Override
 		public void clear()
 		{
+			// do nothing at all
 		}
 		
 		@Override
@@ -187,11 +188,13 @@ public final class L2Collections
 	
 	private static final class EmptySet extends EmptyCollection implements Set<Object>
 	{
+		@SuppressWarnings("hiding")
 		public static final EmptySet INSTANCE = new EmptySet();
 	}
 	
 	private static final class EmptyList extends EmptyCollection implements List<Object>
 	{
+		@SuppressWarnings("hiding")
 		public static final EmptyList INSTANCE = new EmptyList();
 		
 		@Override
@@ -262,6 +265,7 @@ public final class L2Collections
 		@Override
 		public void clear()
 		{
+			// do nothing at all
 		}
 		
 		@Override
@@ -362,6 +366,7 @@ public final class L2Collections
 		@Override
 		public void clear()
 		{
+			// do nothing at all
 		}
 		
 		@Override

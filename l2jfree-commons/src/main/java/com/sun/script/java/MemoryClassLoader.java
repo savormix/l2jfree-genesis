@@ -108,6 +108,7 @@ public final class MemoryClassLoader extends URLClassLoader
 				}
 				catch (MalformedURLException mue)
 				{
+					// ignore
 				}
 			}
 			else
@@ -118,6 +119,7 @@ public final class MemoryClassLoader extends URLClassLoader
 				}
 				catch (MalformedURLException mue)
 				{
+					// ignore
 				}
 			}
 		}

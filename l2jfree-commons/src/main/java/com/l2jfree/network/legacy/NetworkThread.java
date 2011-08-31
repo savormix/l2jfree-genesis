@@ -188,15 +188,7 @@ public abstract class NetworkThread extends Thread
 	{
 		IOUtils.closeQuietly(_in);
 		IOUtils.closeQuietly(_out);
-		
-		try
-		{
-			if (_connection != null)
-				_connection.close();
-		}
-		catch (IOException e)
-		{
-		}
+		IOUtils.closeQuietly(_connection);
 		
 		_in = null;
 		_out = null;

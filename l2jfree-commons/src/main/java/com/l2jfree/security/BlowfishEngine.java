@@ -43,7 +43,7 @@ import java.nio.ByteOrder;
 /**
  * @formatter:off
  */
-public class BlowfishEngine {
+public final class BlowfishEngine {
 	private final static int[] KP = { 0x243F6A88, 0x85A308D3, 0x13198A2E,
 			0x03707344, 0xA4093822, 0x299F31D0, 0x082EFA98, 0xEC4E6C89,
 			0x452821E6, 0x38D01377, 0xBE5466CF, 0x34E90C6C, 0xC0AC29B7,
@@ -298,7 +298,7 @@ public class BlowfishEngine {
 	 * Returns the name of the algorithm.
 	 * @return Blowfish
 	 */
-	public String getAlgorithmName() {
+	public static String getAlgorithmName() {
 		return "Blowfish";
 	}
 
@@ -339,7 +339,7 @@ public class BlowfishEngine {
 	 * Returns block size in bytes.
 	 * @return block size
 	 */
-	public int getBlockSize() {
+	public static int getBlockSize() {
 		return BLOCK_SIZE;
 	}
 

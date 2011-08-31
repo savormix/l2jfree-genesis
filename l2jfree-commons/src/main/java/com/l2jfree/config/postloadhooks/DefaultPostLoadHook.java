@@ -22,6 +22,6 @@ public final class DefaultPostLoadHook implements PostLoadHook
 	@Override
 	public void valueLoaded(Object obj)
 	{
-		// do nothing
+		// do nothing at default
 	}
 }

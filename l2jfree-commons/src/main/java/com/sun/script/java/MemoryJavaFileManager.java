@@ -78,6 +78,7 @@ public final class MemoryJavaFileManager extends EclipseFileManager
 	@Override
 	public void flush() throws IOException
 	{
+		// do nothing at all
 	}
 	
 	/**

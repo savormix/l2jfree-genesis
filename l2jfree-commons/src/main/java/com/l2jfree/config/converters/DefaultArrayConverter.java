@@ -71,6 +71,7 @@ public class DefaultArrayConverter implements Converter
 		return tb.moveToString();
 	}
 	
+	@SuppressWarnings("static-method")
 	protected Converter getElementConverter()
 	{
 		return DefaultConverter.getInstance();

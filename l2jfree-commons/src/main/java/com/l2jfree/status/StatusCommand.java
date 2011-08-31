@@ -54,11 +54,13 @@ public abstract class StatusCommand
 		return _description;
 	}
 	
+	@SuppressWarnings("static-method")
 	protected String getParameterUsage()
 	{
 		return null;
 	}
 	
+	@SuppressWarnings("static-method")
 	protected StatusThread getStatusThread()
 	{
 		return (StatusThread)Thread.currentThread();

@@ -29,7 +29,6 @@
 
 package com.sun.script.java;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -40,6 +39,7 @@ import javax.tools.Diagnostic;
 import javax.tools.DiagnosticCollector;
 import javax.tools.JavaFileObject;
 
+import org.apache.commons.io.IOUtils;
 import org.eclipse.jdt.internal.compiler.tool.EclipseCompiler;
 
 /**
@@ -125,13 +125,8 @@ public class JavaCompiler
 		}
 		
 		Map<String, byte[]> classBytes = manager.getClassBytes();
-		try
-		{
-			manager.close();
-		}
-		catch (IOException exp)
-		{
-		}
+		
+		IOUtils.closeQuietly(manager);
 		
 		return classBytes;
 	}

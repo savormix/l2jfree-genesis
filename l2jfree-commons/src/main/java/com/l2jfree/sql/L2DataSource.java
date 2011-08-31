@@ -136,6 +136,7 @@ public abstract class L2DataSource implements DataSource
 		return _dataSource;
 	}
 	
+	@SuppressWarnings("static-method")
 	protected String getInformationSchemaTables()
 	{
 		return "information_schema.tables";
@@ -254,7 +255,7 @@ public abstract class L2DataSource implements DataSource
 		_log.warn("TableOptimizer: Provider (" + getProviderName() + ") not yet supported.");
 	}
 	
-	protected final boolean writeBackup(String databaseName, InputStream in) throws IOException
+	protected static final boolean writeBackup(String databaseName, InputStream in) throws IOException
 	{
 		FileUtils.forceMkdir(new File("backup/database"));
 		

@@ -240,6 +240,7 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 	private final FloodManager _packets = initPacketsFloodManager();
 	private final FloodManager _errors = initErrorsFloodManager();
 	
+	@SuppressWarnings("static-method")
 	protected FloodManager initAcceptsFloodManager()
 	{
 		return new FloodManager(1000, // 1000 msec per tick
@@ -247,12 +248,14 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 				new FloodManager.FloodFilter(30, 60, 60)); // long period
 	}
 	
+	@SuppressWarnings("static-method")
 	protected FloodManager initPacketsFloodManager()
 	{
 		return new FloodManager(1000, // 1000 msec per tick
 				new FloodManager.FloodFilter(250, 300, 2));
 	}
 	
+	@SuppressWarnings("static-method")
 	protected FloodManager initErrorsFloodManager()
 	{
 		return new FloodManager(200, // 200 msec per tick

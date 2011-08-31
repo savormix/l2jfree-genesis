@@ -78,6 +78,7 @@ public abstract class L2Thread extends Thread
 	
 	protected void onShutdown()
 	{
+		// do nothing at default
 	}
 	
 	@Override
@@ -120,6 +121,7 @@ public abstract class L2Thread extends Thread
 	
 	protected void onFinally()
 	{
+		// do nothing at default
 	}
 	
 	public static List<String> getStats(Thread t)

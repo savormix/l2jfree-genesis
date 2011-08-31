@@ -24,6 +24,8 @@ import java.util.ArrayDeque;
 
 import javolution.util.FastList;
 
+import org.apache.commons.io.IOUtils;
+
 import com.l2jfree.network.mmocore.FloodManager.ErrorMode;
 
 /**
@@ -621,11 +623,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 			try
 			{
 				// close socket and the SocketChannel
-				con.getSocket().close();
-			}
-			catch (IOException e)
-			{
-				// ignore, we are closing anyway
+				IOUtils.closeQuietly(con.getSocket());
 			}
 			finally
 			{

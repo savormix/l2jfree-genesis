@@ -32,7 +32,7 @@ import java.util.Set;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class ValueSortMap
 {
-	public Map<Integer, Integer> sortThis(Map<Integer, Integer> map, boolean asc)
+	public static Map<Integer, Integer> sortThis(Map<Integer, Integer> map, boolean asc)
 	{
 		return sortMapByValue(map, asc);
 	}

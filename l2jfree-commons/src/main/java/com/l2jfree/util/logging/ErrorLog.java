@@ -53,5 +53,6 @@ public final class ErrorLog
 	
 	public static final class Formatter extends L2RuntimeLogFormatter
 	{
+		// subclassed only for naming reasons
 	}
 }

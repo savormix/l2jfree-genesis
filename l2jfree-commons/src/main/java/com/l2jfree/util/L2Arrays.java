@@ -184,6 +184,7 @@ public final class L2Arrays
 		 * @param obj
 		 * @return
 		 */
+		@SuppressWarnings("static-method")
 		boolean allowElement(Object obj)
 		{
 			return true;

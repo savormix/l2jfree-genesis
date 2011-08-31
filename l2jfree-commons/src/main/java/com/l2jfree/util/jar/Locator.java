@@ -113,7 +113,7 @@ public final class Locator
 		}
 		catch (MalformedURLException emYouEarlEx)
 		{
-			// Ignore malformed exception
+			// ignore malformed exception
 		}
 		if (url == null || !("file".equals(url.getProtocol())))
 		{

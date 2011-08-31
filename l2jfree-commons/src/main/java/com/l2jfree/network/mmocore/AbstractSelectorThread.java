@@ -19,6 +19,8 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.util.Set;
 
+import org.apache.commons.io.IOUtils;
+
 import com.l2jfree.util.concurrent.RunnableStatsManager;
 
 /**
@@ -122,14 +124,7 @@ abstract class AbstractSelectorThread<T extends MMOConnection<T, RP, SP>, RP ext
 	{
 		for (SelectionKey key : getSelector().keys())
 		{
-			try
-			{
-				key.channel().close();
-			}
-			catch (IOException e)
-			{
-				// ignore
-			}
+			IOUtils.closeQuietly(key.channel());
 		}
 		
 		try
@@ -138,7 +133,7 @@ abstract class AbstractSelectorThread<T extends MMOConnection<T, RP, SP>, RP ext
 		}
 		catch (IOException e)
 		{
-			// Ignore
+			// ignore
 		}
 	}
 	

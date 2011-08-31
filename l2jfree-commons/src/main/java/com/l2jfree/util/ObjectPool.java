@@ -51,7 +51,7 @@ public abstract class ObjectPool<E> extends AbstractObjectPool<E>
 						}
 						catch (ConcurrentModificationException e)
 						{
-							// skip it
+							// ignore
 						}
 					}
 				}, 60000, 60000);

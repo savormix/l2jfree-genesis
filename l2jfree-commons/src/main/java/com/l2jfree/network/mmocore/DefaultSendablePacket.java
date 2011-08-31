@@ -39,6 +39,7 @@ public abstract class DefaultSendablePacket<T extends MMOConnection<T, RP, SP>, 
 	 * @return an array filled with numbers from the interval [{@link java.lang.Byte#MIN_VALUE};
 	 *         {@link java.lang.Byte#MAX_VALUE}]
 	 */
+	@SuppressWarnings("static-method")
 	protected int[] getAdditionalOpcodes()
 	{
 		return EMPTY_ADDITIONAL_OPCODES;

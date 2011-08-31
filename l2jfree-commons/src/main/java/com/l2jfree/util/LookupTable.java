@@ -181,6 +181,7 @@ public class LookupTable<E> implements Iterable<E>
 	 */
 	protected void replacedValue(final int key, final E oldValue, final E newValue)
 	{
+		// do nothing at default
 	}
 	
 	@Override

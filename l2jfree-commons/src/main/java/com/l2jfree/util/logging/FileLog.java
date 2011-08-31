@@ -42,5 +42,6 @@ public final class FileLog
 	
 	public static final class Formatter extends L2RuntimeLogFormatter
 	{
+		// subclassed only for naming reasons
 	}
 }

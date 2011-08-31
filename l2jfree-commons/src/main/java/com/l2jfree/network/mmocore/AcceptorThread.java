@@ -22,6 +22,8 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
+import org.apache.commons.io.IOUtils;
+
 /**
  * {@link MMOController} associated {@link WorkerThread} responsible for accepting new connections.
  * 
@@ -82,7 +84,7 @@ final class AcceptorThread<T extends MMOConnection<T, RP, SP>, RP extends Receiv
 				}
 				else
 				{
-					sc.socket().close();
+					IOUtils.closeQuietly(sc.socket());
 				}
 			}
 		}

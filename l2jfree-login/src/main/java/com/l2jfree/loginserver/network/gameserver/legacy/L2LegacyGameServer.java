@@ -80,7 +80,7 @@ public final class L2LegacyGameServer extends
 		
 		_keyPair = L2LegacyGameServerSecurity.getInstance().getKeyPair();
 		_cipher = new NewCipher(
-				HexUtil.HexStringToBytes("5F 3B 76 2E 5D 30 35 2D 33 31 21 7C 2B 2D 25 78 54 21 5E 5B 24 00"));
+						HexUtil.HexStringToBytes("5F 3B 76 2E 5D 30 35 2D 33 31 21 7C 2B 2D 25 78 54 21 5E 5B 24 00"));
 		
 		_state = L2LegacyGameServerState.CONNECTED;
 		_id = null;

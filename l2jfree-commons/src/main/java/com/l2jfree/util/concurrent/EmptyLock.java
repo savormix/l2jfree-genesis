@@ -26,11 +26,13 @@ public final class EmptyLock implements Lock
 	@Override
 	public void lock()
 	{
+		// do nothing at all
 	}
 	
 	@Override
 	public void lockInterruptibly() throws InterruptedException
 	{
+		// do nothing at all
 	}
 	
 	@Override
@@ -54,5 +56,6 @@ public final class EmptyLock implements Lock
 	@Override
 	public void unlock()
 	{
+		// do nothing at all
 	}
 }

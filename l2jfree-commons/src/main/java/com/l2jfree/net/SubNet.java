@@ -120,6 +120,7 @@ public class SubNet
 			}
 			catch (NumberFormatException e)
 			{
+				// ignore
 			}
 		}
 		else
@@ -131,6 +132,7 @@ public class SubNet
 				}
 				catch (NumberFormatException e)
 				{
+					// ignore
 				}
 			}
 		

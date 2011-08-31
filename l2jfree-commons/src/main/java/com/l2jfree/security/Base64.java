@@ -38,7 +38,7 @@ import org.apache.commons.io.IOUtils;
  * @version 2.0
  * @formatter:off
  */
-public class Base64 {
+public final class Base64 {
 
 	/* ******** P U B L I C F I E L D S ******** */
 
@@ -492,7 +492,6 @@ public class Base64 {
 				gzos = new java.util.zip.GZIPOutputStream(b64os);
 
 				gzos.write(source, off, len);
-				gzos.close();
 			} // end try
 			catch (java.io.IOException e) {
 				e.printStackTrace();

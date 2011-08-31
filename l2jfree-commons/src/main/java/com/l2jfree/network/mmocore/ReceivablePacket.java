@@ -89,6 +89,7 @@ public abstract class ReceivablePacket<T extends MMOConnection<T, RP, SP>, RP ex
 	 * @return size of the longest valid packet
 	 * @see #getMinimumLength()
 	 */
+	@SuppressWarnings("static-method")
 	protected int getMaximumLength()
 	{
 		return Integer.MAX_VALUE;

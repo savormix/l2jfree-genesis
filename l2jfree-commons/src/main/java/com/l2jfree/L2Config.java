@@ -430,6 +430,7 @@ public abstract class L2Config
 	{
 		protected abstract String getName();
 		
+		@SuppressWarnings("static-method")
 		protected ConfigClassInfo getConfigClassInfo()
 		{
 			return null;

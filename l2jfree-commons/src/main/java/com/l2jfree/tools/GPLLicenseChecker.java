@@ -78,7 +78,7 @@ public final class GPLLicenseChecker extends L2Config
 			// skip SVN files
 			if (f.isHidden())
 				return false;
-			// skip? package-info
+			// skip package-info
 			else if (f.getName().equals("package-info.java"))
 				return false;
 			

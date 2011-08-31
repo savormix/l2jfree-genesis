@@ -35,5 +35,6 @@ public final class ConsoleLog
 	
 	public static final class Formatter extends L2RuntimeLogFormatter
 	{
+		// subclassed only for naming reasons
 	}
 }
