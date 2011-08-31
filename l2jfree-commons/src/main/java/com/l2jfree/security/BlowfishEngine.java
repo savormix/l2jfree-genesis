@@ -40,6 +40,9 @@ import java.nio.ByteOrder;
  * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+/**
+ * @formatter:off
+ */
 public class BlowfishEngine {
 	private final static int[] KP = { 0x243F6A88, 0x85A308D3, 0x13198A2E,
 			0x03707344, 0xA4093822, 0x299F31D0, 0x082EFA98, 0xEC4E6C89,
@@ -471,12 +474,12 @@ public class BlowfishEngine {
 		Bits32ToBytes(xl, dst, dstIndex + 4);
 	}
 
-	private int BytesTo32bits(byte[] b, int i) {
+	private static int BytesTo32bits(byte[] b, int i) {
 		return ((b[i + 3] & 0xff) << 24) | ((b[i + 2] & 0xff) << 16)
 				| ((b[i + 1] & 0xff) << 8) | ((b[i] & 0xff));
 	}
 
-	private void Bits32ToBytes(int in, byte[] b, int offset) {
+	private static void Bits32ToBytes(int in, byte[] b, int offset) {
 		b[offset] = (byte) in;
 		b[offset + 1] = (byte) (in >> 8);
 		b[offset + 2] = (byte) (in >> 16);
@@ -509,7 +512,7 @@ public class BlowfishEngine {
 		return BLOCK_SIZE;
 	}
 
-	private int BytesTo32bits(ByteBuffer src, int pos) {
+	private static int BytesTo32bits(ByteBuffer src, int pos) {
 		ByteOrder bo = src.order();
 		try
 		{
@@ -522,7 +525,7 @@ public class BlowfishEngine {
 		}
 	}
 
-	private void Bits32ToBytes(int val, ByteBuffer dest, int pos) {
+	private static void Bits32ToBytes(int val, ByteBuffer dest, int pos) {
 		ByteOrder bo = dest.order();
 		try
 		{

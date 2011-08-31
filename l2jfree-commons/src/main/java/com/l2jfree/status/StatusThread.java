@@ -222,6 +222,10 @@ public abstract class StatusThread extends Thread
 		}
 	}
 	
+	/**
+	 * @param command
+	 * @param line
+	 */
 	protected void unknownCommand(String command, String line)
 	{
 		println("No handler registered for '" + command + "'.");

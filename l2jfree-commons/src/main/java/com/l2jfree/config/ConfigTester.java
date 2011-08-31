@@ -102,6 +102,6 @@ public class ConfigTester extends L2Config
 		info.print(System.out, PrintMode.MODIFIED);
 		info.store();
 		
-		new Configurator(info);
+		new Configurator(info).setVisible(true);
 	}
 }

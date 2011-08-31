@@ -70,8 +70,8 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 		
 		for (int i = 0; i < _readWriteThreads.length; i++)
 		{
-			final ReadWriteThread<T, RP, SP> readWriteThread = new ReadWriteThread<T, RP, SP>(this, config,
-					packetHandler);
+			final ReadWriteThread<T, RP, SP> readWriteThread =
+					new ReadWriteThread<T, RP, SP>(this, config, packetHandler);
 			
 			readWriteThread.setName(readWriteThread.getName() + "-" + (i + 1));
 			

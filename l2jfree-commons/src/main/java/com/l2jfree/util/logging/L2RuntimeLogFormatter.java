@@ -52,7 +52,7 @@ public abstract class L2RuntimeLogFormatter extends L2LogFormatter
 		appendThrown(record, tb);
 	}
 	
-	protected final void appendThrown(LogRecord record, L2TextBuilder tb)
+	protected static final void appendThrown(LogRecord record, L2TextBuilder tb)
 	{
 		Throwable throwable = record.getThrown();
 		

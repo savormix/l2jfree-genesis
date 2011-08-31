@@ -36,6 +36,7 @@ import org.apache.commons.io.IOUtils;
  * @author Robert Harder
  * @author rob@iharder.net
  * @version 2.0
+ * @formatter:off
  */
 public class Base64 {
 

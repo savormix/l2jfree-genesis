@@ -33,7 +33,7 @@ public final class LoginSuccess extends L2ServerPacket
 	 */
 	public LoginSuccess(L2Client client)
 	{
-		_sessionKey = L2ClientSecurity.getInstance().assignSessionKey(client);
+		_sessionKey = L2ClientSecurity.assignSessionKey(client);
 	}
 	
 	@Override

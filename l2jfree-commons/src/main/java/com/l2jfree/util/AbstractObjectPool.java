@@ -36,6 +36,9 @@ public abstract class AbstractObjectPool<E>
 	
 	public abstract void store(E e);
 	
+	/**
+	 * @param e
+	 */
 	protected void reset(E e)
 	{
 	}

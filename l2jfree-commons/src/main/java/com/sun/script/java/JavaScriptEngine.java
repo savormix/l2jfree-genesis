@@ -417,7 +417,7 @@ public class JavaScriptEngine extends AbstractScriptEngine implements Compilable
 	}
 	
 	// read a Reader fully and return the content as string
-	private String readFully(Reader reader) throws ScriptException
+	private static String readFully(Reader reader) throws ScriptException
 	{
 		char[] arr = new char[8 * 1024]; // 8K at a time
 		StringBuilder buf = new StringBuilder();

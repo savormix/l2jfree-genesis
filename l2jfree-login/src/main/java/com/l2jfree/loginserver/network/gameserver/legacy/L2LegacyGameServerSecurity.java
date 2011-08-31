@@ -55,7 +55,7 @@ public final class L2LegacyGameServerSecurity
 		}
 	}
 	
-	private void warmUp(PrivateKey key) throws GeneralSecurityException
+	private static void warmUp(PrivateKey key) throws GeneralSecurityException
 	{
 		// avoid worst-case execution, KenM
 		Cipher rsaCipher = Cipher.getInstance("RSA/ECB/nopadding");

@@ -33,7 +33,7 @@ public class ScrambledKeyPair
 		scrambledModulus = scrambleModulus(((RSAPublicKey)pair.getPublic()).getModulus());
 	}
 	
-	private byte[] scrambleModulus(BigInteger modulus)
+	private static byte[] scrambleModulus(BigInteger modulus)
 	{
 		byte[] retScrambledModulus = modulus.toByteArray();
 		

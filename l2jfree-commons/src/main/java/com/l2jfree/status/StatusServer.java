@@ -201,7 +201,7 @@ public abstract class StatusServer extends Thread
 			thread.println(message);
 	}
 	
-	protected final String generateRandomPassword(int length)
+	protected static final String generateRandomPassword(int length)
 	{
 		final String chars = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789";
 		

@@ -180,6 +180,10 @@ public final class L2Arrays
 			_array = array;
 		}
 		
+		/**
+		 * @param obj
+		 * @return
+		 */
 		boolean allowElement(Object obj)
 		{
 			return true;

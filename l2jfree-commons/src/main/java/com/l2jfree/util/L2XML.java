@@ -44,6 +44,10 @@ public final class L2XML
 			}
 		}
 		
+		/**
+		 * @param node
+		 * @return
+		 */
 		protected boolean accept(Node node)
 		{
 			return true;

@@ -95,7 +95,7 @@ public class SubNet
 		return false;
 	}
 	
-	private int ipToInt(String ip)
+	private static int ipToInt(String ip)
 	{
 		int _ip = 0;
 		

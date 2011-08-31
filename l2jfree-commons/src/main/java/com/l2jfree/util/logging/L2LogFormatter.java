@@ -42,17 +42,17 @@ public abstract class L2LogFormatter extends Formatter
 	
 	protected abstract void format0(LogRecord record, L2TextBuilder tb);
 	
-	protected final void appendDate(LogRecord record, L2TextBuilder tb)
+	protected static final void appendDate(LogRecord record, L2TextBuilder tb)
 	{
 		tb.append("[").append(DATE_FORMAT.format(new Date(record.getMillis()))).append("] ");
 	}
 	
-	protected final void appendMessage(LogRecord record, L2TextBuilder tb)
+	protected static final void appendMessage(LogRecord record, L2TextBuilder tb)
 	{
 		tb.append(record.getMessage());
 	}
 	
-	protected final void appendParameters(LogRecord record, L2TextBuilder tb, String separator, boolean before)
+	protected static final void appendParameters(LogRecord record, L2TextBuilder tb, String separator, boolean before)
 	{
 		if (record.getParameters() != null)
 		{

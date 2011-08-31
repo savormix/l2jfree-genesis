@@ -64,7 +64,7 @@ public final class L2ClientSecurity
 		}
 	}
 	
-	private void warmUp(PrivateKey key) throws GeneralSecurityException
+	private static void warmUp(PrivateKey key) throws GeneralSecurityException
 	{
 		// avoid worst-case execution, KenM
 		Cipher rsaCipher = Cipher.getInstance("RSA/ECB/nopadding");
@@ -87,7 +87,7 @@ public final class L2ClientSecurity
 	 * @param client logged in client
 	 * @return the assigned session key
 	 */
-	public long assignSessionKey(L2Client client)
+	public static long assignSessionKey(L2Client client)
 	{
 		if (client == null || client.getAccount() == null)
 			throw new IllegalStateException("Client not authorized.");

@@ -526,6 +526,9 @@ public abstract class L2Config
 			getConfigClassInfo().store();
 		}
 		
+		/**
+		 * @param properties
+		 */
 		protected void loadImpl(L2Properties properties)
 		{
 			// load without annotations

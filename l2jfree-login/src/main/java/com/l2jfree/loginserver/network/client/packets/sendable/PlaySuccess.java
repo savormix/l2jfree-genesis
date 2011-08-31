@@ -36,7 +36,7 @@ public final class PlaySuccess extends L2ServerPacket
 	 */
 	public PlaySuccess(L2Client client, int server)
 	{
-		_sessionKey = L2ClientSecurity.getInstance().assignSessionKey(client);
+		_sessionKey = L2ClientSecurity.assignSessionKey(client);
 		L2ClientController.getInstance().authorize(client);
 		_server = server;
 	}

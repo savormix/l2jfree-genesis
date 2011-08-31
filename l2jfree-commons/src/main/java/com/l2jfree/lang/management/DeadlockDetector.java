@@ -86,7 +86,7 @@ public final class DeadlockDetector extends L2Thread
 		Thread.sleep(10000);
 	}
 	
-	private long[] findDeadlockedThreadIds()
+	private static long[] findDeadlockedThreadIds()
 	{
 		if (ManagementFactory.getThreadMXBean().isSynchronizerUsageSupported())
 			return ManagementFactory.getThreadMXBean().findDeadlockedThreads();
@@ -94,7 +94,7 @@ public final class DeadlockDetector extends L2Thread
 			return ManagementFactory.getThreadMXBean().findMonitorDeadlockedThreads();
 	}
 	
-	private Thread findThreadById(long id)
+	private static Thread findThreadById(long id)
 	{
 		for (Thread thread : Thread.getAllStackTraces().keySet())
 			if (thread.getId() == id)

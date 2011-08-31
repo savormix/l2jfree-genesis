@@ -196,7 +196,7 @@ public class JavaScriptEngineFactory implements ScriptEngineFactory
 	}
 	
 	// used to generate a unique class name in getProgram
-	private String getClassName()
+	private static String getClassName()
 	{
 		return "com_sun_script_java_Main$" + getNextClassNumber();
 	}
