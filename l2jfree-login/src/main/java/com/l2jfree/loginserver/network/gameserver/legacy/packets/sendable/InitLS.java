@@ -25,7 +25,10 @@ import com.l2jfree.network.mmocore.MMOBuffer;
  */
 public final class InitLS extends L2LegacyLoginServerPacket
 {
-	private static final int LEGACY_PROTOCOL_REVISION = 0x0104;
+	// there are many, but newer ones only contain additional packets
+	// still, they are invalidated, so we will have to have multiple ports
+	// running with the same protocol... ftl
+	private static final int LEGACY_PROTOCOL_REVISION = 0x0106;
 	
 	private final byte[] _publicKey;
 	

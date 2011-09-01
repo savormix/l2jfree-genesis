@@ -216,7 +216,6 @@ public abstract class L2DataSource implements DataSource
 				{
 					_database = rs.getString(1);
 					_schema = rs.getString(2);
-					_log.info("Context: " + _database + " | " + _schema);
 				}
 				else
 					throw new SQLException("Anomaly/Malfunction."); // should never happen

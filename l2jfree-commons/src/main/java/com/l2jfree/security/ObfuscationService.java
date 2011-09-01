@@ -141,54 +141,57 @@ public final class ObfuscationService
 		
 		setGeneratorSeed(seed);
 		
-		// mix 1-byte opcode table
-		for (i = 1; i <= _s1; i++)
+		if (seed != 0) // check whether to shuffle
 		{
-			pos = getGenerated() % (i + 1);
-			// swap bytes at indexes [pos] and [i] in DecodeTable1
-			tmp = _decodeTable1[pos];
-			_decodeTable1[pos] = _decodeTable1[i];
-			_decodeTable1[i] = tmp;
+			// mix 1-byte opcode table
+			for (i = 1; i <= _s1; i++)
+			{
+				pos = getGenerated() % (i + 1);
+				// swap bytes at indexes [pos] and [i] in DecodeTable1
+				tmp = _decodeTable1[pos];
+				_decodeTable1[pos] = _decodeTable1[i];
+				_decodeTable1[i] = tmp;
+			}
+			
+			// mix 2-byte opcode table
+			for (i = 1; i <= _s2; i++)
+			{
+				pos = getGenerated() % (i + 1);
+				// swap bytes at indexes [pos] and [i] in DecodeTable2
+				tmp = _decodeTable2[pos];
+				_decodeTable2[pos] = _decodeTable2[i];
+				_decodeTable2[i] = tmp;
+			}
+			
+			// non-obfuscated main opcodes
+			cpos = 0;
+			while (_decodeTable1[cpos] != 0x12)
+				cpos++;
+			tmp = _decodeTable1[0x12];
+			_decodeTable1[0x12] = 0x12;
+			_decodeTable1[cpos] = tmp;
+			
+			cpos = 0;
+			while (_decodeTable1[cpos] != (byte)0xB1)
+				cpos++;
+			tmp = _decodeTable1[0xB1];
+			_decodeTable1[0xB1] = (byte)0xB1;
+			_decodeTable1[cpos] = tmp;
+			
+			cpos = 0;
+			while (_decodeTable1[cpos] != 0x11)
+				cpos++;
+			tmp = _decodeTable1[0x11];
+			_decodeTable1[0x11] = 0x11;
+			_decodeTable1[cpos] = tmp;
+			
+			cpos = 0;
+			while (_decodeTable1[cpos] != (byte)0xD0)
+				cpos++;
+			tmp = _decodeTable1[0xD0];
+			_decodeTable1[0xD0] = (byte)0xD0;
+			_decodeTable1[cpos] = tmp;
 		}
-		
-		// mix 2-byte opcode table
-		for (i = 1; i <= _s2; i++)
-		{
-			pos = getGenerated() % (i + 1);
-			// swap bytes at indexes [pos] and [i] in DecodeTable2
-			tmp = _decodeTable2[pos];
-			_decodeTable2[pos] = _decodeTable2[i];
-			_decodeTable2[i] = tmp;
-		}
-		
-		// non-obfuscated main opcodes
-		cpos = 0;
-		while (_decodeTable1[cpos] != 0x12)
-			cpos++;
-		tmp = _decodeTable1[0x12];
-		_decodeTable1[0x12] = 0x12;
-		_decodeTable1[cpos] = tmp;
-		
-		cpos = 0;
-		while (_decodeTable1[cpos] != (byte)0xB1)
-			cpos++;
-		tmp = _decodeTable1[0xB1];
-		_decodeTable1[0xB1] = (byte)0xB1;
-		_decodeTable1[cpos] = tmp;
-		
-		cpos = 0;
-		while (_decodeTable1[cpos] != 0x11)
-			cpos++;
-		tmp = _decodeTable1[0x11];
-		_decodeTable1[0x11] = 0x11;
-		_decodeTable1[cpos] = tmp;
-		
-		cpos = 0;
-		while (_decodeTable1[cpos] != (byte)0xD0)
-			cpos++;
-		tmp = _decodeTable1[0xD0];
-		_decodeTable1[0xD0] = (byte)0xD0;
-		_decodeTable1[cpos] = tmp;
 		
 		// mirrored obfuscation tables
 		_encodeTable1 = new byte[_s1 + 1];
