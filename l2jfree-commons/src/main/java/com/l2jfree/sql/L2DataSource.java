@@ -21,9 +21,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -94,6 +95,7 @@ public abstract class L2DataSource implements DataSource
 	}
 	
 	protected static final L2Logger _log = L2Logger.getLogger(L2DataSource.class);
+	private static final String[] BASE_TABLE = { "TABLE" };
 	
 	public static L2DataSource valueOf(String name, ComboPooledDataSource dataSource)
 	{
@@ -116,7 +118,7 @@ public abstract class L2DataSource implements DataSource
 			return provider.createDataSource(name, dataSource);
 		}
 		
-		throw new IllegalArgumentException("Not supported JDBC provider!");
+		throw new IllegalArgumentException("Unsupported JDBC provider!");
 	}
 	
 	private final String _name;
@@ -136,24 +138,19 @@ public abstract class L2DataSource implements DataSource
 		return _dataSource;
 	}
 	
-	@SuppressWarnings("static-method")
-	protected String getInformationSchemaTables()
-	{
-		return "information_schema.tables";
-	}
-	
 	protected String getProviderName()
 	{
 		return getClass().getSimpleName().replace(L2DataSource.class.getSimpleName(), "");
 	}
 	
-	public void initSQLContext() throws SQLException
+	/**
+	 * Obtains <TT>CURRENT_DATABASE</TT> and <TT>CURRENT_SCHEMA</TT> on an arbitrary DBMS.
+	 * 
+	 * @author savormix
+	 * @throws SQLException if a SQL error occurs
+	 */
+	public final void initSQLContext() throws SQLException
 	{
-		/**
-		 * Obtains <TT>CURRENT_DATABASE</TT> and <TT>CURRENT_SCHEMA</TT> on an arbitrary DBMS.
-		 * 
-		 * @author savormix
-		 */
 		Connection con = null;
 		
 		// remove leftover tables
@@ -161,33 +158,31 @@ public abstract class L2DataSource implements DataSource
 		{
 			con = getConnection();
 			
-			final List<String> tables = new ArrayList<String>();
+			DatabaseMetaData dmd = con.getMetaData();
 			
+			final List<String> tables = new ArrayList<String>();
 			{
-				final PreparedStatement ps =
-						con.prepareStatement("SELECT table_name FROM " + getInformationSchemaTables()
-								+ " WHERE table_type LIKE ? AND table_name LIKE ?");
-				ps.setString(1, "BASE_TABLE");
-				ps.setString(2, "_zzz%");
-				
-				final ResultSet rs = ps.executeQuery();
-				
+				final ResultSet rs = dmd.getTables(null, null, "_zzz%", BASE_TABLE);
 				while (rs.next())
-					tables.add(rs.getString("table_name"));
-				
+					tables.add(rs.getString(3));
 				rs.close();
-				ps.close();
 			}
 			
 			int removed = 0;
+			final Statement s = con.createStatement();
 			for (String table : tables)
 			{
-				final PreparedStatement ps = con.prepareStatement("DROP TABLE " + table);
-				ps.executeUpdate();
-				ps.close();
-				
-				removed++;
+				try
+				{
+					s.executeUpdate("DROP TABLE " + table);
+					removed++;
+				}
+				catch (SQLException e)
+				{
+					// table is owned by another user
+				}
 			}
+			s.close();
 			
 			if (removed > 0)
 				_log.info("Removed " + removed + " temporary tables.");
@@ -203,46 +198,40 @@ public abstract class L2DataSource implements DataSource
 			
 			// generate a random table name
 			final String table = "_zzz" + Rnd.getString(5, Rnd.LOWER_CASE_LETTERS);
-			// DO NOT LOOK UP information_schema NOW
+			// DO NOT LOOK IT UP NOW
 			
 			// attempt to create in current schema instead
 			{
-				final PreparedStatement ps = con.prepareStatement("CREATE TABLE " + table + " (x INT)");
-				ps.executeUpdate();
-				ps.close();
+				final Statement s = con.createStatement();
+				s.executeUpdate("CREATE TABLE " + table + " (x INT)");
+				s.close();
 			}
 			
-			// table did not exist in current schema
-			// we can look it up in information_schema now
+			// table did not exist in current schema, we can look it up now
 			{
-				final PreparedStatement ps =
-						con.prepareStatement("SELECT table_catalog, table_schema FROM " + getInformationSchemaTables()
-								+ " WHERE table_type LIKE ? AND table_name LIKE ?");
-				ps.setString(1, "BASE_TABLE");
-				ps.setString(2, table);
+				DatabaseMetaData dmd = con.getMetaData();
 				
-				final ResultSet rs = ps.executeQuery();
-				
+				final ResultSet rs = dmd.getTables(null, null, table, BASE_TABLE);
 				if (rs.next())
 				{
-					_database = rs.getString("table_catalog");
-					_schema = rs.getString("table_schema");
+					_database = rs.getString(1);
+					_schema = rs.getString(2);
+					_log.info("Context: " + _database + " | " + _schema);
 				}
 				else
-					throw new SQLException("Table stolen."); // should never happen
+					throw new SQLException("Anomaly/Malfunction."); // should never happen
 					
 				if (rs.next())
-					throw new SQLException("Non-deterministic results."); // should never happen
+					throw new SQLException("Please try again later."); // should never happen
 					
 				rs.close();
-				ps.close();
 			}
 			
 			// remove table
 			{
-				final PreparedStatement ps = con.prepareStatement("DROP TABLE " + table);
-				ps.executeUpdate();
-				ps.close();
+				final Statement s = con.createStatement();
+				s.executeUpdate("DROP TABLE " + table);
+				s.close();
 			}
 		}
 		finally
@@ -251,7 +240,11 @@ public abstract class L2DataSource implements DataSource
 		}
 	}
 	
-	@SuppressWarnings("unused")
+	/**
+	 * Optimizes the underlying data source.
+	 * 
+	 * @throws SQLException if a SQL error occurs
+	 */
 	public void optimize() throws SQLException
 	{
 		_log.warn("TableOptimizer: Provider (" + getProviderName() + ") not yet supported.");
@@ -302,7 +295,7 @@ public abstract class L2DataSource implements DataSource
 			return false;
 		}
 		
-		_log.info("DatabaseBackupManager: Schema `" + databaseName + "` backed up successfully in "
+		_log.info("DatabaseBackupManager: Database `" + databaseName + "` backed up successfully in "
 				+ (System.currentTimeMillis() - time.getTime()) / 1000 + " s.");
 		return true;
 	}
@@ -321,22 +314,12 @@ public abstract class L2DataSource implements DataSource
 		{
 			con = getConnection();
 			
-			final PreparedStatement ps =
-					con.prepareStatement("SELECT table_name FROM "
-							+ getInformationSchemaTables()
-							+ " WHERE table_type LIKE ? AND table_name LIKE ? AND table_schema LIKE ? AND table_catalog LIKE ?");
-			ps.setString(1, "BASE_TABLE");
-			ps.setString(2, tableName);
-			ps.setString(3, _schema);
-			ps.setString(4, _database);
-			
-			final ResultSet rs = ps.executeQuery();
-			
-			if (rs.next())
-				tableExists = true;
-			
+			DatabaseMetaData dmd = con.getMetaData();
+			final ResultSet rs = dmd.getTables(_database, _schema, tableName, BASE_TABLE);
+			{
+				tableExists = rs.next();
+			}
 			rs.close();
-			ps.close();
 		}
 		catch (SQLException e)
 		{

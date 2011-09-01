@@ -18,14 +18,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import org.apache.commons.io.IOUtils;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-
-import com.l2jfree.lang.L2TextBuilder;
 
 /**
  * @author NB4L1
@@ -38,48 +36,28 @@ public final class L2DataSourceSQLite extends L2DataSource
 	}
 	
 	@Override
-	protected String getInformationSchemaTables()
-	{
-		return "INFORMATION_SCHEMA_TABLES";
-	}
-	
-	@Override
-	public void initSQLContext() throws SQLException
+	public void optimize() throws SQLException
 	{
 		Connection con = null;
 		try
 		{
 			con = getConnection();
 			
-			final PreparedStatement ps1 = con.prepareStatement("DROP VIEW IF EXISTS INFORMATION_SCHEMA_TABLES");
-			ps1.executeUpdate();
-			ps1.close();
+			final Statement st = con.createStatement();
 			
-			// source: http://www.sqlite.org/cvstrac/wiki?p=InformationSchema
-			final L2TextBuilder tb = new L2TextBuilder();
-			tb.append("CREATE VIEW INFORMATION_SCHEMA_TABLES AS");
-			tb.append("    SELECT 'main'     AS TABLE_CATALOG,");
-			tb.append("           'sqlite'   AS TABLE_SCHEMA,");
-			tb.append("           tbl_name   AS TABLE_NAME,");
-			tb.append("           CASE WHEN type = 'table' THEN 'BASE TABLE'");
-			tb.append("                WHEN type = 'view'  THEN 'VIEW'");
-			tb.append("           END        AS TABLE_TYPE,");
-			tb.append("           sql        AS TABLE_SOURCE");
-			tb.append("    FROM   sqlite_master");
-			tb.append("    WHERE  type IN ('table', 'view')");
-			tb.append("           AND tbl_name NOT LIKE 'INFORMATION_SCHEMA_%'");
-			tb.append("    ORDER BY TABLE_TYPE, TABLE_NAME;");
+			_log.info("TableOptimizer: Rebuilding database...");
+			st.executeUpdate("VACUUM");
+			_log.info("TableOptimizer: Building usage statistics...");
+			st.executeUpdate("ANALYZE");
 			
-			final PreparedStatement ps2 = con.prepareStatement(tb.moveToString());
-			ps2.executeUpdate();
-			ps2.close();
+			_log.info("TableOptimizer: Database tables have been optimized.");
+			
+			st.close();
 		}
 		finally
 		{
 			L2Database.close(con);
 		}
-		
-		super.initSQLContext();
 	}
 	
 	@Override
