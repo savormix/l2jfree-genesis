@@ -15,6 +15,7 @@
 package com.l2jfree.loginserver.network.gameserver.legacy.status;
 
 import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServer;
+import com.l2jfree.util.EnumValues;
 
 /**
  * @author savormix
@@ -53,9 +54,11 @@ public enum L2LegacyAgeLimit
 	 */
 	public static boolean isDisplayed(L2LegacyGameServer lgs)
 	{
-		for (L2LegacyAgeLimit llal : values())
+		for (L2LegacyAgeLimit llal : VALUES)
 			if (lgs.getAge() == llal.getMin())
 				return true;
 		return false;
 	}
+	
+	public static final EnumValues<L2LegacyAgeLimit> VALUES = new EnumValues<L2LegacyAgeLimit>(L2LegacyAgeLimit.class);
 }

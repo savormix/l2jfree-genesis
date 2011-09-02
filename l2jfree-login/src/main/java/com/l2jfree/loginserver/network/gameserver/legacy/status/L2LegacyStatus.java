@@ -14,6 +14,7 @@
  */
 package com.l2jfree.loginserver.network.gameserver.legacy.status;
 
+import com.l2jfree.util.EnumValues;
 import com.l2jfree.util.logging.L2Logger;
 
 /**
@@ -73,11 +74,13 @@ public enum L2LegacyStatus
 	 */
 	public static L2LegacyStatus getById(int id)
 	{
-		for (L2LegacyStatus lls : values())
+		for (L2LegacyStatus lls : VALUES)
 			if (lls.getId() == id)
 				return lls;
 		
 		_log.warn("Unknown legacy status ID: " + id);
 		return AUTO;
 	}
+	
+	public static final EnumValues<L2LegacyStatus> VALUES = new EnumValues<L2LegacyStatus>(L2LegacyStatus.class);
 }

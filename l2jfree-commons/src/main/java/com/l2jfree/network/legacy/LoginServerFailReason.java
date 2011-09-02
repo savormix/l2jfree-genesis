@@ -14,6 +14,8 @@
  */
 package com.l2jfree.network.legacy;
 
+import com.l2jfree.util.EnumValues;
+
 /** This enum was designed for non-nio LS<->GS connections. */
 @Deprecated
 public enum LoginServerFailReason
@@ -39,13 +41,17 @@ public enum LoginServerFailReason
 		return _reason;
 	}
 	
-	private static final LoginServerFailReason[] VALUES = LoginServerFailReason.values();
+	public static final EnumValues<LoginServerFailReason> VALUES = new EnumValues<LoginServerFailReason>(
+			LoginServerFailReason.class) {
+		@Override
+		protected LoginServerFailReason defaultValue()
+		{
+			return REASON_NONE;
+		}
+	};
 	
 	public static LoginServerFailReason valueOf(int index)
 	{
-		if (index < 0 || VALUES.length <= index)
-			return REASON_NONE;
-		
-		return VALUES[index];
+		return VALUES.valueOf(index);
 	}
 }

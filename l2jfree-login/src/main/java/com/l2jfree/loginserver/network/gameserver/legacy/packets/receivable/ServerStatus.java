@@ -66,7 +66,7 @@ public final class ServerStatus extends L2LegacyGameServerPacket
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		final L2LegacyGameServer lgs = getClient();
-		for (L2LegacyManagedState llms : L2LegacyManagedState.values())
+		for (L2LegacyManagedState llms : L2LegacyManagedState.VALUES)
 		{
 			Integer val = _status.remove(llms.getId());
 			if (val == null)

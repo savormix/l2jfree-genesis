@@ -47,6 +47,6 @@ public final class ClassStats extends StatusCommand
 	@Override
 	protected String getParameterUsage()
 	{
-		return "[" + StringUtils.join(SortBy.values(), "|").toLowerCase() + "]";
+		return "[" + StringUtils.join(SortBy.VALUES, "|").toLowerCase() + "]";
 	}
 }

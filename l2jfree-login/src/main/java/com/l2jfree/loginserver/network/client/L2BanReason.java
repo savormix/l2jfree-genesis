@@ -15,6 +15,7 @@
 package com.l2jfree.loginserver.network.client;
 
 import com.l2jfree.loginserver.network.client.packets.sendable.LoginFailure.Reason;
+import com.l2jfree.util.EnumValues;
 
 /**
  * @author savormix
@@ -99,9 +100,11 @@ public enum L2BanReason implements Reason
 	 */
 	public static L2BanReason getById(int id)
 	{
-		for (L2BanReason lbr : L2BanReason.values())
+		for (L2BanReason lbr : L2BanReason.VALUES)
 			if (lbr.getId() == id)
 				return lbr;
 		return SUSPENDED_PHONE_CC;
 	}
+	
+	public static final EnumValues<L2BanReason> VALUES = new EnumValues<L2BanReason>(L2BanReason.class);
 }

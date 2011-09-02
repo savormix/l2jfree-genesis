@@ -14,6 +14,8 @@
  */
 package com.l2jfree.network.legacy;
 
+import com.l2jfree.util.EnumValues;
+
 // Good, Normal and Full are not used for years
 // Oh and they wont be used. ever.
 /** This enum was designed for non-nio LS<->GS connections. */
@@ -27,13 +29,16 @@ public enum ServerStatus
 	STATUS_DOWN,
 	STATUS_GM_ONLY;
 	
-	private static final ServerStatus[] VALUES = ServerStatus.values();
+	public static final EnumValues<ServerStatus> VALUES = new EnumValues<ServerStatus>(ServerStatus.class) {
+		@Override
+		protected ServerStatus defaultValue()
+		{
+			return STATUS_AUTO;
+		}
+	};
 	
 	public static ServerStatus valueOf(int index)
 	{
-		if (index < 0 || VALUES.length <= index)
-			return STATUS_AUTO;
-		
-		return VALUES[index];
+		return VALUES.valueOf(index);
 	}
 }

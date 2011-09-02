@@ -42,6 +42,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import com.l2jfree.L2Config;
 import com.l2jfree.lang.L2TextBuilder;
+import com.l2jfree.util.EnumValues;
 import com.l2jfree.util.Rnd;
 import com.l2jfree.util.logging.L2Logger;
 
@@ -92,6 +93,8 @@ public abstract class L2DataSource implements DataSource
 		}
 		
 		public abstract L2DataSource createDataSource(String name, ComboPooledDataSource dataSource);
+		
+		public static final EnumValues<JDBCProvider> VALUES = new EnumValues<JDBCProvider>(JDBCProvider.class);
 	}
 	
 	protected static final L2Logger _log = L2Logger.getLogger(L2DataSource.class);
@@ -101,7 +104,7 @@ public abstract class L2DataSource implements DataSource
 	{
 		final String jdbcUrl = dataSource.getJdbcUrl().toLowerCase();
 		
-		for (JDBCProvider provider : JDBCProvider.values())
+		for (JDBCProvider provider : JDBCProvider.VALUES)
 		{
 			if (!jdbcUrl.contains(provider.getProtocol()))
 				continue;

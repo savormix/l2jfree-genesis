@@ -31,6 +31,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import com.l2jfree.config.L2Properties;
 import com.l2jfree.config.annotation.ConfigClass;
 import com.l2jfree.config.annotation.ConfigField;
+import com.l2jfree.util.EnumValues;
 import com.l2jfree.util.logging.L2Logger;
 
 public final class ConfigClassInfo
@@ -159,7 +160,7 @@ public final class ConfigClassInfo
 	
 	public synchronized void store()
 	{
-		for (PrintMode mode : PrintMode.values())
+		for (PrintMode mode : PrintMode.VALUES)
 			store(mode);
 	}
 	
@@ -259,5 +260,7 @@ public final class ConfigClassInfo
 		MODIFIED,
 		FULL,
 		DEFAULT;
+		
+		public static final EnumValues<PrintMode> VALUES = new EnumValues<PrintMode>(PrintMode.class);
 	}
 }

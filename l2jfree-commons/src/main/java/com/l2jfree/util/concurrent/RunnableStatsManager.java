@@ -34,6 +34,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import com.l2jfree.L2Config;
 import com.l2jfree.lang.L2TextBuilder;
+import com.l2jfree.util.EnumValues;
 import com.l2jfree.util.logging.L2Logger;
 
 /**
@@ -289,7 +290,7 @@ public final class RunnableStatsManager
 			}
 		}
 		
-		private static final SortBy[] VALUES = SortBy.values();
+		public static final EnumValues<SortBy> VALUES = new EnumValues<SortBy>(SortBy.class);
 	}
 	
 	public static void dumpClassStats()
@@ -319,12 +320,12 @@ public final class RunnableStatsManager
 		lines.add("\t<!-- This XML contains statistics about execution times. -->");
 		lines.add("\t<!-- Submitted results will help the developers to optimize the server. -->");
 		
-		final String[][] values = new String[SortBy.VALUES.length][methodStats.size()];
-		final int[] maxLength = new int[SortBy.VALUES.length];
+		final String[][] values = new String[SortBy.VALUES.length()][methodStats.size()];
+		final int[] maxLength = new int[SortBy.VALUES.length()];
 		
-		for (int i = 0; i < SortBy.VALUES.length; i++)
+		for (int i = 0; i < SortBy.VALUES.length(); i++)
 		{
-			final SortBy sort = SortBy.VALUES[i];
+			final SortBy sort = SortBy.VALUES.get(i);
 			
 			for (int k = 0; k < methodStats.size(); k++)
 			{

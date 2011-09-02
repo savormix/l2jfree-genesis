@@ -14,6 +14,8 @@
  */
 package com.l2jfree.network.legacy;
 
+import com.l2jfree.util.EnumValues;
+
 // Compatible, legacy values
 /** This enum was designed for non-nio LS<->GS connections. */
 @Deprecated
@@ -30,13 +32,17 @@ public enum ServerStatusAttributes
 	SERVER_LIST_HIDE_NAME,
 	SERVER_AGE_LIMITATION;
 	
-	private static final ServerStatusAttributes[] VALUES = ServerStatusAttributes.values();
+	public static final EnumValues<ServerStatusAttributes> VALUES = new EnumValues<ServerStatusAttributes>(
+			ServerStatusAttributes.class) {
+		@Override
+		protected ServerStatusAttributes defaultValue()
+		{
+			return NONE;
+		}
+	};
 	
 	public static ServerStatusAttributes valueOf(int index)
 	{
-		if (index < 0 || VALUES.length <= index)
-			return NONE;
-		
-		return VALUES[index];
+		return VALUES.valueOf(index);
 	}
 }

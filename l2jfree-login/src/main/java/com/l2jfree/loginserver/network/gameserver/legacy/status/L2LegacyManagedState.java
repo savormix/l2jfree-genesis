@@ -14,6 +14,8 @@
  */
 package com.l2jfree.loginserver.network.gameserver.legacy.status;
 
+import com.l2jfree.util.EnumValues;
+
 /**
  * @author savormix
  */
@@ -46,4 +48,7 @@ public enum L2LegacyManagedState
 	{
 		return _id;
 	}
+	
+	public static final EnumValues<L2LegacyManagedState> VALUES = new EnumValues<L2LegacyManagedState>(
+			L2LegacyManagedState.class);
 }
