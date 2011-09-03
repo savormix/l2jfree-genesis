@@ -85,7 +85,7 @@ public final class L2DatabaseInstaller
 					
 					final String oldDefinition = tables.put(name, definition);
 					if (oldDefinition != null)
-						System.err.println("Found multiple tables with name " + name + "!");
+						throw new RuntimeException("Found multiple tables with name " + name + "!");
 				}
 				
 				for (Node n2 : L2XML.listNodesByNodeName(n1, "update"))
@@ -95,7 +95,7 @@ public final class L2DatabaseInstaller
 					
 					final String oldQuery = updates.put(revision, query);
 					if (oldQuery != null)
-						System.err.println("Found multiple updates with revision " + revision + "!");
+						throw new RuntimeException("Found multiple updates with revision " + revision + "!");
 				}
 			}
 		}
