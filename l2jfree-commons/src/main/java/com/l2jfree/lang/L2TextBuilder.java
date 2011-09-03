@@ -21,7 +21,6 @@ import com.l2jfree.util.ObjectPool;
 /**
  * @author NB4L1
  */
-@SuppressWarnings("javadoc")
 public final class L2TextBuilder implements Serializable
 {
 	private static final long serialVersionUID = -4689463504223014731L;
