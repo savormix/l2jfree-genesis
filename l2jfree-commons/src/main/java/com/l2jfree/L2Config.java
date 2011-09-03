@@ -14,11 +14,17 @@
  */
 package com.l2jfree;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintStream;
+import java.io.StringWriter;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
@@ -26,6 +32,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.logging.Handler;
@@ -242,37 +249,61 @@ public abstract class L2Config
 		System.setProperty("file.encoding", "UTF-8");
 		System.setProperty("java.util.logging.manager", "com.l2jfree.util.logging.L2LogManager");
 		
-		FileInputStream fis = null;
 		try
 		{
-			fis = new FileInputStream(LOG_FILE);
+			// empty logging parameters
+			final Properties props = new Properties();
 			
-			LogManager.getLogManager().readConfiguration(fis);
-		}
-		catch (Exception e)
-		{
+			InputStream is = null;
+			BufferedInputStream bis = null;
 			try
 			{
-				// if failed to load 'logging.properties' from config then try to load from resources
-				LogManager.getLogManager().readConfiguration(
-						ClassLoader.getSystemResourceAsStream("logging.properties"));
+				// load default config from resources
+				is = ClassLoader.getSystemResourceAsStream("logging.properties");
+				
+				props.load(is);
+				
+				// load optional project specific config (overwrites identical parameters)
+				if (new File(LOG_FILE).exists())
+				{
+					bis = new BufferedInputStream(new FileInputStream(LOG_FILE));
+					
+					props.load(bis);
+				}
 			}
-			catch (Exception e1)
+			catch (Exception e) // IOException | RuntimeException
 			{
+				e.printStackTrace();
+			}
+			finally
+			{
+				IOUtils.closeQuietly(is);
+				IOUtils.closeQuietly(bis);
+			}
+			
+			if (props.isEmpty())
+			{
+				LogManager.getLogManager().readConfiguration();
+			}
+			else
+			{
+				final StringWriter sw = new StringWriter();
+				
 				try
 				{
-					// if failed to load 'logging.properties', then load default logging parameters
-					LogManager.getLogManager().readConfiguration();
+					props.store(sw, null);
 				}
-				catch (Exception e2)
+				catch (Exception e) // IOException | RuntimeException
 				{
-					throw new Error(e2);
+					e.printStackTrace();
 				}
+				
+				LogManager.getLogManager().readConfiguration(new ByteArrayInputStream(sw.toString().getBytes("UTF-8")));
 			}
 		}
-		finally
+		catch (Exception e) // IOException | RuntimeException
 		{
-			IOUtils.closeQuietly(fis);
+			throw new Error(e);
 		}
 		
 		_log = L2Logger.getLogger(L2Config.class);
