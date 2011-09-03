@@ -14,12 +14,15 @@
  */
 package com.l2jfree.sql;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
@@ -50,36 +53,50 @@ public final class L2DatabaseInstaller
 		factory.setValidating(false); // FIXME add validation
 		factory.setIgnoringComments(true);
 		
-		final Document doc;
+		final List<Document> documents = new ArrayList<Document>();
 		
 		InputStream is = null;
 		try
 		{
+			// load default database schema from resources
 			is = L2DatabaseInstaller.class.getResourceAsStream("database_schema.xml");
 			
-			doc = factory.newDocumentBuilder().parse(is);
+			documents.add(factory.newDocumentBuilder().parse(is));
 		}
 		finally
 		{
 			IOUtils.closeQuietly(is);
 		}
 		
-		for (Node n1 : L2XML.listNodesByNodeName(doc, "database"))
+		final File f = new File("./config/database_schema.xml");
+		
+		// load optional project specific database tables/updates (fails on already existing)
+		if (f.exists())
+			documents.add(factory.newDocumentBuilder().parse(f));
+		
+		for (Document doc : documents)
 		{
-			for (Node n2 : L2XML.listNodesByNodeName(n1, "table"))
+			for (Node n1 : L2XML.listNodesByNodeName(doc, "database"))
 			{
-				final String name = L2XML.getAttribute(n2, "name");
-				final String definition = L2XML.getAttribute(n2, "definition");
+				for (Node n2 : L2XML.listNodesByNodeName(n1, "table"))
+				{
+					final String name = L2XML.getAttribute(n2, "name");
+					final String definition = L2XML.getAttribute(n2, "definition");
+					
+					final String oldDefinition = tables.put(name, definition);
+					if (oldDefinition != null)
+						System.err.println("Found multiple tables with name " + name + "!");
+				}
 				
-				tables.put(name, definition);
-			}
-			
-			for (Node n2 : L2XML.listNodesByNodeName(n1, "update"))
-			{
-				final Double revision = Double.valueOf(L2XML.getAttribute(n2, "revision"));
-				final String query = L2XML.getAttribute(n2, "query");
-				
-				updates.put(revision, query);
+				for (Node n2 : L2XML.listNodesByNodeName(n1, "update"))
+				{
+					final Double revision = Double.valueOf(L2XML.getAttribute(n2, "revision"));
+					final String query = L2XML.getAttribute(n2, "query");
+					
+					final String oldQuery = updates.put(revision, query);
+					if (oldQuery != null)
+						System.err.println("Found multiple updates with revision " + revision + "!");
+				}
 			}
 		}
 		
