@@ -15,9 +15,10 @@
 package com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable;
 
 import java.nio.BufferUnderflowException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import javolution.util.FastMap;
 
 import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServer;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyGameServerPacket;
@@ -40,7 +41,7 @@ public final class ServerStatus extends L2LegacyGameServerPacket
 	/** Constructs this packet. */
 	public ServerStatus()
 	{
-		_status = new HashMap<Integer, Integer>();
+		_status = new FastMap<Integer, Integer>();
 	}
 	
 	@Override

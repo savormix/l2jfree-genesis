@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javolution.util.FastMap;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -60,7 +62,7 @@ public final class ConfigClassInfo
 		_clazz = clazz;
 		_configClass = _clazz.getAnnotation(ConfigClass.class);
 		
-		final Map<String, ConfigGroup> activeGroups = new HashMap<String, ConfigGroup>();
+		final Map<String, ConfigGroup> activeGroups = new FastMap<String, ConfigGroup>();
 		
 		for (Field field : _clazz.getFields())
 		{

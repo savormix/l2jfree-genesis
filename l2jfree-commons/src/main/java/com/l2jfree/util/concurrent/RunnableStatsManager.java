@@ -40,6 +40,7 @@ import com.l2jfree.util.logging.L2Logger;
 /**
  * @author NB4L1
  */
+// LOW implement database equivalent version of this
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public final class RunnableStatsManager
 {

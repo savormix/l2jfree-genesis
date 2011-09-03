@@ -14,8 +14,9 @@
  */
 package com.l2jfree;
 
-import java.util.HashSet;
 import java.util.Set;
+
+import javolution.util.FastSet;
 
 /**
  * This class provides the functions for shutting down and restarting the server.
@@ -247,7 +248,7 @@ public final class Shutdown
 		});
 	}
 	
-	private static final Set<Runnable> _shutdownHooks = new HashSet<Runnable>();
+	private static final Set<Runnable> _shutdownHooks = new FastSet<Runnable>();
 	
 	/**
 	 * Adds a managed shutdown hook to be run before the application terminates unless an uncaught

@@ -18,13 +18,13 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import javolution.util.FastList;
 import javolution.util.FastMap;
+import javolution.util.FastSet;
 
 import com.l2jfree.config.L2Properties;
 import com.l2jfree.util.L2FastSet;
@@ -218,7 +218,7 @@ public abstract class StatusServer extends Thread
 	 */
 	public static Set<String> getAllowedTelnetHostAddresses()
 	{
-		final Set<String> set = new HashSet<String>();
+		final Set<String> set = new FastSet<String>();
 		
 		try
 		{

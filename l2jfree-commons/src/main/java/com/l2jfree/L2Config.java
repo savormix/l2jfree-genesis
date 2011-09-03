@@ -23,8 +23,6 @@ import java.lang.Thread.UncaughtExceptionHandler;
 import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -34,6 +32,9 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
+
+import javolution.util.FastMap;
+import javolution.util.FastSet;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -163,9 +164,9 @@ public abstract class L2Config
 			Shutdown.exit(TerminationStatus.ENVIRONMENT_SUPERUSER);
 		}
 		
-		final Map<String, List<String>> libs = new HashMap<String, List<String>>();
+		final Map<String, List<String>> libs = new FastMap<String, List<String>>();
 		
-		final Set<File> files = new HashSet<File>();
+		final Set<File> files = new FastSet<File>();
 		
 		for (String classPath : System.getProperty("java.class.path").split(File.pathSeparator))
 		{
