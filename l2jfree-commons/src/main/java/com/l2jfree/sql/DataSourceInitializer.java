@@ -28,6 +28,12 @@ public abstract class DataSourceInitializer
 	
 	protected abstract int getMaxConnections();
 	
+	@SuppressWarnings("static-method")
+	public boolean createEntityManagerFactory()
+	{
+		return false;
+	}
+	
 	public ComboPooledDataSource initDataSource() throws Exception
 	{
 		if (getMaxConnections() < getMinConnections())

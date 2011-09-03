@@ -60,9 +60,13 @@ public final class L2Database
 		_dataSources.put(dataSourceName, dataSource);
 		
 		if (dataSourceName.equals(DEFAULT_DATA_SOURCE_NAME))
-		{
 			_defaultDataSource = dataSource;
-			
+		
+		if (!initializer.createEntityManagerFactory())
+			return;
+		
+		if (dataSourceName.equals(DEFAULT_DATA_SOURCE_NAME))
+		{
 			// initialization of the EclipseLink JPA
 			final Map<Object, Object> props = new HashMap<Object, Object>();
 			
@@ -72,6 +76,12 @@ public final class L2Database
 			
 			// test the entity manager
 			_defaultEntityManagerFactory.createEntityManager().close();
+		}
+		else
+		{
+			// until we have validation for persistence.xml (to check if there is any config for the given datasource)
+			// LOW add persistence.xml validation
+			throw new Exception("Entity manager initialization required for a non-default datasource!");
 		}
 	}
 	
