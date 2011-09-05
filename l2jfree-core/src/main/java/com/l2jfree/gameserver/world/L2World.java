@@ -27,8 +27,8 @@ public final class L2World
 	public static final int MAP_MAX_X = 229376; // ((26 - 19)) * 32768
 	public static final int MAP_MIN_Y = -262144; // ((10 - 17) - 1) * 32768
 	public static final int MAP_MAX_Y = 294912; // ((26 - 17)) * 32768
-	//public static final int MAP_MIN_Z = -32768;
-	//public static final int MAP_MAX_Z = 32767;
+	public static final int MAP_MIN_Z = -32768;
+	public static final int MAP_MAX_Z = 32767;
 	
 	public static final int SHIFT_BY = 12;
 	//public static final int SHIFT_BY_FOR_Z = 9;

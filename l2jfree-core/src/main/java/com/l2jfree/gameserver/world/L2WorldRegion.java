@@ -83,6 +83,24 @@ public final class L2WorldRegion
 		return _objects.toArray(L2Object.class);
 	}
 	
+	public void addObject(L2Object object)
+	{
+		if (object == null)
+			return;
+		
+		_objects.add(object);
+		// startActivation();
+	}
+	
+	public void removeObject(L2Object object)
+	{
+		if (object == null)
+			return;
+		
+		_objects.remove(object);
+		//startDeactivation();
+	}
+	
 	private boolean containsPlayer()
 	{
 		// TODO check if a player present
@@ -155,22 +173,14 @@ public final class L2WorldRegion
 		if (active)
 		{
 			for (L2Object obj : getObjects())
-			{
-				if (obj == null)
-					continue;
-				
-				// TODO
-			}
+				if (obj != null)
+					obj.getPosition().worldRegionActivated();
 		}
 		else
 		{
 			for (L2Object obj : getObjects())
-			{
-				if (obj == null)
-					continue;
-				
-				// TODO
-			}
+				if (obj != null)
+					obj.getPosition().worldRegionDeactivated();
 		}
 	}
 }

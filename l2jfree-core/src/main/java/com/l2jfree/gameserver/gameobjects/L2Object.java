@@ -21,18 +21,28 @@ public abstract class L2Object implements L2Entity<Integer>
 {
 	public static final L2Object[] EMPTY_ARRAY = new L2Object[0];
 	
-	//private final Integer _objectId;
 	private final int _objectId;
+	private final ObjectPosition _position;
 	
 	protected L2Object(int objectId)
 	{
-		//_objectId = L2Integer.valueOf(objectId);
 		_objectId = objectId;
+		_position = initPosition();
 	}
 	
-	public final Integer getObjectId()
+	public final int getObjectId()
 	{
 		return _objectId;
+	}
+	
+	protected final ObjectPosition initPosition()
+	{
+		return new ObjectPosition(this);
+	}
+	
+	public final ObjectPosition getPosition()
+	{
+		return _position;
 	}
 	
 	@Override
@@ -46,7 +56,7 @@ public abstract class L2Object implements L2Entity<Integer>
 	public abstract void setName(String name);
 	
 	@Override
-	public String toString()
+	public final String toString()
 	{
 		final L2TextBuilder tb = new L2TextBuilder();
 		tb.append("(");
