@@ -56,7 +56,7 @@ public final class GameServer extends Config
 			}
 			catch (Throwable e)
 			{
-				_log.fatal("Could not start login server!", e);
+				_log.fatal("Could not start Game Server!", e);
 				Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
 				return;
 			}
