@@ -33,6 +33,9 @@ public final class L2DataSourceSQLite extends L2DataSource
 	protected L2DataSourceSQLite(String name, ComboPooledDataSource dataSource)
 	{
 		super(name, dataSource);
+		
+		System.err.println("NOTE: " + getProviderName() + " isn't recommended for a live server!");
+		System.err.println("It is HIGHLY RECOMMENDED to change to another provider!");
 	}
 	
 	@Override
