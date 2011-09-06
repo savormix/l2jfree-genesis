@@ -40,8 +40,9 @@ public final class LoginServer extends Config
 	 * Launches the login server.
 	 * 
 	 * @param args ignored
+	 * @throws Exception
 	 */
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
 		if (DatabaseConfig.OPTIMIZE)
 			L2Database.optimize();
@@ -52,6 +53,8 @@ public final class LoginServer extends Config
 		L2LoginIdentifier.getInstance().getUID();
 		
 		L2GameServerCache.getInstance();
+		
+		//LoginStatusServer.initInstance();
 		
 		if (NetworkConfig.ENABLE_LEGACY || ServiceConfig.FORCE_LEGACY)
 		{

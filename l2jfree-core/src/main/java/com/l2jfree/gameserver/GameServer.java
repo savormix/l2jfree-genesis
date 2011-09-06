@@ -20,8 +20,10 @@ import com.l2jfree.TerminationStatus;
 import com.l2jfree.gameserver.config.DatabaseConfig;
 import com.l2jfree.gameserver.config.NetworkConfig;
 import com.l2jfree.gameserver.config.SystemConfig;
+import com.l2jfree.gameserver.gameobjects.ComponentFactory;
 import com.l2jfree.gameserver.network.client.L2ClientConnections;
 import com.l2jfree.gameserver.network.client.L2ClientSecurity;
+import com.l2jfree.gameserver.world.L2World;
 import com.l2jfree.lang.L2System;
 import com.l2jfree.sql.L2Database;
 
@@ -37,14 +39,20 @@ public final class GameServer extends Config
 	 * Launches the game server.
 	 * 
 	 * @param args ignored
+	 * @throws Exception
 	 */
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
 		if (DatabaseConfig.OPTIMIZE)
 			L2Database.optimize();
 		
 		if (DatabaseConfig.BACKUP_ON_STARTUP)
 			L2Database.backup();
+		
+		Class.forName(L2World.class.getName());
+		Class.forName(ComponentFactory.class.getName());
+		
+		//GameStatusServer.initInstance();
 		
 		{
 			L2ClientSecurity.getInstance();
