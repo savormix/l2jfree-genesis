@@ -109,7 +109,7 @@ public final class L2World
 		return _objects.get(objectId);
 	}
 	
-	public static <T> T findObject(Class<T> clazz, Integer objectId)
+	public static <T extends L2Object> T findObject(Class<T> clazz, Integer objectId)
 	{
 		return clazz.cast(findObject(objectId));
 	}
