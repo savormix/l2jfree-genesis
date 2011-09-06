@@ -20,8 +20,10 @@ import java.util.Map;
 
 /**
  * @author NB4L1
+ * @param <T>
  */
 // TODO implement more features, use annotations, optimize performance
+@SuppressWarnings("unchecked")
 public final class ComponentFactory<T>
 {
 	public static final ComponentFactory<ObjectPosition> POSITION = new ComponentFactory<ObjectPosition>(
@@ -29,7 +31,12 @@ public final class ComponentFactory<T>
 	
 	private final Map<Class<? extends L2Object>, Class<? extends T>> _registryByOwnerClass =
 			new HashMap<Class<? extends L2Object>, Class<? extends T>>();
+	
+	private final Map<Class<? extends L2Object>, Class<? extends T>> _cacheByOwnerClass =
+			new HashMap<Class<? extends L2Object>, Class<? extends T>>();
+	
 	private final Map<Integer, Class<? extends T>> _registryByTemplateId = new HashMap<Integer, Class<? extends T>>();
+	
 	private final Map<Class<? extends T>, Map<Class<? extends L2Object>, Constructor<? extends T>>> _constructorCache =
 			new HashMap<Class<? extends T>, Map<Class<? extends L2Object>, Constructor<? extends T>>>();
 	
@@ -44,6 +51,9 @@ public final class ComponentFactory<T>
 	{
 		// FIXME handle replacement
 		_registryByOwnerClass.put(ownerClazz, componentClazz);
+		
+		// drop cache
+		_cacheByOwnerClass.clear();
 	}
 	
 	public final void register(int templateId, Class<? extends T> componentClazz)
@@ -52,9 +62,14 @@ public final class ComponentFactory<T>
 		_registryByTemplateId.put(templateId, componentClazz);
 	}
 	
-	private final Class<? extends T> getClass(L2Object owner)
+	private final Class<? extends T> findComponentClass(L2Object owner)
 	{
 		Class<? extends T> clazz = _registryByTemplateId.get(owner.getTemplateId());
+		
+		if (clazz != null)
+			return clazz;
+		
+		clazz = _cacheByOwnerClass.get(owner.getClass());
 		
 		if (clazz != null)
 			return clazz;
@@ -64,15 +79,18 @@ public final class ComponentFactory<T>
 			clazz = _registryByOwnerClass.get(ownerClazz);
 			
 			if (clazz != null)
+			{
+				_cacheByOwnerClass.put(owner.getClass(), clazz);
 				return clazz;
+			}
 		}
 		
 		return null;
 	}
 	
-	private final Map<Class<? extends L2Object>, Constructor<? extends T>> getContructors(L2Object owner)
+	private final Map<Class<? extends L2Object>, Constructor<? extends T>> findComponentContructors(L2Object owner)
 	{
-		final Class<? extends T> clazz = getClass(owner);
+		final Class<? extends T> clazz = findComponentClass(owner);
 		
 		if (clazz == null)
 			throw new IllegalStateException("No " + _rootClazz + " implementation registered for " + owner);
@@ -89,7 +107,7 @@ public final class ComponentFactory<T>
 			final Class<?>[] parameterTypes = constructor.getParameterTypes();
 			
 			if (parameterTypes.length != 1 || !L2Object.class.isAssignableFrom(parameterTypes[0]))
-				continue;
+				throw new IllegalStateException("Invalid constructor " + constructor + " for " + owner);
 			
 			constructors.put((Class<? extends L2Object>)parameterTypes[0], (Constructor<? extends T>)constructor);
 		}
@@ -101,7 +119,7 @@ public final class ComponentFactory<T>
 	
 	public final T getComponent(L2Object owner)
 	{
-		final Map<Class<? extends L2Object>, Constructor<? extends T>> constructors = getContructors(owner);
+		final Map<Class<? extends L2Object>, Constructor<? extends T>> constructors = findComponentContructors(owner);
 		
 		for (Class<?> ownerClazz = owner.getClass(); ownerClazz != null; ownerClazz = ownerClazz.getSuperclass())
 		{
@@ -128,10 +146,11 @@ public final class ComponentFactory<T>
 		long begin1 = System.currentTimeMillis();
 		for (int i = 0; i < 10000000; i++)
 		{
-			final L2Object obj = new L2Object(123123) {
+			new L2Object(123123) {
 				@Override
 				public void setName(String name)
 				{
+					//
 				}
 				
 				@Override
@@ -145,7 +164,7 @@ public final class ComponentFactory<T>
 				{
 					return null;
 				}
-			};
+			}.hashCode();
 			
 			// System.out.println(pet.getPosition());
 		}
@@ -154,10 +173,11 @@ public final class ComponentFactory<T>
 		long begin2 = System.currentTimeMillis();
 		for (int i = 0; i < 10000000; i++)
 		{
-			final L2Object obj = new L2PetInstance(123123) {
+			new L2PetInstance(123123) {
 				@Override
 				public void setName(String name)
 				{
+					//
 				}
 				
 				@Override
@@ -171,7 +191,7 @@ public final class ComponentFactory<T>
 				{
 					return null;
 				}
-			};
+			}.hashCode();
 			
 			// System.out.println(pet.getPosition());
 		}
