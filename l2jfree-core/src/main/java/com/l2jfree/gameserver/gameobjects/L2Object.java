@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.gameobjects;
 
+import com.l2jfree.gameserver.templates.L2Template;
 import com.l2jfree.lang.L2Entity;
 import com.l2jfree.lang.L2TextBuilder;
 
@@ -27,17 +28,32 @@ public abstract class L2Object implements L2Entity<Integer>
 	public static final L2Object[] EMPTY_ARRAY = new L2Object[0];
 	
 	private final int _objectId;
+	private final L2Template _template;
+	
 	private final ObjectPosition _position;
 	
+	// temp fix
 	protected L2Object(int objectId)
 	{
+		this(objectId, new L2Template(0));
+	}
+	
+	protected L2Object(int objectId, L2Template template)
+	{
 		_objectId = objectId;
+		_template = template;
+		
 		_position = ComponentFactory.POSITION.getComponent(this);
 	}
 	
 	public final int getObjectId()
 	{
 		return _objectId;
+	}
+	
+	public final L2Template getTemplate()
+	{
+		return _template;
 	}
 	
 	public final ObjectPosition getPosition()
@@ -68,10 +84,4 @@ public abstract class L2Object implements L2Entity<Integer>
 		
 		return tb.moveToString();
 	}
-	
-	/**
-	 * @return
-	 * @see ComponentFactory
-	 */
-	public abstract int getTemplateId();
 }

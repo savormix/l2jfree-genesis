@@ -18,6 +18,8 @@ import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.l2jfree.gameserver.templates.L2Template;
+
 /**
  * @author NB4L1
  * @param <T>
@@ -32,13 +34,10 @@ public final class ComponentFactory<T>
 	private final Map<Class<? extends L2Object>, Class<? extends T>> _registryByOwnerClass =
 			new HashMap<Class<? extends L2Object>, Class<? extends T>>();
 	
-	private final Map<Class<? extends L2Object>, Class<? extends T>> _cacheByOwnerClass =
-			new HashMap<Class<? extends L2Object>, Class<? extends T>>();
-	
 	private final Map<Integer, Class<? extends T>> _registryByTemplateId = new HashMap<Integer, Class<? extends T>>();
 	
-	private final Map<Class<? extends T>, Map<Class<? extends L2Object>, Constructor<? extends T>>> _constructorCache =
-			new HashMap<Class<? extends T>, Map<Class<? extends L2Object>, Constructor<? extends T>>>();
+	private final Map<Class<? extends L2Object>, Map<Integer, Constructor<? extends T>>> _cache =
+			new HashMap<Class<? extends L2Object>, Map<Integer, Constructor<? extends T>>>();
 	
 	private final Class<?> _rootClazz;
 	
@@ -53,23 +52,21 @@ public final class ComponentFactory<T>
 		_registryByOwnerClass.put(ownerClazz, componentClazz);
 		
 		// drop cache
-		_cacheByOwnerClass.clear();
+		_cache.clear();
 	}
 	
 	public final void register(int templateId, Class<? extends T> componentClazz)
 	{
 		// FIXME handle replacement
 		_registryByTemplateId.put(templateId, componentClazz);
+		
+		// drop cache
+		_cache.clear();
 	}
 	
 	private final Class<? extends T> findComponentClass(L2Object owner)
 	{
-		Class<? extends T> clazz = _registryByTemplateId.get(owner.getTemplateId());
-		
-		if (clazz != null)
-			return clazz;
-		
-		clazz = _cacheByOwnerClass.get(owner.getClass());
+		Class<? extends T> clazz = _registryByTemplateId.get(owner.getTemplate().getId());
 		
 		if (clazz != null)
 			return clazz;
@@ -79,28 +76,18 @@ public final class ComponentFactory<T>
 			clazz = _registryByOwnerClass.get(ownerClazz);
 			
 			if (clazz != null)
-			{
-				_cacheByOwnerClass.put(owner.getClass(), clazz);
 				return clazz;
-			}
 		}
 		
-		return null;
+		throw new IllegalStateException("No " + _rootClazz + " implementation registered for " + owner);
 	}
 	
 	private final Map<Class<? extends L2Object>, Constructor<? extends T>> findComponentContructors(L2Object owner)
 	{
 		final Class<? extends T> clazz = findComponentClass(owner);
 		
-		if (clazz == null)
-			throw new IllegalStateException("No " + _rootClazz + " implementation registered for " + owner);
-		
-		Map<Class<? extends L2Object>, Constructor<? extends T>> constructors = _constructorCache.get(clazz);
-		
-		if (constructors != null)
-			return constructors;
-		
-		constructors = new HashMap<Class<? extends L2Object>, Constructor<? extends T>>();
+		final Map<Class<? extends L2Object>, Constructor<? extends T>> constructors =
+				new HashMap<Class<? extends L2Object>, Constructor<? extends T>>();
 		
 		for (Constructor<?> constructor : clazz.getConstructors())
 		{
@@ -111,8 +98,6 @@ public final class ComponentFactory<T>
 			
 			constructors.put((Class<? extends L2Object>)parameterTypes[0], (Constructor<? extends T>)constructor);
 		}
-		
-		_constructorCache.put(clazz, constructors);
 		
 		return constructors;
 	}
@@ -134,9 +119,19 @@ public final class ComponentFactory<T>
 	
 	public final T getComponent(L2Object owner)
 	{
+		Map<Integer, Constructor<? extends T>> cacheByOwnerClass = _cache.get(owner.getClass());
+		
+		if (cacheByOwnerClass == null)
+			_cache.put(owner.getClass(), cacheByOwnerClass = new HashMap<Integer, Constructor<? extends T>>());
+		
+		Constructor<? extends T> constructor = cacheByOwnerClass.get(owner.getTemplate().getId());
+		
+		if (constructor == null)
+			cacheByOwnerClass.put(owner.getTemplate().getId(), constructor = findComponentContructor(owner));
+		
 		try
 		{
-			return findComponentContructor(owner).newInstance(owner);
+			return constructor.newInstance(owner);
 		}
 		catch (RuntimeException e)
 		{
@@ -154,17 +149,11 @@ public final class ComponentFactory<T>
 		long begin1 = System.currentTimeMillis();
 		for (int i = 0; i < 10000000; i++)
 		{
-			new L2Object(123123) {
+			new L2Object(123123, new L2Template(i % 20000)) {
 				@Override
 				public void setName(String name)
 				{
 					//
-				}
-				
-				@Override
-				public int getTemplateId()
-				{
-					return 0;
 				}
 				
 				@Override
@@ -186,12 +175,6 @@ public final class ComponentFactory<T>
 				public void setName(String name)
 				{
 					//
-				}
-				
-				@Override
-				public int getTemplateId()
-				{
-					return 0;
 				}
 				
 				@Override
