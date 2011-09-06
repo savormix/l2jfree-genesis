@@ -14,13 +14,15 @@
  */
 package com.l2jfree.gameserver.gameobjects;
 
+import com.l2jfree.gameserver.templates.L2Template;
+
 /**
  * @author NB4L1
  */
 public abstract class L2Character extends L2Object
 {
-	public L2Character(int objectId)
+	public L2Character(int objectId, L2Template template)
 	{
-		super(objectId);
+		super(objectId, template);
 	}
 }

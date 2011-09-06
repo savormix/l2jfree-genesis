@@ -14,13 +14,15 @@
  */
 package com.l2jfree.gameserver.gameobjects;
 
+import com.l2jfree.gameserver.templates.L2Template;
+
 /**
  * @author NB4L1
  */
 public abstract class L2StaticObjectInstance extends L2Object
 {
-	protected L2StaticObjectInstance(int objectId)
+	protected L2StaticObjectInstance(int objectId, L2Template template)
 	{
-		super(objectId);
+		super(objectId, template);
 	}
 }

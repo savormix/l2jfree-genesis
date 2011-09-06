@@ -18,8 +18,6 @@ import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.l2jfree.gameserver.templates.L2Template;
-
 /**
  * @author NB4L1
  * @param <T>
@@ -141,51 +139,5 @@ public final class ComponentFactory<T>
 		{
 			throw new RuntimeException(e);
 		}
-	}
-	
-	/* only temporarily for testing */
-	public static void main(String[] args)
-	{
-		long begin1 = System.currentTimeMillis();
-		for (int i = 0; i < 10000000; i++)
-		{
-			new L2Object(123123, new L2Template(i % 20000)) {
-				@Override
-				public void setName(String name)
-				{
-					//
-				}
-				
-				@Override
-				public String getName()
-				{
-					return null;
-				}
-			}.hashCode();
-			
-			// System.out.println(pet.getPosition());
-		}
-		System.out.println(System.currentTimeMillis() - begin1);
-		
-		long begin2 = System.currentTimeMillis();
-		for (int i = 0; i < 10000000; i++)
-		{
-			new L2PetInstance(123123) {
-				@Override
-				public void setName(String name)
-				{
-					//
-				}
-				
-				@Override
-				public String getName()
-				{
-					return null;
-				}
-			}.hashCode();
-			
-			// System.out.println(pet.getPosition());
-		}
-		System.out.println(System.currentTimeMillis() - begin2);
 	}
 }

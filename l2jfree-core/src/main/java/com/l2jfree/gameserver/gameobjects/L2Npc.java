@@ -14,13 +14,21 @@
  */
 package com.l2jfree.gameserver.gameobjects;
 
+import com.l2jfree.gameserver.templates.L2NpcTemplate;
+
 /**
  * @author NB4L1
  */
 public abstract class L2Npc extends L2Character
 {
-	public L2Npc(int objectId)
+	public L2Npc(int objectId, L2NpcTemplate template)
 	{
-		super(objectId);
+		super(objectId, template);
+	}
+	
+	@Override
+	public L2NpcTemplate getTemplate()
+	{
+		return (L2NpcTemplate)super.getTemplate();
 	}
 }

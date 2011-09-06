@@ -14,13 +14,15 @@
  */
 package com.l2jfree.gameserver.gameobjects;
 
+import com.l2jfree.gameserver.templates.L2Template;
+
 /**
  * @author NB4L1
  */
 public abstract class L2PcInstance extends L2Character
 {
-	public L2PcInstance(int objectId)
+	public L2PcInstance(int objectId, L2Template template)
 	{
-		super(objectId);
+		super(objectId, template);
 	}
 }

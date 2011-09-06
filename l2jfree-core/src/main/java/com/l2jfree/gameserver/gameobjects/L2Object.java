@@ -32,12 +32,6 @@ public abstract class L2Object implements L2Entity<Integer>
 	
 	private final ObjectPosition _position;
 	
-	// temp fix
-	protected L2Object(int objectId)
-	{
-		this(objectId, new L2Template(0));
-	}
-	
 	protected L2Object(int objectId, L2Template template)
 	{
 		_objectId = objectId;
@@ -51,7 +45,7 @@ public abstract class L2Object implements L2Entity<Integer>
 		return _objectId;
 	}
 	
-	public final L2Template getTemplate()
+	public L2Template getTemplate()
 	{
 		return _template;
 	}

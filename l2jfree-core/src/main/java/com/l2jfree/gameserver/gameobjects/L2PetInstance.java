@@ -14,13 +14,15 @@
  */
 package com.l2jfree.gameserver.gameobjects;
 
+import com.l2jfree.gameserver.templates.L2NpcTemplate;
+
 /**
  * @author NB4L1
  */
 public abstract class L2PetInstance extends L2Summon
 {
-	public L2PetInstance(int objectId)
+	public L2PetInstance(int objectId, L2NpcTemplate template)
 	{
-		super(objectId);
+		super(objectId, template);
 	}
 }

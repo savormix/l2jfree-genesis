@@ -14,13 +14,15 @@
  */
 package com.l2jfree.gameserver.gameobjects;
 
+import com.l2jfree.gameserver.templates.L2NpcTemplate;
+
 /**
  * @author NB4L1
  */
 public abstract class L2DecoyInstance extends L2Npc
 {
-	public L2DecoyInstance(int objectId)
+	public L2DecoyInstance(int objectId, L2NpcTemplate template)
 	{
-		super(objectId);
+		super(objectId, template);
 	}
 }

@@ -12,17 +12,15 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.gameobjects;
-
-import com.l2jfree.gameserver.templates.L2Template;
+package com.l2jfree.gameserver.templates;
 
 /**
  * @author NB4L1
  */
-public abstract class L2ItemInstance extends L2Object
+public class L2NpcTemplate extends L2Template
 {
-	public L2ItemInstance(int objectId, L2Template template)
+	public L2NpcTemplate(int id)
 	{
-		super(objectId, template);
+		super(id);
 	}
 }
