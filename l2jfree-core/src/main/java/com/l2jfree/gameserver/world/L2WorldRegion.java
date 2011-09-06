@@ -16,9 +16,11 @@ package com.l2jfree.gameserver.world;
 
 import java.util.ArrayList;
 
+import com.l2jfree.gameserver.gameobjects.IL2Playable;
 import com.l2jfree.gameserver.gameobjects.L2Object;
 import com.l2jfree.util.L2Arrays;
 import com.l2jfree.util.concurrent.ExclusiveTask;
+import com.l2jfree.util.concurrent.FIFOSimpleExecutableQueue;
 import com.l2jfree.util.concurrent.L2EntityMap;
 import com.l2jfree.util.concurrent.L2ReadWriteEntityMap;
 
@@ -74,6 +76,7 @@ public final class L2WorldRegion
 	 * Contains all the objects in this region.
 	 */
 	private final L2EntityMap<L2Object> _objects = new L2ReadWriteEntityMap<L2Object>();
+	private final L2EntityMap<IL2Playable> _playables = new L2ReadWriteEntityMap<IL2Playable>();
 	
 	/**
 	 * @return a thread-safe copy of the objects in this region
@@ -83,13 +86,30 @@ public final class L2WorldRegion
 		return _objects.toArray(L2Object.class);
 	}
 	
+	public IL2Playable[] getPlayables()
+	{
+		return _playables.toArray(IL2Playable.class);
+	}
+	
 	public void addObject(L2Object object)
 	{
 		if (object == null)
 			return;
 		
 		_objects.add(object);
-		// startActivation();
+		
+		if (object instanceof IL2Playable)
+		{
+			_playables.add((IL2Playable)object);
+			
+			if (_playables.size() == 1)
+			{
+				_deactivationTask.cancel();
+				
+				for (L2WorldRegion region : getSurroundingRegions())
+					region.setActive(true);
+			}
+		}
 	}
 	
 	public void removeObject(L2Object object)
@@ -98,13 +118,16 @@ public final class L2WorldRegion
 			return;
 		
 		_objects.remove(object);
-		//startDeactivation();
-	}
-	
-	private boolean containsPlayer()
-	{
-		// TODO check if a player present
-		return true;
+		
+		if (object instanceof IL2Playable)
+		{
+			_playables.remove((IL2Playable)object);
+			
+			if (_playables.isEmpty())
+			{
+				_deactivationTask.schedule(90000);
+			}
+		}
 	}
 	
 	/**
@@ -120,26 +143,6 @@ public final class L2WorldRegion
 			for (L2WorldRegion region : getSurroundingRegions())
 				region.setActive(false);
 		}
-	}
-	
-	/**
-	 * When a player enters an empty region, it activates all the surrounding ones.
-	 */
-	private void startActivation()
-	{
-		_deactivationTask.cancel();
-		
-		for (L2WorldRegion region : getSurroundingRegions())
-			region.setActive(true);
-	}
-	
-	/**
-	 * When the last player leaves a region, schedules a task to deactive the empty surrounding
-	 * regions after a cooldown period.
-	 */
-	private void startDeactivation()
-	{
-		_deactivationTask.schedule(90000);
 	}
 	
 	/**
@@ -161,7 +164,7 @@ public final class L2WorldRegion
 		if (!active)
 		{
 			for (L2WorldRegion region : getSurroundingRegions())
-				if (region.containsPlayer())
+				if (!region._playables.isEmpty())
 					active = true;
 		}
 		
@@ -182,5 +185,31 @@ public final class L2WorldRegion
 				if (obj != null)
 					obj.getPosition().worldRegionDeactivated();
 		}
+	}
+	
+	public L2Object[][] getAllSurroundingObjects2DArray()
+	{
+		final L2Object[][] result = new L2Object[_surroundingRegions.length][];
+		
+		for (int i = 0; i < _surroundingRegions.length; i++)
+			result[i] = _surroundingRegions[i].getObjects();
+		
+		return result;
+	}
+	
+	private final FIFOSimpleExecutableQueue<L2Object> _knownListUpdater = new FIFOSimpleExecutableQueue<L2Object>() {
+		@Override
+		protected void removeAndExecuteAll()
+		{
+			final L2Object[][] surroundingObjects = getAllSurroundingObjects2DArray();
+			
+			for (L2Object obj; (obj = removeFirst()) != null;)
+				obj.getKnownList().update(surroundingObjects);
+		}
+	};
+	
+	public void updateKnownList(L2Object obj)
+	{
+		_knownListUpdater.execute(obj);
 	}
 }

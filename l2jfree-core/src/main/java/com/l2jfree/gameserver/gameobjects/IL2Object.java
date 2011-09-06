@@ -15,14 +15,28 @@
 package com.l2jfree.gameserver.gameobjects;
 
 import com.l2jfree.gameserver.templates.L2Template;
+import com.l2jfree.lang.L2Entity;
 
 /**
  * @author NB4L1
  */
-public abstract class L2Character extends L2Object implements IL2Character
+public interface IL2Object extends L2Entity<Integer>
 {
-	public L2Character(int objectId, L2Template template)
-	{
-		super(objectId, template);
-	}
+	public abstract int getObjectId();
+	
+	public abstract L2Template getTemplate();
+	
+	public abstract ObjectPosition getPosition();
+	
+	public abstract ObjectKnownList getKnownList();
+	
+	@Override
+	public abstract Integer getPrimaryKey();
+	
+	public abstract String getName();
+	
+	public abstract void setName(String name);
+	
+	@Override
+	public abstract String toString();
 }

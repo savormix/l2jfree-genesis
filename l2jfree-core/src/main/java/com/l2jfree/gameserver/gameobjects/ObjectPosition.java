@@ -23,7 +23,7 @@ import com.l2jfree.lang.L2Math;
  */
 public final class ObjectPosition
 {
-	private final L2Object _activeObject;
+	private final L2Object _activeChar;
 	
 	private volatile int _x;
 	private volatile int _y;
@@ -33,9 +33,14 @@ public final class ObjectPosition
 	
 	private volatile L2WorldRegion _worldRegion;
 	
-	public ObjectPosition(L2Object activeObject)
+	public ObjectPosition(L2Object activeChar)
 	{
-		_activeObject = activeObject;
+		_activeChar = activeChar;
+	}
+	
+	public final L2Object getActiveChar()
+	{
+		return _activeChar;
 	}
 	
 	public final int getX()
@@ -89,12 +94,12 @@ public final class ObjectPosition
 			return;
 		
 		if (oldRegion != null)
-			oldRegion.removeObject(_activeObject);
+			oldRegion.removeObject(_activeChar);
 		
 		_worldRegion = newRegion;
 		
 		if (newRegion != null)
-			newRegion.addObject(_activeObject);
+			newRegion.addObject(_activeChar);
 	}
 	
 	public final synchronized void update(int x, int y, int z)

@@ -28,6 +28,8 @@ public final class ComponentFactory<T>
 {
 	public static final ComponentFactory<ObjectPosition> POSITION = new ComponentFactory<ObjectPosition>(
 			ObjectPosition.class);
+	public static final ComponentFactory<ObjectKnownList> KNOWNLIST = new ComponentFactory<ObjectKnownList>(
+			ObjectKnownList.class);
 	
 	private final Map<Class<? extends L2Object>, Class<? extends T>> _registryByOwnerClass =
 			new HashMap<Class<? extends L2Object>, Class<? extends T>>();

@@ -19,7 +19,7 @@ import com.l2jfree.gameserver.templates.L2NpcTemplate;
 /**
  * @author NB4L1
  */
-public abstract class L2Summon extends L2Npc
+public abstract class L2Summon extends L2Npc implements IL2Playable
 {
 	public L2Summon(int objectId, L2NpcTemplate template)
 	{

@@ -15,14 +15,14 @@
 package com.l2jfree.gameserver.gameobjects;
 
 import com.l2jfree.gameserver.templates.L2Template;
-import com.l2jfree.lang.L2Entity;
 import com.l2jfree.lang.L2TextBuilder;
 
-public abstract class L2Object implements L2Entity<Integer>
+public abstract class L2Object implements IL2Object
 {
 	static
 	{
 		ComponentFactory.POSITION.register(L2Object.class, ObjectPosition.class);
+		ComponentFactory.KNOWNLIST.register(L2Object.class, ObjectKnownList.class);
 	}
 	
 	public static final L2Object[] EMPTY_ARRAY = new L2Object[0];
@@ -31,6 +31,7 @@ public abstract class L2Object implements L2Entity<Integer>
 	private final L2Template _template;
 	
 	private final ObjectPosition _position;
+	private final ObjectKnownList _knownList;
 	
 	protected L2Object(int objectId, L2Template template)
 	{
@@ -38,21 +39,31 @@ public abstract class L2Object implements L2Entity<Integer>
 		_template = template;
 		
 		_position = ComponentFactory.POSITION.getComponent(this);
+		_knownList = ComponentFactory.KNOWNLIST.getComponent(this);
 	}
 	
+	@Override
 	public final int getObjectId()
 	{
 		return _objectId;
 	}
 	
+	@Override
 	public L2Template getTemplate()
 	{
 		return _template;
 	}
 	
+	@Override
 	public final ObjectPosition getPosition()
 	{
 		return _position;
+	}
+	
+	@Override
+	public final ObjectKnownList getKnownList()
+	{
+		return _knownList;
 	}
 	
 	@Override
@@ -61,8 +72,10 @@ public abstract class L2Object implements L2Entity<Integer>
 		return getObjectId();
 	}
 	
+	@Override
 	public abstract String getName();
 	
+	@Override
 	public abstract void setName(String name);
 	
 	@Override
