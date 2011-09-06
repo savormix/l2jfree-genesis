@@ -19,6 +19,11 @@ import com.l2jfree.lang.L2TextBuilder;
 
 public abstract class L2Object implements L2Entity<Integer>
 {
+	static
+	{
+		ComponentFactory.POSITION.register(L2Object.class, ObjectPosition.class);
+	}
+	
 	public static final L2Object[] EMPTY_ARRAY = new L2Object[0];
 	
 	private final int _objectId;
@@ -37,7 +42,8 @@ public abstract class L2Object implements L2Entity<Integer>
 	
 	protected final ObjectPosition initPosition()
 	{
-		return new ObjectPosition(this);
+		//return new ObjectPosition(this);
+		return ComponentFactory.POSITION.getComponent(this);
 	}
 	
 	public final ObjectPosition getPosition()
@@ -68,4 +74,10 @@ public abstract class L2Object implements L2Entity<Integer>
 		
 		return tb.moveToString();
 	}
+	
+	/**
+	 * @return
+	 * @see ComponentFactory
+	 */
+	public abstract int getTemplateId();
 }
