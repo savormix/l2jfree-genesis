@@ -32,18 +32,12 @@ public abstract class L2Object implements L2Entity<Integer>
 	protected L2Object(int objectId)
 	{
 		_objectId = objectId;
-		_position = initPosition();
+		_position = ComponentFactory.POSITION.getComponent(this);
 	}
 	
 	public final int getObjectId()
 	{
 		return _objectId;
-	}
-	
-	protected final ObjectPosition initPosition()
-	{
-		//return new ObjectPosition(this);
-		return ComponentFactory.POSITION.getComponent(this);
 	}
 	
 	public final ObjectPosition getPosition()

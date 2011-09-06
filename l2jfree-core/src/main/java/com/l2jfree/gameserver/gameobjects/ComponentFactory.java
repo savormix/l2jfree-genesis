@@ -117,7 +117,7 @@ public final class ComponentFactory<T>
 		return constructors;
 	}
 	
-	public final T getComponent(L2Object owner)
+	private final Constructor<? extends T> findComponentContructor(L2Object owner)
 	{
 		final Map<Class<? extends L2Object>, Constructor<? extends T>> constructors = findComponentContructors(owner);
 		
@@ -125,22 +125,30 @@ public final class ComponentFactory<T>
 		{
 			final Constructor<? extends T> constructor = constructors.get(ownerClazz);
 			
-			if (constructor == null)
-				continue;
-			
-			try
-			{
-				return constructor.newInstance(owner);
-			}
-			catch (Exception e) // IllegalArgumentException | InstantiationException | IllegalAccessException | InvocationTargetException
-			{
-				e.printStackTrace();
-			}
+			if (constructor != null)
+				return constructor;
 		}
 		
 		throw new IllegalStateException("No proper " + _rootClazz + " contructor registered for " + owner);
 	}
 	
+	public final T getComponent(L2Object owner)
+	{
+		try
+		{
+			return findComponentContructor(owner).newInstance(owner);
+		}
+		catch (RuntimeException e)
+		{
+			throw e;
+		}
+		catch (Exception e)
+		{
+			throw new RuntimeException(e);
+		}
+	}
+	
+	/* only temporarily for testing */
 	public static void main(String[] args)
 	{
 		long begin1 = System.currentTimeMillis();
