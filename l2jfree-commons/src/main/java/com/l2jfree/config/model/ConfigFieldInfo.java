@@ -18,6 +18,7 @@ import java.io.PrintWriter;
 import java.lang.reflect.Field;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.l2jfree.config.L2Properties;
 import com.l2jfree.config.annotation.ConfigField;
@@ -199,6 +200,8 @@ public final class ConfigFieldInfo
 			
 			out.println("# ");
 			out.println("# Default: " + getDefaultValue());
+			if (getField().getType().isEnum())
+				out.println("# Available: " + StringUtils.join(getField().getType().getEnumConstants(), "|"));
 			out.println("# ");
 			out.println(getName() + " = "
 					+ (mode == null || mode == PrintMode.DEFAULT ? getDefaultValue() : getCurrentValue()));
