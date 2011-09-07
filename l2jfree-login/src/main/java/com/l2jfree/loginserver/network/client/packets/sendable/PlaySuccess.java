@@ -51,6 +51,7 @@ public final class PlaySuccess extends L2ServerPacket
 	protected void writeImpl(L2Client client, MMOBuffer buf)
 	{
 		buf.writeQ(_sessionKey);
+		// FIXME in which chronicle was this introduced?
 		buf.writeC(_server);
 	}
 }

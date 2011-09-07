@@ -51,7 +51,7 @@ public final class RequestAuthorization extends L2ClientPacket
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
-		_account = buf.readS();
+		_account = buf.readS().trim().toLowerCase();
 		_accountId1 = buf.readD();
 		_currentKey = buf.readD();
 		_accountId2 = buf.readD();

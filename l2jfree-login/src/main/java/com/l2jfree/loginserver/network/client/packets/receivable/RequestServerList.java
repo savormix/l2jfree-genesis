@@ -53,7 +53,7 @@ public final class RequestServerList extends L2ClientPacket
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		final L2Client client = getClient();
-		SessionKey sk = client.getSessionKey();
+		final SessionKey sk = client.getSessionKey();
 		if (sk != null && sk.getActiveKey() == _sessionKey)
 		{
 			client.setState(L2ClientState.VIEWING_LIST);

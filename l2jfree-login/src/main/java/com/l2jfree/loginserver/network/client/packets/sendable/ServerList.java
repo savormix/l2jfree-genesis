@@ -76,6 +76,7 @@ public final class ServerList extends L2ServerPacket
 			buf.writeC(gsv.isBrackets());
 		}
 		
+		// FIXME in which chronicle were these introduced?
 		final int totalChars = 0; // total player's characters (on a GS)
 		final int pendingRemoval = 0; // player's characters pending removal (on a GS)
 		final int bytesize = 1 + count * 3 + pendingRemoval * 4;

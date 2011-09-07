@@ -55,18 +55,20 @@ public final class RequestAuthLogin extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x00;
 	
+	private static final int ENCIPHERED_LENGTH = 128;
+	
 	private byte[] _enciphered;
 	
 	@Override
 	protected int getMinimumLength()
 	{
-		return 128;
+		return ENCIPHERED_LENGTH;
 	}
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
-		_enciphered = buf.readB(new byte[getMinimumLength()]);
+		_enciphered = buf.readB(new byte[ENCIPHERED_LENGTH]);
 		buf.skipAll();
 	}
 	
@@ -79,7 +81,7 @@ public final class RequestAuthLogin extends L2ClientPacket
 		{
 			Cipher rsa = Cipher.getInstance("RSA/ECB/nopadding");
 			rsa.init(Cipher.DECRYPT_MODE, client.getPrivateKey());
-			deciphered = rsa.doFinal(_enciphered, 0, getMinimumLength());
+			deciphered = rsa.doFinal(_enciphered, 0, ENCIPHERED_LENGTH);
 		}
 		catch (GeneralSecurityException e)
 		{

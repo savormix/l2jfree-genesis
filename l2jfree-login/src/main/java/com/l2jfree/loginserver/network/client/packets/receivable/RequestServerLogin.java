@@ -21,6 +21,7 @@ import java.sql.SQLException;
 
 import com.l2jfree.loginserver.network.client.L2Account;
 import com.l2jfree.loginserver.network.client.L2Client;
+import com.l2jfree.loginserver.network.client.L2ClientSecurity.SessionKey;
 import com.l2jfree.loginserver.network.client.L2NoServiceReason;
 import com.l2jfree.loginserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.loginserver.network.client.packets.sendable.PlayFailure;
@@ -61,51 +62,61 @@ public final class RequestServerLogin extends L2ClientPacket
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		final L2Client client = getClient();
-		if (client.getSessionKey() != null && client.getSessionKey().getActiveKey() != _sessionKey)
+		final SessionKey sk = client.getSessionKey();
+		if (sk != null && sk.getActiveKey() != _sessionKey)
 		{
 			client.close(new PlayFailure(L2NoServiceReason.ACCESS_FAILED_TRY_AGAIN));
 			return;
 		}
 		
-		L2LegacyGameServer lgs = L2LegacyGameServerController.getInstance().getById(_serverId);
+		final L2LegacyGameServer lgs = L2LegacyGameServerController.getInstance().getById(_serverId);
 		if (lgs == null || lgs.getStatus() == L2LegacyStatus.DOWN) // server down
 		{
 			client.close(new PlayFailure(L2NoServiceReason.MAINTENANCE_UNDERGOING));
 			return;
 		}
 		
-		L2Account acc = client.getAccount();
+		final L2Account acc = client.getAccount();
 		if (acc == null) // should never happen
+		{
 			client.close(new PlayFailure(L2NoServiceReason.THERE_IS_A_SYSTEM_ERROR));
-		else if (!client.getAccount().isSuperUser()) // normal account
+			return;
+		}
+		
+		if (!acc.isSuperUser()) // normal account
 		{
 			if (lgs.getStatus() == L2LegacyStatus.GM_ONLY) // restricted access
+			{
 				client.close(new PlayFailure(L2NoServiceReason.MAINTENANCE_UNDERGOING));
+				return;
+			}
 			else if (lgs.getOnlineAccounts().size() >= lgs.getMaxPlayers()) // server full
+			{
 				client.close(new PlayFailure(L2NoServiceReason.TOO_HIGH_TRAFFIC));
+				return;
+			}
 		}
-		else
+		
+		Connection con = null;
+		try
 		{
-			Connection con = null;
-			try
-			{
-				con = L2Database.getConnection();
-				PreparedStatement ps =
-						con.prepareStatement("UPDATE account SET lastServerId = ? WHERE username LIKE ?");
-				ps.setInt(1, _serverId);
-				ps.setString(2, acc.getAccount());
-				ps.executeUpdate();
-				ps.close();
-			}
-			catch (SQLException e)
-			{
-				_log.error("Could not modify account data!", e);
-			}
-			finally
-			{
-				L2Database.close(con);
-			}
-			client.close(new PlaySuccess(client, _serverId));
+			con = L2Database.getConnection();
+			
+			PreparedStatement ps = con.prepareStatement("UPDATE account SET lastServerId = ? WHERE username LIKE ?");
+			ps.setInt(1, _serverId);
+			ps.setString(2, acc.getAccount());
+			ps.executeUpdate();
+			ps.close();
 		}
+		catch (SQLException e)
+		{
+			_log.error("Could not modify account data!", e);
+		}
+		finally
+		{
+			L2Database.close(con);
+		}
+		
+		client.close(new PlaySuccess(client, _serverId));
 	}
 }
