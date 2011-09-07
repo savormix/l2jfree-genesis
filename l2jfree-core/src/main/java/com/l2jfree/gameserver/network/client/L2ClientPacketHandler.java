@@ -15,12 +15,14 @@
 package com.l2jfree.gameserver.network.client;
 
 import static com.l2jfree.gameserver.network.client.L2ClientState.CONNECTED;
+import static com.l2jfree.gameserver.network.client.L2ClientState.PROTOCOL_OK;
 
 import java.nio.ByteBuffer;
 
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.gameserver.network.client.packets.receivable.ProtocolVersion;
+import com.l2jfree.gameserver.network.client.packets.receivable.RequestAuthorization;
 import com.l2jfree.network.mmocore.PacketHandler;
 
 /**
@@ -43,6 +45,11 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 				if (client.stateEquals(CONNECTED))
 					return new ProtocolVersion();
 				return invalidState(client, ProtocolVersion.class, opcode);
+				
+			case RequestAuthorization.OPCODE:
+				if (client.stateEquals(PROTOCOL_OK))
+					return new RequestAuthorization();
+				return invalidState(client, RequestAuthorization.class, opcode);
 				
 			default:
 				return unknown(buf, client, opcode);

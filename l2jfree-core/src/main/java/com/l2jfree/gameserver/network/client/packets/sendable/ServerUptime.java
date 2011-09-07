@@ -27,6 +27,7 @@ import com.l2jfree.network.mmocore.MMOBuffer;
  * 
  * @author savormix
  */
+//FIXME in which chronicle was this introduced?
 public final class ServerUptime extends L2ServerPacket
 {
 	/** An instance of this packet. */

@@ -29,6 +29,9 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 @SuppressWarnings("unused")
 public final class RequestAuthorization extends L2ClientPacket
 {
+	/** Packet's identifier */
+	public static final int OPCODE = 0x2b;
+	
 	private String _account;
 	private int _accountId1;
 	private int _currentKey;
@@ -41,7 +44,8 @@ public final class RequestAuthorization extends L2ClientPacket
 	@Override
 	protected int getMinimumLength()
 	{
-		return (READ_S * 2) + READ_D + READ_D + READ_D + READ_D + READ_D + READ_D + READ_Q;
+		return (READ_S * 2) + READ_D + READ_D + READ_D + READ_D // FIXME in which chronicle were these introduced?
+				+ READ_D + READ_D + READ_Q;
 	}
 	
 	@Override
@@ -53,6 +57,7 @@ public final class RequestAuthorization extends L2ClientPacket
 		_accountId2 = buf.readD();
 		_previousKey = buf.readD();
 		
+		// FIXME in which chronicle were these introduced?
 		_unk1 = buf.readD();
 		_bitsInBlock = buf.readD();
 		_unk2 = buf.readQ();

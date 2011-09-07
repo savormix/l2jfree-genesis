@@ -17,10 +17,12 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 import java.nio.BufferUnderflowException;
 
 import com.l2jfree.gameserver.network.client.L2Client;
+import com.l2jfree.gameserver.network.client.L2ClientState;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.sendable.ProtocolAnswer;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
+import com.l2jfree.util.Rnd;
 
 /**
  * @author savormix
@@ -50,13 +52,18 @@ public final class ProtocolVersion extends L2ClientPacket
 		_log.info("Protocol: " + _version);
 		
 		final L2Client client = getClient();
-		client.close(ProtocolAnswer.INCOMPATIBLE);
 		
-		/* TODO: after verifying
+		boolean valid = false; // FIXME validity check
+		
+		if (!valid)
+		{
+			client.close(ProtocolAnswer.INCOMPATIBLE);
+			return;
+		}
+		
 		final int seed = Rnd.get(Integer.MIN_VALUE, Integer.MAX_VALUE);
 		client.getDeobfuscator().init(seed);
 		client.setState(L2ClientState.PROTOCOL_OK);
-		sendPacket(new ProtocolAnswer(true, client.getCipherKey(), seed));
-		*/
+		sendPacket(new ProtocolAnswer(client.getCipherKey(), seed));
 	}
 }
