@@ -218,6 +218,52 @@ public final class L2ThreadPool
 	
 	// ===========================================================================================
 	
+	public static List<Future<?>> invokeAll(Iterable<Runnable> c)
+	{
+		final List<Future<?>> futures = new ArrayList<Future<?>>();
+		
+		for (Runnable r : c)
+			futures.add(submit(r));
+		
+		for (Future<?> future : futures)
+		{
+			try
+			{
+				future.get();
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+		
+		return futures;
+	}
+	
+	public static List<Future<?>> invokeAllLongRunning(Iterable<? extends Runnable> c)
+	{
+		final List<Future<?>> futures = new ArrayList<Future<?>>();
+		
+		for (Runnable r : c)
+			futures.add(submitLongRunning(r));
+		
+		for (Future<?> future : futures)
+		{
+			try
+			{
+				future.get();
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+		
+		return futures;
+	}
+	
+	// ===========================================================================================
+	
 	public static List<String> getStats()
 	{
 		List<String> list = new ArrayList<String>();
