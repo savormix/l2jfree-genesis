@@ -14,20 +14,39 @@
  */
 package com.l2jfree.gameserver.gameobjects;
 
-import com.l2jfree.gameserver.templates.L2Template;
-
 /**
  * @author NB4L1
  */
-public abstract class L2PcInstance extends L2Character implements IL2Playable
+public final class PcKnownList extends ObjectKnownList
 {
-	static
+	public PcKnownList(L2PcInstance activeChar)
 	{
-		ComponentFactory.KNOWNLIST.register(L2PcInstance.class, PcKnownList.class);
+		super(activeChar);
 	}
 	
-	public L2PcInstance(int objectId, L2Template template)
+	@Override
+	public L2PcInstance getActiveChar()
 	{
-		super(objectId, template);
+		return (L2PcInstance)super.getActiveChar();
+	}
+	
+	@Override
+	protected int getDistanceToAddObject(L2Object obj)
+	{
+		// H5 retail value 2011-09-07
+		if (obj instanceof L2ItemInstance)
+			return 2500;
+		
+		return super.getDistanceToRemoveObject(obj);
+	}
+	
+	@Override
+	protected int getDistanceToRemoveObject(L2Object obj)
+	{
+		// H5 retail value 2011-09-07
+		if (obj instanceof L2ItemInstance)
+			return 3000;
+		
+		return super.getDistanceToRemoveObject(obj);
 	}
 }

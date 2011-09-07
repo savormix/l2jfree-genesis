@@ -21,7 +21,7 @@ import com.l2jfree.util.LazyMap;
 /**
  * @author NB4L1
  */
-public final class ObjectKnownList
+public class ObjectKnownList
 {
 	private final L2Object _activeChar;
 	
@@ -35,7 +35,7 @@ public final class ObjectKnownList
 		_activeChar = activeChar;
 	}
 	
-	public final L2Object getActiveChar()
+	public L2Object getActiveChar()
 	{
 		return _activeChar;
 	}
@@ -92,12 +92,12 @@ public final class ObjectKnownList
 		return true;
 	}
 	
-	protected final int getDistanceToAddObject(L2Object obj)
+	protected int getDistanceToAddObject(L2Object obj)
 	{
 		return 0;
 	}
 	
-	protected final int getDistanceToRemoveObject(L2Object obj)
+	protected int getDistanceToRemoveObject(L2Object obj)
 	{
 		return 0;
 	}
