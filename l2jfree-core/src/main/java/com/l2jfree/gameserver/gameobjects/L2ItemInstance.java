@@ -23,7 +23,7 @@ public abstract class L2ItemInstance extends L2Object
 {
 	static
 	{
-		ComponentFactory.KNOWNLIST.register(L2ItemInstance.class, EmptyKnownList.class);
+		ComponentFactory.KNOWNLIST.register(L2ItemInstance.class, EmptyObjectKnownList.class);
 	}
 	
 	public L2ItemInstance(int objectId, L2Template template)

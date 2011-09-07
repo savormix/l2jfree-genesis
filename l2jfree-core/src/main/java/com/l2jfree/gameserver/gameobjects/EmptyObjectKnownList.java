@@ -21,8 +21,13 @@ import com.l2jfree.util.L2Collections;
 /**
  * @author NB4L1
  */
-public class EmptyKnownList implements IObjectKnownList
+public class EmptyObjectKnownList implements IObjectKnownList
 {
+	public EmptyObjectKnownList(@SuppressWarnings("unused") L2Object activeChar)
+	{
+		// do nothing
+	}
+	
 	@Override
 	public Collection<L2Object> getKnownObjects()
 	{
@@ -39,11 +44,6 @@ public class EmptyKnownList implements IObjectKnownList
 	public Collection<L2Object> getKnowingObjects()
 	{
 		return L2Collections.emptyCollection();
-	}
-	
-	public EmptyKnownList(@SuppressWarnings("unused") L2Object activeChar)
-	{
-		// do nothing
 	}
 	
 	@Override

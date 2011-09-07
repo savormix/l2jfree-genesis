@@ -161,7 +161,7 @@ public class ObjectKnownList implements IObjectKnownList
 		}
 	}
 	
-	public void removeAllKnownObjects()
+	public final void removeAllKnownObjects()
 	{
 		for (L2Object obj : _knownObjects.values())
 			removeObject(obj);
