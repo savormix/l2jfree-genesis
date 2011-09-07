@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.gameobjects;
 
+import java.util.Collection;
 import java.util.Map;
 
 import com.l2jfree.util.LazyMap;
@@ -21,7 +22,7 @@ import com.l2jfree.util.LazyMap;
 /**
  * @author NB4L1
  */
-public class ObjectKnownList
+public class ObjectKnownList implements IObjectKnownList
 {
 	private final L2Object _activeChar;
 	
@@ -40,19 +41,22 @@ public class ObjectKnownList
 		return _activeChar;
 	}
 	
-	public final Map<Integer, L2Object> getKnownObjects()
+	@Override
+	public final Collection<L2Object> getKnownObjects()
 	{
-		return _knownObjects;
+		return _knownObjects.values();
 	}
 	
-	public final Map<Integer, L2PcInstance> getKnownPlayers()
+	@Override
+	public final Collection<L2PcInstance> getKnownPlayers()
 	{
-		return _knownPlayers;
+		return _knownPlayers.values();
 	}
 	
-	public final Map<Integer, L2Object> getKnowingObjects()
+	@Override
+	public final Collection<L2Object> getKnowingObjects()
 	{
-		return _knowingObjects;
+		return _knowingObjects.values();
 	}
 	
 	public final boolean knowsObject(L2Object object)
@@ -60,7 +64,7 @@ public class ObjectKnownList
 		return object != null && (_activeChar == object || _knownObjects.containsKey(object.getObjectId()));
 	}
 	
-	public final boolean addObject(L2Object obj)
+	protected final boolean addObject(L2Object obj)
 	{
 		if (obj == null || obj == _activeChar)
 			return false;
@@ -68,7 +72,7 @@ public class ObjectKnownList
 		if (_knownObjects.put(obj.getObjectId(), obj) != null)
 			return false;
 		
-		obj.getKnownList()._knowingObjects.put(_activeChar.getObjectId(), _activeChar);
+		obj.getKnownList().addKnowingObject(_activeChar);
 		
 		if (obj instanceof L2PcInstance)
 			_knownPlayers.put(obj.getObjectId(), (L2PcInstance)obj);
@@ -76,6 +80,7 @@ public class ObjectKnownList
 		return true;
 	}
 	
+	@Override
 	public final boolean removeObject(L2Object obj)
 	{
 		if (obj == null || obj == _activeChar)
@@ -84,12 +89,24 @@ public class ObjectKnownList
 		if (_knownObjects.remove(obj.getObjectId()) == null)
 			return false;
 		
-		obj.getKnownList()._knowingObjects.remove(_activeChar.getObjectId());
+		obj.getKnownList().removeKnowingObject(_activeChar);
 		
 		if (obj instanceof L2PcInstance)
 			_knownPlayers.remove(obj.getObjectId());
 		
 		return true;
+	}
+	
+	@Override
+	public final void addKnowingObject(L2Object obj)
+	{
+		_knowingObjects.put(obj.getObjectId(), obj);
+	}
+	
+	@Override
+	public final void removeKnowingObject(L2Object obj)
+	{
+		_knowingObjects.remove(obj.getObjectId());
 	}
 	
 	protected int getDistanceToAddObject(L2Object obj)
@@ -112,7 +129,8 @@ public class ObjectKnownList
 		return false;
 	}
 	
-	protected final void update(L2Object obj)
+	@Override
+	public final void update(L2Object obj)
 	{
 		final boolean knows = knowsObject(obj);
 		final boolean shouldKnow = shouldKnowObject(obj);
@@ -130,6 +148,7 @@ public class ObjectKnownList
 		}
 	}
 	
+	@Override
 	public final void update(L2Object[][] surroundingObjects)
 	{
 		for (L2Object[] regionObjects : surroundingObjects)

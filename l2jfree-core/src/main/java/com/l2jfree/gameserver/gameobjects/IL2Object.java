@@ -22,21 +22,21 @@ import com.l2jfree.lang.L2Entity;
  */
 public interface IL2Object extends L2Entity<Integer>
 {
-	public abstract int getObjectId();
+	public int getObjectId();
 	
-	public abstract L2Template getTemplate();
+	public L2Template getTemplate();
 	
-	public abstract ObjectPosition getPosition();
+	public ObjectPosition getPosition();
 	
-	public abstract ObjectKnownList getKnownList();
-	
-	@Override
-	public abstract Integer getPrimaryKey();
-	
-	public abstract String getName();
-	
-	public abstract void setName(String name);
+	public IObjectKnownList getKnownList();
 	
 	@Override
-	public abstract String toString();
+	public Integer getPrimaryKey();
+	
+	public String getName();
+	
+	public void setName(String name);
+	
+	@Override
+	public String toString();
 }

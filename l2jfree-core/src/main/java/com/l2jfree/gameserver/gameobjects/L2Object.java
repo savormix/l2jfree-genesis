@@ -31,7 +31,7 @@ public abstract class L2Object implements IL2Object
 	private final L2Template _template;
 	
 	private final ObjectPosition _position;
-	private final ObjectKnownList _knownList;
+	private final IObjectKnownList _knownList;
 	
 	protected L2Object(int objectId, L2Template template)
 	{
@@ -61,7 +61,7 @@ public abstract class L2Object implements IL2Object
 	}
 	
 	@Override
-	public final ObjectKnownList getKnownList()
+	public final IObjectKnownList getKnownList()
 	{
 		return _knownList;
 	}
