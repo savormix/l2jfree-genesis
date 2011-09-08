@@ -12,30 +12,25 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.templates.player;
+package com.l2jfree.util;
 
 /**
  * @author NB4L1
  */
-public enum ClassType
+public final class CompareAssist
 {
-	Fighter,
-	Mystic,
-	Priest,
-	Summoner;
+	private int _result = 0;
 	
-	public boolean isMage()
+	public <C extends Comparable<C>> CompareAssist add(C c1, C c2)
 	{
-		switch (this)
-		{
-			case Fighter:
-				return false;
-			case Mystic:
-			case Priest:
-			case Summoner:
-				return true;
-			default:
-				throw new InternalError();
-		}
+		if (_result == 0)
+			_result = c1.compareTo(c2);
+		
+		return this;
+	}
+	
+	public int result()
+	{
+		return _result;
 	}
 }

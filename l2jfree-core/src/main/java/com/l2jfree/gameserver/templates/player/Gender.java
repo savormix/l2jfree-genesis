@@ -17,25 +17,8 @@ package com.l2jfree.gameserver.templates.player;
 /**
  * @author NB4L1
  */
-public enum ClassType
+public enum Gender
 {
-	Fighter,
-	Mystic,
-	Priest,
-	Summoner;
-	
-	public boolean isMage()
-	{
-		switch (this)
-		{
-			case Fighter:
-				return false;
-			case Mystic:
-			case Priest:
-			case Summoner:
-				return true;
-			default:
-				throw new InternalError();
-		}
-	}
+	Male,
+	Female;
 }

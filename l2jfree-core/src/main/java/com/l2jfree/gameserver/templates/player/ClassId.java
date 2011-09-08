@@ -14,6 +14,8 @@
  */
 package com.l2jfree.gameserver.templates.player;
 
+import com.l2jfree.gameserver.datatables.PlayerTemplateTable;
+
 /**
  * @author NB4L1
  */
@@ -235,5 +237,11 @@ public enum ClassId
 	public ClassId getParent()
 	{
 		return _parent;
+	}
+	
+	public PlayerBaseTemplate getPlayerBaseTemplate(Gender gender)
+	{
+		return PlayerTemplateTable.getInstance().getPlayerBaseTemplate(_race,
+				_type.isMage() ? ClassType.Mystic : ClassType.Fighter, gender);
 	}
 }
