@@ -85,6 +85,32 @@ public final class L2Database
 		}
 	}
 	
+	public static String correctTableDefinition(String definition)
+	{
+		return correctTableDefinition(DEFAULT_DATA_SOURCE_NAME, _defaultDataSource, definition);
+	}
+	
+	public static String correctTableDefinition(String dataSourceName, String definition)
+	{
+		return correctTableDefinition(dataSourceName, _dataSources.get(dataSourceName), definition);
+	}
+	
+	private static String correctTableDefinition(String dataSourceName, L2DataSource dataSource, String definition)
+	{
+		try
+		{
+			if (dataSource == null)
+				throw new SQLException("Unknown data source!");
+			
+			return dataSource.correctTableDefinition(definition);
+		}
+		catch (Exception e)
+		{
+			_log.fatal("L2Database: Failed to optimise the database tables of data source: " + dataSourceName, e);
+			return definition;
+		}
+	}
+	
 	public static void optimize()
 	{
 		optimize(DEFAULT_DATA_SOURCE_NAME, _defaultDataSource);

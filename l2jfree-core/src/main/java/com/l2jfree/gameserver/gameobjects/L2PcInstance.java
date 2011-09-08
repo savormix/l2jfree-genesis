@@ -21,6 +21,7 @@ import java.sql.SQLException;
 
 import com.l2jfree.gameserver.templates.L2PlayerTemplate;
 import com.l2jfree.sql.L2Database;
+import com.l2jfree.util.Rnd;
 
 /**
  * @author NB4L1
@@ -34,7 +35,7 @@ public class L2PcInstance extends L2Character implements IL2Playable
 	
 	public static L2PcInstance create(String name, String accountName)
 	{
-		int objectId = -1; // TODO
+		int objectId = Rnd.get(Integer.MAX_VALUE); // TODO
 		
 		L2PcInstance result = null;
 		

@@ -81,7 +81,7 @@ public final class L2DatabaseInstaller
 				for (Node n2 : L2XML.listNodesByNodeName(n1, "table"))
 				{
 					final String name = L2XML.getAttribute(n2, "name");
-					final String definition = L2XML.getAttribute(n2, "definition");
+					final String definition = L2Database.correctTableDefinition(L2XML.getAttribute(n2, "definition"));
 					
 					final String oldDefinition = tables.put(name, definition);
 					if (oldDefinition != null)

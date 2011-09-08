@@ -21,11 +21,13 @@ import com.l2jfree.gameserver.config.DatabaseConfig;
 import com.l2jfree.gameserver.config.NetworkConfig;
 import com.l2jfree.gameserver.config.SystemConfig;
 import com.l2jfree.gameserver.gameobjects.ComponentFactory;
+import com.l2jfree.gameserver.gameobjects.L2PcInstance;
 import com.l2jfree.gameserver.network.client.L2ClientConnections;
 import com.l2jfree.gameserver.network.client.L2ClientSecurity;
 import com.l2jfree.gameserver.world.L2World;
 import com.l2jfree.lang.L2System;
 import com.l2jfree.sql.L2Database;
+import com.l2jfree.util.Rnd;
 
 /**
  * This class contains the application entry point.
@@ -69,6 +71,19 @@ public final class GameServer extends Config
 				return;
 			}
 		}
+		
+		final String name = Rnd.getString(20, Rnd.LETTERS_AND_DIGITS);
+		final String accountName = Rnd.getString(20, Rnd.LETTERS_AND_DIGITS);
+		
+		final L2PcInstance created = L2PcInstance.create(name, accountName);
+		System.out.println(created);
+		
+		final L2PcInstance loaded = L2PcInstance.load(created.getObjectId());
+		System.out.println(loaded);
+		
+		System.out.println(created.getPrimaryKey().equals(loaded.getPrimaryKey()));
+		System.out.println(created.getName().equals(loaded.getName()));
+		System.out.println(created.getAccountName().equals(loaded.getAccountName()));
 		
 		// TODO
 		

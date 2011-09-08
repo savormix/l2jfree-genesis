@@ -39,6 +39,12 @@ public final class L2DataSourceSQLite extends L2DataSource
 	}
 	
 	@Override
+	protected String correctTableDefinition(String defition)
+	{
+		return defition.replaceAll(",\\s*KEY [^\\)]*\\)", "").replace("UNIQUE KEY", "UNIQUE");
+	}
+	
+	@Override
 	public void optimize() throws SQLException
 	{
 		Connection con = null;
