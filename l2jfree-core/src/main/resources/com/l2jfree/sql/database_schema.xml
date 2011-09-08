@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <database xmlns="http://www.l2jfree.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.l2jfree.com database_schema.xsd">
+	<table name="players"
+		definition="
+			CREATE TABLE players (
+				
+				objectId		INT UNSIGNED	NOT NULL,
+				name			VARCHAR(35)		NOT NULL,
+				accountName		VARCHAR(45)		NOT NULL,
+				
+				PRIMARY KEY (objectId),
+				UNIQUE KEY (name),
+				KEY (accountName)
+			);
+	" />
 </database>

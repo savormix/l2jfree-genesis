@@ -20,6 +20,7 @@
 	<table name="account"
 		definition="
 			CREATE TABLE account (
+				
 				username		VARCHAR(45)	NOT NULL,
 				password		CHAR(40)	NOT NULL,
 				superuser		BOOLEAN		NOT NULL	DEFAULT FALSE,
@@ -27,6 +28,7 @@
 				lastLogin		BIGINT					DEFAULT NULL,
 				lastServerId	SMALLINT				DEFAULT NULL,
 				banReason		SMALLINT				DEFAULT NULL,
+				
 				PRIMARY KEY (username)
 			);
 	" />
@@ -39,9 +41,11 @@
 	<table name="gameserver"
 		definition="
 			CREATE TABLE gameserver (
+				
 				id			SMALLINT	NOT NULL,
 				authData	CHAR(128)	NOT NULL,
 				allowBans	BOOLEAN		NOT NULL,
+				
 				PRIMARY KEY (id)
 			);
 	" />
@@ -54,9 +58,11 @@
 	<table name="logins"
 		definition="
 			CREATE TABLE logins (
+				
 				username	VARCHAR(45)	NOT NULL,
 				ipv4		CHAR(15)	NOT NULL,
 				date_		DATE		NOT NULL,
+				
 				PRIMARY KEY (username, ipv4, date_)
 			);
 	" />
@@ -71,8 +77,10 @@
 	<table name="restriction"
 		definition="
 			CREATE TABLE restriction (
+				
 				ipv4	CHAR(15)	NOT NULL,
 				expiry	BIGINT					DEFAULT NULL,
+				
 				PRIMARY KEY (ipv4)
 			);
 	" />

@@ -14,20 +14,125 @@
  */
 package com.l2jfree.gameserver.gameobjects;
 
-import com.l2jfree.gameserver.templates.L2Template;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.l2jfree.gameserver.templates.L2PlayerTemplate;
+import com.l2jfree.sql.L2Database;
 
 /**
  * @author NB4L1
  */
-public abstract class L2PcInstance extends L2Character implements IL2Playable
+public class L2PcInstance extends L2Character implements IL2Playable
 {
 	static
 	{
 		ComponentFactory.KNOWNLIST.register(L2PcInstance.class, PcKnownList.class);
 	}
 	
-	public L2PcInstance(int objectId, L2Template template)
+	public static L2PcInstance create(String name, String accountName)
+	{
+		int objectId = -1; // TODO
+		
+		L2PcInstance result = null;
+		
+		Connection con = null;
+		try
+		{
+			con = L2Database.getConnection();
+			
+			final PreparedStatement ps =
+					con.prepareStatement("INSERT INTO players (objectId, name, accountName) VALUES (?,?,?)");
+			ps.setInt(1, objectId);
+			ps.setString(2, name);
+			ps.setString(3, accountName);
+			ps.executeUpdate();
+			ps.close();
+			
+			result = new L2PcInstance(objectId, new L2PlayerTemplate());
+			result.setAccountName(accountName);
+			result.setName(name);
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			L2Database.close(con);
+		}
+		
+		return result;
+	}
+	
+	public static L2PcInstance load(int objectId)
+	{
+		L2PcInstance result = null;
+		
+		Connection con = null;
+		try
+		{
+			con = L2Database.getConnection();
+			
+			final PreparedStatement ps = con.prepareStatement("SELECT * FROM players WHERE objectId = ?");
+			ps.setInt(1, objectId);
+			
+			final ResultSet rs = ps.executeQuery();
+			
+			if (rs.next())
+			{
+				final String accountName = rs.getString("accountName");
+				final String name = rs.getString("name");
+				
+				result = new L2PcInstance(objectId, new L2PlayerTemplate());
+				result.setAccountName(accountName);
+				result.setName(name);
+			}
+			
+			rs.close();
+			ps.close();
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			L2Database.close(con);
+		}
+		
+		return result;
+	}
+	
+	private String _accountName;
+	private String _name;
+	
+	private L2PcInstance(int objectId, L2PlayerTemplate template)
 	{
 		super(objectId, template);
+	}
+	
+	public String getAccountName()
+	{
+		return _accountName;
+	}
+	
+	public void setAccountName(String accountName)
+	{
+		_accountName = accountName;
+	}
+	
+	@Override
+	public String getName()
+	{
+		return _name;
+	}
+	
+	@Override
+	public void setName(String name)
+	{
+		_name = name;
 	}
 }
