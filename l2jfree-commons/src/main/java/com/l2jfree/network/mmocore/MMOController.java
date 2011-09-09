@@ -201,6 +201,14 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 	}
 	
 	/**
+	 * @return mmocore threads status
+	 */
+	public final boolean isStarted()
+	{
+		return _started;
+	}
+	
+	/**
 	 * Initiates the shutdown of the mmocore threads, and waits until they are finished.
 	 */
 	public final void shutdown()
