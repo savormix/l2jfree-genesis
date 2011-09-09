@@ -373,7 +373,7 @@ public final class ObfuscationService
 	public static void test() throws InternalError
 	{
 		ObfuscationService os = new ObfuscationService();
-		os.init(Rnd.get(Long.MIN_VALUE, Long.MAX_VALUE));
+		os.init(Rnd.nextLong());
 		final byte[] opcodes = { (byte)0xD0, (byte)0xFF, 0x00 };
 		ByteBuffer bb = ByteBuffer.wrap(opcodes);
 		for (int i = 0; i < 0xD1; i++)

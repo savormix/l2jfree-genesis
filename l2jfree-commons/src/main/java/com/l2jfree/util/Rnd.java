@@ -91,6 +91,16 @@ public final class Rnd
 	}
 	
 	/**
+	 * Get random number from <TT>Integer.MIN_VALUE</TT> to <TT>Integer.MAX_VALUE</TT>
+	 * 
+	 * @return int
+	 */
+	public static int nextInt()
+	{
+		return RND.nextInt();
+	}
+	
+	/**
 	 * Get random number from 0 to n-1
 	 * 
 	 * @param n
@@ -125,6 +135,16 @@ public final class Rnd
 	public static long nextLong(long n)
 	{
 		return RND.nextLong(n);
+	}
+	
+	/**
+	 * Get random number from <TT>Long.MIN_VALUE</TT> to <TT>Long.MAX_VALUE</TT>
+	 * 
+	 * @return long
+	 */
+	public static long nextLong()
+	{
+		return RND.nextLong();
 	}
 	
 	/**

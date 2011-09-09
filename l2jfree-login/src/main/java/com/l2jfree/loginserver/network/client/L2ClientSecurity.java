@@ -167,7 +167,7 @@ public final class L2ClientSecurity
 		private long assignNewKey()
 		{
 			_oldKey = _activeKey;
-			_activeKey = Rnd.get(Long.MIN_VALUE, Long.MAX_VALUE);
+			_activeKey = Rnd.nextLong();
 			return getActiveKey();
 		}
 		

@@ -64,7 +64,7 @@ public final class ProtocolVersion extends L2ClientPacket
 			return;
 		}
 		
-		final int seed = Rnd.get(Integer.MIN_VALUE, Integer.MAX_VALUE);
+		final int seed = Rnd.nextInt();
 		client.getDeobfuscator().init(seed);
 		client.setState(L2ClientState.PROTOCOL_OK);
 		

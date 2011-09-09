@@ -125,7 +125,7 @@ public final class L2LoginIdentifier
 	
 	private static long getRandomUID()
 	{
-		return Rnd.get(Long.MIN_VALUE, Long.MAX_VALUE);
+		return Rnd.nextLong();
 	}
 	
 	private boolean isLoaded()

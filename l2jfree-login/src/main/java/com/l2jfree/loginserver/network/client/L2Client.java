@@ -119,7 +119,7 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 		{
 			int stop = size - 8; // reserved for checksum and key
 			int pos = offset;
-			int key = Rnd.get(Integer.MIN_VALUE, Integer.MAX_VALUE);
+			int key = Rnd.nextInt();
 			
 			while ((pos += 4) < stop)
 			{

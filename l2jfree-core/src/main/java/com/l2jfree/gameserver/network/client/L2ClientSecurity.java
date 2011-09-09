@@ -85,7 +85,7 @@ public final class L2ClientSecurity
 			{
 				final ByteBuffer buf = ByteBuffer.wrap(result[i]);
 				
-				buf.putLong(Rnd.get(Long.MIN_VALUE, Long.MAX_VALUE));
+				buf.putLong(Rnd.nextLong());
 				buf.putLong(0xc8279301a16c3197L);
 			}
 			
