@@ -147,10 +147,11 @@ public abstract class ReceivablePacket<T extends MMOConnection<T, RP, SP>, RP ex
 	 * 
 	 * @see MMOConnection#sendPacket(SendablePacket)
 	 * @param sp the packet to be sent
+	 * @return if the packet was successfully added to the packet queue
 	 */
-	protected final void sendPacket(SP sp)
+	protected final boolean sendPacket(SP sp)
 	{
-		getClient().sendPacket(sp);
+		return getClient().sendPacket(sp);
 	}
 	
 	/**

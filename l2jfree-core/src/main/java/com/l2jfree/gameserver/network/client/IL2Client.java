@@ -21,5 +21,5 @@ import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
  */
 public interface IL2Client
 {
-	public void sendPacket(L2ServerPacket sp);
+	public boolean sendPacket(L2ServerPacket sp);
 }

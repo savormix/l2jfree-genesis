@@ -76,23 +76,26 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 	 * Sends a packet to the client, by adding it to the queue, and enabling write interest.
 	 * 
 	 * @param sp the packet to be sent
+	 * @return if the packet was successfully added to the packet queue
 	 */
-	public synchronized void sendPacket(SP sp)
+	public synchronized boolean sendPacket(SP sp)
 	{
 		if (sp == null)
-			return;
+			return false;
 		
 		if (isClosed())
-			return;
+			return false;
 		
 		try
 		{
 			getSelectionKey().interestOps(getSelectionKey().interestOps() | SelectionKey.OP_WRITE);
 			getSendQueue2().addLast(sp);
+			return true;
 		}
 		catch (CancelledKeyException e)
 		{
 			// ignore
+			return false;
 		}
 	}
 	

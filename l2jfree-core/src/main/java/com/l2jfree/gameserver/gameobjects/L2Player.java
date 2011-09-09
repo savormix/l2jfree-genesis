@@ -170,8 +170,8 @@ public class L2Player extends L2Character implements IL2Playable
 		_client = client != null ? client : EmptyClient.getInstance();
 	}
 	
-	public void sendPacket(L2ServerPacket sp)
+	public boolean sendPacket(L2ServerPacket sp)
 	{
-		getClient().sendPacket(sp);
+		return getClient().sendPacket(sp);
 	}
 }

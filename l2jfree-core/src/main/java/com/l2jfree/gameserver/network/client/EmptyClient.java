@@ -32,8 +32,9 @@ public final class EmptyClient implements IL2Client
 	}
 	
 	@Override
-	public void sendPacket(L2ServerPacket sp)
+	public boolean sendPacket(L2ServerPacket sp)
 	{
 		// do nothing
+		return false;
 	}
 }

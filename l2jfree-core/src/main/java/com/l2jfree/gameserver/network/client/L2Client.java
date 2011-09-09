@@ -18,12 +18,15 @@ import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SocketChannel;
 
+import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
+import com.l2jfree.lang.L2TextBuilder;
 import com.l2jfree.network.mmocore.DataSizeHolder;
 import com.l2jfree.network.mmocore.MMOConnection;
 import com.l2jfree.security.CoreCipher;
 import com.l2jfree.security.ObfuscationService;
+import com.l2jfree.util.concurrent.RunnableStatsManager;
 
 /**
  * @author savormix
@@ -37,6 +40,9 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	
 	private L2ClientState _state;
 	private int _bitsInBlock;
+	
+	private String _accountName;
+	private L2Player _activeChar;
 	
 	/**
 	 * Creates an internal object representing a game client connection.
@@ -113,14 +119,65 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	@Override
 	protected String getUID()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getAccountName();
 	}
 	
 	@Override
 	protected boolean isAuthed()
 	{
 		return getState() != L2ClientState.CONNECTED;
+	}
+	
+	@Override
+	public synchronized boolean sendPacket(L2ServerPacket sp)
+	{
+		final long begin = System.nanoTime();
+		final L2Player activeChar = getActiveChar();
+		
+		try
+		{
+			// TODO:
+			//if (isDisconnected())
+			//	return false;
+			
+			if (!sp.canBeSentTo(this, activeChar))
+				return false;
+			
+			sp.prepareToSend(this, activeChar);
+			
+			if (!super.sendPacket(sp))
+				return false;
+			
+			sp.packetSent(this, activeChar);
+			return true;
+		}
+		finally
+		{
+			RunnableStatsManager.handleStats(sp.getClass(), "runImpl()", System.nanoTime() - begin);
+		}
+	}
+	
+	@Override
+	public String toString()
+	{
+		final L2TextBuilder tb = new L2TextBuilder();
+		tb.append("[State: ").append(getState());
+		
+		String host = getHostAddress();
+		if (host != null)
+			tb.append(" | IP: ").append(String.format("%-15s", host));
+		
+		String account = getAccountName();
+		if (account != null)
+			tb.append(" | Account: ").append(String.format("%-15s", account));
+		
+		L2Player player = getActiveChar();
+		if (player != null)
+			tb.append(" | Character: ").append(String.format("%-15s", player.getName()));
+		
+		tb.append("]");
+		
+		return tb.moveToString();
 	}
 	
 	/**
@@ -198,5 +255,25 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	public void setBitsInBlock(int bitsInBlock)
 	{
 		_bitsInBlock = bitsInBlock;
+	}
+	
+	public String getAccountName()
+	{
+		return _accountName;
+	}
+	
+	public void setAccountName(String accountName)
+	{
+		_accountName = accountName;
+	}
+	
+	public L2Player getActiveChar()
+	{
+		return _activeChar;
+	}
+	
+	public void setActiveChar(L2Player activeChar)
+	{
+		_activeChar = activeChar;
 	}
 }
