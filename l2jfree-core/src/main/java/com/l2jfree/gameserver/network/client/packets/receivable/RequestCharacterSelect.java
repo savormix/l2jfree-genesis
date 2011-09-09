@@ -22,6 +22,8 @@ import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
+ * This packet is sent when user pressed [Start]
+ * 
  * @author hex1r0
  */
 public class RequestCharacterSelect extends L2ClientPacket

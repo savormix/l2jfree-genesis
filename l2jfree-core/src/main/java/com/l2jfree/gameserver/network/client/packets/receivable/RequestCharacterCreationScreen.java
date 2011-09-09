@@ -22,8 +22,7 @@ import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
- * This class represents a packet sent by the client when the "Create [character]" button is
- * pressed.
+ * This packet is sent when user pressed [Create] from characters screen
  * 
  * @author hex1r0
  */

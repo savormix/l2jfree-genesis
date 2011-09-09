@@ -22,6 +22,8 @@ import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
+ * This packet is sent after user customized character and pressed [Create]
+ * 
  * @author hex1r0
  */
 public class RequestCharacterCreate extends L2ClientPacket
@@ -47,8 +49,8 @@ public class RequestCharacterCreate extends L2ClientPacket
 	@Override
 	protected int getMinimumLength()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return READ_S + READ_D + READ_D + READ_D + READ_D + READ_D + READ_D + READ_D + READ_D + READ_D + READ_D
+				+ READ_D + READ_D;
 	}
 	
 	@Override
