@@ -5,13 +5,13 @@
 		definition="
 			CREATE TABLE players (
 				
-				objectId		INT UNSIGNED	NOT NULL,
+				objectId		INT				NOT NULL,
 				name			VARCHAR(35)		NOT NULL,
 				accountName		VARCHAR(45)		NOT NULL,
 				
-				PRIMARY KEY (objectId),
-				UNIQUE KEY (name),
-				KEY (accountName)
+				PRIMARY KEY (objectId)
 			);
+			CREATE UNIQUE INDEX name			ON players (name);
+			CREATE        INDEX accountName		ON players (accountName);
 	" />
 </database>

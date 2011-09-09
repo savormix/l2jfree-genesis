@@ -21,6 +21,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -81,7 +82,7 @@ public final class L2DatabaseInstaller
 				for (Node n2 : L2XML.listNodesByNodeName(n1, "table"))
 				{
 					final String name = L2XML.getAttribute(n2, "name");
-					final String definition = L2Database.correctTableDefinition(L2XML.getAttribute(n2, "definition"));
+					final String definition = L2XML.getAttribute(n2, "definition");
 					
 					final String oldDefinition = tables.put(name, definition);
 					if (oldDefinition != null)
@@ -155,23 +156,7 @@ public final class L2DatabaseInstaller
 	{
 		System.out.println("Installing table '" + tableName + "'.");
 		
-		Connection con = null;
-		try
-		{
-			con = L2Database.getConnection();
-			
-			PreparedStatement ps = con.prepareStatement(tableDefinition);
-			ps.executeUpdate();
-			ps.close();
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			L2Database.close(con);
-		}
+		L2Database.executeUpdate(tableDefinition);
 		
 		System.out.println("Done.");
 	}
@@ -180,23 +165,7 @@ public final class L2DatabaseInstaller
 	{
 		System.out.println("Executing update '" + updateQuery + "'.");
 		
-		Connection con = null;
-		try
-		{
-			con = L2Database.getConnection();
-			
-			PreparedStatement ps = con.prepareStatement(updateQuery);
-			ps.executeUpdate();
-			ps.close();
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			L2Database.close(con);
-		}
+		L2Database.executeUpdate(updateQuery);
 		
 		System.out.println("Done.");
 	}
@@ -240,30 +209,14 @@ public final class L2DatabaseInstaller
 		
 		System.out.println("Creating revision table.");
 		
-		Connection con = null;
-		try
-		{
-			con = L2Database.getConnection();
-			
-			L2TextBuilder tb = new L2TextBuilder();
-			tb.append("CREATE TABLE _revision (");
-			tb.append("  revision DECIMAL NOT NULL,");
-			tb.append("  date BIGINT NOT NULL,");
-			tb.append("  PRIMARY KEY (revision)");
-			tb.append(')');
-			
-			PreparedStatement ps = con.prepareStatement(tb.moveToString());
-			ps.executeUpdate();
-			ps.close();
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			L2Database.close(con);
-		}
+		final L2TextBuilder tb = new L2TextBuilder();
+		tb.append("CREATE TABLE _revision (");
+		tb.append("  revision DECIMAL NOT NULL,");
+		tb.append("  date BIGINT NOT NULL,");
+		tb.append("  PRIMARY KEY (revision)");
+		tb.append(")");
+		
+		L2Database.executeUpdate(tb.moveToString());
 		
 		System.out.println("Done.");
 	}
@@ -277,16 +230,14 @@ public final class L2DatabaseInstaller
 		{
 			con = L2Database.getConnection();
 			
-			// FIXME non-standard SQL
-			PreparedStatement ps =
-					con.prepareStatement("SELECT revision FROM _revision ORDER BY revision DESC LIMIT 1");
-			ResultSet rs = ps.executeQuery();
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery("SELECT revision FROM _revision ORDER BY revision DESC LIMIT 1");
 			
 			if (rs.next())
 				revision = rs.getDouble(1);
 			
 			rs.close();
-			ps.close();
+			st.close();
 		}
 		catch (SQLException e)
 		{

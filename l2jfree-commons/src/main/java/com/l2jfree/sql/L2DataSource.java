@@ -242,12 +242,6 @@ public abstract class L2DataSource implements DataSource
 		}
 	}
 	
-	@SuppressWarnings("static-method")
-	protected String correctTableDefinition(String defition)
-	{
-		return defition;
-	}
-	
 	/**
 	 * Optimizes the underlying data source.
 	 * 
