@@ -24,6 +24,7 @@ import com.l2jfree.gameserver.gameobjects.ComponentFactory;
 import com.l2jfree.gameserver.gameobjects.L2PcInstance;
 import com.l2jfree.gameserver.network.client.L2ClientConnections;
 import com.l2jfree.gameserver.network.client.L2ClientSecurity;
+import com.l2jfree.gameserver.templates.player.ClassId;
 import com.l2jfree.gameserver.world.L2World;
 import com.l2jfree.lang.L2System;
 import com.l2jfree.sql.L2Database;
@@ -75,7 +76,7 @@ public final class GameServer extends Config
 		final String name = Rnd.getString(20, Rnd.LETTERS_AND_DIGITS);
 		final String accountName = Rnd.getString(20, Rnd.LETTERS_AND_DIGITS);
 		
-		final L2PcInstance created = L2PcInstance.create(name, accountName);
+		final L2PcInstance created = L2PcInstance.create(name, accountName, ClassId.HumanFighter);
 		System.out.println(created);
 		
 		final L2PcInstance loaded = L2PcInstance.load(created.getObjectId());

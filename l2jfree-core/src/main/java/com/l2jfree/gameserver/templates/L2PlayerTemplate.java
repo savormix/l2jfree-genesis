@@ -14,13 +14,33 @@
  */
 package com.l2jfree.gameserver.templates;
 
+import com.l2jfree.gameserver.templates.player.ClassId;
+import com.l2jfree.gameserver.templates.player.Gender;
+import com.l2jfree.gameserver.templates.player.PlayerBaseTemplate;
+
 /**
  * @author NB4L1
  */
 public final class L2PlayerTemplate extends L2Template
 {
-	public L2PlayerTemplate()
+	private final ClassId _classId;
+	private final PlayerBaseTemplate[] _playerBaseTemplates;
+	
+	public L2PlayerTemplate(ClassId classId, PlayerBaseTemplate[] playerBaseTemplates)
 	{
 		super(-1);
+		
+		_classId = classId;
+		_playerBaseTemplates = playerBaseTemplates;
+	}
+	
+	public ClassId getClassId()
+	{
+		return _classId;
+	}
+	
+	public PlayerBaseTemplate getPlayerBaseTemplate(Gender gender)
+	{
+		return _playerBaseTemplates[gender.ordinal()];
 	}
 }

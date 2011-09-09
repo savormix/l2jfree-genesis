@@ -15,6 +15,7 @@
 package com.l2jfree.gameserver.templates.player;
 
 import com.l2jfree.gameserver.datatables.PlayerTemplateTable;
+import com.l2jfree.util.EnumValues;
 
 /**
  * @author NB4L1
@@ -162,17 +163,17 @@ public enum ClassId
 	
 	MaleSoldier/*					*/(123, Race.Kamael, ClassType.Fighter, ClassLevel.First, null),
 	FemaleSoldier/*					*/(124, Race.Kamael, ClassType.Fighter, ClassLevel.First, null),
-	/*	*/Dragoon/*					*/(125, Race.Kamael, ClassType.Fighter, ClassLevel.Second, MaleSoldier), // Trooper
+	/*	*/Trooper/*					*/(125, Race.Kamael, ClassType.Fighter, ClassLevel.Second, MaleSoldier),
 	/*	*/Warder/*					*/(126, Race.Kamael, ClassType.Fighter, ClassLevel.Second, FemaleSoldier),
-	/*		*/Berserker/*			*/(127, Race.Kamael, ClassType.Fighter, ClassLevel.Third, Dragoon),
-	/*		*/MaleSoulBreaker/*		*/(128, Race.Kamael, ClassType.Fighter, ClassLevel.Third, Dragoon),
+	/*		*/Berserker/*			*/(127, Race.Kamael, ClassType.Fighter, ClassLevel.Third, Trooper),
+	/*		*/MaleSoulBreaker/*		*/(128, Race.Kamael, ClassType.Fighter, ClassLevel.Third, Trooper),
 	/*		*/FemaleSoulBreaker/*	*/(129, Race.Kamael, ClassType.Fighter, ClassLevel.Third, Warder),
 	/*		*/Arbalester/*			*/(130, Race.Kamael, ClassType.Fighter, ClassLevel.Third, Warder),
 	/*			*/Doombringer/*		*/(131, Race.Kamael, ClassType.Fighter, ClassLevel.Fourth, Berserker),
 	/*			*/MaleSoulHound/*	*/(132, Race.Kamael, ClassType.Fighter, ClassLevel.Fourth, MaleSoulBreaker),
 	/*			*/FemaleSoulHound/*	*/(133, Race.Kamael, ClassType.Fighter, ClassLevel.Fourth, FemaleSoulBreaker),
 	/*			*/Trickster/*		*/(134, Race.Kamael, ClassType.Fighter, ClassLevel.Fourth, Arbalester),
-	/*		*/Inspector/*			*/(135, Race.Kamael, ClassType.Fighter, ClassLevel.Third, null),
+	/*		*/Inspector/*			*/(135, Race.Kamael, ClassType.Fighter, ClassLevel.Third, Warder),
 	/*			*/Judicator/*		*/(136, Race.Kamael, ClassType.Fighter, ClassLevel.Fourth, Inspector);
 	
 	private final int _id;
@@ -180,6 +181,8 @@ public enum ClassId
 	private final ClassType _type;
 	private final ClassLevel _level;
 	private final ClassId _parent;
+	private final boolean _dummy;
+	private final String _name;
 	
 	private ClassId(int id)
 	{
@@ -188,6 +191,8 @@ public enum ClassId
 		_type = null;
 		_level = null;
 		_parent = null;
+		_dummy = true;
+		_name = "";
 	}
 	
 	private ClassId(int id, Race race, ClassType type, ClassLevel level, ClassId parent)
@@ -197,51 +202,62 @@ public enum ClassId
 		_type = type;
 		_level = level;
 		_parent = parent;
+		_dummy = false;
+		
+		final StringBuilder sb = new StringBuilder();
+		for (char ch : name().toCharArray())
+		{
+			if (Character.isUpperCase(ch))
+				sb.append(' ');
+			sb.append(ch);
+		}
+		_name = sb.toString().replace("Evas", "Eva's").trim();
 	}
 	
-	/**
-	 * @return the id
-	 */
 	public int getId()
 	{
 		return _id;
 	}
 	
-	/**
-	 * @return the race
-	 */
 	public Race getRace()
 	{
 		return _race;
 	}
 	
-	/**
-	 * @return the type
-	 */
 	public ClassType getType()
 	{
 		return _type;
 	}
 	
-	/**
-	 * @return the level
-	 */
 	public ClassLevel getLevel()
 	{
 		return _level;
 	}
 	
-	/**
-	 * @return the parent
-	 */
 	public ClassId getParent()
 	{
 		return _parent;
 	}
 	
+	public boolean isDummy()
+	{
+		return _dummy;
+	}
+	
+	public String getName()
+	{
+		return _name;
+	}
+	
+	public ClassType getBaseType()
+	{
+		return _type.isMage() ? ClassType.Mystic : ClassType.Fighter;
+	}
+	
 	public PlayerBaseTemplate getPlayerBaseTemplate(Gender gender)
 	{
-		return PlayerTemplateTable.getInstance().getPlayerBaseTemplate(_race,
-				_type.isMage() ? ClassType.Mystic : ClassType.Fighter, gender);
+		return PlayerTemplateTable.getInstance().getPlayerBaseTemplate(this, gender);
 	}
+	
+	public static final EnumValues<ClassId> VALUES = new EnumValues<ClassId>(ClassId.class);
 }

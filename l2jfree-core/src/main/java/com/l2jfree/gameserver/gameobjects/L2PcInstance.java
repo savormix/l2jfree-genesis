@@ -19,7 +19,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.l2jfree.gameserver.templates.L2PlayerTemplate;
+import com.l2jfree.gameserver.datatables.PlayerTemplateTable;
+import com.l2jfree.gameserver.templates.player.ClassId;
 import com.l2jfree.sql.L2Database;
 import com.l2jfree.util.Rnd;
 
@@ -33,7 +34,7 @@ public class L2PcInstance extends L2Character implements IL2Playable
 		ComponentFactory.KNOWNLIST.register(L2PcInstance.class, PcKnownList.class);
 	}
 	
-	public static L2PcInstance create(String name, String accountName)
+	public static L2PcInstance create(String name, String accountName, ClassId classId)
 	{
 		int objectId = Rnd.get(Integer.MAX_VALUE); // TODO
 		
@@ -52,7 +53,7 @@ public class L2PcInstance extends L2Character implements IL2Playable
 			ps.executeUpdate();
 			ps.close();
 			
-			result = new L2PcInstance(objectId, new L2PlayerTemplate());
+			result = new L2PcInstance(objectId, classId);
 			result.setAccountName(accountName);
 			result.setName(name);
 		}
@@ -86,8 +87,9 @@ public class L2PcInstance extends L2Character implements IL2Playable
 			{
 				final String accountName = rs.getString("accountName");
 				final String name = rs.getString("name");
+				final ClassId classId = ClassId.HumanFighter; // TODO
 				
-				result = new L2PcInstance(objectId, new L2PlayerTemplate());
+				result = new L2PcInstance(objectId, classId);
 				result.setAccountName(accountName);
 				result.setName(name);
 			}
@@ -110,9 +112,9 @@ public class L2PcInstance extends L2Character implements IL2Playable
 	private String _accountName;
 	private String _name;
 	
-	private L2PcInstance(int objectId, L2PlayerTemplate template)
+	private L2PcInstance(int objectId, ClassId classId)
 	{
-		super(objectId, template);
+		super(objectId, PlayerTemplateTable.getInstance().getPlayerTemplate(classId));
 	}
 	
 	public String getAccountName()

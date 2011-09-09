@@ -19,8 +19,20 @@ package com.l2jfree.gameserver.templates.player;
  */
 public enum ClassLevel
 {
-	First,
-	Second,
-	Third,
-	Fourth;
+	First(1),
+	Second(20),
+	Third(40),
+	Fourth(76);
+	
+	private final int _baseLevel;
+	
+	private ClassLevel(int baseLevel)
+	{
+		_baseLevel = baseLevel;
+	}
+	
+	public int getBaseLevel()
+	{
+		return _baseLevel;
+	}
 }
