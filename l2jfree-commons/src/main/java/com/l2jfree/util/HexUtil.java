@@ -15,6 +15,7 @@
 package com.l2jfree.util;
 
 import java.math.BigInteger;
+import java.nio.ByteBuffer;
 
 /**
  * This class provides functions to manipulate byte arrays in the programmer-friendly hexadecimal
@@ -120,6 +121,16 @@ public final class HexUtil
 			bytes[i] = (byte)(Integer.parseInt(byte_, 16) & 0xFF);
 		}
 		return bytes;
+	}
+	
+	public static String printData(ByteBuffer buf, int offset, int len)
+	{
+		byte[] tmp = new byte[len];
+		int pos = buf.position();
+		buf.position(offset);
+		buf.get(tmp);
+		buf.position(pos);
+		return printData(tmp, len);
 	}
 	
 	/**
