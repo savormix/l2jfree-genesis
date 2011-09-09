@@ -17,9 +17,9 @@ package com.l2jfree.gameserver.gameobjects;
 /**
  * @author NB4L1
  */
-public final class PcKnownList extends ObjectKnownList
+public final class PlayerKnownList extends ObjectKnownList
 {
-	public PcKnownList(L2PcInstance activeChar)
+	public PlayerKnownList(L2PcInstance activeChar)
 	{
 		super(activeChar);
 	}

@@ -35,7 +35,7 @@ public class L2PcInstance extends L2Character implements IL2Playable
 {
 	static
 	{
-		ComponentFactory.KNOWNLIST.register(L2PcInstance.class, PcKnownList.class);
+		ComponentFactory.KNOWNLIST.register(L2PcInstance.class, PlayerKnownList.class);
 	}
 	
 	public static L2PcInstance create(String name, String accountName, ClassId classId)
