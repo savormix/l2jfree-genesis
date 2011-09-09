@@ -21,6 +21,7 @@ import java.sql.SQLException;
 
 import com.l2jfree.gameserver.datatables.PlayerTemplateTable;
 import com.l2jfree.gameserver.templates.player.ClassId;
+import com.l2jfree.gameserver.templates.player.Gender;
 import com.l2jfree.sql.L2Database;
 import com.l2jfree.util.Rnd;
 
@@ -36,7 +37,13 @@ public class L2PcInstance extends L2Character implements IL2Playable
 	
 	public static L2PcInstance create(String name, String accountName, ClassId classId)
 	{
-		int objectId = Rnd.get(Integer.MAX_VALUE); // TODO
+		return create(name, accountName, classId, Gender.Male, (byte)0, (byte)0, (byte)0); // TODO
+	}
+	
+	public static L2PcInstance create(String name, String accountName, ClassId classId, Gender gender, byte face,
+			byte hairColor, byte hairStyle)
+	{
+		final int objectId = Rnd.get(Integer.MAX_VALUE); // TODO
 		
 		L2PcInstance result = null;
 		
@@ -53,8 +60,7 @@ public class L2PcInstance extends L2Character implements IL2Playable
 			ps.executeUpdate();
 			ps.close();
 			
-			result = new L2PcInstance(objectId, classId);
-			result.setAccountName(accountName);
+			result = new L2PcInstance(objectId, classId, accountName, gender, face, hairColor, hairStyle);
 			result.setName(name);
 		}
 		catch (SQLException e)
@@ -88,9 +94,12 @@ public class L2PcInstance extends L2Character implements IL2Playable
 				final String accountName = rs.getString("accountName");
 				final String name = rs.getString("name");
 				final ClassId classId = ClassId.HumanFighter; // TODO
+				final Gender gender = Gender.Male; // TODO
+				final byte face = 0; // TODO
+				final byte hairColor = 0; // TODO
+				final byte hairStyle = 0; // TODO
 				
-				result = new L2PcInstance(objectId, classId);
-				result.setAccountName(accountName);
+				result = new L2PcInstance(objectId, classId, accountName, gender, face, hairColor, hairStyle);
 				result.setName(name);
 			}
 			
@@ -109,22 +118,23 @@ public class L2PcInstance extends L2Character implements IL2Playable
 		return result;
 	}
 	
-	private String _accountName;
+	private final String _accountName;
 	private String _name;
 	
-	private L2PcInstance(int objectId, ClassId classId)
+	private final PlayerAppearance _appearance;
+	
+	private L2PcInstance(int objectId, ClassId classId, String accountName, Gender gender, byte face, byte hairColor,
+			byte hairStyle)
 	{
 		super(objectId, PlayerTemplateTable.getInstance().getPlayerTemplate(classId));
+		
+		_accountName = accountName;
+		_appearance = new PlayerAppearance(this, gender, face, hairColor, hairStyle);
 	}
 	
 	public String getAccountName()
 	{
 		return _accountName;
-	}
-	
-	public void setAccountName(String accountName)
-	{
-		_accountName = accountName;
 	}
 	
 	@Override
@@ -137,5 +147,10 @@ public class L2PcInstance extends L2Character implements IL2Playable
 	public void setName(String name)
 	{
 		_name = name;
+	}
+	
+	public PlayerAppearance getAppearance()
+	{
+		return _appearance;
 	}
 }
