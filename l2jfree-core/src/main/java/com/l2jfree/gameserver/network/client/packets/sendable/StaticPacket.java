@@ -12,21 +12,16 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.network.client.packets;
+package com.l2jfree.gameserver.network.client.packets.sendable;
 
-import com.l2jfree.gameserver.network.client.L2Client;
-import com.l2jfree.gameserver.network.client.packets.sendable.ActionFailed;
-import com.l2jfree.network.mmocore.ReceivablePacket;
+import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 
 /**
- * Just for convenience.
- * 
- * @author savormix
+ * @author hex1r0
  */
-public abstract class L2ClientPacket extends ReceivablePacket<L2Client, L2ClientPacket, L2ServerPacket>
+public abstract class StaticPacket extends L2ServerPacket
 {
-	protected final boolean sendActionFailed()
+	protected StaticPacket()
 	{
-		return sendPacket(ActionFailed.STATIC_PACKET);
 	}
 }

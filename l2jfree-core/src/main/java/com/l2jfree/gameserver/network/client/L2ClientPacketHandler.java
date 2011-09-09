@@ -25,6 +25,11 @@ import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.gameserver.network.client.packets.receivable.Logout;
 import com.l2jfree.gameserver.network.client.packets.receivable.ProtocolVersion;
 import com.l2jfree.gameserver.network.client.packets.receivable.RequestAuthorization;
+import com.l2jfree.gameserver.network.client.packets.receivable.RequestCharacterCreate;
+import com.l2jfree.gameserver.network.client.packets.receivable.RequestCharacterCreationScreen;
+import com.l2jfree.gameserver.network.client.packets.receivable.RequestCharacterDelete;
+import com.l2jfree.gameserver.network.client.packets.receivable.RequestCharacterRestore;
+import com.l2jfree.gameserver.network.client.packets.receivable.RequestCharacterSelect;
 import com.l2jfree.network.mmocore.PacketHandler;
 
 /**
@@ -51,10 +56,37 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 				if (client.stateEquals(PROTOCOL_OK))
 					return new RequestAuthorization();
 				return invalidState(client, RequestAuthorization.class, opcode);
+				
 			case Logout.OPCODE:
 				if (client.stateEquals(CHARACTER_MANAGEMENT))
 					return new Logout();
 				return invalidState(client, Logout.class, opcode);
+				
+			case RequestCharacterCreate.OPCODE:
+				if (client.stateEquals(CHARACTER_MANAGEMENT))
+					return new RequestCharacterCreate();
+				return invalidState(client, RequestCharacterCreate.class, opcode);
+				
+			case RequestCharacterDelete.OPCODE:
+				if (client.stateEquals(CHARACTER_MANAGEMENT))
+					return new RequestCharacterDelete();
+				return invalidState(client, RequestCharacterDelete.class, opcode);
+				
+			case RequestCharacterSelect.OPCODE:
+				if (client.stateEquals(CHARACTER_MANAGEMENT))
+					return new RequestCharacterSelect();
+				return invalidState(client, RequestCharacterSelect.class, opcode);
+				
+			case RequestCharacterCreationScreen.OPCODE:
+				if (client.stateEquals(CHARACTER_MANAGEMENT))
+					return new RequestCharacterCreationScreen();
+				return invalidState(client, RequestCharacterCreationScreen.class, opcode);
+				
+			case RequestCharacterRestore.OPCODE:
+				if (client.stateEquals(CHARACTER_MANAGEMENT))
+					return new RequestCharacterRestore();
+				return invalidState(client, RequestCharacterRestore.class, opcode);
+				
 			default:
 				return unknown(buf, client, opcode);
 		}

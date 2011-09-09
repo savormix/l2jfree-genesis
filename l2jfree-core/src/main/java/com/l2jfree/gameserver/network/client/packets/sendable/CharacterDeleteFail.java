@@ -12,21 +12,37 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.network.client.packets;
+package com.l2jfree.gameserver.network.client.packets.sendable;
 
 import com.l2jfree.gameserver.network.client.L2Client;
-import com.l2jfree.gameserver.network.client.packets.sendable.ActionFailed;
-import com.l2jfree.network.mmocore.ReceivablePacket;
+import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
+import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
- * Just for convenience.
- * 
- * @author savormix
+ * @author hex1r0
  */
-public abstract class L2ClientPacket extends ReceivablePacket<L2Client, L2ClientPacket, L2ServerPacket>
+public class CharacterDeleteFail extends L2ServerPacket
 {
-	protected final boolean sendActionFailed()
+	public static final int REASON_DELETION_FAILED = 0x01;
+	public static final int REASON_YOU_MAY_NOT_DELETE_CLAN_MEMBER = 0x02;
+	public static final int REASON_CLAN_LEADERS_MAY_NOT_BE_DELETED = 0x03;
+	
+	private final int _error;
+	
+	public CharacterDeleteFail(int error)
 	{
-		return sendPacket(ActionFailed.STATIC_PACKET);
+		_error = error;
+	}
+	
+	@Override
+	protected int getOpcode()
+	{
+		return 0x1e;
+	}
+	
+	@Override
+	protected void writeImpl(L2Client client, MMOBuffer buf) throws RuntimeException
+	{
+		buf.writeD(_error);
 	}
 }
