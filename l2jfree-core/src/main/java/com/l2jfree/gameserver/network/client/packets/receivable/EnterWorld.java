@@ -16,45 +16,32 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 
-import com.l2jfree.gameserver.network.client.L2ClientState;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
-import com.l2jfree.gameserver.network.client.packets.sendable.CharacterSelected;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
- * This packet is sent when user pressed [Start]
- * 
  * @author hex1r0
  */
-public class RequestCharacterSelect extends L2ClientPacket
+public class EnterWorld extends L2ClientPacket
 {
-	public static final int OPCODE = 0x12;
-	private int _charSlot;
+	public static final int OPCODE = 0x11;
 	
 	@Override
 	protected int getMinimumLength()
 	{
-		return READ_D + READ_H + READ_D + READ_D + READ_D;
+		return 0;
 	}
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
-		_charSlot = buf.readD();
-		/*_unk1 = */buf.readH();
-		/*_unk2 = */buf.readD();
-		/*_unk3 = */buf.readD();
-		/*_unk4 = */buf.readD();
+		buf.skipAll();
 	}
 	
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		// TODO
-		getClient().setState(L2ClientState.LOGGED_IN);
-		getClient().setActiveChar(getClient().loadCharacterBySlot(_charSlot));
-		sendPacket(new CharacterSelected(0)); // FIXME getSessionId().playOkID1
-		sendActionFailed();
+		// TODO	
 	}
 }

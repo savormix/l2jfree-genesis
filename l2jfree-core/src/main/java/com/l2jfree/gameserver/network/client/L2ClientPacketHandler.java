@@ -16,12 +16,14 @@ package com.l2jfree.gameserver.network.client;
 
 import static com.l2jfree.gameserver.network.client.L2ClientState.CHARACTER_MANAGEMENT;
 import static com.l2jfree.gameserver.network.client.L2ClientState.CONNECTED;
+import static com.l2jfree.gameserver.network.client.L2ClientState.LOGGED_IN;
 import static com.l2jfree.gameserver.network.client.L2ClientState.PROTOCOL_OK;
 
 import java.nio.ByteBuffer;
 
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
+import com.l2jfree.gameserver.network.client.packets.receivable.EnterWorld;
 import com.l2jfree.gameserver.network.client.packets.receivable.Logout;
 import com.l2jfree.gameserver.network.client.packets.receivable.ProtocolVersion;
 import com.l2jfree.gameserver.network.client.packets.receivable.RequestAuthorization;
@@ -104,6 +106,11 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 					default:
 						return unknown(buf, client, opcode, opcode2);
 				}
+				
+			case EnterWorld.OPCODE:
+				if (client.stateEquals(LOGGED_IN))
+					return new EnterWorld();
+				return invalidState(client, EnterWorld.class, opcode);
 				
 			default:
 				return unknown(buf, client, opcode);

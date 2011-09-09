@@ -120,5 +120,6 @@ public class AvailableCharacters extends L2ServerPacket
 			buf.writeD(0); // vitallity points HF
 		}
 		
+		client.definePlayerSlots(_players);
 	}
 }

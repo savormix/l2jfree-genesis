@@ -43,6 +43,7 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	
 	private String _accountName;
 	private L2Player _activeChar;
+	private int[] _playerSlotMap;
 	
 	/**
 	 * Creates an internal object representing a game client connection.
@@ -278,5 +279,24 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	public void setActiveChar(L2Player activeChar)
 	{
 		_activeChar = activeChar;
+	}
+	
+	/**
+	 * @param players
+	 */
+	public void definePlayerSlots(L2Player[] players)
+	{
+		_playerSlotMap = new int[players.length];
+		int i = 0;
+		for (L2Player p : players)
+			_playerSlotMap[i++] = p.getObjectId();
+	}
+	
+	public L2Player loadCharacterBySlot(int slot)
+	{
+		if (slot >= 0 && slot < _playerSlotMap.length)
+			return L2Player.load(_playerSlotMap[slot]);
+		
+		return null;
 	}
 }
