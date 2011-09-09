@@ -17,12 +17,15 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 import java.nio.BufferUnderflowException;
 
 import com.l2jfree.gameserver.network.client.L2Client;
+import com.l2jfree.gameserver.network.client.L2ClientState;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
+import com.l2jfree.gameserver.network.client.packets.sendable.AvailableCharacters;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
- * Client sends this packet in response to a compatible <TT>ProtocolAnswer</TT>.
+ * Client sends this packet in response to a compatible <TT>ProtocolAnswer</TT>. <BR>
+ * NOTE: original name was <TT>AuthLogin</TT>
  * 
  * @author savormix
  */
@@ -68,11 +71,15 @@ public final class RequestAuthorization extends L2ClientPacket
 	{
 		//if (_accountId1 != _accountId2 || _unk1 != 1 || _bitsInBlock & 7 != 0 || _unk2 != 0)
 		
-		// TODO Auto-generated method stub
 		final L2Client client = getClient();
-		client.closeNow();
+		
+		// TODO validate session key
+		
 		//client.setBitsInBlock(_bitsInBlock);
-		//client.setState(L2ClientState.CHARACTER_MANAGEMENT);
-		//sendPacket(new AvailableCharacters([...]));
+		client.setState(L2ClientState.CHARACTER_MANAGEMENT);
+		//client.closeNow();
+		
+		// FIXME
+		sendPacket(new AvailableCharacters(client));
 	}
 }
