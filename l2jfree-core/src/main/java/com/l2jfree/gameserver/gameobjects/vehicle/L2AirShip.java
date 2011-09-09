@@ -12,16 +12,17 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.gameobjects;
+package com.l2jfree.gameserver.gameobjects.vehicle;
 
+import com.l2jfree.gameserver.gameobjects.L2Vehicle;
 import com.l2jfree.gameserver.templates.L2Template;
 
 /**
  * @author NB4L1
  */
-public abstract class L2Boat extends L2Vehicle
+public abstract class L2AirShip extends L2Vehicle
 {
-	protected L2Boat(int objectId, L2Template template)
+	protected L2AirShip(int objectId, L2Template template)
 	{
 		super(objectId, template);
 	}

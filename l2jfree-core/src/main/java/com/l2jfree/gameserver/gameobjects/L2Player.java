@@ -20,6 +20,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.l2jfree.gameserver.datatables.PlayerTemplateTable;
+import com.l2jfree.gameserver.gameobjects.player.PlayerAppearance;
+import com.l2jfree.gameserver.gameobjects.player.PlayerKnownList;
 import com.l2jfree.gameserver.network.client.EmptyClient;
 import com.l2jfree.gameserver.network.client.IL2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;

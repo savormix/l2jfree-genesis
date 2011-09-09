@@ -12,41 +12,18 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.gameobjects;
+package com.l2jfree.gameserver.gameobjects.vehicle;
+
+import com.l2jfree.gameserver.gameobjects.L2Vehicle;
+import com.l2jfree.gameserver.templates.L2Template;
 
 /**
  * @author NB4L1
  */
-public final class PlayerKnownList extends ObjectKnownList
+public abstract class L2Boat extends L2Vehicle
 {
-	public PlayerKnownList(L2Player activeChar)
+	protected L2Boat(int objectId, L2Template template)
 	{
-		super(activeChar);
-	}
-	
-	@Override
-	public L2Player getActiveChar()
-	{
-		return (L2Player)super.getActiveChar();
-	}
-	
-	@Override
-	protected int getDistanceToAddObject(L2Object obj)
-	{
-		// H5 retail value 2011-09-07
-		if (obj instanceof L2Item)
-			return 2500;
-		
-		return super.getDistanceToRemoveObject(obj);
-	}
-	
-	@Override
-	protected int getDistanceToRemoveObject(L2Object obj)
-	{
-		// H5 retail value 2011-09-07
-		if (obj instanceof L2Item)
-			return 3000;
-		
-		return super.getDistanceToRemoveObject(obj);
+		super(objectId, template);
 	}
 }
