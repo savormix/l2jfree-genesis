@@ -17,14 +17,18 @@ package com.l2jfree.gameserver;
 import com.l2jfree.L2Config;
 import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
+import com.l2jfree.Util;
 import com.l2jfree.gameserver.config.DatabaseConfig;
 import com.l2jfree.gameserver.config.NetworkConfig;
 import com.l2jfree.gameserver.config.SystemConfig;
+import com.l2jfree.gameserver.datatables.PlayerTemplateTable;
 import com.l2jfree.gameserver.gameobjects.ComponentFactory;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2ClientConnections;
 import com.l2jfree.gameserver.network.client.L2ClientSecurity;
 import com.l2jfree.gameserver.templates.player.ClassId;
+import com.l2jfree.gameserver.util.IdFactory;
+import com.l2jfree.gameserver.util.IdFactory.IdRange;
 import com.l2jfree.gameserver.world.L2World;
 import com.l2jfree.lang.L2System;
 import com.l2jfree.sql.L2Database;
@@ -52,10 +56,20 @@ public final class GameServer extends Config
 		if (DatabaseConfig.BACKUP_ON_STARTUP)
 			L2Database.backup();
 		
+		Util.printSection("World");
+		
+		IdFactory.getInstance();
+		
 		Class.forName(L2World.class.getName());
 		Class.forName(ComponentFactory.class.getName());
 		
 		//GameStatusServer.initInstance();
+		
+		Util.printSection("Templates");
+		
+		PlayerTemplateTable.getInstance();
+		
+		Util.printSection("Network");
 		
 		{
 			L2ClientSecurity.getInstance();
@@ -72,19 +86,6 @@ public final class GameServer extends Config
 				return;
 			}
 		}
-		
-		final String name = Rnd.getString(20, Rnd.LETTERS_AND_DIGITS);
-		final String accountName = Rnd.getString(20, Rnd.LETTERS_AND_DIGITS);
-		
-		final L2Player created = L2Player.create(name, accountName, ClassId.HumanFighter);
-		System.out.println(created);
-		
-		final L2Player loaded = L2Player.load(created.getObjectId());
-		System.out.println(loaded);
-		
-		System.out.println(created.getPrimaryKey().equals(loaded.getPrimaryKey()));
-		System.out.println(created.getName().equals(loaded.getName()));
-		System.out.println(created.getAccountName().equals(loaded.getAccountName()));
 		
 		// TODO
 		
@@ -123,9 +124,23 @@ public final class GameServer extends Config
 			}
 		});
 		
-		L2Config.applicationLoaded("l2jfree-core", CoreInfo.getFullVersionInfo());
+		L2Config.applicationLoaded("l2jfree-core", CoreInfo.getFullVersionInfo(), SystemConfig.DUMP_HEAP_AFTER_STARTUP);
 		
-		if (SystemConfig.DUMP_HEAP_AFTER_STARTUP)
-			L2System.dumpHeap(true);
+		final String name = Rnd.getString(20, Rnd.LETTERS_AND_DIGITS);
+		final String accountName = Rnd.getString(20, Rnd.LETTERS_AND_DIGITS);
+		
+		final L2Player created = L2Player.create(name, accountName, ClassId.HumanFighter);
+		System.out.println(created);
+		
+		final L2Player loaded = L2Player.load(created.getObjectId());
+		System.out.println(loaded);
+		
+		System.out.println(created.getPrimaryKey().equals(loaded.getPrimaryKey()));
+		System.out.println(created.getName().equals(loaded.getName()));
+		System.out.println(created.getAccountName().equals(loaded.getAccountName()));
+		
+		final IdFactory ids = IdFactory.getInstance();
+		for (IdRange idRange : IdRange.values())
+			System.out.println(idRange + ": " + ids.getNextId(idRange) + ", " + ids.getNextId(idRange));
 	}
 }

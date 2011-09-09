@@ -48,6 +48,7 @@ import com.l2jfree.config.L2Properties;
 import com.l2jfree.config.model.ConfigClassInfo;
 import com.l2jfree.io.BufferedRedirectingOutputStream;
 import com.l2jfree.lang.L2Math;
+import com.l2jfree.lang.L2System;
 import com.l2jfree.lang.L2TextBuilder;
 import com.l2jfree.lang.management.DeadlockDetector;
 import com.l2jfree.sql.DataSourceInitializer;
@@ -71,7 +72,7 @@ public abstract class L2Config
 	 */
 	public static String getUptime()
 	{
-		final long uptimeInSec = ManagementFactory.getRuntimeMXBean().getUptime() / 1000;
+		final long uptimeInSec = (long)Math.ceil(ManagementFactory.getRuntimeMXBean().getUptime() / 1000.0);
 		
 		final long s = uptimeInSec / 1 % 60;
 		final long m = uptimeInSec / 60 % 60;
@@ -102,7 +103,7 @@ public abstract class L2Config
 	 */
 	public static String getShortUptime()
 	{
-		final long uptimeInSec = ManagementFactory.getRuntimeMXBean().getUptime() / 1000;
+		final long uptimeInSec = (long)Math.ceil(ManagementFactory.getRuntimeMXBean().getUptime() / 1000.0);
 		
 		final long s = uptimeInSec / 1 % 60;
 		final long m = uptimeInSec / 60 % 60;
@@ -657,17 +658,16 @@ public abstract class L2Config
 		DeadlockDetector.getInstance();
 	}
 	
-	protected static void applicationLoaded(String appName, String[] versionInfo)
+	protected static void applicationLoaded(String appName, String[] versionInfo, boolean dumpHeap)
 	{
 		Startup.onStartup();
 		
-		Util.printSection(appName);
+		Util.printSection("Summary");
 		for (String line : versionInfo)
 			_log.info(line);
 		_log.info("Operating System: " + Util.getOSName() + " " + Util.getOSVersion() + " " + Util.getOSArch());
 		_log.info("Available CPUs: " + Util.getAvailableProcessors());
 		
-		Util.printSection("Memory");
 		System.gc();
 		System.runFinalization();
 		
@@ -676,6 +676,11 @@ public abstract class L2Config
 		
 		_log.info("Server loaded in " + Util.formatNumber(ManagementFactory.getRuntimeMXBean().getUptime())
 				+ " milliseconds.");
+		
+		if (dumpHeap)
+			L2System.dumpHeap(true);
+		
+		Util.printSection(appName);
 	}
 	
 	protected static void shutdownApplication()

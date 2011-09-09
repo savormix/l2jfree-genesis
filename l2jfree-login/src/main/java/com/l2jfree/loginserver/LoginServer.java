@@ -137,9 +137,7 @@ public final class LoginServer extends Config
 			}
 		});
 		
-		L2Config.applicationLoaded("l2jfree-login", LoginInfo.getFullVersionInfo());
-		
-		if (SystemConfig.DUMP_HEAP_AFTER_STARTUP)
-			L2System.dumpHeap(true);
+		L2Config.applicationLoaded("l2jfree-login", LoginInfo.getFullVersionInfo(),
+				SystemConfig.DUMP_HEAP_AFTER_STARTUP);
 	}
 }
