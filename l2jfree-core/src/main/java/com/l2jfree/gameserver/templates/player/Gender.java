@@ -14,6 +14,8 @@
  */
 package com.l2jfree.gameserver.templates.player;
 
+import com.l2jfree.util.EnumValues;
+
 /**
  * @author NB4L1
  */
@@ -21,4 +23,12 @@ public enum Gender
 {
 	Male,
 	Female;
+	
+	public static final EnumValues<Gender> VALUES = new EnumValues<Gender>(Gender.class) {
+		@Override
+		protected Gender defaultValue()
+		{
+			return Gender.Female; // for every non-zero value
+		}
+	};
 }

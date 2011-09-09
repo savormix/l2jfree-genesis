@@ -16,8 +16,13 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 
+import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
+import com.l2jfree.gameserver.network.client.packets.sendable.CharacterCreateFail;
 import com.l2jfree.gameserver.network.client.packets.sendable.CharacterCreateSuccess;
+import com.l2jfree.gameserver.templates.player.ClassId;
+import com.l2jfree.gameserver.templates.player.ClassLevel;
+import com.l2jfree.gameserver.templates.player.Gender;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
@@ -76,8 +81,19 @@ public class RequestCharacterCreate extends L2ClientPacket
 	{
 		// TODO 
 		//CharacterCreateFail
+		
+		final ClassId classId = ClassId.VALUES.valueOf(_classId);
+		if (classId == null || classId.getLevel() != ClassLevel.First)
+		{
+			sendPacket(new CharacterCreateFail(CharacterCreateFail.REASON_CREATION_FAILED));
+			return;
+		}
+		
+		L2Player player =
+				L2Player.create(_name, getClient().getAccountName(), ClassId.VALUES.valueOf(_classId),
+						Gender.VALUES.valueOf(_sex), _face, _hairColor, _hairStyle);
+		
 		sendPacket(CharacterCreateSuccess.STATIC_PACKET);
 		sendActionFailed();
 	}
-	
 }
