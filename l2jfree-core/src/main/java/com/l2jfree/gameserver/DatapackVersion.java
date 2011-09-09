@@ -21,18 +21,26 @@ import com.l2jfree.ClientProtocolVersion;
  */
 public enum DatapackVersion
 {
-	FREYA(ClientProtocolVersion.FREYA),
-	HIGH_FIVE(ClientProtocolVersion.HIGH_FIVE_UPDATE_3);
+	FREYA(ClientProtocolVersion.FREYA, ClientProtocolVersion.HIGH_FIVE_UPDATE_3),
+	HIGH_FIVE(ClientProtocolVersion.HIGH_FIVE_UPDATE_3, ClientProtocolVersion.HIGH_FIVE_UPDATE_3);
 	
-	private final ClientProtocolVersion _requiredMinimumClientProtocolVersion;
+	private final ClientProtocolVersion _minimumClientProtocolVersion;
+	private final ClientProtocolVersion _maximumClientProtocolVersion;
 	
-	private DatapackVersion(ClientProtocolVersion requiredMinimumClientProtocolVersion)
+	private DatapackVersion(ClientProtocolVersion minimumClientProtocolVersion,
+			ClientProtocolVersion maximumClientProtocolVersion)
 	{
-		_requiredMinimumClientProtocolVersion = requiredMinimumClientProtocolVersion;
+		_minimumClientProtocolVersion = minimumClientProtocolVersion;
+		_maximumClientProtocolVersion = maximumClientProtocolVersion;
 	}
 	
-	public ClientProtocolVersion getRequiredMinimumClientProtocolVersion()
+	public ClientProtocolVersion getMinimumClientProtocolVersion()
 	{
-		return _requiredMinimumClientProtocolVersion;
+		return _minimumClientProtocolVersion;
+	}
+	
+	public ClientProtocolVersion getMaximumClientProtocolVersion()
+	{
+		return _maximumClientProtocolVersion;
 	}
 }

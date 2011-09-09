@@ -16,6 +16,7 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.config.VersionConfig;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.L2ClientState;
@@ -55,9 +56,9 @@ public final class ProtocolVersion extends L2ClientPacket
 			_log.debug("Client protocol version: " + _version);
 		
 		final L2Client client = getClient();
+		final ClientProtocolVersion version = ClientProtocolVersion.getByVersion(_version);
 		
-		if (_version < VersionConfig.MIN_SUPPORTED_CLIENT_PROTOCOL_VERSION.getVersion()
-				|| _version > VersionConfig.MAX_SUPPORTED_CLIENT_PROTOCOL_VERSION.getVersion())
+		if (!VersionConfig.isSupported(version))
 		{
 			client.close(ProtocolAnswer.INCOMPATIBLE);
 			return;

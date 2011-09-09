@@ -42,30 +42,37 @@ public final class VersionConfig extends ConfigPropertiesLoader
 	@Override
 	protected void loadImpl(L2Properties properties)
 	{
-		if (MIN_SUPPORTED_CLIENT_PROTOCOL_VERSION.ordinal() > MAX_SUPPORTED_CLIENT_PROTOCOL_VERSION.ordinal())
+		if (MIN_SUPPORTED_CLIENT_PROTOCOL_VERSION.isNewerThan(MAX_SUPPORTED_CLIENT_PROTOCOL_VERSION))
 		{
 			System.err.println("Min supported client protocol version " + MIN_SUPPORTED_CLIENT_PROTOCOL_VERSION
-					+ " isn't lower than max " + MAX_SUPPORTED_CLIENT_PROTOCOL_VERSION + "!");
+					+ " is newer than max " + MAX_SUPPORTED_CLIENT_PROTOCOL_VERSION + "!");
 			
 			Shutdown.exit(TerminationStatus.RUNTIME_INVALID_CONFIGURATION);
 		}
 		
-		if (MIN_SUPPORTED_CLIENT_PROTOCOL_VERSION.ordinal() < DATAPACK_VERSION
-				.getRequiredMinimumClientProtocolVersion().ordinal())
+		if (MIN_SUPPORTED_CLIENT_PROTOCOL_VERSION.isOlderThan(DATAPACK_VERSION.getMinimumClientProtocolVersion()))
 		{
-			System.err.println("Too low min supported client protocol version " + MIN_SUPPORTED_CLIENT_PROTOCOL_VERSION
+			System.err.println("Too old supported client protocol version " + MIN_SUPPORTED_CLIENT_PROTOCOL_VERSION
 					+ " given for specified datapack version " + DATAPACK_VERSION + "!");
 			
 			Shutdown.exit(TerminationStatus.RUNTIME_INVALID_CONFIGURATION);
 		}
 		
-		if (MAX_SUPPORTED_CLIENT_PROTOCOL_VERSION.ordinal() < DATAPACK_VERSION
-				.getRequiredMinimumClientProtocolVersion().ordinal())
+		if (MAX_SUPPORTED_CLIENT_PROTOCOL_VERSION.isNewerThan(DATAPACK_VERSION.getMaximumClientProtocolVersion()))
 		{
-			System.err.println("Too low max supported client protocol version " + MAX_SUPPORTED_CLIENT_PROTOCOL_VERSION
+			System.err.println("Too new supported client protocol version " + MAX_SUPPORTED_CLIENT_PROTOCOL_VERSION
 					+ " given for specified datapack version " + DATAPACK_VERSION + "!");
 			
 			Shutdown.exit(TerminationStatus.RUNTIME_INVALID_CONFIGURATION);
 		}
+	}
+	
+	public static boolean isSupported(ClientProtocolVersion version)
+	{
+		if (version == null)
+			return false;
+		
+		return !version.isOlderThan(MIN_SUPPORTED_CLIENT_PROTOCOL_VERSION)
+				&& !version.isNewerThan(MAX_SUPPORTED_CLIENT_PROTOCOL_VERSION);
 	}
 }

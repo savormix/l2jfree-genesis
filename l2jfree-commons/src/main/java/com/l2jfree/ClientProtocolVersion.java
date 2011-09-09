@@ -33,8 +33,27 @@ public enum ClientProtocolVersion
 		_version = version;
 	}
 	
-	public int getVersion()
+	private int getVersion()
 	{
 		return _version;
+	}
+	
+	public boolean isOlderThan(ClientProtocolVersion version)
+	{
+		return ordinal() < version.ordinal();
+	}
+	
+	public boolean isNewerThan(ClientProtocolVersion version)
+	{
+		return version.ordinal() < ordinal();
+	}
+	
+	public static ClientProtocolVersion getByVersion(int version)
+	{
+		for (ClientProtocolVersion cpv : values())
+			if (cpv.getVersion() == version)
+				return cpv;
+		
+		return null;
 	}
 }
