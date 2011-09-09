@@ -14,8 +14,6 @@
  */
 package com.l2jfree.gameserver;
 
-import java.net.UnknownHostException;
-
 import com.l2jfree.L2Config;
 import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
@@ -28,7 +26,6 @@ import com.l2jfree.gameserver.gameobjects.ComponentFactory;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2ClientConnections;
 import com.l2jfree.gameserver.network.client.L2ClientSecurity;
-import com.l2jfree.gameserver.network.loginserver.legacy.L2LegacyLoginServerController;
 import com.l2jfree.gameserver.templates.player.ClassId;
 import com.l2jfree.gameserver.util.IdFactory;
 import com.l2jfree.gameserver.util.IdFactory.IdRange;
@@ -145,19 +142,5 @@ public final class GameServer extends Config
 		final IdFactory ids = IdFactory.getInstance();
 		for (IdRange idRange : IdRange.values())
 			System.out.println(idRange + ": " + ids.getNextId(idRange) + ", " + ids.getNextId(idRange));
-		
-		// ----------------------------------------------------
-		_log.info("Connecting to login on " + NetworkConfig.LOGIN_HOST + ":" + NetworkConfig.LOGIN_PORT);
-		try
-		{
-			L2LegacyLoginServerController.getInstance().connect(NetworkConfig.LOGIN_HOST, NetworkConfig.LOGIN_PORT,
-					true);
-			L2LegacyLoginServerController.getInstance().start();
-		}
-		catch (UnknownHostException e1)
-		{
-			e1.printStackTrace();
-		}
-		// ----------------------------------------------------
 	}
 }
