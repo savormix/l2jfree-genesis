@@ -27,7 +27,7 @@ public class ObjectKnownList implements IObjectKnownList
 	private final L2Object _activeChar;
 	
 	private final Map<Integer, L2Object> _knownObjects = new LazyMap<Integer, L2Object>().setShared();
-	private final Map<Integer, L2PcInstance> _knownPlayers = new LazyMap<Integer, L2PcInstance>().setShared();
+	private final Map<Integer, L2Player> _knownPlayers = new LazyMap<Integer, L2Player>().setShared();
 	
 	private final Map<Integer, L2Object> _knowingObjects = new LazyMap<Integer, L2Object>().setShared();
 	
@@ -48,7 +48,7 @@ public class ObjectKnownList implements IObjectKnownList
 	}
 	
 	@Override
-	public final Collection<L2PcInstance> getKnownPlayers()
+	public final Collection<L2Player> getKnownPlayers()
 	{
 		return _knownPlayers.values();
 	}
@@ -74,8 +74,8 @@ public class ObjectKnownList implements IObjectKnownList
 		
 		obj.getKnownList().addKnowingObject(_activeChar);
 		
-		if (obj instanceof L2PcInstance)
-			_knownPlayers.put(obj.getObjectId(), (L2PcInstance)obj);
+		if (obj instanceof L2Player)
+			_knownPlayers.put(obj.getObjectId(), (L2Player)obj);
 		
 		return true;
 	}
@@ -91,7 +91,7 @@ public class ObjectKnownList implements IObjectKnownList
 		
 		obj.getKnownList().removeKnowingObject(_activeChar);
 		
-		if (obj instanceof L2PcInstance)
+		if (obj instanceof L2Player)
 			_knownPlayers.remove(obj.getObjectId());
 		
 		return true;

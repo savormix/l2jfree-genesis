@@ -12,16 +12,17 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.gameobjects;
+package com.l2jfree.gameserver.gameobjects.npc;
 
-import com.l2jfree.gameserver.templates.L2Template;
+import com.l2jfree.gameserver.gameobjects.L2Npc;
+import com.l2jfree.gameserver.templates.L2NpcTemplate;
 
 /**
  * @author NB4L1
  */
-public abstract class L2BoatInstance extends L2Vehicle
+public abstract class L2Decoy extends L2Npc
 {
-	protected L2BoatInstance(int objectId, L2Template template)
+	public L2Decoy(int objectId, L2NpcTemplate template)
 	{
 		super(objectId, template);
 	}

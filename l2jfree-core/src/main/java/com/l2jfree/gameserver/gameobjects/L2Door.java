@@ -19,14 +19,9 @@ import com.l2jfree.gameserver.templates.L2Template;
 /**
  * @author NB4L1
  */
-public abstract class L2ItemInstance extends L2Object
+public abstract class L2Door extends L2Character
 {
-	static
-	{
-		ComponentFactory.KNOWNLIST.register(L2ItemInstance.class, EmptyObjectKnownList.class);
-	}
-	
-	public L2ItemInstance(int objectId, L2Template template)
+	public L2Door(int objectId, L2Template template)
 	{
 		super(objectId, template);
 	}

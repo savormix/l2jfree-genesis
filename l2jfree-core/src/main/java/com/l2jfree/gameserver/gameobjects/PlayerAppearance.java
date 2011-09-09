@@ -22,14 +22,14 @@ import com.l2jfree.gameserver.templates.player.Gender;
 // TODO sql
 public final class PlayerAppearance
 {
-	private final L2PcInstance _activeChar;
+	private final L2Player _activeChar;
 	
 	private Gender _gender;
 	private byte _face;
 	private byte _hairColor;
 	private byte _hairStyle;
 	
-	public PlayerAppearance(L2PcInstance activeChar, Gender gender, byte face, byte hairColor, byte hairStyle)
+	public PlayerAppearance(L2Player activeChar, Gender gender, byte face, byte hairColor, byte hairStyle)
 	{
 		_activeChar = activeChar;
 		
@@ -39,7 +39,7 @@ public final class PlayerAppearance
 		_hairStyle = hairStyle;
 	}
 	
-	public final L2PcInstance getActiveChar()
+	public final L2Player getActiveChar()
 	{
 		return _activeChar;
 	}

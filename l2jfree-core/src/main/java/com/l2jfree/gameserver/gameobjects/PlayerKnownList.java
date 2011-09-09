@@ -19,22 +19,22 @@ package com.l2jfree.gameserver.gameobjects;
  */
 public final class PlayerKnownList extends ObjectKnownList
 {
-	public PlayerKnownList(L2PcInstance activeChar)
+	public PlayerKnownList(L2Player activeChar)
 	{
 		super(activeChar);
 	}
 	
 	@Override
-	public L2PcInstance getActiveChar()
+	public L2Player getActiveChar()
 	{
-		return (L2PcInstance)super.getActiveChar();
+		return (L2Player)super.getActiveChar();
 	}
 	
 	@Override
 	protected int getDistanceToAddObject(L2Object obj)
 	{
 		// H5 retail value 2011-09-07
-		if (obj instanceof L2ItemInstance)
+		if (obj instanceof L2Item)
 			return 2500;
 		
 		return super.getDistanceToRemoveObject(obj);
@@ -44,7 +44,7 @@ public final class PlayerKnownList extends ObjectKnownList
 	protected int getDistanceToRemoveObject(L2Object obj)
 	{
 		// H5 retail value 2011-09-07
-		if (obj instanceof L2ItemInstance)
+		if (obj instanceof L2Item)
 			return 3000;
 		
 		return super.getDistanceToRemoveObject(obj);

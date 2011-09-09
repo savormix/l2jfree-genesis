@@ -14,26 +14,20 @@
  */
 package com.l2jfree.gameserver.gameobjects;
 
-import java.util.Collection;
+import com.l2jfree.gameserver.templates.L2ItemTemplate;
 
 /**
  * @author NB4L1
  */
-public interface IObjectKnownList
+public abstract class L2Item extends L2Object
 {
-	public Collection<L2Object> getKnownObjects();
+	static
+	{
+		ComponentFactory.KNOWNLIST.register(L2Item.class, EmptyObjectKnownList.class);
+	}
 	
-	public Collection<L2Player> getKnownPlayers();
-	
-	public Collection<L2Object> getKnowingObjects();
-	
-	public boolean removeObject(L2Object activeChar);
-	
-	public void addKnowingObject(L2Object activeChar);
-	
-	public void removeKnowingObject(L2Object activeChar);
-	
-	public void update(L2Object activeChar);
-	
-	public void update(L2Object[][] surroundingObjects);
+	public L2Item(int objectId, L2ItemTemplate template)
+	{
+		super(objectId, template);
+	}
 }

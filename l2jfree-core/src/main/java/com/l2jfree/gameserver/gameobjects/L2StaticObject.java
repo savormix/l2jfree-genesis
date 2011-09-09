@@ -12,17 +12,16 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.gameobjects.npc.summon;
+package com.l2jfree.gameserver.gameobjects;
 
-import com.l2jfree.gameserver.gameobjects.npc.L2Summon;
-import com.l2jfree.gameserver.templates.L2NpcTemplate;
+import com.l2jfree.gameserver.templates.L2Template;
 
 /**
  * @author NB4L1
  */
-public abstract class L2PetInstance extends L2Summon
+public abstract class L2StaticObject extends L2Object
 {
-	public L2PetInstance(int objectId, L2NpcTemplate template)
+	protected L2StaticObject(int objectId, L2Template template)
 	{
 		super(objectId, template);
 	}

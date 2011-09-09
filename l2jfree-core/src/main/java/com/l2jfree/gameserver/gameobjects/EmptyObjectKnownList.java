@@ -35,7 +35,7 @@ public class EmptyObjectKnownList implements IObjectKnownList
 	}
 	
 	@Override
-	public Collection<L2PcInstance> getKnownPlayers()
+	public Collection<L2Player> getKnownPlayers()
 	{
 		return L2Collections.emptyCollection();
 	}

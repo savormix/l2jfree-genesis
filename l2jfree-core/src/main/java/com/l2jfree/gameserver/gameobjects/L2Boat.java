@@ -19,9 +19,9 @@ import com.l2jfree.gameserver.templates.L2Template;
 /**
  * @author NB4L1
  */
-public abstract class L2AirShipInstance extends L2Vehicle
+public abstract class L2Boat extends L2Vehicle
 {
-	protected L2AirShipInstance(int objectId, L2Template template)
+	protected L2Boat(int objectId, L2Template template)
 	{
 		super(objectId, template);
 	}
