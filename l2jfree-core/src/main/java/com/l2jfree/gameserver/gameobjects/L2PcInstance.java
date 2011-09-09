@@ -20,6 +20,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.l2jfree.gameserver.datatables.PlayerTemplateTable;
+import com.l2jfree.gameserver.network.client.EmptyClient;
+import com.l2jfree.gameserver.network.client.IL2Client;
+import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.gameserver.templates.player.ClassId;
 import com.l2jfree.gameserver.templates.player.Gender;
 import com.l2jfree.sql.L2Database;
@@ -122,6 +125,7 @@ public class L2PcInstance extends L2Character implements IL2Playable
 	private String _name;
 	
 	private final PlayerAppearance _appearance;
+	private IL2Client _client = EmptyClient.getInstance();
 	
 	private L2PcInstance(int objectId, ClassId classId, String accountName, Gender gender, byte face, byte hairColor,
 			byte hairStyle)
@@ -152,5 +156,20 @@ public class L2PcInstance extends L2Character implements IL2Playable
 	public PlayerAppearance getAppearance()
 	{
 		return _appearance;
+	}
+	
+	public IL2Client getClient()
+	{
+		return _client;
+	}
+	
+	public void setClient(IL2Client client)
+	{
+		_client = client != null ? client : EmptyClient.getInstance();
+	}
+	
+	public void sendPacket(L2ServerPacket sp)
+	{
+		getClient().sendPacket(sp);
 	}
 }

@@ -28,7 +28,7 @@ import com.l2jfree.security.ObfuscationService;
 /**
  * @author savormix
  */
-public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2ServerPacket>
+public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2ServerPacket> implements IL2Client
 {
 	private final CoreCipher _cipher = new CoreCipher(L2ClientSecurity.getInstance().getKey());
 	private boolean _firstTime = true;
