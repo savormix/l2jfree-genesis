@@ -16,6 +16,7 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 
+import com.l2jfree.gameserver.config.VersionConfig;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.L2ClientState;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
@@ -44,18 +45,19 @@ public final class ProtocolVersion extends L2ClientPacket
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		_version = buf.readD();
+		buf.skipAll();
 	}
 	
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		_log.info("Protocol: " + _version);
+		if (_log.isDebugEnabled())
+			_log.debug("Client protocol version: " + _version);
 		
 		final L2Client client = getClient();
 		
-		boolean valid = false; // FIXME validity check
-		
-		if (!valid)
+		if (_version < VersionConfig.MIN_SUPPORTED_CLIENT_PROTOCOL_VERSION.getVersion()
+				|| _version > VersionConfig.MAX_SUPPORTED_CLIENT_PROTOCOL_VERSION.getVersion())
 		{
 			client.close(ProtocolAnswer.INCOMPATIBLE);
 			return;
@@ -64,6 +66,7 @@ public final class ProtocolVersion extends L2ClientPacket
 		final int seed = Rnd.get(Integer.MIN_VALUE, Integer.MAX_VALUE);
 		client.getDeobfuscator().init(seed);
 		client.setState(L2ClientState.PROTOCOL_OK);
+		
 		sendPacket(new ProtocolAnswer(client.getCipherKey(), seed));
 	}
 }
