@@ -76,6 +76,7 @@ public final class RequestAuthorization extends L2ClientPacket
 		// TODO validate session key
 		
 		client.setAccountName(_accountName);
+		client.setSessionId(_currentKey);
 		//client.setBitsInBlock(_bitsInBlock);
 		client.setState(L2ClientState.CHARACTER_MANAGEMENT);
 		//client.closeNow();

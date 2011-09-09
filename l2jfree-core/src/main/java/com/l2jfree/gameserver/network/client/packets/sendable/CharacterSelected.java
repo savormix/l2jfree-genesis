@@ -47,7 +47,7 @@ public class CharacterSelected extends L2ServerPacket
 			return;
 		
 		PlayerAppearance appearance = activeChar.getAppearance();
-		L2PlayerTemplate template = (L2PlayerTemplate)activeChar.getTemplate();
+		L2PlayerTemplate template = activeChar.getTemplate();
 		PlayerBaseTemplate baseTemplate = template.getPlayerBaseTemplate(appearance.getGender());
 		
 		buf.writeS(activeChar.getName());

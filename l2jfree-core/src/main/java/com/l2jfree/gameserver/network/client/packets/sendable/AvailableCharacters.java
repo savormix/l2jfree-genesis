@@ -35,7 +35,7 @@ public class AvailableCharacters extends L2ServerPacket
 	
 	public AvailableCharacters(L2Client client)
 	{
-		_sessionId = 0; // TODO
+		_sessionId = client.getSessionId(); // TODO
 		_accountName = client.getAccountName();
 		_players = L2Player.loadAccountPlayers(_accountName);
 	}

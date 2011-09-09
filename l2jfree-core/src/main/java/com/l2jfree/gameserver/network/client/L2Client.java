@@ -44,6 +44,7 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	private String _accountName;
 	private L2Player _activeChar;
 	private int[] _playerSlotMap;
+	private int _sessionId;
 	
 	/**
 	 * Creates an internal object representing a game client connection.
@@ -298,5 +299,18 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 			return L2Player.load(_playerSlotMap[slot]);
 		
 		return null;
+	}
+	
+	public int getSessionId()
+	{
+		return _sessionId;
+	}
+	
+	/**
+	 * @param sessionId
+	 */
+	public void setSessionId(int sessionId)
+	{
+		_sessionId = sessionId;
 	}
 }

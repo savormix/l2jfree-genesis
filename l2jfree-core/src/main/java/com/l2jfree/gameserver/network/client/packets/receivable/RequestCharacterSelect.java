@@ -54,7 +54,7 @@ public class RequestCharacterSelect extends L2ClientPacket
 		// TODO
 		getClient().setState(L2ClientState.LOGGED_IN);
 		getClient().setActiveChar(getClient().loadCharacterBySlot(_charSlot));
-		sendPacket(new CharacterSelected(0)); // FIXME getSessionId().playOkID1
+		sendPacket(new CharacterSelected(getClient().getSessionId()));
 		sendActionFailed();
 	}
 }
