@@ -30,13 +30,13 @@ import com.l2jfree.security.ObfuscationService;
  */
 public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2ServerPacket> implements IL2Client
 {
-	private final CoreCipher _cipher = new CoreCipher(L2ClientSecurity.getInstance().getKey());
-	private boolean _firstTime = true;
+	private final CoreCipher _cipher;
+	private boolean _firstTime;
 	
-	private final ObfuscationService _deobfuscator = new ObfuscationService();
+	private final ObfuscationService _deobfuscator;
 	
-	private L2ClientState _state = L2ClientState.CONNECTED;
-	private int _bitsInBlock = 0;
+	private L2ClientState _state;
+	private int _bitsInBlock;
 	
 	/**
 	 * Creates an internal object representing a game client connection.
@@ -48,6 +48,15 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	protected L2Client(L2ClientConnections mmoController, SocketChannel socketChannel) throws ClosedChannelException
 	{
 		super(mmoController, socketChannel);
+		
+		// TODO Auto-generated constructor stub
+		_cipher = new CoreCipher(L2ClientSecurity.getInstance().getKey());
+		_firstTime = true;
+		
+		_deobfuscator = new ObfuscationService();
+		
+		_state = L2ClientState.CONNECTED;
+		_bitsInBlock = 0;
 	}
 	
 	@Override
@@ -67,6 +76,9 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	@Override
 	protected boolean decipher(ByteBuffer buf, DataSizeHolder size)
 	{
+		if (getCipher() == null) // wait till cipher initializes
+			return false;
+		
 		if (isFirstTime())
 			return true;
 		
@@ -79,6 +91,9 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	@Override
 	protected boolean encipher(ByteBuffer buf, int size)
 	{
+		if (getCipher() == null) // wait till cipher initializes
+			return false;
+		
 		if (isFirstTime())
 			setFirstTime(false);
 		else
