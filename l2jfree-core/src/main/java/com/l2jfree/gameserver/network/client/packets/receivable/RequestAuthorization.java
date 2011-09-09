@@ -35,7 +35,7 @@ public final class RequestAuthorization extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x2b;
 	
-	private String _account;
+	private String _accountName;
 	private int _accountId1;
 	private int _currentKey;
 	private int _accountId2;
@@ -54,7 +54,7 @@ public final class RequestAuthorization extends L2ClientPacket
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
-		_account = buf.readS().trim().toLowerCase();
+		_accountName = buf.readS().trim().toLowerCase();
 		_accountId1 = buf.readD();
 		_currentKey = buf.readD();
 		_accountId2 = buf.readD();
@@ -75,6 +75,7 @@ public final class RequestAuthorization extends L2ClientPacket
 		
 		// TODO validate session key
 		
+		client.setAccountName(_accountName);
 		//client.setBitsInBlock(_bitsInBlock);
 		client.setState(L2ClientState.CHARACTER_MANAGEMENT);
 		//client.closeNow();

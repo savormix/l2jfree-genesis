@@ -19,6 +19,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javolution.util.FastList;
+
 import com.l2jfree.gameserver.datatables.PlayerTemplateTable;
 import com.l2jfree.gameserver.gameobjects.player.PlayerAppearance;
 import com.l2jfree.gameserver.gameobjects.player.PlayerKnownList;
@@ -121,6 +123,44 @@ public class L2Player extends L2Character implements IL2Playable
 		}
 		
 		return result;
+	}
+	
+	public static L2Player[] loadAccountPlayers(String accountName)
+	{
+		FastList<Integer> objectIds = new FastList<Integer>();
+		
+		Connection con = null;
+		try
+		{
+			con = L2Database.getConnection();
+			
+			final PreparedStatement ps = con.prepareStatement("SELECT objectId FROM players WHERE accountName = ?");
+			ps.setString(1, accountName);
+			
+			final ResultSet rs = ps.executeQuery();
+			
+			while (rs.next())
+				objectIds.add(rs.getInt("objectId"));
+			
+			rs.close();
+			ps.close();
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			L2Database.close(con);
+		}
+		
+		L2Player[] players = new L2Player[objectIds.size()];
+		
+		int i = 0;
+		for (Integer objectId : objectIds)
+			players[i++] = load(objectId);
+		
+		return players;
 	}
 	
 	private final String _accountName;
