@@ -90,9 +90,10 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 				
 			case 0xd0:
 				if (buf.remaining() < 2)
-					return null;
+					return underflow(buf, client, opcode);
 				
 				final int opcode2 = buf.getShort() & 0xffff;
+				
 				switch (opcode2)
 				{
 					case RequestCharacterPreviousState.OPCODE:

@@ -40,6 +40,14 @@ public abstract class PacketHandler<T extends MMOConnection<T, RP, SP>, RP exten
 	 */
 	public abstract RP handlePacket(ByteBuffer buf, T client, int opcode);
 	
+	protected final RP underflow(ByteBuffer buf, T client, int opcode, int... additionalOpcodes)
+	{
+		logUnexpectedBehaviour("Unknown packet", buf, client, null, opcode, additionalOpcodes);
+		
+		client.getMMOController().report(ErrorMode.BUFFER_UNDER_FLOW, client, null, null);
+		return null;
+	}
+	
 	protected final RP unknown(ByteBuffer buf, T client, int opcode, int... additionalOpcodes)
 	{
 		logUnexpectedBehaviour("Unknown packet", buf, client, null, opcode, additionalOpcodes);
