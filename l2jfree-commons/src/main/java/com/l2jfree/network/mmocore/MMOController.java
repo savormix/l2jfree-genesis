@@ -23,6 +23,8 @@ import java.nio.channels.SocketChannel;
 
 import javolution.util.FastList;
 
+import org.apache.commons.lang3.ObjectUtils;
+
 import com.l2jfree.network.mmocore.FloodManager.ErrorMode;
 import com.l2jfree.network.mmocore.FloodManager.Result;
 
@@ -114,6 +116,8 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 		}
 		
 		_acceptorThread.openServerSocket(address, port);
+		
+		System.out.println(getName() + " ready on " + ObjectUtils.toString(address) + ":" + port);
 	}
 	
 	/**
