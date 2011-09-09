@@ -27,10 +27,12 @@ import com.l2jfree.gameserver.gameobjects.player.PlayerKnownList;
 import com.l2jfree.gameserver.network.client.EmptyClient;
 import com.l2jfree.gameserver.network.client.IL2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
+import com.l2jfree.gameserver.templates.L2PlayerTemplate;
 import com.l2jfree.gameserver.templates.player.ClassId;
 import com.l2jfree.gameserver.templates.player.Gender;
+import com.l2jfree.gameserver.util.IdFactory;
+import com.l2jfree.gameserver.util.IdFactory.IdRange;
 import com.l2jfree.sql.L2Database;
-import com.l2jfree.util.Rnd;
 
 /**
  * @author NB4L1
@@ -50,7 +52,7 @@ public class L2Player extends L2Character implements IL2Playable
 	public static L2Player create(String name, String accountName, ClassId classId, Gender gender, byte face,
 			byte hairColor, byte hairStyle)
 	{
-		final int objectId = Rnd.get(Integer.MAX_VALUE); // TODO
+		final int objectId = IdFactory.getInstance().getNextId(IdRange.PLAYERS);
 		
 		L2Player result = null;
 		
@@ -176,6 +178,12 @@ public class L2Player extends L2Character implements IL2Playable
 		
 		_accountName = accountName;
 		_appearance = new PlayerAppearance(this, gender, face, hairColor, hairStyle);
+	}
+	
+	@Override
+	public L2PlayerTemplate getTemplate()
+	{
+		return (L2PlayerTemplate)super.getTemplate();
 	}
 	
 	public String getAccountName()

@@ -56,7 +56,7 @@ public class AvailableCharacters extends L2ServerPacket
 		for (L2Player p : _players)
 		{
 			PlayerAppearance appearance = p.getAppearance();
-			L2PlayerTemplate template = (L2PlayerTemplate)p.getTemplate();
+			L2PlayerTemplate template = p.getTemplate();
 			PlayerBaseTemplate baseTemplate = template.getPlayerBaseTemplate(appearance.getGender());
 			
 			buf.writeS(p.getName()); // TODO
