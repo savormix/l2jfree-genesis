@@ -30,13 +30,13 @@ import com.l2jfree.security.ObfuscationService;
  */
 public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2ServerPacket>
 {
-	private final CoreCipher _cipher;
-	private boolean _firstTime;
+	private final CoreCipher _cipher = new CoreCipher(L2ClientSecurity.getInstance().getKey());
+	private boolean _firstTime = true;
 	
-	private final ObfuscationService _deobfuscator;
+	private final ObfuscationService _deobfuscator = new ObfuscationService();
 	
-	private L2ClientState _state;
-	private int _bitsInBlock;
+	private L2ClientState _state = L2ClientState.CONNECTED;
+	private int _bitsInBlock = 0;
 	
 	/**
 	 * Creates an internal object representing a game client connection.
@@ -48,14 +48,6 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	protected L2Client(L2ClientConnections mmoController, SocketChannel socketChannel) throws ClosedChannelException
 	{
 		super(mmoController, socketChannel);
-		// TODO Auto-generated constructor stub
-		_cipher = new CoreCipher(L2ClientSecurity.getInstance().getKey());
-		_firstTime = true;
-		
-		_deobfuscator = new ObfuscationService();
-		
-		_state = L2ClientState.CONNECTED;
-		_bitsInBlock = 0;
 	}
 	
 	@Override
