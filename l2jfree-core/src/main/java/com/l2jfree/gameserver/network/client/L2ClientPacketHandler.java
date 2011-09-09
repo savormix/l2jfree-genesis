@@ -28,6 +28,7 @@ import com.l2jfree.gameserver.network.client.packets.receivable.RequestAuthoriza
 import com.l2jfree.gameserver.network.client.packets.receivable.RequestCharacterCreate;
 import com.l2jfree.gameserver.network.client.packets.receivable.RequestCharacterCreationScreen;
 import com.l2jfree.gameserver.network.client.packets.receivable.RequestCharacterDelete;
+import com.l2jfree.gameserver.network.client.packets.receivable.RequestCharacterPreviousState;
 import com.l2jfree.gameserver.network.client.packets.receivable.RequestCharacterRestore;
 import com.l2jfree.gameserver.network.client.packets.receivable.RequestCharacterSelect;
 import com.l2jfree.network.mmocore.PacketHandler;
@@ -43,7 +44,7 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 	}
 	
 	@Override
-	public L2ClientPacket handlePacket(ByteBuffer buf, L2Client client, int opcode)
+	public L2ClientPacket handlePacket(ByteBuffer buf, L2Client client, final int opcode)
 	{
 		switch (opcode)
 		{
@@ -86,6 +87,22 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 				if (client.stateEquals(CHARACTER_MANAGEMENT))
 					return new RequestCharacterRestore();
 				return invalidState(client, RequestCharacterRestore.class, opcode);
+				
+			case 0xd0:
+				if (buf.remaining() < 2)
+					return null;
+				
+				final int opcode2 = buf.getShort() & 0xffff;
+				switch (opcode2)
+				{
+					case RequestCharacterPreviousState.OPCODE:
+						if (client.stateEquals(CHARACTER_MANAGEMENT))
+							return new RequestCharacterPreviousState();
+						return invalidState(client, RequestCharacterPreviousState.class, opcode, opcode2);
+						
+					default:
+						return unknown(buf, client, opcode, opcode2);
+				}
 				
 			default:
 				return unknown(buf, client, opcode);

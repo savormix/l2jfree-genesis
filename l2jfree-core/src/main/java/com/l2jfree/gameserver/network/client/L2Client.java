@@ -131,6 +131,9 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	@Override
 	public synchronized boolean sendPacket(L2ServerPacket sp)
 	{
+		if (sp == null)
+			return false;
+		
 		final long begin = System.nanoTime();
 		final L2Player activeChar = getActiveChar();
 		
