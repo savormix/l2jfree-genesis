@@ -139,6 +139,13 @@ public final class LoginServer extends Config
 		
 		L2Config.applicationLoaded("l2jfree-login", LoginInfo.getFullVersionInfo());
 		
+		if (L2LegacyGameServerController.getInstance().isStarted())
+			_log.info("Legacy Login Server ready on " + NetworkConfig.LEGACY_LISTEN_IP + ":"
+					+ NetworkConfig.LEGACY_LISTEN_PORT);
+		
+		if (L2ClientController.getInstance().isStarted())
+			_log.info("Login Server ready on " + NetworkConfig.LISTEN_IP + ":" + NetworkConfig.LISTEN_PORT);
+		
 		if (SystemConfig.DUMP_HEAP_AFTER_STARTUP)
 			L2System.dumpHeap(true);
 	}
