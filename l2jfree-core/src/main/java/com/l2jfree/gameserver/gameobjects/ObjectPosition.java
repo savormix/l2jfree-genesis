@@ -94,12 +94,12 @@ public final class ObjectPosition
 			return;
 		
 		if (oldRegion != null)
-			oldRegion.removeObject(_activeChar);
+			oldRegion.removeVisibleObject(_activeChar);
 		
 		_worldRegion = newRegion;
 		
 		if (newRegion != null)
-			newRegion.addObject(_activeChar);
+			newRegion.addVisibleObject(_activeChar);
 	}
 	
 	public final synchronized void update(int x, int y, int z)
@@ -137,10 +137,12 @@ public final class ObjectPosition
 		setXYZ(x, y, z);
 		
 		setVisible(false);
+		
+		getActiveChar().getKnownList().removeAllKnownObjects();
 	}
 	
 	/**
-	 * @see L2WorldRegion#addObject(L2Object)
+	 * @see L2WorldRegion#addVisibleObject(L2Object)
 	 * @see ObjectPosition#setVisible(boolean)
 	 * @see ObjectPosition#update(int, int, int)
 	 * @see ObjectPosition#spawn(int, int, int)
@@ -151,7 +153,7 @@ public final class ObjectPosition
 	}
 	
 	/**
-	 * @see L2WorldRegion#removeObject(L2Object)
+	 * @see L2WorldRegion#removeVisibleObject(L2Object)
 	 * @see ObjectPosition#setVisible(boolean)
 	 * @see ObjectPosition#update(int, int, int)
 	 * @see ObjectPosition#decay(int, int, int)

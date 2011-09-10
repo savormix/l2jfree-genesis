@@ -16,6 +16,7 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 
+import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2ClientState;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.sendable.CharacterSelected;
@@ -51,9 +52,26 @@ public class RequestCharacterSelect extends L2ClientPacket
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
+		// should always be null
+		// but if not then this is repeated packet and nothing should be done here
+		if (getClient().getActiveChar() != null)
+			return;
+		
+		final L2Player player = getClient().loadCharacterBySlot(_charSlot);
+		
+		if (player == null)
+		{
+			_log.fatal(getClient() + ": player couldn't be loaded (slot:" + _charSlot + ")");
+			sendActionFailed();
+			return;
+		}
+		
 		// TODO
+		
+		player.setClient(getClient());
+		player.addToWorld();
+		
 		getClient().setState(L2ClientState.LOGGED_IN);
-		getClient().setActiveChar(getClient().loadCharacterBySlot(_charSlot));
 		sendPacket(new CharacterSelected(getClient().getSessionId()));
 		sendActionFailed();
 	}

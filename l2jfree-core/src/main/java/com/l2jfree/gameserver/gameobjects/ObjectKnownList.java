@@ -109,12 +109,14 @@ public class ObjectKnownList implements IObjectKnownList
 		_knowingObjects.remove(obj.getObjectId());
 	}
 	
-	protected int getDistanceToAddObject(L2Object obj)
+	@SuppressWarnings("static-method")
+	protected int getDistanceToAddObject(@SuppressWarnings("unused") L2Object obj)
 	{
 		return 0;
 	}
 	
-	protected int getDistanceToRemoveObject(L2Object obj)
+	@SuppressWarnings("static-method")
+	protected int getDistanceToRemoveObject(@SuppressWarnings("unused") L2Object obj)
 	{
 		return 0;
 	}
@@ -161,6 +163,7 @@ public class ObjectKnownList implements IObjectKnownList
 		}
 	}
 	
+	@Override
 	public final void removeAllKnownObjects()
 	{
 		for (L2Object obj : _knownObjects.values())
@@ -187,10 +190,7 @@ public class ObjectKnownList implements IObjectKnownList
 		for (L2Object obj : _knowingObjects.values())
 			obj.getKnownList().update(_activeChar);
 		
-		if (force)
-			update(_activeChar.getPosition().getWorldRegion().getAllSurroundingObjects2DArray());
-		else
-			_activeChar.getPosition().getWorldRegion().updateKnownList(_activeChar);
+		_activeChar.getPosition().getWorldRegion().updateKnownList(_activeChar, force);
 		
 		_lastUpdate = System.currentTimeMillis();
 	}

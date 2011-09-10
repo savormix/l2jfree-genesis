@@ -19,5 +19,7 @@ package com.l2jfree.gameserver.gameobjects;
  */
 public interface IL2Playable extends IL2Character
 {
+	public static final IL2Playable[] EMPTY_ARRAY = new IL2Playable[0];
+	
 	//
 }

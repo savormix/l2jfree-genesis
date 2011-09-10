@@ -21,6 +21,7 @@ import com.l2jfree.Util;
 import com.l2jfree.gameserver.config.DatabaseConfig;
 import com.l2jfree.gameserver.config.NetworkConfig;
 import com.l2jfree.gameserver.config.SystemConfig;
+import com.l2jfree.gameserver.datatables.PlayerNameTable;
 import com.l2jfree.gameserver.datatables.PlayerTemplateTable;
 import com.l2jfree.gameserver.gameobjects.ComponentFactory;
 import com.l2jfree.gameserver.gameobjects.L2Player;
@@ -46,9 +47,8 @@ public final class GameServer extends Config
 	 * Launches the game server.
 	 * 
 	 * @param args ignored
-	 * @throws Exception
 	 */
-	public static void main(String[] args) throws Exception
+	public static void main(String[] args)
 	{
 		if (DatabaseConfig.OPTIMIZE)
 			L2Database.optimize();
@@ -60,8 +60,10 @@ public final class GameServer extends Config
 		
 		IdFactory.getInstance();
 		
-		Class.forName(L2World.class.getName());
-		Class.forName(ComponentFactory.class.getName());
+		L2Config.load(L2World.class);
+		L2Config.load(ComponentFactory.class);
+		
+		PlayerNameTable.getInstance();
 		
 		//GameStatusServer.initInstance();
 		

@@ -15,10 +15,14 @@
 package com.l2jfree.gameserver.gameobjects;
 
 import com.l2jfree.gameserver.templates.L2Template;
+import com.l2jfree.gameserver.world.L2World;
 import com.l2jfree.lang.L2TextBuilder;
+import com.l2jfree.util.logging.L2Logger;
 
 public abstract class L2Object implements IL2Object
 {
+	protected static final L2Logger _log = L2Logger.getLogger(L2Object.class);
+	
 	static
 	{
 		ComponentFactory.POSITION.register(L2Object.class, ObjectPosition.class);
@@ -90,5 +94,46 @@ public abstract class L2Object implements IL2Object
 		tb.append(getName());
 		
 		return tb.moveToString();
+	}
+	
+	public static final byte OBJECT_STATE_INITIALIZED = 0;
+	public static final byte OBJECT_STATE_ALIVE = 1;
+	public static final byte OBJECT_STATE_DELETED = 2;
+	
+	private byte _objectState = OBJECT_STATE_INITIALIZED;
+	
+	public final byte getObjectState()
+	{
+		return _objectState;
+	}
+	
+	private synchronized boolean setState(byte expected, byte value)
+	{
+		if (_objectState != expected)
+		{
+			_log.warn("Object state validation failed! Expected: " + expected + ", found: " + _objectState);
+			return false;
+		}
+		
+		_objectState = value;
+		return true;
+	}
+	
+	public boolean addToWorld()
+	{
+		if (!setState(OBJECT_STATE_INITIALIZED, OBJECT_STATE_ALIVE))
+			return false;
+		
+		L2World.addObject(this);
+		return true;
+	}
+	
+	public boolean removeFromWorld()
+	{
+		if (!setState(OBJECT_STATE_ALIVE, OBJECT_STATE_DELETED))
+			return false;
+		
+		L2World.removeObject(this);
+		return true;
 	}
 }

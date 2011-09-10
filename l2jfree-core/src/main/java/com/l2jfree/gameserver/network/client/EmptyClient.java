@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.network.client;
 
+import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 
 /**
@@ -29,6 +30,12 @@ public final class EmptyClient implements IL2Client
 	public static EmptyClient getInstance()
 	{
 		return SingletonHolder.INSTANCE;
+	}
+	
+	@Override
+	public void setActiveChar(L2Player player)
+	{
+		// do nothing
 	}
 	
 	@Override

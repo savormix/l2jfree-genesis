@@ -14,7 +14,10 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import java.util.List;
+
 import com.l2jfree.gameserver.gameobjects.L2Player;
+import com.l2jfree.gameserver.gameobjects.ObjectPosition;
 import com.l2jfree.gameserver.gameobjects.player.PlayerAppearance;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -31,13 +34,15 @@ public class AvailableCharacters extends L2ServerPacket
 {
 	private final String _accountName;
 	private final int _sessionId;
-	private final L2Player[] _players;
+	private final List<L2Player> _players;
 	
 	public AvailableCharacters(L2Client client)
 	{
 		_sessionId = client.getSessionId(); // TODO
 		_accountName = client.getAccountName();
-		_players = L2Player.loadAccountPlayers(_accountName);
+		_players = L2Player.loadAccountPlayers(_accountName); // FIXME don't fetch the whole player only thee required data
+		
+		client.definePlayerSlots(_players);
 	}
 	
 	@Override
@@ -49,15 +54,16 @@ public class AvailableCharacters extends L2ServerPacket
 	@Override
 	protected void writeImpl(L2Client client, MMOBuffer buf) throws RuntimeException
 	{
-		buf.writeD(_players.length); // TODO num of chars
+		buf.writeD(_players.size()); // TODO num of chars
 		buf.writeD(0x07);
 		buf.writeC(0);
 		
 		for (L2Player p : _players)
 		{
-			PlayerAppearance appearance = p.getAppearance();
-			L2PlayerTemplate template = p.getTemplate();
-			PlayerBaseTemplate baseTemplate = template.getPlayerBaseTemplate(appearance.getGender());
+			final PlayerAppearance appearance = p.getAppearance();
+			final ObjectPosition position = p.getPosition();
+			final L2PlayerTemplate template = p.getTemplate();
+			final PlayerBaseTemplate baseTemplate = template.getPlayerBaseTemplate(appearance.getGender());
 			
 			buf.writeS(p.getName()); // TODO
 			buf.writeD(p.getObjectId()); // TODO
@@ -73,9 +79,9 @@ public class AvailableCharacters extends L2ServerPacket
 			
 			buf.writeD(0x01); // active ?? (no difference between 0 and 1)
 			
-			buf.writeD(p.getPosition().getX()); // TODO x
-			buf.writeD(p.getPosition().getY()); // TODO y
-			buf.writeD(p.getPosition().getZ()); // TODO z
+			buf.writeD(position.getX()); // TODO x
+			buf.writeD(position.getY()); // TODO y
+			buf.writeD(position.getZ()); // TODO z
 			
 			buf.writeF(100.0); // TODO hp cur
 			buf.writeF(100.0); // TODO mp cur
@@ -120,6 +126,7 @@ public class AvailableCharacters extends L2ServerPacket
 			buf.writeD(0); // vitallity points HF
 		}
 		
-		client.definePlayerSlots(_players);
+		for (L2Player player : _players)
+			player.removeFromWorld(); // FIXME don't fetch the whole player only the required data
 	}
 }

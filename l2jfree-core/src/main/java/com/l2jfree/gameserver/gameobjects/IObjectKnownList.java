@@ -27,13 +27,15 @@ public interface IObjectKnownList
 	
 	public Collection<L2Object> getKnowingObjects();
 	
-	public boolean removeObject(L2Object activeChar);
+	public boolean removeObject(L2Object obj);
 	
-	public void addKnowingObject(L2Object activeChar);
+	public void addKnowingObject(L2Object obj);
 	
-	public void removeKnowingObject(L2Object activeChar);
+	public void removeKnowingObject(L2Object obj);
 	
-	public void update(L2Object activeChar);
+	public void update(L2Object obj);
 	
 	public void update(L2Object[][] surroundingObjects);
+	
+	public void removeAllKnownObjects();
 }

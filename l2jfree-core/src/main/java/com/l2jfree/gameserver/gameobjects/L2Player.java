@@ -18,9 +18,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-import javolution.util.FastList;
-
+import com.l2jfree.gameserver.datatables.PlayerNameTable;
 import com.l2jfree.gameserver.datatables.PlayerTemplateTable;
 import com.l2jfree.gameserver.gameobjects.player.PlayerAppearance;
 import com.l2jfree.gameserver.gameobjects.player.PlayerKnownList;
@@ -32,12 +33,13 @@ import com.l2jfree.gameserver.templates.player.ClassId;
 import com.l2jfree.gameserver.templates.player.Gender;
 import com.l2jfree.gameserver.util.IdFactory;
 import com.l2jfree.gameserver.util.IdFactory.IdRange;
+import com.l2jfree.gameserver.world.L2World;
 import com.l2jfree.sql.L2Database;
 
 /**
  * @author NB4L1
  */
-public class L2Player extends L2Character implements IL2Playable
+public class L2Player extends L2Character implements IL2Playable, PlayerNameTable.IPlayerInfo
 {
 	static
 	{
@@ -127,40 +129,12 @@ public class L2Player extends L2Character implements IL2Playable
 		return result;
 	}
 	
-	public static L2Player[] loadAccountPlayers(String accountName)
+	public static List<L2Player> loadAccountPlayers(String accountName)
 	{
-		FastList<Integer> objectIds = new FastList<Integer>();
+		final List<L2Player> players = new ArrayList<L2Player>();
 		
-		Connection con = null;
-		try
-		{
-			con = L2Database.getConnection();
-			
-			final PreparedStatement ps = con.prepareStatement("SELECT objectId FROM players WHERE accountName = ?");
-			ps.setString(1, accountName);
-			
-			final ResultSet rs = ps.executeQuery();
-			
-			while (rs.next())
-				objectIds.add(rs.getInt("objectId"));
-			
-			rs.close();
-			ps.close();
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			L2Database.close(con);
-		}
-		
-		L2Player[] players = new L2Player[objectIds.size()];
-		
-		int i = 0;
-		for (Integer objectId : objectIds)
-			players[i++] = load(objectId);
+		for (Integer objectId : PlayerNameTable.getInstance().getObjectIdsForAccount(accountName))
+			players.add(load(objectId));
 		
 		return players;
 	}
@@ -186,6 +160,7 @@ public class L2Player extends L2Character implements IL2Playable
 		return (L2PlayerTemplate)super.getTemplate();
 	}
 	
+	@Override
 	public String getAccountName()
 	{
 		return _accountName;
@@ -200,7 +175,25 @@ public class L2Player extends L2Character implements IL2Playable
 	@Override
 	public void setName(String name)
 	{
+		final String oldName = _name;
+		
 		_name = name;
+		
+		L2World.updateOnlinePlayer(this, oldName, name);
+		
+		PlayerNameTable.getInstance().update(this);
+	}
+	
+	@Override
+	public int getAccessLevel()
+	{
+		return 0; // FIXME
+	}
+	
+	@Override
+	public boolean isGM()
+	{
+		return false; // FIXME
 	}
 	
 	public PlayerAppearance getAppearance()
@@ -215,11 +208,64 @@ public class L2Player extends L2Character implements IL2Playable
 	
 	public void setClient(IL2Client client)
 	{
+		_client.setActiveChar(null);
 		_client = client != null ? client : EmptyClient.getInstance();
+		_client.setActiveChar(this);
 	}
 	
+	@Override
 	public boolean sendPacket(L2ServerPacket sp)
 	{
 		return getClient().sendPacket(sp);
+	}
+	
+	@Override
+	public boolean addToWorld()
+	{
+		if (!super.addToWorld())
+			return false;
+		
+		setOnlineStatus(true);
+		return true;
+	}
+	
+	@Override
+	public boolean removeFromWorld()
+	{
+		if (!super.removeFromWorld())
+			return false;
+		
+		setOnlineStatus(false);
+		
+		setClient(null);
+		return true;
+	}
+	
+	public boolean isOnline()
+	{
+		return getObjectState() == OBJECT_STATE_ALIVE;
+	}
+	
+	public void setOnlineStatus(boolean isOnline)
+	{
+		Connection con = null;
+		try
+		{
+			con = L2Database.getConnection();
+			
+			final PreparedStatement ps = con.prepareStatement("UPDATE player SET online = ? WHERE objectId = ?");
+			ps.setBoolean(1, isOnline);
+			ps.setInt(2, getObjectId());
+			ps.executeUpdate();
+			ps.close();
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			L2Database.close(con);
+		}
 	}
 }

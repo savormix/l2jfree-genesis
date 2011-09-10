@@ -14,7 +14,13 @@
  */
 package com.l2jfree.gameserver.world;
 
+import java.util.Collection;
+
+import javolution.util.FastMap;
+
+import com.l2jfree.gameserver.gameobjects.L2Character;
 import com.l2jfree.gameserver.gameobjects.L2Object;
+import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.util.concurrent.L2EntityMap;
 import com.l2jfree.util.concurrent.L2ReadWriteEntityMap;
 import com.l2jfree.util.logging.L2Logger;
@@ -93,15 +99,41 @@ public final class L2World
 	 * Contains all the objects in the world.
 	 */
 	private static final L2EntityMap<L2Object> _objects = new L2ReadWriteEntityMap<L2Object>(50000);
+	private static final FastMap<String, L2Player> _players = new FastMap<String, L2Player>(1000).setShared(true);
+	private static final Collection<L2Player> _unmodifiablePlayers = _players.unmodifiable().values();
 	
+	// TODO check replace
 	public static void addObject(L2Object obj)
 	{
 		_objects.add(obj);
+		
+		if (obj instanceof L2Player)
+		{
+			final L2Player player = (L2Player)obj;
+			
+			_players.put(player.getName().toLowerCase(), player);
+		}
 	}
 	
 	public static void removeObject(L2Object obj)
 	{
 		_objects.remove(obj);
+		
+		if (obj instanceof L2Player)
+		{
+			final L2Player player = (L2Player)obj;
+			
+			_players.remove(player.getName().toLowerCase());
+		}
+	}
+	
+	public static void updateOnlinePlayer(L2Player player, String oldName, String newName)
+	{
+		// do not add if it wasn't already added
+		if (_players.remove(oldName.toLowerCase()) == null)
+			return;
+		
+		_players.put(newName.toLowerCase(), player);
 	}
 	
 	public static L2Object findObject(Integer objectId)
@@ -111,7 +143,24 @@ public final class L2World
 	
 	public static <T extends L2Object> T findObject(Class<T> clazz, Integer objectId)
 	{
-		return clazz.cast(findObject(objectId));
+		final L2Object obj = findObject(objectId);
+		
+		return clazz.isInstance(obj) ? clazz.cast(obj) : null;
+	}
+	
+	public static L2Character findCharacter(int objectId)
+	{
+		return findObject(L2Character.class, objectId);
+	}
+	
+	public static L2Player findPlayer(int objectId)
+	{
+		return findObject(L2Player.class, objectId);
+	}
+	
+	public static L2Player findPlayer(String name)
+	{
+		return _players.get(name.toLowerCase());
 	}
 	
 	/**
@@ -120,5 +169,10 @@ public final class L2World
 	public static L2Object[] getObjects()
 	{
 		return _objects.toArray(L2Object.class);
+	}
+	
+	public static Collection<L2Player> getPlayers()
+	{
+		return _unmodifiablePlayers;
 	}
 }

@@ -76,4 +76,10 @@ public class EmptyObjectKnownList implements IObjectKnownList
 	{
 		// do nothing
 	}
+	
+	@Override
+	public void removeAllKnownObjects()
+	{
+		// do nothing
+	}
 }

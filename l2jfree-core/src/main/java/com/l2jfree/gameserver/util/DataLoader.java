@@ -105,6 +105,7 @@ public abstract class DataLoader<T>
 		}
 	}
 	
+	@SuppressWarnings("static-method")
 	protected String readFile(File file) throws IOException
 	{
 		return FileUtils.readFileToString(file);

@@ -18,6 +18,8 @@ import java.util.ArrayList;
 
 import com.l2jfree.gameserver.gameobjects.IL2Playable;
 import com.l2jfree.gameserver.gameobjects.L2Object;
+import com.l2jfree.gameserver.gameobjects.ObjectPosition;
+import com.l2jfree.util.ArrayBunch;
 import com.l2jfree.util.L2Arrays;
 import com.l2jfree.util.concurrent.ExclusiveTask;
 import com.l2jfree.util.concurrent.FIFOSimpleExecutableQueue;
@@ -29,7 +31,7 @@ public final class L2WorldRegion
 	private final int _tileX;
 	private final int _tileY;
 	
-	public L2WorldRegion(int tileX, int tileY)
+	protected L2WorldRegion(int tileX, int tileY)
 	{
 		_tileX = tileX;
 		_tileY = tileY;
@@ -42,7 +44,7 @@ public final class L2WorldRegion
 	 */
 	private L2WorldRegion[] _surroundingRegions = new L2WorldRegion[0];
 	
-	public void initSurroundingRegions()
+	protected void initSurroundingRegions()
 	{
 		final ArrayList<L2WorldRegion> tmp = new ArrayList<L2WorldRegion>();
 		
@@ -67,13 +69,14 @@ public final class L2WorldRegion
 	/**
 	 * @return the surrounding regions - including this one. Useful for gathering objects nearby.
 	 */
-	public L2WorldRegion[] getSurroundingRegions()
+	private L2WorldRegion[] getSurroundingRegions()
 	{
 		return _surroundingRegions;
 	}
 	
 	/**
-	 * Contains all the objects in this region.
+	 * Contains all the objects in this region, when they are actually visible.<br>
+	 * It also means objects are removed during teleport.
 	 */
 	private final L2EntityMap<L2Object> _objects = new L2ReadWriteEntityMap<L2Object>();
 	private final L2EntityMap<IL2Playable> _playables = new L2ReadWriteEntityMap<IL2Playable>();
@@ -81,17 +84,17 @@ public final class L2WorldRegion
 	/**
 	 * @return a thread-safe copy of the objects in this region
 	 */
-	public L2Object[] getObjects()
+	private L2Object[] getVisibleObjects()
 	{
 		return _objects.toArray(L2Object.class);
 	}
 	
-	public IL2Playable[] getPlayables()
+	private IL2Playable[] getVisiblePlayables()
 	{
 		return _playables.toArray(IL2Playable.class);
 	}
 	
-	public void addObject(L2Object object)
+	public void addVisibleObject(L2Object object)
 	{
 		if (object == null)
 			return;
@@ -100,19 +103,19 @@ public final class L2WorldRegion
 		
 		if (object instanceof IL2Playable)
 		{
-			_playables.add((IL2Playable)object);
-			
-			if (_playables.size() == 1)
+			if (_playables.isEmpty())
 			{
 				_deactivationTask.cancel();
 				
 				for (L2WorldRegion region : getSurroundingRegions())
 					region.setActive(true);
 			}
+			
+			_playables.add((IL2Playable)object);
 		}
 	}
 	
-	public void removeObject(L2Object object)
+	public void removeVisibleObject(L2Object object)
 	{
 		if (object == null)
 			return;
@@ -175,24 +178,24 @@ public final class L2WorldRegion
 		
 		if (active)
 		{
-			for (L2Object obj : getObjects())
+			for (L2Object obj : getVisibleObjects())
 				if (obj != null)
 					obj.getPosition().worldRegionActivated();
 		}
 		else
 		{
-			for (L2Object obj : getObjects())
+			for (L2Object obj : getVisibleObjects())
 				if (obj != null)
 					obj.getPosition().worldRegionDeactivated();
 		}
 	}
 	
-	public L2Object[][] getAllSurroundingObjects2DArray()
+	private L2Object[][] getAllSurroundingVisibleObjects2DArray()
 	{
 		final L2Object[][] result = new L2Object[_surroundingRegions.length][];
 		
 		for (int i = 0; i < _surroundingRegions.length; i++)
-			result[i] = _surroundingRegions[i].getObjects();
+			result[i] = _surroundingRegions[i].getVisibleObjects();
 		
 		return result;
 	}
@@ -201,15 +204,130 @@ public final class L2WorldRegion
 		@Override
 		protected void removeAndExecuteAll()
 		{
-			final L2Object[][] surroundingObjects = getAllSurroundingObjects2DArray();
+			final L2Object[][] surroundingObjects = getAllSurroundingVisibleObjects2DArray();
 			
 			for (L2Object obj; (obj = removeFirst()) != null;)
 				obj.getKnownList().update(surroundingObjects);
 		}
 	};
 	
-	public void updateKnownList(L2Object obj)
+	public void updateKnownList(L2Object obj, boolean force)
 	{
-		_knownListUpdater.execute(obj);
+		if (force)
+			obj.getKnownList().update(getAllSurroundingVisibleObjects2DArray());
+		else
+			_knownListUpdater.execute(obj);
+	}
+	
+	public static L2Object[] getVisibleObjectsAround2D(L2Object object, long radius)
+	{
+		if (object == null)
+			return L2Object.EMPTY_ARRAY;
+		
+		final ObjectPosition objectPosition = object.getPosition();
+		final L2WorldRegion selfRegion = objectPosition.getWorldRegion();
+		
+		if (selfRegion == null)
+			return L2Object.EMPTY_ARRAY;
+		
+		final long x = objectPosition.getX();
+		final long y = objectPosition.getY();
+		final long sqRadius = radius * radius;
+		
+		final ArrayBunch<L2Object> result = new ArrayBunch<L2Object>();
+		
+		for (L2WorldRegion region : selfRegion.getSurroundingRegions())
+		{
+			for (L2Object obj : region.getVisibleObjects())
+			{
+				if (obj == null)
+					continue;
+				
+				final ObjectPosition objPosition = obj.getPosition();
+				
+				if (obj == object || !objPosition.isVisible())
+					continue;
+				
+				final long dx = objPosition.getX() - x;
+				final long dy = objPosition.getY() - y;
+				
+				if (dx * dx + dy * dy > sqRadius)
+					continue;
+				
+				result.add(obj);
+			}
+		}
+		
+		return result.moveToArray(new L2Object[result.size()]);
+	}
+	
+	public static L2Object[] getVisibleObjectsAround(L2Object object, long radius)
+	{
+		if (object == null)
+			return L2Object.EMPTY_ARRAY;
+		
+		final ObjectPosition objectPosition = object.getPosition();
+		final L2WorldRegion selfRegion = objectPosition.getWorldRegion();
+		
+		if (selfRegion == null)
+			return L2Object.EMPTY_ARRAY;
+		
+		final long x = objectPosition.getX();
+		final long y = objectPosition.getY();
+		final long z = objectPosition.getZ();
+		final long sqRadius = radius * radius;
+		
+		final ArrayBunch<L2Object> result = new ArrayBunch<L2Object>();
+		
+		for (L2WorldRegion region : selfRegion.getSurroundingRegions())
+		{
+			for (L2Object obj : region.getVisibleObjects())
+			{
+				if (obj == null)
+					continue;
+				
+				final ObjectPosition objPosition = obj.getPosition();
+				
+				if (obj == object || !objPosition.isVisible())
+					continue;
+				
+				final long dx = objPosition.getX() - x;
+				final long dy = objPosition.getY() - y;
+				final long dz = objPosition.getZ() - z;
+				
+				if (dx * dx + dy * dy + dz * dz > sqRadius)
+					continue;
+				
+				result.add(obj);
+			}
+		}
+		
+		return result.moveToArray(new L2Object[result.size()]);
+	}
+	
+	public static IL2Playable[] getVisiblePlayablesAround(L2Object object)
+	{
+		if (object == null)
+			return IL2Playable.EMPTY_ARRAY;
+		
+		final L2WorldRegion selfRegion = object.getPosition().getWorldRegion();
+		
+		if (selfRegion == null)
+			return IL2Playable.EMPTY_ARRAY;
+		
+		final ArrayBunch<IL2Playable> result = new ArrayBunch<IL2Playable>();
+		
+		for (L2WorldRegion region : selfRegion.getSurroundingRegions())
+		{
+			for (IL2Playable obj : region.getVisiblePlayables())
+			{
+				if (obj == null || obj == object || !obj.getPosition().isVisible())
+					continue;
+				
+				result.add(obj);
+			}
+		}
+		
+		return result.moveToArray(new IL2Playable[result.size()]);
 	}
 }

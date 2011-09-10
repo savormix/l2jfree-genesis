@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.network.client;
 
+import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 
 /**
@@ -21,5 +22,7 @@ import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
  */
 public interface IL2Client
 {
+	public void setActiveChar(L2Player player);
+	
 	public boolean sendPacket(L2ServerPacket sp);
 }

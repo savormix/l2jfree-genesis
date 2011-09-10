@@ -658,6 +658,24 @@ public abstract class L2Config
 		DeadlockDetector.getInstance();
 	}
 	
+	/**
+	 * To load full static utility classes.
+	 * 
+	 * @param clazz
+	 */
+	protected static void load(Class<?> clazz)
+	{
+		try
+		{
+			Class.forName(clazz.getName());
+		}
+		catch (ClassNotFoundException e)
+		{
+			// should never happen
+			throw new Error(e);
+		}
+	}
+	
 	protected static void applicationLoaded(String appName, String[] versionInfo, boolean dumpHeap)
 	{
 		Startup.onStartup();

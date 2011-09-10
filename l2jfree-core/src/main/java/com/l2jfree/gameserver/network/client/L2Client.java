@@ -17,6 +17,7 @@ package com.l2jfree.gameserver.network.client;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SocketChannel;
+import java.util.List;
 
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
@@ -277,6 +278,7 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 		return _activeChar;
 	}
 	
+	@Override
 	public void setActiveChar(L2Player activeChar)
 	{
 		_activeChar = activeChar;
@@ -285,9 +287,9 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	/**
 	 * @param players
 	 */
-	public void definePlayerSlots(L2Player[] players)
+	public void definePlayerSlots(List<L2Player> players)
 	{
-		_playerSlotMap = new int[players.length];
+		_playerSlotMap = new int[players.size()];
 		int i = 0;
 		for (L2Player p : players)
 			_playerSlotMap[i++] = p.getObjectId();

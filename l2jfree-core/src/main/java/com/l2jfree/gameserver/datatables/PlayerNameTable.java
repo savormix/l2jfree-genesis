@@ -1,0 +1,277 @@
+/*
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+package com.l2jfree.gameserver.datatables;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Map;
+
+import javolution.util.FastMap;
+
+import com.l2jfree.gameserver.gameobjects.L2Player;
+import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
+import com.l2jfree.gameserver.world.L2World;
+import com.l2jfree.sql.L2Database;
+import com.l2jfree.util.L2Collections;
+import com.l2jfree.util.logging.L2Logger;
+
+/**
+ * @author NB4L1
+ */
+public final class PlayerNameTable
+{
+	private static final L2Logger _log = L2Logger.getLogger(PlayerNameTable.class);
+	
+	private static final class SingletonHolder
+	{
+		public static final PlayerNameTable INSTANCE = new PlayerNameTable();
+	}
+	
+	public static PlayerNameTable getInstance()
+	{
+		return SingletonHolder.INSTANCE;
+	}
+	
+	private final Map<Integer, PlayerInfo> _mapByObjectId = new FastMap<Integer, PlayerInfo>().setShared(true);
+	private final Map<String, PlayerInfo> _mapByName = new FastMap<String, PlayerInfo>().setShared(true);
+	
+	private PlayerNameTable()
+	{
+		Connection con = null;
+		try
+		{
+			con = L2Database.getConnection();
+			
+			final Statement st = con.createStatement();
+			final ResultSet rs = st.executeQuery("SELECT objectId, accountName, name FROM players");
+			
+			while (rs.next())
+			{
+				final int objectId = rs.getInt("objectId");
+				final String accountName = rs.getString("accountName");
+				final String name = rs.getString("name");
+				final int accessLevel = 0; // rs.getInt("accessLevel"); // TODO
+				
+				update(objectId, accountName, name, accessLevel);
+			}
+			
+			rs.close();
+			st.close();
+		}
+		catch (SQLException e)
+		{
+			_log.warn("", e);
+		}
+		finally
+		{
+			L2Database.close(con);
+		}
+		
+		_log.info("PlayerNameTable: Loaded " + _mapByObjectId.size() + " player infos.");
+	}
+	
+	public String getNameByObjectId(Integer objectId)
+	{
+		final PlayerInfo playerInfo = _mapByObjectId.get(objectId);
+		
+		return playerInfo == null ? null : playerInfo._name;
+	}
+	
+	public String getNameByName(String name)
+	{
+		final PlayerInfo playerInfo = _mapByName.get(name.toLowerCase());
+		
+		return playerInfo == null ? null : playerInfo._name;
+	}
+	
+	public Integer getObjectIdByName(String name)
+	{
+		final PlayerInfo playerInfo = _mapByName.get(name.toLowerCase());
+		
+		return playerInfo == null ? null : playerInfo._objectId;
+	}
+	
+	public int getAccessLevelByObjectId(Integer objectId)
+	{
+		final PlayerInfo playerInfo = _mapByObjectId.get(objectId);
+		
+		return playerInfo == null ? 0 : playerInfo._accessLevel;
+	}
+	
+	public int getAccessLevelByName(String name)
+	{
+		final PlayerInfo playerInfo = _mapByName.get(name.toLowerCase());
+		
+		return playerInfo == null ? 0 : playerInfo._accessLevel;
+	}
+	
+	public void update(L2Player player)
+	{
+		update(player.getObjectId(), player.getAccountName(), player.getName(), player.getAccessLevel());
+	}
+	
+	public void update(int objectId, String accountName, String name, int accessLevel)
+	{
+		PlayerInfo playerInfo = _mapByObjectId.get(objectId);
+		if (playerInfo == null)
+			playerInfo = new PlayerInfo(objectId);
+		
+		playerInfo.updateNames(accountName, name, accessLevel);
+	}
+	
+	public IPlayerInfo getIPlayerInfoByObjectId(Integer objectId)
+	{
+		final L2Player player = L2World.findPlayer(objectId);
+		
+		if (player != null)
+			return player;
+		
+		return _mapByObjectId.get(objectId);
+	}
+	
+	public IPlayerInfo getIPlayerInfoByName(String name)
+	{
+		final L2Player player = L2World.findPlayer(name);
+		
+		if (player != null)
+			return player;
+		
+		return _mapByName.get(name.toLowerCase());
+	}
+	
+	public interface IPlayerInfo
+	{
+		public int getObjectId();
+		
+		public String getAccountName();
+		
+		public String getName();
+		
+		public int getAccessLevel();
+		
+		public boolean isGM();
+		
+		public boolean sendPacket(L2ServerPacket gsp);
+	}
+	
+	private class PlayerInfo implements IPlayerInfo
+	{
+		private final int _objectId;
+		
+		private String _accountName;
+		private String _name;
+		private int _accessLevel;
+		
+		@Override
+		public int getObjectId()
+		{
+			return _objectId;
+		}
+		
+		@Override
+		public String getAccountName()
+		{
+			return _accountName;
+		}
+		
+		@Override
+		public String getName()
+		{
+			return _name;
+		}
+		
+		@Override
+		public int getAccessLevel()
+		{
+			return _accessLevel;
+		}
+		
+		@Override
+		public boolean isGM()
+		{
+			return false; // FIXME
+		}
+		
+		@Override
+		public boolean sendPacket(L2ServerPacket gsp)
+		{
+			// do nothing
+			return false;
+		}
+		
+		private PlayerInfo(int objectId)
+		{
+			_objectId = objectId;
+			
+			final PlayerInfo playerInfo = _mapByObjectId.put(_objectId, this);
+			if (playerInfo != null)
+				_log.warn("PlayerNameTable: Duplicated objectId: [" + this + "] - [" + playerInfo + "]");
+		}
+		
+		private void updateNames(String accountName, String name, int accessLevel)
+		{
+			_accountName = accountName;
+			
+			if (_name != null)
+				_mapByName.remove(_name.toLowerCase());
+			
+			_name = name.intern();
+			
+			final PlayerInfo playerInfo = _mapByName.put(_name.toLowerCase(), this);
+			if (playerInfo != null)
+				_log.warn("PlayerNameTable: Duplicated hashName: [" + this + "] - [" + playerInfo + "]");
+			
+			_accessLevel = accessLevel;
+		}
+		
+		@Override
+		public String toString()
+		{
+			return "objectId: " + _objectId + ", accountName: " + _accountName + ", name: " + _name;
+		}
+	}
+	
+	public boolean isPlayerNameTaken(String name)
+	{
+		return getObjectIdByName(name) != null;
+	}
+	
+	public int accountCharNumber(String account)
+	{
+		int count = 0;
+		
+		for (PlayerInfo playerInfo : _mapByObjectId.values())
+			if (playerInfo._accountName.equalsIgnoreCase(account))
+				count++;
+		
+		return count;
+	}
+	
+	public Iterable<Integer> getObjectIdsForAccount(final String account)
+	{
+		return L2Collections.convertingIterable(_mapByObjectId.values(),
+				new L2Collections.Converter<PlayerInfo, Integer>() {
+					@Override
+					public Integer convert(PlayerInfo playerInfo)
+					{
+						if (playerInfo._accountName.equalsIgnoreCase(account))
+							return playerInfo._objectId;
+						return null;
+					}
+				});
+	}
+}
