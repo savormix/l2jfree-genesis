@@ -69,20 +69,6 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	}
 	
 	@Override
-	protected void onDisconnection()
-	{
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
-	protected void onForcedDisconnection()
-	{
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
 	protected boolean decipher(ByteBuffer buf, DataSizeHolder size)
 	{
 		if (getCipher() == null) // wait till cipher initializes
@@ -113,13 +99,6 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	}
 	
 	@Override
-	protected L2ServerPacket getDefaultClosePacket()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
 	protected String getUID()
 	{
 		return getAccountName();
@@ -142,9 +121,8 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 		
 		try
 		{
-			// TODO:
-			//if (isDisconnected())
-			//	return false;
+			if (_disconnected)
+				return false;
 			
 			if (!sp.canBeSentTo(this, activeChar))
 				return false;
@@ -161,6 +139,61 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 		{
 			RunnableStatsManager.handleStats(sp.getClass(), "runImpl()", System.nanoTime() - begin);
 		}
+	}
+	
+	private volatile boolean _disconnected;
+	
+	public synchronized void close(boolean toLoginScreen)
+	{
+		// TODO
+		//close(toLoginScreen ? ServerClose.STATIC_PACKET : LeaveWorld.STATIC_PACKET);
+		closeNow();
+	}
+	
+	@Override
+	public synchronized void close(L2ServerPacket sp)
+	{
+		super.close(sp);
+		
+		_disconnected = true;
+		
+		new Disconnection(this).storeAndRemoveFromWorld();
+	}
+	
+	@Override
+	public synchronized void closeNow()
+	{
+		super.closeNow();
+		
+		_disconnected = true;
+		
+		new Disconnection(this).storeAndRemoveFromWorld();
+	}
+	
+	@Override
+	protected L2ServerPacket getDefaultClosePacket()
+	{
+		// TODO Auto-generated method stub
+		//return LeaveWorld.STATIC_PACKET;
+		return null;
+	}
+	
+	@Override
+	protected void onDisconnection()
+	{
+		// TODO
+		//LoginServerThread.getInstance().sendLogout(getAccountName());
+		
+		_disconnected = true;
+		
+		new Disconnection(this).onDisconnection();
+	}
+	
+	@Override
+	protected void onForcedDisconnection()
+	{
+		if (_log.isDebugEnabled())
+			_log.info("Client " + toString() + " disconnected abnormally.");
 	}
 	
 	@Override

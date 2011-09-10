@@ -25,6 +25,7 @@ import com.l2jfree.gameserver.datatables.PlayerNameTable;
 import com.l2jfree.gameserver.datatables.PlayerTemplateTable;
 import com.l2jfree.gameserver.gameobjects.player.PlayerAppearance;
 import com.l2jfree.gameserver.gameobjects.player.PlayerKnownList;
+import com.l2jfree.gameserver.network.client.Disconnection;
 import com.l2jfree.gameserver.network.client.EmptyClient;
 import com.l2jfree.gameserver.network.client.IL2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -88,6 +89,8 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 	
 	public static L2Player load(int objectId)
 	{
+		L2Player.disconnectIfOnline(objectId);
+		
 		L2Player result = null;
 		
 		Connection con = null;
@@ -137,6 +140,25 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 			players.add(load(objectId));
 		
 		return players;
+	}
+	
+	public static void disconnectIfOnline(int objectId)
+	{
+		L2Player onlinePlayer = L2World.findPlayer(objectId);
+		
+		if (onlinePlayer == null)
+			onlinePlayer = L2World.findPlayer(PlayerNameTable.getInstance().getNameByObjectId(objectId));
+		
+		if (onlinePlayer == null)
+			return;
+		
+		//if (!onlinePlayer.isInOfflineMode())
+		_log.warn("Avoiding duplicate character! Disconnecting online character (" + onlinePlayer.getName() + ")");
+		
+		// FIXME won't be sent because client.close() clears the packet queue
+		//onlinePlayer.sendPacket(SystemMessageId.ANOTHER_LOGIN_WITH_ACCOUNT);
+		
+		new Disconnection(onlinePlayer).defaultSequence(true);
 	}
 	
 	private final String _accountName;
@@ -232,24 +254,12 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 	}
 	
 	@Override
-	protected synchronized boolean setState(byte expected, byte value)
-	{
-		if (!super.setState(expected, value))
-			return false;
-		
-		if (expected == OBJECT_STATE_ALIVE && value == OBJECT_STATE_DELETED)
-		{
-			// store player to db
-		}
-		
-		return true;
-	}
-	
-	@Override
 	public boolean addToWorld()
 	{
 		if (!super.addToWorld())
 			return false;
+		
+		// TODO
 		
 		setOnlineStatus(true);
 		return true;
@@ -258,12 +268,20 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 	@Override
 	public boolean removeFromWorld()
 	{
+		synchronized (this)
+		{
+			if (getObjectState() == OBJECT_STATE_ALIVE)
+			{
+				new Disconnection(this).close(false).store();
+			}
+		}
+		
 		if (!super.removeFromWorld())
 			return false;
 		
-		setOnlineStatus(false);
+		// TODO
 		
-		setClient(null);
+		setOnlineStatus(false);
 		return true;
 	}
 	

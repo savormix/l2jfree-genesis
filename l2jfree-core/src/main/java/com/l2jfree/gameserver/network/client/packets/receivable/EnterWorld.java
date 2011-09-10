@@ -39,6 +39,7 @@ public class EnterWorld extends L2ClientPacket
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
+		// TODO
 		buf.skipAll();
 	}
 	

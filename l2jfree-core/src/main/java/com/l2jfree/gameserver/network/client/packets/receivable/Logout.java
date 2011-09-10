@@ -44,5 +44,4 @@ public class Logout extends L2ClientPacket
 	{
 		getClient().closeNow();
 	}
-	
 }

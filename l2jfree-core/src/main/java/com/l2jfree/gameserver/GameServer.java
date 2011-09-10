@@ -25,6 +25,7 @@ import com.l2jfree.gameserver.datatables.PlayerNameTable;
 import com.l2jfree.gameserver.datatables.PlayerTemplateTable;
 import com.l2jfree.gameserver.gameobjects.ComponentFactory;
 import com.l2jfree.gameserver.gameobjects.L2Player;
+import com.l2jfree.gameserver.network.client.Disconnection;
 import com.l2jfree.gameserver.network.client.L2ClientConnections;
 import com.l2jfree.gameserver.network.client.L2ClientSecurity;
 import com.l2jfree.gameserver.templates.player.ClassId;
@@ -95,6 +96,18 @@ public final class GameServer extends Config
 			@Override
 			public void run()
 			{
+				for (L2Player player : L2World.getPlayers())
+				{
+					try
+					{
+						new Disconnection(player).defaultSequence(true);
+					}
+					catch (Throwable t)
+					{
+						_log.warn("Orderly shutdown sequence interrupted", t);
+					}
+				}
+				
 				try
 				{
 					if (SystemConfig.DUMP_HEAP_BEFORE_SHUTDOWN)
