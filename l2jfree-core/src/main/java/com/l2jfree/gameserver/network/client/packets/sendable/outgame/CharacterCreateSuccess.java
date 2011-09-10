@@ -12,31 +12,33 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.network.client.packets.sendable;
+package com.l2jfree.gameserver.network.client.packets.sendable.outgame;
 
 import com.l2jfree.gameserver.network.client.L2Client;
+import com.l2jfree.gameserver.network.client.packets.sendable.StaticPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author hex1r0
  */
-public class CharacterCreationScreenSuccess extends StaticPacket
+public class CharacterCreateSuccess extends StaticPacket
 {
-	public static final CharacterCreationScreenSuccess STATIC_PACKET = new CharacterCreationScreenSuccess();
+	public static final CharacterCreateSuccess STATIC_PACKET = new CharacterCreateSuccess();
 	
-	private CharacterCreationScreenSuccess()
+	private CharacterCreateSuccess()
 	{
 	}
 	
 	@Override
 	protected int getOpcode()
 	{
-		return 0x0d;
+		return 0x0f;
 	}
 	
 	@Override
 	protected void writeImpl(L2Client client, MMOBuffer buf) throws RuntimeException
 	{
-		// TODO 
+		buf.writeD(0x01);
 	}
+	
 }

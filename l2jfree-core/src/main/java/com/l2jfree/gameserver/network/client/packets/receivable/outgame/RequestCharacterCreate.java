@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.network.client.packets.receivable;
+package com.l2jfree.gameserver.network.client.packets.receivable.outgame;
 
 import java.nio.BufferUnderflowException;
 import java.util.regex.Pattern;
@@ -20,8 +20,8 @@ import java.util.regex.Pattern;
 import com.l2jfree.gameserver.datatables.PlayerNameTable;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
-import com.l2jfree.gameserver.network.client.packets.sendable.CharacterCreateFail;
-import com.l2jfree.gameserver.network.client.packets.sendable.CharacterCreateSuccess;
+import com.l2jfree.gameserver.network.client.packets.sendable.outgame.CharacterCreateFail;
+import com.l2jfree.gameserver.network.client.packets.sendable.outgame.CharacterCreateSuccess;
 import com.l2jfree.gameserver.templates.player.ClassId;
 import com.l2jfree.gameserver.templates.player.ClassLevel;
 import com.l2jfree.gameserver.templates.player.Gender;

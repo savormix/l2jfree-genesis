@@ -12,37 +12,44 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.network.client.packets.receivable;
+package com.l2jfree.gameserver.network.client.packets.receivable.outgame;
 
 import java.nio.BufferUnderflowException;
 
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
-import com.l2jfree.gameserver.network.client.packets.sendable.AvailableCharacters;
+import com.l2jfree.gameserver.network.client.packets.sendable.outgame.AvailableCharacters;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
+ * This class represents a packet sent by the client when a marked to delete character is being
+ * restored ("Yes" is clicked in the restore confirmation dialog) <BR>
+ * NOTE: original name was <TT>CharacterRestore</TT>
+ * 
  * @author hex1r0
  */
-public class RequestCharacterPreviousState extends L2ClientPacket
+public class RequestCharacterRestore extends L2ClientPacket
 {
-	public static final int OPCODE = 0x36;
+	public static final int OPCODE = 0x7b;
+	
+	private int _charSlot;
 	
 	@Override
 	protected int getMinimumLength()
 	{
-		return 0;
+		return READ_D;
 	}
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
-		//
+		_charSlot = buf.readD();
 	}
 	
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
+		// TODO mark character undeleted
 		sendPacket(new AvailableCharacters(getClient()));
 		sendActionFailed();
 	}

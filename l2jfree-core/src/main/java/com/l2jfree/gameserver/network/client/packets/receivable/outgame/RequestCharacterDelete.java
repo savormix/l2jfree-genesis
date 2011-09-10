@@ -12,29 +12,27 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.network.client.packets.receivable;
+package com.l2jfree.gameserver.network.client.packets.receivable.outgame;
 
 import java.nio.BufferUnderflowException;
 
-import com.l2jfree.ClientProtocolVersion;
-import com.l2jfree.gameserver.config.VersionConfig;
-import com.l2jfree.gameserver.network.client.L2Client;
-import com.l2jfree.gameserver.network.client.L2ClientState;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
-import com.l2jfree.gameserver.network.client.packets.sendable.ProtocolAnswer;
+import com.l2jfree.gameserver.network.client.packets.sendable.outgame.AvailableCharacters;
+import com.l2jfree.gameserver.network.client.packets.sendable.outgame.CharacterDeleteSuccess;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
-import com.l2jfree.util.Rnd;
 
 /**
- * @author savormix
+ * This class represents a packet sent by the client when a character is being marked for deletion
+ * ("Yes" is clicked in the deletion confirmation dialog)
+ * 
+ * @author hex1r0
  */
-public final class ProtocolVersion extends L2ClientPacket
+public class RequestCharacterDelete extends L2ClientPacket
 {
-	/** Packet's identifier */
-	public static final int OPCODE = 0x0e;
+	public static final int OPCODE = 0x0d;
 	
-	private int _version;
+	private int _charSlot;
 	
 	@Override
 	protected int getMinimumLength()
@@ -45,29 +43,21 @@ public final class ProtocolVersion extends L2ClientPacket
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
-		_version = buf.readD();
-		buf.skipAll();
+		_charSlot = buf.readD();
 	}
 	
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		if (_log.isDebugEnabled())
-			_log.debug("Client protocol version: " + _version);
+		// TODO mark character to delete
+		sendPacket(CharacterDeleteSuccess.STATIC_PACKET);
 		
-		final L2Client client = getClient();
-		final ClientProtocolVersion version = ClientProtocolVersion.getByVersion(_version);
+		//sendPacket(new CharacterDeleteFail(REASON_DELETION_FAILED));
+		//sendPacket(new CharacterDeleteFail(REASON_YOU_MAY_NOT_DELETE_CLAN_MEMBER));
+		//sendPacket(new CharacterDeleteFail(REASON_CLAN_LEADERS_MAY_NOT_BE_DELETED));
 		
-		if (!VersionConfig.isSupported(version))
-		{
-			client.close(ProtocolAnswer.INCOMPATIBLE);
-			return;
-		}
-		
-		final int seed = Rnd.nextInt();
-		client.getDeobfuscator().init(seed);
-		client.setState(L2ClientState.PROTOCOL_OK);
-		
-		sendPacket(new ProtocolAnswer(client.getCipherKey(), seed));
+		sendPacket(new AvailableCharacters(getClient()));
+		sendActionFailed();
 	}
+	
 }

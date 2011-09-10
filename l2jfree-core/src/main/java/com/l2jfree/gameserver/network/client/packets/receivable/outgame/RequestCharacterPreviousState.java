@@ -12,32 +12,39 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.network.client.packets.sendable;
+package com.l2jfree.gameserver.network.client.packets.receivable.outgame;
 
-import com.l2jfree.gameserver.network.client.L2Client;
+import java.nio.BufferUnderflowException;
+
+import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
+import com.l2jfree.gameserver.network.client.packets.sendable.outgame.AvailableCharacters;
+import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author hex1r0
  */
-public class CharacterCreateSuccess extends StaticPacket
+public class RequestCharacterPreviousState extends L2ClientPacket
 {
-	public static final CharacterCreateSuccess STATIC_PACKET = new CharacterCreateSuccess();
+	public static final int OPCODE = 0x36;
 	
-	private CharacterCreateSuccess()
+	@Override
+	protected int getMinimumLength()
 	{
+		return 0;
 	}
 	
 	@Override
-	protected int getOpcode()
+	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
-		return 0x0f;
+		//
 	}
 	
 	@Override
-	protected void writeImpl(L2Client client, MMOBuffer buf) throws RuntimeException
+	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		buf.writeD(0x01);
+		sendPacket(new AvailableCharacters(getClient()));
+		sendActionFailed();
 	}
 	
 }

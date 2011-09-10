@@ -12,52 +12,39 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.network.client.packets.receivable;
+package com.l2jfree.gameserver.network.client.packets.receivable.outgame;
 
 import java.nio.BufferUnderflowException;
 
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
-import com.l2jfree.gameserver.network.client.packets.sendable.AvailableCharacters;
-import com.l2jfree.gameserver.network.client.packets.sendable.CharacterDeleteSuccess;
+import com.l2jfree.gameserver.network.client.packets.sendable.outgame.CharacterCreationScreenSuccess;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
- * This class represents a packet sent by the client when a character is being marked for deletion
- * ("Yes" is clicked in the deletion confirmation dialog)
+ * This packet is sent when user pressed [Create] from characters screen
  * 
  * @author hex1r0
  */
-public class RequestCharacterDelete extends L2ClientPacket
+public class RequestCharacterCreationScreen extends L2ClientPacket
 {
-	public static final int OPCODE = 0x0d;
-	
-	private int _charSlot;
+	public static final int OPCODE = 0x13;
 	
 	@Override
 	protected int getMinimumLength()
 	{
-		return READ_D;
+		return 0;
 	}
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
-		_charSlot = buf.readD();
+		//
 	}
 	
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		// TODO mark character to delete
-		sendPacket(CharacterDeleteSuccess.STATIC_PACKET);
-		
-		//sendPacket(new CharacterDeleteFail(REASON_DELETION_FAILED));
-		//sendPacket(new CharacterDeleteFail(REASON_YOU_MAY_NOT_DELETE_CLAN_MEMBER));
-		//sendPacket(new CharacterDeleteFail(REASON_CLAN_LEADERS_MAY_NOT_BE_DELETED));
-		
-		sendPacket(new AvailableCharacters(getClient()));
-		sendActionFailed();
+		sendPacket(CharacterCreationScreenSuccess.STATIC_PACKET);
 	}
-	
 }

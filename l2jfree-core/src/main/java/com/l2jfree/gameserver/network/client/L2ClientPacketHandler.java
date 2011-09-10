@@ -25,15 +25,15 @@ import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.gameserver.network.client.packets.receivable.EnterWorld;
 import com.l2jfree.gameserver.network.client.packets.receivable.Logout;
-import com.l2jfree.gameserver.network.client.packets.receivable.ProtocolVersion;
-import com.l2jfree.gameserver.network.client.packets.receivable.RequestAuthorization;
-import com.l2jfree.gameserver.network.client.packets.receivable.RequestCharacterCreate;
-import com.l2jfree.gameserver.network.client.packets.receivable.RequestCharacterCreationScreen;
-import com.l2jfree.gameserver.network.client.packets.receivable.RequestCharacterDelete;
-import com.l2jfree.gameserver.network.client.packets.receivable.RequestCharacterPreviousState;
-import com.l2jfree.gameserver.network.client.packets.receivable.RequestCharacterRestore;
-import com.l2jfree.gameserver.network.client.packets.receivable.RequestCharacterSelect;
 import com.l2jfree.gameserver.network.client.packets.receivable.RequestRestart;
+import com.l2jfree.gameserver.network.client.packets.receivable.outgame.ProtocolVersion;
+import com.l2jfree.gameserver.network.client.packets.receivable.outgame.RequestAuthorization;
+import com.l2jfree.gameserver.network.client.packets.receivable.outgame.RequestCharacterCreate;
+import com.l2jfree.gameserver.network.client.packets.receivable.outgame.RequestCharacterCreationScreen;
+import com.l2jfree.gameserver.network.client.packets.receivable.outgame.RequestCharacterDelete;
+import com.l2jfree.gameserver.network.client.packets.receivable.outgame.RequestCharacterPreviousState;
+import com.l2jfree.gameserver.network.client.packets.receivable.outgame.RequestCharacterRestore;
+import com.l2jfree.gameserver.network.client.packets.receivable.outgame.RequestCharacterSelect;
 import com.l2jfree.network.mmocore.PacketHandler;
 
 /**
