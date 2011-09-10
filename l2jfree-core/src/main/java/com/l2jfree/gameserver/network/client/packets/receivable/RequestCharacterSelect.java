@@ -52,8 +52,6 @@ public class RequestCharacterSelect extends L2ClientPacket
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		// should always be null
-		// but if not then this is repeated packet and nothing should be done here
 		if (getClient().getActiveChar() != null)
 			return;
 		

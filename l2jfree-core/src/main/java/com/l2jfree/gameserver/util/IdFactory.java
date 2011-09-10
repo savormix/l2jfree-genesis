@@ -107,8 +107,7 @@ public final class IdFactory
 	
 	private IdFactory() throws SQLException
 	{
-		// FIXME
-		//L2Database.executeUpdate("UPDATE players SET online = 0");
+		L2Database.executeUpdate("UPDATE players SET online = 0");
 		
 		removeLeftover();
 		removeExpired();

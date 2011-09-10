@@ -15,39 +15,38 @@
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
 import com.l2jfree.gameserver.network.client.L2Client;
-import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author hex1r0
  */
-public class CharacterCreateFail extends L2ServerPacket
+public class CharacterCreateFail extends StaticPacket
 {
 	/** Your character creation has failed. */
-	public static final int REASON_CREATION_FAILED = 0x00;
+	public static final CharacterCreateFail REASON_CREATION_FAILED = new CharacterCreateFail(0x00);
 	/**
 	 * You cannot create another character. Please delete the existing character and try again. <BR>
 	 * <I>Removes all settings that were selected (race, class, etc).</I>
 	 */
-	public static final int REASON_TOO_MANY_CHARACTERS = 0x01;
+	public static final CharacterCreateFail REASON_TOO_MANY_CHARACTERS = new CharacterCreateFail(0x01);
 	/** This name already exists. */
-	public static final int REASON_NAME_ALREADY_EXISTS = 0x02;
+	public static final CharacterCreateFail REASON_NAME_ALREADY_EXISTS = new CharacterCreateFail(0x02);
 	/** Your title cannot exceed 16 characters in length. Please try again. */
-	public static final int REASON_16_ENG_CHARS = 0x03;
+	public static final CharacterCreateFail REASON_16_ENG_CHARS = new CharacterCreateFail(0x03);
 	/** Incorrect name. Please try again. */
-	public static final int REASON_INCORRECT_NAME = 0x04;
+	public static final CharacterCreateFail REASON_INCORRECT_NAME = new CharacterCreateFail(0x04);
 	/** Characters cannot be created from this server. */
-	public static final int REASON_CREATE_NOT_ALLOWED = 0x05;
+	public static final CharacterCreateFail REASON_CREATE_NOT_ALLOWED = new CharacterCreateFail(0x05);
 	/**
 	 * Unable to create character. You are unable to create a new character on the selected server.
 	 * A restriction is in place which restricts users from creating characters on different servers
 	 * where no previous character exists. Please choose another server.
 	 */
-	public static final int REASON_CHOOSE_ANOTHER_SERVER = 0x06;
+	public static final CharacterCreateFail REASON_CHOOSE_ANOTHER_SERVER = new CharacterCreateFail(0x06);
 	
 	private final int _error;
 	
-	public CharacterCreateFail(int error)
+	private CharacterCreateFail(int error)
 	{
 		_error = error;
 	}

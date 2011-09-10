@@ -107,7 +107,7 @@ public abstract class L2Object implements IL2Object
 		return _objectState;
 	}
 	
-	private synchronized boolean setState(byte expected, byte value)
+	protected synchronized boolean setState(byte expected, byte value)
 	{
 		if (_objectState != expected)
 		{

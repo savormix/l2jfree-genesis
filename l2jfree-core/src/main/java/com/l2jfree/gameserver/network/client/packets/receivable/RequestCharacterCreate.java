@@ -15,7 +15,9 @@
 package com.l2jfree.gameserver.network.client.packets.receivable;
 
 import java.nio.BufferUnderflowException;
+import java.util.regex.Pattern;
 
+import com.l2jfree.gameserver.datatables.PlayerNameTable;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.sendable.CharacterCreateFail;
@@ -79,19 +81,71 @@ public class RequestCharacterCreate extends L2ClientPacket
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
+		if (getClient().getActiveChar() != null)
+			return;
+		
 		// TODO 
 		//CharacterCreateFail
 		
 		final ClassId classId = ClassId.VALUES.valueOf(_classId);
+		final int MAX_CHARACTERS_NUMBER_PER_ACCOUNT = 3; // TODO
+		final String account = getClient().getAccountName();
+		final Pattern CNAME_PATTERN = Pattern.compile("[A-Za-z0-9-]{2,16}");
+		
 		if (classId == null || classId.getLevel() != ClassLevel.First)
 		{
-			sendPacket(new CharacterCreateFail(CharacterCreateFail.REASON_CREATION_FAILED));
+			sendPacket(CharacterCreateFail.REASON_CREATION_FAILED);
 			return;
 		}
+		else if (MAX_CHARACTERS_NUMBER_PER_ACCOUNT > 0
+				&& MAX_CHARACTERS_NUMBER_PER_ACCOUNT <= PlayerNameTable.getInstance().getPlayerCountForAccount(account))
+		{
+			if (_log.isDebugEnabled())
+				_log.debug("Max number of characters reached. Creation failed.");
+			sendPacket(CharacterCreateFail.REASON_TOO_MANY_CHARACTERS);
+			return;
+		}
+		else if (!CNAME_PATTERN.matcher(_name).matches())
+		{
+			if (_log.isDebugEnabled())
+				_log.debug("charname: " + _name + " is invalid. creation failed.");
+			sendPacket(CharacterCreateFail.REASON_16_ENG_CHARS);
+			return;
+		}
+		/*
+		else if (NpcTable.getInstance().getTemplateByName(_name) != null || obsceneCheck(_name))
+		{
+			if (_log.isDebugEnabled())
+				_log.debug("charname: " + _name + " overlaps with a NPC. creation failed.");
+			sendPacket(CharacterCreateFail.REASON_INCORRECT_NAME);
+			return;
+		}
+		*/
 		
-		L2Player player =
-				L2Player.create(_name, getClient().getAccountName(), ClassId.VALUES.valueOf(_classId),
-						Gender.VALUES.valueOf(_sex), _face, _hairColor, _hairStyle);
+		// atomic check + creation
+		synchronized (RequestCharacterCreate.class)
+		{
+			if (PlayerNameTable.getInstance().isPlayerNameTaken(_name))
+			{
+				if (_log.isDebugEnabled())
+					_log.debug("charname: " + _name + " already exists. creation failed.");
+				sendPacket(CharacterCreateFail.REASON_NAME_ALREADY_EXISTS);
+				return;
+			}
+			
+			if (_log.isDebugEnabled())
+				_log.debug("charname: " + _name + " classId: " + _classId);
+			
+			final L2Player player =
+					L2Player.create(_name, account, classId, Gender.VALUES.valueOf(_sex), _face, _hairColor, _hairStyle);
+			
+			player.addToWorld();
+			
+			// TODO
+			player.getPosition().setXYZ(-71338, 258271, -3104);
+			
+			player.removeFromWorld();
+		}
 		
 		sendPacket(CharacterCreateSuccess.STATIC_PACKET);
 		sendActionFailed();

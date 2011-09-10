@@ -250,7 +250,7 @@ public final class PlayerNameTable
 		return getObjectIdByName(name) != null;
 	}
 	
-	public int accountCharNumber(String account)
+	public int getPlayerCountForAccount(String account)
 	{
 		int count = 0;
 		

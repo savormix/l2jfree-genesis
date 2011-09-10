@@ -220,6 +220,20 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 	}
 	
 	@Override
+	protected synchronized boolean setState(byte expected, byte value)
+	{
+		if (!super.setState(expected, value))
+			return false;
+		
+		if (expected == OBJECT_STATE_ALIVE && value == OBJECT_STATE_DELETED)
+		{
+			// store player to db
+		}
+		
+		return true;
+	}
+	
+	@Override
 	public boolean addToWorld()
 	{
 		if (!super.addToWorld())
