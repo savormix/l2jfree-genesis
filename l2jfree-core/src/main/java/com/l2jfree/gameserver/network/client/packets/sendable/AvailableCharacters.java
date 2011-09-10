@@ -54,7 +54,7 @@ public class AvailableCharacters extends L2ServerPacket
 	@Override
 	protected void writeImpl(L2Client client, MMOBuffer buf) throws RuntimeException
 	{
-		buf.writeD(_players.size()); // TODO num of chars
+		buf.writeD(_players.size());
 		buf.writeD(0x07);
 		buf.writeC(0);
 		
@@ -65,8 +65,8 @@ public class AvailableCharacters extends L2ServerPacket
 			final L2PlayerTemplate template = p.getTemplate();
 			final PlayerBaseTemplate baseTemplate = template.getPlayerBaseTemplate(appearance.getGender());
 			
-			buf.writeS(p.getName()); // TODO
-			buf.writeD(p.getObjectId()); // TODO
+			buf.writeS(p.getName());
+			buf.writeD(p.getObjectId());
 			buf.writeS(_accountName);
 			buf.writeD(_sessionId);
 			buf.writeD(0); // TODO clan id
@@ -79,9 +79,9 @@ public class AvailableCharacters extends L2ServerPacket
 			
 			buf.writeD(0x01); // active ?? (no difference between 0 and 1)
 			
-			buf.writeD(position.getX()); // TODO x
-			buf.writeD(position.getY()); // TODO y
-			buf.writeD(position.getZ()); // TODO z
+			buf.writeD(position.getX());
+			buf.writeD(position.getY());
+			buf.writeD(position.getZ());
 			
 			buf.writeF(100.0); // TODO hp cur
 			buf.writeF(100.0); // TODO mp cur

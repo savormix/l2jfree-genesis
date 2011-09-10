@@ -130,7 +130,7 @@ public final class L2World
 	public static void updateOnlinePlayer(L2Player player, String oldName, String newName)
 	{
 		// do not add if it wasn't already added
-		if (_players.remove(oldName.toLowerCase()) == null)
+		if (oldName != null && _players.remove(oldName.toLowerCase()) == null)
 			return;
 		
 		_players.put(newName.toLowerCase(), player);

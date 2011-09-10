@@ -267,7 +267,7 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 		{
 			con = L2Database.getConnection();
 			
-			final PreparedStatement ps = con.prepareStatement("UPDATE player SET online = ? WHERE objectId = ?");
+			final PreparedStatement ps = con.prepareStatement("UPDATE players SET online = ? WHERE objectId = ?");
 			ps.setBoolean(1, isOnline);
 			ps.setInt(2, getObjectId());
 			ps.executeUpdate();
