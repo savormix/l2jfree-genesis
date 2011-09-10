@@ -49,7 +49,9 @@ public class RequestRestart extends L2ClientPacket
 		
 		sendPacket(RestartResponse.SUCCESS);
 		
-		getClient().getActiveChar().removeFromWorld();
+		getClient().getActiveChar().setClient(null);
+		
+		//getClient().getActiveChar().removeFromWorld();
 		
 		getClient().setState(L2ClientState.CHARACTER_MANAGEMENT);
 		sendPacket(new AvailableCharacters(getClient()));
