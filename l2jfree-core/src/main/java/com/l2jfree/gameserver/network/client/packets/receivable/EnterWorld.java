@@ -16,7 +16,10 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 
+import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
+import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
+import com.l2jfree.gameserver.network.client.packets.sendable.UserInfo;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
@@ -42,6 +45,24 @@ public class EnterWorld extends L2ClientPacket
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		// TODO	
+		// TODO
+		
+		sendPacket(new UserInfo());
+		
+		// Welcome to Lineage 2, temp solution ^)
+		sendPacket(new L2ServerPacket() {
+			@Override
+			protected void writeImpl(L2Client client, MMOBuffer buf) throws RuntimeException
+			{
+				buf.writeD(34);
+				buf.writeD(0);
+			}
+			
+			@Override
+			protected int getOpcode()
+			{
+				return 0x62;
+			}
+		});
 	}
 }

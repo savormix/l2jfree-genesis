@@ -140,7 +140,9 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 	}
 	
 	private final String _accountName;
+	
 	private String _name;
+	private String _title;
 	
 	private final PlayerAppearance _appearance;
 	private IL2Client _client = EmptyClient.getInstance();
@@ -182,6 +184,16 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 		L2World.updateOnlinePlayer(this, oldName, name);
 		
 		PlayerNameTable.getInstance().update(this);
+	}
+	
+	public String getTitle()
+	{
+		return _title;
+	}
+	
+	public void setTitle(String title)
+	{
+		_title = title;
 	}
 	
 	@Override

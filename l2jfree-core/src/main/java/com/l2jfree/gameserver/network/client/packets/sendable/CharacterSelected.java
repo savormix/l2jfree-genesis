@@ -15,6 +15,7 @@
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
 import com.l2jfree.gameserver.gameobjects.L2Player;
+import com.l2jfree.gameserver.gameobjects.ObjectPosition;
 import com.l2jfree.gameserver.gameobjects.player.PlayerAppearance;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -46,9 +47,10 @@ public class CharacterSelected extends L2ServerPacket
 		if (activeChar == null)
 			return;
 		
-		PlayerAppearance appearance = activeChar.getAppearance();
-		L2PlayerTemplate template = activeChar.getTemplate();
-		PlayerBaseTemplate baseTemplate = template.getPlayerBaseTemplate(appearance.getGender());
+		final PlayerAppearance appearance = activeChar.getAppearance();
+		final ObjectPosition position = activeChar.getPosition();
+		final L2PlayerTemplate template = activeChar.getTemplate();
+		final PlayerBaseTemplate baseTemplate = template.getPlayerBaseTemplate(appearance.getGender());
 		
 		buf.writeS(activeChar.getName());
 		buf.writeD(activeChar.getObjectId()); // ??
@@ -60,9 +62,9 @@ public class CharacterSelected extends L2ServerPacket
 		buf.writeD(baseTemplate.getRace().ordinal());
 		buf.writeD(template.getClassId().getId());
 		buf.writeD(0x01); // active ??
-		buf.writeD(activeChar.getPosition().getX());
-		buf.writeD(activeChar.getPosition().getY());
-		buf.writeD(activeChar.getPosition().getZ());
+		buf.writeD(position.getX());
+		buf.writeD(position.getY());
+		buf.writeD(position.getZ());
 		
 		buf.writeF(100/*_activeChar.getCurrentHp()*/); // TODO HP
 		buf.writeF(100/*_activeChar.getCurrentMp()*/); // TODO MP
