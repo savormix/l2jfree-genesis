@@ -105,6 +105,8 @@ public final class L2World
 	// TODO check replace
 	public static void addObject(L2Object obj)
 	{
+		System.out.println(obj.getObjectId());
+		
 		_objects.add(obj);
 		
 		if (obj instanceof L2Player)
@@ -130,7 +132,7 @@ public final class L2World
 	public static void updateOnlinePlayer(L2Player player, String oldName, String newName)
 	{
 		// do not add if it wasn't already added
-		if (oldName != null && _players.remove(oldName.toLowerCase()) == null)
+		if (oldName == null || _players.remove(oldName.toLowerCase()) == null)
 			return;
 		
 		_players.put(newName.toLowerCase(), player);
