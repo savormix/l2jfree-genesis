@@ -22,6 +22,7 @@ import java.util.List;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
+import com.l2jfree.gameserver.network.client.packets.sendable.LeaveWorld;
 import com.l2jfree.lang.L2TextBuilder;
 import com.l2jfree.network.mmocore.DataSizeHolder;
 import com.l2jfree.network.mmocore.MMOConnection;
@@ -173,9 +174,7 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	@Override
 	protected L2ServerPacket getDefaultClosePacket()
 	{
-		// TODO Auto-generated method stub
-		//return LeaveWorld.STATIC_PACKET;
-		return null;
+		return LeaveWorld.STATIC_PACKET;
 	}
 	
 	@Override
