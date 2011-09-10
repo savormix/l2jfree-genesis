@@ -334,8 +334,8 @@ public abstract class L2Config
 			if (stack[i].getClassName().startsWith("java.io.") || stack[i].getMethodName().equals("printStackTrace"))
 				return stack[L2Math.limit(0, i + 1, stack.length - 1)];
 			
-			if (stack[i].getMethodName().equals("dispatchUncaughtException"))
-				break;
+			//if (stack[i].getMethodName().equals("dispatchUncaughtException"))
+			//	break;
 		}
 		
 		return null;

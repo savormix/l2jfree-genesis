@@ -45,8 +45,15 @@ public abstract class L2RuntimeLogFormatter extends L2LogFormatter
 		appendDate(record, tb);
 		
 		if (record.getLevel().intValue() > Level.INFO.intValue() || record.getThrown() != null)
+		{
 			if (!StringUtils.isEmpty(record.getSourceClassName()) && !StringUtils.isEmpty(record.getSourceMethodName()))
-				tb.append(record.getSourceClassName()).append(".").append(record.getSourceMethodName()).append("(): ");
+			{
+				tb.append(record.getSourceClassName().replace("com.l2jfree.", ""));
+				tb.append(".");
+				tb.append(record.getSourceMethodName());
+				tb.append("(): ");
+			}
+		}
 		
 		appendMessage(record, tb);
 		appendThrown(record, tb);
