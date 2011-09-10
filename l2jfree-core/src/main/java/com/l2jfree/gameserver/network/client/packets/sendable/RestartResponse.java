@@ -15,13 +15,12 @@
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
 import com.l2jfree.gameserver.network.client.L2Client;
-import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author hex1r0
  */
-public class RestartResponse extends L2ServerPacket
+public class RestartResponse extends StaticPacket
 {
 	public static final RestartResponse SUCCESS = new RestartResponse(1);
 	public static final RestartResponse FAIL = new RestartResponse(0);

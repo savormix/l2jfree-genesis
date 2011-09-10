@@ -17,7 +17,6 @@ package com.l2jfree.gameserver.network.client.packets.sendable;
 import java.lang.management.ManagementFactory;
 
 import com.l2jfree.gameserver.network.client.L2Client;
-import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
@@ -28,10 +27,10 @@ import com.l2jfree.network.mmocore.MMOBuffer;
  * @author savormix
  */
 //FIXME in which chronicle was this introduced?
-public final class ServerUptime extends L2ServerPacket
+public final class ServerUptime extends StaticPacket
 {
 	/** An instance of this packet. */
-	public static final ServerUptime PACKET = new ServerUptime();
+	public static final ServerUptime STATIC_PACKET = new ServerUptime();
 	
 	private ServerUptime()
 	{

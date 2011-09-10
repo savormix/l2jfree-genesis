@@ -15,15 +15,15 @@
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
 /**
- * @author hex1r0
+ * @author NB4L1
  */
-public class LeaveWorld extends StaticPacket
+public class ServerClose extends StaticPacket
 {
-	public static final LeaveWorld STATIC_PACKET = new LeaveWorld();
+	public static final ServerClose STATIC_PACKET = new ServerClose();
 	
 	@Override
 	protected int getOpcode()
 	{
-		return 0x84;
+		return 0x20;
 	}
 }
