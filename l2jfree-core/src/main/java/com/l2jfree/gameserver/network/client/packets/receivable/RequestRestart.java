@@ -16,6 +16,7 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 
+import com.l2jfree.gameserver.network.client.Disconnection;
 import com.l2jfree.gameserver.network.client.L2ClientState;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.sendable.RestartResponse;
@@ -49,12 +50,9 @@ public class RequestRestart extends L2ClientPacket
 		
 		sendPacket(RestartResponse.SUCCESS);
 		
-		getClient().getActiveChar().setClient(null);
-		
-		//getClient().getActiveChar().removeFromWorld();
+		new Disconnection(getClient()).storeAndRemoveFromWorld();
 		
 		getClient().setState(L2ClientState.CHARACTER_MANAGEMENT);
 		sendPacket(new AvailableCharacters(getClient()));
 	}
-	
 }

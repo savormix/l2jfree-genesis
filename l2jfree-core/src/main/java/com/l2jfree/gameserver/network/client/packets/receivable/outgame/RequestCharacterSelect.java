@@ -17,7 +17,6 @@ package com.l2jfree.gameserver.network.client.packets.receivable.outgame;
 import java.nio.BufferUnderflowException;
 
 import com.l2jfree.gameserver.gameobjects.L2Player;
-import com.l2jfree.gameserver.network.client.Disconnection;
 import com.l2jfree.gameserver.network.client.L2ClientState;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.sendable.outgame.CharacterSelected;
@@ -70,7 +69,7 @@ public class RequestCharacterSelect extends L2ClientPacket
 		
 		if (player.getAccessLevel() < 0 || SERVER_GMONLY && !player.isGM())
 		{
-			new Disconnection(getClient(), player).defaultSequence(false);
+			getClient().closeNow();
 			return;
 		}
 		
