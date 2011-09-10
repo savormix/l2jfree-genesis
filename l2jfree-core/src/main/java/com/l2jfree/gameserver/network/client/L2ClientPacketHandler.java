@@ -33,6 +33,7 @@ import com.l2jfree.gameserver.network.client.packets.receivable.RequestCharacter
 import com.l2jfree.gameserver.network.client.packets.receivable.RequestCharacterPreviousState;
 import com.l2jfree.gameserver.network.client.packets.receivable.RequestCharacterRestore;
 import com.l2jfree.gameserver.network.client.packets.receivable.RequestCharacterSelect;
+import com.l2jfree.gameserver.network.client.packets.receivable.RequestRestart;
 import com.l2jfree.network.mmocore.PacketHandler;
 
 /**
@@ -111,6 +112,11 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 				if (client.stateEquals(LOGGED_IN))
 					return new EnterWorld();
 				return invalidState(client, EnterWorld.class, opcode);
+				
+			case RequestRestart.OPCODE:
+				if (client.stateEquals(LOGGED_IN))
+					return new RequestRestart();
+				return invalidState(client, RequestRestart.class, opcode);
 				
 			default:
 				return unknown(buf, client, opcode);
