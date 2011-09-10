@@ -125,8 +125,8 @@ public class AvailableCharacters extends L2ServerPacket
 			
 			buf.writeD(0); // vitallity points HF
 		}
-		
-		for (L2Player player : _players)
-			player.removeFromWorld(); // FIXME don't fetch the whole player only the required data
+		// breaks L2Object.setState()
+		//for (L2Player player : _players)
+		//player.removeFromWorld(); // FIXME don't fetch the whole player only the required data
 	}
 }
