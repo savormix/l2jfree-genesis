@@ -15,21 +15,20 @@
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
 import com.l2jfree.gameserver.network.client.L2Client;
-import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author hex1r0
  */
-public class CharacterDeleteFail extends L2ServerPacket
+public class CharacterDeleteFail extends StaticPacket
 {
-	public static final int REASON_DELETION_FAILED = 0x01;
-	public static final int REASON_YOU_MAY_NOT_DELETE_CLAN_MEMBER = 0x02;
-	public static final int REASON_CLAN_LEADERS_MAY_NOT_BE_DELETED = 0x03;
+	public static final CharacterDeleteFail REASON_DELETION_FAILED = new CharacterDeleteFail(0x01);
+	public static final CharacterDeleteFail REASON_YOU_MAY_NOT_DELETE_CLAN_MEMBER = new CharacterDeleteFail(0x02);
+	public static final CharacterDeleteFail REASON_CLAN_LEADERS_MAY_NOT_BE_DELETED = new CharacterDeleteFail(0x03);
 	
 	private final int _error;
 	
-	public CharacterDeleteFail(int error)
+	private CharacterDeleteFail(int error)
 	{
 		_error = error;
 	}
