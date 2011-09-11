@@ -18,6 +18,8 @@ import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.l2jfree.gameserver.gameobjects.CharacterStat;
+import com.l2jfree.gameserver.gameobjects.CharacterView;
 import com.l2jfree.gameserver.gameobjects.IObjectKnownList;
 import com.l2jfree.gameserver.gameobjects.L2Object;
 import com.l2jfree.gameserver.gameobjects.ObjectPosition;
@@ -55,6 +57,34 @@ public abstract class ComponentFactory<T>
 		protected Class<? extends IObjectKnownList> getComponentClassByAnnotation(L2Object owner)
 		{
 			return owner.getClass().getAnnotation(KnownListComponent.class).value();
+		}
+	};
+	
+	public static final ComponentFactory<CharacterStat> STAT = new ComponentFactory<CharacterStat>() {
+		@Override
+		protected java.lang.Class<? extends CharacterStat> getRootClass()
+		{
+			return CharacterStat.class;
+		}
+		
+		@Override
+		protected Class<? extends CharacterStat> getComponentClassByAnnotation(L2Object owner)
+		{
+			return owner.getClass().getAnnotation(StatComponent.class).value();
+		}
+	};
+	
+	public static final ComponentFactory<CharacterView> VIEW = new ComponentFactory<CharacterView>() {
+		@Override
+		protected java.lang.Class<? extends CharacterView> getRootClass()
+		{
+			return CharacterView.class;
+		}
+		
+		@Override
+		protected Class<? extends CharacterView> getComponentClassByAnnotation(L2Object owner)
+		{
+			return owner.getClass().getAnnotation(ViewComponent.class).value();
 		}
 	};
 	

@@ -17,8 +17,12 @@ package com.l2jfree.gameserver.gameobjects;
 import com.l2jfree.gameserver.datatables.PlayerNameTable;
 import com.l2jfree.gameserver.datatables.PlayerTemplateTable;
 import com.l2jfree.gameserver.gameobjects.components.KnownListComponent;
+import com.l2jfree.gameserver.gameobjects.components.StatComponent;
+import com.l2jfree.gameserver.gameobjects.components.ViewComponent;
 import com.l2jfree.gameserver.gameobjects.player.PlayerAppearance;
 import com.l2jfree.gameserver.gameobjects.player.PlayerKnownList;
+import com.l2jfree.gameserver.gameobjects.player.PlayerStat;
+import com.l2jfree.gameserver.gameobjects.player.PlayerView;
 import com.l2jfree.gameserver.network.client.Disconnection;
 import com.l2jfree.gameserver.network.client.EmptyClient;
 import com.l2jfree.gameserver.network.client.IL2Client;
@@ -37,6 +41,8 @@ import com.l2jfree.util.Rnd;
  * @author NB4L1
  */
 @KnownListComponent(PlayerKnownList.class)
+@StatComponent(PlayerStat.class)
+@ViewComponent(PlayerView.class)
 public class L2Player extends L2Character implements IL2Playable, PlayerNameTable.IPlayerInfo
 {
 	public static L2Player create(String name, String accountName, ClassId classId)
@@ -55,7 +61,7 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 			playerDB.objectId = objectId;
 			playerDB.name = name;
 			playerDB.accountName = accountName;
-			playerDB.baseClassId = classId;
+			playerDB.mainClassId = classId;
 			playerDB.activeClassId = classId;
 			
 			// Appearance
@@ -109,7 +115,7 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 			playerDB.objectId = player.getObjectId();
 			playerDB.name = player.getName();
 			playerDB.accountName = player.getAccountName();
-			playerDB.baseClassId = player.getBaseClassId();
+			playerDB.mainClassId = player.getMainClassId();
 			playerDB.activeClassId = player.getActiveClassId();
 			
 			// Appearance
@@ -155,7 +161,7 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 	
 	private final String _accountName;
 	
-	private final ClassId _baseClassId;
+	private final ClassId _mainClassId;
 	private ClassId _activeClassId;
 	
 	private String _name;
@@ -170,7 +176,7 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 		
 		_accountName = playerDB.accountName;
 		
-		_baseClassId = playerDB.baseClassId;
+		_mainClassId = playerDB.mainClassId;
 		_activeClassId = playerDB.activeClassId;
 		
 		_appearance = new PlayerAppearance(this, playerDB);
@@ -187,14 +193,32 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 	}
 	
 	@Override
+	public PlayerKnownList getKnownList()
+	{
+		return (PlayerKnownList)super.getKnownList();
+	}
+	
+	@Override
+	public PlayerStat getStat()
+	{
+		return (PlayerStat)super.getStat();
+	}
+	
+	@Override
+	public PlayerView getView()
+	{
+		return (PlayerView)super.getView();
+	}
+	
+	@Override
 	public String getAccountName()
 	{
 		return _accountName;
 	}
 	
-	public ClassId getBaseClassId()
+	public ClassId getMainClassId()
 	{
-		return _baseClassId;
+		return _mainClassId;
 	}
 	
 	public ClassId getActiveClassId()

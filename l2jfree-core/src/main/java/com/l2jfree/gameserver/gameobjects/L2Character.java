@@ -14,15 +14,36 @@
  */
 package com.l2jfree.gameserver.gameobjects;
 
+import com.l2jfree.gameserver.gameobjects.components.ComponentFactory;
+import com.l2jfree.gameserver.gameobjects.components.StatComponent;
+import com.l2jfree.gameserver.gameobjects.components.ViewComponent;
 import com.l2jfree.gameserver.templates.L2Template;
 
 /**
  * @author NB4L1
  */
+@StatComponent(CharacterStat.class)
+@ViewComponent(CharacterView.class)
 public abstract class L2Character extends L2Object implements IL2Character
 {
+	private final CharacterStat _stat;
+	private final CharacterView _view;
+	
 	public L2Character(int objectId, L2Template template)
 	{
 		super(objectId, template);
+		
+		_stat = ComponentFactory.STAT.getComponent(this);
+		_view = ComponentFactory.VIEW.getComponent(this);
+	}
+	
+	public CharacterStat getStat()
+	{
+		return _stat;
+	}
+	
+	public CharacterView getView()
+	{
+		return _view;
 	}
 }

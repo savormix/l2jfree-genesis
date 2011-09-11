@@ -64,7 +64,7 @@ public abstract class L2Object implements IL2Object
 	}
 	
 	@Override
-	public final IObjectKnownList getKnownList()
+	public IObjectKnownList getKnownList()
 	{
 		return _knownList;
 	}

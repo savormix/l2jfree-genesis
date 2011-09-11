@@ -89,8 +89,8 @@ public abstract class CharacterSelectionInfo extends L2ServerPacket
 			buf.writeD(0); // Pledge ID
 			buf.writeD(0); // 0
 			buf.writeD(p.gender); // Sex
-			buf.writeD(p.baseClassId.getRace()); // Race
-			buf.writeD(p.baseClassId); // Main class
+			buf.writeD(p.mainClassId.getRace()); // Race
+			buf.writeD(p.mainClassId); // Main class
 			buf.writeD(ReportedConfig.ID); // Game server
 			buf.writeD(p.x); // Location X
 			buf.writeD(p.y); // Location Y
