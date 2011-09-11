@@ -16,7 +16,7 @@ package com.l2jfree.gameserver.gameobjects;
 
 import com.l2jfree.gameserver.datatables.PlayerNameTable;
 import com.l2jfree.gameserver.datatables.PlayerTemplateTable;
-import com.l2jfree.gameserver.gameobjects.components.ComponentFactory;
+import com.l2jfree.gameserver.gameobjects.components.KnownListComponent;
 import com.l2jfree.gameserver.gameobjects.player.PlayerAppearance;
 import com.l2jfree.gameserver.gameobjects.player.PlayerKnownList;
 import com.l2jfree.gameserver.network.client.Disconnection;
@@ -36,13 +36,9 @@ import com.l2jfree.util.Rnd;
 /**
  * @author NB4L1
  */
+@KnownListComponent(PlayerKnownList.class)
 public class L2Player extends L2Character implements IL2Playable, PlayerNameTable.IPlayerInfo
 {
-	static
-	{
-		ComponentFactory.KNOWNLIST.register(L2Player.class, PlayerKnownList.class);
-	}
-	
 	public static L2Player create(String name, String accountName, ClassId classId)
 	{
 		return create(name, accountName, classId, Gender.Male, (byte)0, (byte)0, (byte)0); // TODO

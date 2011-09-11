@@ -28,12 +28,35 @@ import com.l2jfree.gameserver.gameobjects.ObjectPosition;
  */
 // TODO implement more features, use annotations, optimize performance
 @SuppressWarnings("unchecked")
-public final class ComponentFactory<T>
+public abstract class ComponentFactory<T>
 {
-	public static final ComponentFactory<ObjectPosition> POSITION = new ComponentFactory<ObjectPosition>(
-			ObjectPosition.class);
-	public static final ComponentFactory<IObjectKnownList> KNOWNLIST = new ComponentFactory<IObjectKnownList>(
-			IObjectKnownList.class);
+	public static final ComponentFactory<ObjectPosition> POSITION = new ComponentFactory<ObjectPosition>() {
+		@Override
+		protected java.lang.Class<? extends ObjectPosition> getRootClass()
+		{
+			return ObjectPosition.class;
+		}
+		
+		@Override
+		protected Class<? extends ObjectPosition> getComponentClassByAnnotation(L2Object owner)
+		{
+			return owner.getClass().getAnnotation(PositionComponent.class).value();
+		}
+	};
+	
+	public static final ComponentFactory<IObjectKnownList> KNOWNLIST = new ComponentFactory<IObjectKnownList>() {
+		@Override
+		protected java.lang.Class<? extends IObjectKnownList> getRootClass()
+		{
+			return IObjectKnownList.class;
+		}
+		
+		@Override
+		protected Class<? extends IObjectKnownList> getComponentClassByAnnotation(L2Object owner)
+		{
+			return owner.getClass().getAnnotation(KnownListComponent.class).value();
+		}
+	};
 	
 	private final Map<Class<? extends L2Object>, Class<? extends T>> _registryByOwnerClass =
 			new HashMap<Class<? extends L2Object>, Class<? extends T>>();
@@ -43,11 +66,9 @@ public final class ComponentFactory<T>
 	private final Map<Class<? extends L2Object>, Map<Integer, Constructor<? extends T>>> _cache =
 			new HashMap<Class<? extends L2Object>, Map<Integer, Constructor<? extends T>>>();
 	
-	private final Class<?> _rootClazz;
-	
-	private ComponentFactory(Class<?> rootClazz)
+	private ComponentFactory()
 	{
-		_rootClazz = rootClazz;
+		//
 	}
 	
 	public final void register(Class<? extends L2Object> ownerClazz, Class<? extends T> componentClazz)
@@ -68,9 +89,18 @@ public final class ComponentFactory<T>
 		_cache.clear();
 	}
 	
+	protected abstract Class<? extends T> getRootClass();
+	
+	protected abstract Class<? extends T> getComponentClassByAnnotation(L2Object owner);
+	
 	private final Class<? extends T> findComponentClass(L2Object owner)
 	{
 		Class<? extends T> clazz = _registryByTemplateId.get(owner.getTemplate().getId());
+		
+		if (clazz != null)
+			return clazz;
+		
+		clazz = getComponentClassByAnnotation(owner);
 		
 		if (clazz != null)
 			return clazz;
@@ -83,7 +113,7 @@ public final class ComponentFactory<T>
 				return clazz;
 		}
 		
-		throw new IllegalStateException("No " + _rootClazz + " implementation registered for " + owner);
+		throw new IllegalStateException("No " + getRootClass() + " implementation registered for " + owner);
 	}
 	
 	private final Map<Class<? extends L2Object>, Constructor<? extends T>> findComponentContructors(L2Object owner)
@@ -118,7 +148,7 @@ public final class ComponentFactory<T>
 				return constructor;
 		}
 		
-		throw new IllegalStateException("No proper " + _rootClazz + " contructor registered for " + owner);
+		throw new IllegalStateException("No proper " + getRootClass() + " contructor registered for " + owner);
 	}
 	
 	public final T getComponent(L2Object owner)

@@ -15,20 +15,18 @@
 package com.l2jfree.gameserver.gameobjects;
 
 import com.l2jfree.gameserver.gameobjects.components.ComponentFactory;
+import com.l2jfree.gameserver.gameobjects.components.KnownListComponent;
+import com.l2jfree.gameserver.gameobjects.components.PositionComponent;
 import com.l2jfree.gameserver.templates.L2Template;
 import com.l2jfree.gameserver.world.L2World;
 import com.l2jfree.lang.L2TextBuilder;
 import com.l2jfree.util.logging.L2Logger;
 
+@PositionComponent(ObjectPosition.class)
+@KnownListComponent(ObjectKnownList.class)
 public abstract class L2Object implements IL2Object
 {
 	protected static final L2Logger _log = L2Logger.getLogger(L2Object.class);
-	
-	static
-	{
-		ComponentFactory.POSITION.register(L2Object.class, ObjectPosition.class);
-		ComponentFactory.KNOWNLIST.register(L2Object.class, ObjectKnownList.class);
-	}
 	
 	public static final L2Object[] EMPTY_ARRAY = new L2Object[0];
 	
