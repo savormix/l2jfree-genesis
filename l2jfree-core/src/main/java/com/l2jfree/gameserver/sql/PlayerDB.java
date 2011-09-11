@@ -136,7 +136,7 @@ public class PlayerDB extends L2DBEntity
 	
 	public static void setOnlineStatus(final L2Player player, final boolean isOnline)
 	{
-		L2Database.executeUpdateByNamedQuery("PlayerDB.setOfflineAll", new QueryConfigurator() {
+		L2Database.executeUpdateByNamedQuery("PlayerDB.setOnline", new QueryConfigurator() {
 			@Override
 			public void configure(Query q)
 			{
