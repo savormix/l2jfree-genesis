@@ -295,7 +295,8 @@ public final class L2Database
 			result = em.find(entityClass, primaryKey);
 			
 			if (result != null)
-				em.detach(result);
+				if (result instanceof L2DBEntity) // TODO
+					em.detach(result);
 		}
 		em.close();
 		
@@ -341,7 +342,8 @@ public final class L2Database
 			em.getTransaction().commit();
 			
 			if (result != null)
-				em.detach(result);
+				if (result instanceof L2DBEntity) // TODO
+					em.detach(result);
 		}
 		em.close();
 		
@@ -393,7 +395,8 @@ public final class L2Database
 			result = (T)q.getSingleResult();
 			
 			if (result != null)
-				em.detach(result);
+				if (result instanceof L2DBEntity) // TODO
+					em.detach(result);
 		}
 		em.close();
 		
@@ -438,7 +441,8 @@ public final class L2Database
 			
 			for (T t : result)
 				if (t != null)
-					em.detach(t);
+					if (t instanceof L2DBEntity) // TODO
+						em.detach(t);
 		}
 		em.close();
 		
@@ -511,14 +515,27 @@ public final class L2Database
 	
 	// =================================================================================================================
 	
-	public interface Transaction<T>
+	public interface L2Query<T>
 	{
 		public T execute(EntityManager em);
 	}
 	
 	// =================================================================================================================
 	
-	public static <T> T executeTransaction(Transaction<T> transaction)
+	public static <T> T executeQuery(L2Query<T> transaction)
+	{
+		final T result;
+		
+		final EntityManager em = L2Database.getEntityManager();
+		{
+			result = transaction.execute(em);
+		}
+		em.close();
+		
+		return result;
+	}
+	
+	public static <T> T executeUpdate(L2Query<T> transaction)
 	{
 		final T result;
 		
