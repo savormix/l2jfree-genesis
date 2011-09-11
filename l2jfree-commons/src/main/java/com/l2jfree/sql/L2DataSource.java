@@ -46,6 +46,10 @@ import com.l2jfree.util.EnumValues;
 import com.l2jfree.util.Rnd;
 import com.l2jfree.util.logging.L2Logger;
 
+/**
+ * @author NB4L1
+ * @author savormix
+ */
 public abstract class L2DataSource implements DataSource
 {
 	public enum JDBCProvider
@@ -149,7 +153,6 @@ public abstract class L2DataSource implements DataSource
 	/**
 	 * Obtains <TT>CURRENT_DATABASE</TT> and <TT>CURRENT_SCHEMA</TT> on an arbitrary DBMS.
 	 * 
-	 * @author savormix
 	 * @throws SQLException if a SQL error occurs
 	 */
 	public final void initSQLContext() throws SQLException

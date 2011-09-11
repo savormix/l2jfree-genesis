@@ -29,7 +29,7 @@ public abstract class L2ServerPacket extends DefaultSendablePacket<L2Client, L2C
 	/**
 	 * @param client
 	 * @param activeChar
-	 * @return
+	 * @return true, if the client can receive this packet, false otherwise
 	 */
 	@SuppressWarnings("static-method")
 	public boolean canBeSentTo(L2Client client, L2Player activeChar)

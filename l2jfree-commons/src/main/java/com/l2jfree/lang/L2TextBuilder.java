@@ -105,7 +105,7 @@ public final class L2TextBuilder implements Serializable
 	// StringBuilder delegate methods
 	
 	/**
-	 * @return
+	 * @return int
 	 * @see java.lang.StringBuilder#length()
 	 */
 	public int length()
@@ -114,7 +114,7 @@ public final class L2TextBuilder implements Serializable
 	}
 	
 	/**
-	 * @return
+	 * @return int
 	 * @see java.lang.StringBuilder#capacity()
 	 */
 	public int capacity()
@@ -123,7 +123,7 @@ public final class L2TextBuilder implements Serializable
 	}
 	
 	/**
-	 * @return
+	 * @return int
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -160,7 +160,7 @@ public final class L2TextBuilder implements Serializable
 	
 	/**
 	 * @param obj
-	 * @return
+	 * @return boolean
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -171,37 +171,40 @@ public final class L2TextBuilder implements Serializable
 	
 	/**
 	 * @param obj
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#append(java.lang.Object)
 	 */
-	public StringBuilder append(Object obj)
+	public L2TextBuilder append(Object obj)
 	{
-		return _builder.append(obj);
+		_builder.append(obj);
+		return this;
 	}
 	
 	/**
 	 * @param str
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#append(java.lang.String)
 	 */
-	public StringBuilder append(String str)
+	public L2TextBuilder append(String str)
 	{
-		return _builder.append(str);
+		_builder.append(str);
+		return this;
 	}
 	
 	/**
 	 * @param sb
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#append(java.lang.StringBuffer)
 	 */
-	public StringBuilder append(StringBuffer sb)
+	public L2TextBuilder append(StringBuffer sb)
 	{
-		return _builder.append(sb);
+		_builder.append(sb);
+		return this;
 	}
 	
 	/**
 	 * @param index
-	 * @return
+	 * @return char
 	 * @see java.lang.StringBuilder#charAt(int)
 	 */
 	public char charAt(int index)
@@ -211,17 +214,18 @@ public final class L2TextBuilder implements Serializable
 	
 	/**
 	 * @param s
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#append(java.lang.CharSequence)
 	 */
-	public StringBuilder append(CharSequence s)
+	public L2TextBuilder append(CharSequence s)
 	{
-		return _builder.append(s);
+		_builder.append(s);
+		return this;
 	}
 	
 	/**
 	 * @param index
-	 * @return
+	 * @return int
 	 * @see java.lang.StringBuilder#codePointAt(int)
 	 */
 	public int codePointAt(int index)
@@ -233,69 +237,75 @@ public final class L2TextBuilder implements Serializable
 	 * @param s
 	 * @param start
 	 * @param end
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#append(java.lang.CharSequence, int, int)
 	 */
-	public StringBuilder append(CharSequence s, int start, int end)
+	public L2TextBuilder append(CharSequence s, int start, int end)
 	{
-		return _builder.append(s, start, end);
+		_builder.append(s, start, end);
+		return this;
 	}
 	
 	/**
 	 * @param str
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#append(char[])
 	 */
-	public StringBuilder append(char[] str)
+	public L2TextBuilder append(char[] str)
 	{
-		return _builder.append(str);
+		_builder.append(str);
+		return this;
 	}
 	
 	/**
 	 * @param str
 	 * @param offset
 	 * @param len
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#append(char[], int, int)
 	 */
-	public StringBuilder append(char[] str, int offset, int len)
+	public L2TextBuilder append(char[] str, int offset, int len)
 	{
-		return _builder.append(str, offset, len);
+		_builder.append(str, offset, len);
+		return this;
 	}
 	
 	/**
 	 * @param b
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#append(boolean)
 	 */
-	public StringBuilder append(boolean b)
+	public L2TextBuilder append(boolean b)
 	{
-		return _builder.append(b);
+		_builder.append(b);
+		return this;
 	}
 	
 	/**
 	 * @param c
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#append(char)
 	 */
-	public StringBuilder append(char c)
+	public L2TextBuilder append(char c)
 	{
-		return _builder.append(c);
+		_builder.append(c);
+		return this;
 	}
 	
 	/**
 	 * @param i
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#append(int)
 	 */
-	public StringBuilder append(int i)
+	public L2TextBuilder append(int i)
 	{
-		return _builder.append(i);
+		_builder.append(i);
+		return this;
 	}
 	
 	/**
 	 * @param index
-	 * @return
+	 * @return int
 	 * @see java.lang.StringBuilder#codePointBefore(int)
 	 */
 	public int codePointBefore(int index)
@@ -305,81 +315,88 @@ public final class L2TextBuilder implements Serializable
 	
 	/**
 	 * @param lng
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#append(long)
 	 */
-	public StringBuilder append(long lng)
+	public L2TextBuilder append(long lng)
 	{
-		return _builder.append(lng);
+		_builder.append(lng);
+		return this;
 	}
 	
 	/**
 	 * @param f
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#append(float)
 	 */
-	public StringBuilder append(float f)
+	public L2TextBuilder append(float f)
 	{
-		return _builder.append(f);
+		_builder.append(f);
+		return this;
 	}
 	
 	/**
 	 * @param d
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#append(double)
 	 */
-	public StringBuilder append(double d)
+	public L2TextBuilder append(double d)
 	{
-		return _builder.append(d);
+		_builder.append(d);
+		return this;
 	}
 	
 	/**
 	 * @param codePoint
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#appendCodePoint(int)
 	 */
-	public StringBuilder appendCodePoint(int codePoint)
+	public L2TextBuilder appendCodePoint(int codePoint)
 	{
-		return _builder.appendCodePoint(codePoint);
+		_builder.appendCodePoint(codePoint);
+		return this;
 	}
 	
 	/**
 	 * @param start
 	 * @param end
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#delete(int, int)
 	 */
-	public StringBuilder delete(int start, int end)
+	public L2TextBuilder delete(int start, int end)
 	{
-		return _builder.delete(start, end);
+		_builder.delete(start, end);
+		return this;
 	}
 	
 	/**
 	 * @param index
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#deleteCharAt(int)
 	 */
-	public StringBuilder deleteCharAt(int index)
+	public L2TextBuilder deleteCharAt(int index)
 	{
-		return _builder.deleteCharAt(index);
+		_builder.deleteCharAt(index);
+		return this;
 	}
 	
 	/**
 	 * @param start
 	 * @param end
 	 * @param str
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#replace(int, int, java.lang.String)
 	 */
-	public StringBuilder replace(int start, int end, String str)
+	public L2TextBuilder replace(int start, int end, String str)
 	{
-		return _builder.replace(start, end, str);
+		_builder.replace(start, end, str);
+		return this;
 	}
 	
 	/**
 	 * @param beginIndex
 	 * @param endIndex
-	 * @return
+	 * @return int
 	 * @see java.lang.StringBuilder#codePointCount(int, int)
 	 */
 	public int codePointCount(int beginIndex, int endIndex)
@@ -392,62 +409,67 @@ public final class L2TextBuilder implements Serializable
 	 * @param str
 	 * @param offset
 	 * @param len
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#insert(int, char[], int, int)
 	 */
-	public StringBuilder insert(int index, char[] str, int offset, int len)
+	public L2TextBuilder insert(int index, char[] str, int offset, int len)
 	{
-		return _builder.insert(index, str, offset, len);
+		_builder.insert(index, str, offset, len);
+		return this;
 	}
 	
 	/**
 	 * @param offset
 	 * @param obj
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#insert(int, java.lang.Object)
 	 */
-	public StringBuilder insert(int offset, Object obj)
+	public L2TextBuilder insert(int offset, Object obj)
 	{
-		return _builder.insert(offset, obj);
+		_builder.insert(offset, obj);
+		return this;
 	}
 	
 	/**
 	 * @param offset
 	 * @param str
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#insert(int, java.lang.String)
 	 */
-	public StringBuilder insert(int offset, String str)
+	public L2TextBuilder insert(int offset, String str)
 	{
-		return _builder.insert(offset, str);
+		_builder.insert(offset, str);
+		return this;
 	}
 	
 	/**
 	 * @param offset
 	 * @param str
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#insert(int, char[])
 	 */
-	public StringBuilder insert(int offset, char[] str)
+	public L2TextBuilder insert(int offset, char[] str)
 	{
-		return _builder.insert(offset, str);
+		_builder.insert(offset, str);
+		return this;
 	}
 	
 	/**
 	 * @param dstOffset
 	 * @param s
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#insert(int, java.lang.CharSequence)
 	 */
-	public StringBuilder insert(int dstOffset, CharSequence s)
+	public L2TextBuilder insert(int dstOffset, CharSequence s)
 	{
-		return _builder.insert(dstOffset, s);
+		_builder.insert(dstOffset, s);
+		return this;
 	}
 	
 	/**
 	 * @param index
 	 * @param codePointOffset
-	 * @return
+	 * @return int
 	 * @see java.lang.StringBuilder#offsetByCodePoints(int, int)
 	 */
 	public int offsetByCodePoints(int index, int codePointOffset)
@@ -460,45 +482,49 @@ public final class L2TextBuilder implements Serializable
 	 * @param s
 	 * @param start
 	 * @param end
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#insert(int, java.lang.CharSequence, int, int)
 	 */
-	public StringBuilder insert(int dstOffset, CharSequence s, int start, int end)
+	public L2TextBuilder insert(int dstOffset, CharSequence s, int start, int end)
 	{
-		return _builder.insert(dstOffset, s, start, end);
+		_builder.insert(dstOffset, s, start, end);
+		return this;
 	}
 	
 	/**
 	 * @param offset
 	 * @param b
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#insert(int, boolean)
 	 */
-	public StringBuilder insert(int offset, boolean b)
+	public L2TextBuilder insert(int offset, boolean b)
 	{
-		return _builder.insert(offset, b);
+		_builder.insert(offset, b);
+		return this;
 	}
 	
 	/**
 	 * @param offset
 	 * @param c
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#insert(int, char)
 	 */
-	public StringBuilder insert(int offset, char c)
+	public L2TextBuilder insert(int offset, char c)
 	{
-		return _builder.insert(offset, c);
+		_builder.insert(offset, c);
+		return this;
 	}
 	
 	/**
 	 * @param offset
 	 * @param i
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#insert(int, int)
 	 */
-	public StringBuilder insert(int offset, int i)
+	public L2TextBuilder insert(int offset, int i)
 	{
-		return _builder.insert(offset, i);
+		_builder.insert(offset, i);
+		return this;
 	}
 	
 	/**
@@ -516,39 +542,42 @@ public final class L2TextBuilder implements Serializable
 	/**
 	 * @param offset
 	 * @param l
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#insert(int, long)
 	 */
-	public StringBuilder insert(int offset, long l)
+	public L2TextBuilder insert(int offset, long l)
 	{
-		return _builder.insert(offset, l);
+		_builder.insert(offset, l);
+		return this;
 	}
 	
 	/**
 	 * @param offset
 	 * @param f
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#insert(int, float)
 	 */
-	public StringBuilder insert(int offset, float f)
+	public L2TextBuilder insert(int offset, float f)
 	{
-		return _builder.insert(offset, f);
+		_builder.insert(offset, f);
+		return this;
 	}
 	
 	/**
 	 * @param offset
 	 * @param d
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#insert(int, double)
 	 */
-	public StringBuilder insert(int offset, double d)
+	public L2TextBuilder insert(int offset, double d)
 	{
-		return _builder.insert(offset, d);
+		_builder.insert(offset, d);
+		return this;
 	}
 	
 	/**
 	 * @param str
-	 * @return
+	 * @return int
 	 * @see java.lang.StringBuilder#indexOf(java.lang.String)
 	 */
 	public int indexOf(String str)
@@ -559,7 +588,7 @@ public final class L2TextBuilder implements Serializable
 	/**
 	 * @param str
 	 * @param fromIndex
-	 * @return
+	 * @return int
 	 * @see java.lang.StringBuilder#indexOf(java.lang.String, int)
 	 */
 	public int indexOf(String str, int fromIndex)
@@ -569,7 +598,7 @@ public final class L2TextBuilder implements Serializable
 	
 	/**
 	 * @param str
-	 * @return
+	 * @return int
 	 * @see java.lang.StringBuilder#lastIndexOf(java.lang.String)
 	 */
 	public int lastIndexOf(String str)
@@ -580,7 +609,7 @@ public final class L2TextBuilder implements Serializable
 	/**
 	 * @param str
 	 * @param fromIndex
-	 * @return
+	 * @return int
 	 * @see java.lang.StringBuilder#lastIndexOf(java.lang.String, int)
 	 */
 	public int lastIndexOf(String str, int fromIndex)
@@ -589,16 +618,17 @@ public final class L2TextBuilder implements Serializable
 	}
 	
 	/**
-	 * @return
+	 * @return this
 	 * @see java.lang.StringBuilder#reverse()
 	 */
-	public StringBuilder reverse()
+	public L2TextBuilder reverse()
 	{
-		return _builder.reverse();
+		_builder.reverse();
+		return this;
 	}
 	
 	/**
-	 * @return
+	 * @return String
 	 * @see java.lang.StringBuilder#toString()
 	 */
 	@Override
@@ -619,7 +649,7 @@ public final class L2TextBuilder implements Serializable
 	
 	/**
 	 * @param start
-	 * @return
+	 * @return String
 	 * @see java.lang.StringBuilder#substring(int)
 	 */
 	public String substring(int start)
@@ -630,7 +660,7 @@ public final class L2TextBuilder implements Serializable
 	/**
 	 * @param start
 	 * @param end
-	 * @return
+	 * @return CharSequence
 	 * @see java.lang.StringBuilder#subSequence(int, int)
 	 */
 	public CharSequence subSequence(int start, int end)
@@ -641,7 +671,7 @@ public final class L2TextBuilder implements Serializable
 	/**
 	 * @param start
 	 * @param end
-	 * @return
+	 * @return String
 	 * @see java.lang.StringBuilder#substring(int, int)
 	 */
 	public String substring(int start, int end)

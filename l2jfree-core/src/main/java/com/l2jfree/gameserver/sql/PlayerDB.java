@@ -66,8 +66,8 @@ public class PlayerDB extends L2DBEntity
 	public boolean online;
 	
 	@Enumerated(EnumType.ORDINAL)
-	@Column(name = "baseClassId", nullable = false, updatable = false)
-	public ClassId baseClassId;
+	@Column(name = "mainClassId", nullable = false, updatable = false)
+	public ClassId mainClassId;
 	
 	@Enumerated(EnumType.ORDINAL)
 	@Column(name = "activeClassId", nullable = false)
