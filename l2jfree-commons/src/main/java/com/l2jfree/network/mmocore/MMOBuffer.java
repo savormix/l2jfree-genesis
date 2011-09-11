@@ -277,6 +277,16 @@ public final class MMOBuffer
 	}
 	
 	/**
+	 * Writes a signed integer as a dword (four bytes).
+	 * 
+	 * @param value an enum whose ordinal value will be written
+	 */
+	public void writeD(Enum<?> value)
+	{
+		_buffer.putInt(value.ordinal());
+	}
+	
+	/**
 	 * Writes a signed integer as a dword (four bytes). If the given value is not from the interval
 	 * [{@link java.lang.Integer#MIN_VALUE}; {@link java.lang.Integer#MAX_VALUE}], then it is
 	 * increased/decreased to fit.

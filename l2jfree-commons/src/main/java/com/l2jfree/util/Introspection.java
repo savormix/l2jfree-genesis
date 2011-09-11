@@ -18,6 +18,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 
+import javax.persistence.Column;
+
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * This class provides advanced object status reporting capabilities. <BR>
  * <BR>
@@ -170,7 +174,13 @@ public final class Introspection
 				init = false;
 			else if (eol == null)
 				dest.append(", ");
-			dest.append(f.getName());
+			String fieldName = null;
+			final Column column = f.getAnnotation(Column.class);
+			if (column != null)
+				fieldName = column.name();
+			if (StringUtils.isEmpty(fieldName))
+				fieldName = f.getName();
+			dest.append(fieldName);
 			dest.append(" = ");
 			try
 			{
