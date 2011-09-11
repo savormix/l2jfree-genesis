@@ -12,11 +12,15 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.gameobjects;
+package com.l2jfree.gameserver.gameobjects.components;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.l2jfree.gameserver.gameobjects.IObjectKnownList;
+import com.l2jfree.gameserver.gameobjects.L2Object;
+import com.l2jfree.gameserver.gameobjects.ObjectPosition;
 
 /**
  * @author NB4L1

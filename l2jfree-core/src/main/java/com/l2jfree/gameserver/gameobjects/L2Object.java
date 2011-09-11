@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.gameobjects;
 
+import com.l2jfree.gameserver.gameobjects.components.ComponentFactory;
 import com.l2jfree.gameserver.templates.L2Template;
 import com.l2jfree.gameserver.world.L2World;
 import com.l2jfree.lang.L2TextBuilder;

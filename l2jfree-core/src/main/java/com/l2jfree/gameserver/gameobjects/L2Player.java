@@ -16,6 +16,7 @@ package com.l2jfree.gameserver.gameobjects;
 
 import com.l2jfree.gameserver.datatables.PlayerNameTable;
 import com.l2jfree.gameserver.datatables.PlayerTemplateTable;
+import com.l2jfree.gameserver.gameobjects.components.ComponentFactory;
 import com.l2jfree.gameserver.gameobjects.player.PlayerAppearance;
 import com.l2jfree.gameserver.gameobjects.player.PlayerKnownList;
 import com.l2jfree.gameserver.network.client.Disconnection;
