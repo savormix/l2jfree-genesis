@@ -44,7 +44,6 @@ public class RequestCharacterPreviousState extends L2ClientPacket
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		sendPacket(new AvailableCharacters(getClient()));
-		sendActionFailed();
 	}
 	
 }

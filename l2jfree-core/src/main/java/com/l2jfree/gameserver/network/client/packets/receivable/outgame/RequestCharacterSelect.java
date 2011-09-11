@@ -60,7 +60,6 @@ public class RequestCharacterSelect extends L2ClientPacket
 		if (player == null)
 		{
 			_log.fatal(getClient() + ": player couldn't be loaded (slot:" + _charSlot + ")");
-			sendActionFailed();
 			return;
 		}
 		
@@ -80,6 +79,5 @@ public class RequestCharacterSelect extends L2ClientPacket
 		
 		getClient().setState(L2ClientState.LOGGED_IN);
 		sendPacket(new CharacterSelected(getClient().getSessionId()));
-		sendActionFailed();
 	}
 }

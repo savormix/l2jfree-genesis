@@ -15,7 +15,6 @@
 package com.l2jfree.gameserver.network.client.packets;
 
 import com.l2jfree.gameserver.network.client.L2Client;
-import com.l2jfree.gameserver.network.client.packets.sendable.ActionFailed;
 import com.l2jfree.network.mmocore.ReceivablePacket;
 
 /**
@@ -25,8 +24,8 @@ import com.l2jfree.network.mmocore.ReceivablePacket;
  */
 public abstract class L2ClientPacket extends ReceivablePacket<L2Client, L2ClientPacket, L2ServerPacket>
 {
-	protected final boolean sendActionFailed()
-	{
-		return sendPacket(ActionFailed.STATIC_PACKET);
-	}
+	// it's high time we tested when AF is really needed:
+	// after every Action packet, regardless of result (so send in packet handler, not in NPC or elsewhere)
+	// ...?
+	// ...?
 }

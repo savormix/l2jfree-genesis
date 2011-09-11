@@ -17,11 +17,18 @@ package com.l2jfree.gameserver.network.client.packets.sendable;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 
 /**
- * @author hex1r0
+ * A wrapper/marker class for packets with minimal mutability. All meaningful mutations are
+ * instanced in advance.<BR>
+ * <BR>
+ * Subclasses of this packet must meet the following criteria:
+ * <UL>
+ * <LI>Private constructor</LI>
+ * <LI>Public static final field <TT>PACKET</TT> of type <TT>&lt;? extends StaticPacket&gt;</TT></LI>
+ * OR
+ * <LI>Public static final fields of type <TT>&lt;? extends StaticPacket&gt;</TT></LI>
+ * </UL>
  */
 public abstract class StaticPacket extends L2ServerPacket
 {
-	protected StaticPacket()
-	{
-	}
+	// marker class
 }

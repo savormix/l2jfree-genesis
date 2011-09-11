@@ -22,8 +22,9 @@ import java.util.List;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
-import com.l2jfree.gameserver.network.client.packets.sendable.LeaveWorld;
+import com.l2jfree.gameserver.network.client.packets.sendable.LeaveWorld.CloseClient;
 import com.l2jfree.gameserver.network.client.packets.sendable.ServerClose;
+import com.l2jfree.gameserver.network.client.packets.sendable.ServerCloseSocketPacket.ConnectionTerminated;
 import com.l2jfree.gameserver.sql.PlayerDB;
 import com.l2jfree.lang.L2TextBuilder;
 import com.l2jfree.network.mmocore.DataSizeHolder;
@@ -74,9 +75,6 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	@Override
 	protected boolean decipher(ByteBuffer buf, DataSizeHolder size)
 	{
-		if (getCipher() == null) // wait till cipher initializes
-			return false;
-		
 		if (isFirstTime())
 			return true;
 		
@@ -89,9 +87,6 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	@Override
 	protected boolean encipher(ByteBuffer buf, int size)
 	{
-		if (getCipher() == null) // wait till cipher initializes
-			return false;
-		
 		if (isFirstTime())
 			setFirstTime(false);
 		else
@@ -148,7 +143,7 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	
 	public synchronized void close(boolean toLoginScreen)
 	{
-		close(toLoginScreen ? ServerClose.STATIC_PACKET : LeaveWorld.STATIC_PACKET);
+		close(toLoginScreen ? ServerClose.PACKET : CloseClient.PACKET);
 	}
 	
 	@Override
@@ -174,7 +169,7 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	@Override
 	protected L2ServerPacket getDefaultClosePacket()
 	{
-		return LeaveWorld.STATIC_PACKET;
+		return ConnectionTerminated.PACKET;
 	}
 	
 	@Override

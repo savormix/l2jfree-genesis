@@ -24,211 +24,241 @@ import com.l2jfree.gameserver.templates.player.PlayerBaseTemplate;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
- * @author hex1r0
+ * @author savormix (generated)
  */
-public class UserInfo extends L2ServerPacket
+public abstract class UserInfo extends L2ServerPacket
 {
-	@Override
-	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
+	/**
+	 * A nicer name for {@link UserInfo}.
+	 * 
+	 * @author savormix (generated)
+	 * @see UserInfo
+	 */
+	public static final class MyPlayerInfo extends UserInfo
 	{
-		final PlayerAppearance appearance = activeChar.getAppearance();
-		final ObjectPosition position = activeChar.getPosition();
-		final L2PlayerTemplate template = activeChar.getTemplate();
-		final PlayerBaseTemplate baseTemplate = template.getPlayerBaseTemplate(appearance.getGender());
-		
-		buf.writeD(position.getX());
-		buf.writeD(position.getY());
-		buf.writeD(position.getZ());
-		// TODO
-		/*if (_activeChar.getVehicle() != null)
-			buf.writeD(activeChar.getVehicle().getObjectId());
-		else*/
-		buf.writeD(0);
-		buf.writeD(activeChar.getObjectId());
-		buf.writeS(activeChar.getName());
-		buf.writeD(baseTemplate.getRace());
-		buf.writeD(appearance.getGender());
-		// TODO
-		//if (_activeChar.getClassIndex() == 0) writeD(_activeChar.getClassId().getId());
-		buf.writeD(template.getClassId().getId());
-		buf.writeD(5); // TODO activeChar.getLevel();
-		buf.writeQ(5); // TODO activeChar.getExp();
-		buf.writeF(5); // TODO High Five exp %
-		
-		buf.writeD(5);// TODO activeChar.getSTR());
-		buf.writeD(5);// TODO activeChar.getDEX());
-		buf.writeD(5);// TODO activeChar.getCON());
-		buf.writeD(5);// TODO activeChar.getINT());
-		buf.writeD(5);// TODO activeChar.getWIT());
-		buf.writeD(5);// TODO activeChar.getMEN());
-		
-		buf.writeD(5);// TODO activeChar.getMaxVisibleHp());
-		buf.writeD(5);// TODO (int) activeChar.getCurrentHp());
-		buf.writeD(5);// TODO activeChar.getMaxMp());
-		buf.writeD(5);// TODO (int) activeChar.getCurrentMp());
-		buf.writeD(5);// TODO activeChar.getSp());
-		
-		buf.writeD(5);// TODO activeChar.getCurrentLoad());
-		buf.writeD(5);// TODO activeChar.getMaxLoad());
-		
-		buf.writeD(/*_activeChar.getActiveWeaponItem() != null ? 40 :*/20); // 20 no weapon, 40 weapon equipped
-		
-		// TODO PaperdollObjectId
-		for (int i = 0; i < 26; i++)
-			buf.writeD(0);
-		
-		// TODO PaperdollItemId
-		for (int i = 0; i < 26; i++)
-			buf.writeD(0);
-		
-		// TODO PaperdollAugmentationId
-		for (int i = 0; i < 26; i++)
-			buf.writeD(0);
-		
-		buf.writeD(0);// TODO activeChar.getInventory().getMaxTalismanCount()); // CT2.3
-		buf.writeD(0);// TODO activeChar.getInventory().getCloakStatus()); // CT2.3
-		buf.writeD(5);// TODO activeChar.getPAtk(null));
-		buf.writeD(5);// TODO activeChar.getPAtkSpd());
-		buf.writeD(5);// TODO activeChar.getPDef(null));
-		buf.writeD(5);// TODO activeChar.getEvasionRate(null));
-		buf.writeD(5);// TODO activeChar.getAccuracy());
-		buf.writeD(5);// TODO activeChar.getCriticalHit(null, null));
-		buf.writeD(5);// TODO activeChar.getMAtk(null, null));
-		
-		buf.writeD(5);// TODO activeChar.getMAtkSpd());
-		buf.writeD(5);// TODO activeChar.getPAtkSpd());
-		
-		buf.writeD(5);// TODO activeChar.getMDef(null, null));
-		
-		buf.writeD(0);// TODO activeChar.getPvpFlag()); // 0-non-pvp  1-pvp = violett name
-		buf.writeD(5);// TODO activeChar.getKarma());
-		
-		buf.writeD(baseTemplate.getRunSpeed()); // TODO Math.round((_activeChar.getRunSpeed() / _moveMultiplier));
-		buf.writeD(baseTemplate.getWalkSpeed());// TODO
-		buf.writeD(baseTemplate.getRunSpeedInWater()); // // TODO 
-		buf.writeD(baseTemplate.getWalkSpeedInWater()); // TODO
-		buf.writeD(0);
-		buf.writeD(0);
-		buf.writeD(0);// TODO activeChar.isFlying() ? _runSpd : 0); // fly speed
-		buf.writeD(0);// TODO activeChar.isFlying() ? _walkSpd : 0); // fly speed
-		buf.writeF(1); /// TODO activeChar.getMovementSpeedMultiplier()
-		buf.writeF(1);// TODO activeChar.getAttackSpeedMultiplier());
-		
-		/*if (_activeChar.getMountType() != 0 && pet != null)
+		/**
+		 * Constructs this packet.
+		 * 
+		 * @see UserInfo#UserInfo()
+		 */
+		public MyPlayerInfo()
 		{
-			writeF(pet.getTemplate().fCollisionRadius);
-			writeF(pet.getTemplate().fCollisionHeight);
 		}
-		else if ((trans = _activeChar.getTransformation()) != null)
-		{
-			writeF(trans.getCollisionRadius());
-			writeF(trans.getCollisionHeight());
-		}
-		else*/
-		{
-			buf.writeF(baseTemplate.getCollisionRadius());
-			buf.writeF(baseTemplate.getCollisionHeight());
-		}
-		
-		buf.writeD(appearance.getHairStyle());
-		buf.writeD(appearance.getHairColor());
-		buf.writeD(appearance.getFace());
-		buf.writeD(0); // TODO _activeChar.isGM()
-		
-		buf.writeS(activeChar.getTitle());
-		
-		buf.writeD(0);//TODO _activeChar.getClanId());
-		buf.writeD(0);//TODO _activeChar.getClanCrestId());
-		buf.writeD(0);//TODO _activeChar.getAllyId());
-		buf.writeD(0);//TODO _activeChar.getAllyCrestId()); // ally crest id
-		// 0x40 leader rights
-		// siege flags: attacker - 0x180 sword over name, defender - 0x80 shield, 0xC0 crown (|leader), 0x1C0 flag (|leader)
-		buf.writeD(0);
-		buf.writeC(0);//TODO _activeChar.getMountType()); // mount type
-		buf.writeC(0);//TODO _activeChar.getPrivateStoreType());
-		buf.writeC(0);//TODO _activeChar.hasDwarvenCraft() ? 1 : 0);
-		buf.writeD(0);//TODO _activeChar.getPkKills());
-		buf.writeD(0);//TODO _activeChar.getPvpKills());
-		
-		buf.writeH(0);//TODO _activeChar.getCubics().size());
-		/*for (int id : _activeChar.getCubics().keySet())
-			buf.writeH(id);*/
-		
-		buf.writeC(0);//TODO _activeChar.isInPartyMatchRoom() ? 1 : 0);
-		
-		/*if (_activeChar.getAppearance().getInvisible() && _activeChar.isGM())
-			buf.writeD(0);//TODO _activeChar.getAbnormalEffect() | AbnormalEffect.STEALTH.getMask());
-		else*/
-		buf.writeD(0);//TODO _activeChar.getAbnormalEffect());
-		buf.writeC(0);//TODO _activeChar.isFlyingMounted() ? 2 : 0);
-		
-		buf.writeD(0);//TODO _activeChar.getClanPrivileges());
-		
-		buf.writeH(0);//TODO activeChar.getRecomLeft()); //c2  recommendations remaining
-		buf.writeH(0);//TODO activeChar.getRecomHave()); //c2  recommendations received
-		buf.writeD(0);//TODO activeChar.getMountNpcId() > 0 ? _activeChar.getMountNpcId() + 1000000 : 0);
-		buf.writeH(0);//TODO activeChar.getInventoryLimit());
-		
-		buf.writeD(template.getClassId().getId());
-		buf.writeD(0x00); // special effects? circles around player...
-		buf.writeD(100);//TODO activeChar.getMaxCp());
-		buf.writeD(50);//TODO activeChar.getCurrentCp());
-		buf.writeC(0);//TODO activeChar.isMounted() || _airShipHelm != 0 ? 0 : _activeChar.getEnchantEffect());
-		
-		/*if (_activeChar.getTeam() == 1)
-			buf.writeC(0x01); //team circle around feet 1= Blue, 2 = red
-		else if (_activeChar.getTeam() == 2)
-			buf.writeC(0x02); //team circle around feet 1= Blue, 2 = red
-		else*/
-		buf.writeC(0x00); //team circle around feet 1= Blue, 2 = red
-		
-		buf.writeD(0);//TODO activeChar.getClanCrestLargeId());
-		buf.writeC(0);//TODO activeChar.isNoble() ? 1 : 0); //0x01: symbol on char menu ctrl+I
-		buf.writeC(0);//TODO activeChar.isHero() || (_activeChar.isGM() && Config.GM_HERO_AURA) ? 1 : 0); //0x01: Hero Aura
-		
-		buf.writeC(0);//TODO activeChar.isFishing() ? 1 : 0); //Fishing Mode
-		buf.writeD(0);//TODO activeChar.getFishx()); //fishing x
-		buf.writeD(0);//TODO activeChar.getFishy()); //fishing y
-		buf.writeD(0);//TODO activeChar.getFishz()); //fishing z
-		buf.writeD(0);//TODO activeChar.getAppearance().getNameColor());
-		
-		//new c5
-		buf.writeC(0);//TODO activeChar.isRunning() ? 0x01 : 0x00); //changes the Speed display on Status Window
-		
-		buf.writeD(0);//TODO activeChar.getPledgeClass()); //changes the text above CP on Status Window
-		buf.writeD(0);//TODO activeChar.getPledgeType());
-		
-		buf.writeD(0);//TODO activeChar.getAppearance().getTitleColor());
-		
-		/*if (_activeChar.isCursedWeaponEquipped())
-			buf.writeD(CursedWeaponsManager.getInstance().getLevel(_activeChar.getCursedWeaponEquippedId()));
-		else*/
-		buf.writeD(0x00);
-		
-		// T1 Starts
-		buf.writeD(0);//TODO activeChar.getTransformationId());
-		
-		buf.writeH(0); //byte attackAttribute = _activeChar.getAttackElement();
-		buf.writeH(0);// TODO activeChar.getAttackElementValue(attackAttribute));
-		buf.writeH(0);// TODO activeChar.getDefenseElementValue(Elementals.FIRE));
-		buf.writeH(0);// TODO activeChar.getDefenseElementValue(Elementals.WATER));
-		buf.writeH(0);// TODO activeChar.getDefenseElementValue(Elementals.WIND));
-		buf.writeH(0);// TODO activeChar.getDefenseElementValue(Elementals.EARTH));
-		buf.writeH(0);// TODO activeChar.getDefenseElementValue(Elementals.HOLY));
-		buf.writeH(0);// TODO activeChar.getDefenseElementValue(Elementals.DARK));
-		
-		buf.writeD(0);// TODO activeChar.getAgathionId());
-		
-		// T2 Starts
-		buf.writeD(0);// TODO activeChar.getFame()); // Fame
-		buf.writeD(0);// TODO activeChar.isMinimapAllowed() ? 1 : 0); // Minimap on Hellbound
-		buf.writeD(0);// TODO activeChar.getVitalityPoints()); // Vitality Points
-		buf.writeD(0);// TODO activeChar.getSpecialEffect());
+	}
+	
+	/** Constructs this packet. */
+	public UserInfo()
+	{
 	}
 	
 	@Override
 	protected int getOpcode()
 	{
 		return 0x32;
+	}
+	
+	@Override
+	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
+	{
+		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		
+		// FIXME: use views to provide data reliably or no longer applicable?
+		final PlayerAppearance appearance = activeChar.getAppearance();
+		final ObjectPosition position = activeChar.getPosition();
+		final L2PlayerTemplate template = activeChar.getTemplate();
+		final PlayerBaseTemplate baseTemplate = template.getPlayerBaseTemplate(appearance.getGender());
+		
+		buf.writeD(position.getX()); // Location X
+		buf.writeD(position.getY()); // Location Y
+		buf.writeD(position.getZ()); // Location Z
+		buf.writeD(0); // Vehicle OID
+		buf.writeD(activeChar.getObjectId()); // My OID
+		buf.writeS(activeChar.getName()); // Name
+		buf.writeD(baseTemplate.getRace()); // Race
+		buf.writeD(appearance.getGender()); // Sex
+		buf.writeD(template.getClassId().getId()); // Main class
+		buf.writeD(1); // Level
+		buf.writeQ(0L); // XP
+		buf.writeF(0D); // XP %
+		buf.writeD(1); // STR
+		buf.writeD(1); // DEX
+		buf.writeD(1); // CON
+		buf.writeD(1); // INT
+		buf.writeD(1); // WIT
+		buf.writeD(1); // MEN
+		buf.writeD(100); // Maximum HP
+		buf.writeD(100); // Current HP
+		buf.writeD(30); // Maximum MP
+		buf.writeD(30); // Current MP
+		buf.writeD(0); // SP
+		buf.writeD(0); // Current carried weight
+		buf.writeD(1); // Maximum carried weight
+		buf.writeD(20); // Weapon status
+		buf.writeD(0); // Shirt OID
+		buf.writeD(0); // Right earring OID
+		buf.writeD(0); // Left earring OID
+		buf.writeD(0); // Necklace OID
+		buf.writeD(0); // Right ring OID
+		buf.writeD(0); // Left ring OID
+		buf.writeD(0); // Helmet OID
+		buf.writeD(0); // Main weapon OID
+		buf.writeD(0); // Shield/support weapon OID
+		buf.writeD(0); // Gloves OID
+		buf.writeD(0); // Chest armor OID
+		buf.writeD(0); // Leg armor OID
+		buf.writeD(0); // Boots OID
+		buf.writeD(0); // Cloak OID
+		buf.writeD(0); // Two-handed weapon OID
+		buf.writeD(0); // 1st hair item OID
+		buf.writeD(0); // 2nd hair item OID
+		buf.writeD(0); // Right bracelet OID
+		buf.writeD(0); // Left bracelet OID
+		buf.writeD(0); // 1st talisman OID
+		buf.writeD(0); // 2nd talisman OID
+		buf.writeD(0); // 3rd talisman OID
+		buf.writeD(0); // 4th talisman OID
+		buf.writeD(0); // 5th talisman OID
+		buf.writeD(0); // 6th talisman OID
+		buf.writeD(0); // Belt OID
+		buf.writeD(0); // Shirt
+		buf.writeD(0); // Right earring
+		buf.writeD(0); // Left earring
+		buf.writeD(0); // Necklace
+		buf.writeD(0); // Right ring
+		buf.writeD(0); // Left ring
+		buf.writeD(0); // Helmet
+		buf.writeD(0); // Main weapon
+		buf.writeD(0); // Shield/support weapon
+		buf.writeD(0); // Gloves
+		buf.writeD(0); // Chest armor
+		buf.writeD(0); // Leg armor
+		buf.writeD(0); // Boots
+		buf.writeD(0); // Cloak
+		buf.writeD(0); // Two-handed weapon
+		buf.writeD(0); // 1st hair item
+		buf.writeD(0); // 2nd hair item
+		buf.writeD(0); // Right bracelet
+		buf.writeD(0); // Left bracelet
+		buf.writeD(0); // 1st talisman
+		buf.writeD(0); // 2nd talisman
+		buf.writeD(0); // 3rd talisman
+		buf.writeD(0); // 4th talisman
+		buf.writeD(0); // 5th talisman
+		buf.writeD(0); // 6th talisman
+		buf.writeD(0); // Belt
+		buf.writeD(0); // Shirt augmentation
+		buf.writeD(0); // Right earring augmentation
+		buf.writeD(0); // Left earring augmentation
+		buf.writeD(0); // Necklace augmentation
+		buf.writeD(0); // Right ring augmentation
+		buf.writeD(0); // Left ring augmentation
+		buf.writeD(0); // Helmet augmentation
+		buf.writeD(0); // Main weapon augmentation
+		buf.writeD(0); // Shield/support weapon augmentation
+		buf.writeD(0); // Gloves augmentation
+		buf.writeD(0); // Chest armor augmentation
+		buf.writeD(0); // Leg armor augmentation
+		buf.writeD(0); // Boots augmentation
+		buf.writeD(0); // Cloak augmentation
+		buf.writeD(0); // Two-handed weapon augmentation
+		buf.writeD(0); // 1st hair item augmentation
+		buf.writeD(0); // 2nd hair item augmentation
+		buf.writeD(0); // Right bracelet augmentation
+		buf.writeD(0); // Left bracelet augmentation
+		buf.writeD(0); // 1st talisman augmentation
+		buf.writeD(0); // 2nd talisman augmentation
+		buf.writeD(0); // 3rd talisman augmentation
+		buf.writeD(0); // 4th talisman augmentation
+		buf.writeD(0); // 5th talisman augmentation
+		buf.writeD(0); // 6th talisman augmentation
+		buf.writeD(0); // Belt augmentation
+		buf.writeD(0); // Talisman slots
+		buf.writeD(0); // Can equip cloak
+		buf.writeD(1); // P. Atk.
+		buf.writeD(100); // Attack speed
+		buf.writeD(1); // P. Def.
+		buf.writeD(1); // Evasion
+		buf.writeD(1); // Accuracy
+		buf.writeD(1); // Critical
+		buf.writeD(1); // M. Atk.
+		buf.writeD(111); // Casting speed
+		buf.writeD(100); // Attack speed (dupe)
+		buf.writeD(1); // M. Def.
+		buf.writeD(0); // In PvP
+		buf.writeD(0); // Karma
+		buf.writeD(baseTemplate.getRunSpeed()); // Running speed (on ground)
+		buf.writeD(baseTemplate.getWalkSpeed()); // Walking speed (on ground)
+		buf.writeD(baseTemplate.getRunSpeedInWater()); // Running speed (in water)
+		buf.writeD(baseTemplate.getWalkSpeedInWater()); // Walking speed (in water)
+		buf.writeD(0); // Running speed (in air) ???
+		buf.writeD(0); // Walking speed (in air) ???
+		buf.writeD(0); // Running speed (in air) while mounted?
+		buf.writeD(0); // Walking speed (in air) while mounted?
+		buf.writeF(1D); // Movement speed multiplier
+		buf.writeF(1D); // Attack speed multiplier
+		buf.writeF(baseTemplate.getCollisionRadius()); // Collision radius
+		buf.writeF(baseTemplate.getCollisionHeight()); // Collision height
+		buf.writeD(appearance.getHairStyle()); // Hair style
+		buf.writeD(appearance.getHairColor()); // Hair color
+		buf.writeD(appearance.getFace()); // Face
+		buf.writeD(0); // Game Master
+		buf.writeS(activeChar.getTitle()); // Title
+		buf.writeD(0); // Pledge ID
+		buf.writeD(0); // Pledge crest ID
+		buf.writeD(0); // Alliance ID
+		buf.writeD(0); // Alliance crest ID
+		buf.writeD(0); // Siege participation
+		buf.writeC(0); // Mount type
+		buf.writeC(0); // Private store
+		buf.writeC(0); // Can use dwarven recipes
+		buf.writeD(0); // PK Count
+		buf.writeD(0); // PvP Count
+		final int sizeA = 0; // Cubic count
+		buf.writeH(sizeA);
+		for (int i = 0; i < sizeA; i++)
+		{
+			buf.writeH(0); // Cubic
+		}
+		buf.writeC(0); // Looking for party
+		buf.writeD(0); // Abnormal effect
+		buf.writeC(0); // Flying with mount
+		buf.writeD(0); // Pledge privileges
+		buf.writeH(0); // Recomendations
+		buf.writeH(0); // Evaluation score
+		buf.writeD(0); // Mount
+		buf.writeH(10); // Inventory slots
+		buf.writeD(template.getClassId().getId()); // Current class
+		buf.writeD(0); // 0
+		buf.writeD(80); // Maximum CP
+		buf.writeD(80); // Current CP
+		buf.writeC(0); // Weapon enchant glow
+		buf.writeC(0); // Duel team
+		buf.writeD(0); // Pledge insignia ID
+		buf.writeC(0); // Noble
+		buf.writeC(0); // Hero
+		buf.writeC(0); // Fishing
+		buf.writeD(0); // Fishing lure X
+		buf.writeD(0); // Fishing lure Y
+		buf.writeD(0); // Fishing lure Z
+		buf.writeD(0); // Name color
+		buf.writeC(0); // Moving
+		buf.writeD(0); // Pledge rank
+		buf.writeD(0); // Pledge unit
+		buf.writeD(0); // Title color
+		buf.writeD(0); // Cursed weapon level
+		buf.writeD(0); // Transformation
+		buf.writeH(0); // Attack element
+		buf.writeH(0); // Attack element power
+		buf.writeH(0); // Fire defense
+		buf.writeH(0); // Water defense
+		buf.writeH(0); // Wind defense
+		buf.writeH(0); // Earth defense
+		buf.writeH(0); // Holy defense
+		buf.writeH(0); // Dark defense
+		buf.writeD(0); // Agathion
+		buf.writeD(0); // Fame
+		buf.writeD(0); // Can use minimap
+		buf.writeD(0); // Vitality
+		buf.writeD(0); // Special effect
 	}
 }

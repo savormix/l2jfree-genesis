@@ -57,7 +57,6 @@ public class RequestCharacterDelete extends L2ClientPacket
 		//sendPacket(new CharacterDeleteFail(REASON_CLAN_LEADERS_MAY_NOT_BE_DELETED));
 		
 		sendPacket(new AvailableCharacters(getClient()));
-		sendActionFailed();
 	}
 	
 }

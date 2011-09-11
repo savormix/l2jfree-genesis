@@ -15,12 +15,18 @@
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
 /**
- * @author NB4L1
+ * @author savormix (generated)
  */
 public class ServerClose extends StaticPacket
 {
-	public static final ServerClose STATIC_PACKET = new ServerClose();
-	
+	/** This packet. */
+	public static final ServerClose PACKET = new ServerClose();
+
+	/** Constructs this packet. */
+	private ServerClose()
+	{
+	}
+
 	@Override
 	protected int getOpcode()
 	{

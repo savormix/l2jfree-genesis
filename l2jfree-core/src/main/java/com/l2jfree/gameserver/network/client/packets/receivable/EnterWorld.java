@@ -19,7 +19,7 @@ import java.nio.BufferUnderflowException;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
-import com.l2jfree.gameserver.network.client.packets.sendable.UserInfo;
+import com.l2jfree.gameserver.network.client.packets.sendable.UserInfo.MyPlayerInfo;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
@@ -48,7 +48,7 @@ public class EnterWorld extends L2ClientPacket
 	{
 		// TODO
 		
-		sendPacket(new UserInfo());
+		sendPacket(new MyPlayerInfo());
 		
 		// Welcome to Lineage 2, temp solution ^)
 		sendPacket(new L2ServerPacket() {

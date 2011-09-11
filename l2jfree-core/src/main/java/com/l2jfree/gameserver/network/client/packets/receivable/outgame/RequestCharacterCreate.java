@@ -148,6 +148,5 @@ public class RequestCharacterCreate extends L2ClientPacket
 		}
 		
 		sendPacket(CharacterCreateSuccess.STATIC_PACKET);
-		sendActionFailed();
 	}
 }

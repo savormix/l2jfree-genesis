@@ -19,7 +19,7 @@ import java.nio.BufferUnderflowException;
 import com.l2jfree.gameserver.network.client.Disconnection;
 import com.l2jfree.gameserver.network.client.L2ClientState;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
-import com.l2jfree.gameserver.network.client.packets.sendable.RestartResponse;
+import com.l2jfree.gameserver.network.client.packets.sendable.RestartResponsePacket.RestartResult;
 import com.l2jfree.gameserver.network.client.packets.sendable.outgame.AvailableCharacters;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
@@ -48,7 +48,7 @@ public class RequestRestart extends L2ClientPacket
 	{
 		// TODO
 		
-		sendPacket(RestartResponse.SUCCESS);
+		sendPacket(RestartResult.ALLOWED);
 		
 		new Disconnection(getClient()).storeAndRemoveFromWorld();
 		

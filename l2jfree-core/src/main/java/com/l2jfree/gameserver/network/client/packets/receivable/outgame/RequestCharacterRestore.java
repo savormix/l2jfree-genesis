@@ -51,7 +51,6 @@ public class RequestCharacterRestore extends L2ClientPacket
 	{
 		// TODO mark character undeleted
 		sendPacket(new AvailableCharacters(getClient()));
-		sendActionFailed();
 	}
 	
 }

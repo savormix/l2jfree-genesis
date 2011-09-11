@@ -15,11 +15,35 @@
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
 /**
- * @author hex1r0
+ * @author savormix (generated)
  */
-public class LeaveWorld extends StaticPacket
+public abstract class LeaveWorld extends StaticPacket
 {
-	public static final LeaveWorld STATIC_PACKET = new LeaveWorld();
+	/**
+	 * A nicer name for {@link LeaveWorld}.
+	 * 
+	 * @author savormix (generated)
+	 * @see LeaveWorld
+	 */
+	public static final class CloseClient extends LeaveWorld
+	{
+		/** This packet. */
+		public static final CloseClient PACKET = new CloseClient();
+		
+		/**
+		 * Constructs this packet.
+		 * 
+		 * @see LeaveWorld#LeaveWorld()
+		 */
+		private CloseClient()
+		{
+		}
+	}
+	
+	/** Constructs this packet. */
+	public LeaveWorld()
+	{
+	}
 	
 	@Override
 	protected int getOpcode()
