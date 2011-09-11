@@ -48,7 +48,7 @@ public class EnterWorld extends L2ClientPacket
 	{
 		// TODO
 		
-		sendPacket(new MyPlayerInfo());
+		sendPacket(MyPlayerInfo.PACKET);
 		
 		// Welcome to Lineage 2, temp solution ^)
 		sendPacket(new L2ServerPacket() {
