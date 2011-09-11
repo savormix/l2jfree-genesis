@@ -80,7 +80,8 @@ final class AcceptorThread<T extends MMOConnection<T, RP, SP>, RP extends Receiv
 				{
 					sc.configureBlocking(false);
 					
-					getMMOController().createClient(sc);
+					final T con = getMMOController().createClient(sc);
+					con.enableReadInterest();
 				}
 				else
 				{

@@ -142,6 +142,8 @@ public final class GameServer extends Config
 		
 		L2Config.applicationLoaded("l2jfree-core", CoreInfo.getFullVersionInfo(), SystemConfig.DUMP_HEAP_AFTER_STARTUP);
 		
+		// TODO remove the rest :D once in the distant future
+		
 		final String name = Rnd.getString(20, Rnd.LETTERS_AND_DIGITS);
 		final String accountName = Rnd.getString(20, Rnd.LETTERS_AND_DIGITS);
 		
@@ -159,6 +161,7 @@ public final class GameServer extends Config
 		for (IdRange idRange : IdRange.values())
 			System.out.println(idRange + ": " + ids.getNextId(idRange) + ", " + ids.getNextId(idRange));
 		
+		Util.printSection("find-and-update-playerdb");
 		final PlayerDB playerDB1 = PlayerDB.find(loaded.getObjectId());
 		
 		System.out.println(playerDB1);
@@ -170,5 +173,13 @@ public final class GameServer extends Config
 		
 		System.out.println(playerDB1);
 		System.out.println(playerDB2);
+		
+		Util.printSection("create-and-store-player");
+		final L2Player player = L2Player.create(Rnd.getString(10, Rnd.LETTERS), accountName, ClassId.HumanFighter);
+		
+		player.getPosition().setXYZ(Rnd.get(1000), Rnd.get(1000), Rnd.get(1000));
+		player.setName(Rnd.getString(10, Rnd.LETTERS));
+		
+		L2Player.store(player);
 	}
 }

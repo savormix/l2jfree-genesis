@@ -66,6 +66,7 @@ final class ConnectorThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 				}
 				
 				final T con = getMMOController().createClient(selectable);
+				con.enableReadInterest();
 				
 				for (;;)
 				{

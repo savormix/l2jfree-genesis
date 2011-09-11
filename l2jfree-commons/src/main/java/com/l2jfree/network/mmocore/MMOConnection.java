@@ -66,7 +66,7 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 		_socket = socketChannel.socket();
 		_inetAddress = _socket.getInetAddress();
 		_hostAddress = _inetAddress.getHostAddress();
-		_selectionKey = socketChannel.register(getReadWriteThread().getSelector(), SelectionKey.OP_READ);
+		_selectionKey = socketChannel.register(getReadWriteThread().getSelector(), 0);
 		_selectionKey.attach(this);
 		
 		UnauthedClientTimeoutChecker.getInstance().clientCreated(this);
@@ -96,6 +96,18 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 		{
 			// ignore
 			return false;
+		}
+	}
+	
+	final void enableReadInterest()
+	{
+		try
+		{
+			getSelectionKey().interestOps(getSelectionKey().interestOps() | SelectionKey.OP_READ);
+		}
+		catch (CancelledKeyException e)
+		{
+			// ignore
 		}
 	}
 	

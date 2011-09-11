@@ -30,6 +30,7 @@ import com.l2jfree.gameserver.util.IdFactory;
 import com.l2jfree.gameserver.util.IdFactory.IdRange;
 import com.l2jfree.gameserver.world.L2World;
 import com.l2jfree.sql.L2Database;
+import com.l2jfree.util.Rnd;
 
 /**
  * @author NB4L1
@@ -66,6 +67,12 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 			playerDB.hairColor = hairColor;
 			playerDB.hairStyle = hairStyle;
 			
+			// Position
+			playerDB.x = Rnd.get(1000);
+			playerDB.y = Rnd.get(1000);
+			playerDB.z = Rnd.get(1000);
+			playerDB.heading = Rnd.get(1000);
+			
 			L2Database.persist(playerDB);
 			
 			return new L2Player(playerDB);
@@ -94,6 +101,39 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 		{
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	public static void store(L2Player player)
+	{
+		try
+		{
+			final PlayerDB playerDB = new PlayerDB();
+			playerDB.objectId = player.getObjectId();
+			playerDB.name = player.getName();
+			playerDB.accountName = player.getAccountName();
+			playerDB.baseClassId = player.getBaseClassId();
+			playerDB.activeClassId = player.getActiveClassId();
+			
+			// Appearance
+			final PlayerAppearance appearance = player.getAppearance();
+			playerDB.gender = appearance.getGender();
+			playerDB.face = appearance.getFace();
+			playerDB.hairColor = appearance.getHairColor();
+			playerDB.hairStyle = appearance.getHairStyle();
+			
+			// Position
+			final ObjectPosition position = player.getPosition();
+			playerDB.x = position.getX();
+			playerDB.y = position.getY();
+			playerDB.z = position.getZ();
+			playerDB.heading = position.getHeading();
+			
+			L2Database.merge(playerDB);
+		}
+		catch (RuntimeException e)
+		{
+			e.printStackTrace();
 		}
 	}
 	
