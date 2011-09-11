@@ -78,6 +78,7 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 		if (isFirstTime())
 			return true;
 		
+		// at this point, cipher cannot be null
 		getCipher().decipher(buf, size.getSize());
 		
 		getDeobfuscator().decodeOpcodes(buf, size.getSize());
@@ -121,6 +122,19 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 		{
 			if (_disconnected)
 				return false;
+			
+			// the price of advertising an object before it's constructed
+			while (getCipher() == null)
+			{
+				try
+				{
+					Thread.sleep(10);
+				}
+				catch (InterruptedException e)
+				{
+					_log.error("", e);
+				}
+			}
 			
 			if (!sp.canBeSentTo(this, activeChar))
 				return false;
