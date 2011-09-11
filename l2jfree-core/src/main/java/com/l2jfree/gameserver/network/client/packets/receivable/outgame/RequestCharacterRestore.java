@@ -17,7 +17,7 @@ package com.l2jfree.gameserver.network.client.packets.receivable.outgame;
 import java.nio.BufferUnderflowException;
 
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
-import com.l2jfree.gameserver.network.client.packets.sendable.outgame.AvailableCharacters;
+import com.l2jfree.gameserver.network.client.packets.sendable.characterless.CharacterSelectionInfo.AvailableCharacters;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
@@ -52,5 +52,4 @@ public class RequestCharacterRestore extends L2ClientPacket
 		// TODO mark character undeleted
 		sendPacket(new AvailableCharacters(getClient()));
 	}
-	
 }

@@ -21,7 +21,7 @@ import com.l2jfree.gameserver.config.VersionConfig;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.L2ClientState;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
-import com.l2jfree.gameserver.network.client.packets.sendable.outgame.ProtocolAnswer;
+import com.l2jfree.gameserver.network.client.packets.sendable.characterless.VersionCheck.ProtocolAnswer;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 import com.l2jfree.util.Rnd;

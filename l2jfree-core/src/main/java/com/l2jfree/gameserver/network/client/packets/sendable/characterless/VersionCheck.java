@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.network.client.packets.sendable.outgame;
+package com.l2jfree.gameserver.network.client.packets.sendable.characterless;
 
 import java.nio.ByteBuffer;
 
@@ -22,14 +22,39 @@ import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
- * The original name was <TT>KeyPacket</TT>.
- * 
  * @author savormix
  */
-public final class ProtocolAnswer extends L2ServerPacket
+public abstract class VersionCheck extends L2ServerPacket
 {
-	/** Default response to unsupported protocol versions. */
-	public static final ProtocolAnswer INCOMPATIBLE = new ProtocolAnswer();
+	/**
+	 * A nicer name for {@link VersionCheck}.
+	 * 
+	 * @author savormix
+	 * @see VersionCheck
+	 */
+	public static final class ProtocolAnswer extends VersionCheck
+	{
+		/** Default response to unsupported protocol versions. */
+		public static final ProtocolAnswer INCOMPATIBLE = new ProtocolAnswer();
+		
+		/**
+		 * Constructs a packet to inform the client about protocol compatibility and keys to be used
+		 * in further communications.
+		 * 
+		 * @param key complete cipher's key
+		 * @param obfusKey client packet opcode obfuscation key
+		 */
+		public ProtocolAnswer(ByteBuffer key, int obfusKey)
+		{
+			super(true, key, obfusKey);
+		}
+		
+		/** Constructs a packet to inform the client about protocol incompatibility. */
+		private ProtocolAnswer()
+		{
+			super(false, ByteBuffer.allocate(CLIENT_KEY_LENGTH), 0);
+		}
+	}
 	
 	private static final int CLIENT_KEY_LENGTH = 8;
 	
@@ -41,34 +66,16 @@ public final class ProtocolAnswer extends L2ServerPacket
 	 * Constructs a packet to inform the client about protocol compatibility and keys to be used in
 	 * further communications.
 	 * 
-	 * @param key complete cipher's key
-	 * @param obfusKey client packet opcode obfuscation key
-	 */
-	public ProtocolAnswer(ByteBuffer key, int obfusKey)
-	{
-		this(true, key, obfusKey);
-	}
-	
-	/**
-	 * Constructs a packet to inform the client about protocol compatibility and keys to be used in
-	 * further communications.
-	 * 
 	 * @param compatible whether protocol versions are compatible
 	 * @param key complete cipher's key
 	 * @param obfusKey client packet opcode obfuscation key
 	 */
-	private ProtocolAnswer(boolean compatible, ByteBuffer key, int obfusKey)
+	private VersionCheck(boolean compatible, ByteBuffer key, int obfusKey)
 	{
 		_compatible = compatible;
 		_key = new byte[CLIENT_KEY_LENGTH];
 		key.get(_key, 0, _key.length);
 		_obfusKey = obfusKey;
-	}
-	
-	/** Constructs a packet to inform the client about protocol incompatibility. */
-	private ProtocolAnswer()
-	{
-		this(false, ByteBuffer.allocate(CLIENT_KEY_LENGTH), 0);
 	}
 	
 	@Override
@@ -78,7 +85,7 @@ public final class ProtocolAnswer extends L2ServerPacket
 	}
 	
 	@Override
-	protected void writeImpl(L2Client client, MMOBuffer buf)
+	protected void writeImpl(L2Client client, MMOBuffer buf) throws RuntimeException
 	{
 		buf.writeC(_compatible);
 		buf.writeB(_key);

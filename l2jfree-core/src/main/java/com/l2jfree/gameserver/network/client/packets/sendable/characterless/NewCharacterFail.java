@@ -12,24 +12,23 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.network.client.packets.sendable.outgame;
+package com.l2jfree.gameserver.network.client.packets.sendable.characterless;
 
-import com.l2jfree.gameserver.network.client.packets.sendable.StaticPacket;
+import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 
 /**
- * @author hex1r0
+ * @author savormix (generated)
  */
-public class CharacterDeleteSuccess extends StaticPacket
+public class NewCharacterFail extends L2ServerPacket
 {
-	public static final CharacterDeleteSuccess STATIC_PACKET = new CharacterDeleteSuccess();
-	
-	private CharacterDeleteSuccess()
+	/** Constructs this packet. */
+	public NewCharacterFail()
 	{
 	}
-	
+
 	@Override
 	protected int getOpcode()
 	{
-		return 0x1d;
+		return 0x0e;
 	}
 }

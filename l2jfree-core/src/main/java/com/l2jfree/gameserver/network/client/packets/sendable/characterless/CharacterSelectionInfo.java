@@ -12,14 +12,19 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.network.client.packets.sendable;
+package com.l2jfree.gameserver.network.client.packets.sendable.characterless;
 
-import com.l2jfree.gameserver.gameobjects.L2Player;
+import java.util.List;
+
+import com.l2jfree.gameserver.config.ReportedConfig;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
+import com.l2jfree.gameserver.sql.PlayerDB;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
+ * @author hex1r0
+ * @author NB4L1
  * @author savormix (generated)
  */
 public abstract class CharacterSelectionInfo extends L2ServerPacket
@@ -35,53 +40,67 @@ public abstract class CharacterSelectionInfo extends L2ServerPacket
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @see CharacterSelectionInfo#CharacterSelectionInfo()
+		 * @param client authorized client
+		 * @see CharacterSelectionInfo#CharacterSelectionInfo(L2Client)
 		 */
-		public AvailableCharacters()
+		public AvailableCharacters(L2Client client)
 		{
+			super(client);
 		}
 	}
-
-	/** Constructs this packet. */
-	public CharacterSelectionInfo()
+	
+	private final String _account;
+	private final int _sessionId;
+	private final List<PlayerDB> _players;
+	
+	/**
+	 * Constructs this packet.
+	 * 
+	 * @param client authorized client
+	 */
+	public CharacterSelectionInfo(L2Client client)
 	{
+		_sessionId = client.getSessionId(); // TODO: revise session stuff
+		_account = client.getAccountName();
+		_players = PlayerDB.findByAccount(_account); // FIXME: don't fetch the whole player only the required data
+		
+		client.definePlayerSlots(_players);
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0x09;
 	}
-
+	
 	@Override
-	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
+	protected void writeImpl(L2Client client, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		final int sizeA = 0; // Character count
-		buf.writeD(sizeA);
-		buf.writeD(0); // New characters
+		buf.writeD(_players.size()); // Character count
+		buf.writeD(7); // New characters
 		buf.writeC(0); // 0
-		for (int i = 0; i < sizeA; i++)
+		for (PlayerDB p : _players)
 		{
-			buf.writeS(""); // Character name
-			buf.writeD(0); // Character ID
-			buf.writeS(""); // Account name
-			buf.writeD(0); // Session ID
+			buf.writeS(p.name); // Character name
+			buf.writeD(0); // TODO: Character ID
+			buf.writeS(p.accountName); // Account name
+			buf.writeD(_sessionId); // Session ID
 			buf.writeD(0); // Pledge ID
 			buf.writeD(0); // 0
-			buf.writeD(0); // Sex
-			buf.writeD(0); // Race
-			buf.writeD(0); // Main class
-			buf.writeD(0); // Game server
-			buf.writeD(0); // Location X
-			buf.writeD(0); // Location Y
-			buf.writeD(0); // Location Z
-			buf.writeF(0D); // Current HP
-			buf.writeF(0D); // Current MP
+			buf.writeD(p.gender); // Sex
+			buf.writeD(p.baseClassId.getRace()); // Race
+			buf.writeD(p.baseClassId); // Main class
+			buf.writeD(ReportedConfig.ID); // Game server
+			buf.writeD(p.x); // Location X
+			buf.writeD(p.y); // Location Y
+			buf.writeD(p.z); // Location Z
+			buf.writeF(100D); // Current HP
+			buf.writeF(30D); // Current MP
 			buf.writeD(0); // SP
 			buf.writeQ(0L); // XP
 			buf.writeF(0D); // XP %
-			buf.writeD(0); // Level
+			buf.writeD(1); // Level
 			buf.writeD(0); // Karma
 			buf.writeD(0); // PK Count
 			buf.writeD(0); // PvP Count
@@ -118,14 +137,14 @@ public abstract class CharacterSelectionInfo extends L2ServerPacket
 			buf.writeD(0); // 5th talisman
 			buf.writeD(0); // 6th talisman
 			buf.writeD(0); // Belt
-			buf.writeD(0); // Hair style
-			buf.writeD(0); // Hair color
-			buf.writeD(0); // Face
-			buf.writeF(0D); // Maximum HP
-			buf.writeF(0D); // Maximum MP
+			buf.writeD(p.hairStyle); // Hair style
+			buf.writeD(p.hairColor); // Hair color
+			buf.writeD(p.face); // Face
+			buf.writeF(100D); // Maximum HP
+			buf.writeF(30D); // Maximum MP
 			buf.writeD(0); // Time of deletion
-			buf.writeD(0); // Current class
-			buf.writeD(0); // Selected
+			buf.writeD(p.activeClassId); // Current class
+			buf.writeD(1); // Selected
 			buf.writeC(0); // Weapon enchant glow
 			buf.writeD(0); // ??? 0
 			buf.writeD(0); // Transformation
@@ -135,7 +154,7 @@ public abstract class CharacterSelectionInfo extends L2ServerPacket
 			buf.writeD(0); // ??? Pet food
 			buf.writeF(0D); // Pet maximum HP
 			buf.writeF(0D); // Pet current HP
-			buf.writeD(0); // Vitality
+			buf.writeD(20000); // Vitality
 		}
 	}
 }

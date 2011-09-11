@@ -12,37 +12,29 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.network.client.packets.sendable.outgame;
+package com.l2jfree.gameserver.network.client.packets.sendable.characterless;
 
-import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.sendable.StaticPacket;
-import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
+ * Reports that a character was successfully marked for deletion.
+ * 
  * @author hex1r0
+ * @author savormix (generated)
  */
-public class CharacterDeleteFail extends StaticPacket
+public class CharacterDeleteSuccess extends StaticPacket
 {
-	public static final CharacterDeleteFail REASON_DELETION_FAILED = new CharacterDeleteFail(0x01);
-	public static final CharacterDeleteFail REASON_YOU_MAY_NOT_DELETE_CLAN_MEMBER = new CharacterDeleteFail(0x02);
-	public static final CharacterDeleteFail REASON_CLAN_LEADERS_MAY_NOT_BE_DELETED = new CharacterDeleteFail(0x03);
+	/** This packet. */
+	public static final CharacterDeleteSuccess PACKET = new CharacterDeleteSuccess();
 	
-	private final int _error;
-	
-	private CharacterDeleteFail(int error)
+	/** Constructs this packet. */
+	private CharacterDeleteSuccess()
 	{
-		_error = error;
 	}
 	
 	@Override
 	protected int getOpcode()
 	{
-		return 0x1e;
-	}
-	
-	@Override
-	protected void writeImpl(L2Client client, MMOBuffer buf) throws RuntimeException
-	{
-		buf.writeD(_error);
+		return 0x1d;
 	}
 }

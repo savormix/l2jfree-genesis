@@ -17,8 +17,8 @@ package com.l2jfree.gameserver.network.client.packets.receivable.outgame;
 import java.nio.BufferUnderflowException;
 
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
-import com.l2jfree.gameserver.network.client.packets.sendable.outgame.AvailableCharacters;
-import com.l2jfree.gameserver.network.client.packets.sendable.outgame.CharacterDeleteSuccess;
+import com.l2jfree.gameserver.network.client.packets.sendable.characterless.CharacterDeleteSuccess;
+import com.l2jfree.gameserver.network.client.packets.sendable.characterless.CharacterSelectionInfo.AvailableCharacters;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
@@ -50,7 +50,7 @@ public class RequestCharacterDelete extends L2ClientPacket
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		// TODO mark character to delete
-		sendPacket(CharacterDeleteSuccess.STATIC_PACKET);
+		sendPacket(CharacterDeleteSuccess.PACKET);
 		
 		//sendPacket(new CharacterDeleteFail(REASON_DELETION_FAILED));
 		//sendPacket(new CharacterDeleteFail(REASON_YOU_MAY_NOT_DELETE_CLAN_MEMBER));
@@ -58,5 +58,4 @@ public class RequestCharacterDelete extends L2ClientPacket
 		
 		sendPacket(new AvailableCharacters(getClient()));
 	}
-	
 }

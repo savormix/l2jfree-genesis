@@ -17,7 +17,7 @@ package com.l2jfree.gameserver.network.client.packets.receivable.outgame;
 import java.nio.BufferUnderflowException;
 
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
-import com.l2jfree.gameserver.network.client.packets.sendable.outgame.CharacterCreationScreenSuccess;
+import com.l2jfree.gameserver.network.client.packets.sendable.characterless.NewCharacterSuccess.CharacterTemplates;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
@@ -37,14 +37,20 @@ public class RequestCharacterCreationScreen extends L2ClientPacket
 	}
 	
 	@Override
+	protected int getMaximumLength()
+	{
+		return 0;
+	}
+	
+	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
-		//
+		// trigger packet
 	}
 	
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		sendPacket(CharacterCreationScreenSuccess.STATIC_PACKET);
+		sendPacket(CharacterTemplates.PACKET);
 	}
 }

@@ -19,9 +19,10 @@ import java.nio.BufferUnderflowException;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2ClientState;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
-import com.l2jfree.gameserver.network.client.packets.sendable.outgame.CharacterSelected;
+import com.l2jfree.gameserver.network.client.packets.sendable.characterless.CharacterSelectedPacket.SelectedCharacterInfo;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
+import com.l2jfree.util.Rnd;
 
 /**
  * This packet is sent when user pressed [Start]
@@ -77,7 +78,10 @@ public class RequestCharacterSelect extends L2ClientPacket
 		player.setClient(getClient());
 		player.addToWorld();
 		
+		final int seed = Rnd.nextInt();
+		getClient().getDeobfuscator().init(seed);
 		getClient().setState(L2ClientState.LOGGED_IN);
-		sendPacket(new CharacterSelected(getClient().getSessionId()));
+		
+		sendPacket(new SelectedCharacterInfo(seed));
 	}
 }

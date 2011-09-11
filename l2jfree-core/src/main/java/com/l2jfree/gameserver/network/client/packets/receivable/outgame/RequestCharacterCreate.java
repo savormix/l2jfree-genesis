@@ -20,8 +20,8 @@ import java.util.regex.Pattern;
 import com.l2jfree.gameserver.datatables.PlayerNameTable;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
-import com.l2jfree.gameserver.network.client.packets.sendable.outgame.CharacterCreateFail;
-import com.l2jfree.gameserver.network.client.packets.sendable.outgame.CharacterCreateSuccess;
+import com.l2jfree.gameserver.network.client.packets.sendable.characterless.CharCreateFail.CharacterCreateFailure;
+import com.l2jfree.gameserver.network.client.packets.sendable.characterless.CharCreateOk.CharacterCreateSuccess;
 import com.l2jfree.gameserver.templates.player.ClassId;
 import com.l2jfree.gameserver.templates.player.ClassLevel;
 import com.l2jfree.gameserver.templates.player.Gender;
@@ -94,7 +94,7 @@ public class RequestCharacterCreate extends L2ClientPacket
 		
 		if (classId == null || classId.getLevel() != ClassLevel.First)
 		{
-			sendPacket(CharacterCreateFail.REASON_CREATION_FAILED);
+			sendPacket(CharacterCreateFailure.UNSPECIFIED);
 			return;
 		}
 		else if (MAX_CHARACTERS_NUMBER_PER_ACCOUNT > 0
@@ -102,14 +102,14 @@ public class RequestCharacterCreate extends L2ClientPacket
 		{
 			if (_log.isDebugEnabled())
 				_log.debug("Max number of characters reached. Creation failed.");
-			sendPacket(CharacterCreateFail.REASON_TOO_MANY_CHARACTERS);
+			sendPacket(CharacterCreateFailure.LIMIT_REACHED);
 			return;
 		}
 		else if (!CNAME_PATTERN.matcher(_name).matches())
 		{
 			if (_log.isDebugEnabled())
 				_log.debug("charname: " + _name + " is invalid. creation failed.");
-			sendPacket(CharacterCreateFail.REASON_16_ENG_CHARS);
+			sendPacket(CharacterCreateFailure.TITLE_LENGTH);
 			return;
 		}
 		/*
@@ -129,7 +129,7 @@ public class RequestCharacterCreate extends L2ClientPacket
 			{
 				if (_log.isDebugEnabled())
 					_log.debug("charname: " + _name + " already exists. creation failed.");
-				sendPacket(CharacterCreateFail.REASON_NAME_ALREADY_EXISTS);
+				sendPacket(CharacterCreateFailure.NAME_EXISTS);
 				return;
 			}
 			
@@ -147,6 +147,6 @@ public class RequestCharacterCreate extends L2ClientPacket
 			player.removeFromWorld();
 		}
 		
-		sendPacket(CharacterCreateSuccess.STATIC_PACKET);
+		sendPacket(CharacterCreateSuccess.PACKET);
 	}
 }

@@ -41,18 +41,18 @@ public abstract class SSQInfoPacket extends L2ServerPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public SSQInfoPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0x73;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

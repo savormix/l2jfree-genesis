@@ -12,51 +12,53 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.network.client.packets.sendable;
+package com.l2jfree.gameserver.network.client.packets.sendable.characterless;
 
-import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
-import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
+import com.l2jfree.gameserver.network.client.packets.sendable.StaticPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
- * @author savormix (generated)
+ * Sent to report that a character has been successfully created.
+ * 
+ * @author savormix
  */
-public abstract class CharCreateOk extends L2ServerPacket
+public abstract class CharCreateOk extends StaticPacket
 {
 	/**
 	 * A nicer name for {@link CharCreateOk}.
 	 * 
-	 * @author savormix (generated)
+	 * @author savormix
 	 * @see CharCreateOk
 	 */
 	public static final class CharacterCreateSuccess extends CharCreateOk
 	{
+		public static final CharacterCreateSuccess PACKET = new CharacterCreateSuccess();
+		
 		/**
 		 * Constructs this packet.
 		 * 
 		 * @see CharCreateOk#CharCreateOk()
 		 */
-		public CharacterCreateSuccess()
+		private CharacterCreateSuccess()
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public CharCreateOk()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0x0f;
 	}
-
+	
 	@Override
-	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
+	protected void writeImpl(L2Client client, MMOBuffer buf) throws RuntimeException
 	{
-		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.writeD(0); // 1
+		buf.writeD(1); // 1
 	}
 }

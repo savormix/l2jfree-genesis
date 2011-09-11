@@ -24,6 +24,7 @@ import com.l2jfree.gameserver.templates.player.PlayerBaseTemplate;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
+ * @author hex1r0
  * @author savormix (generated)
  */
 public abstract class UserInfo extends L2ServerPacket
@@ -76,7 +77,7 @@ public abstract class UserInfo extends L2ServerPacket
 		buf.writeS(activeChar.getName()); // Name
 		buf.writeD(baseTemplate.getRace()); // Race
 		buf.writeD(appearance.getGender()); // Sex
-		buf.writeD(template.getClassId().getId()); // Main class
+		buf.writeD(template.getClassId()); // Main class
 		buf.writeD(1); // Level
 		buf.writeQ(0L); // XP
 		buf.writeF(0D); // XP %
@@ -258,7 +259,7 @@ public abstract class UserInfo extends L2ServerPacket
 		buf.writeD(0); // Agathion
 		buf.writeD(0); // Fame
 		buf.writeD(0); // Can use minimap
-		buf.writeD(0); // Vitality
+		buf.writeD(20000); // Vitality
 		buf.writeD(0); // Special effect
 	}
 }
