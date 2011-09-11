@@ -18,13 +18,11 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.Table;
 
@@ -33,6 +31,7 @@ import com.l2jfree.gameserver.templates.player.ClassId;
 import com.l2jfree.gameserver.templates.player.Gender;
 import com.l2jfree.lang.L2System;
 import com.l2jfree.sql.L2Database;
+import com.l2jfree.sql.L2Database.QueryConfigurator;
 import com.l2jfree.util.Introspection;
 
 /**
@@ -40,7 +39,6 @@ import com.l2jfree.util.Introspection;
  */
 @Entity
 @Table(name = "players")
-@SuppressWarnings("unchecked")
 @NamedQueries({
 		@NamedQuery(name = "PlayerDB.findByAccount",
 				query = "SELECT p FROM PlayerDB p WHERE p.accountName = :accountName"),
@@ -149,122 +147,39 @@ public class PlayerDB
 	
 	public static PlayerDB find(int objectId)
 	{
-		final PlayerDB result;
-		
-		final EntityManager em = L2Database.getEntityManager();
-		{
-			result = em.find(PlayerDB.class, objectId);
-			
-			if (result != null)
-				em.detach(result);
-		}
-		em.close();
-		
-		return result;
+		return L2Database.find(PlayerDB.class, objectId);
 	}
 	
-	public static void persist(PlayerDB playerDB) throws PersistenceException
+	public static List<PlayerDB> findByAccount(final String accountName)
 	{
-		final EntityManager em = L2Database.getEntityManager();
-		{
-			em.getTransaction().begin();
+		return L2Database.getResultListByNamedQuery("PlayerDB.findByAccount", new QueryConfigurator() {
+			@Override
+			public void configure(Query q)
 			{
-				em.persist(playerDB);
+				q.setParameter("accountName", accountName);
 			}
-			em.getTransaction().commit();
-		}
-		em.close();
-	}
-	
-	public static void merge(PlayerDB playerDB) throws PersistenceException
-	{
-		final EntityManager em = L2Database.getEntityManager();
-		{
-			em.getTransaction().begin();
-			{
-				em.merge(playerDB);
-			}
-			em.getTransaction().commit();
-		}
-		em.close();
-	}
-	
-	public static PlayerDB mergeAndDetach(PlayerDB playerDB) throws PersistenceException
-	{
-		final PlayerDB result;
-		
-		final EntityManager em = L2Database.getEntityManager();
-		{
-			em.getTransaction().begin();
-			{
-				result = em.merge(playerDB);
-			}
-			em.getTransaction().commit();
-			
-			if (result != null)
-				em.detach(result);
-		}
-		em.close();
-		
-		return result;
-	}
-	
-	public static List<PlayerDB> findByAccount(String accountName)
-	{
-		final List<PlayerDB> result;
-		
-		final EntityManager em = L2Database.getEntityManager();
-		{
-			final Query q = em.createNamedQuery("PlayerDB.findByAccount");
-			q.setParameter("accountName", accountName);
-			
-			result = q.getResultList();
-			
-			for (PlayerDB playerDB : result)
-				em.detach(playerDB);
-		}
-		em.close();
-		
-		return result;
+		});
 	}
 	
 	public static List<PlayerDB> findAll()
 	{
-		final List<PlayerDB> result;
-		
-		final EntityManager em = L2Database.getEntityManager();
-		{
-			final Query q = em.createNamedQuery("PlayerDB.findAll");
-			
-			result = q.getResultList();
-			
-			for (PlayerDB playerDB : result)
-				em.detach(playerDB);
-		}
-		em.close();
-		
-		return result;
+		return L2Database.getResultListByNamedQuery("PlayerDB.findAll");
 	}
 	
-	public static void setOnlineStatus(L2Player player, boolean isOnline)
+	public static void setOnlineStatus(final L2Player player, final boolean isOnline)
 	{
-		final EntityManager em = L2Database.getEntityManager();
-		{
-			final Query q = em.createNamedQuery("PlayerDB.setOnline");
-			q.setParameter("online", isOnline);
-			q.setParameter("objectId", player.getObjectId());
-			q.executeUpdate();
-		}
-		em.close();
+		L2Database.executeUpdateByNamedQuery("PlayerDB.setOfflineAll", new QueryConfigurator() {
+			@Override
+			public void configure(Query q)
+			{
+				q.setParameter("online", isOnline);
+				q.setParameter("objectId", player.getObjectId());
+			}
+		});
 	}
 	
 	public static void setOfflineAll()
 	{
-		final EntityManager em = L2Database.getEntityManager();
-		{
-			final Query q = em.createNamedQuery("PlayerDB.setOfflineAll");
-			q.executeUpdate();
-		}
-		em.close();
+		L2Database.executeUpdateByNamedQuery("PlayerDB.setOfflineAll");
 	}
 }

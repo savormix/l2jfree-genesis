@@ -29,6 +29,7 @@ import com.l2jfree.gameserver.templates.player.Gender;
 import com.l2jfree.gameserver.util.IdFactory;
 import com.l2jfree.gameserver.util.IdFactory.IdRange;
 import com.l2jfree.gameserver.world.L2World;
+import com.l2jfree.sql.L2Database;
 
 /**
  * @author NB4L1
@@ -65,7 +66,7 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 			playerDB.hairColor = hairColor;
 			playerDB.hairStyle = hairStyle;
 			
-			PlayerDB.persist(playerDB);
+			L2Database.persist(playerDB);
 			
 			return new L2Player(playerDB);
 		}

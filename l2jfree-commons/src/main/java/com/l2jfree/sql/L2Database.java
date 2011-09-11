@@ -18,11 +18,13 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import com.l2jfree.util.logging.L2Logger;
 
@@ -280,5 +282,226 @@ public final class L2Database
 		{
 			// ignore
 		}
+	}
+	
+	// =================================================================================================================
+	
+	public static <T> T find(Class<T> entityClass, Object primaryKey)
+	{
+		final T result;
+		
+		final EntityManager em = L2Database.getEntityManager();
+		{
+			result = em.find(entityClass, primaryKey);
+			
+			if (result != null)
+				em.detach(result);
+		}
+		em.close();
+		
+		return result;
+	}
+	
+	public static void persist(Object entity)
+	{
+		final EntityManager em = L2Database.getEntityManager();
+		{
+			em.getTransaction().begin();
+			{
+				em.persist(entity);
+			}
+			em.getTransaction().commit();
+		}
+		em.close();
+	}
+	
+	public static void merge(Object entity)
+	{
+		final EntityManager em = L2Database.getEntityManager();
+		{
+			em.getTransaction().begin();
+			{
+				em.merge(entity);
+			}
+			em.getTransaction().commit();
+		}
+		em.close();
+	}
+	
+	public static <T> T mergeAndDetach(T entity)
+	{
+		final T result;
+		
+		final EntityManager em = L2Database.getEntityManager();
+		{
+			em.getTransaction().begin();
+			{
+				result = em.merge(entity);
+			}
+			em.getTransaction().commit();
+			
+			if (result != null)
+				em.detach(result);
+		}
+		em.close();
+		
+		return result;
+	}
+	
+	public static void remove(Object entity)
+	{
+		final EntityManager em = L2Database.getEntityManager();
+		{
+			em.getTransaction().begin();
+			{
+				em.remove(entity);
+			}
+			em.getTransaction().commit();
+		}
+		em.close();
+	}
+	
+	// =================================================================================================================
+	
+	private static Query createQuery(boolean named, EntityManager em, String query)
+	{
+		if (named)
+			return em.createNamedQuery(query);
+		else
+			return em.createQuery(query);
+	}
+	
+	public interface QueryConfigurator
+	{
+		public void configure(Query q);
+	}
+	
+	// =================================================================================================================
+	
+	@SuppressWarnings("unchecked")
+	private static <T> T getSingleResult(boolean named, String query, QueryConfigurator queryConfigurator)
+	{
+		final T result;
+		
+		final EntityManager em = L2Database.getEntityManager();
+		{
+			final Query q = createQuery(named, em, query);
+			
+			if (queryConfigurator != null)
+				queryConfigurator.configure(q);
+			
+			result = (T)q.getSingleResult();
+			
+			if (result != null)
+				em.detach(result);
+		}
+		em.close();
+		
+		return result;
+	}
+	
+	public static <T> T getSingleResultByNamedQuery(String namedQuery)
+	{
+		return getSingleResult(true, namedQuery, null);
+	}
+	
+	public static <T> T getSingleResultByNamedQuery(String namedQuery, QueryConfigurator queryConfigurator)
+	{
+		return getSingleResult(true, namedQuery, queryConfigurator);
+	}
+	
+	public static <T> T getSingleResultByQuery(String query)
+	{
+		return getSingleResult(false, query, null);
+	}
+	
+	public static <T> T getSingleResultByQuery(String query, QueryConfigurator queryConfigurator)
+	{
+		return getSingleResult(false, query, queryConfigurator);
+	}
+	
+	// =================================================================================================================
+	
+	@SuppressWarnings("unchecked")
+	private static <T> List<T> getResultList(boolean named, String query, QueryConfigurator queryConfigurator)
+	{
+		final List<T> result;
+		
+		final EntityManager em = L2Database.getEntityManager();
+		{
+			final Query q = createQuery(named, em, query);
+			
+			if (queryConfigurator != null)
+				queryConfigurator.configure(q);
+			
+			result = q.getResultList();
+			
+			for (T t : result)
+				if (t != null)
+					em.detach(t);
+		}
+		em.close();
+		
+		return result;
+	}
+	
+	public static <T> List<T> getResultListByNamedQuery(String namedQuery)
+	{
+		return getResultList(true, namedQuery, null);
+	}
+	
+	public static <T> List<T> getResultListByNamedQuery(String namedQuery, QueryConfigurator queryConfigurator)
+	{
+		return getResultList(true, namedQuery, queryConfigurator);
+	}
+	
+	public static <T> List<T> getResultListByQuery(String query)
+	{
+		return getResultList(false, query, null);
+	}
+	
+	public static <T> List<T> getResultListByQuery(String query, QueryConfigurator queryConfigurator)
+	{
+		return getResultList(false, query, queryConfigurator);
+	}
+	
+	// =================================================================================================================
+	
+	private static void executeUpdate(boolean named, String query, QueryConfigurator queryConfigurator)
+	{
+		final EntityManager em = L2Database.getEntityManager();
+		{
+			em.getTransaction().begin();
+			{
+				final Query q = createQuery(named, em, query);
+				
+				if (queryConfigurator != null)
+					queryConfigurator.configure(q);
+				
+				q.executeUpdate();
+			}
+			em.getTransaction().commit();
+		}
+		em.close();
+	}
+	
+	public static void executeUpdateByNamedQuery(String namedQuery)
+	{
+		executeUpdate(true, namedQuery, null);
+	}
+	
+	public static void executeUpdateByNamedQuery(String namedQuery, QueryConfigurator queryConfigurator)
+	{
+		executeUpdate(true, namedQuery, queryConfigurator);
+	}
+	
+	public static void executeUpdateByQuery(String query)
+	{
+		executeUpdate(false, query, null);
+	}
+	
+	public static void executeUpdateByQuery(String query, QueryConfigurator queryConfigurator)
+	{
+		executeUpdate(false, query, queryConfigurator);
 	}
 }
