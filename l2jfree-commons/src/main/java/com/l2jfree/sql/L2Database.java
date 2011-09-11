@@ -467,8 +467,10 @@ public final class L2Database
 	
 	// =================================================================================================================
 	
-	private static void executeUpdate(boolean named, String query, QueryConfigurator queryConfigurator)
+	private static int executeUpdate(boolean named, String query, QueryConfigurator queryConfigurator)
 	{
+		final int result;
+		
 		final EntityManager em = L2Database.getEntityManager();
 		{
 			em.getTransaction().begin();
@@ -478,30 +480,58 @@ public final class L2Database
 				if (queryConfigurator != null)
 					queryConfigurator.configure(q);
 				
-				q.executeUpdate();
+				result = q.executeUpdate();
 			}
 			em.getTransaction().commit();
 		}
 		em.close();
+		
+		return result;
 	}
 	
-	public static void executeUpdateByNamedQuery(String namedQuery)
+	public static int executeUpdateByNamedQuery(String namedQuery)
 	{
-		executeUpdate(true, namedQuery, null);
+		return executeUpdate(true, namedQuery, null);
 	}
 	
-	public static void executeUpdateByNamedQuery(String namedQuery, QueryConfigurator queryConfigurator)
+	public static int executeUpdateByNamedQuery(String namedQuery, QueryConfigurator queryConfigurator)
 	{
-		executeUpdate(true, namedQuery, queryConfigurator);
+		return executeUpdate(true, namedQuery, queryConfigurator);
 	}
 	
-	public static void executeUpdateByQuery(String query)
+	public static int executeUpdateByQuery(String query)
 	{
-		executeUpdate(false, query, null);
+		return executeUpdate(false, query, null);
 	}
 	
-	public static void executeUpdateByQuery(String query, QueryConfigurator queryConfigurator)
+	public static int executeUpdateByQuery(String query, QueryConfigurator queryConfigurator)
 	{
-		executeUpdate(false, query, queryConfigurator);
+		return executeUpdate(false, query, queryConfigurator);
+	}
+	
+	// =================================================================================================================
+	
+	public interface Transaction<T>
+	{
+		public T execute(EntityManager em);
+	}
+	
+	// =================================================================================================================
+	
+	public static <T> T executeTransaction(Transaction<T> transaction)
+	{
+		final T result;
+		
+		final EntityManager em = L2Database.getEntityManager();
+		{
+			em.getTransaction().begin();
+			{
+				result = transaction.execute(em);
+			}
+			em.getTransaction().commit();
+		}
+		em.close();
+		
+		return result;
 	}
 }

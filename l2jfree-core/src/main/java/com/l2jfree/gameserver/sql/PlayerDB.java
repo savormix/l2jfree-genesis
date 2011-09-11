@@ -25,20 +25,20 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Query;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.templates.player.ClassId;
 import com.l2jfree.gameserver.templates.player.Gender;
-import com.l2jfree.lang.L2System;
+import com.l2jfree.sql.L2DBEntity;
 import com.l2jfree.sql.L2Database;
 import com.l2jfree.sql.L2Database.QueryConfigurator;
-import com.l2jfree.util.Introspection;
 
 /**
  * @author NB4L1
  */
 @Entity
-@Table(name = "players")
+@Table(name = "players", uniqueConstraints = { @UniqueConstraint(columnNames = "name") })
 @NamedQueries({
 		@NamedQuery(name = "PlayerDB.findByAccount",
 				query = "SELECT p FROM PlayerDB p WHERE p.accountName = :accountName"),
@@ -48,101 +48,69 @@ import com.l2jfree.util.Introspection;
 		@NamedQuery(name = "PlayerDB.setOfflineAll", query = "UPDATE PlayerDB p SET p.online = 0"),
 
 })
-public class PlayerDB
+public class PlayerDB extends L2DBEntity
 {
-	public static final String TABLE = "players";
-	
-	public static final String OBJECT_ID = "objectId";
-	public static final String NAME = "name";
-	public static final String ACCOUNT_NAME = "accountName";
-	public static final String ONLINE = "online";
-	public static final String BASE_CLASS_ID = "baseClassId";
-	public static final String ACTIVE_CLASS_ID = "activeClassId";
-	
-	// Appearance
-	public static final String GENDER = "gender";
-	public static final String FACE = "face";
-	public static final String HAIR_COLOR = "hairColor";
-	public static final String HAIR_STYLE = "hairStyle";
-	
-	// Position
-	public static final String X = "x";
-	public static final String Y = "y";
-	public static final String Z = "z";
-	public static final String HEADING = "heading";
-	
 	@Id
-	@Column(name = OBJECT_ID, nullable = false, updatable = false)
+	@Column(name = "objectId", nullable = false, updatable = false)
 	public int objectId;
 	
-	@Column(name = NAME, unique = true, nullable = false, length = 35)
+	@Column(name = "name", unique = true, nullable = false, length = 35)
 	public String name;
 	
-	@Column(name = ACCOUNT_NAME, nullable = false, updatable = false, length = 45)
+	@Column(name = "accountName", nullable = false, updatable = false, length = 45)
 	public String accountName;
 	
-	@Column(name = ONLINE, nullable = false)
+	@Column(name = "online", nullable = false)
 	public boolean online;
 	
 	@Enumerated(EnumType.ORDINAL)
-	@Column(name = BASE_CLASS_ID, nullable = false, updatable = false)
+	@Column(name = "baseClassId", nullable = false, updatable = false)
 	public ClassId baseClassId;
 	
 	@Enumerated(EnumType.ORDINAL)
-	@Column(name = ACTIVE_CLASS_ID, nullable = false)
+	@Column(name = "activeClassId", nullable = false)
 	public ClassId activeClassId;
 	
 	// Appearance
 	@Enumerated(EnumType.ORDINAL)
-	@Column(name = GENDER, nullable = false)
+	@Column(name = "gender", nullable = false)
 	public Gender gender;
 	
-	@Column(name = FACE, nullable = false)
+	@Column(name = "face", nullable = false)
 	public byte face;
 	
-	@Column(name = HAIR_COLOR, nullable = false)
+	@Column(name = "hairColor", nullable = false)
 	public byte hairColor;
 	
-	@Column(name = HAIR_STYLE, nullable = false)
+	@Column(name = "hairStyle", nullable = false)
 	public byte hairStyle;
 	// Appearance
 	
 	// Position
-	@Column(name = X)
+	@Column(name = "x")
 	public int x;
 	
-	@Column(name = Y)
+	@Column(name = "y")
 	public int y;
 	
-	@Column(name = Z)
+	@Column(name = "z")
 	public int z;
 	
-	@Column(name = HEADING)
+	@Column(name = "heading")
 	public int heading;
 	
 	// Position
 	
 	@Override
-	public int hashCode()
+	public Object getPrimaryKey()
 	{
-		return L2System.hash(objectId);
+		return objectId;
 	}
 	
 	@Override
-	public boolean equals(Object obj)
+	protected Class<?> getClassForEqualsCheck()
 	{
-		if (!(obj instanceof PlayerDB))
-			return false;
-		
-		final PlayerDB other = (PlayerDB)obj;
-		
-		return L2System.equals(objectId, other.objectId);
-	}
-	
-	@Override
-	public String toString()
-	{
-		return Introspection.toString(this);
+		return PlayerDB.class;
 	}
 	
 	public static PlayerDB find(int objectId)
