@@ -38,7 +38,7 @@ public abstract class DataSourceInitializer
 	@SuppressWarnings("static-method")
 	public boolean createEntityManagerFactory()
 	{
-		return false;
+		return ClassLoader.getSystemResource("META-INF/persistence.xml") != null;
 	}
 	
 	@SuppressWarnings("static-method")
