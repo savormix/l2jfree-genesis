@@ -21,6 +21,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.BitSet;
 
+import com.l2jfree.gameserver.sql.PlayerDB;
 import com.l2jfree.sql.L2Database;
 import com.l2jfree.util.concurrent.L2ThreadPool;
 import com.l2jfree.util.logging.L2Logger;
@@ -107,7 +108,7 @@ public final class IdFactory
 	
 	private IdFactory() throws SQLException
 	{
-		L2Database.executeUpdate("UPDATE players SET online = 0");
+		PlayerDB.setOfflineAll();
 		
 		removeLeftover();
 		removeExpired();

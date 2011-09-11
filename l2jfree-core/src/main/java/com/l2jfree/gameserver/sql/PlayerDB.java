@@ -44,8 +44,10 @@ import com.l2jfree.util.Introspection;
 @NamedQueries({
 		@NamedQuery(name = "PlayerDB.findByAccount",
 				query = "SELECT p FROM PlayerDB p WHERE p.accountName = :accountName"),
+		@NamedQuery(name = "PlayerDB.findAll", query = "SELECT p FROM PlayerDB p"),
 		@NamedQuery(name = "PlayerDB.setOnline",
-				query = "UPDATE PlayerDB p SET p.online = :online WHERE p.objectId = :objectId")
+				query = "UPDATE PlayerDB p SET p.online = :online WHERE p.objectId = :objectId"),
+		@NamedQuery(name = "PlayerDB.setOfflineAll", query = "UPDATE PlayerDB p SET p.online = 0"),
 
 })
 public class PlayerDB
@@ -226,13 +228,41 @@ public class PlayerDB
 		return result;
 	}
 	
+	public static List<PlayerDB> findAll()
+	{
+		final List<PlayerDB> result;
+		
+		final EntityManager em = L2Database.getEntityManager();
+		{
+			final Query q = em.createNamedQuery("PlayerDB.findAll");
+			
+			result = q.getResultList();
+			
+			for (PlayerDB playerDB : result)
+				em.detach(playerDB);
+		}
+		em.close();
+		
+		return result;
+	}
+	
 	public static void setOnlineStatus(L2Player player, boolean isOnline)
 	{
 		final EntityManager em = L2Database.getEntityManager();
 		{
-			Query q = em.createNamedQuery("PlayerDB.setOnline");
+			final Query q = em.createNamedQuery("PlayerDB.setOnline");
 			q.setParameter("online", isOnline);
 			q.setParameter("objectId", player.getObjectId());
+			q.executeUpdate();
+		}
+		em.close();
+	}
+	
+	public static void setOfflineAll()
+	{
+		final EntityManager em = L2Database.getEntityManager();
+		{
+			final Query q = em.createNamedQuery("PlayerDB.setOfflineAll");
 			q.executeUpdate();
 		}
 		em.close();
