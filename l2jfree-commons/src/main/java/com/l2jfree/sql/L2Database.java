@@ -24,8 +24,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import org.eclipse.persistence.config.PersistenceUnitProperties;
-
 import com.l2jfree.util.logging.L2Logger;
 
 /**
@@ -68,9 +66,7 @@ public final class L2Database
 		if (dataSourceName.equals(DEFAULT_DATA_SOURCE_NAME))
 		{
 			// initialization of the EclipseLink JPA
-			final Map<Object, Object> props = new HashMap<Object, Object>();
-			
-			props.put(PersistenceUnitProperties.NON_JTA_DATASOURCE, _defaultDataSource);
+			final Map<Object, Object> props = initializer.initEntityManagerFactoryProperties(_defaultDataSource);
 			
 			_defaultEntityManagerFactory = Persistence.createEntityManagerFactory(DEFAULT_DATA_SOURCE_NAME, props);
 			

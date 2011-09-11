@@ -14,6 +14,13 @@
  */
 package com.l2jfree.sql;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.eclipse.persistence.config.LoggerType;
+import org.eclipse.persistence.config.PersistenceUnitProperties;
+import org.eclipse.persistence.logging.SessionLog;
+
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 public abstract class DataSourceInitializer
@@ -32,6 +39,22 @@ public abstract class DataSourceInitializer
 	public boolean createEntityManagerFactory()
 	{
 		return false;
+	}
+	
+	@SuppressWarnings("static-method")
+	public Map<Object, Object> initEntityManagerFactoryProperties(L2DataSource source)
+	{
+		final Map<Object, Object> props = new HashMap<Object, Object>();
+		
+		props.put("provider", "org.eclipse.persistence.jpa.PersistenceProvider");
+		
+		props.put(PersistenceUnitProperties.NON_JTA_DATASOURCE, source);
+		
+		props.put(PersistenceUnitProperties.LOGGING_LOGGER, LoggerType.JavaLogger);
+		// let the configured log system handle levels
+		props.put(PersistenceUnitProperties.LOGGING_LEVEL, SessionLog.ALL_LABEL);
+		
+		return props;
 	}
 	
 	public ComboPooledDataSource initDataSource() throws Exception
