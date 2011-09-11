@@ -12,11 +12,27 @@
 				baseClassId		SMALLINT		NOT NULL,
 				activeClassId	SMALLINT		NOT NULL,
 				
+				PRIMARY KEY (objectId)
+			);
+			CREATE UNIQUE INDEX name			ON players (name);
+			CREATE        INDEX accountName		ON players (accountName);
+	" />
+	<table name="player_appearances" definition="
+				CREATE TABLE player_appearances (
+				
+				objectId		INT				NOT NULL,
 				gender			SMALLINT		NOT NULL,
 				face			SMALLINT		NOT NULL,
 				hairColor		SMALLINT		NOT NULL,
 				hairStyle		SMALLINT		NOT NULL,
 				
+				PRIMARY KEY (objectId)
+			);
+	" />
+	<table name="player_positions" definition="
+				CREATE TABLE player_positions (
+				
+				objectId		INT				NOT NULL,
 				x				INT,
 				y				INT,
 				z				INT,
@@ -24,7 +40,5 @@
 				
 				PRIMARY KEY (objectId)
 			);
-			CREATE UNIQUE INDEX name			ON players (name);
-			CREATE        INDEX accountName		ON players (accountName);
 	" />
 </database>

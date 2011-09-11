@@ -24,6 +24,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Query;
+import javax.persistence.SecondaryTable;
+import javax.persistence.SecondaryTables;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -39,13 +41,13 @@ import com.l2jfree.sql.L2Database.QueryConfigurator;
  */
 @Entity
 @Table(name = "players", uniqueConstraints = { @UniqueConstraint(columnNames = "name") })
+@SecondaryTables({ @SecondaryTable(name = "player_appearances"), @SecondaryTable(name = "player_positions") })
 @NamedQueries({
 		@NamedQuery(name = "PlayerDB.findByAccount",
 				query = "SELECT p FROM PlayerDB p WHERE p.accountName = :accountName"),
-		@NamedQuery(name = "PlayerDB.findAll", query = "SELECT p FROM PlayerDB p"),
 		@NamedQuery(name = "PlayerDB.setOnline",
 				query = "UPDATE PlayerDB p SET p.online = :online WHERE p.objectId = :objectId"),
-		@NamedQuery(name = "PlayerDB.setOfflineAll", query = "UPDATE PlayerDB p SET p.online = 0"),
+		@NamedQuery(name = "PlayerDB.setOfflineAll", query = "UPDATE PlayerDB p SET p.online = 0")
 
 })
 public class PlayerDB extends L2DBEntity
@@ -73,30 +75,30 @@ public class PlayerDB extends L2DBEntity
 	
 	// Appearance
 	@Enumerated(EnumType.ORDINAL)
-	@Column(name = "gender", nullable = false)
+	@Column(name = "gender", nullable = false, table = "player_appearances")
 	public Gender gender;
 	
-	@Column(name = "face", nullable = false)
+	@Column(name = "face", nullable = false, table = "player_appearances")
 	public byte face;
 	
-	@Column(name = "hairColor", nullable = false)
+	@Column(name = "hairColor", nullable = false, table = "player_appearances")
 	public byte hairColor;
 	
-	@Column(name = "hairStyle", nullable = false)
+	@Column(name = "hairStyle", nullable = false, table = "player_appearances")
 	public byte hairStyle;
 	// Appearance
 	
 	// Position
-	@Column(name = "x")
+	@Column(name = "x", table = "player_positions")
 	public int x;
 	
-	@Column(name = "y")
+	@Column(name = "y", table = "player_positions")
 	public int y;
 	
-	@Column(name = "z")
+	@Column(name = "z", table = "player_positions")
 	public int z;
 	
-	@Column(name = "heading")
+	@Column(name = "heading", table = "player_positions")
 	public int heading;
 	
 	// Position
@@ -127,11 +129,6 @@ public class PlayerDB extends L2DBEntity
 				q.setParameter("accountName", accountName);
 			}
 		});
-	}
-	
-	public static List<PlayerDB> findAll()
-	{
-		return L2Database.getResultListByNamedQuery("PlayerDB.findAll");
 	}
 	
 	public static void setOnlineStatus(final L2Player player, final boolean isOnline)

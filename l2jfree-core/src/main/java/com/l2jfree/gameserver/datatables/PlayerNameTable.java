@@ -16,12 +16,19 @@ package com.l2jfree.gameserver.datatables;
 
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import javolution.util.FastMap;
 
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.gameserver.sql.PlayerDB;
 import com.l2jfree.gameserver.world.L2World;
+import com.l2jfree.sql.L2Database;
+import com.l2jfree.sql.L2Database.L2Query;
 import com.l2jfree.util.L2Collections;
 import com.l2jfree.util.logging.L2Logger;
 
@@ -45,16 +52,45 @@ public final class PlayerNameTable
 	private final Map<Integer, PlayerInfo> _mapByObjectId = new FastMap<Integer, PlayerInfo>().setShared(true);
 	private final Map<String, PlayerInfo> _mapByName = new FastMap<String, PlayerInfo>().setShared(true);
 	
+	public static class PlayerInfoWrapper
+	{
+		private final int _objectId;
+		private final String _accountName;
+		private final String _name;
+		
+		public PlayerInfoWrapper(int objectId, String accountName, String name)
+		{
+			_objectId = objectId;
+			_accountName = accountName;
+			_name = name;
+		}
+	}
+	
 	private PlayerNameTable()
 	{
 		try
 		{
-			for (PlayerDB playerDB : PlayerDB.findAll())
-			{
-				final int accessLevel = 0; // p.accessLevel; // TODO
-				
-				update(playerDB.objectId, playerDB.accountName, playerDB.name, accessLevel);
-			}
+			L2Database.executeQuery(new L2Query<Void>() {
+				@Override
+				public Void execute(EntityManager em)
+				{
+					final CriteriaBuilder builder = em.getCriteriaBuilder();
+					final CriteriaQuery<PlayerInfoWrapper> criteria = builder.createQuery(PlayerInfoWrapper.class);
+					final Root<PlayerDB> root = criteria.from(PlayerDB.class);
+					
+					criteria.select(builder.construct(PlayerInfoWrapper.class, //
+							root.get("objectId"), root.get("accountName"), root.get("name")));
+					
+					for (PlayerInfoWrapper p : em.createQuery(criteria).getResultList())
+					{
+						final int accessLevel = 0; // p.accessLevel; // TODO
+						
+						update(p._objectId, p._accountName, p._name, accessLevel);
+					}
+					
+					return null;
+				}
+			});
 		}
 		catch (RuntimeException e)
 		{

@@ -54,9 +54,11 @@ public abstract class DataSourceInitializer
 		// let the configured log system handle levels
 		props.put(PersistenceUnitProperties.LOGGING_LEVEL, SessionLog.ALL_LABEL);
 		
-		//props.put(PersistenceUnitProperties.LOGGING_PARAMETERS, "true");
-		//props.put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.CREATE_ONLY);
-		//props.put(PersistenceUnitProperties.DDL_GENERATION_MODE, PersistenceUnitProperties.DDL_SQL_SCRIPT_GENERATION);
+		// TODO to temporarily allow eclipselink to show sqls
+		props.put(PersistenceUnitProperties.LOGGING_PARAMETERS, "true");
+		props.put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.CREATE_ONLY);
+		props.put(PersistenceUnitProperties.DDL_GENERATION_MODE, PersistenceUnitProperties.DDL_SQL_SCRIPT_GENERATION);
+		//
 		
 		return props;
 	}

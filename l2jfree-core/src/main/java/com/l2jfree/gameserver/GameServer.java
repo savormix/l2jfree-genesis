@@ -164,6 +164,7 @@ public final class GameServer extends Config
 		System.out.println(playerDB1);
 		
 		playerDB1.online = true;
+		playerDB1.x = Rnd.get(10000);
 		
 		final PlayerDB playerDB2 = L2Database.mergeAndDetach(playerDB1);
 		

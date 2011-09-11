@@ -191,6 +191,8 @@ public final class IdFactory
 		{
 			_idRange = idRange;
 			
+			int loaded = 0;
+			
 			Connection con = null;
 			try
 			{
@@ -207,6 +209,8 @@ public final class IdFactory
 						final int objectId = rs.getInt(1);
 						
 						loadId(objectId);
+						
+						loaded++;
 					}
 					
 					rs.close();
@@ -218,6 +222,9 @@ public final class IdFactory
 			{
 				L2Database.close(con);
 			}
+			
+			_log.info("IdFactory: Loaded " + loaded + " " + _idRange.name().replaceFirst("S$", "")
+					+ " objectIds from database.");
 			
 			L2ThreadPool.scheduleAtFixedRate(new Runnable() {
 				@Override
