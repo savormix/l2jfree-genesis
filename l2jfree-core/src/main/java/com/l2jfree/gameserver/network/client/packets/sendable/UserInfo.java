@@ -46,8 +46,8 @@ public class UserInfo extends L2ServerPacket
 		buf.writeD(0);
 		buf.writeD(activeChar.getObjectId());
 		buf.writeS(activeChar.getName());
-		buf.writeD(baseTemplate.getRace().ordinal());
-		buf.writeD(appearance.getGender().ordinal());
+		buf.writeD(baseTemplate.getRace());
+		buf.writeD(appearance.getGender());
 		// TODO
 		//if (_activeChar.getClassIndex() == 0) writeD(_activeChar.getClassId().getId());
 		buf.writeD(template.getClassId().getId());

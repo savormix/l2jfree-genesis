@@ -58,8 +58,8 @@ public class CharacterSelected extends L2ServerPacket
 		buf.writeD(_sessionId);
 		buf.writeD(0/*_activeChar.getClanId()*/); // TODO clan id
 		buf.writeD(0x00); // ??
-		buf.writeD(appearance.getGender().ordinal());
-		buf.writeD(baseTemplate.getRace().ordinal());
+		buf.writeD(appearance.getGender());
+		buf.writeD(baseTemplate.getRace());
 		buf.writeD(template.getClassId().getId());
 		buf.writeD(0x01); // active ??
 		buf.writeD(position.getX());

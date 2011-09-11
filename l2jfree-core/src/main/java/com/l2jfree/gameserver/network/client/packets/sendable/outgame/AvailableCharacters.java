@@ -16,13 +16,9 @@ package com.l2jfree.gameserver.network.client.packets.sendable.outgame;
 
 import java.util.List;
 
-import com.l2jfree.gameserver.gameobjects.L2Player;
-import com.l2jfree.gameserver.gameobjects.ObjectPosition;
-import com.l2jfree.gameserver.gameobjects.player.PlayerAppearance;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
-import com.l2jfree.gameserver.templates.L2PlayerTemplate;
-import com.l2jfree.gameserver.templates.player.PlayerBaseTemplate;
+import com.l2jfree.gameserver.sql.PlayerDB;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
@@ -34,13 +30,13 @@ public class AvailableCharacters extends L2ServerPacket
 {
 	private final String _accountName;
 	private final int _sessionId;
-	private final List<L2Player> _players;
+	private final List<PlayerDB> _players;
 	
 	public AvailableCharacters(L2Client client)
 	{
 		_sessionId = client.getSessionId(); // TODO
 		_accountName = client.getAccountName();
-		_players = L2Player.loadAccountPlayers(_accountName); // FIXME don't fetch the whole player only thee required data
+		_players = PlayerDB.findByAccount(_accountName); // FIXME don't fetch the whole player only thee required data
 		
 		client.definePlayerSlots(_players);
 	}
@@ -58,30 +54,25 @@ public class AvailableCharacters extends L2ServerPacket
 		buf.writeD(0x07);
 		buf.writeC(0);
 		
-		for (L2Player p : _players)
+		for (PlayerDB p : _players)
 		{
-			final PlayerAppearance appearance = p.getAppearance();
-			final ObjectPosition position = p.getPosition();
-			final L2PlayerTemplate template = p.getTemplate();
-			final PlayerBaseTemplate baseTemplate = template.getPlayerBaseTemplate(appearance.getGender());
-			
-			buf.writeS(p.getName());
-			buf.writeD(p.getObjectId());
+			buf.writeS(p.name);
+			buf.writeD(p.objectId);
 			buf.writeS(_accountName);
 			buf.writeD(_sessionId);
 			buf.writeD(0); // TODO clan id
 			buf.writeD(0); // ??
 			
-			buf.writeD(baseTemplate.getGender().ordinal()); // TODO sex
-			buf.writeD(baseTemplate.getRace().ordinal()); // TODO race
+			buf.writeD(p.gender); // TODO sex
+			buf.writeD(p.baseClassId.getRace()); // TODO race
 			
-			buf.writeD(template.getClassId().getId()); // TODO class id
+			buf.writeD(p.baseClassId); // TODO class id
 			
 			buf.writeD(0x01); // active ?? (no difference between 0 and 1)
 			
-			buf.writeD(position.getX());
-			buf.writeD(position.getY());
-			buf.writeD(position.getZ());
+			buf.writeD(p.x);
+			buf.writeD(p.y);
+			buf.writeD(p.z);
 			
 			buf.writeF(100.0); // TODO hp cur
 			buf.writeF(100.0); // TODO mp cur
@@ -101,15 +92,15 @@ public class AvailableCharacters extends L2ServerPacket
 			for (int slot = 0; slot < 26; slot++)
 				buf.writeD(0); // TODO PaperdollSlots
 			
-			buf.writeD(appearance.getHairStyle()); // TODO hair style
-			buf.writeD(appearance.getHairColor()); // TODO hair color
-			buf.writeD(appearance.getFace()); // TODO face
+			buf.writeD(p.hairStyle); // TODO hair style
+			buf.writeD(p.hairColor); // TODO hair color
+			buf.writeD(p.face); // TODO face
 			
 			buf.writeF(200.0); // TODO hp max
 			buf.writeF(200.0); // TODO mp max
 			
 			buf.writeD(0x00); // TODO delete days left before
-			buf.writeD(template.getClassId().getId()); // TODO class id
+			buf.writeD(p.activeClassId); // TODO class id
 			buf.writeD(1); // TODO active
 			buf.writeC(0); // TODO enchant effect
 			buf.writeD(0); // TODO augmentation

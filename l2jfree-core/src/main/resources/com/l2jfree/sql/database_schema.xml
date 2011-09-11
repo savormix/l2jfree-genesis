@@ -9,6 +9,18 @@
 				name			VARCHAR(35)		NOT NULL,
 				accountName		VARCHAR(45)		NOT NULL,
 				online			BOOLEAN			NOT NULL	DEFAULT false,
+				baseClassId		SMALLINT		NOT NULL,
+				activeClassId	SMALLINT		NOT NULL,
+				
+				gender			SMALLINT		NOT NULL,
+				face			SMALLINT		NOT NULL,
+				hairColor		SMALLINT		NOT NULL,
+				hairStyle		SMALLINT		NOT NULL,
+				
+				x				INT,
+				y				INT,
+				z				INT,
+				heading			INT,
 				
 				PRIMARY KEY (objectId)
 			);

@@ -24,6 +24,7 @@ import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.gameserver.network.client.packets.sendable.LeaveWorld;
 import com.l2jfree.gameserver.network.client.packets.sendable.ServerClose;
+import com.l2jfree.gameserver.sql.PlayerDB;
 import com.l2jfree.lang.L2TextBuilder;
 import com.l2jfree.network.mmocore.DataSizeHolder;
 import com.l2jfree.network.mmocore.MMOConnection;
@@ -318,12 +319,16 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	/**
 	 * @param players
 	 */
-	public void definePlayerSlots(List<L2Player> players)
+	public void definePlayerSlots(List<PlayerDB> players)
 	{
 		_playerSlotMap = new int[players.size()];
 		int i = 0;
-		for (L2Player p : players)
-			_playerSlotMap[i++] = p.getObjectId();
+		for (PlayerDB p : players)
+		{
+			L2Player.disconnectIfOnline(p.objectId);
+			
+			_playerSlotMap[i++] = p.objectId;
+		}
 	}
 	
 	public L2Player loadCharacterBySlot(int slot)

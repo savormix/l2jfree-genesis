@@ -15,6 +15,7 @@
 package com.l2jfree.gameserver.gameobjects.player;
 
 import com.l2jfree.gameserver.gameobjects.L2Player;
+import com.l2jfree.gameserver.sql.PlayerDB;
 import com.l2jfree.gameserver.templates.player.Gender;
 
 /**
@@ -30,14 +31,14 @@ public final class PlayerAppearance
 	private byte _hairColor;
 	private byte _hairStyle;
 	
-	public PlayerAppearance(L2Player activeChar, Gender gender, byte face, byte hairColor, byte hairStyle)
+	public PlayerAppearance(L2Player activeChar, PlayerDB playerDB)
 	{
 		_activeChar = activeChar;
 		
-		_gender = gender;
-		_face = face;
-		_hairColor = hairColor;
-		_hairStyle = hairStyle;
+		_gender = playerDB.gender;
+		_face = playerDB.face;
+		_hairColor = playerDB.hairColor;
+		_hairStyle = playerDB.hairStyle;
 	}
 	
 	public final L2Player getActiveChar()
