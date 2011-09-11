@@ -45,7 +45,7 @@ import com.l2jfree.util.Introspection;
 		@NamedQuery(name = "PlayerDB.findByAccount",
 				query = "SELECT p FROM PlayerDB p WHERE p.accountName = :accountName"),
 		@NamedQuery(name = "PlayerDB.setOnline",
-				query = "UPDATE PlayerDB p SET p.online = :online WHERE s.objectId = :objectId")
+				query = "UPDATE PlayerDB p SET p.online = :online WHERE p.objectId = :objectId")
 
 })
 public class PlayerDB
@@ -166,7 +166,9 @@ public class PlayerDB
 		final EntityManager em = L2Database.getEntityManager();
 		{
 			em.getTransaction().begin();
-			em.persist(playerDB);
+			{
+				em.persist(playerDB);
+			}
 			em.getTransaction().commit();
 		}
 		em.close();
@@ -177,10 +179,32 @@ public class PlayerDB
 		final EntityManager em = L2Database.getEntityManager();
 		{
 			em.getTransaction().begin();
-			em.merge(playerDB);
+			{
+				em.merge(playerDB);
+			}
 			em.getTransaction().commit();
 		}
 		em.close();
+	}
+	
+	public static PlayerDB mergeAndDetach(PlayerDB playerDB) throws PersistenceException
+	{
+		final PlayerDB result;
+		
+		final EntityManager em = L2Database.getEntityManager();
+		{
+			em.getTransaction().begin();
+			{
+				result = em.merge(playerDB);
+			}
+			em.getTransaction().commit();
+			
+			if (result != null)
+				em.detach(result);
+		}
+		em.close();
+		
+		return result;
 	}
 	
 	public static List<PlayerDB> findByAccount(String accountName)

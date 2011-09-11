@@ -28,6 +28,7 @@ import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.Disconnection;
 import com.l2jfree.gameserver.network.client.L2ClientConnections;
 import com.l2jfree.gameserver.network.client.L2ClientSecurity;
+import com.l2jfree.gameserver.sql.PlayerDB;
 import com.l2jfree.gameserver.templates.player.ClassId;
 import com.l2jfree.gameserver.util.IdFactory;
 import com.l2jfree.gameserver.util.IdFactory.IdRange;
@@ -157,5 +158,16 @@ public final class GameServer extends Config
 		final IdFactory ids = IdFactory.getInstance();
 		for (IdRange idRange : IdRange.values())
 			System.out.println(idRange + ": " + ids.getNextId(idRange) + ", " + ids.getNextId(idRange));
+		
+		final PlayerDB playerDB1 = PlayerDB.find(loaded.getObjectId());
+		
+		System.out.println(playerDB1);
+		
+		playerDB1.online = true;
+		
+		final PlayerDB playerDB2 = PlayerDB.mergeAndDetach(playerDB1);
+		
+		System.out.println(playerDB1);
+		System.out.println(playerDB2);
 	}
 }
