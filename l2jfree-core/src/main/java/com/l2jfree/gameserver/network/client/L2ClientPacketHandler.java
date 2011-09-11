@@ -62,7 +62,7 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 				return invalidState(client, RequestAuthorization.class, opcode);
 				
 			case Logout.OPCODE:
-				if (client.stateEquals(CHARACTER_MANAGEMENT))
+				if (client.stateEquals(CHARACTER_MANAGEMENT) || client.stateEquals(LOGGED_IN))
 					return new Logout();
 				return invalidState(client, Logout.class, opcode);
 				
