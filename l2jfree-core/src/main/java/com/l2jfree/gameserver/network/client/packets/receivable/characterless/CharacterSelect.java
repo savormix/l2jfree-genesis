@@ -66,14 +66,17 @@ public abstract class CharacterSelect extends L2ClientPacket
 	@Override
 	protected int getMinimumLength()
 	{
-		return READ_D;
+		return READ_D + READ_H + READ_D + READ_D + READ_D;
 	}
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
-		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
 		_charSlot = buf.readD(); // Slot
+		buf.readH();
+		buf.readD();
+		buf.readD();
+		buf.readD();
 	}
 	
 	@Override

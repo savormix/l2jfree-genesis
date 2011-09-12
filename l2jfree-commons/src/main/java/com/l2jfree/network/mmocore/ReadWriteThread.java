@@ -27,6 +27,7 @@ import javolution.util.FastList;
 import org.apache.commons.io.IOUtils;
 
 import com.l2jfree.network.mmocore.FloodManager.ErrorMode;
+import com.l2jfree.util.HexUtil;
 
 /**
  * {@link MMOController} associated {@link WorkerThread} responsible for read-write operations, and
@@ -393,9 +394,9 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 								//report(ErrorMode.BUFFER_OVER_FLOW, client, cp, null);
 								
 								MMOController._log.info("Invalid packet format (buf: " + buf + ", dataSize: "
-										+ dataSize + ", pos: " + pos + ", limit: " + limit + ", opcode: " + opcode
-										+ ") used for reading - " + client + " - " + cp.getType() + " - "
-										+ getMMOController().getVersionInfo());
+										+ dataSize + ", pos: " + pos + ", limit: " + limit + ", opcode: 0x"
+										+ HexUtil.fillHex(opcode, 2) + ") used for reading - " + client + " - "
+										+ cp.getType() + " - " + getMMOController().getVersionInfo());
 							}
 						}
 					}

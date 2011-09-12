@@ -16,13 +16,12 @@ package com.l2jfree.gameserver.network.client.packets.sendable;
 
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
-import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
  */
-public abstract class SSQInfoPacket extends L2ServerPacket
+public abstract class SSQInfoPacket extends StaticPacket
 {
 	/**
 	 * A nicer name for {@link SSQInfoPacket}.
@@ -83,7 +82,7 @@ public abstract class SSQInfoPacket extends L2ServerPacket
 	 * @param cabal seven signs victor
 	 * @param instant transition type
 	 */
-	public SSQInfoPacket(int cabal, boolean instant)
+	private SSQInfoPacket(int cabal, boolean instant)
 	{
 		_cabal = cabal;
 		_instant = instant;
