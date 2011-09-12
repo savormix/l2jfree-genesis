@@ -147,9 +147,11 @@ public final class RequestAuthLogin extends L2ClientPacket
 						
 						if (offline)
 						{
-							L2Account la =
-									new L2Account(user, rs.getBoolean("superUser"), rs.getDate("birthDate"),
-											rs.getInt("lastServerId"));
+							final boolean superUser = rs.getBoolean("superUser");
+							final Date birthDate = rs.getDate("birthDate");
+							final int lastServerId = rs.getInt("lastServerId");
+							
+							final L2Account la = new L2Account(user, superUser, birthDate, lastServerId);
 							client.setAccount(la);
 							
 							if (ServiceConfig.SHOW_EULA)

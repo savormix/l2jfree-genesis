@@ -137,8 +137,9 @@ public class RequestCharacterCreate extends L2ClientPacket
 			if (_log.isDebugEnabled())
 				_log.debug("charname: " + _name + " classId: " + _classId);
 			
-			final L2Player player =
-					L2Player.create(_name, account, classId, Gender.VALUES.valueOf(_sex), _face, _hairColor, _hairStyle);
+			final Gender gender = Gender.VALUES.valueOf(_sex);
+			
+			final L2Player player = L2Player.create(_name, account, classId, gender, _face, _hairColor, _hairStyle);
 			
 			player.addToWorld();
 			

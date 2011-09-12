@@ -16,6 +16,7 @@ package com.l2jfree.gameserver.gameobjects.components;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -97,9 +98,11 @@ public final class ComponentFactory<K extends L2Object, V extends IComponent>
 		// and finally fall-back to default annotations based mappings
 		try
 		{
-			clazz =
-					(Class<? extends V>)_annotationClazz.getMethod("value").invoke(
-							ownerClazz.getAnnotation(_annotationClazz));
+			final Method method = _annotationClazz.getMethod("value");
+			final Annotation annotation = ownerClazz.getAnnotation(_annotationClazz);
+			final Object result = method.invoke(annotation);
+			
+			clazz = (Class<? extends V>)result;
 			
 			if (clazz != null)
 				return clazz;
