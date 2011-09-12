@@ -14,8 +14,8 @@
  */
 package com.l2jfree.gameserver.gameobjects.player;
 
-import com.l2jfree.gameserver.gameobjects.CharacterView;
 import com.l2jfree.gameserver.gameobjects.CharInventory;
+import com.l2jfree.gameserver.gameobjects.CharacterView;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.gameobjects.ObjectPosition;
 import com.l2jfree.gameserver.templates.player.Gender;
@@ -30,17 +30,17 @@ public final class PlayerView extends CharacterView
 {
 	private int _abnormalEffect;
 	private int _accuracy;
+	private int _activeClassId;
 	private int _agathionId;
 	private int _allianceCrestId;
 	private int _allianceId;
 	private int _attackElementPower;
 	private int _attackElementType;
 	private double _attackSpeedMultiplier;
-	private int _mainClassId;
 	private int _carriedWeight;
-	private int _activeClassId;
 	private double _collisionHeight;
 	private double _collisionRadius;
+	private boolean _combatAction;
 	private int _con;
 	private int _criticalHit;
 	private int[] _cubics;
@@ -75,9 +75,12 @@ public final class PlayerView extends CharacterView
 	private int _holyElementDefence;
 	private int _inPvPAction;
 	private int _int;
+	private boolean _invisible;
 	private int _karmaPoints;
 	private int _level;
 	private boolean _lookingForParty;
+	private boolean _lyingDead;
+	private int _mainClassId;
 	private int _mAtk;
 	private int _mAtkSpd;
 	private int _maxCarriedWeight;
@@ -106,6 +109,7 @@ public final class PlayerView extends CharacterView
 	private int _pledgeInsigniaId;
 	private int _pledgePrivileges;
 	private int _pledgeRank;
+	private int _pledgeReputation;
 	private int _pledgeUnit;
 	private int _privateStoreType;
 	private int _pvpCount;
@@ -138,12 +142,6 @@ public final class PlayerView extends CharacterView
 		super(activeChar);
 	}
 	
-	@Override
-	public L2Player getActiveChar()
-	{
-		return (L2Player)super.getActiveChar();
-	}
-	
 	public int canEquipCloak()
 	{
 		return _equipCloak;
@@ -167,6 +165,17 @@ public final class PlayerView extends CharacterView
 	public int getAccuracy()
 	{
 		return _accuracy;
+	}
+	
+	@Override
+	public L2Player getActiveChar()
+	{
+		return (L2Player)super.getActiveChar();
+	}
+	
+	public int getActiveClassId()
+	{
+		return _activeClassId;
 	}
 	
 	public int getAgathionId()
@@ -199,19 +208,9 @@ public final class PlayerView extends CharacterView
 		return _attackSpeedMultiplier;
 	}
 	
-	public int getMainClassId()
-	{
-		return _mainClassId;
-	}
-	
 	public int getCarriedWeight()
 	{
 		return _carriedWeight;
-	}
-	
-	public int getActiveClassId()
-	{
-		return _activeClassId;
 	}
 	
 	public double getCollisionHeight()
@@ -374,6 +373,11 @@ public final class PlayerView extends CharacterView
 		return _level;
 	}
 	
+	public int getMainClassId()
+	{
+		return _mainClassId;
+	}
+	
 	public int getMAtk()
 	{
 		return _mAtk;
@@ -502,6 +506,11 @@ public final class PlayerView extends CharacterView
 	public int getPledgeRank()
 	{
 		return _pledgeRank;
+	}
+	
+	public int getPledgeReputation()
+	{
+		return _pledgeReputation;
 	}
 	
 	public int getPledgeUnit()
@@ -654,14 +663,29 @@ public final class PlayerView extends CharacterView
 		return _hero;
 	}
 	
+	public boolean isInCombatAction()
+	{
+		return _combatAction;
+	}
+	
 	public int isInPvPAction()
 	{
 		return _inPvPAction;
 	}
 	
+	public boolean isInvisible()
+	{
+		return _invisible;
+	}
+	
 	public boolean isLookingForParty()
 	{
 		return _lookingForParty;
+	}
+	
+	public boolean isLyingDead()
+	{
+		return _lyingDead;
 	}
 	
 	public boolean isMoving()
