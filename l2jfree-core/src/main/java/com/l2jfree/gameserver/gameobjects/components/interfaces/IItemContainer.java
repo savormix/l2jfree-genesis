@@ -21,5 +21,5 @@ import com.l2jfree.gameserver.gameobjects.components.IComponent;
  */
 public interface IItemContainer extends IComponent
 {
-	// 
+	//
 }

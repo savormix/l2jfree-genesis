@@ -112,7 +112,7 @@ public abstract class CharInfo extends L2ServerPacket
 		buf.writeD(view.getAllianceId()); // Alliance ID
 		buf.writeD(view.getAllianceCrestId()); // Alliance crest ID
 		buf.writeC(0); // Waiting FIXME isSitting()
-		buf.writeC(view.isMoving()); // Moving FIXME isRunning() 
+		buf.writeC(view.isMoving()); // Moving FIXME isRunning()
 		buf.writeC(view.isInCombatAction()); // In combat
 		buf.writeC(view.isLyingDead()); // Lying dead
 		buf.writeC(view.isInvisible()); // Invisible

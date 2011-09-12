@@ -19,5 +19,5 @@ package com.l2jfree.gameserver.gameobjects.components.interfaces;
  */
 public interface IInventory extends IItemContainer
 {
-	// 
+	//
 }

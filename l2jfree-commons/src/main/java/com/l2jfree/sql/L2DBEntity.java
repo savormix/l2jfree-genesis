@@ -38,7 +38,7 @@ public abstract class L2DBEntity implements L2Entity<Object>
 {
 	protected static final L2Logger _log = L2Logger.getLogger(L2DBEntity.class);
 	
-	// TODO remove once it's not required anymore 
+	// TODO remove once it's not required anymore
 	private static final boolean DEBUG = true;
 	
 	@Override

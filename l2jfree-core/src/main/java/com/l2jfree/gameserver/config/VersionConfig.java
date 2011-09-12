@@ -26,7 +26,7 @@ import com.l2jfree.gameserver.DatapackVersion;
 /**
  * @author NB4L1
  */
-@ConfigClass(folderName = "config", fileName = "version", comment = { "WARNING!", // 
+@ConfigClass(folderName = "config", fileName = "version", comment = { "WARNING!", //
 		"Be aware to don't set client versions lower than required version determined by the datapack version!" })
 public final class VersionConfig extends ConfigPropertiesLoader
 {

@@ -40,7 +40,7 @@ public final class Disconnection
 	
 	public Disconnection(L2Client client, L2Player activeChar)
 	{
-		// 
+		//
 		if (client != null)
 			_client = client;
 		else if (activeChar != null)
@@ -48,7 +48,7 @@ public final class Disconnection
 		else
 			_client = null;
 		
-		// 
+		//
 		if (activeChar != null)
 			_activeChar = activeChar;
 		else if (client != null)
@@ -56,7 +56,7 @@ public final class Disconnection
 		else
 			_activeChar = null;
 		
-		// 
+		//
 		if (_activeChar != null)
 			_activeChar.setClient(null);
 	}

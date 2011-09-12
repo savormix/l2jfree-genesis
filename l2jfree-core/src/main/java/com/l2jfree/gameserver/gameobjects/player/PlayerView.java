@@ -994,7 +994,7 @@ public class PlayerView extends CharacterView implements IPlayerView
 		return _paperDollAugmentationIds[slot];
 	}
 	
-	// -- methods for convenience 
+	// -- methods for convenience
 	
 	@Override
 	public void writeElements(MMOBuffer buf)

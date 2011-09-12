@@ -85,7 +85,7 @@ public class RequestCharacterCreate extends L2ClientPacket
 		if (getClient().getActiveChar() != null)
 			return;
 		
-		// TODO 
+		// TODO
 		//CharacterCreateFail
 		
 		final ClassId classId = ClassId.VALUES.valueOf(_classId);
