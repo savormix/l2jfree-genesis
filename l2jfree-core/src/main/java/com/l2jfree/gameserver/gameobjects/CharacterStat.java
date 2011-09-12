@@ -24,14 +24,25 @@ public abstract class CharacterStat implements ICharacterStat
 {
 	public static enum Element
 	{
-		FIRE,
-		WATER,
-		WIND,
-		EARTH,
-		HOLY,
-		DARK;
+		NONE(-1),
+		FIRE(0),
+		WATER(1),
+		WIND(2),
+		EARTH(3),
+		HOLY(4),
+		DARK(5);
 		
-		public static final byte NONE = -1;
+		private final int _value;
+		
+		Element(int value)
+		{
+			_value = value;
+		}
+		
+		public int getValue()
+		{
+			return _value;
+		}
 	}
 	
 	private final L2Character _activeChar;
@@ -197,9 +208,9 @@ public abstract class CharacterStat implements ICharacterStat
 	}
 	
 	@Override
-	public byte getAttackElement()
+	public Element getAttackElement()
 	{
-		return 0;
+		return Element.NONE;
 	}
 	
 	@Override

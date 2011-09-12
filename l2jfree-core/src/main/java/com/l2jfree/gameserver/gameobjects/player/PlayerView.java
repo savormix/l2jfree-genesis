@@ -44,7 +44,7 @@ public class PlayerView extends CharacterView implements IPlayerView
 	private int _allianceCrestId;
 	private int _allianceId;
 	private int _attackElementPower;
-	private int _attackElementType;
+	private Element _attackElementType;
 	private double _attackSpeedMultiplier;
 	private int _carriedWeight;
 	private double _collisionHeight;
@@ -104,7 +104,6 @@ public class PlayerView extends CharacterView implements IPlayerView
 	private String _name;
 	private int _nameColor;
 	private boolean _noble;
-	private int _objectId;
 	private int _pAtk;
 	private int _pAtkSpd;
 	private int _pDef;
@@ -215,7 +214,7 @@ public class PlayerView extends CharacterView implements IPlayerView
 	@Override
 	public int getAttackElementType()
 	{
-		return _attackElementType;
+		return _attackElementType.getValue();
 	}
 	
 	@Override
@@ -792,7 +791,6 @@ public class PlayerView extends CharacterView implements IPlayerView
 		//final IPlayerInventory inv = p.getInventory();
 		//final L2Transformation transformation = p.getTransformation();
 		
-		refreshObjectId();
 		refreshPosition();
 		refreshPaperDoll();
 		
@@ -827,18 +825,18 @@ public class PlayerView extends CharacterView implements IPlayerView
 		
 		_maxSp = stat.getMaxSP();
 		
-		_maxCp = stat.getMaxCP(); // Maximum CP
-		_currentCp = stat.getCurrentCP(); // Current CP
+		_maxCp = stat.getMaxCP();
+		_currentCp = stat.getCurrentCP();
 		
 		_carriedWeight = stat.getCarriedWeight();
 		_maxCarriedWeight = stat.getMaxCarriedWeight();
 		
-		_karmaPoints = stat.getKarmaPoints(); // Karma
-		_vitalityPoints = stat.getVitalityPoints(); // Vitality
-		_famePoints = stat.getFamePoints(); // Fame
+		_karmaPoints = stat.getKarmaPoints();
+		_vitalityPoints = stat.getVitalityPoints();
+		_famePoints = stat.getFamePoints();
 		
-		_pkCount = stat.getPkCount(); // PK Count
-		_pvpCount = stat.getPvPCount(); // PvP Count
+		_pkCount = stat.getPkCount();
+		_pvpCount = stat.getPvPCount();
 		
 		_pAtk = stat.getPAtk(0);
 		_pDef = stat.getPDef(0);
@@ -861,9 +859,14 @@ public class PlayerView extends CharacterView implements IPlayerView
 		_flyRunSpeed = 0; // getActiveChar().isFlying() ? _runSpeed : 0; // TODO
 		_flyWalkSpeed = 0; // getActiveChar().isFlying() ? _walkSpeed : 0; // TODO
 		
-		_attackElementType = 0;//getAttackElementType(); // Attack element
-		_attackElementPower = 0;//getAttackElementPower(); // Attack element power
-		//_defenceElementPower
+		_attackElementType = stat.getAttackElement();
+		_attackElementPower = stat.getAttackElementPower(_attackElementType);
+		_defenceElementPower[Element.FIRE.getValue()] = stat.getDefenseElementPower(Element.FIRE);
+		_defenceElementPower[Element.WATER.getValue()] = stat.getDefenseElementPower(Element.WATER);
+		_defenceElementPower[Element.WIND.getValue()] = stat.getDefenseElementPower(Element.WIND);
+		_defenceElementPower[Element.EARTH.getValue()] = stat.getDefenseElementPower(Element.EARTH);
+		_defenceElementPower[Element.HOLY.getValue()] = stat.getDefenseElementPower(Element.HOLY);
+		_defenceElementPower[Element.DARK.getValue()] = stat.getDefenseElementPower(Element.DARK);
 		
 		// --
 		
@@ -892,7 +895,7 @@ public class PlayerView extends CharacterView implements IPlayerView
 		_race = baseTemplate.getRace();
 		_gender = appearance.getGender();
 		
-		_gm = p.isGM(); // Game Master
+		_gm = p.isGM();
 		
 		_pledgeId = 0;//getPledgeId(); // Pledge ID
 		_pledgeCrestId = 0;//getPledgeCrestId(); // Pledge crest ID
@@ -958,18 +961,9 @@ public class PlayerView extends CharacterView implements IPlayerView
 		_transformationGraphicalId = 0;
 	}
 	
-	// TODO actually this should never change during object life time
-	@Override
-	public void refreshObjectId()
-	{
-		_objectId = getActiveChar().getObjectId();
-	}
-	
 	@Override
 	public void refreshPosition()
 	{
-		refreshObjectId();
-		
 		final ObjectPosition position = getActiveChar().getPosition();
 		
 		_x = position.getX();
@@ -982,6 +976,7 @@ public class PlayerView extends CharacterView implements IPlayerView
 	private final int[] _paperDollItemDisplayIds = new int[PaperDollSlot.TOTAL_SLOTS];
 	private final int[] _paperDollAugmentationIds = new int[PaperDollSlot.TOTAL_SLOTS];
 	
+	@Override
 	public void refreshPaperDoll()
 	{
 		final IPlayerInventory inv = getActiveChar().getInventory();

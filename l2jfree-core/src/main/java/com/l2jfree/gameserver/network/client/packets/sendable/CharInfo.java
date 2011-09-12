@@ -17,14 +17,13 @@ package com.l2jfree.gameserver.network.client.packets.sendable;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerView;
 import com.l2jfree.gameserver.network.client.L2Client;
-import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author NB4L1
  * @author savormix (generated)
  */
-public abstract class CharInfo extends L2ServerPacket
+public abstract class CharInfo extends StaticPacket
 {
 	/**
 	 * A nicer name for {@link CharInfo}.

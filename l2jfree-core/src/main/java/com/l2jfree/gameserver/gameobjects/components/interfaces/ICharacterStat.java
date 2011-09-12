@@ -72,7 +72,7 @@ public interface ICharacterStat extends IComponent
 	
 	public int getCurrentMP();
 	
-	public byte getAttackElement();
+	public Element getAttackElement();
 	
 	public int getAttackElementPower(Element element);
 	

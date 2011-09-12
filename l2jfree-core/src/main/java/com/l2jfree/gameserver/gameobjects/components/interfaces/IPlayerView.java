@@ -234,9 +234,9 @@ public interface IPlayerView extends ICharacterView
 	
 	public boolean isNoble();
 	
-	public void refreshObjectId();
-	
 	public void refreshPosition();
+	
+	public void refreshPaperDoll();
 	
 	public void writeElements(MMOBuffer buf);
 	
