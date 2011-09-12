@@ -36,7 +36,7 @@ public class RequestAllFortressInfo extends L2ClientPacket
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
-		// trigger		
+		// trigger
 	}
 	
 	@Override

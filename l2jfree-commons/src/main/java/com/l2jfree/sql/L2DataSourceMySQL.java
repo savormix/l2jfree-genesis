@@ -151,7 +151,7 @@ public final class L2DataSourceMySQL extends L2DataSource
 			commands.add("mysqldump");
 			commands.add(" --user=" + getComboPooledDataSource().getUser()); // The MySQL user name to use when connecting to the server
 			commands.add(" --password=" + getComboPooledDataSource().getPassword()); // The password to use when connecting to the server
-			commands.add("--compact"); // Produce more compact output. 
+			commands.add("--compact"); // Produce more compact output.
 			commands.add("--complete-insert"); // Use complete INSERT statements that include column names
 			commands.add("--default-character-set=utf8"); // Use charset_name as the default character set
 			commands.add("--extended-insert"); // Use multiple-row INSERT syntax that include several VALUES lists
