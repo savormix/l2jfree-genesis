@@ -24,7 +24,6 @@ import com.l2jfree.network.mmocore.MMOBuffer;
  */
 public interface IPlayerView extends ICharacterView
 {
-	
 	public int canEquipCloak();
 	
 	public boolean canUseDwarvenRecipes();

@@ -16,6 +16,8 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 
+import com.l2jfree.gameserver.gameobjects.L2Player;
+import com.l2jfree.gameserver.gameobjects.ObjectPosition;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.sendable.ValidateLocation.UpdateLocation;
 import com.l2jfree.network.mmocore.InvalidPacketException;
@@ -23,19 +25,18 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author hex1r0
+ * @author savormix (generated)
  */
 public abstract class ValidatePosition extends L2ClientPacket
 {
 	/**
 	 * A nicer name for {@link ValidatePosition}.
 	 * 
-	 * @author hex1r0
+	 * @author savormix (generated)
 	 * @see ValidatePosition
 	 */
 	public static final class ReportLocation extends ValidatePosition
 	{
-		public static final int OPCODE = 0x59;
-		
 		/**
 		 * Constructs this packet.
 		 * 
@@ -46,12 +47,15 @@ public abstract class ValidatePosition extends L2ClientPacket
 		}
 	}
 	
+	/** Packet's identifier */
+	public static final int OPCODE = 0x59;
+	
 	private int _x;
 	private int _y;
 	private int _z;
 	private int _heading;
-	@SuppressWarnings("unused")
-	private int _vehicleObjectID;
+	
+	//private int _vehicle;
 	
 	/** Constructs this packet. */
 	public ValidatePosition()
@@ -67,20 +71,26 @@ public abstract class ValidatePosition extends L2ClientPacket
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
-		_x = buf.readD();
-		_y = buf.readD();
-		_z = buf.readD();
-		_heading = buf.readD();
-		_vehicleObjectID = buf.readD();
+		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		_x = buf.readD(); // Current client X
+		_y = buf.readD(); // Current client Y
+		_z = buf.readD(); // Current client Z
+		_heading = buf.readD(); // Heading
+		/*_vehicle = */buf.readD(); // Vehicle OID
 	}
 	
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		// TODO make real validation
-		getClient().getActiveChar().getPosition().setXYZ(_x, _y, _z);
-		getClient().getActiveChar().getPosition().setHeading(_heading);
-		
+		// TODO: implement
+		L2Player activeChar = getClient().getActiveChar();
+		ObjectPosition position = activeChar.getPosition();
+		{
+			position.setXYZ(_x, _y, _z);
+			position.setHeading(_heading);
+		}
+		// TODO: perhaps make an iterative task instead of replying every time
+		// even though we have flood protection
 		sendPacket(UpdateLocation.PACKET);
 	}
 }

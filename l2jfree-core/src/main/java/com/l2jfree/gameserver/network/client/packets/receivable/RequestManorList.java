@@ -23,10 +23,21 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author hex1r0
+ * @author savormix (generated)
  */
 public class RequestManorList extends L2ClientPacket
 {
-	public static final int OPCODE = 0x01;
+	/** Packet's identifier */
+	public static final int OPCODE = 0xd0;
+	/** Additional packet's identifiers */
+	public static final int[] EXT_OPCODES = { 0x01, 0x00, };
+	/** Second packet's identifier */
+	public static final int OPCODE_2 = 0x01;
+	
+	/** Constructs this packet. */
+	public RequestManorList()
+	{
+	}
 	
 	@Override
 	protected int getMinimumLength()
@@ -37,7 +48,7 @@ public class RequestManorList extends L2ClientPacket
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
-		// trigger
+		// trigger packet
 	}
 	
 	@Override

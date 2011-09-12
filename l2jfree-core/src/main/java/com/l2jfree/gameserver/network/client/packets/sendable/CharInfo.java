@@ -21,6 +21,7 @@ import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
+ * @author NB4L1
  * @author savormix (generated)
  */
 public abstract class CharInfo extends L2ServerPacket
@@ -67,7 +68,6 @@ public abstract class CharInfo extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		
 		final IPlayerView view = activeChar.getView();
 		
 		buf.writeD(view.getX()); // Location X
@@ -80,9 +80,8 @@ public abstract class CharInfo extends L2ServerPacket
 		buf.writeD(view.getGender()); // Sex
 		buf.writeD(view.getMainClassId()); // Main class
 		
-		view.writePaperDollObjectIds(buf, true);
-		view.writePaperDollItemDisplayIds(buf, true);
-		view.writePaperDollAugmentationIds(buf, true);
+		view.writePaperDollItemDisplayIds(buf, false); // Equipment
+		view.writePaperDollAugmentationIds(buf, false); // Equipment augmentations
 		
 		buf.writeD(view.getMaxTalismanSlots()); // Talisman slots
 		buf.writeD(view.canEquipCloak()); // Can equip cloak
@@ -119,7 +118,7 @@ public abstract class CharInfo extends L2ServerPacket
 		buf.writeC(view.getMountType()); // Mount type
 		buf.writeC(view.getPrivateStoreType()); // Private store
 		
-		view.writeCubics(buf);
+		view.writeCubics(buf); // Cubics
 		
 		buf.writeC(view.isLookingForParty()); // Looking for party
 		buf.writeD(view.getAbnormalEffect()); // Abnormal effect

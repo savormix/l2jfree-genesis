@@ -25,29 +25,59 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author hex1r0
+ * @author savormix (generated)
  */
-public class EnterWorld extends L2ClientPacket
+public abstract class EnterWorld extends L2ClientPacket
 {
+	/**
+	 * A nicer name for {@link EnterWorld}.
+	 * 
+	 * @author savormix (generated)
+	 * @see EnterWorld
+	 */
+	public static final class RequestEnterWorld extends EnterWorld
+	{
+		/**
+		 * Constructs this packet.
+		 * 
+		 * @see EnterWorld#EnterWorld()
+		 */
+		public RequestEnterWorld()
+		{
+		}
+	}
+	
+	/** Packet's identifier */
 	public static final int OPCODE = 0x11;
+	
+	/** Constructs this packet. */
+	public EnterWorld()
+	{
+	}
 	
 	@Override
 	protected int getMinimumLength()
 	{
-		return 0;
+		return 84 + 4 + 4 + 4 + 4 + 4;
 	}
 	
+	@SuppressWarnings("unused")
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
-		// TODO
-		buf.skipAll();
+		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		final byte[] bytesA = buf.readB(new byte[84]); // Unk
+		final byte[] bytesB = buf.readB(new byte[4]); // Client IP
+		final byte[] bytesC = buf.readB(new byte[4]); // Hop 1
+		final byte[] bytesD = buf.readB(new byte[4]); // Hop 2
+		final byte[] bytesE = buf.readB(new byte[4]); // Hop 3
+		final byte[] bytesF = buf.readB(new byte[4]); // Hop 4
 	}
 	
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		// TODO
-		
+		// TODO: implement
 		sendPacket(MyPlayerInfo.PACKET);
 		
 		// Welcome to Lineage 2, temp solution ^)

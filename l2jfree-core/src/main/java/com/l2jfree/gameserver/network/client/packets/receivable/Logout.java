@@ -22,11 +22,17 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author hex1r0
+ * @author savormix
  */
 public class Logout extends L2ClientPacket
 {
 	/** Packet's identifier */
 	public static final int OPCODE = 0x00;
+	
+	/** Constructs this packet. */
+	public Logout()
+	{
+	}
 	
 	@Override
 	protected int getMinimumLength()
@@ -37,12 +43,12 @@ public class Logout extends L2ClientPacket
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
-		// empty packet
+		// trigger packet
 	}
 	
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		getClient().closeNow();
+		getClient().close(false);
 	}
 }

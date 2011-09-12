@@ -87,13 +87,13 @@ public abstract class VersionCheck extends L2ServerPacket
 	@Override
 	protected void writeImpl(L2Client client, MMOBuffer buf) throws RuntimeException
 	{
-		buf.writeC(_compatible);
-		buf.writeB(_key);
+		buf.writeC(_compatible); // Compatible
+		buf.writeB(_key); // Cipher key half
 		
-		buf.writeD(0x01);
-		buf.writeD(ReportedConfig.ID);
-		buf.writeC(0x01);
+		buf.writeD(0x01); // 1
+		buf.writeD(ReportedConfig.ID); // Server
+		buf.writeC(0x01); // 1
 		
-		buf.writeD(_obfusKey);
+		buf.writeD(_obfusKey); // Character management obfuscation key
 	}
 }

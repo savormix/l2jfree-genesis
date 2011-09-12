@@ -25,14 +25,14 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 /**
  * @author hex1r0
  * @author NB4L1
- * @author savormix (generated)
+ * @author savormix
  */
 public abstract class CharacterSelectionInfo extends L2ServerPacket
 {
 	/**
 	 * A nicer name for {@link CharacterSelectionInfo}.
 	 * 
-	 * @author savormix (generated)
+	 * @author savormix
 	 * @see CharacterSelectionInfo
 	 */
 	public static final class AvailableCharacters extends CharacterSelectionInfo
@@ -40,31 +40,49 @@ public abstract class CharacterSelectionInfo extends L2ServerPacket
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @param client authorized client
-		 * @see CharacterSelectionInfo#CharacterSelectionInfo(L2Client)
+		 * @param characters available characters
+		 * @see CharacterSelectionInfo#CharacterSelectionInfo(List)
 		 */
-		public AvailableCharacters(L2Client client)
+		private AvailableCharacters(List<PlayerDB> characters)
 		{
-			super(client);
+			super(characters);
+		}
+		
+		/**
+		 * Sends the available character list retrieved using the client's authorized account.
+		 * 
+		 * @param client recipient
+		 */
+		public static void sendToClient(L2Client client)
+		{
+			sendToClient(client, client.getAccountName());
+		}
+		
+		/**
+		 * Sends the available character list from the specified account.
+		 * 
+		 * @param client recipient
+		 * @param account account name
+		 */
+		public static void sendToClient(L2Client client, String account)
+		{
+			// FIXME: don't fetch the whole player only the required data
+			List<PlayerDB> characters = PlayerDB.findByAccount(account);
+			client.definePlayerSlots(characters);
+			client.sendPacket(new AvailableCharacters(characters));
 		}
 	}
 	
-	private final String _account;
-	private final int _sessionId;
-	private final List<PlayerDB> _players;
+	private final List<PlayerDB> _characters;
 	
 	/**
 	 * Constructs this packet.
 	 * 
-	 * @param client authorized client
+	 * @param characters available characters
 	 */
-	public CharacterSelectionInfo(L2Client client)
+	private CharacterSelectionInfo(List<PlayerDB> characters)
 	{
-		_sessionId = client.getSessionId(); // TODO: revise session stuff
-		_account = client.getAccountName();
-		_players = PlayerDB.findByAccount(_account); // FIXME: don't fetch the whole player only the required data
-		
-		client.definePlayerSlots(_players);
+		_characters = characters;
 	}
 	
 	@Override
@@ -77,15 +95,15 @@ public abstract class CharacterSelectionInfo extends L2ServerPacket
 	protected void writeImpl(L2Client client, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.writeD(_players.size()); // Character count
+		buf.writeD(_characters.size()); // Character count
 		buf.writeD(7); // New characters
 		buf.writeC(0); // 0
-		for (PlayerDB p : _players)
+		for (PlayerDB p : _characters)
 		{
 			buf.writeS(p.name); // Character name
 			buf.writeD(0); // TODO: Character ID
 			buf.writeS(p.accountName); // Account name
-			buf.writeD(_sessionId); // Session ID
+			buf.writeD(client.getSessionId()); // Session ID
 			buf.writeD(0); // Pledge ID
 			buf.writeD(0); // 0
 			buf.writeD(p.gender); // Sex

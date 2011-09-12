@@ -24,20 +24,27 @@ import java.nio.ByteBuffer;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.gameserver.network.client.packets.receivable.EnterWorld;
+import com.l2jfree.gameserver.network.client.packets.receivable.EnterWorld.RequestEnterWorld;
+import com.l2jfree.gameserver.network.client.packets.receivable.ExGetOnAirShip;
 import com.l2jfree.gameserver.network.client.packets.receivable.Logout;
-import com.l2jfree.gameserver.network.client.packets.receivable.RequestAllFortressInfo;
-import com.l2jfree.gameserver.network.client.packets.receivable.RequestKeyMapping;
 import com.l2jfree.gameserver.network.client.packets.receivable.RequestManorList;
 import com.l2jfree.gameserver.network.client.packets.receivable.RequestRestart;
+import com.l2jfree.gameserver.network.client.packets.receivable.ValidatePosition;
 import com.l2jfree.gameserver.network.client.packets.receivable.ValidatePosition.ReportLocation;
-import com.l2jfree.gameserver.network.client.packets.receivable.outgame.ProtocolVersion;
-import com.l2jfree.gameserver.network.client.packets.receivable.outgame.RequestAuthorization;
-import com.l2jfree.gameserver.network.client.packets.receivable.outgame.RequestCharacterCreate;
-import com.l2jfree.gameserver.network.client.packets.receivable.outgame.RequestCharacterCreationScreen;
-import com.l2jfree.gameserver.network.client.packets.receivable.outgame.RequestCharacterDelete;
-import com.l2jfree.gameserver.network.client.packets.receivable.outgame.RequestCharacterPreviousState;
-import com.l2jfree.gameserver.network.client.packets.receivable.outgame.RequestCharacterRestore;
-import com.l2jfree.gameserver.network.client.packets.receivable.outgame.RequestCharacterSelect;
+import com.l2jfree.gameserver.network.client.packets.receivable.accountless.AuthLogin;
+import com.l2jfree.gameserver.network.client.packets.receivable.accountless.AuthLogin.RequestAuthorization;
+import com.l2jfree.gameserver.network.client.packets.receivable.accountless.ProtocolVersion;
+import com.l2jfree.gameserver.network.client.packets.receivable.characterless.CharacterDeletePacket;
+import com.l2jfree.gameserver.network.client.packets.receivable.characterless.CharacterDeletePacket.RequestDeleteCharacter;
+import com.l2jfree.gameserver.network.client.packets.receivable.characterless.CharacterRestorePacket;
+import com.l2jfree.gameserver.network.client.packets.receivable.characterless.CharacterRestorePacket.RequestRestoreCharacter;
+import com.l2jfree.gameserver.network.client.packets.receivable.characterless.CharacterSelect;
+import com.l2jfree.gameserver.network.client.packets.receivable.characterless.CharacterSelect.RequestSelectCharacter;
+import com.l2jfree.gameserver.network.client.packets.receivable.characterless.NewCharacter;
+import com.l2jfree.gameserver.network.client.packets.receivable.characterless.NewCharacter.RequestNewCharacter;
+import com.l2jfree.gameserver.network.client.packets.receivable.characterless.NewCharacterPacket;
+import com.l2jfree.gameserver.network.client.packets.receivable.characterless.NewCharacterPacket.RequestCharacterTemplates;
+import com.l2jfree.gameserver.network.client.packets.receivable.characterless.RequestAvailableCharacters;
 import com.l2jfree.network.mmocore.PacketHandler;
 
 /**
@@ -61,77 +68,69 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 					return new ProtocolVersion();
 				return invalidState(client, ProtocolVersion.class, opcode);
 				
-			case RequestAuthorization.OPCODE:
+			case AuthLogin.OPCODE:
 				if (client.stateEquals(PROTOCOL_OK))
 					return new RequestAuthorization();
-				return invalidState(client, RequestAuthorization.class, opcode);
+				return invalidState(client, AuthLogin.class, opcode);
 				
 			case Logout.OPCODE:
 				if (client.stateEquals(CHARACTER_MANAGEMENT) || client.stateEquals(LOGGED_IN))
 					return new Logout();
 				return invalidState(client, Logout.class, opcode);
 				
-			case RequestCharacterCreate.OPCODE:
+			case NewCharacter.OPCODE:
 				if (client.stateEquals(CHARACTER_MANAGEMENT))
-					return new RequestCharacterCreate();
-				return invalidState(client, RequestCharacterCreate.class, opcode);
+					return new RequestNewCharacter();
+				return invalidState(client, NewCharacter.class, opcode);
 				
-			case RequestCharacterDelete.OPCODE:
+			case CharacterDeletePacket.OPCODE:
 				if (client.stateEquals(CHARACTER_MANAGEMENT))
-					return new RequestCharacterDelete();
-				return invalidState(client, RequestCharacterDelete.class, opcode);
+					return new RequestDeleteCharacter();
+				return invalidState(client, CharacterDeletePacket.class, opcode);
 				
-			case RequestCharacterSelect.OPCODE:
+			case CharacterSelect.OPCODE:
 				if (client.stateEquals(CHARACTER_MANAGEMENT))
-					return new RequestCharacterSelect();
-				return invalidState(client, RequestCharacterSelect.class, opcode);
+					return new RequestSelectCharacter();
+				return invalidState(client, CharacterSelect.class, opcode);
 				
-			case RequestCharacterCreationScreen.OPCODE:
+			case NewCharacterPacket.OPCODE:
 				if (client.stateEquals(CHARACTER_MANAGEMENT))
-					return new RequestCharacterCreationScreen();
-				return invalidState(client, RequestCharacterCreationScreen.class, opcode);
+					return new RequestCharacterTemplates();
+				return invalidState(client, NewCharacterPacket.class, opcode);
 				
-			case RequestCharacterRestore.OPCODE:
+			case CharacterRestorePacket.OPCODE:
 				if (client.stateEquals(CHARACTER_MANAGEMENT))
-					return new RequestCharacterRestore();
-				return invalidState(client, RequestCharacterRestore.class, opcode);
+					return new RequestRestoreCharacter();
+				return invalidState(client, CharacterRestorePacket.class, opcode);
 				
 			case 0xd0:
+			{
 				if (buf.remaining() < 2)
 					return underflow(buf, client, opcode);
 				
-				final int opcode2 = buf.getShort() & 0xffff;
+				final int opcode2 = buf.getChar();
 				
 				switch (opcode2)
 				{
-				
-					case RequestCharacterPreviousState.OPCODE:
-						if (client.stateEquals(CHARACTER_MANAGEMENT))
-							return new RequestCharacterPreviousState();
-						return invalidState(client, RequestCharacterPreviousState.class, opcode, opcode2);
-						
-					case RequestManorList.OPCODE:
+					case RequestManorList.OPCODE_2:
 						if (client.stateEquals(LOGGED_IN))
 							return new RequestManorList();
-						return invalidState(client, RequestCharacterPreviousState.class, opcode, opcode2);
+						return invalidState(client, RequestManorList.class, opcode, opcode2);
 						
-					case RequestKeyMapping.OPCODE:
-						if (client.stateEquals(LOGGED_IN))
-							return new RequestKeyMapping();
-						return invalidState(client, RequestKeyMapping.class, opcode, opcode2);
-						
-					case RequestAllFortressInfo.OPCODE:
-						if (client.stateEquals(LOGGED_IN))
-							return new RequestAllFortressInfo();
-						return invalidState(client, RequestAllFortressInfo.class, opcode, opcode2);
-						
+					case ExGetOnAirShip.OPCODE_2:
+						if (client.stateEquals(CHARACTER_MANAGEMENT))
+							return new RequestAvailableCharacters();
+						//else if (client.stateEquals(LOGGED_IN))
+						//return new ();
+						return invalidState(client, RequestManorList.class, opcode, opcode2);
 					default:
 						return unknown(buf, client, opcode, opcode2);
 				}
-				
+			}
+			
 			case EnterWorld.OPCODE:
 				if (client.stateEquals(LOGGED_IN))
-					return new EnterWorld();
+					return new RequestEnterWorld();
 				return invalidState(client, EnterWorld.class, opcode);
 				
 			case RequestRestart.OPCODE:
@@ -139,10 +138,10 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 					return new RequestRestart();
 				return invalidState(client, RequestRestart.class, opcode);
 				
-			case ReportLocation.OPCODE:
+			case ValidatePosition.OPCODE:
 				if (client.stateEquals(LOGGED_IN))
 					return new ReportLocation();
-				return invalidState(client, ReportLocation.class, opcode);
+				return invalidState(client, ValidatePosition.class, opcode);
 				
 			default:
 				return unknown(buf, client, opcode);

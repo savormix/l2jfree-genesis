@@ -14,10 +14,14 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
+
 /**
+ * This packet needs re-generation after completing the definition.
+ * 
  * @author savormix (generated)
  */
-public abstract class ExUISettingPacket extends StaticPacket
+public abstract class ExUISettingPacket extends L2ServerPacket
 {
 	/**
 	 * A nicer name for {@link ExUISettingPacket}.
@@ -27,15 +31,12 @@ public abstract class ExUISettingPacket extends StaticPacket
 	 */
 	public static final class UserInterfaceSetup extends ExUISettingPacket
 	{
-		/** This packet. */
-		public static final UserInterfaceSetup PACKET = new UserInterfaceSetup();
-		
 		/**
 		 * Constructs this packet.
 		 * 
 		 * @see ExUISettingPacket#ExUISettingPacket()
 		 */
-		private UserInterfaceSetup()
+		public UserInterfaceSetup()
 		{
 		}
 	}

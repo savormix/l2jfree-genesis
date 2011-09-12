@@ -97,9 +97,9 @@ public abstract class UserInfo extends StaticPacket
 		buf.writeD(view.getMaxCarriedWeight()); // Maximum carried weight
 		buf.writeD(view.getWeaponStatus()); // Weapon status
 		
-		view.writePaperDollObjectIds(buf, true);
-		view.writePaperDollItemDisplayIds(buf, true);
-		view.writePaperDollAugmentationIds(buf, true);
+		view.writePaperDollObjectIds(buf, true); // Equipment OIDs
+		view.writePaperDollItemDisplayIds(buf, true); // Equipment
+		view.writePaperDollAugmentationIds(buf, true); // Equipment augmentations
 		
 		buf.writeD(view.getMaxTalismanSlots()); // Talisman slots
 		buf.writeD(view.canEquipCloak()); // Can equip cloak
@@ -111,7 +111,7 @@ public abstract class UserInfo extends StaticPacket
 		buf.writeD(view.getCriticalHit()); // Critical
 		buf.writeD(view.getMAtk()); // M. Atk.
 		buf.writeD(view.getMAtkSpd()); // Casting speed
-		buf.writeD(100); // Attack speed (dupe) FIXME duplication?
+		buf.writeD(view.getPAtkSpd()); // Attack speed (dupe)
 		buf.writeD(view.getMDef()); // M. Def.
 		buf.writeD(view.isInPvPAction()); // In PvP
 		buf.writeD(view.getKarma()); // Karma
@@ -143,7 +143,7 @@ public abstract class UserInfo extends StaticPacket
 		buf.writeD(view.getPkCount()); // PK Count
 		buf.writeD(view.getPvPCount()); // PvP Count
 		
-		view.writeCubics(buf);
+		view.writeCubics(buf); // Cubics
 		
 		buf.writeC(view.isLookingForParty()); // Looking for party
 		buf.writeD(view.getAbnormalEffect()); // Abnormal effect
@@ -174,7 +174,7 @@ public abstract class UserInfo extends StaticPacket
 		buf.writeD(view.getCursedWeaponLevel()); // Cursed weapon level
 		buf.writeD(view.getTransformationGraphicalId()); // Transformation
 		
-		view.writeElements(buf);
+		view.writeElements(buf); // Attack and defense element info
 		
 		buf.writeD(view.getAgathionId()); // Agathion
 		buf.writeD(view.getFamePoints()); // Fame

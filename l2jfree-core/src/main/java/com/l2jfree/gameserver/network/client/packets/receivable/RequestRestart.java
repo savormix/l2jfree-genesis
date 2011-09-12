@@ -17,6 +17,7 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 import java.nio.BufferUnderflowException;
 
 import com.l2jfree.gameserver.network.client.Disconnection;
+import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.L2ClientState;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.sendable.RestartResponsePacket.RestartResult;
@@ -26,11 +27,17 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author hex1r0
+ * @author savormix (generated)
  */
 public class RequestRestart extends L2ClientPacket
 {
 	/** Packet's identifier */
 	public static final int OPCODE = 0x57;
+	
+	/** Constructs this packet. */
+	public RequestRestart()
+	{
+	}
 	
 	@Override
 	protected int getMinimumLength()
@@ -41,19 +48,19 @@ public class RequestRestart extends L2ClientPacket
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
-		// trigger
+		// trigger packet
 	}
 	
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		// TODO
-		
+		// TODO: implement
+		final L2Client client = getClient();
 		sendPacket(RestartResult.ALLOWED);
 		
-		new Disconnection(getClient()).storeAndRemoveFromWorld();
+		new Disconnection(client).storeAndRemoveFromWorld();
 		
-		getClient().setState(L2ClientState.CHARACTER_MANAGEMENT);
-		sendPacket(new AvailableCharacters(getClient()));
+		client.setState(L2ClientState.CHARACTER_MANAGEMENT);
+		AvailableCharacters.sendToClient(client);
 	}
 }

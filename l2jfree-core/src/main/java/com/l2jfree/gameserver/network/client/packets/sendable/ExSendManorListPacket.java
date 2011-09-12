@@ -16,13 +16,13 @@ package com.l2jfree.gameserver.network.client.packets.sendable;
 
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
-import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
- * @author savormix (generated)
+ * @author hex1r0
+ * @author savormix
  */
-public abstract class ExSendManorListPacket extends L2ServerPacket
+public abstract class ExSendManorListPacket extends StaticPacket
 {
 	/**
 	 * A nicer name for {@link ExSendManorListPacket}.
@@ -45,10 +45,10 @@ public abstract class ExSendManorListPacket extends L2ServerPacket
 		}
 	}
 	
-	private static String[] _castles = new String[] { "gludio", "dion", "giran", "oren", "aden", "innadril", "goddard",
-			"rune", "schuttgart" };
-	
 	private static final int[] EXT_OPCODES = { 0x22, 0x00, };
+	
+	private final String[] _castles = { "gludio", "dion", "giran", "oren", "aden", "innadrile", "godard", "rune",
+			"shuttgart" };
 	
 	/** Constructs this packet. */
 	public ExSendManorListPacket()
