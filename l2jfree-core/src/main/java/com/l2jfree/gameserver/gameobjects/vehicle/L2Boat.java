@@ -22,7 +22,7 @@ import com.l2jfree.gameserver.templates.L2Template;
  */
 public abstract class L2Boat extends L2Vehicle
 {
-	protected L2Boat(int objectId, L2Template template)
+	public L2Boat(int objectId, L2Template template)
 	{
 		super(objectId, template);
 	}

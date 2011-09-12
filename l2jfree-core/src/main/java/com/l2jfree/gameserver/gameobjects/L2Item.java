@@ -24,7 +24,7 @@ import com.l2jfree.gameserver.templates.L2ItemTemplate;
 @KnownListComponent(EmptyObjectKnownList.class)
 public abstract class L2Item extends L2Object
 {
-	public L2Item(int objectId, L2ItemTemplate template)
+	protected L2Item(int objectId, L2ItemTemplate template)
 	{
 		super(objectId, template);
 	}
@@ -33,5 +33,21 @@ public abstract class L2Item extends L2Object
 	public L2ItemTemplate getTemplate()
 	{
 		return (L2ItemTemplate)super.getTemplate();
+	}
+	
+	@Override
+	public final String getName()
+	{
+		return getTemplate().getName();
+	}
+	
+	public abstract int getCount();
+	
+	public abstract boolean isStackable();
+	
+	@SuppressWarnings("static-method")
+	public boolean isEquipable()
+	{
+		return false;
 	}
 }

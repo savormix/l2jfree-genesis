@@ -34,7 +34,7 @@ public abstract class L2Character extends L2Object implements IL2Character
 	private final ICharacterView _view;
 	private final IInventory _inventory;
 	
-	public L2Character(int objectId, L2Template template)
+	protected L2Character(int objectId, L2Template template)
 	{
 		super(objectId, template);
 		
@@ -59,5 +59,11 @@ public abstract class L2Character extends L2Object implements IL2Character
 	public IInventory getInventory()
 	{
 		return _inventory;
+	}
+	
+	@Override
+	public void setName(String name)
+	{
+		throw new UnsupportedOperationException("setName() is unsupported for " + getClass().getSimpleName());
 	}
 }

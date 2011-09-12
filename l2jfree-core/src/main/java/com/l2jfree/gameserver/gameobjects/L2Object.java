@@ -80,9 +80,6 @@ public abstract class L2Object implements IL2Object
 	public abstract String getName();
 	
 	@Override
-	public abstract void setName(String name);
-	
-	@Override
 	public String toString()
 	{
 		final L2TextBuilder tb = new L2TextBuilder();

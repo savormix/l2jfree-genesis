@@ -37,8 +37,6 @@ public interface IL2Object extends L2Entity<Integer>
 	
 	public String getName();
 	
-	public void setName(String name);
-	
 	@Override
 	public String toString();
 }

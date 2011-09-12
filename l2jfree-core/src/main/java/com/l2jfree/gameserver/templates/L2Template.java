@@ -16,4 +16,10 @@ public/* abstract */class L2Template
 	{
 		return _id;
 	}
+	
+	public final String getName()
+	{
+		// TODO
+		return "dummy" + getClass().getSimpleName();
+	}
 }

@@ -21,7 +21,7 @@ import com.l2jfree.gameserver.templates.L2Template;
  */
 public abstract class L2StaticObject extends L2Object
 {
-	protected L2StaticObject(int objectId, L2Template template)
+	public L2StaticObject(int objectId, L2Template template)
 	{
 		super(objectId, template);
 	}

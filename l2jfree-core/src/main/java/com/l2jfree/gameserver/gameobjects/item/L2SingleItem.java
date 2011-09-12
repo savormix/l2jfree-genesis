@@ -12,22 +12,30 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.gameobjects.interfaces;
+package com.l2jfree.gameserver.gameobjects.item;
 
-import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterStat;
-import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterView;
-import com.l2jfree.gameserver.gameobjects.components.interfaces.IInventory;
+import com.l2jfree.gameserver.gameobjects.L2Item;
+import com.l2jfree.gameserver.templates.L2ItemTemplate;
 
 /**
  * @author NB4L1
  */
-public interface IL2Character extends IL2Object
+public class L2SingleItem extends L2Item
 {
-	public ICharacterStat getStat();
+	protected L2SingleItem(int objectId, L2ItemTemplate template)
+	{
+		super(objectId, template);
+	}
 	
-	public ICharacterView getView();
+	@Override
+	public final int getCount()
+	{
+		return 1; // ALWAYS
+	}
 	
-	public IInventory getInventory();
-	
-	public void setName(String name);
+	@Override
+	public final boolean isStackable()
+	{
+		return false; // ALWAYS
+	}
 }
