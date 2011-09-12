@@ -125,16 +125,13 @@ public abstract class ComponentFactory<T>
 	
 	private final Class<? extends T> findComponentClass(L2Object owner)
 	{
+		// first search for template id based mapping
 		Class<? extends T> clazz = _registryByTemplateId.get(owner.getTemplate().getId());
 		
 		if (clazz != null)
 			return clazz;
 		
-		clazz = getComponentClassByAnnotation(owner);
-		
-		if (clazz != null)
-			return clazz;
-		
+		// then check for class based mappings
 		for (Class<?> ownerClazz = owner.getClass(); ownerClazz != null; ownerClazz = ownerClazz.getSuperclass())
 		{
 			clazz = _registryByOwnerClass.get(ownerClazz);
@@ -142,6 +139,12 @@ public abstract class ComponentFactory<T>
 			if (clazz != null)
 				return clazz;
 		}
+		
+		// and finally fall-back to default annotations based mappings
+		clazz = getComponentClassByAnnotation(owner);
+		
+		if (clazz != null)
+			return clazz;
 		
 		throw new IllegalStateException("No " + getRootClass() + " implementation registered for " + owner);
 	}
