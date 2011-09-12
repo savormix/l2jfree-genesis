@@ -27,8 +27,6 @@ import com.l2jfree.gameserver.templates.L2Template;
 /**
  * @author NB4L1
  */
-@StatComponent(CharacterStat.class)
-@ViewComponent(CharacterView.class)
 @InventoryComponent(EmptyInventory.class)
 public abstract class L2Character extends L2Object implements IL2Character
 {

@@ -14,10 +14,12 @@
  */
 package com.l2jfree.gameserver.gameobjects.components;
 
+import com.l2jfree.util.logging.L2Logger;
+
 /**
  * @author NB4L1
  */
 public interface IComponent
 {
-	// just for convenience
+	public static final L2Logger _log = L2Logger.getLogger(IComponent.class);
 }
