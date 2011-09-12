@@ -15,8 +15,8 @@
 package com.l2jfree.gameserver.gameobjects.player;
 
 import com.l2jfree.gameserver.gameobjects.CharacterStat;
-import com.l2jfree.gameserver.gameobjects.IPlayerStat;
 import com.l2jfree.gameserver.gameobjects.L2Player;
+import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerStat;
 
 /**
  * @author hex1r0

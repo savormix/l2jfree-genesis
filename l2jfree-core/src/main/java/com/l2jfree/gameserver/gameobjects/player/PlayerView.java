@@ -19,10 +19,10 @@ import java.util.List;
 
 import com.l2jfree.gameserver.gameobjects.CharacterStat.Element;
 import com.l2jfree.gameserver.gameobjects.CharacterView;
-import com.l2jfree.gameserver.gameobjects.IPlayerStat;
-import com.l2jfree.gameserver.gameobjects.IPlayerView;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.gameobjects.ObjectPosition;
+import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerStat;
+import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerView;
 import com.l2jfree.gameserver.gameobjects.player.PlayerInventory.PaperDollSlot;
 import com.l2jfree.gameserver.templates.player.Gender;
 import com.l2jfree.gameserver.templates.player.PlayerBaseTemplate;

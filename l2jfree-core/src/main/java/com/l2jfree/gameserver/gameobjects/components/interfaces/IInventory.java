@@ -12,30 +12,12 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.gameobjects;
+package com.l2jfree.gameserver.gameobjects.components.interfaces;
 
 /**
  * @author NB4L1
  */
-public interface IPlayerStat extends ICharacterStat
+public interface IInventory extends IItemContainer
 {
-	public int getMaxSP();
-	
-	public int getMaxCP();
-	
-	public int getCurrentCP();
-	
-	public int getCarriedWeight();
-	
-	public int getMaxCarriedWeight();
-	
-	public int getKarmaPoints();
-	
-	public int getVitalityPoints();
-	
-	public int getFamePoints();
-	
-	public int getPkCount();
-	
-	public int getPvPCount();
+	// 
 }

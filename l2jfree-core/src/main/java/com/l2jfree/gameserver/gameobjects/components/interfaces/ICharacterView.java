@@ -12,15 +12,14 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.gameobjects;
+package com.l2jfree.gameserver.gameobjects.components.interfaces;
+
+import com.l2jfree.gameserver.gameobjects.components.IComponent;
 
 /**
  * @author NB4L1
  */
-public class EmptyInventory implements IInventory
+public interface ICharacterView extends IComponent
 {
-	public EmptyInventory(@SuppressWarnings("unused") L2Character activeChar)
-	{
-		// do nothing
-	}
+	public void refresh();
 }

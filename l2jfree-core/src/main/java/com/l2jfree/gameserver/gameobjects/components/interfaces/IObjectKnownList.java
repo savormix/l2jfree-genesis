@@ -12,14 +12,34 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.gameobjects;
+package com.l2jfree.gameserver.gameobjects.components.interfaces;
 
+import java.util.Collection;
+
+import com.l2jfree.gameserver.gameobjects.L2Object;
+import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.gameobjects.components.IComponent;
 
 /**
  * @author NB4L1
  */
-public interface ICharacterView extends IComponent
+public interface IObjectKnownList extends IComponent
 {
-	public void refresh();
+	public Collection<L2Object> getKnownObjects();
+	
+	public Collection<L2Player> getKnownPlayers();
+	
+	public Collection<L2Object> getKnowingObjects();
+	
+	public boolean removeObject(L2Object obj);
+	
+	public void addKnowingObject(L2Object obj);
+	
+	public void removeKnowingObject(L2Object obj);
+	
+	public void update(L2Object obj);
+	
+	public void update(L2Object[][] surroundingObjects);
+	
+	public void removeAllKnownObjects();
 }

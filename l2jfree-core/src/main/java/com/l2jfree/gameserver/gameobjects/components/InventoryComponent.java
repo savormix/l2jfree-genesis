@@ -21,8 +21,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.l2jfree.gameserver.gameobjects.IInventory;
 import com.l2jfree.gameserver.gameobjects.L2Character;
+import com.l2jfree.gameserver.gameobjects.components.interfaces.IInventory;
 
 /**
  * @author NB4L1

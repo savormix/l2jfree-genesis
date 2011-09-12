@@ -12,32 +12,31 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.gameobjects;
+package com.l2jfree.gameserver.gameobjects.components.interfaces;
 
-import java.util.Collection;
-
-import com.l2jfree.gameserver.gameobjects.components.IComponent;
 
 /**
  * @author NB4L1
  */
-public interface IObjectKnownList extends IComponent
+public interface IPlayerStat extends ICharacterStat
 {
-	public Collection<L2Object> getKnownObjects();
+	public int getMaxSP();
 	
-	public Collection<L2Player> getKnownPlayers();
+	public int getMaxCP();
 	
-	public Collection<L2Object> getKnowingObjects();
+	public int getCurrentCP();
 	
-	public boolean removeObject(L2Object obj);
+	public int getCarriedWeight();
 	
-	public void addKnowingObject(L2Object obj);
+	public int getMaxCarriedWeight();
 	
-	public void removeKnowingObject(L2Object obj);
+	public int getKarmaPoints();
 	
-	public void update(L2Object obj);
+	public int getVitalityPoints();
 	
-	public void update(L2Object[][] surroundingObjects);
+	public int getFamePoints();
 	
-	public void removeAllKnownObjects();
+	public int getPkCount();
+	
+	public int getPvPCount();
 }

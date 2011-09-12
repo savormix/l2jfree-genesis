@@ -12,14 +12,14 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.gameobjects;
+package com.l2jfree.gameserver.gameobjects.components.interfaces;
+
+import com.l2jfree.gameserver.gameobjects.components.IComponent;
 
 /**
  * @author NB4L1
  */
-public interface IL2Playable extends IL2Character
+public interface IItemContainer extends IComponent
 {
-	public static final IL2Playable[] EMPTY_ARRAY = new IL2Playable[0];
-	
-	//
+	// 
 }

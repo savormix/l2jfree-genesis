@@ -15,6 +15,7 @@
 package com.l2jfree.gameserver.gameobjects;
 
 import com.l2jfree.gameserver.gameobjects.components.KnownListComponent;
+import com.l2jfree.gameserver.gameobjects.components.empty.EmptyObjectKnownList;
 import com.l2jfree.gameserver.templates.L2ItemTemplate;
 
 /**

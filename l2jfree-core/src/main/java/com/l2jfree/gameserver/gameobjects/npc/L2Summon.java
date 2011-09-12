@@ -14,8 +14,8 @@
  */
 package com.l2jfree.gameserver.gameobjects.npc;
 
-import com.l2jfree.gameserver.gameobjects.IL2Playable;
 import com.l2jfree.gameserver.gameobjects.L2Npc;
+import com.l2jfree.gameserver.gameobjects.interfaces.IL2Playable;
 import com.l2jfree.gameserver.templates.L2NpcTemplate;
 
 /**

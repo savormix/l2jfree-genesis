@@ -16,6 +16,8 @@ package com.l2jfree.gameserver.gameobjects;
 
 import com.l2jfree.gameserver.gameobjects.components.KnownListComponent;
 import com.l2jfree.gameserver.gameobjects.components.PositionComponent;
+import com.l2jfree.gameserver.gameobjects.components.interfaces.IObjectKnownList;
+import com.l2jfree.gameserver.gameobjects.interfaces.IL2Object;
 import com.l2jfree.gameserver.templates.L2Template;
 import com.l2jfree.gameserver.world.L2World;
 import com.l2jfree.lang.L2TextBuilder;

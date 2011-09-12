@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.gameobjects;
+package com.l2jfree.gameserver.gameobjects.components.interfaces;
 
 import com.l2jfree.gameserver.gameobjects.CharacterStat.Element;
 import com.l2jfree.gameserver.gameobjects.components.IComponent;

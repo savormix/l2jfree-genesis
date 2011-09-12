@@ -14,6 +14,8 @@
  */
 package com.l2jfree.gameserver.gameobjects;
 
+import com.l2jfree.gameserver.gameobjects.components.interfaces.IInventory;
+
 /**
  * @author hex1r0
  */

@@ -17,6 +17,11 @@ package com.l2jfree.gameserver.gameobjects;
 import com.l2jfree.gameserver.gameobjects.components.InventoryComponent;
 import com.l2jfree.gameserver.gameobjects.components.StatComponent;
 import com.l2jfree.gameserver.gameobjects.components.ViewComponent;
+import com.l2jfree.gameserver.gameobjects.components.empty.EmptyInventory;
+import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterStat;
+import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterView;
+import com.l2jfree.gameserver.gameobjects.components.interfaces.IInventory;
+import com.l2jfree.gameserver.gameobjects.interfaces.IL2Character;
 import com.l2jfree.gameserver.templates.L2Template;
 
 /**

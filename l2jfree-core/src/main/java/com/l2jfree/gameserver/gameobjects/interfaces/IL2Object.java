@@ -12,8 +12,10 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.gameobjects;
+package com.l2jfree.gameserver.gameobjects.interfaces;
 
+import com.l2jfree.gameserver.gameobjects.ObjectPosition;
+import com.l2jfree.gameserver.gameobjects.components.interfaces.IObjectKnownList;
 import com.l2jfree.gameserver.templates.L2Template;
 import com.l2jfree.lang.L2Entity;
 

@@ -17,6 +17,7 @@ package com.l2jfree.gameserver.gameobjects;
 import java.util.Collection;
 import java.util.Map;
 
+import com.l2jfree.gameserver.gameobjects.components.interfaces.IObjectKnownList;
 import com.l2jfree.util.LazyMap;
 
 /**

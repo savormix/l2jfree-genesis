@@ -16,9 +16,9 @@ package com.l2jfree.gameserver.world;
 
 import java.util.ArrayList;
 
-import com.l2jfree.gameserver.gameobjects.IL2Playable;
 import com.l2jfree.gameserver.gameobjects.L2Object;
 import com.l2jfree.gameserver.gameobjects.ObjectPosition;
+import com.l2jfree.gameserver.gameobjects.interfaces.IL2Playable;
 import com.l2jfree.util.ArrayBunch;
 import com.l2jfree.util.L2Arrays;
 import com.l2jfree.util.concurrent.ExclusiveTask;
