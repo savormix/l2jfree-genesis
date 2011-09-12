@@ -14,12 +14,10 @@
  */
 package com.l2jfree.gameserver.gameobjects;
 
-import com.l2jfree.gameserver.gameobjects.components.IComponent;
-
 /**
  * @author NB4L1
  */
-public abstract class ItemContainer implements IComponent
+public abstract class ItemContainer implements IItemContainer
 {
 	// 
 }

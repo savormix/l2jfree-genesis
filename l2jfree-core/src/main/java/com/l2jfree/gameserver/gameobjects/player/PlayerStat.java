@@ -15,14 +15,14 @@
 package com.l2jfree.gameserver.gameobjects.player;
 
 import com.l2jfree.gameserver.gameobjects.CharacterStat;
+import com.l2jfree.gameserver.gameobjects.IPlayerStat;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 
 /**
  * @author hex1r0
  * @author NB4L1
  */
-@SuppressWarnings({ "static-method" })
-public class PlayerStat extends CharacterStat
+public class PlayerStat extends CharacterStat implements IPlayerStat
 {
 	public PlayerStat(L2Player activeChar)
 	{
@@ -35,51 +35,61 @@ public class PlayerStat extends CharacterStat
 		return (L2Player)super.getActiveChar();
 	}
 	
+	@Override
 	public int getMaxSP()
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getMaxCP()
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getCurrentCP()
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getCarriedWeight()
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getMaxCarriedWeight()
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getKarmaPoints()
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getVitalityPoints()
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getFamePoints()
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getPkCount()
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getPvPCount()
 	{
 		return 0;

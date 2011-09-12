@@ -14,8 +14,8 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.gameserver.gameobjects.IPlayerView;
 import com.l2jfree.gameserver.gameobjects.L2Player;
-import com.l2jfree.gameserver.gameobjects.player.PlayerView;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
@@ -68,7 +68,7 @@ public abstract class CharInfo extends L2ServerPacket
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
 		
-		final PlayerView view = activeChar.getView();
+		final IPlayerView view = activeChar.getView();
 		
 		buf.writeD(view.getX()); // Location X
 		buf.writeD(view.getY()); // Location Y

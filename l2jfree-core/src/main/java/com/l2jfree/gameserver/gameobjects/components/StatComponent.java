@@ -21,7 +21,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.l2jfree.gameserver.gameobjects.CharacterStat;
+import com.l2jfree.gameserver.gameobjects.ICharacterStat;
 import com.l2jfree.gameserver.gameobjects.L2Character;
 
 /**
@@ -33,8 +33,8 @@ import com.l2jfree.gameserver.gameobjects.L2Character;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface StatComponent
 {
-	public Class<? extends CharacterStat> value();
+	public Class<? extends ICharacterStat> value();
 	
-	public static final ComponentFactory<L2Character, CharacterStat> FACTORY =
-			new ComponentFactory<L2Character, CharacterStat>(L2Character.class, StatComponent.class);
+	public static final ComponentFactory<L2Character, ICharacterStat> FACTORY =
+			new ComponentFactory<L2Character, ICharacterStat>(L2Character.class, StatComponent.class);
 }

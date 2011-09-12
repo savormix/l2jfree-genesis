@@ -17,11 +17,25 @@ package com.l2jfree.gameserver.gameobjects;
 /**
  * @author NB4L1
  */
-public interface IL2Character extends IL2Object
+public interface IPlayerStat extends ICharacterStat
 {
-	public ICharacterStat getStat();
+	public int getMaxSP();
 	
-	public ICharacterView getView();
+	public int getMaxCP();
 	
-	public IInventory getInventory();
+	public int getCurrentCP();
+	
+	public int getCarriedWeight();
+	
+	public int getMaxCarriedWeight();
+	
+	public int getKarmaPoints();
+	
+	public int getVitalityPoints();
+	
+	public int getFamePoints();
+	
+	public int getPkCount();
+	
+	public int getPvPCount();
 }

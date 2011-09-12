@@ -14,14 +14,11 @@
  */
 package com.l2jfree.gameserver.gameobjects;
 
-import com.l2jfree.gameserver.gameobjects.components.IComponent;
-
 /**
  * @author hex1r0
  * @author NB4L1
  */
-@SuppressWarnings({ "unused", "static-method" })
-public abstract class CharacterStat implements IComponent
+public abstract class CharacterStat implements ICharacterStat
 {
 	public static enum Element
 	{
@@ -47,144 +44,171 @@ public abstract class CharacterStat implements IComponent
 		return _activeChar;
 	}
 	
+	@Override
 	public double getMovementSpeedMultiplier()
 	{
 		return 0;
 	}
 	
+	@Override
 	public double getAttackSpeedMultiplier()
 	{
 		return 0;
 	}
 	
+	@Override
 	public double getRunSpeed()
 	{
 		return 0;
 	}
 	
+	@Override
 	public double getWalkSpeed()
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getPAtk(Object object)
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getPDef(Object object)
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getPAtkSpd()
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getMAtk(Object object, Object object2)
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getMAtkSpd()
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getAccuracy()
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getEvasionRate(Object object)
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getCriticalHit(Object object)
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getMDef(Object object, Object object2)
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getLevel()
 	{
 		return 0;
 	}
 	
+	@Override
 	public long getExp()
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getSTR()
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getDEX()
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getCON()
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getINT()
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getWIT()
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getMEN()
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getMaxHP()
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getCurrentHP()
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getMaxMP()
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getCurrentMP()
 	{
 		return 0;
 	}
 	
+	@Override
 	public byte getAttackElement()
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getAttackElementPower(Element element)
 	{
 		return 0;
 	}
 	
+	@Override
 	public int getDefenseElementPower(Element element)
 	{
 		return 0;
 	}
-	
 }

@@ -27,8 +27,8 @@ import com.l2jfree.gameserver.templates.L2Template;
 @InventoryComponent(EmptyInventory.class)
 public abstract class L2Character extends L2Object implements IL2Character
 {
-	private final CharacterStat _stat;
-	private final CharacterView _view;
+	private final ICharacterStat _stat;
+	private final ICharacterView _view;
 	private final IInventory _inventory;
 	
 	public L2Character(int objectId, L2Template template)
@@ -40,16 +40,19 @@ public abstract class L2Character extends L2Object implements IL2Character
 		_inventory = InventoryComponent.FACTORY.getComponent(this);
 	}
 	
-	public CharacterStat getStat()
+	@Override
+	public ICharacterStat getStat()
 	{
 		return _stat;
 	}
 	
-	public CharacterView getView()
+	@Override
+	public ICharacterView getView()
 	{
 		return _view;
 	}
 	
+	@Override
 	public IInventory getInventory()
 	{
 		return _inventory;

@@ -14,13 +14,11 @@
  */
 package com.l2jfree.gameserver.gameobjects;
 
-import com.l2jfree.gameserver.gameobjects.components.IComponent;
-
 /**
  * @author hex1r0
  * @author NB4L1
  */
-public abstract class CharacterView implements IComponent
+public abstract class CharacterView implements ICharacterView
 {
 	private final L2Character _activeChar;
 	
@@ -34,6 +32,7 @@ public abstract class CharacterView implements IComponent
 		return _activeChar;
 	}
 	
+	@Override
 	public final void refresh()
 	{
 		refreshImpl();

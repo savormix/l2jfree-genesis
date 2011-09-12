@@ -19,6 +19,8 @@ import java.util.List;
 
 import com.l2jfree.gameserver.gameobjects.CharacterStat.Element;
 import com.l2jfree.gameserver.gameobjects.CharacterView;
+import com.l2jfree.gameserver.gameobjects.IPlayerStat;
+import com.l2jfree.gameserver.gameobjects.IPlayerView;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.gameobjects.ObjectPosition;
 import com.l2jfree.gameserver.gameobjects.player.PlayerInventory.PaperDollSlot;
@@ -31,7 +33,7 @@ import com.l2jfree.network.mmocore.MMOBuffer;
  * @author hex1r0
  * @author NB4L1
  */
-public class PlayerView extends CharacterView
+public class PlayerView extends CharacterView implements IPlayerView
 {
 	private int _abnormalEffect;
 	private int _accuracy;
@@ -148,526 +150,631 @@ public class PlayerView extends CharacterView
 		return (L2Player)super.getActiveChar();
 	}
 	
+	@Override
 	public int canEquipCloak()
 	{
 		return _equipCloak;
 	}
 	
+	@Override
 	public boolean canUseDwarvenRecipes()
 	{
 		return _useDwarvenRecipes;
 	}
 	
+	@Override
 	public int canUseMinimap()
 	{
 		return _useMinimap;
 	}
 	
+	@Override
 	public int getAbnormalEffect()
 	{
 		return _abnormalEffect;
 	}
 	
+	@Override
 	public int getAccuracy()
 	{
 		return _accuracy;
 	}
 	
+	@Override
 	public int getActiveClassId()
 	{
 		return _activeClassId;
 	}
 	
+	@Override
 	public int getAgathionId()
 	{
 		return _agathionId;
 	}
 	
+	@Override
 	public int getAllianceCrestId()
 	{
 		return _allianceCrestId;
 	}
 	
+	@Override
 	public int getAllianceId()
 	{
 		return _allianceId;
 	}
 	
+	@Override
 	public int getAttackElementPower()
 	{
 		return _attackElementPower;
 	}
 	
+	@Override
 	public int getAttackElementType()
 	{
 		return _attackElementType;
 	}
 	
+	@Override
 	public double getAttackSpeedMultiplier()
 	{
 		return _attackSpeedMultiplier;
 	}
 	
+	@Override
 	public int getCarriedWeight()
 	{
 		return _carriedWeight;
 	}
 	
+	@Override
 	public double getCollisionHeight()
 	{
 		return _collisionHeight;
 	}
 	
+	@Override
 	public double getCollisionRadius()
 	{
 		return _collisionRadius;
 	}
 	
+	@Override
 	public int getCON()
 	{
 		return _con;
 	}
 	
+	@Override
 	public int getCriticalHit()
 	{
 		return _criticalHit;
 	}
 	
+	@Override
 	public int[] getCubicData()
 	{
 		return _cubics;
 	}
 	
+	@Override
 	public int getCurrentCP()
 	{
 		return _currentCp;
 	}
 	
+	@Override
 	public int getCurrentHP()
 	{
 		return _currentHp;
 	}
 	
+	@Override
 	public int getCurrentMP()
 	{
 		return _currentMp;
 	}
 	
+	@Override
 	public int getCursedWeaponLevel()
 	{
 		return _cursedWeaponLevel;
 	}
 	
+	@Override
 	public int getDefenseElementPower(Element element)
 	{
 		return _defenceElementPower[element.ordinal()];
 	}
 	
+	@Override
 	public int getDEX()
 	{
 		return _dex;
 	}
 	
+	@Override
 	public int getDuelTeam()
 	{
 		return _duelTeam;
 	}
 	
+	@Override
 	public int getEvasionRate()
 	{
 		return _evasionRate;
 	}
 	
+	@Override
 	public long getExp()
 	{
 		return _exp;
 	}
 	
+	@Override
 	public double getExpPercent()
 	{
 		return _expPercent;
 	}
 	
+	@Override
 	public int getFace()
 	{
 		return _face;
 	}
 	
+	@Override
 	public int getFamePoints()
 	{
 		return _famePoints;
 	}
 	
+	@Override
 	public int getFishLureX()
 	{
 		return _fishLureX;
 	}
 	
+	@Override
 	public int getFishLureY()
 	{
 		return _fishLureY;
 	}
 	
+	@Override
 	public int getFishLureZ()
 	{
 		return _fishLureZ;
 	}
 	
+	@Override
 	public int getFlyRunSpeed()
 	{
 		return _flyRunSpeed;
 	}
 	
+	@Override
 	public int getFlyWalkSpeed()
 	{
 		return _flyWalkSpeed;
 	}
 	
+	@Override
 	public Gender getGender()
 	{
 		return _gender;
 	}
 	
+	@Override
 	public int getHairColor()
 	{
 		return _hairColor;
 	}
 	
+	@Override
 	public int getHairStyle()
 	{
 		return _hairStyle;
 	}
 	
+	@Override
 	public int getHeading()
 	{
 		return _heading;
 	}
 	
+	@Override
 	public int getINT()
 	{
 		return _int;
 	}
 	
+	@Override
 	public int getKarma()
 	{
 		return _karmaPoints;
 	}
 	
+	@Override
 	public int getLevel()
 	{
 		return _level;
 	}
 	
+	@Override
 	public int getMainClassId()
 	{
 		return _mainClassId;
 	}
 	
+	@Override
 	public int getMAtk()
 	{
 		return _mAtk;
 	}
 	
+	@Override
 	public int getMAtkSpd()
 	{
 		return _mAtkSpd;
 	}
 	
+	@Override
 	public int getMaxCarriedWeight()
 	{
 		return _maxCarriedWeight;
 	}
 	
+	@Override
 	public int getMaxCP()
 	{
 		return _maxCp;
 	}
 	
+	@Override
 	public int getMaxHP()
 	{
 		return _maxHp;
 	}
 	
+	@Override
 	public int getMaxInventorySlots()
 	{
 		return _maxInventorySlots;
 	}
 	
+	@Override
 	public int getMaxMP()
 	{
 		return _maxMp;
 	}
 	
+	@Override
 	public int getMaxSP()
 	{
 		return _maxSp;
 	}
 	
+	@Override
 	public int getMaxTalismanSlots()
 	{
 		return _maxTalismanSlots;
 	}
 	
+	@Override
 	public int getMDef()
 	{
 		return _mDef;
 	}
 	
+	@Override
 	public int getMEN()
 	{
 		return _men;
 	}
 	
+	@Override
 	public int getMountNpcId()
 	{
 		return _mountNpcId;
 	}
 	
+	@Override
 	public int getMountType()
 	{
 		return _mountType;
 	}
 	
+	@Override
 	public double getMovementSpeedMultiplier()
 	{
 		return _movementSpeedMultiplier;
 	}
 	
+	@Override
 	public String getName()
 	{
 		return _name;
 	}
 	
+	@Override
 	public int getNameColor()
 	{
 		return _nameColor;
 	}
 	
+	@Override
 	public int getObjectId()
 	{
 		return _objectId;
 	}
 	
+	@Override
 	public int getPAtk()
 	{
 		return _pAtk;
 	}
 	
+	@Override
 	public int getPAtkSpd()
 	{
 		return _pAtkSpd;
 	}
 	
+	@Override
 	public int getPDef()
 	{
 		return _pDef;
 	}
 	
+	@Override
 	public int getPkCount()
 	{
 		return _pkCount;
 	}
 	
+	@Override
 	public int getPledgeCrestId()
 	{
 		return _pledgeCrestId;
 	}
 	
+	@Override
 	public int getPledgeId()
 	{
 		return _pledgeId;
 	}
 	
+	@Override
 	public int getPledgeInsigniaId()
 	{
 		return _pledgeInsigniaId;
 	}
 	
+	@Override
 	public int getPledgePrivileges()
 	{
 		return _pledgePrivileges;
 	}
 	
+	@Override
 	public int getPledgeRank()
 	{
 		return _pledgeRank;
 	}
 	
+	@Override
 	public int getPledgeReputation()
 	{
 		return _pledgeReputation;
 	}
 	
+	@Override
 	public int getPledgeUnit()
 	{
 		return _pledgeUnit;
 	}
 	
+	@Override
 	public int getPrivateStoreType()
 	{
 		return _privateStoreType;
 	}
 	
+	@Override
 	public int getPvPCount()
 	{
 		return _pvpCount;
 	}
 	
+	@Override
 	public Race getRace()
 	{
 		return _race;
 	}
 	
+	@Override
 	public int getReceivedRecommendations()
 	{
 		return _receivedRecommendations;
 	}
 	
+	@Override
 	public int getRemainingRecommendations()
 	{
 		return _remainingRecommendaions;
 	}
 	
+	@Override
 	public int getRunSpeed()
 	{
 		return _runSpeed;
 	}
 	
+	@Override
 	public int getSiegeRelation()
 	{
 		return _siegeRelation;
 	}
 	
+	@Override
 	public int getSpecialEffect()
 	{
 		return _specialEffect;
 	}
 	
+	@Override
 	public int getSTR()
 	{
 		return _str;
 	}
 	
+	@Override
 	public int getSwimRunSpeed()
 	{
 		return getRunSpeed();
 	}
 	
+	@Override
 	public int getSwimWalkSpeed()
 	{
 		return getWalkSpeed();
 	}
 	
+	@Override
 	public String getTitle()
 	{
 		return _title;
 	}
 	
+	@Override
 	public int getTitleColor()
 	{
 		return _titleColor;
 	}
 	
+	@Override
 	public int getTransformationGraphicalId()
 	{
 		return _transformationGraphicalId;
 	}
 	
+	@Override
 	public int getVehicleObjectId()
 	{
 		return _vehicleObjectId;
 	}
 	
+	@Override
 	public int getVitalityPoints()
 	{
 		return _vitalityPoints;
 	}
 	
+	@Override
 	public int getWalkSpeed()
 	{
 		return _walkSpeed;
 	}
 	
+	@Override
 	public int getWeaponEnchantGlow()
 	{
 		return _weaponEnchantGlow;
 	}
 	
+	@Override
 	public int getWeaponStatus()
 	{
 		return _weaponStatus;
 	}
 	
+	@Override
 	public int getWIT()
 	{
 		return _wit;
 	}
 	
+	@Override
 	public int getX()
 	{
 		return _x;
 	}
 	
+	@Override
 	public int getY()
 	{
 		return _y;
 	}
 	
+	@Override
 	public int getZ()
 	{
 		return _z;
 	}
 	
+	@Override
 	public boolean isFishing()
 	{
 		return _fishing;
 	}
 	
+	@Override
 	public boolean isFlyingMounted()
 	{
 		return _flyingMounted;
 	}
 	
+	@Override
 	public boolean isGM()
 	{
 		return _gm;
 	}
 	
+	@Override
 	public boolean isHero()
 	{
 		return _hero;
 	}
 	
+	@Override
 	public boolean isInCombatAction()
 	{
 		return _combatAction;
 	}
 	
+	@Override
 	public int isInPvPAction()
 	{
 		return _inPvPAction;
 	}
 	
+	@Override
 	public boolean isInvisible()
 	{
 		return _invisible;
 	}
 	
+	@Override
 	public boolean isLookingForParty()
 	{
 		return _lookingForParty;
 	}
 	
+	@Override
 	public boolean isLyingDead()
 	{
 		return _lyingDead;
 	}
 	
+	@Override
 	public boolean isMoving()
 	{
 		return _moving;
 	}
 	
+	@Override
 	public boolean isNoble()
 	{
 		return _noble;
@@ -678,7 +785,7 @@ public class PlayerView extends CharacterView
 	{
 		final L2Player p = getActiveChar();
 		final PlayerAppearance appearance = p.getAppearance();
-		final PlayerStat stat = p.getStat();
+		final IPlayerStat stat = p.getStat();
 		final PlayerBaseTemplate baseTemplate = p.getTemplate().getPlayerBaseTemplate(appearance.getGender());
 		//final PlayerInventory inv = p.getInventory();
 		//final L2Transformation transformation = p.getTransformation();
@@ -849,11 +956,13 @@ public class PlayerView extends CharacterView
 	}
 	
 	// TODO actually this should never change during object life time
+	@Override
 	public void refreshObjectId()
 	{
 		_objectId = getActiveChar().getObjectId();
 	}
 	
+	@Override
 	public void refreshPosition()
 	{
 		refreshObjectId();
@@ -887,6 +996,7 @@ public class PlayerView extends CharacterView
 	
 	// -- methods for convenience 
 	
+	@Override
 	public void writeElements(MMOBuffer buf)
 	{
 		buf.writeH(getAttackElementType()); // Attack element
@@ -899,24 +1009,28 @@ public class PlayerView extends CharacterView
 		buf.writeH(getDefenseElementPower(Element.DARK)); // Dark defense
 	}
 	
+	@Override
 	public void writePaperDollObjectIds(MMOBuffer buf, boolean withAccessory)
 	{
 		for (int slot : PlayerView.getSlots(withAccessory))
 			buf.writeD(getPaperDollObjectId(slot));
 	}
 	
+	@Override
 	public void writePaperDollItemDisplayIds(MMOBuffer buf, boolean withAccessory)
 	{
 		for (int slot : PlayerView.getSlots(withAccessory))
 			buf.writeD(getPaperDollItemDisplayId(slot));
 	}
 	
+	@Override
 	public void writePaperDollAugmentationIds(MMOBuffer buf, boolean withAccessory)
 	{
 		for (int slot : PlayerView.getSlots(withAccessory))
 			buf.writeD(getPaperDollAugmentationId(slot));
 	}
 	
+	@Override
 	public void writeCubics(MMOBuffer buf)
 	{
 		buf.writeH(getCubicData().length); // Cubic count

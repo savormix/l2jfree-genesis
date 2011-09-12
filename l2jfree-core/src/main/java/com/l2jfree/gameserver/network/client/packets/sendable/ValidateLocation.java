@@ -14,8 +14,8 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.gameserver.gameobjects.IPlayerView;
 import com.l2jfree.gameserver.gameobjects.L2Player;
-import com.l2jfree.gameserver.gameobjects.player.PlayerView;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
@@ -67,7 +67,7 @@ public abstract class ValidateLocation extends L2ServerPacket
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
-		final PlayerView view = activeChar.getView();
+		final IPlayerView view = activeChar.getView();
 		
 		buf.writeD(view.getObjectId()); // Actor OID
 		buf.writeD(view.getX()); // Location X

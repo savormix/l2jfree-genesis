@@ -14,14 +14,12 @@
  */
 package com.l2jfree.gameserver.gameobjects;
 
+import com.l2jfree.gameserver.gameobjects.components.IComponent;
+
 /**
  * @author NB4L1
  */
-public interface IL2Character extends IL2Object
+public interface IItemContainer extends IComponent
 {
-	public ICharacterStat getStat();
-	
-	public ICharacterView getView();
-	
-	public IInventory getInventory();
+	// 
 }

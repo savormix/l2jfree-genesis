@@ -199,21 +199,15 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 	}
 	
 	@Override
-	public PlayerKnownList getKnownList()
+	public IPlayerStat getStat()
 	{
-		return (PlayerKnownList)super.getKnownList();
+		return (IPlayerStat)super.getStat();
 	}
 	
 	@Override
-	public PlayerStat getStat()
+	public IPlayerView getView()
 	{
-		return (PlayerStat)super.getStat();
-	}
-	
-	@Override
-	public PlayerView getView()
-	{
-		return (PlayerView)super.getView();
+		return (IPlayerView)super.getView();
 	}
 	
 	@Override

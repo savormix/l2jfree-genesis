@@ -27,4 +27,10 @@ public abstract class L2Item extends L2Object
 	{
 		super(objectId, template);
 	}
+	
+	@Override
+	public L2ItemTemplate getTemplate()
+	{
+		return (L2ItemTemplate)super.getTemplate();
+	}
 }
