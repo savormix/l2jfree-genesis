@@ -14,23 +14,16 @@
  */
 package com.l2jfree.sql;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-
-import com.l2jfree.lang.L2TextBuilder;
 
 /**
  * @author NB4L1
@@ -151,73 +144,33 @@ public final class L2DataSourceMySQL extends L2DataSource
 		
 		_log.info("DatabaseBackupManager: backing up `" + databaseName + "`...");
 		
-		Process run = null;
+		final Process run;
 		try
 		{
-			final L2TextBuilder tb = new L2TextBuilder();
-			tb.append("mysqldump");
-			tb.append(" --user=").append(getComboPooledDataSource().getUser());
-			tb.append(" --password=").append(getComboPooledDataSource().getPassword());
-			tb.append(" --compact --complete-insert --default-character-set=utf8 --extended-insert ");
-			tb.append("--lock-tables --quick --skip-triggers ").append(databaseName);
+			final ArrayList<String> commands = new ArrayList<String>();
+			commands.add("mysqldump");
+			commands.add(" --user=" + getComboPooledDataSource().getUser()); // The MySQL user name to use when connecting to the server
+			commands.add(" --password=" + getComboPooledDataSource().getPassword()); // The password to use when connecting to the server
+			commands.add("--compact"); // Produce more compact output. 
+			commands.add("--complete-insert"); // Use complete INSERT statements that include column names
+			commands.add("--default-character-set=utf8"); // Use charset_name as the default character set
+			commands.add("--extended-insert"); // Use multiple-row INSERT syntax that include several VALUES lists
+			commands.add("--lock-tables"); // Lock all tables before dumping them
+			commands.add("--quick"); // Retrieve rows for a table from the server a row at a time
+			commands.add("--skip-triggers"); // Do not dump triggers
+			commands.add(databaseName); // db_name
 			
-			run = Runtime.getRuntime().exec(tb.moveToString(), null, new File("."));
+			final ProcessBuilder pb = new ProcessBuilder(commands);
+			pb.directory(new File("."));
+			
+			run = pb.start();
 		}
 		catch (Exception e)
 		{
-			_log.warn("DatabaseBackupManager: Could not make backup:", e);
-		}
-		
-		if (run == null)
-		{
-			_log.warn("DatabaseBackupManager: Could not execute mysqldump!");
+			_log.warn("DatabaseBackupManager: Could not execute mysqldump!", e);
 			return;
 		}
 		
-		try
-		{
-			boolean success = false;
-			InputStream in = null;
-			try
-			{
-				in = run.getInputStream();
-				
-				success = writeBackup(databaseName, in);
-			}
-			catch (IOException e)
-			{
-				_log.warn("DatabaseBackupManager: Could not make backup:", e);
-			}
-			finally
-			{
-				IOUtils.closeQuietly(in);
-			}
-			
-			if (!success)
-			{
-				BufferedReader br = null;
-				try
-				{
-					br = new BufferedReader(new InputStreamReader(run.getErrorStream()));
-					
-					for (String line; (line = br.readLine()) != null;)
-						_log.warn("DatabaseBackupManager: " + line);
-				}
-				catch (Exception e)
-				{
-					_log.warn("DatabaseBackupManager: Could not make backup:", e);
-				}
-				finally
-				{
-					IOUtils.closeQuietly(br);
-				}
-			}
-			
-			run.waitFor();
-		}
-		catch (Exception e)
-		{
-			_log.warn("DatabaseBackupManager: Could not make backup:", e);
-		}
+		writeBackup(databaseName, run);
 	}
 }

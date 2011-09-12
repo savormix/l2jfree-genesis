@@ -15,10 +15,12 @@
 package com.l2jfree.sql;
 
 import java.beans.PropertyVetoException;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -253,6 +255,56 @@ public abstract class L2DataSource implements DataSource
 	public void optimize() throws SQLException
 	{
 		_log.warn("TableOptimizer: Provider (" + getProviderName() + ") not yet supported.");
+	}
+	
+	protected static final void writeBackup(String databaseName, Process run)
+	{
+		try
+		{
+			boolean success = false;
+			
+			InputStream in = null;
+			try
+			{
+				in = run.getInputStream();
+				
+				success = writeBackup(databaseName, in);
+			}
+			catch (IOException e)
+			{
+				_log.warn("DatabaseBackupManager: Could not make backup:", e);
+			}
+			finally
+			{
+				IOUtils.closeQuietly(in);
+			}
+			
+			if (!success)
+			{
+				BufferedReader br = null;
+				try
+				{
+					br = new BufferedReader(new InputStreamReader(run.getErrorStream()));
+					
+					for (String line; (line = br.readLine()) != null;)
+						_log.warn("DatabaseBackupManager: " + line);
+				}
+				catch (Exception e)
+				{
+					_log.warn("DatabaseBackupManager: Could not make backup:", e);
+				}
+				finally
+				{
+					IOUtils.closeQuietly(br);
+				}
+			}
+			
+			run.waitFor();
+		}
+		catch (Exception e)
+		{
+			_log.warn("DatabaseBackupManager: Could not make backup:", e);
+		}
 	}
 	
 	protected static final boolean writeBackup(String databaseName, InputStream in) throws IOException

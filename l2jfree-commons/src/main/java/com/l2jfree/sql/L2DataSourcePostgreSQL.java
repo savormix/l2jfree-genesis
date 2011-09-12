@@ -14,16 +14,11 @@
  */
 package com.l2jfree.sql;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import org.apache.commons.io.IOUtils;
+import java.util.ArrayList;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
@@ -70,71 +65,31 @@ public final class L2DataSourcePostgreSQL extends L2DataSource
 		
 		_log.info("DatabaseBackupManager: backing up \"" + databaseName + "\"...");
 		
-		Process run = null;
+		final Process run;
 		try
 		{
-			ProcessBuilder pb = new ProcessBuilder("pg_dump", "-U", getComboPooledDataSource().getUser(), "-F", "p",
-					"-b", "-c", "-E", "utf8", "-n", getComboPooledDataSource().getUser());
+			final ArrayList<String> commands = new ArrayList<String>();
+			commands.add("pg_dump"); // Extract a PostgreSQL database into a script file or other archive file
+			commands.add("-U " + getComboPooledDataSource().getUser()); // User name to connect as.
+			commands.add("-F p"); // Selects the format of the output.
+			commands.add("-b"); // Include large objects in the dump.
+			commands.add("-c"); // Output commands to clean (drop) database objects prior to (the commands for) creating them.
+			commands.add("-E utf8"); // Create the dump in the specified character set encoding.
+			commands.add("-n " + getComboPooledDataSource().getUser()); // Dump only schemas matching schema; this selects both the schema itself, and all its contained objects.
+			
+			final ProcessBuilder pb = new ProcessBuilder(commands);
 			pb.environment().put("PGDATABASE", databaseName);
 			pb.environment().put("PGPASSWORD", getComboPooledDataSource().getPassword());
 			pb.directory(new File("."));
+			
 			run = pb.start();
 		}
 		catch (Exception e)
 		{
-			_log.warn("DatabaseBackupManager: Could not make backup:", e);
-		}
-		
-		if (run == null)
-		{
-			_log.warn("DatabaseBackupManager: Could not execute pg_dump!");
+			_log.warn("DatabaseBackupManager: Could not execute pg_dump!", e);
 			return;
 		}
 		
-		try
-		{
-			boolean success = false;
-			InputStream in = null;
-			try
-			{
-				in = run.getInputStream();
-				
-				success = writeBackup(databaseName, in);
-			}
-			catch (IOException e)
-			{
-				_log.warn("DatabaseBackupManager: Could not make backup!", e);
-			}
-			finally
-			{
-				IOUtils.closeQuietly(in);
-			}
-			
-			if (!success)
-			{
-				BufferedReader br = null;
-				try
-				{
-					br = new BufferedReader(new InputStreamReader(run.getErrorStream()));
-					
-					for (String line; (line = br.readLine()) != null;)
-						_log.warn("DatabaseBackupManager: " + line);
-				}
-				catch (Exception e)
-				{
-					_log.warn("DatabaseBackupManager: Could not make backup!", e);
-				}
-				finally
-				{
-					IOUtils.closeQuietly(br);
-				}
-			}
-			
-			run.waitFor();
-		}
-		catch (Exception e)
-		{
-			_log.warn("DatabaseBackupManager: Could not make backup!", e);
-		}
+		writeBackup(databaseName, run);
 	}
 }
