@@ -25,6 +25,9 @@ import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.gameserver.network.client.packets.receivable.EnterWorld;
 import com.l2jfree.gameserver.network.client.packets.receivable.Logout;
+import com.l2jfree.gameserver.network.client.packets.receivable.RequestAllFortressInfo;
+import com.l2jfree.gameserver.network.client.packets.receivable.RequestKeyMapping;
+import com.l2jfree.gameserver.network.client.packets.receivable.RequestManorList;
 import com.l2jfree.gameserver.network.client.packets.receivable.RequestRestart;
 import com.l2jfree.gameserver.network.client.packets.receivable.ValidatePosition.ReportLocation;
 import com.l2jfree.gameserver.network.client.packets.receivable.outgame.ProtocolVersion;
@@ -101,10 +104,26 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 				
 				switch (opcode2)
 				{
+				
 					case RequestCharacterPreviousState.OPCODE:
 						if (client.stateEquals(CHARACTER_MANAGEMENT))
 							return new RequestCharacterPreviousState();
 						return invalidState(client, RequestCharacterPreviousState.class, opcode, opcode2);
+						
+					case RequestManorList.OPCODE:
+						if (client.stateEquals(LOGGED_IN))
+							return new RequestManorList();
+						return invalidState(client, RequestCharacterPreviousState.class, opcode, opcode2);
+						
+					case RequestKeyMapping.OPCODE:
+						if (client.stateEquals(LOGGED_IN))
+							return new RequestKeyMapping();
+						return invalidState(client, RequestKeyMapping.class, opcode, opcode2);
+						
+					case RequestAllFortressInfo.OPCODE:
+						if (client.stateEquals(LOGGED_IN))
+							return new RequestAllFortressInfo();
+						return invalidState(client, RequestAllFortressInfo.class, opcode, opcode2);
 						
 					default:
 						return unknown(buf, client, opcode, opcode2);
@@ -123,7 +142,7 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 			case ReportLocation.OPCODE:
 				if (client.stateEquals(LOGGED_IN))
 					return new ReportLocation();
-				return invalidState(client, RequestRestart.class, opcode);
+				return invalidState(client, ReportLocation.class, opcode);
 				
 			default:
 				return unknown(buf, client, opcode);

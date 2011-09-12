@@ -32,48 +32,49 @@ public abstract class ExSendManorListPacket extends L2ServerPacket
 	 */
 	public static final class ManorList extends ExSendManorListPacket
 	{
+		/** This packet. */
+		public static final ManorList PACKET = new ManorList();
+		
 		/**
 		 * Constructs this packet.
 		 * 
 		 * @see ExSendManorListPacket#ExSendManorListPacket()
 		 */
-		public ManorList()
+		private ManorList()
 		{
 		}
 	}
-
-	private static final int[] EXT_OPCODES = {
-		0x22,
-		0x00,
-	};
-
+	
+	private static String[] _castles = new String[] { "gludio", "dion", "giran", "oren", "aden", "innadril", "goddard",
+			"rune", "schuttgart" };
+	
+	private static final int[] EXT_OPCODES = { 0x22, 0x00, };
+	
 	/** Constructs this packet. */
 	public ExSendManorListPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0xfe;
 	}
-
+	
 	@Override
 	protected int[] getAdditionalOpcodes()
 	{
 		return EXT_OPCODES;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
-		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		final int sizeA = 0; // Manor count
-		buf.writeD(sizeA);
-		for (int i = 0; i < sizeA; i++)
+		buf.writeD(_castles.length);
+		for (int i = 0; i < _castles.length; i++)
 		{
-			buf.writeD(0); // Castle
-			buf.writeS(""); // Manor
+			buf.writeD(i + 1); // Castle
+			buf.writeS(_castles[i]); // Manor
 		}
 	}
 }
