@@ -25,7 +25,7 @@ public class SurrenderPersonallyPacket extends L2ServerPacket
 	public SurrenderPersonallyPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

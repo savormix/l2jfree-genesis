@@ -41,18 +41,18 @@ public abstract class JoinPledgePacket extends L2ServerPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public JoinPledgePacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0x2d;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

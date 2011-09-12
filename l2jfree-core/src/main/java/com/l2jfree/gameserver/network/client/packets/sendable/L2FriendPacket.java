@@ -41,18 +41,18 @@ public abstract class L2FriendPacket extends L2ServerPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public L2FriendPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0x76;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

@@ -41,18 +41,18 @@ public abstract class ShortBuffStatusUpdatePacket extends L2ServerPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public ShortBuffStatusUpdatePacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0xfa;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

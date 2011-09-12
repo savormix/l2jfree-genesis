@@ -28,13 +28,13 @@ public class NpcHtmlMessage extends L2ServerPacket
 	public NpcHtmlMessage()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0x19;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

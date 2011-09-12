@@ -41,18 +41,18 @@ public abstract class MagicAndSkillList extends L2ServerPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public MagicAndSkillList()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0x40;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

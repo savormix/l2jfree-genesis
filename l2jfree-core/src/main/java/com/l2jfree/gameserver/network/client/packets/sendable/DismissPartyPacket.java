@@ -25,7 +25,7 @@ public class DismissPartyPacket extends L2ServerPacket
 	public DismissPartyPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

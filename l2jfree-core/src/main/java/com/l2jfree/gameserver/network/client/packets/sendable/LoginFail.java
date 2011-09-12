@@ -25,7 +25,7 @@ public class LoginFail extends L2ServerPacket
 	public LoginFail()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

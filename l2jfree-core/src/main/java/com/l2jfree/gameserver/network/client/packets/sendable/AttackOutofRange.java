@@ -25,7 +25,7 @@ public class AttackOutofRange extends L2ServerPacket
 	public AttackOutofRange()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

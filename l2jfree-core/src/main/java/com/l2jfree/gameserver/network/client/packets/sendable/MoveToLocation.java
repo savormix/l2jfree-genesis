@@ -41,18 +41,18 @@ public abstract class MoveToLocation extends L2ServerPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public MoveToLocation()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0x2f;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

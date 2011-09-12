@@ -28,13 +28,13 @@ public class PledgeInfo extends L2ServerPacket
 	public PledgeInfo()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0x89;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

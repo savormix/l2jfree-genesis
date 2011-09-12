@@ -28,13 +28,13 @@ public class PartyMemberPosition extends L2ServerPacket
 	public PartyMemberPosition()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0xba;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

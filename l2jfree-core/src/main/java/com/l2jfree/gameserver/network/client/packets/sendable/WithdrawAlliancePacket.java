@@ -25,7 +25,7 @@ public class WithdrawAlliancePacket extends L2ServerPacket
 	public WithdrawAlliancePacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

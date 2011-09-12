@@ -41,18 +41,18 @@ public abstract class SetDismissPartyPacket extends L2ServerPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public SetDismissPartyPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0x3f;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

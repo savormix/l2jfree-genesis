@@ -25,7 +25,7 @@ public class AttackDeadTarget extends L2ServerPacket
 	public AttackDeadTarget()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

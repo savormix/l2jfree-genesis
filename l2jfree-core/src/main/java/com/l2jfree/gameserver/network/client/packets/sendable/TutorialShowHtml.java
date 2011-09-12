@@ -41,18 +41,18 @@ public abstract class TutorialShowHtml extends L2ServerPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public TutorialShowHtml()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0xa6;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

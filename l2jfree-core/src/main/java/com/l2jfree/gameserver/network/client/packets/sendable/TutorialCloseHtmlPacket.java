@@ -29,7 +29,7 @@ public abstract class TutorialCloseHtmlPacket extends StaticPacket
 	{
 		/** This packet. */
 		public static final HideTutorialHtml PACKET = new HideTutorialHtml();
-
+		
 		/**
 		 * Constructs this packet.
 		 * 
@@ -39,12 +39,12 @@ public abstract class TutorialCloseHtmlPacket extends StaticPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public TutorialCloseHtmlPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

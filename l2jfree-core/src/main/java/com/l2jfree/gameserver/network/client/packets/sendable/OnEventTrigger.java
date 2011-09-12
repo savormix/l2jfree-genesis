@@ -41,18 +41,18 @@ public abstract class OnEventTrigger extends L2ServerPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public OnEventTrigger()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0xcf;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

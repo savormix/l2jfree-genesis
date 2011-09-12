@@ -29,7 +29,7 @@ public abstract class PledgeShowMemberListDeleteAllPacket extends StaticPacket
 	{
 		/** This packet. */
 		public static final ClearPledgeMemberList PACKET = new ClearPledgeMemberList();
-
+		
 		/**
 		 * Constructs this packet.
 		 * 
@@ -39,12 +39,12 @@ public abstract class PledgeShowMemberListDeleteAllPacket extends StaticPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public PledgeShowMemberListDeleteAllPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

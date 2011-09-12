@@ -25,7 +25,7 @@ public class DummyPacket extends L2ServerPacket
 	public DummyPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

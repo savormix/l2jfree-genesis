@@ -29,7 +29,7 @@ public abstract class ExUISettingPacket extends StaticPacket
 	{
 		/** This packet. */
 		public static final UserInterfaceSetup PACKET = new UserInterfaceSetup();
-
+		
 		/**
 		 * Constructs this packet.
 		 * 
@@ -39,23 +39,20 @@ public abstract class ExUISettingPacket extends StaticPacket
 		{
 		}
 	}
-
-	private static final int[] EXT_OPCODES = {
-		0x70,
-		0x00,
-	};
-
+	
+	private static final int[] EXT_OPCODES = { 0x70, 0x00, };
+	
 	/** Constructs this packet. */
 	public ExUISettingPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0xfe;
 	}
-
+	
 	@Override
 	protected int[] getAdditionalOpcodes()
 	{

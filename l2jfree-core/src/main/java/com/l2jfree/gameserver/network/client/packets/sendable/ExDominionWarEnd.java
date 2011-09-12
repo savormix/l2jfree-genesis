@@ -29,7 +29,7 @@ public abstract class ExDominionWarEnd extends StaticPacket
 	{
 		/** This packet. */
 		public static final TerritoryWarFinished PACKET = new TerritoryWarFinished();
-
+		
 		/**
 		 * Constructs this packet.
 		 * 
@@ -39,23 +39,20 @@ public abstract class ExDominionWarEnd extends StaticPacket
 		{
 		}
 	}
-
-	private static final int[] EXT_OPCODES = {
-		0xa4,
-		0x00,
-	};
-
+	
+	private static final int[] EXT_OPCODES = { 0xa4, 0x00, };
+	
 	/** Constructs this packet. */
 	public ExDominionWarEnd()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0xfe;
 	}
-
+	
 	@Override
 	protected int[] getAdditionalOpcodes()
 	{

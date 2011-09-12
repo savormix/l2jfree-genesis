@@ -25,7 +25,7 @@ public class OnSkillRemainSec extends L2ServerPacket
 	public OnSkillRemainSec()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

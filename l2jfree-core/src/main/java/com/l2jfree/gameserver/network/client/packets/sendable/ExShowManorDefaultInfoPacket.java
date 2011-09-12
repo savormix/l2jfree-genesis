@@ -41,29 +41,26 @@ public abstract class ExShowManorDefaultInfoPacket extends L2ServerPacket
 		{
 		}
 	}
-
-	private static final int[] EXT_OPCODES = {
-		0x25,
-		0x00,
-	};
-
+	
+	private static final int[] EXT_OPCODES = { 0x25, 0x00, };
+	
 	/** Constructs this packet. */
 	public ExShowManorDefaultInfoPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0xfe;
 	}
-
+	
 	@Override
 	protected int[] getAdditionalOpcodes()
 	{
 		return EXT_OPCODES;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

@@ -41,18 +41,18 @@ public abstract class PartySpelled extends L2ServerPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public PartySpelled()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0xf4;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

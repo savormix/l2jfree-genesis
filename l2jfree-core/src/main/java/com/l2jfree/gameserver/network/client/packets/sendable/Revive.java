@@ -41,18 +41,18 @@ public abstract class Revive extends L2ServerPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public Revive()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0x01;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

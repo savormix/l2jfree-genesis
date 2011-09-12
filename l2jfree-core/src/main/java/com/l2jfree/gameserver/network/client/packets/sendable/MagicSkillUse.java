@@ -28,13 +28,13 @@ public class MagicSkillUse extends L2ServerPacket
 	public MagicSkillUse()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0x48;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

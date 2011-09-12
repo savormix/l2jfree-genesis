@@ -41,18 +41,18 @@ public abstract class PrivateStoreMsg extends L2ServerPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public PrivateStoreMsg()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0xa2;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

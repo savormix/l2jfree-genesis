@@ -41,18 +41,18 @@ public abstract class StopMoveInVehicle extends L2ServerPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public StopMoveInVehicle()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0x7f;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

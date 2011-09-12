@@ -25,7 +25,7 @@ public class AttackinCoolTime extends L2ServerPacket
 	public AttackinCoolTime()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

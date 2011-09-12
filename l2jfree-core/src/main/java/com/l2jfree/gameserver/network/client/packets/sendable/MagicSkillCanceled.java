@@ -28,13 +28,13 @@ public class MagicSkillCanceled extends L2ServerPacket
 	public MagicSkillCanceled()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0x49;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

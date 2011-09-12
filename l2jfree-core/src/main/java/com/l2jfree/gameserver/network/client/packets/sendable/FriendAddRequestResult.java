@@ -41,18 +41,18 @@ public abstract class FriendAddRequestResult extends L2ServerPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public FriendAddRequestResult()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0x55;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

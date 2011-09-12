@@ -29,7 +29,7 @@ public abstract class ExNotifyBirthDay extends StaticPacket
 	{
 		/** This packet. */
 		public static final ShowBirthdayMark PACKET = new ShowBirthdayMark();
-
+		
 		/**
 		 * Constructs this packet.
 		 * 
@@ -39,23 +39,20 @@ public abstract class ExNotifyBirthDay extends StaticPacket
 		{
 		}
 	}
-
-	private static final int[] EXT_OPCODES = {
-		0x8f,
-		0x00,
-	};
-
+	
+	private static final int[] EXT_OPCODES = { 0x8f, 0x00, };
+	
 	/** Constructs this packet. */
 	public ExNotifyBirthDay()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0xfe;
 	}
-
+	
 	@Override
 	protected int[] getAdditionalOpcodes()
 	{

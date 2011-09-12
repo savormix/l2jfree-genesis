@@ -25,7 +25,7 @@ public class SetPledgeCrestPacket extends L2ServerPacket
 	public SetPledgeCrestPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

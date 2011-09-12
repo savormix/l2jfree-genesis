@@ -25,7 +25,7 @@ public class FriendStatus extends L2ServerPacket
 	public FriendStatus()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

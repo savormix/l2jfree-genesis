@@ -28,13 +28,13 @@ public class SellList extends L2ServerPacket
 	public SellList()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0x06;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

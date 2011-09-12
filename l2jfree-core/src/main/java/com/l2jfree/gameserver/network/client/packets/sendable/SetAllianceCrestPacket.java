@@ -25,7 +25,7 @@ public class SetAllianceCrestPacket extends L2ServerPacket
 	public SetAllianceCrestPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

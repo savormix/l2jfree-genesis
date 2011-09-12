@@ -21,22 +21,19 @@ import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
  */
 public class ExBR_LoadEventTopRankers extends L2ServerPacket
 {
-	private static final int[] EXT_OPCODES = {
-		0xbd,
-		0x00,
-	};
-
+	private static final int[] EXT_OPCODES = { 0xbd, 0x00, };
+	
 	/** Constructs this packet. */
 	public ExBR_LoadEventTopRankers()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0xfe;
 	}
-
+	
 	@Override
 	protected int[] getAdditionalOpcodes()
 	{

@@ -25,7 +25,7 @@ public class DoorStatusUpdate extends L2ServerPacket
 	public DoorStatusUpdate()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

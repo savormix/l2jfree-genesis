@@ -29,7 +29,7 @@ public abstract class ExClosePartyRoomPacket extends StaticPacket
 	{
 		/** This packet. */
 		public static final PartyRoomClosed PACKET = new PartyRoomClosed();
-
+		
 		/**
 		 * Constructs this packet.
 		 * 
@@ -39,23 +39,20 @@ public abstract class ExClosePartyRoomPacket extends StaticPacket
 		{
 		}
 	}
-
-	private static final int[] EXT_OPCODES = {
-		0x09,
-		0x00,
-	};
-
+	
+	private static final int[] EXT_OPCODES = { 0x09, 0x00, };
+	
 	/** Constructs this packet. */
 	public ExClosePartyRoomPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0xfe;
 	}
-
+	
 	@Override
 	protected int[] getAdditionalOpcodes()
 	{

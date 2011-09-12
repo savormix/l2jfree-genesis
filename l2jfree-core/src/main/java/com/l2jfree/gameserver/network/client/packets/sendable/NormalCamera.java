@@ -21,12 +21,12 @@ public class NormalCamera extends StaticPacket
 {
 	/** This packet. */
 	public static final NormalCamera PACKET = new NormalCamera();
-
+	
 	/** Constructs this packet. */
 	private NormalCamera()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

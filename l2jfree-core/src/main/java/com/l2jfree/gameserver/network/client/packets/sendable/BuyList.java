@@ -25,7 +25,7 @@ public class BuyList extends L2ServerPacket
 	public BuyList()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

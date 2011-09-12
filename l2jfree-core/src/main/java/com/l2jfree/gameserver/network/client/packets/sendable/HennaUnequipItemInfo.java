@@ -41,18 +41,18 @@ public abstract class HennaUnequipItemInfo extends L2ServerPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public HennaUnequipItemInfo()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0xe7;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

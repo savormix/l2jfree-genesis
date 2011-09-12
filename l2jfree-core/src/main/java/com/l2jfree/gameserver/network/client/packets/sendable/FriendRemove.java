@@ -25,7 +25,7 @@ public class FriendRemove extends L2ServerPacket
 	public FriendRemove()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

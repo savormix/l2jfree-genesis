@@ -28,13 +28,13 @@ public class DeleteObject extends L2ServerPacket
 	public DeleteObject()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0x08;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

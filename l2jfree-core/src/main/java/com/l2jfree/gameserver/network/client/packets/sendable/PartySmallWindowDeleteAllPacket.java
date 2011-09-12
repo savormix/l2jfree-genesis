@@ -29,7 +29,7 @@ public abstract class PartySmallWindowDeleteAllPacket extends StaticPacket
 	{
 		/** This packet. */
 		public static final ClearPartyMemberList PACKET = new ClearPartyMemberList();
-
+		
 		/**
 		 * Constructs this packet.
 		 * 
@@ -39,12 +39,12 @@ public abstract class PartySmallWindowDeleteAllPacket extends StaticPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public PartySmallWindowDeleteAllPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

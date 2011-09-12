@@ -28,13 +28,13 @@ public class PledgeCrest extends L2ServerPacket
 	public PledgeCrest()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0x6a;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

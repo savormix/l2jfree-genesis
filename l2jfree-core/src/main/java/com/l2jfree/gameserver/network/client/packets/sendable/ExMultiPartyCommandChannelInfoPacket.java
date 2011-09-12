@@ -41,29 +41,26 @@ public abstract class ExMultiPartyCommandChannelInfoPacket extends L2ServerPacke
 		{
 		}
 	}
-
-	private static final int[] EXT_OPCODES = {
-		0x31,
-		0x00,
-	};
-
+	
+	private static final int[] EXT_OPCODES = { 0x31, 0x00, };
+	
 	/** Constructs this packet. */
 	public ExMultiPartyCommandChannelInfoPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0xfe;
 	}
-
+	
 	@Override
 	protected int[] getAdditionalOpcodes()
 	{
 		return EXT_OPCODES;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

@@ -29,7 +29,7 @@ public abstract class AcquireSkillDonePacket extends StaticPacket
 	{
 		/** This packet. */
 		public static final SkillLearned PACKET = new SkillLearned();
-
+		
 		/**
 		 * Constructs this packet.
 		 * 
@@ -39,12 +39,12 @@ public abstract class AcquireSkillDonePacket extends StaticPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public AcquireSkillDonePacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

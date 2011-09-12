@@ -25,7 +25,7 @@ public class DeleteRadarPacket extends L2ServerPacket
 	public DeleteRadarPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

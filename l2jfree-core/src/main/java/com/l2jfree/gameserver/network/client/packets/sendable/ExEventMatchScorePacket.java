@@ -21,22 +21,19 @@ import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
  */
 public class ExEventMatchScorePacket extends L2ServerPacket
 {
-	private static final int[] EXT_OPCODES = {
-		0x10,
-		0x00,
-	};
-
+	private static final int[] EXT_OPCODES = { 0x10, 0x00, };
+	
 	/** Constructs this packet. */
 	public ExEventMatchScorePacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0xfe;
 	}
-
+	
 	@Override
 	protected int[] getAdditionalOpcodes()
 	{

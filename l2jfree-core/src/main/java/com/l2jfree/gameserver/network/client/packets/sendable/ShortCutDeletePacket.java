@@ -25,7 +25,7 @@ public class ShortCutDeletePacket extends L2ServerPacket
 	public ShortCutDeletePacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

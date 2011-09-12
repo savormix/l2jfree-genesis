@@ -25,7 +25,7 @@ public class StopPledgeWarPacket extends L2ServerPacket
 	public StopPledgeWarPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

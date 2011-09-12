@@ -25,7 +25,7 @@ public class RequestTimeCheckPacket extends L2ServerPacket
 	public RequestTimeCheckPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

@@ -25,7 +25,7 @@ public class TradePressOwnOkPacket extends L2ServerPacket
 	public TradePressOwnOkPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

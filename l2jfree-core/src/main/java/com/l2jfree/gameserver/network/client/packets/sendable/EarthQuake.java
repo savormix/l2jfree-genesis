@@ -28,13 +28,13 @@ public class EarthQuake extends L2ServerPacket
 	public EarthQuake()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0xd3;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

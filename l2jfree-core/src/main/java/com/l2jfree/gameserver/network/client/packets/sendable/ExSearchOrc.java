@@ -30,40 +30,37 @@ public abstract class ExSearchOrc extends L2ServerPacket
 	 * @author savormix (generated)
 	 * @see ExSearchOrc
 	 */
-	public static final class DemandProcessBlock  extends ExSearchOrc
+	public static final class DemandProcessBlock extends ExSearchOrc
 	{
 		/**
 		 * Constructs this packet.
 		 * 
 		 * @see ExSearchOrc#ExSearchOrc()
 		 */
-		public DemandProcessBlock ()
+		public DemandProcessBlock()
 		{
 		}
 	}
-
-	private static final int[] EXT_OPCODES = {
-		0x45,
-		0x00,
-	};
-
+	
+	private static final int[] EXT_OPCODES = { 0x45, 0x00, };
+	
 	/** Constructs this packet. */
 	public ExSearchOrc()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0xfe;
 	}
-
+	
 	@Override
 	protected int[] getAdditionalOpcodes()
 	{
 		return EXT_OPCODES;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

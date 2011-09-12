@@ -29,7 +29,7 @@ public abstract class PetitionVotePacket extends StaticPacket
 	{
 		/** This packet. */
 		public static final ConsultationFinished PACKET = new ConsultationFinished();
-
+		
 		/**
 		 * Constructs this packet.
 		 * 
@@ -39,12 +39,12 @@ public abstract class PetitionVotePacket extends StaticPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public PetitionVotePacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

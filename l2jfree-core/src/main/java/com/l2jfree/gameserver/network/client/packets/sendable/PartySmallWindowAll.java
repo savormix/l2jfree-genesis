@@ -41,18 +41,18 @@ public abstract class PartySmallWindowAll extends L2ServerPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public PartySmallWindowAll()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0x4e;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

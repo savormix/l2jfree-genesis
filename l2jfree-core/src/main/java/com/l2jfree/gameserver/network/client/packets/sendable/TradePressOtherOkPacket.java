@@ -29,7 +29,7 @@ public abstract class TradePressOtherOkPacket extends StaticPacket
 	{
 		/** This packet. */
 		public static final MyOfferAccepted PACKET = new MyOfferAccepted();
-
+		
 		/**
 		 * Constructs this packet.
 		 * 
@@ -39,12 +39,12 @@ public abstract class TradePressOtherOkPacket extends StaticPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public TradePressOtherOkPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

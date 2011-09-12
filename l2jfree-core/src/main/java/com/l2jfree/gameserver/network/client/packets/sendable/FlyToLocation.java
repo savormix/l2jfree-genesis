@@ -41,18 +41,18 @@ public abstract class FlyToLocation extends L2ServerPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public FlyToLocation()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0xd4;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

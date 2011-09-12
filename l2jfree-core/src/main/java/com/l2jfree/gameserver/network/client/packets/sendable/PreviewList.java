@@ -41,18 +41,18 @@ public abstract class PreviewList extends L2ServerPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public PreviewList()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0xf5;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

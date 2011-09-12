@@ -25,7 +25,7 @@ public class CreatePledgePacket extends L2ServerPacket
 	public CreatePledgePacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

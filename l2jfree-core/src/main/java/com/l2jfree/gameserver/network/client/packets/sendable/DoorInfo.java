@@ -25,7 +25,7 @@ public class DoorInfo extends L2ServerPacket
 	public DoorInfo()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

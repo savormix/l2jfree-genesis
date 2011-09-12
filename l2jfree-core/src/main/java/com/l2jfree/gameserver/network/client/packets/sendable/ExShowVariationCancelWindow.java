@@ -29,7 +29,7 @@ public abstract class ExShowVariationCancelWindow extends StaticPacket
 	{
 		/** This packet. */
 		public static final ShowRefineRemovalWindow PACKET = new ShowRefineRemovalWindow();
-
+		
 		/**
 		 * Constructs this packet.
 		 * 
@@ -39,23 +39,20 @@ public abstract class ExShowVariationCancelWindow extends StaticPacket
 		{
 		}
 	}
-
-	private static final int[] EXT_OPCODES = {
-		0x52,
-		0x00,
-	};
-
+	
+	private static final int[] EXT_OPCODES = { 0x52, 0x00, };
+	
 	/** Constructs this packet. */
 	public ExShowVariationCancelWindow()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0xfe;
 	}
-
+	
 	@Override
 	protected int[] getAdditionalOpcodes()
 	{

@@ -25,7 +25,7 @@ public class BlockListPacket extends L2ServerPacket
 	public BlockListPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

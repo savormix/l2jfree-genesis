@@ -25,7 +25,7 @@ public class OustPartyMemberPacket extends L2ServerPacket
 	public OustPartyMemberPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

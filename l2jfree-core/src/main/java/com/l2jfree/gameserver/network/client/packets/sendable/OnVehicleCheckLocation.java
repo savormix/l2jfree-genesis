@@ -25,7 +25,7 @@ public class OnVehicleCheckLocation extends L2ServerPacket
 	public OnVehicleCheckLocation()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

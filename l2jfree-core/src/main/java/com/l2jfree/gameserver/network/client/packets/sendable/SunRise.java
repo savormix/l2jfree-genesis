@@ -29,7 +29,7 @@ public abstract class SunRise extends StaticPacket
 	{
 		/** This packet. */
 		public static final DayTime PACKET = new DayTime();
-
+		
 		/**
 		 * Constructs this packet.
 		 * 
@@ -39,12 +39,12 @@ public abstract class SunRise extends StaticPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public SunRise()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

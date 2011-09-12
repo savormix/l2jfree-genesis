@@ -41,18 +41,18 @@ public abstract class OnVehicleInfo extends L2ServerPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public OnVehicleInfo()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0x60;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

@@ -41,18 +41,18 @@ public abstract class ValidateLocationInVehicle extends L2ServerPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public ValidateLocationInVehicle()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0x80;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

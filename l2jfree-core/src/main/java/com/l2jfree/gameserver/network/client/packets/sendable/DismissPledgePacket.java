@@ -25,7 +25,7 @@ public class DismissPledgePacket extends L2ServerPacket
 	public DismissPledgePacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

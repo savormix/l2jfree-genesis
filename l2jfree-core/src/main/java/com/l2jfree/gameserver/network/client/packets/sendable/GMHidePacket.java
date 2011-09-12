@@ -25,7 +25,7 @@ public class GMHidePacket extends L2ServerPacket
 	public GMHidePacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

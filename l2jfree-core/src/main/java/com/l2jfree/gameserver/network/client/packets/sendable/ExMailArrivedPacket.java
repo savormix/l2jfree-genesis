@@ -29,7 +29,7 @@ public abstract class ExMailArrivedPacket extends StaticPacket
 	{
 		/** This packet. */
 		public static final ShowFakeMailMark PACKET = new ShowFakeMailMark();
-
+		
 		/**
 		 * Constructs this packet.
 		 * 
@@ -39,23 +39,20 @@ public abstract class ExMailArrivedPacket extends StaticPacket
 		{
 		}
 	}
-
-	private static final int[] EXT_OPCODES = {
-		0x2e,
-		0x00,
-	};
-
+	
+	private static final int[] EXT_OPCODES = { 0x2e, 0x00, };
+	
 	/** Constructs this packet. */
 	public ExMailArrivedPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0xfe;
 	}
-
+	
 	@Override
 	protected int[] getAdditionalOpcodes()
 	{

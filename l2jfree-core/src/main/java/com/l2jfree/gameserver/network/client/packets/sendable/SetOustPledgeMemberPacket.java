@@ -25,7 +25,7 @@ public class SetOustPledgeMemberPacket extends L2ServerPacket
 	public SetOustPledgeMemberPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

@@ -25,7 +25,7 @@ public class DismissAlliancePacket extends L2ServerPacket
 	public DismissAlliancePacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

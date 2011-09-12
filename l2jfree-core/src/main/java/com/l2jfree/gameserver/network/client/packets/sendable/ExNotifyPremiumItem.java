@@ -29,7 +29,7 @@ public abstract class ExNotifyPremiumItem extends StaticPacket
 	{
 		/** This packet. */
 		public static final ShowDimensionalItemMark PACKET = new ShowDimensionalItemMark();
-
+		
 		/**
 		 * Constructs this packet.
 		 * 
@@ -39,23 +39,20 @@ public abstract class ExNotifyPremiumItem extends StaticPacket
 		{
 		}
 	}
-
-	private static final int[] EXT_OPCODES = {
-		0x85,
-		0x00,
-	};
-
+	
+	private static final int[] EXT_OPCODES = { 0x85, 0x00, };
+	
 	/** Constructs this packet. */
 	public ExNotifyPremiumItem()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0xfe;
 	}
-
+	
 	@Override
 	protected int[] getAdditionalOpcodes()
 	{

@@ -29,7 +29,7 @@ public abstract class ShowPCCafeCouponShowUI extends StaticPacket
 	{
 		/** This packet. */
 		public static final AskCafeCouponNumber PACKET = new AskCafeCouponNumber();
-
+		
 		/**
 		 * Constructs this packet.
 		 * 
@@ -39,23 +39,20 @@ public abstract class ShowPCCafeCouponShowUI extends StaticPacket
 		{
 		}
 	}
-
-	private static final int[] EXT_OPCODES = {
-		0x44,
-		0x00,
-	};
-
+	
+	private static final int[] EXT_OPCODES = { 0x44, 0x00, };
+	
 	/** Constructs this packet. */
 	public ShowPCCafeCouponShowUI()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0xfe;
 	}
-
+	
 	@Override
 	protected int[] getAdditionalOpcodes()
 	{

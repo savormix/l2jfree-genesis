@@ -41,18 +41,18 @@ public abstract class CastleSiegeDefenderList extends L2ServerPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public CastleSiegeDefenderList()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0xcb;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

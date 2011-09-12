@@ -25,7 +25,7 @@ public class ActionFail extends L2ServerPacket
 	public ActionFail()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

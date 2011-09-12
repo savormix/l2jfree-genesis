@@ -41,18 +41,18 @@ public abstract class RelationChanged extends L2ServerPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public RelationChanged()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0xce;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

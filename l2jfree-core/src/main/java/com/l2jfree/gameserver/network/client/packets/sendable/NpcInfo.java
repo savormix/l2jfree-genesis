@@ -28,13 +28,13 @@ public class NpcInfo extends L2ServerPacket
 	public NpcInfo()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0x0c;
 	}
-
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{

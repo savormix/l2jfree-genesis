@@ -29,7 +29,7 @@ public abstract class ExShowQuestInfoPacket extends StaticPacket
 	{
 		/** This packet. */
 		public static final ShowQuestInfoList PACKET = new ShowQuestInfoList();
-
+		
 		/**
 		 * Constructs this packet.
 		 * 
@@ -39,23 +39,20 @@ public abstract class ExShowQuestInfoPacket extends StaticPacket
 		{
 		}
 	}
-
-	private static final int[] EXT_OPCODES = {
-		0x20,
-		0x00,
-	};
-
+	
+	private static final int[] EXT_OPCODES = { 0x20, 0x00, };
+	
 	/** Constructs this packet. */
 	public ExShowQuestInfoPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0xfe;
 	}
-
+	
 	@Override
 	protected int[] getAdditionalOpcodes()
 	{

@@ -25,7 +25,7 @@ public class PledgeExtendedInfoPacket extends L2ServerPacket
 	public PledgeExtendedInfoPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

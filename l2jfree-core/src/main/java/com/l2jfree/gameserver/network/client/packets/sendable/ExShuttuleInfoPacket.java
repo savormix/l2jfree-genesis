@@ -21,22 +21,19 @@ import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
  */
 public class ExShuttuleInfoPacket extends L2ServerPacket
 {
-	private static final int[] EXT_OPCODES = {
-		0xca,
-		0x00,
-	};
-
+	private static final int[] EXT_OPCODES = { 0xca, 0x00, };
+	
 	/** Constructs this packet. */
 	public ExShuttuleInfoPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0xfe;
 	}
-
+	
 	@Override
 	protected int[] getAdditionalOpcodes()
 	{

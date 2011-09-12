@@ -25,7 +25,7 @@ public class SurrenderAllianceWarPacket extends L2ServerPacket
 	public SurrenderAllianceWarPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

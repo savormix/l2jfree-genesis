@@ -25,7 +25,7 @@ public class FriendAdd extends L2ServerPacket
 	public FriendAdd()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

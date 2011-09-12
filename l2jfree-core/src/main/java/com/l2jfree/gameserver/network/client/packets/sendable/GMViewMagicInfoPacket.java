@@ -25,7 +25,7 @@ public class GMViewMagicInfoPacket extends L2ServerPacket
 	public GMViewMagicInfoPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

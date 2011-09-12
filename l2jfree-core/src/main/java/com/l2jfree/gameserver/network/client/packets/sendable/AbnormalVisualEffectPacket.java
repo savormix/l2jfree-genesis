@@ -25,7 +25,7 @@ public class AbnormalVisualEffectPacket extends L2ServerPacket
 	public AbnormalVisualEffectPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

@@ -25,7 +25,7 @@ public class JoinAlliancePacket extends L2ServerPacket
 	public JoinAlliancePacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

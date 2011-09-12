@@ -25,7 +25,7 @@ public class MagicListPacket extends L2ServerPacket
 	public MagicListPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

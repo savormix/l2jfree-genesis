@@ -25,7 +25,7 @@ public class EquipUpdatePacket extends L2ServerPacket
 	public EquipUpdatePacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

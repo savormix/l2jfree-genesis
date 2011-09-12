@@ -29,7 +29,7 @@ public abstract class SunSet extends StaticPacket
 	{
 		/** This packet. */
 		public static final NightTime PACKET = new NightTime();
-
+		
 		/**
 		 * Constructs this packet.
 		 * 
@@ -39,12 +39,12 @@ public abstract class SunSet extends StaticPacket
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public SunSet()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

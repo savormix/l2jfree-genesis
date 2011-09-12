@@ -25,7 +25,7 @@ public class ReviveRequestPacket extends L2ServerPacket
 	public ReviveRequestPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

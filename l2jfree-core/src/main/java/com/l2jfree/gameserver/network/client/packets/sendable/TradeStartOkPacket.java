@@ -25,7 +25,7 @@ public class TradeStartOkPacket extends L2ServerPacket
 	public TradeStartOkPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

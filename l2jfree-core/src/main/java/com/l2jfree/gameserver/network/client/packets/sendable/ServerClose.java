@@ -21,12 +21,12 @@ public class ServerClose extends StaticPacket
 {
 	/** This packet. */
 	public static final ServerClose PACKET = new ServerClose();
-
+	
 	/** Constructs this packet. */
 	private ServerClose()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

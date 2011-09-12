@@ -25,7 +25,7 @@ public class ReplyStartAllianceWarPacket extends L2ServerPacket
 	public ReplyStartAllianceWarPacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{

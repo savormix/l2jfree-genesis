@@ -25,7 +25,7 @@ public class RaceMonsterStatusUpdatePacket extends L2ServerPacket
 	public RaceMonsterStatusUpdatePacket()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
