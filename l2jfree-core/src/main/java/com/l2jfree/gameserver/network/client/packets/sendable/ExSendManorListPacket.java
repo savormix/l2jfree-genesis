@@ -45,7 +45,7 @@ public abstract class ExSendManorListPacket extends StaticPacket
 		}
 	}
 	
-	private static final int[] EXT_OPCODES = { 0x22, 0x00, };
+	private static final int[] EXT_OPCODES = { 0x22, 0x00 };
 	
 	private final String[] _castles = { "gludio", "dion", "giran", "oren", "aden", "innadrile", "godard", "rune",
 			"shuttgart" };

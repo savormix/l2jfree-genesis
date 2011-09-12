@@ -42,7 +42,7 @@ public abstract class ExMoveToLocationInAirShipPacket extends L2ServerPacket
 		}
 	}
 	
-	private static final int[] EXT_OPCODES = { 0x6d, 0x00, };
+	private static final int[] EXT_OPCODES = { 0x6d, 0x00 };
 	
 	/** Constructs this packet. */
 	public ExMoveToLocationInAirShipPacket()

@@ -40,7 +40,7 @@ public abstract class ShowPCCafeCouponShowUI extends StaticPacket
 		}
 	}
 	
-	private static final int[] EXT_OPCODES = { 0x44, 0x00, };
+	private static final int[] EXT_OPCODES = { 0x44, 0x00 };
 	
 	/** Constructs this packet. */
 	public ShowPCCafeCouponShowUI()

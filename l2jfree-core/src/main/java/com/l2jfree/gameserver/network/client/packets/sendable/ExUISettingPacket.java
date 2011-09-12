@@ -41,7 +41,7 @@ public abstract class ExUISettingPacket extends L2ServerPacket
 		}
 	}
 	
-	private static final int[] EXT_OPCODES = { 0x70, 0x00, };
+	private static final int[] EXT_OPCODES = { 0x70, 0x00 };
 	
 	/** Constructs this packet. */
 	public ExUISettingPacket()

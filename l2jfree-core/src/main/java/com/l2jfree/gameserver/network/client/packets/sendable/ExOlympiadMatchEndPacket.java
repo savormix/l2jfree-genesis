@@ -40,7 +40,7 @@ public abstract class ExOlympiadMatchEndPacket extends StaticPacket
 		}
 	}
 	
-	private static final int[] EXT_OPCODES = { 0x2d, 0x00, };
+	private static final int[] EXT_OPCODES = { 0x2d, 0x00 };
 	
 	/** Constructs this packet. */
 	public ExOlympiadMatchEndPacket()

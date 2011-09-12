@@ -42,7 +42,7 @@ public abstract class ExShowManorDefaultInfoPacket extends L2ServerPacket
 		}
 	}
 	
-	private static final int[] EXT_OPCODES = { 0x25, 0x00, };
+	private static final int[] EXT_OPCODES = { 0x25, 0x00 };
 	
 	/** Constructs this packet. */
 	public ExShowManorDefaultInfoPacket()

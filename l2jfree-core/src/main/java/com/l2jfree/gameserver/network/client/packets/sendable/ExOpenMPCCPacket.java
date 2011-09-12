@@ -40,7 +40,7 @@ public abstract class ExOpenMPCCPacket extends StaticPacket
 		}
 	}
 	
-	private static final int[] EXT_OPCODES = { 0x12, 0x00, };
+	private static final int[] EXT_OPCODES = { 0x12, 0x00 };
 	
 	/** Constructs this packet. */
 	public ExOpenMPCCPacket()

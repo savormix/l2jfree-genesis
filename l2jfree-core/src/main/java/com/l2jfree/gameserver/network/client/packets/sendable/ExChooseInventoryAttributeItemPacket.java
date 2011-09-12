@@ -42,7 +42,7 @@ public abstract class ExChooseInventoryAttributeItemPacket extends L2ServerPacke
 		}
 	}
 	
-	private static final int[] EXT_OPCODES = { 0x62, 0x00, };
+	private static final int[] EXT_OPCODES = { 0x62, 0x00 };
 	
 	/** Constructs this packet. */
 	public ExChooseInventoryAttributeItemPacket()

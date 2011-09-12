@@ -42,7 +42,7 @@ public abstract class ExPutCommissionResultForVariationMake extends L2ServerPack
 		}
 	}
 	
-	private static final int[] EXT_OPCODES = { 0x55, 0x00, };
+	private static final int[] EXT_OPCODES = { 0x55, 0x00 };
 	
 	/** Constructs this packet. */
 	public ExPutCommissionResultForVariationMake()

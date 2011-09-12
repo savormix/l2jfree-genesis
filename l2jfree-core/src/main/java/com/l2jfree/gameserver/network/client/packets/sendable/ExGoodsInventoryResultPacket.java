@@ -21,7 +21,7 @@ import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
  */
 public class ExGoodsInventoryResultPacket extends L2ServerPacket
 {
-	private static final int[] EXT_OPCODES = { 0xe4, 0x00, };
+	private static final int[] EXT_OPCODES = { 0xe4, 0x00 };
 	
 	/** Constructs this packet. */
 	public ExGoodsInventoryResultPacket()

@@ -42,7 +42,7 @@ public abstract class ExAskJoinPartyRoom extends L2ServerPacket
 		}
 	}
 	
-	private static final int[] EXT_OPCODES = { 0x35, 0x00, };
+	private static final int[] EXT_OPCODES = { 0x35, 0x00 };
 	
 	/** Constructs this packet. */
 	public ExAskJoinPartyRoom()

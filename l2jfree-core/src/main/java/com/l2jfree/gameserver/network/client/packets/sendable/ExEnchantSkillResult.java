@@ -42,7 +42,7 @@ public abstract class ExEnchantSkillResult extends L2ServerPacket
 		}
 	}
 	
-	private static final int[] EXT_OPCODES = { 0xa7, 0x00, };
+	private static final int[] EXT_OPCODES = { 0xa7, 0x00 };
 	
 	/** Constructs this packet. */
 	public ExEnchantSkillResult()

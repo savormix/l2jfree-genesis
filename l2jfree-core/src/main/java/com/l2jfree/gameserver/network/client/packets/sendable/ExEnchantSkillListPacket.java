@@ -21,7 +21,7 @@ import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
  */
 public class ExEnchantSkillListPacket extends L2ServerPacket
 {
-	private static final int[] EXT_OPCODES = { 0x29, 0x00, };
+	private static final int[] EXT_OPCODES = { 0x29, 0x00 };
 	
 	/** Constructs this packet. */
 	public ExEnchantSkillListPacket()

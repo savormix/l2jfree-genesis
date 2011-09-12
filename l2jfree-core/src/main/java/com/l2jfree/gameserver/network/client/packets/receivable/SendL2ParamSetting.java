@@ -46,7 +46,7 @@ public abstract class SendL2ParamSetting extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x4a;
 	/** Additional packet's identifiers */
-	public static final int[] EXT_OPCODES = { 0x03, 0x00, };
+	public static final int[] EXT_OPCODES = { 0x03, 0x00 };
 	/** Second packet's identifier */
 	public static final int OPCODE_2 = 0x03;
 	
