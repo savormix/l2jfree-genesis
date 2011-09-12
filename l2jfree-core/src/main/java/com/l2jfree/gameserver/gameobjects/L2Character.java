@@ -14,7 +14,7 @@
  */
 package com.l2jfree.gameserver.gameobjects;
 
-import com.l2jfree.gameserver.gameobjects.components.ComponentFactory;
+import com.l2jfree.gameserver.gameobjects.components.InventoryComponent;
 import com.l2jfree.gameserver.gameobjects.components.StatComponent;
 import com.l2jfree.gameserver.gameobjects.components.ViewComponent;
 import com.l2jfree.gameserver.templates.L2Template;
@@ -24,17 +24,20 @@ import com.l2jfree.gameserver.templates.L2Template;
  */
 @StatComponent(CharacterStat.class)
 @ViewComponent(CharacterView.class)
+@InventoryComponent(EmptyInventory.class)
 public abstract class L2Character extends L2Object implements IL2Character
 {
 	private final CharacterStat _stat;
 	private final CharacterView _view;
+	private final IInventory _inventory;
 	
 	public L2Character(int objectId, L2Template template)
 	{
 		super(objectId, template);
 		
-		_stat = ComponentFactory.STAT.getComponent(this);
-		_view = ComponentFactory.VIEW.getComponent(this);
+		_stat = StatComponent.FACTORY.getComponent(this);
+		_view = ViewComponent.FACTORY.getComponent(this);
+		_inventory = InventoryComponent.FACTORY.getComponent(this);
 	}
 	
 	public CharacterStat getStat()
@@ -45,5 +48,10 @@ public abstract class L2Character extends L2Object implements IL2Character
 	public CharacterView getView()
 	{
 		return _view;
+	}
+	
+	public IInventory getInventory()
+	{
+		return _inventory;
 	}
 }

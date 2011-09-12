@@ -15,6 +15,7 @@
 package com.l2jfree.gameserver.gameobjects.player;
 
 import com.l2jfree.gameserver.gameobjects.Inventory;
+import com.l2jfree.gameserver.gameobjects.L2Player;
 
 /**
  * @author NB4L1
@@ -56,5 +57,16 @@ public class PlayerInventory extends Inventory
 		BELT;
 		
 		public static final int TOTAL_SLOTS = PaperDollSlot.values().length;
+	}
+	
+	public PlayerInventory(L2Player activeChar)
+	{
+		super(activeChar);
+	}
+	
+	@Override
+	public final L2Player getActiveChar()
+	{
+		return (L2Player)super.getActiveChar();
 	}
 }

@@ -14,7 +14,6 @@
  */
 package com.l2jfree.gameserver.gameobjects;
 
-import com.l2jfree.gameserver.gameobjects.components.ComponentFactory;
 import com.l2jfree.gameserver.gameobjects.components.KnownListComponent;
 import com.l2jfree.gameserver.gameobjects.components.PositionComponent;
 import com.l2jfree.gameserver.templates.L2Template;
@@ -41,8 +40,8 @@ public abstract class L2Object implements IL2Object
 		_objectId = objectId;
 		_template = template;
 		
-		_position = ComponentFactory.POSITION.getComponent(this);
-		_knownList = ComponentFactory.KNOWNLIST.getComponent(this);
+		_position = PositionComponent.FACTORY.getComponent(this);
+		_knownList = KnownListComponent.FACTORY.getComponent(this);
 	}
 	
 	@Override

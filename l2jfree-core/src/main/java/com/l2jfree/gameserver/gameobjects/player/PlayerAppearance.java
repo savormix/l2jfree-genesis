@@ -34,10 +34,13 @@ public class PlayerAppearance implements IComponent
 	private int _nameColor;
 	private int _titleColor;
 	
-	public PlayerAppearance(L2Player activeChar, PlayerDB playerDB)
+	public PlayerAppearance(L2Player activeChar)
 	{
 		_activeChar = activeChar;
-		
+	}
+	
+	public void init(PlayerDB playerDB)
+	{
 		_gender = playerDB.gender;
 		_face = playerDB.face;
 		_hairColor = playerDB.hairColor;

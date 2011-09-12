@@ -21,5 +21,14 @@ import com.l2jfree.gameserver.gameobjects.Inventory;
  */
 public class PetInventory extends Inventory
 {
-	//
+	public PetInventory(L2Pet activeChar)
+	{
+		super(activeChar);
+	}
+	
+	@Override
+	public final L2Pet getActiveChar()
+	{
+		return (L2Pet)super.getActiveChar();
+	}
 }

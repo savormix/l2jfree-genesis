@@ -21,6 +21,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import com.l2jfree.gameserver.gameobjects.L2Object;
 import com.l2jfree.gameserver.gameobjects.ObjectPosition;
 
 /**
@@ -33,4 +34,7 @@ import com.l2jfree.gameserver.gameobjects.ObjectPosition;
 public @interface PositionComponent
 {
 	public Class<? extends ObjectPosition> value();
+	
+	public static final ComponentFactory<L2Object, ObjectPosition> FACTORY =
+			new ComponentFactory<L2Object, ObjectPosition>(L2Object.class, PositionComponent.class);
 }

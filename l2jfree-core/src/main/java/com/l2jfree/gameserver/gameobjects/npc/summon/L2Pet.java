@@ -14,12 +14,14 @@
  */
 package com.l2jfree.gameserver.gameobjects.npc.summon;
 
+import com.l2jfree.gameserver.gameobjects.components.InventoryComponent;
 import com.l2jfree.gameserver.gameobjects.npc.L2Summon;
 import com.l2jfree.gameserver.templates.L2NpcTemplate;
 
 /**
  * @author NB4L1
  */
+@InventoryComponent(PetInventory.class)
 public abstract class L2Pet extends L2Summon
 {
 	public L2Pet(int objectId, L2NpcTemplate template)

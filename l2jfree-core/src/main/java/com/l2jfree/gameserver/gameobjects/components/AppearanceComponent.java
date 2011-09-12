@@ -21,8 +21,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.l2jfree.gameserver.gameobjects.IObjectKnownList;
-import com.l2jfree.gameserver.gameobjects.L2Object;
+import com.l2jfree.gameserver.gameobjects.L2Player;
+import com.l2jfree.gameserver.gameobjects.player.PlayerAppearance;
 
 /**
  * @author NB4L1
@@ -31,10 +31,10 @@ import com.l2jfree.gameserver.gameobjects.L2Object;
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface KnownListComponent
+public @interface AppearanceComponent
 {
-	public Class<? extends IObjectKnownList> value();
+	public Class<? extends PlayerAppearance> value();
 	
-	public static final ComponentFactory<L2Object, IObjectKnownList> FACTORY =
-			new ComponentFactory<L2Object, IObjectKnownList>(L2Object.class, KnownListComponent.class);
+	public static final ComponentFactory<L2Player, PlayerAppearance> FACTORY =
+			new ComponentFactory<L2Player, PlayerAppearance>(L2Player.class, AppearanceComponent.class);
 }

@@ -15,19 +15,12 @@
 package com.l2jfree.gameserver.gameobjects;
 
 /**
- * @author hex1r0
+ * @author NB4L1
  */
-public abstract class Inventory extends ItemContainer implements IInventory
+public class EmptyInventory implements IInventory
 {
-	private final L2Character _activeChar;
-	
-	protected Inventory(L2Character activeChar)
+	public EmptyInventory(@SuppressWarnings("unused") L2Character activeChar)
 	{
-		_activeChar = activeChar;
-	}
-	
-	public L2Character getActiveChar()
-	{
-		return _activeChar;
+		// do nothing
 	}
 }

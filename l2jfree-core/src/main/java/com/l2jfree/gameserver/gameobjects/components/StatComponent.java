@@ -22,6 +22,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import com.l2jfree.gameserver.gameobjects.CharacterStat;
+import com.l2jfree.gameserver.gameobjects.L2Character;
 
 /**
  * @author NB4L1
@@ -33,4 +34,7 @@ import com.l2jfree.gameserver.gameobjects.CharacterStat;
 public @interface StatComponent
 {
 	public Class<? extends CharacterStat> value();
+	
+	public static final ComponentFactory<L2Character, CharacterStat> FACTORY =
+			new ComponentFactory<L2Character, CharacterStat>(L2Character.class, StatComponent.class);
 }

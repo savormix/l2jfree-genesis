@@ -14,103 +14,60 @@
  */
 package com.l2jfree.gameserver.gameobjects.components;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.l2jfree.gameserver.gameobjects.CharacterStat;
-import com.l2jfree.gameserver.gameobjects.CharacterView;
-import com.l2jfree.gameserver.gameobjects.IObjectKnownList;
 import com.l2jfree.gameserver.gameobjects.L2Object;
-import com.l2jfree.gameserver.gameobjects.ObjectPosition;
 
 /**
  * @author NB4L1
- * @param <T>
+ * @param <K>
+ * @param <V>
  */
 // TODO implement more features, use annotations, optimize performance
 @SuppressWarnings("unchecked")
-public abstract class ComponentFactory<T extends IComponent>
+public final class ComponentFactory<K extends L2Object, V extends IComponent>
 {
-	public static final ComponentFactory<ObjectPosition> POSITION = new ComponentFactory<ObjectPosition>() {
-		@Override
-		protected java.lang.Class<? extends ObjectPosition> getRootClass()
-		{
-			return ObjectPosition.class;
-		}
-		
-		@Override
-		protected Class<? extends ObjectPosition> getComponentClassByAnnotation(L2Object owner)
-		{
-			return owner.getClass().getAnnotation(PositionComponent.class).value();
-		}
-	};
+	private final Map<Class<? extends K>, Class<? extends V>> _registryByOwnerClazz =
+			new HashMap<Class<? extends K>, Class<? extends V>>();
 	
-	public static final ComponentFactory<IObjectKnownList> KNOWNLIST = new ComponentFactory<IObjectKnownList>() {
-		@Override
-		protected java.lang.Class<? extends IObjectKnownList> getRootClass()
-		{
-			return IObjectKnownList.class;
-		}
-		
-		@Override
-		protected Class<? extends IObjectKnownList> getComponentClassByAnnotation(L2Object owner)
-		{
-			return owner.getClass().getAnnotation(KnownListComponent.class).value();
-		}
-	};
+	private final Map<Integer, Class<? extends V>> _registryByTemplateId = new HashMap<Integer, Class<? extends V>>();
 	
-	public static final ComponentFactory<CharacterStat> STAT = new ComponentFactory<CharacterStat>() {
-		@Override
-		protected java.lang.Class<? extends CharacterStat> getRootClass()
-		{
-			return CharacterStat.class;
-		}
-		
-		@Override
-		protected Class<? extends CharacterStat> getComponentClassByAnnotation(L2Object owner)
-		{
-			return owner.getClass().getAnnotation(StatComponent.class).value();
-		}
-	};
+	private final Map<Class<? extends K>, Map<Integer, Constructor<? extends V>>> _cache =
+			new HashMap<Class<? extends K>, Map<Integer, Constructor<? extends V>>>();
 	
-	public static final ComponentFactory<CharacterView> VIEW = new ComponentFactory<CharacterView>() {
-		@Override
-		protected java.lang.Class<? extends CharacterView> getRootClass()
-		{
-			return CharacterView.class;
-		}
-		
-		@Override
-		protected Class<? extends CharacterView> getComponentClassByAnnotation(L2Object owner)
-		{
-			return owner.getClass().getAnnotation(ViewComponent.class).value();
-		}
-	};
+	private final Class<K> _ownerRootClazz;
+	private final Class<? extends Annotation> _annotationClazz;
+	private final String _componentName;
 	
-	private final Map<Class<? extends L2Object>, Class<? extends T>> _registryByOwnerClass =
-			new HashMap<Class<? extends L2Object>, Class<? extends T>>();
-	
-	private final Map<Integer, Class<? extends T>> _registryByTemplateId = new HashMap<Integer, Class<? extends T>>();
-	
-	private final Map<Class<? extends L2Object>, Map<Integer, Constructor<? extends T>>> _cache =
-			new HashMap<Class<? extends L2Object>, Map<Integer, Constructor<? extends T>>>();
-	
-	private ComponentFactory()
+	protected ComponentFactory(Class<K> ownerRootClazz, Class<? extends Annotation> annotationClazz)
 	{
-		//
+		_ownerRootClazz = ownerRootClazz;
+		_annotationClazz = annotationClazz;
+		
+		try
+		{
+			_componentName = Class.forName(new Throwable().getStackTrace()[1].getClassName()).getSimpleName();
+		}
+		catch (ClassNotFoundException e)
+		{
+			// should never happen
+			throw new Error(e);
+		}
 	}
 	
-	public final void register(Class<? extends L2Object> ownerClazz, Class<? extends T> componentClazz)
+	public final void register(Class<? extends K> ownerClazz, Class<? extends V> componentClazz)
 	{
 		// FIXME handle replacement
-		_registryByOwnerClass.put(ownerClazz, componentClazz);
+		_registryByOwnerClazz.put(ownerClazz, componentClazz);
 		
 		// drop cache
 		_cache.clear();
 	}
 	
-	public final void register(int templateId, Class<? extends T> componentClazz)
+	public final void register(int templateId, Class<? extends V> componentClazz)
 	{
 		// FIXME handle replacement
 		_registryByTemplateId.put(templateId, componentClazz);
@@ -119,82 +76,95 @@ public abstract class ComponentFactory<T extends IComponent>
 		_cache.clear();
 	}
 	
-	protected abstract Class<? extends T> getRootClass();
-	
-	protected abstract Class<? extends T> getComponentClassByAnnotation(L2Object owner);
-	
-	private final Class<? extends T> findComponentClass(L2Object owner)
+	private final Class<? extends V> findComponentClass(final Class<? extends K> ownerClazz,
+			final Integer ownerTemplateId)
 	{
 		// first search for template id based mapping
-		Class<? extends T> clazz = _registryByTemplateId.get(owner.getTemplate().getId());
+		Class<? extends V> clazz = _registryByTemplateId.get(ownerTemplateId);
 		
 		if (clazz != null)
 			return clazz;
 		
 		// then check for class based mappings
-		for (Class<?> ownerClazz = owner.getClass(); ownerClazz != null; ownerClazz = ownerClazz.getSuperclass())
+		for (Class<?> tmpClazz = ownerClazz; tmpClazz != null; tmpClazz = tmpClazz.getSuperclass())
 		{
-			clazz = _registryByOwnerClass.get(ownerClazz);
+			clazz = _registryByOwnerClazz.get(tmpClazz);
 			
 			if (clazz != null)
 				return clazz;
 		}
 		
 		// and finally fall-back to default annotations based mappings
-		clazz = getComponentClassByAnnotation(owner);
+		try
+		{
+			clazz =
+					(Class<? extends V>)_annotationClazz.getMethod("value").invoke(
+							ownerClazz.getAnnotation(_annotationClazz));
+			
+			if (clazz != null)
+				return clazz;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 		
-		if (clazz != null)
-			return clazz;
-		
-		throw new IllegalStateException("No " + getRootClass() + " implementation registered for " + owner);
+		throw new ComponentException(_componentName + " implementation", ownerClazz, ownerTemplateId);
 	}
 	
-	private final Map<Class<? extends L2Object>, Constructor<? extends T>> findComponentContructors(L2Object owner)
+	private final Map<Class<? extends K>, Constructor<? extends V>> findComponentContructors(
+			final Class<? extends K> ownerClazz, final Integer ownerTemplateId)
 	{
-		final Class<? extends T> clazz = findComponentClass(owner);
+		final Class<? extends V> clazz = findComponentClass(ownerClazz, ownerTemplateId);
 		
-		final Map<Class<? extends L2Object>, Constructor<? extends T>> constructors =
-				new HashMap<Class<? extends L2Object>, Constructor<? extends T>>();
+		final Map<Class<? extends K>, Constructor<? extends V>> constructors =
+				new HashMap<Class<? extends K>, Constructor<? extends V>>();
 		
 		for (Constructor<?> constructor : clazz.getConstructors())
 		{
 			final Class<?>[] parameterTypes = constructor.getParameterTypes();
 			
-			if (parameterTypes.length != 1 || !L2Object.class.isAssignableFrom(parameterTypes[0]))
-				throw new IllegalStateException("Invalid constructor " + constructor + " for " + owner);
+			if (parameterTypes.length != 1 || !_ownerRootClazz.isAssignableFrom(parameterTypes[0]))
+				throw new IllegalStateException("Invalid constructor " + constructor + " for class: " + ownerClazz
+						+ ", template id: " + ownerTemplateId);
 			
-			constructors.put((Class<? extends L2Object>)parameterTypes[0], (Constructor<? extends T>)constructor);
+			constructors.put((Class<? extends K>)parameterTypes[0], (Constructor<? extends V>)constructor);
 		}
 		
 		return constructors;
 	}
 	
-	private final Constructor<? extends T> findComponentContructor(L2Object owner)
+	private final Constructor<? extends V> findComponentContructor(final Class<? extends K> ownerClazz,
+			final Integer ownerTemplateId)
 	{
-		final Map<Class<? extends L2Object>, Constructor<? extends T>> constructors = findComponentContructors(owner);
+		final Map<Class<? extends K>, Constructor<? extends V>> constructors =
+				findComponentContructors(ownerClazz, ownerTemplateId);
 		
-		for (Class<?> ownerClazz = owner.getClass(); ownerClazz != null; ownerClazz = ownerClazz.getSuperclass())
+		for (Class<?> tmpClazz = ownerClazz; tmpClazz != null; tmpClazz = tmpClazz.getSuperclass())
 		{
-			final Constructor<? extends T> constructor = constructors.get(ownerClazz);
+			final Constructor<? extends V> constructor = constructors.get(tmpClazz);
 			
 			if (constructor != null)
 				return constructor;
 		}
 		
-		throw new IllegalStateException("No proper " + getRootClass() + " contructor registered for " + owner);
+		throw new ComponentException("Proper " + _componentName + " constructor", ownerClazz, ownerTemplateId);
 	}
 	
-	public final T getComponent(L2Object owner)
+	public final V getComponent(K owner)
 	{
-		Map<Integer, Constructor<? extends T>> cacheByOwnerClass = _cache.get(owner.getClass());
+		final Class<? extends K> ownerClazz = (Class<? extends K>)owner.getClass();
+		final Integer ownerTemplateId = owner.getTemplate().getId();
 		
-		if (cacheByOwnerClass == null)
-			_cache.put(owner.getClass(), cacheByOwnerClass = new HashMap<Integer, Constructor<? extends T>>());
+		Map<Integer, Constructor<? extends V>> cacheByOwnerClazz = _cache.get(ownerClazz);
 		
-		Constructor<? extends T> constructor = cacheByOwnerClass.get(owner.getTemplate().getId());
+		if (cacheByOwnerClazz == null)
+			_cache.put(ownerClazz, cacheByOwnerClazz = new HashMap<Integer, Constructor<? extends V>>());
+		
+		Constructor<? extends V> constructor = cacheByOwnerClazz.get(ownerTemplateId);
 		
 		if (constructor == null)
-			cacheByOwnerClass.put(owner.getTemplate().getId(), constructor = findComponentContructor(owner));
+			cacheByOwnerClazz.put(ownerTemplateId, constructor = findComponentContructor(ownerClazz, ownerTemplateId));
 		
 		try
 		{
@@ -207,6 +177,16 @@ public abstract class ComponentFactory<T extends IComponent>
 		catch (Exception e)
 		{
 			throw new RuntimeException(e);
+		}
+	}
+	
+	public static final class ComponentException extends IllegalStateException
+	{
+		private static final long serialVersionUID = 107476204199857568L;
+		
+		public ComponentException(String missingEntity, Class<?> ownerClazz, final Integer ownerTemplateId)
+		{
+			super("No " + missingEntity + " registered for class: " + ownerClazz + ", template id: " + ownerTemplateId);
 		}
 	}
 }

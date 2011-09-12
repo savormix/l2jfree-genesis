@@ -16,10 +16,13 @@ package com.l2jfree.gameserver.gameobjects;
 
 import com.l2jfree.gameserver.datatables.PlayerNameTable;
 import com.l2jfree.gameserver.datatables.PlayerTemplateTable;
+import com.l2jfree.gameserver.gameobjects.components.AppearanceComponent;
+import com.l2jfree.gameserver.gameobjects.components.InventoryComponent;
 import com.l2jfree.gameserver.gameobjects.components.KnownListComponent;
 import com.l2jfree.gameserver.gameobjects.components.StatComponent;
 import com.l2jfree.gameserver.gameobjects.components.ViewComponent;
 import com.l2jfree.gameserver.gameobjects.player.PlayerAppearance;
+import com.l2jfree.gameserver.gameobjects.player.PlayerInventory;
 import com.l2jfree.gameserver.gameobjects.player.PlayerKnownList;
 import com.l2jfree.gameserver.gameobjects.player.PlayerStat;
 import com.l2jfree.gameserver.gameobjects.player.PlayerView;
@@ -43,6 +46,8 @@ import com.l2jfree.util.Rnd;
 @KnownListComponent(PlayerKnownList.class)
 @StatComponent(PlayerStat.class)
 @ViewComponent(PlayerView.class)
+@InventoryComponent(PlayerInventory.class)
+@AppearanceComponent(PlayerAppearance.class)
 public class L2Player extends L2Character implements IL2Playable, PlayerNameTable.IPlayerInfo
 {
 	public static L2Player create(String name, String accountName, ClassId classId)
@@ -179,7 +184,8 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 		_mainClassId = playerDB.mainClassId;
 		_activeClassId = playerDB.activeClassId;
 		
-		_appearance = new PlayerAppearance(this, playerDB);
+		_appearance = AppearanceComponent.FACTORY.getComponent(this);
+		_appearance.init(playerDB);
 		
 		setName(playerDB.name);
 		getPosition().setXYZ(playerDB.x, playerDB.y, playerDB.z);

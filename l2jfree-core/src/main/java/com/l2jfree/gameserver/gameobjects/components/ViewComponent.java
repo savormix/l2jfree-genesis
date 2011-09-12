@@ -22,6 +22,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import com.l2jfree.gameserver.gameobjects.CharacterView;
+import com.l2jfree.gameserver.gameobjects.L2Character;
 
 /**
  * @author NB4L1
@@ -33,4 +34,7 @@ import com.l2jfree.gameserver.gameobjects.CharacterView;
 public @interface ViewComponent
 {
 	public Class<? extends CharacterView> value();
+	
+	public static final ComponentFactory<L2Character, CharacterView> FACTORY =
+			new ComponentFactory<L2Character, CharacterView>(L2Character.class, ViewComponent.class);
 }
