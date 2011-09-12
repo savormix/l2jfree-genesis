@@ -14,7 +14,6 @@
  */
 package com.l2jfree.gameserver.gameobjects.components.interfaces;
 
-
 /**
  * @author NB4L1
  */

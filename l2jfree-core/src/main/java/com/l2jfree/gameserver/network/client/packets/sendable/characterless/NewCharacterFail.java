@@ -25,7 +25,7 @@ public class NewCharacterFail extends L2ServerPacket
 	public NewCharacterFail()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
