@@ -12,16 +12,14 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.gameobjects;
+package com.l2jfree.gameserver.gameobjects.components.interfaces;
 
-import com.l2jfree.gameserver.gameobjects.components.interfaces.IItemContainer;
+import com.l2jfree.gameserver.gameobjects.item.L2EquipableItem;
 
 /**
  * @author NB4L1
  */
-public abstract class ItemContainer implements IItemContainer
+public interface IPlayerInventory extends IInventory
 {
-	protected ItemContainer()
-	{
-	}
+	public L2EquipableItem getPaperDollItem(int slot);
 }

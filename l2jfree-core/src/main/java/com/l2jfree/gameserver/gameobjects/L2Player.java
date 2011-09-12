@@ -22,6 +22,7 @@ import com.l2jfree.gameserver.gameobjects.components.KnownListComponent;
 import com.l2jfree.gameserver.gameobjects.components.PositionComponent;
 import com.l2jfree.gameserver.gameobjects.components.StatComponent;
 import com.l2jfree.gameserver.gameobjects.components.ViewComponent;
+import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerInventory;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerStat;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerView;
 import com.l2jfree.gameserver.gameobjects.interfaces.IL2Playable;
@@ -204,6 +205,12 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 	}
 	
 	@Override
+	public PlayerPosition getPosition()
+	{
+		return (PlayerPosition)super.getPosition();
+	}
+	
+	@Override
 	public IPlayerStat getStat()
 	{
 		return (IPlayerStat)super.getStat();
@@ -213,6 +220,17 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 	public IPlayerView getView()
 	{
 		return (IPlayerView)super.getView();
+	}
+	
+	@Override
+	public IPlayerInventory getInventory()
+	{
+		return (IPlayerInventory)super.getInventory();
+	}
+	
+	public PlayerAppearance getAppearance()
+	{
+		return _appearance;
 	}
 	
 	@Override
@@ -274,17 +292,6 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 	public boolean isGM()
 	{
 		return false; // FIXME
-	}
-	
-	public PlayerAppearance getAppearance()
-	{
-		return _appearance;
-	}
-	
-	@Override
-	public PlayerPosition getPosition()
-	{
-		return (PlayerPosition)super.getPosition();
 	}
 	
 	public IL2Client getClient()

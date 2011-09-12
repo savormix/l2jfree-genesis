@@ -16,11 +16,13 @@ package com.l2jfree.gameserver.gameobjects.player;
 
 import com.l2jfree.gameserver.gameobjects.Inventory;
 import com.l2jfree.gameserver.gameobjects.L2Player;
+import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerInventory;
+import com.l2jfree.gameserver.gameobjects.item.L2EquipableItem;
 
 /**
  * @author NB4L1
  */
-public class PlayerInventory extends Inventory
+public class PlayerInventory extends Inventory implements IPlayerInventory
 {
 	public static enum PaperDollSlot
 	{
@@ -59,6 +61,8 @@ public class PlayerInventory extends Inventory
 		public static final int TOTAL_SLOTS = PaperDollSlot.values().length;
 	}
 	
+	private final L2EquipableItem[] _paperDollItems = new L2EquipableItem[PaperDollSlot.TOTAL_SLOTS];
+	
 	public PlayerInventory(L2Player activeChar)
 	{
 		super(activeChar);
@@ -68,5 +72,11 @@ public class PlayerInventory extends Inventory
 	public final L2Player getActiveChar()
 	{
 		return (L2Player)super.getActiveChar();
+	}
+	
+	@Override
+	public L2EquipableItem getPaperDollItem(int slot)
+	{
+		return _paperDollItems[slot];
 	}
 }

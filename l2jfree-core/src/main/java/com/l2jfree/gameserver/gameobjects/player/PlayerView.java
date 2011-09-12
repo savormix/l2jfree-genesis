@@ -21,8 +21,10 @@ import com.l2jfree.gameserver.gameobjects.CharacterStat.Element;
 import com.l2jfree.gameserver.gameobjects.CharacterView;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.gameobjects.ObjectPosition;
+import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerInventory;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerStat;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerView;
+import com.l2jfree.gameserver.gameobjects.item.L2EquipableItem;
 import com.l2jfree.gameserver.gameobjects.player.PlayerInventory.PaperDollSlot;
 import com.l2jfree.gameserver.templates.player.Gender;
 import com.l2jfree.gameserver.templates.player.PlayerBaseTemplate;
@@ -787,11 +789,12 @@ public class PlayerView extends CharacterView implements IPlayerView
 		final PlayerAppearance appearance = p.getAppearance();
 		final IPlayerStat stat = p.getStat();
 		final PlayerBaseTemplate baseTemplate = p.getTemplate().getPlayerBaseTemplate(appearance.getGender());
-		//final PlayerInventory inv = p.getInventory();
+		//final IPlayerInventory inv = p.getInventory();
 		//final L2Transformation transformation = p.getTransformation();
 		
 		refreshObjectId();
 		refreshPosition();
+		refreshPaperDoll();
 		
 		_vehicleObjectId = 0; // TODO
 		
@@ -979,19 +982,27 @@ public class PlayerView extends CharacterView implements IPlayerView
 	private final int[] _paperDollItemDisplayIds = new int[PaperDollSlot.TOTAL_SLOTS];
 	private final int[] _paperDollAugmentationIds = new int[PaperDollSlot.TOTAL_SLOTS];
 	
-	private int getPaperDollObjectId(int slot)
+	public void refreshPaperDoll()
 	{
-		return _paperDollObjectIds[slot];
-	}
-	
-	private int getPaperDollItemDisplayId(int slot)
-	{
-		return _paperDollItemDisplayIds[slot];
-	}
-	
-	private int getPaperDollAugmentationId(int slot)
-	{
-		return _paperDollAugmentationIds[slot];
+		final IPlayerInventory inv = getActiveChar().getInventory();
+		
+		for (int i = 0; i < PaperDollSlot.TOTAL_SLOTS; i++)
+		{
+			final L2EquipableItem equipableItem = inv.getPaperDollItem(i);
+			
+			if (equipableItem == null)
+			{
+				_paperDollObjectIds[i] = 0;
+				_paperDollItemDisplayIds[i] = 0;
+				_paperDollAugmentationIds[i] = 0;
+			}
+			else
+			{
+				_paperDollObjectIds[i] = equipableItem.getObjectId();
+				_paperDollItemDisplayIds[i] = equipableItem.getTemplate().getId(); // TODO
+				_paperDollAugmentationIds[i] = 0; // TODO
+			}
+		}
 	}
 	
 	// -- methods for convenience
@@ -1013,21 +1024,21 @@ public class PlayerView extends CharacterView implements IPlayerView
 	public void writePaperDollObjectIds(MMOBuffer buf, boolean withAccessory)
 	{
 		for (int slot : PlayerView.getSlots(withAccessory))
-			buf.writeD(getPaperDollObjectId(slot));
+			buf.writeD(_paperDollObjectIds[slot]);
 	}
 	
 	@Override
 	public void writePaperDollItemDisplayIds(MMOBuffer buf, boolean withAccessory)
 	{
 		for (int slot : PlayerView.getSlots(withAccessory))
-			buf.writeD(getPaperDollItemDisplayId(slot));
+			buf.writeD(_paperDollItemDisplayIds[slot]);
 	}
 	
 	@Override
 	public void writePaperDollAugmentationIds(MMOBuffer buf, boolean withAccessory)
 	{
 		for (int slot : PlayerView.getSlots(withAccessory))
-			buf.writeD(getPaperDollAugmentationId(slot));
+			buf.writeD(_paperDollAugmentationIds[slot]);
 	}
 	
 	@Override
