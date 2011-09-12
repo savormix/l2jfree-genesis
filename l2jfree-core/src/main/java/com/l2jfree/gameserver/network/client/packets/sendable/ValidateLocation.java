@@ -15,12 +15,14 @@
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
 import com.l2jfree.gameserver.gameobjects.L2Player;
+import com.l2jfree.gameserver.gameobjects.player.PlayerView;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
+ * @author hex1r0
  */
 public abstract class ValidateLocation extends L2ServerPacket
 {
@@ -32,35 +34,45 @@ public abstract class ValidateLocation extends L2ServerPacket
 	 */
 	public static final class UpdateLocation extends ValidateLocation
 	{
+		/** This packet. */
+		public static final UpdateLocation PACKET = new UpdateLocation();
+		
 		/**
 		 * Constructs this packet.
 		 * 
 		 * @see ValidateLocation#ValidateLocation()
 		 */
-		public UpdateLocation()
+		private UpdateLocation()
 		{
 		}
 	}
-
+	
 	/** Constructs this packet. */
 	public ValidateLocation()
 	{
 	}
-
+	
 	@Override
 	protected int getOpcode()
 	{
 		return 0x79;
 	}
-
+	
+	@Override
+	public void prepareToSend(L2Client client, L2Player activeChar)
+	{
+		activeChar.getView().refreshPosition();
+	}
+	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
-		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.writeD(0); // Actor OID
-		buf.writeD(0); // Location X
-		buf.writeD(0); // Location Y
-		buf.writeD(0); // Location Z
-		buf.writeD(0); // Heading
+		final PlayerView view = activeChar.getView();
+		
+		buf.writeD(view.getObjectId()); // Actor OID
+		buf.writeD(view.getX()); // Location X
+		buf.writeD(view.getY()); // Location Y
+		buf.writeD(view.getZ()); // Location Z
+		buf.writeD(view.getHeading()); // Heading
 	}
 }

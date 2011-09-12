@@ -99,7 +99,6 @@ public class StatusUpdate extends L2ServerPacket
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
-		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
 		buf.writeD(_objectId); // Actor OID
 		buf.writeD(_attributes.size()); // Update count
 		for (Attribute a : _attributes)

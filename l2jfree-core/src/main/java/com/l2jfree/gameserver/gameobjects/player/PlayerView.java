@@ -702,20 +702,16 @@ public final class PlayerView extends CharacterView
 	protected void refreshImpl()
 	{
 		final L2Player p = getActiveChar();
-		final ObjectPosition position = p.getPosition();
 		final PlayerAppearance appearance = p.getAppearance();
 		final PlayerStat stat = p.getStat();
 		final PlayerBaseTemplate baseTemplate = p.getTemplate().getPlayerBaseTemplate(appearance.getGender());
 		//final PlayerInventory inv = p.getInventory();
 		//final L2Transformation transformation = p.getTransformation();
 		
-		_x = position.getX();
-		_y = position.getY();
-		_z = position.getZ();
-		_heading = position.getHeading();
+		refreshObjectId();
+		refreshPosition();
 		
 		_vehicleObjectId = 0; // TODO
-		_objectId = p.getObjectId();
 		
 		_name = p.getName();
 		_title = p.getTitle();
@@ -876,6 +872,24 @@ public final class PlayerView extends CharacterView
 			_transformationGraphicalId = transformation.getGraphicalId();
 		else*/
 		_transformationGraphicalId = 0;
+	}
+	
+	// TODO actually this should never change during object life time
+	public void refreshObjectId()
+	{
+		_objectId = getActiveChar().getObjectId();
+	}
+	
+	public void refreshPosition()
+	{
+		refreshObjectId();
+		
+		final ObjectPosition position = getActiveChar().getPosition();
+		
+		_x = position.getX();
+		_y = position.getY();
+		_z = position.getZ();
+		_heading = position.getHeading();
 	}
 	
 	private final int[] _slotObjectIds = new int[CharInventory.TOTAL_SLOTS];
