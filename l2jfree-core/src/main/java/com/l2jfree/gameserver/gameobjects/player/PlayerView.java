@@ -14,19 +14,23 @@
  */
 package com.l2jfree.gameserver.gameobjects.player;
 
-import com.l2jfree.gameserver.gameobjects.CharInventory;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.l2jfree.gameserver.gameobjects.CharacterView;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.gameobjects.ObjectPosition;
+import com.l2jfree.gameserver.gameobjects.player.PlayerInventory.PaperDollSlot;
 import com.l2jfree.gameserver.templates.player.Gender;
 import com.l2jfree.gameserver.templates.player.PlayerBaseTemplate;
 import com.l2jfree.gameserver.templates.player.Race;
+import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author hex1r0
  * @author NB4L1
  */
-public final class PlayerView extends CharacterView
+public class PlayerView extends CharacterView
 {
 	private int _abnormalEffect;
 	private int _accuracy;
@@ -142,6 +146,12 @@ public final class PlayerView extends CharacterView
 		super(activeChar);
 	}
 	
+	@Override
+	public final L2Player getActiveChar()
+	{
+		return (L2Player)super.getActiveChar();
+	}
+	
 	public int canEquipCloak()
 	{
 		return _equipCloak;
@@ -165,12 +175,6 @@ public final class PlayerView extends CharacterView
 	public int getAccuracy()
 	{
 		return _accuracy;
-	}
-	
-	@Override
-	public L2Player getActiveChar()
-	{
-		return (L2Player)super.getActiveChar();
 	}
 	
 	public int getActiveClassId()
@@ -892,74 +896,114 @@ public final class PlayerView extends CharacterView
 		_heading = position.getHeading();
 	}
 	
-	private final int[] _slotObjectIds = new int[CharInventory.TOTAL_SLOTS];
-	private final int[] _slotItemDisplayIds = new int[CharInventory.TOTAL_SLOTS];
-	private final int[] _slotAugmentationIds = new int[CharInventory.TOTAL_SLOTS];
+	private final int[] _paperDollObjectIds = new int[PaperDollSlot.TOTAL_SLOTS];
+	private final int[] _paperDollItemDisplayIds = new int[PaperDollSlot.TOTAL_SLOTS];
+	private final int[] _paperDollAugmentationIds = new int[PaperDollSlot.TOTAL_SLOTS];
 	
-	public int getSlotObjectId(int slot)
+	private int getPaperDollObjectId(int slot)
 	{
-		return _slotObjectIds[slot];
+		return _paperDollObjectIds[slot];
 	}
 	
-	public int getSlotItemDisplayId(int slot)
+	private int getPaperDollItemDisplayId(int slot)
 	{
-		return _slotItemDisplayIds[slot];
+		return _paperDollItemDisplayIds[slot];
 	}
 	
-	public int getSlotAugmentationId(int slot)
+	private int getPaperDollAugmentationId(int slot)
 	{
-		return _slotAugmentationIds[slot];
+		return _paperDollAugmentationIds[slot];
+	}
+	
+	// -- methods for convenience 
+	
+	public void writeElements(MMOBuffer buf)
+	{
+		buf.writeH(getAttackElementType()); // Attack element
+		buf.writeH(getAttackElementPower()); // Attack element power
+		buf.writeH(getFireElementDefence()); // Fire defense
+		buf.writeH(getWaterElementDefence()); // Water defense
+		buf.writeH(getWindElementDefence()); // Wind defense
+		buf.writeH(getEarthElementDefence()); // Earth defense
+		buf.writeH(getHolyElementDefence()); // Holy defense
+		buf.writeH(getDarkElementDefence()); // Dark defense
+	}
+	
+	public void writePaperDollObjectIds(MMOBuffer buf, boolean withAccessory)
+	{
+		for (int slot : PlayerView.getSlots(withAccessory))
+			buf.writeD(getPaperDollObjectId(slot));
+	}
+	
+	public void writePaperDollItemDisplayIds(MMOBuffer buf, boolean withAccessory)
+	{
+		for (int slot : PlayerView.getSlots(withAccessory))
+			buf.writeD(getPaperDollItemDisplayId(slot));
+	}
+	
+	public void writePaperDollAugmentationIds(MMOBuffer buf, boolean withAccessory)
+	{
+		for (int slot : PlayerView.getSlots(withAccessory))
+			buf.writeD(getPaperDollAugmentationId(slot));
+	}
+	
+	public void writeCubics(MMOBuffer buf)
+	{
+		buf.writeH(getCubicData().length); // Cubic count
+		for (int cubic : getCubicData())
+			buf.writeH(cubic); // Cubic
 	}
 	
 	private static final int[] SLOTS_WITH_ACCESSORY = initSlots(true);
 	private static final int[] SLOTS_WITHOUT_ACCESSORY = initSlots(false);
 	
-	public static final int[] getSlots(boolean withAccessory)
+	private static int[] getSlots(boolean withAccessory)
 	{
 		return withAccessory ? SLOTS_WITH_ACCESSORY : SLOTS_WITHOUT_ACCESSORY;
 	}
 	
 	private static int[] initSlots(boolean withAccessory)
 	{
-		int i = 0;
-		int[] slots;
-		if (withAccessory)
-			slots = new int[26];
-		else
-			slots = new int[21];
+		final List<PaperDollSlot> slots = new ArrayList<PaperDollSlot>(withAccessory ? 26 : 21);
 		
-		slots[i++] = CharInventory.SLOT_UNDER;
+		slots.add(PaperDollSlot.UNDER);
 		
 		if (withAccessory)
 		{
-			slots[i++] = CharInventory.SLOT_R_EAR;
-			slots[i++] = CharInventory.SLOT_L_EAR;
-			slots[i++] = CharInventory.SLOT_NECK;
-			slots[i++] = CharInventory.SLOT_R_FINGER;
-			slots[i++] = CharInventory.SLOT_L_FINGER;
+			slots.add(PaperDollSlot.R_EAR);
+			slots.add(PaperDollSlot.L_EAR);
+			slots.add(PaperDollSlot.NECK);
+			slots.add(PaperDollSlot.R_FINGER);
+			slots.add(PaperDollSlot.L_FINGER);
 		}
 		
-		slots[i++] = CharInventory.SLOT_HEAD;
-		slots[i++] = CharInventory.SLOT_R_HAND;
-		slots[i++] = CharInventory.SLOT_L_HAND;
-		slots[i++] = CharInventory.SLOT_GLOVES;
-		slots[i++] = CharInventory.SLOT_CHEST;
-		slots[i++] = CharInventory.SLOT_LEGS;
-		slots[i++] = CharInventory.SLOT_FEET;
-		slots[i++] = CharInventory.SLOT_CLOAK;
-		slots[i++] = CharInventory.SLOT_L_R_HAND;
-		slots[i++] = CharInventory.SLOT_HAIR_1;
-		slots[i++] = CharInventory.SLOT_HAIR_2;
-		slots[i++] = CharInventory.SLOT_R_BRACELET;
-		slots[i++] = CharInventory.SLOT_L_BRACELET;
-		slots[i++] = CharInventory.SLOT_TALISMAN_1;
-		slots[i++] = CharInventory.SLOT_TALISMAN_2;
-		slots[i++] = CharInventory.SLOT_TALISMAN_3;
-		slots[i++] = CharInventory.SLOT_TALISMAN_4;
-		slots[i++] = CharInventory.SLOT_TALISMAN_5;
-		slots[i++] = CharInventory.SLOT_TALISMAN_6;
-		slots[i++] = CharInventory.SLOT_BELT;
+		slots.add(PaperDollSlot.HEAD);
+		slots.add(PaperDollSlot.R_HAND);
+		slots.add(PaperDollSlot.L_HAND);
+		slots.add(PaperDollSlot.GLOVES);
+		slots.add(PaperDollSlot.CHEST);
+		slots.add(PaperDollSlot.LEGS);
+		slots.add(PaperDollSlot.FEET);
+		slots.add(PaperDollSlot.CLOAK);
+		slots.add(PaperDollSlot.L_R_HAND);
+		slots.add(PaperDollSlot.HAIR_1);
+		slots.add(PaperDollSlot.HAIR_2);
+		slots.add(PaperDollSlot.R_BRACELET);
+		slots.add(PaperDollSlot.L_BRACELET);
+		slots.add(PaperDollSlot.TALISMAN_1);
+		slots.add(PaperDollSlot.TALISMAN_2);
+		slots.add(PaperDollSlot.TALISMAN_3);
+		slots.add(PaperDollSlot.TALISMAN_4);
+		slots.add(PaperDollSlot.TALISMAN_5);
+		slots.add(PaperDollSlot.TALISMAN_6);
+		slots.add(PaperDollSlot.BELT);
 		
-		return slots;
+		final int[] indexes = new int[slots.size()];
+		
+		int i = 0;
+		for (PaperDollSlot slot : slots)
+			indexes[i++] = slot.ordinal();
+		
+		return indexes;
 	}
 }

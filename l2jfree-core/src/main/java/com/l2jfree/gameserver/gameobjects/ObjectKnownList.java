@@ -64,7 +64,7 @@ public class ObjectKnownList implements IObjectKnownList
 		return object != null && (_activeChar == object || _knownObjects.containsKey(object.getObjectId()));
 	}
 	
-	protected final boolean addObject(L2Object obj)
+	protected boolean addObject(L2Object obj)
 	{
 		if (obj == null || obj == _activeChar)
 			return false;
@@ -81,7 +81,7 @@ public class ObjectKnownList implements IObjectKnownList
 	}
 	
 	@Override
-	public final boolean removeObject(L2Object obj)
+	public boolean removeObject(L2Object obj)
 	{
 		if (obj == null || obj == _activeChar)
 			return false;
@@ -164,7 +164,7 @@ public class ObjectKnownList implements IObjectKnownList
 	}
 	
 	@Override
-	public final void removeAllKnownObjects()
+	public void removeAllKnownObjects()
 	{
 		for (L2Object obj : _knownObjects.values())
 			removeObject(obj);

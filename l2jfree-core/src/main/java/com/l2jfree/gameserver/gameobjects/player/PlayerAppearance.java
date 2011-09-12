@@ -22,7 +22,7 @@ import com.l2jfree.gameserver.templates.player.Gender;
  * @author NB4L1
  */
 // TODO sql
-public final class PlayerAppearance
+public class PlayerAppearance
 {
 	private final L2Player _activeChar;
 	

@@ -97,9 +97,9 @@ public abstract class UserInfo extends StaticPacket
 		buf.writeD(view.getMaxCarriedWeight()); // Maximum carried weight
 		buf.writeD(view.getWeaponStatus()); // Weapon status
 		
-		writeSlotObjectIds(view, true, buf);
-		writeSlotItemDisplayIds(view, true, buf);
-		writeSlotAugmentationIds(view, true, buf);
+		view.writePaperDollObjectIds(buf, true);
+		view.writePaperDollItemDisplayIds(buf, true);
+		view.writePaperDollAugmentationIds(buf, true);
 		
 		buf.writeD(view.getMaxTalismanSlots()); // Talisman slots
 		buf.writeD(view.canEquipCloak()); // Can equip cloak
@@ -143,7 +143,7 @@ public abstract class UserInfo extends StaticPacket
 		buf.writeD(view.getPkCount()); // PK Count
 		buf.writeD(view.getPvPCount()); // PvP Count
 		
-		writeCubics(view, buf);
+		view.writeCubics(buf);
 		
 		buf.writeC(view.isLookingForParty()); // Looking for party
 		buf.writeD(view.getAbnormalEffect()); // Abnormal effect
@@ -174,7 +174,7 @@ public abstract class UserInfo extends StaticPacket
 		buf.writeD(view.getCursedWeaponLevel()); // Cursed weapon level
 		buf.writeD(view.getTransformationGraphicalId()); // Transformation
 		
-		writeElements(view, buf);
+		view.writeElements(buf);
 		
 		buf.writeD(view.getAgathionId()); // Agathion
 		buf.writeD(view.getFamePoints()); // Fame

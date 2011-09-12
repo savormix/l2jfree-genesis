@@ -22,7 +22,7 @@ import com.l2jfree.gameserver.gameobjects.L2Player;
  * @author NB4L1
  */
 @SuppressWarnings({ "unused", "static-method" })
-public final class PlayerStat extends CharacterStat
+public class PlayerStat extends CharacterStat
 {
 	public PlayerStat(L2Player activeChar)
 	{
@@ -30,7 +30,7 @@ public final class PlayerStat extends CharacterStat
 	}
 	
 	@Override
-	public L2Player getActiveChar()
+	public final L2Player getActiveChar()
 	{
 		return (L2Player)super.getActiveChar();
 	}

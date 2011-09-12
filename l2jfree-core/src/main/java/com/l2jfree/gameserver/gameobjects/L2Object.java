@@ -58,7 +58,7 @@ public abstract class L2Object implements IL2Object
 	}
 	
 	@Override
-	public final ObjectPosition getPosition()
+	public ObjectPosition getPosition()
 	{
 		return _position;
 	}
@@ -82,7 +82,7 @@ public abstract class L2Object implements IL2Object
 	public abstract void setName(String name);
 	
 	@Override
-	public final String toString()
+	public String toString()
 	{
 		final L2TextBuilder tb = new L2TextBuilder();
 		tb.append("(");

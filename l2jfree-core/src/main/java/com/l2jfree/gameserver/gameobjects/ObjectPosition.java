@@ -21,7 +21,7 @@ import com.l2jfree.lang.L2Math;
 /**
  * @author NB4L1
  */
-public final class ObjectPosition
+public class ObjectPosition
 {
 	private final L2Object _activeChar;
 	
@@ -38,7 +38,7 @@ public final class ObjectPosition
 		_activeChar = activeChar;
 	}
 	
-	public final L2Object getActiveChar()
+	public L2Object getActiveChar()
 	{
 		return _activeChar;
 	}
@@ -68,14 +68,14 @@ public final class ObjectPosition
 		return _worldRegion;
 	}
 	
-	public final synchronized void setXYZ(int x, int y, int z)
+	public synchronized void setXYZ(int x, int y, int z)
 	{
 		_x = L2Math.limit(L2World.MAP_MIN_X + 500, x, L2World.MAP_MAX_X - 500);
 		_y = L2Math.limit(L2World.MAP_MIN_Y + 500, y, L2World.MAP_MAX_Y - 500);
 		_z = L2Math.limit(L2World.MAP_MIN_Z + 500, z, L2World.MAP_MAX_Z - 500);
 	}
 	
-	public final synchronized void setHeading(int heading)
+	public synchronized void setHeading(int heading)
 	{
 		_heading = heading;
 	}
@@ -85,13 +85,13 @@ public final class ObjectPosition
 		return _worldRegion != null;
 	}
 	
-	private final synchronized void setVisible(boolean visible)
+	protected synchronized boolean setVisible(boolean visible)
 	{
 		final L2WorldRegion oldRegion = _worldRegion;
 		final L2WorldRegion newRegion = visible ? L2World.getRegion(_x, _y) : null;
 		
 		if (oldRegion == newRegion)
-			return;
+			return false;
 		
 		if (oldRegion != null)
 			oldRegion.removeVisibleObject(_activeChar);
@@ -100,6 +100,8 @@ public final class ObjectPosition
 		
 		if (newRegion != null)
 			newRegion.addVisibleObject(_activeChar);
+		
+		return true;
 	}
 	
 	public final synchronized void update(int x, int y, int z)
@@ -147,7 +149,7 @@ public final class ObjectPosition
 	 * @see ObjectPosition#update(int, int, int)
 	 * @see ObjectPosition#spawn(int, int, int)
 	 */
-	public final void worldRegionActivated()
+	public void worldRegionActivated()
 	{
 		// do nothing at default
 	}
@@ -158,7 +160,7 @@ public final class ObjectPosition
 	 * @see ObjectPosition#update(int, int, int)
 	 * @see ObjectPosition#decay(int, int, int)
 	 */
-	public final void worldRegionDeactivated()
+	public void worldRegionDeactivated()
 	{
 		// do nothing at default
 	}

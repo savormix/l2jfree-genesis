@@ -22,7 +22,7 @@ import com.l2jfree.gameserver.gameobjects.ObjectKnownList;
 /**
  * @author NB4L1
  */
-public final class PlayerKnownList extends ObjectKnownList
+public class PlayerKnownList extends ObjectKnownList
 {
 	public PlayerKnownList(L2Player activeChar)
 	{
@@ -30,7 +30,7 @@ public final class PlayerKnownList extends ObjectKnownList
 	}
 	
 	@Override
-	public L2Player getActiveChar()
+	public final L2Player getActiveChar()
 	{
 		return (L2Player)super.getActiveChar();
 	}

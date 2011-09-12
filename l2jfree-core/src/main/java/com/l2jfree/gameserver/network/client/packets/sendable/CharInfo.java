@@ -80,9 +80,9 @@ public abstract class CharInfo extends L2ServerPacket
 		buf.writeD(view.getGender()); // Sex
 		buf.writeD(view.getMainClassId()); // Main class
 		
-		writeSlotObjectIds(view, true, buf);
-		writeSlotItemDisplayIds(view, true, buf);
-		writeSlotAugmentationIds(view, true, buf);
+		view.writePaperDollObjectIds(buf, true);
+		view.writePaperDollItemDisplayIds(buf, true);
+		view.writePaperDollAugmentationIds(buf, true);
 		
 		buf.writeD(view.getMaxTalismanSlots()); // Talisman slots
 		buf.writeD(view.canEquipCloak()); // Can equip cloak
@@ -119,7 +119,7 @@ public abstract class CharInfo extends L2ServerPacket
 		buf.writeC(view.getMountType()); // Mount type
 		buf.writeC(view.getPrivateStoreType()); // Private store
 		
-		writeCubics(view, buf);
+		view.writeCubics(buf);
 		
 		buf.writeC(view.isLookingForParty()); // Looking for party
 		buf.writeD(view.getAbnormalEffect()); // Abnormal effect
