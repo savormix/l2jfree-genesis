@@ -21,7 +21,7 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * Sent in response to
- * {@link com.l2jfree.gameserver.network.client.packets.receivable.old.RequestRestart}.
+ * {@link com.l2jfree.gameserver.network.client.packets.receivable.RequestRestart}.
  * 
  * @author savormix
  */
