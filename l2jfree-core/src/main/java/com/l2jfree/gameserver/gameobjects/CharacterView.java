@@ -14,11 +14,13 @@
  */
 package com.l2jfree.gameserver.gameobjects;
 
+import com.l2jfree.gameserver.gameobjects.components.IComponent;
+
 /**
  * @author hex1r0
  * @author NB4L1
  */
-public abstract class CharacterView
+public abstract class CharacterView implements IComponent
 {
 	private final L2Character _activeChar;
 	

@@ -30,7 +30,7 @@ import com.l2jfree.gameserver.gameobjects.ObjectPosition;
  */
 // TODO implement more features, use annotations, optimize performance
 @SuppressWarnings("unchecked")
-public abstract class ComponentFactory<T>
+public abstract class ComponentFactory<T extends IComponent>
 {
 	public static final ComponentFactory<ObjectPosition> POSITION = new ComponentFactory<ObjectPosition>() {
 		@Override

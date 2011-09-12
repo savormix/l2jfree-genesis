@@ -15,6 +15,7 @@
 package com.l2jfree.gameserver.gameobjects.player;
 
 import com.l2jfree.gameserver.gameobjects.L2Player;
+import com.l2jfree.gameserver.gameobjects.components.IComponent;
 import com.l2jfree.gameserver.sql.PlayerDB;
 import com.l2jfree.gameserver.templates.player.Gender;
 
@@ -22,7 +23,7 @@ import com.l2jfree.gameserver.templates.player.Gender;
  * @author NB4L1
  */
 // TODO sql
-public class PlayerAppearance
+public class PlayerAppearance implements IComponent
 {
 	private final L2Player _activeChar;
 	

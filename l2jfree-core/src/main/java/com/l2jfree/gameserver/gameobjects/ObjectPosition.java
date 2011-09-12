@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.gameobjects;
 
+import com.l2jfree.gameserver.gameobjects.components.IComponent;
 import com.l2jfree.gameserver.world.L2World;
 import com.l2jfree.gameserver.world.L2WorldRegion;
 import com.l2jfree.lang.L2Math;
@@ -21,7 +22,7 @@ import com.l2jfree.lang.L2Math;
 /**
  * @author NB4L1
  */
-public class ObjectPosition
+public class ObjectPosition implements IComponent
 {
 	private final L2Object _activeChar;
 	

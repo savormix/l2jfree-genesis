@@ -16,10 +16,12 @@ package com.l2jfree.gameserver.gameobjects;
 
 import java.util.Collection;
 
+import com.l2jfree.gameserver.gameobjects.components.IComponent;
+
 /**
  * @author NB4L1
  */
-public interface IObjectKnownList
+public interface IObjectKnownList extends IComponent
 {
 	public Collection<L2Object> getKnownObjects();
 	
