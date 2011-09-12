@@ -36,6 +36,6 @@ public final class ItemFactory
 		if (equipable)
 			return new L2EquipableItem(objectId, template);
 		
-		return new L2SingleItem(objectId, template);
+		return new L2SingularItem(objectId, template);
 	}
 }

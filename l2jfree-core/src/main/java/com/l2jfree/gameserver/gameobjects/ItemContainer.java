@@ -24,7 +24,7 @@ import javolution.util.FastList;
 import javolution.util.FastMap;
 
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IItemContainer;
-import com.l2jfree.gameserver.gameobjects.item.L2SingleItem;
+import com.l2jfree.gameserver.gameobjects.item.L2SingularItem;
 import com.l2jfree.gameserver.gameobjects.item.L2StackableItem;
 import com.l2jfree.util.L2Collections;
 
@@ -35,7 +35,8 @@ public abstract class ItemContainer implements IItemContainer
 {
 	private final Map<Integer, L2Item> _itemsByObjectId = new FastMap<Integer, L2Item>();
 	private final Map<Integer, L2StackableItem> _stackableItemsByItemId = new FastMap<Integer, L2StackableItem>();
-	private final Map<Integer, List<L2SingleItem>> _singleItemsByItemId = new FastMap<Integer, List<L2SingleItem>>();
+	private final Map<Integer, List<L2SingularItem>> _singularItemsByItemId =
+			new FastMap<Integer, List<L2SingularItem>>();
 	
 	private final ReentrantLock _lock = new ReentrantLock();
 	
@@ -66,12 +67,12 @@ public abstract class ItemContainer implements IItemContainer
 			if (stackableItem != null)
 				return stackableItem;
 			
-			final List<L2SingleItem> singleItemsByItemId = _singleItemsByItemId.get(itemId);
+			final List<L2SingularItem> singularItemsByItemId = _singularItemsByItemId.get(itemId);
 			
-			if (singleItemsByItemId == null || singleItemsByItemId.isEmpty())
+			if (singularItemsByItemId == null || singularItemsByItemId.isEmpty())
 				return null;
 			
-			return singleItemsByItemId.get(0);
+			return singularItemsByItemId.get(0);
 		}
 		finally
 		{
@@ -92,17 +93,17 @@ public abstract class ItemContainer implements IItemContainer
 		}
 	}
 	
-	public final L2SingleItem getSingleItemByItemId(int itemId)
+	public final L2SingularItem getSingularItemByItemId(int itemId)
 	{
 		_lock.lock();
 		try
 		{
-			final List<L2SingleItem> singleItemsByItemId = _singleItemsByItemId.get(itemId);
+			final List<L2SingularItem> singularItemsByItemId = _singularItemsByItemId.get(itemId);
 			
-			if (singleItemsByItemId == null || singleItemsByItemId.isEmpty())
+			if (singularItemsByItemId == null || singularItemsByItemId.isEmpty())
 				return null;
 			
-			return singleItemsByItemId.get(0);
+			return singularItemsByItemId.get(0);
 		}
 		finally
 		{
@@ -120,15 +121,15 @@ public abstract class ItemContainer implements IItemContainer
 			if (stackableItem != null)
 				return Arrays.asList((L2Item)stackableItem);
 			
-			final List<L2SingleItem> singleItemsByItemId = _singleItemsByItemId.get(itemId);
+			final List<L2SingularItem> singularItemsByItemId = _singularItemsByItemId.get(itemId);
 			
-			if (singleItemsByItemId == null || singleItemsByItemId.isEmpty())
+			if (singularItemsByItemId == null || singularItemsByItemId.isEmpty())
 				return L2Collections.emptyList();
 			
-			if (singleItemsByItemId.size() <= 8)
-				return new CopyOnWriteArrayList<L2Item>(singleItemsByItemId);
+			if (singularItemsByItemId.size() <= 8)
+				return new CopyOnWriteArrayList<L2Item>(singularItemsByItemId);
 			else
-				return new FastList<L2Item>(singleItemsByItemId);
+				return new FastList<L2Item>(singularItemsByItemId);
 		}
 		finally
 		{
@@ -136,20 +137,20 @@ public abstract class ItemContainer implements IItemContainer
 		}
 	}
 	
-	public final List<L2SingleItem> getSingleItemsByItemId(int itemId)
+	public final List<L2SingularItem> getSingularItemsByItemId(int itemId)
 	{
 		_lock.lock();
 		try
 		{
-			final List<L2SingleItem> singleItemsByItemId = _singleItemsByItemId.get(itemId);
+			final List<L2SingularItem> singularItemsByItemId = _singularItemsByItemId.get(itemId);
 			
-			if (singleItemsByItemId == null || singleItemsByItemId.isEmpty())
+			if (singularItemsByItemId == null || singularItemsByItemId.isEmpty())
 				return L2Collections.emptyList();
 			
-			if (singleItemsByItemId.size() <= 8)
-				return new CopyOnWriteArrayList<L2SingleItem>(singleItemsByItemId);
+			if (singularItemsByItemId.size() <= 8)
+				return new CopyOnWriteArrayList<L2SingularItem>(singularItemsByItemId);
 			else
-				return new FastList<L2SingleItem>(singleItemsByItemId);
+				return new FastList<L2SingularItem>(singularItemsByItemId);
 		}
 		finally
 		{

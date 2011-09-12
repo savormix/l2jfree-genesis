@@ -20,9 +20,9 @@ import com.l2jfree.gameserver.templates.L2ItemTemplate;
 /**
  * @author NB4L1
  */
-public class L2SingleItem extends L2Item
+public class L2SingularItem extends L2Item
 {
-	protected L2SingleItem(int objectId, L2ItemTemplate template)
+	protected L2SingularItem(int objectId, L2ItemTemplate template)
 	{
 		super(objectId, template);
 	}

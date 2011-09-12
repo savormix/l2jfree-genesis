@@ -19,7 +19,7 @@ import com.l2jfree.gameserver.templates.L2ItemTemplate;
 /**
  * @author NB4L1
  */
-public final class L2EquipableItem extends L2SingleItem
+public final class L2EquipableItem extends L2SingularItem
 {
 	// TODO
 	private int _enchantLevel;
