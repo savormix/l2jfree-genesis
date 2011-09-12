@@ -28,14 +28,7 @@ public class RequestExAgitListForBid extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0xd0;
 	/** Additional packet's identifiers */
-	public static final int[] EXT_OPCODES = {
-		0x83,
-		0x00,
-		0x14,
-		0x00,
-		0x00,
-		0x00,
-	};
+	public static final int[] EXT_OPCODES = { 0x83, 0x00, 0x14, 0x00, 0x00, 0x00, };
 	/** Second packet's identifier */
 	public static final int OPCODE_2 = 0x83;
 	/** Third packet's identifier */
