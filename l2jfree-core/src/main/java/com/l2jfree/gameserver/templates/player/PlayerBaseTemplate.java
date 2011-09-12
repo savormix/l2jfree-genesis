@@ -25,6 +25,7 @@ public final class PlayerBaseTemplate
 	
 	private double _collisionRadius;
 	private double _collisionHeight;
+	
 	private int _runSpeed;
 	private int _walkSpeed;
 	private int _runSpeedInWater;
@@ -38,6 +39,13 @@ public final class PlayerBaseTemplate
 	private int _breath;
 	private int _safeFallHeight;
 	private int _jump;
+	
+	private int _str;
+	private int _dex;
+	private int _con;
+	private int _int;
+	private int _wit;
+	private int _men;
 	
 	public PlayerBaseTemplate(Race race, ClassType type, Gender gender)
 	{
@@ -209,5 +217,65 @@ public final class PlayerBaseTemplate
 	public void setJump(int jump)
 	{
 		_jump = jump;
+	}
+	
+	public int getSTR()
+	{
+		return _str;
+	}
+	
+	public int getDEX()
+	{
+		return _dex;
+	}
+	
+	public int getCON()
+	{
+		return _con;
+	}
+	
+	public int getINT()
+	{
+		return _int;
+	}
+	
+	public int getWIT()
+	{
+		return _wit;
+	}
+	
+	public int getMEN()
+	{
+		return _men;
+	}
+	
+	public void setSTR(int value)
+	{
+		_str = value;
+	}
+	
+	public void setDEX(int value)
+	{
+		_dex = value;
+	}
+	
+	public void setCON(int value)
+	{
+		_con = value;
+	}
+	
+	public void setINT(int value)
+	{
+		_int = value;
+	}
+	
+	public void setWIT(int value)
+	{
+		_wit = value;
+	}
+	
+	public void setMEN(int value)
+	{
+		_men = value;
 	}
 }
