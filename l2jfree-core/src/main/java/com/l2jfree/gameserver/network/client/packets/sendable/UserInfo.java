@@ -96,84 +96,11 @@ public abstract class UserInfo extends StaticPacket
 		buf.writeD(view.getCarriedWeight()); // Current carried weight
 		buf.writeD(view.getMaxCarriedWeight()); // Maximum carried weight
 		buf.writeD(view.getWeaponStatus()); // Weapon status
-		buf.writeD(0); // Shirt OID
-		buf.writeD(0); // Right earring OID
-		buf.writeD(0); // Left earring OID
-		buf.writeD(0); // Necklace OID
-		buf.writeD(0); // Right ring OID
-		buf.writeD(0); // Left ring OID
-		buf.writeD(0); // Helmet OID
-		buf.writeD(0); // Main weapon OID
-		buf.writeD(0); // Shield/support weapon OID
-		buf.writeD(0); // Gloves OID
-		buf.writeD(0); // Chest armor OID
-		buf.writeD(0); // Leg armor OID
-		buf.writeD(0); // Boots OID
-		buf.writeD(0); // Cloak OID
-		buf.writeD(0); // Two-handed weapon OID
-		buf.writeD(0); // 1st hair item OID
-		buf.writeD(0); // 2nd hair item OID
-		buf.writeD(0); // Right bracelet OID
-		buf.writeD(0); // Left bracelet OID
-		buf.writeD(0); // 1st talisman OID
-		buf.writeD(0); // 2nd talisman OID
-		buf.writeD(0); // 3rd talisman OID
-		buf.writeD(0); // 4th talisman OID
-		buf.writeD(0); // 5th talisman OID
-		buf.writeD(0); // 6th talisman OID
-		buf.writeD(0); // Belt OID
-		buf.writeD(0); // Shirt
-		buf.writeD(0); // Right earring
-		buf.writeD(0); // Left earring
-		buf.writeD(0); // Necklace
-		buf.writeD(0); // Right ring
-		buf.writeD(0); // Left ring
-		buf.writeD(0); // Helmet
-		buf.writeD(0); // Main weapon
-		buf.writeD(0); // Shield/support weapon
-		buf.writeD(0); // Gloves
-		buf.writeD(0); // Chest armor
-		buf.writeD(0); // Leg armor
-		buf.writeD(0); // Boots
-		buf.writeD(0); // Cloak
-		buf.writeD(0); // Two-handed weapon
-		buf.writeD(0); // 1st hair item
-		buf.writeD(0); // 2nd hair item
-		buf.writeD(0); // Right bracelet
-		buf.writeD(0); // Left bracelet
-		buf.writeD(0); // 1st talisman
-		buf.writeD(0); // 2nd talisman
-		buf.writeD(0); // 3rd talisman
-		buf.writeD(0); // 4th talisman
-		buf.writeD(0); // 5th talisman
-		buf.writeD(0); // 6th talisman
-		buf.writeD(0); // Belt
-		buf.writeD(0); // Shirt augmentation
-		buf.writeD(0); // Right earring augmentation
-		buf.writeD(0); // Left earring augmentation
-		buf.writeD(0); // Necklace augmentation
-		buf.writeD(0); // Right ring augmentation
-		buf.writeD(0); // Left ring augmentation
-		buf.writeD(0); // Helmet augmentation
-		buf.writeD(0); // Main weapon augmentation
-		buf.writeD(0); // Shield/support weapon augmentation
-		buf.writeD(0); // Gloves augmentation
-		buf.writeD(0); // Chest armor augmentation
-		buf.writeD(0); // Leg armor augmentation
-		buf.writeD(0); // Boots augmentation
-		buf.writeD(0); // Cloak augmentation
-		buf.writeD(0); // Two-handed weapon augmentation
-		buf.writeD(0); // 1st hair item augmentation
-		buf.writeD(0); // 2nd hair item augmentation
-		buf.writeD(0); // Right bracelet augmentation
-		buf.writeD(0); // Left bracelet augmentation
-		buf.writeD(0); // 1st talisman augmentation
-		buf.writeD(0); // 2nd talisman augmentation
-		buf.writeD(0); // 3rd talisman augmentation
-		buf.writeD(0); // 4th talisman augmentation
-		buf.writeD(0); // 5th talisman augmentation
-		buf.writeD(0); // 6th talisman augmentation
-		buf.writeD(0); // Belt augmentation
+		
+		writeSlotObjectIds(view, true, buf);
+		writeSlotItemDisplayIds(view, true, buf);
+		writeSlotAugmentationIds(view, true, buf);
+		
 		buf.writeD(view.getMaxTalismanSlots()); // Talisman slots
 		buf.writeD(view.canEquipCloak()); // Can equip cloak
 		buf.writeD(view.getPAtk()); // P. Atk.
@@ -215,12 +142,9 @@ public abstract class UserInfo extends StaticPacket
 		buf.writeC(view.canUseDwarvenRecipes()); // Can use dwarven recipes
 		buf.writeD(view.getPkCount()); // PK Count
 		buf.writeD(view.getPvPCount()); // PvP Count
-		final int sizeA = 0; // Cubic count
-		buf.writeH(sizeA);
-		for (int i = 0; i < sizeA; i++)
-		{
-			buf.writeH(0); // Cubic
-		}
+		
+		writeCubics(view, buf);
+		
 		buf.writeC(view.isLookingForParty()); // Looking for party
 		buf.writeD(view.getAbnormalEffect()); // Abnormal effect
 		buf.writeC(view.isFlyingMounted()); // Flying with mount
@@ -249,14 +173,9 @@ public abstract class UserInfo extends StaticPacket
 		buf.writeD(view.getTitleColor()); // Title color
 		buf.writeD(view.getCursedWeaponLevel()); // Cursed weapon level
 		buf.writeD(view.getTransformationGraphicalId()); // Transformation
-		buf.writeH(0); // Attack element
-		buf.writeH(0); // Attack element power
-		buf.writeH(0); // Fire defense
-		buf.writeH(0); // Water defense
-		buf.writeH(0); // Wind defense
-		buf.writeH(0); // Earth defense
-		buf.writeH(0); // Holy defense
-		buf.writeH(0); // Dark defense
+		
+		writeElements(view, buf);
+		
 		buf.writeD(view.getAgathionId()); // Agathion
 		buf.writeD(view.getFamePoints()); // Fame
 		buf.writeD(view.canUseMinimap()); // Can use minimap

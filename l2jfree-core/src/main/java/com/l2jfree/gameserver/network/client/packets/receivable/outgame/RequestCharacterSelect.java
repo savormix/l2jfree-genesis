@@ -31,7 +31,9 @@ import com.l2jfree.util.Rnd;
  */
 public class RequestCharacterSelect extends L2ClientPacket
 {
+	/** Packet's identifier */
 	public static final int OPCODE = 0x12;
+	
 	private int _charSlot;
 	
 	@Override

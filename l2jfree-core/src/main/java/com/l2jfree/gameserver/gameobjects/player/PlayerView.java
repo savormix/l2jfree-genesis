@@ -15,6 +15,7 @@
 package com.l2jfree.gameserver.gameobjects.player;
 
 import com.l2jfree.gameserver.gameobjects.CharacterView;
+import com.l2jfree.gameserver.gameobjects.Inventory;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.gameobjects.ObjectPosition;
 import com.l2jfree.gameserver.templates.player.Gender;
@@ -770,8 +771,8 @@ public final class PlayerView extends CharacterView
 		_hairStyle = appearance.getHairStyle(); // Hair style
 		_hairColor = appearance.getHairColor(); // Hair color
 		_face = appearance.getFace(); // Face
-		_nameColor = 0; // appearance.getNameColor(); TODO
-		_titleColor = 0; // appearance.getTitleColor(); TODO
+		_nameColor = appearance.getNameColor();
+		_titleColor = appearance.getTitleColor();
 		_specialEffect = 0;//getSpecialEffect(); // Special effect
 		_cubics = new int[0]; //getCubicData()
 		
@@ -851,5 +852,76 @@ public final class PlayerView extends CharacterView
 			_transformationGraphicalId = transformation.getGraphicalId();
 		else*/
 		_transformationGraphicalId = 0;
+	}
+	
+	private final int[] _slotObjectIds = new int[31];
+	private final int[] _slotItemDisplayIds = new int[31];
+	private final int[] _slotAugmentationIds = new int[31];
+	
+	public int getSlotObjectId(int slot)
+	{
+		return _slotObjectIds[slot];
+	}
+	
+	public int getSlotItemDisplayId(int slot)
+	{
+		return _slotItemDisplayIds[slot];
+	}
+	
+	public int getSlotAugmentationId(int slot)
+	{
+		return _slotAugmentationIds[slot];
+	}
+	
+	private static final int[] SLOTS_WITH_ACCESSORY = initSlots(true);
+	private static final int[] SLOTS_WITHOUT_ACCESSORY = initSlots(false);
+	
+	public static final int[] getSlots(boolean withAccessory)
+	{
+		return withAccessory ? SLOTS_WITH_ACCESSORY : SLOTS_WITHOUT_ACCESSORY;
+	}
+	
+	private static int[] initSlots(boolean withAccessory)
+	{
+		int i = 0;
+		int[] slots;
+		if (withAccessory)
+			slots = new int[26];
+		else
+			slots = new int[21];
+		
+		slots[i++] = Inventory.SLOT_UNDER;
+		
+		if (withAccessory)
+		{
+			slots[i++] = Inventory.SLOT_R_EAR;
+			slots[i++] = Inventory.SLOT_L_EAR;
+			slots[i++] = Inventory.SLOT_NECK;
+			slots[i++] = Inventory.SLOT_R_FINGER;
+			slots[i++] = Inventory.SLOT_L_FINGER;
+		}
+		
+		slots[i++] = Inventory.SLOT_HEAD;
+		slots[i++] = Inventory.SLOT_R_HAND;
+		slots[i++] = Inventory.SLOT_L_HAND;
+		slots[i++] = Inventory.SLOT_GLOVES;
+		slots[i++] = Inventory.SLOT_CHEST;
+		slots[i++] = Inventory.SLOT_LEGS;
+		slots[i++] = Inventory.SLOT_FEET;
+		slots[i++] = Inventory.SLOT_CLOAK;
+		slots[i++] = Inventory.SLOT_L_R_HAND;
+		slots[i++] = Inventory.SLOT_HAIR_1;
+		slots[i++] = Inventory.SLOT_HAIR_2;
+		slots[i++] = Inventory.SLOT_R_BRACELET;
+		slots[i++] = Inventory.SLOT_L_BRACELET;
+		slots[i++] = Inventory.SLOT_TALISMAN_1;
+		slots[i++] = Inventory.SLOT_TALISMAN_2;
+		slots[i++] = Inventory.SLOT_TALISMAN_3;
+		slots[i++] = Inventory.SLOT_TALISMAN_4;
+		slots[i++] = Inventory.SLOT_TALISMAN_5;
+		slots[i++] = Inventory.SLOT_TALISMAN_6;
+		slots[i++] = Inventory.SLOT_BELT;
+		
+		return slots;
 	}
 }

@@ -38,7 +38,7 @@ public final class PlayerBaseTemplate
 	private int _breath;
 	private int _safeFallHeight;
 	private int _jump;
-
+	
 	public PlayerBaseTemplate(Race race, ClassType type, Gender gender)
 	{
 		_race = race;
@@ -120,47 +120,42 @@ public final class PlayerBaseTemplate
 	{
 		_walkSpeedInWater = walkSpeedInWater;
 	}
-
+	
 	public int getWalkSpeedFlying()
 	{
 		return _walkSpeedFlying;
 	}
-
+	
 	public void setWalkSpeedFlying(int walkSpeedFlying)
 	{
 		_walkSpeedFlying = walkSpeedFlying;
 	}
-
+	
 	public int getRunSpeedFlying()
 	{
 		return _runSpeedFlying;
 	}
-
-	public void setRunSpeedFlying(int walkSpeedFlying)
+	
+	public void setRunSpeedFlying(int runSpeedFlying)
 	{
 		_runSpeedFlying = runSpeedFlying;
 	}
 	
-	public int getAttackRange()
-	{
-		return _attackRange;
-	}
-
 	public int getWalkSpeedNoble()
 	{
 		return _walkSpeedNoble;
 	}
-
+	
 	public void setWalkSpeedNoble(int walkSpeedNoble)
 	{
 		_walkSpeedNoble = walkSpeedNoble;
 	}
-
+	
 	public int getRunSpeedNoble()
 	{
 		return _runSpeedNoble;
 	}
-
+	
 	public void setRunSpeedNoble(int runSpeedNoble)
 	{
 		_runSpeedNoble = runSpeedNoble;
@@ -205,7 +200,7 @@ public final class PlayerBaseTemplate
 	{
 		_safeFallHeight = safeFallHeight;
 	}
-
+	
 	public int getJump()
 	{
 		return _jump;

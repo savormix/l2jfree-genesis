@@ -25,6 +25,7 @@ import com.l2jfree.network.mmocore.MMOBuffer;
  */
 public class Logout extends L2ClientPacket
 {
+	/** Packet's identifier */
 	public static final int OPCODE = 0x00;
 	
 	@Override

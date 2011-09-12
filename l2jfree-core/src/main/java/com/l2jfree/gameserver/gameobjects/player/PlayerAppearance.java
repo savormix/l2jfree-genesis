@@ -30,6 +30,8 @@ public final class PlayerAppearance
 	private byte _face;
 	private byte _hairColor;
 	private byte _hairStyle;
+	private int _nameColor;
+	private int _titleColor;
 	
 	public PlayerAppearance(L2Player activeChar, PlayerDB playerDB)
 	{
@@ -39,6 +41,8 @@ public final class PlayerAppearance
 		_face = playerDB.face;
 		_hairColor = playerDB.hairColor;
 		_hairStyle = playerDB.hairStyle;
+		//TODO _nameColor = playerDB.nameColor;
+		//TODO_titleColor = playerDB.nameColor;
 	}
 	
 	public final L2Player getActiveChar()
@@ -84,5 +88,15 @@ public final class PlayerAppearance
 	public void setHairStyle(byte hairStyle)
 	{
 		_hairStyle = hairStyle;
+	}
+	
+	public int getNameColor()
+	{
+		return _nameColor;
+	}
+	
+	public int getTitleColor()
+	{
+		return _titleColor;
 	}
 }

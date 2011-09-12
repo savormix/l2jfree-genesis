@@ -28,6 +28,7 @@ import com.l2jfree.network.mmocore.MMOBuffer;
  */
 public class RequestCharacterCreationScreen extends L2ClientPacket
 {
+	/** Packet's identifier */
 	public static final int OPCODE = 0x13;
 	
 	@Override

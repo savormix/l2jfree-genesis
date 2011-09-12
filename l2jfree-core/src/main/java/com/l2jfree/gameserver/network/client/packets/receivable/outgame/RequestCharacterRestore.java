@@ -30,6 +30,7 @@ import com.l2jfree.network.mmocore.MMOBuffer;
  */
 public class RequestCharacterRestore extends L2ClientPacket
 {
+	/** Packet's identifier */
 	public static final int OPCODE = 0x7b;
 	
 	private int _charSlot;
