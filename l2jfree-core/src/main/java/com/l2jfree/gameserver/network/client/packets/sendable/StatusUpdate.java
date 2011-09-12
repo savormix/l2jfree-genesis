@@ -23,7 +23,7 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
- * @hex1r0
+ * @author hex1r0
  */
 public class StatusUpdate extends L2ServerPacket
 {
