@@ -26,6 +26,7 @@ import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.gameserver.network.client.packets.receivable.EnterWorld;
 import com.l2jfree.gameserver.network.client.packets.receivable.Logout;
 import com.l2jfree.gameserver.network.client.packets.receivable.RequestRestart;
+import com.l2jfree.gameserver.network.client.packets.receivable.ValidatePosition.ReportLocation;
 import com.l2jfree.gameserver.network.client.packets.receivable.outgame.ProtocolVersion;
 import com.l2jfree.gameserver.network.client.packets.receivable.outgame.RequestAuthorization;
 import com.l2jfree.gameserver.network.client.packets.receivable.outgame.RequestCharacterCreate;
@@ -38,6 +39,7 @@ import com.l2jfree.network.mmocore.PacketHandler;
 
 /**
  * @author savormix
+ * @author hex1r0
  */
 public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2ClientPacket, L2ServerPacket>
 {
@@ -116,6 +118,11 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 			case RequestRestart.OPCODE:
 				if (client.stateEquals(LOGGED_IN))
 					return new RequestRestart();
+				return invalidState(client, RequestRestart.class, opcode);
+				
+			case ReportLocation.OPCODE:
+				if (client.stateEquals(LOGGED_IN))
+					return new ReportLocation();
 				return invalidState(client, RequestRestart.class, opcode);
 				
 			default:
