@@ -135,7 +135,7 @@ public class PlayerView extends CharacterView
 	private int _x;
 	private int _y;
 	private int _z;
-	private int[] _defenceElementPower;
+	private final int[] _defenceElementPower = new int[Element.values().length];
 	
 	public PlayerView(L2Player activeChar)
 	{
