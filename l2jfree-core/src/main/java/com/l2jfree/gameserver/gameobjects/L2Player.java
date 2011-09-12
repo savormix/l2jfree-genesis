@@ -19,6 +19,7 @@ import com.l2jfree.gameserver.datatables.PlayerTemplateTable;
 import com.l2jfree.gameserver.gameobjects.components.AppearanceComponent;
 import com.l2jfree.gameserver.gameobjects.components.InventoryComponent;
 import com.l2jfree.gameserver.gameobjects.components.KnownListComponent;
+import com.l2jfree.gameserver.gameobjects.components.PositionComponent;
 import com.l2jfree.gameserver.gameobjects.components.StatComponent;
 import com.l2jfree.gameserver.gameobjects.components.ViewComponent;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerStat;
@@ -27,6 +28,7 @@ import com.l2jfree.gameserver.gameobjects.interfaces.IL2Playable;
 import com.l2jfree.gameserver.gameobjects.player.PlayerAppearance;
 import com.l2jfree.gameserver.gameobjects.player.PlayerInventory;
 import com.l2jfree.gameserver.gameobjects.player.PlayerKnownList;
+import com.l2jfree.gameserver.gameobjects.player.PlayerPosition;
 import com.l2jfree.gameserver.gameobjects.player.PlayerStat;
 import com.l2jfree.gameserver.gameobjects.player.PlayerView;
 import com.l2jfree.gameserver.network.client.Disconnection;
@@ -46,6 +48,7 @@ import com.l2jfree.util.Rnd;
 /**
  * @author NB4L1
  */
+@PositionComponent(PlayerPosition.class)
 @KnownListComponent(PlayerKnownList.class)
 @StatComponent(PlayerStat.class)
 @ViewComponent(PlayerView.class)
@@ -181,6 +184,7 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 	private L2Player(PlayerDB playerDB)
 	{
 		super(playerDB.objectId, PlayerTemplateTable.getInstance().getPlayerTemplate(playerDB.activeClassId));
+		getPosition().init(playerDB);
 		
 		_accountName = playerDB.accountName;
 		
@@ -188,11 +192,9 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 		_activeClassId = playerDB.activeClassId;
 		
 		_appearance = AppearanceComponent.FACTORY.getComponent(this);
-		_appearance.init(playerDB);
+		getAppearance().init(playerDB);
 		
 		setName(playerDB.name);
-		getPosition().setXYZ(playerDB.x, playerDB.y, playerDB.z);
-		getPosition().setHeading(playerDB.heading);
 	}
 	
 	@Override
@@ -277,6 +279,12 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 	public PlayerAppearance getAppearance()
 	{
 		return _appearance;
+	}
+	
+	@Override
+	public PlayerPosition getPosition()
+	{
+		return (PlayerPosition)super.getPosition();
 	}
 	
 	public IL2Client getClient()
