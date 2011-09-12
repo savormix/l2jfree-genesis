@@ -21,7 +21,7 @@ import com.l2jfree.gameserver.gameobjects.L2Player;
  * @author hex1r0
  * @author NB4L1
  */
-@SuppressWarnings({ "unused", "static-method" })
+@SuppressWarnings({ "static-method" })
 public class PlayerStat extends CharacterStat
 {
 	public PlayerStat(L2Player activeChar)
@@ -33,126 +33,6 @@ public class PlayerStat extends CharacterStat
 	public final L2Player getActiveChar()
 	{
 		return (L2Player)super.getActiveChar();
-	}
-	
-	public double getMovementSpeedMultiplier()
-	{
-		return 0;
-	}
-	
-	public double getAttackSpeedMultiplier()
-	{
-		return 0;
-	}
-	
-	public double getRunSpeed()
-	{
-		return 0;
-	}
-	
-	public double getWalkSpeed()
-	{
-		return 0;
-	}
-	
-	public int getPAtk(Object object)
-	{
-		return 0;
-	}
-	
-	public int getPDef(Object object)
-	{
-		return 0;
-	}
-	
-	public int getPAtkSpd()
-	{
-		return 0;
-	}
-	
-	public int getMAtk(Object object, Object object2)
-	{
-		return 0;
-	}
-	
-	public int getMAtkSpd()
-	{
-		return 0;
-	}
-	
-	public int getAccuracy()
-	{
-		return 0;
-	}
-	
-	public int getEvasionRate(Object object)
-	{
-		return 0;
-	}
-	
-	public int getCriticalHit(Object object)
-	{
-		return 0;
-	}
-	
-	public int getMDef(Object object, Object object2)
-	{
-		return 0;
-	}
-	
-	public int getLevel()
-	{
-		return 0;
-	}
-	
-	public long getExp()
-	{
-		return 0;
-	}
-	
-	public int getSTR()
-	{
-		return 0;
-	}
-	
-	public int getDEX()
-	{
-		return 0;
-	}
-	
-	public int getCON()
-	{
-		return 0;
-	}
-	
-	public int getINT()
-	{
-		return 0;
-	}
-	
-	public int getWIT()
-	{
-		return 0;
-	}
-	
-	public int getMEN()
-	{
-		return 0;
-	}
-	
-	public int getMaxHP()
-	{
-		return 0;
-	}
-	
-	public int getCurrentHP()
-	{
-		return 0;
-	}
-	
-	public int getMaxMP()
-	{
-		return 0;
 	}
 	
 	public int getMaxSP()

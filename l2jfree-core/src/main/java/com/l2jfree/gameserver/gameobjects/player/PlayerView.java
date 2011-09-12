@@ -17,6 +17,7 @@ package com.l2jfree.gameserver.gameobjects.player;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.l2jfree.gameserver.gameobjects.CharacterStat.Element;
 import com.l2jfree.gameserver.gameobjects.CharacterView;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.gameobjects.ObjectPosition;
@@ -52,17 +53,14 @@ public class PlayerView extends CharacterView
 	private int _currentHp;
 	private int _currentMp;
 	private int _cursedWeaponLevel;
-	private int _darkElementDefence;
 	private int _dex;
 	private int _duelTeam;
-	private int _earthElementDefence;
 	private int _equipCloak;
 	private int _evasionRate;
 	private long _exp;
 	private int _expPercent;
 	private byte _face;
 	private int _famePoints;
-	private int _fireElementDefence;
 	private boolean _fishing;
 	private int _fishLureX;
 	private int _fishLureY;
@@ -76,7 +74,6 @@ public class PlayerView extends CharacterView
 	private byte _hairStyle;
 	private int _heading;
 	private boolean _hero;
-	private int _holyElementDefence;
 	private int _inPvPAction;
 	private int _int;
 	private boolean _invisible;
@@ -132,14 +129,13 @@ public class PlayerView extends CharacterView
 	private int _vehicleObjectId;
 	private int _vitalityPoints;
 	private int _walkSpeed;
-	private int _waterElementDefence;
 	private int _weaponEnchantGlow;
 	private int _weaponStatus;
-	private int _windElementDefence;
 	private int _wit;
 	private int _x;
 	private int _y;
 	private int _z;
+	private int[] _defenceElementPower;
 	
 	public PlayerView(L2Player activeChar)
 	{
@@ -262,9 +258,9 @@ public class PlayerView extends CharacterView
 		return _cursedWeaponLevel;
 	}
 	
-	public int getDarkElementDefence()
+	public int getDefenseElementPower(Element element)
 	{
-		return _darkElementDefence;
+		return _defenceElementPower[element.ordinal()];
 	}
 	
 	public int getDEX()
@@ -275,11 +271,6 @@ public class PlayerView extends CharacterView
 	public int getDuelTeam()
 	{
 		return _duelTeam;
-	}
-	
-	public int getEarthElementDefence()
-	{
-		return _earthElementDefence;
 	}
 	
 	public int getEvasionRate()
@@ -305,11 +296,6 @@ public class PlayerView extends CharacterView
 	public int getFamePoints()
 	{
 		return _famePoints;
-	}
-	
-	public int getFireElementDefence()
-	{
-		return _fireElementDefence;
 	}
 	
 	public int getFishLureX()
@@ -355,11 +341,6 @@ public class PlayerView extends CharacterView
 	public int getHeading()
 	{
 		return _heading;
-	}
-	
-	public int getHolyElementDefence()
-	{
-		return _holyElementDefence;
 	}
 	
 	public int getINT()
@@ -607,11 +588,6 @@ public class PlayerView extends CharacterView
 		return _walkSpeed;
 	}
 	
-	public int getWaterElementDefence()
-	{
-		return _waterElementDefence;
-	}
-	
 	public int getWeaponEnchantGlow()
 	{
 		return _weaponEnchantGlow;
@@ -620,11 +596,6 @@ public class PlayerView extends CharacterView
 	public int getWeaponStatus()
 	{
 		return _weaponStatus;
-	}
-	
-	public int getWindElementDefence()
-	{
-		return _windElementDefence;
 	}
 	
 	public int getWIT()
@@ -725,6 +696,8 @@ public class PlayerView extends CharacterView
 		_mainClassId = p.getMainClassId().ordinal();
 		_activeClassId = p.getActiveClassId().ordinal();
 		
+		// --
+		
 		_level = stat.getLevel();
 		
 		_exp = stat.getExp();
@@ -740,7 +713,7 @@ public class PlayerView extends CharacterView
 		_currentHp = stat.getCurrentHP();
 		
 		_maxMp = stat.getMaxMP();
-		_currentMp = stat.getCurrentHP();
+		_currentMp = stat.getCurrentMP();
 		
 		_maxSp = stat.getMaxSP();
 		
@@ -777,6 +750,12 @@ public class PlayerView extends CharacterView
 		
 		_flyRunSpeed = 0; // getActiveChar().isFlying() ? _runSpeed : 0; // TODO
 		_flyWalkSpeed = 0; // getActiveChar().isFlying() ? _walkSpeed : 0; // TODO
+		
+		_attackElementType = 0;//getAttackElementType(); // Attack element
+		_attackElementPower = 0;//getAttackElementPower(); // Attack element power
+		//_defenceElementPower
+		
+		// --
 		
 		_remainingRecommendaions = 0;//getRemainingRecommendations(); // Recommendations
 		_receivedRecommendations = 0;//getReceivedRecommendations(); // Evaluation score
@@ -836,15 +815,6 @@ public class PlayerView extends CharacterView
 		_fishLureZ = 0;//getFishLureZ(); // Fishing lure Z
 		
 		_moving = isMoving(); // Moving
-		
-		_attackElementType = 0;//getAttackElementType(); // Attack element
-		_attackElementPower = 0;//getAttackElementPower(); // Attack element power
-		_fireElementDefence = 0;//getFireElementDefence(); // Fire defense
-		_waterElementDefence = 0;//getWaterElementDefence(); // Water defense
-		_windElementDefence = 0;//getWindElementDefence(); // Wind defense
-		_earthElementDefence = 0;//getEarthElementDefence(); // Earth defense
-		_holyElementDefence = 0;//getHolyElementDefence(); // Holy defense
-		_darkElementDefence = 0;//getDarkElementDefence(); // Dark defense
 		
 		_useMinimap = 0;//canUseMinimap(); // Can use minimap
 		
@@ -921,12 +891,12 @@ public class PlayerView extends CharacterView
 	{
 		buf.writeH(getAttackElementType()); // Attack element
 		buf.writeH(getAttackElementPower()); // Attack element power
-		buf.writeH(getFireElementDefence()); // Fire defense
-		buf.writeH(getWaterElementDefence()); // Water defense
-		buf.writeH(getWindElementDefence()); // Wind defense
-		buf.writeH(getEarthElementDefence()); // Earth defense
-		buf.writeH(getHolyElementDefence()); // Holy defense
-		buf.writeH(getDarkElementDefence()); // Dark defense
+		buf.writeH(getDefenseElementPower(Element.FIRE)); // Fire defense
+		buf.writeH(getDefenseElementPower(Element.WATER)); // Water defense
+		buf.writeH(getDefenseElementPower(Element.WIND)); // Wind defense
+		buf.writeH(getDefenseElementPower(Element.EARTH)); // Earth defense
+		buf.writeH(getDefenseElementPower(Element.HOLY)); // Holy defense
+		buf.writeH(getDefenseElementPower(Element.DARK)); // Dark defense
 	}
 	
 	public void writePaperDollObjectIds(MMOBuffer buf, boolean withAccessory)
