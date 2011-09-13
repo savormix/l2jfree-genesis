@@ -39,6 +39,7 @@ import com.l2jfree.gameserver.network.client.packets.receivable.characterless.Ne
 import com.l2jfree.gameserver.network.client.packets.receivable.characterless.NewCharacterPacket;
 import com.l2jfree.gameserver.network.client.packets.receivable.characterless.RequestAvailableCharacters;
 import com.l2jfree.network.mmocore.PacketHandler;
+import com.l2jfree.util.HexUtil;
 
 /**
  * @author savormix
@@ -49,6 +50,20 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 	private L2ClientPacketHandler()
 	{
 		// singleton
+		
+		validateSharedOpcodes(0x36, RequestAvailableCharacters.OPCODE_2, RequestAvailableCharacters.class,
+				ExGetOnAirShip.OPCODE_2, ExGetOnAirShip.class);
+	}
+	
+	private static void validateSharedOpcodes(int expectedOpcode, int opcode1, Class<? extends L2ClientPacket> clazz1,
+			int opcode2, Class<? extends L2ClientPacket> clazz2)
+	{
+		if (expectedOpcode == opcode1 && expectedOpcode == opcode2 && opcode1 == opcode2)
+			return;
+		
+		System.err.println("Previously shared opcodes (opcode: 0x" + HexUtil.fillHex(expectedOpcode, 2) + ") for "
+				+ clazz1.getName() + " (opcode: 0x" + HexUtil.fillHex(opcode1, 2) + ")" + " and " //
+				+ clazz2.getName() + " (opcode: 0x" + HexUtil.fillHex(opcode2, 2) + ") aren't shared anymore!");
 	}
 	
 	@Override
