@@ -209,7 +209,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		int readPackets = 0;
 		int readBytes = 0;
 		
-		while (key.isReadable())
+		while ((key.interestOps() & SelectionKey.OP_READ) != 0)
 		{
 			final int remainingFreeSpace = buf.remaining();
 			int result = -2;
@@ -239,7 +239,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 				{
 					buf.flip();
 					// try to read as many packets as possible
-					while (key.isReadable())
+					while ((key.interestOps() & SelectionKey.OP_READ) != 0)
 					{
 						final int startPos = buf.position();
 						
