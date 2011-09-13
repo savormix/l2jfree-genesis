@@ -33,12 +33,7 @@ public abstract class CanNotMoveAnymoreAirShip extends L2ClientPacket
 	 */
 	public static final class ReportLandingInAircraft extends CanNotMoveAnymoreAirShip
 	{
-		/**
-		 * @see CanNotMoveAnymoreAirShip#CanNotMoveAnymoreAirShip()
-		 */
-		public ReportLandingInAircraft()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

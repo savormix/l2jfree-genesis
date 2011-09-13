@@ -33,12 +33,7 @@ public abstract class RequestWithdrawPartyRoom extends L2ClientPacket
 	 */
 	public static final class RequestLeavePartyRoom extends RequestWithdrawPartyRoom
 	{
-		/**
-		 * @see RequestWithdrawPartyRoom#RequestWithdrawPartyRoom()
-		 */
-		public RequestLeavePartyRoom()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

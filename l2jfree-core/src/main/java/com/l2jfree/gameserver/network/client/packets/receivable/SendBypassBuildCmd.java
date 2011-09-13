@@ -33,12 +33,7 @@ public abstract class SendBypassBuildCmd extends L2ClientPacket
 	 */
 	public static final class RequestMasterCommand extends SendBypassBuildCmd
 	{
-		/**
-		 * @see SendBypassBuildCmd#SendBypassBuildCmd()
-		 */
-		public RequestMasterCommand()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

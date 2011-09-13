@@ -33,12 +33,7 @@ public abstract class RequestSentPostList extends L2ClientPacket
 	 */
 	public static final class RequestShowOutbox extends RequestSentPostList
 	{
-		/**
-		 * @see RequestSentPostList#RequestSentPostList()
-		 */
-		public RequestShowOutbox()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

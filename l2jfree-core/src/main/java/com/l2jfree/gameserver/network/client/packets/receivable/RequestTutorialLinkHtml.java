@@ -33,12 +33,7 @@ public abstract class RequestTutorialLinkHtml extends L2ClientPacket
 	 */
 	public static final class RequestLinkTutorialHtml extends RequestTutorialLinkHtml
 	{
-		/**
-		 * @see RequestTutorialLinkHtml#RequestTutorialLinkHtml()
-		 */
-		public RequestLinkTutorialHtml()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

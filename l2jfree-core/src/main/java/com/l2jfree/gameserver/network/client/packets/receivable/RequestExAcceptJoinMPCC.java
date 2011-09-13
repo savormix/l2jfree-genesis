@@ -33,12 +33,7 @@ public abstract class RequestExAcceptJoinMPCC extends L2ClientPacket
 	 */
 	public static final class RequestAnswerCommandChannelInvitation extends RequestExAcceptJoinMPCC
 	{
-		/**
-		 * @see RequestExAcceptJoinMPCC#RequestExAcceptJoinMPCC()
-		 */
-		public RequestAnswerCommandChannelInvitation()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

@@ -33,12 +33,7 @@ public abstract class RequestJoinDominionWar extends L2ClientPacket
 	 */
 	public static final class RequestMercenaryRegistration extends RequestJoinDominionWar
 	{
-		/**
-		 * @see RequestJoinDominionWar#RequestJoinDominionWar()
-		 */
-		public RequestMercenaryRegistration()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

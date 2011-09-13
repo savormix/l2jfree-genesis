@@ -33,12 +33,7 @@ public abstract class RequestPackageSendableItemList extends L2ClientPacket
 	 */
 	public static final class RequestTransferableItemList extends RequestPackageSendableItemList
 	{
-		/**
-		 * @see RequestPackageSendableItemList#RequestPackageSendableItemList()
-		 */
-		public RequestTransferableItemList()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

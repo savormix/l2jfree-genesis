@@ -33,12 +33,7 @@ public abstract class RequestInfoItemAuction extends L2ClientPacket
 	 */
 	public static final class RequestAuctionInfo extends RequestInfoItemAuction
 	{
-		/**
-		 * @see RequestInfoItemAuction#RequestInfoItemAuction()
-		 */
-		public RequestAuctionInfo()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

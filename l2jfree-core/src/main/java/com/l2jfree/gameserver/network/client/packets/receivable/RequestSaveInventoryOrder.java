@@ -33,12 +33,7 @@ public abstract class RequestSaveInventoryOrder extends L2ClientPacket
 	 */
 	public static final class ReportInventoryOrder extends RequestSaveInventoryOrder
 	{
-		/**
-		 * @see RequestSaveInventoryOrder#RequestSaveInventoryOrder()
-		 */
-		public ReportInventoryOrder()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

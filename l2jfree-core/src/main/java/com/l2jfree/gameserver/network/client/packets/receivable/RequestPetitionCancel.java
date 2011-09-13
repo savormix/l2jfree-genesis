@@ -33,12 +33,7 @@ public abstract class RequestPetitionCancel extends L2ClientPacket
 	 */
 	public static final class RequestAbortConsultation extends RequestPetitionCancel
 	{
-		/**
-		 * @see RequestPetitionCancel#RequestPetitionCancel()
-		 */
-		public RequestAbortConsultation()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

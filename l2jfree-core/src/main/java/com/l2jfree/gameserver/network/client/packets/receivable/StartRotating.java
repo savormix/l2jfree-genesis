@@ -33,12 +33,7 @@ public abstract class StartRotating extends L2ClientPacket
 	 */
 	public static final class RequestStartRotation extends StartRotating
 	{
-		/**
-		 * @see StartRotating#StartRotating()
-		 */
-		public RequestStartRotation()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

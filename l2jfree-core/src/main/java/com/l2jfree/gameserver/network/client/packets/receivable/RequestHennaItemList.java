@@ -33,12 +33,7 @@ public abstract class RequestHennaItemList extends L2ClientPacket
 	 */
 	public static final class RequestHennaApplianceList extends RequestHennaItemList
 	{
-		/**
-		 * @see RequestHennaItemList#RequestHennaItemList()
-		 */
-		public RequestHennaApplianceList()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

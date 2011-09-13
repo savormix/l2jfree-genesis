@@ -33,12 +33,7 @@ public abstract class RequestMultiSellChoose extends L2ClientPacket
 	 */
 	public static final class RequestExchange extends RequestMultiSellChoose
 	{
-		/**
-		 * @see RequestMultiSellChoose#RequestMultiSellChoose()
-		 */
-		public RequestExchange()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

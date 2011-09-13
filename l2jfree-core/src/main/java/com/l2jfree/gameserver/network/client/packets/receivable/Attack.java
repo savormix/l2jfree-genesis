@@ -33,12 +33,7 @@ public abstract class Attack extends L2ClientPacket
 	 */
 	public static final class RequestAttack extends Attack
 	{
-		/**
-		 * @see Attack#Attack()
-		 */
-		public RequestAttack()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

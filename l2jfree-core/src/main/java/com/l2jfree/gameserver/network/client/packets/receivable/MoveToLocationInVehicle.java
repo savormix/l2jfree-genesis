@@ -33,12 +33,7 @@ public abstract class MoveToLocationInVehicle extends L2ClientPacket
 	 */
 	public static final class RequestMovementInVehicle extends MoveToLocationInVehicle
 	{
-		/**
-		 * @see MoveToLocationInVehicle#MoveToLocationInVehicle()
-		 */
-		public RequestMovementInVehicle()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

@@ -33,12 +33,7 @@ public abstract class RequestRecipeShopMessageSet extends L2ClientPacket
 	 */
 	public static final class RequestUpdateManufacture extends RequestRecipeShopMessageSet
 	{
-		/**
-		 * @see RequestRecipeShopMessageSet#RequestRecipeShopMessageSet()
-		 */
-		public RequestUpdateManufacture()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

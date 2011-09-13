@@ -33,12 +33,7 @@ public abstract class RequestRecipeItemMakeSelf extends L2ClientPacket
 	 */
 	public static final class RequestUseRecipe extends RequestRecipeItemMakeSelf
 	{
-		/**
-		 * @see RequestRecipeItemMakeSelf#RequestRecipeItemMakeSelf()
-		 */
-		public RequestUseRecipe()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

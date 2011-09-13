@@ -33,12 +33,7 @@ public abstract class RequestGetBossRecord extends L2ClientPacket
 	 */
 	public static final class RequestMyRaidInfo extends RequestGetBossRecord
 	{
-		/**
-		 * @see RequestGetBossRecord#RequestGetBossRecord()
-		 */
-		public RequestMyRaidInfo()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

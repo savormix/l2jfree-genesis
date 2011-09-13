@@ -33,12 +33,7 @@ public abstract class RequestBypassToServer extends L2ClientPacket
 	 */
 	public static final class RequestHtmlCommand extends RequestBypassToServer
 	{
-		/**
-		 * @see RequestBypassToServer#RequestBypassToServer()
-		 */
-		public RequestHtmlCommand()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

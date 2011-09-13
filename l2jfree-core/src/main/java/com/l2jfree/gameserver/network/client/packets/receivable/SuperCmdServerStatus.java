@@ -33,12 +33,7 @@ public abstract class SuperCmdServerStatus extends L2ClientPacket
 	 */
 	public static final class RequestViewServerInfo extends SuperCmdServerStatus
 	{
-		/**
-		 * @see SuperCmdServerStatus#SuperCmdServerStatus()
-		 */
-		public RequestViewServerInfo()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

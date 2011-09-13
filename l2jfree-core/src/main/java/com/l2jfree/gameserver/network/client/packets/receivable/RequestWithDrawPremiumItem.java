@@ -33,12 +33,7 @@ public abstract class RequestWithDrawPremiumItem extends L2ClientPacket
 	 */
 	public static final class RequestReceiveDimensionalItem extends RequestWithDrawPremiumItem
 	{
-		/**
-		 * @see RequestWithDrawPremiumItem#RequestWithDrawPremiumItem()
-		 */
-		public RequestReceiveDimensionalItem()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

@@ -33,12 +33,7 @@ public abstract class RequestRequestReceivedPost extends L2ClientPacket
 	 */
 	public static final class RequestShowReceivedMailMessage extends RequestRequestReceivedPost
 	{
-		/**
-		 * @see RequestRequestReceivedPost#RequestRequestReceivedPost()
-		 */
-		public RequestShowReceivedMailMessage()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

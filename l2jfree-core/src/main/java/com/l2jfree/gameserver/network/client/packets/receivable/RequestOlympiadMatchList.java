@@ -33,12 +33,7 @@ public abstract class RequestOlympiadMatchList extends L2ClientPacket
 	 */
 	public static final class RequestSpectatableMatchList extends RequestOlympiadMatchList
 	{
-		/**
-		 * @see RequestOlympiadMatchList#RequestOlympiadMatchList()
-		 */
-		public RequestSpectatableMatchList()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

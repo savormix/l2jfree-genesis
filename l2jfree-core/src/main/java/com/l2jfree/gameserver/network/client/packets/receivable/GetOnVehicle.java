@@ -33,12 +33,7 @@ public abstract class GetOnVehicle extends L2ClientPacket
 	 */
 	public static final class RequestBoardVehicle extends GetOnVehicle
 	{
-		/**
-		 * @see GetOnVehicle#GetOnVehicle()
-		 */
-		public RequestBoardVehicle()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

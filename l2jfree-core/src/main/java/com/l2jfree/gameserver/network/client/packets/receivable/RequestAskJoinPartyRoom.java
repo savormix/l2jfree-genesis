@@ -33,12 +33,7 @@ public abstract class RequestAskJoinPartyRoom extends L2ClientPacket
 	 */
 	public static final class RequestInviteToPartyRoom extends RequestAskJoinPartyRoom
 	{
-		/**
-		 * @see RequestAskJoinPartyRoom#RequestAskJoinPartyRoom()
-		 */
-		public RequestInviteToPartyRoom()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

@@ -33,12 +33,7 @@ public abstract class RequestExDeletePostFriendForPostBox extends L2ClientPacket
 	 */
 	public static final class RequestRemoveMailContact extends RequestExDeletePostFriendForPostBox
 	{
-		/**
-		 * @see RequestExDeletePostFriendForPostBox#RequestExDeletePostFriendForPostBox()
-		 */
-		public RequestRemoveMailContact()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

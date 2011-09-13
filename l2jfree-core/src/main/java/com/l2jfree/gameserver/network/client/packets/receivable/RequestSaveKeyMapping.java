@@ -33,12 +33,7 @@ public abstract class RequestSaveKeyMapping extends L2ClientPacket
 	 */
 	public static final class RequestSetupUserInterface extends RequestSaveKeyMapping
 	{
-		/**
-		 * @see RequestSaveKeyMapping#RequestSaveKeyMapping()
-		 */
-		public RequestSetupUserInterface()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

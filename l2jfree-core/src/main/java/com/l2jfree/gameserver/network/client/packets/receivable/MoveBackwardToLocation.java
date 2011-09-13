@@ -34,12 +34,7 @@ public abstract class MoveBackwardToLocation extends L2ClientPacket
 	 */
 	public static final class RequestMovement extends MoveBackwardToLocation
 	{
-		/**
-		 * @see MoveBackwardToLocation#MoveBackwardToLocation()
-		 */
-		public RequestMovement()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

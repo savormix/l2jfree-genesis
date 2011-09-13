@@ -33,12 +33,7 @@ public abstract class RequestExSetPledgeCrestLarge extends L2ClientPacket
 	 */
 	public static final class RequestSetPledgeInsignia extends RequestExSetPledgeCrestLarge
 	{
-		/**
-		 * @see RequestExSetPledgeCrestLarge#RequestExSetPledgeCrestLarge()
-		 */
-		public RequestSetPledgeInsignia()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

@@ -33,12 +33,7 @@ public abstract class RequestGMList extends L2ClientPacket
 	 */
 	public static final class RequestGameMasterList extends RequestGMList
 	{
-		/**
-		 * @see RequestGMList#RequestGMList()
-		 */
-		public RequestGameMasterList()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

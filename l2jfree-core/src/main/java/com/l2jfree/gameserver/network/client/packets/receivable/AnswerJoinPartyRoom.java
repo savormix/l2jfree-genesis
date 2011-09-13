@@ -33,12 +33,7 @@ public abstract class AnswerJoinPartyRoom extends L2ClientPacket
 	 */
 	public static final class RequestAnswerPartyRoomInvite extends AnswerJoinPartyRoom
 	{
-		/**
-		 * @see AnswerJoinPartyRoom#AnswerJoinPartyRoom()
-		 */
-		public RequestAnswerPartyRoomInvite()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

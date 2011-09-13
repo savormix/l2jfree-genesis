@@ -33,12 +33,7 @@ public abstract class RequestSSQStatus extends L2ClientPacket
 	 */
 	public static final class RequestSevenSignsInfo extends RequestSSQStatus
 	{
-		/**
-		 * @see RequestSSQStatus#RequestSSQStatus()
-		 */
-		public RequestSevenSignsInfo()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

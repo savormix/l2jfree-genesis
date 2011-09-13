@@ -33,12 +33,7 @@ public abstract class RequestPartyMatchDetail extends L2ClientPacket
 	 */
 	public static final class RequestJoinPartyRoom extends RequestPartyMatchDetail
 	{
-		/**
-		 * @see RequestPartyMatchDetail#RequestPartyMatchDetail()
-		 */
-		public RequestJoinPartyRoom()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

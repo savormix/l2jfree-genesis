@@ -33,12 +33,7 @@ public abstract class RequestSendPost extends L2ClientPacket
 	 */
 	public static final class RequestSendMail extends RequestSendPost
 	{
-		/**
-		 * @see RequestSendPost#RequestSendPost()
-		 */
-		public RequestSendMail()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

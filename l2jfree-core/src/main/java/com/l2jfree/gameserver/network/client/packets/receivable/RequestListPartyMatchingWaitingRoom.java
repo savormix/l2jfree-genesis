@@ -33,12 +33,7 @@ public abstract class RequestListPartyMatchingWaitingRoom extends L2ClientPacket
 	 */
 	public static final class RequestPartyMatchingList extends RequestListPartyMatchingWaitingRoom
 	{
-		/**
-		 * @see RequestListPartyMatchingWaitingRoom#RequestListPartyMatchingWaitingRoom()
-		 */
-		public RequestPartyMatchingList()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

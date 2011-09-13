@@ -33,12 +33,7 @@ public abstract class RequestSetCastleSiegeTime extends L2ClientPacket
 	 */
 	public static final class RequestSiegeTime extends RequestSetCastleSiegeTime
 	{
-		/**
-		 * @see RequestSetCastleSiegeTime#RequestSetCastleSiegeTime()
-		 */
-		public RequestSiegeTime()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

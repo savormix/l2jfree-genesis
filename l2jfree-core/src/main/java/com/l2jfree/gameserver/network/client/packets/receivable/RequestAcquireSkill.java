@@ -33,12 +33,7 @@ public abstract class RequestAcquireSkill extends L2ClientPacket
 	 */
 	public static final class RequestLearnSkill extends RequestAcquireSkill
 	{
-		/**
-		 * @see RequestAcquireSkill#RequestAcquireSkill()
-		 */
-		public RequestLearnSkill()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

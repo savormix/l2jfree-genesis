@@ -33,12 +33,7 @@ public abstract class SetPrivateStoreList extends L2ClientPacket
 	 */
 	public static final class RequestStartSellShop extends SetPrivateStoreList
 	{
-		/**
-		 * @see SetPrivateStoreList#SetPrivateStoreList()
-		 */
-		public RequestStartSellShop()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

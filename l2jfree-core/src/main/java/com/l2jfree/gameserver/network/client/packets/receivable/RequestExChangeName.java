@@ -33,12 +33,7 @@ public abstract class RequestExChangeName extends L2ClientPacket
 	 */
 	public static final class RequestAnswerPledgeNameChange extends RequestExChangeName
 	{
-		/**
-		 * @see RequestExChangeName#RequestExChangeName()
-		 */
-		public RequestAnswerPledgeNameChange()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

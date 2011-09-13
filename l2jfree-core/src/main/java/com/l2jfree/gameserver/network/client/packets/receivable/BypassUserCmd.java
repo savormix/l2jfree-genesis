@@ -33,12 +33,7 @@ public abstract class BypassUserCmd extends L2ClientPacket
 	 */
 	public static final class RequestPlayerCommand extends BypassUserCmd
 	{
-		/**
-		 * @see BypassUserCmd#BypassUserCmd()
-		 */
-		public RequestPlayerCommand()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

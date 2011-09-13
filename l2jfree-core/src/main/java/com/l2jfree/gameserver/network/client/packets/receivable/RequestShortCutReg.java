@@ -33,12 +33,7 @@ public abstract class RequestShortCutReg extends L2ClientPacket
 	 */
 	public static final class RequestAddShortcut extends RequestShortCutReg
 	{
-		/**
-		 * @see RequestShortCutReg#RequestShortCutReg()
-		 */
-		public RequestAddShortcut()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

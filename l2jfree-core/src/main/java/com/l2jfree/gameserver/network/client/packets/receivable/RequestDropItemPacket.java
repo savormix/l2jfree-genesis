@@ -33,12 +33,7 @@ public abstract class RequestDropItemPacket extends L2ClientPacket
 	 */
 	public static final class RequestDropItem extends RequestDropItemPacket
 	{
-		/**
-		 * @see RequestDropItemPacket#RequestDropItemPacket()
-		 */
-		public RequestDropItem()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

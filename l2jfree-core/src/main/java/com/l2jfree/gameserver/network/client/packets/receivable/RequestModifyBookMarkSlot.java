@@ -33,12 +33,7 @@ public abstract class RequestModifyBookMarkSlot extends L2ClientPacket
 	 */
 	public static final class RequestUpdateTeleportBookmark extends RequestModifyBookMarkSlot
 	{
-		/**
-		 * @see RequestModifyBookMarkSlot#RequestModifyBookMarkSlot()
-		 */
-		public RequestUpdateTeleportBookmark()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

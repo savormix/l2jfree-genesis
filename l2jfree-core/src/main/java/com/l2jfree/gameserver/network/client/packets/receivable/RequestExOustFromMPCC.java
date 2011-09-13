@@ -33,12 +33,7 @@ public abstract class RequestExOustFromMPCC extends L2ClientPacket
 	 */
 	public static final class RequestDismissCommandChannelMember extends RequestExOustFromMPCC
 	{
-		/**
-		 * @see RequestExOustFromMPCC#RequestExOustFromMPCC()
-		 */
-		public RequestDismissCommandChannelMember()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

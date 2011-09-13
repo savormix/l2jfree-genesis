@@ -33,12 +33,7 @@ public abstract class RequestPostItemList extends L2ClientPacket
 	 */
 	public static final class RequestAttachableItemList extends RequestPostItemList
 	{
-		/**
-		 * @see RequestPostItemList#RequestPostItemList()
-		 */
-		public RequestAttachableItemList()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

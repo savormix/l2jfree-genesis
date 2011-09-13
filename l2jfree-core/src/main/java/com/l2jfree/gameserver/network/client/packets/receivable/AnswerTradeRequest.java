@@ -33,12 +33,7 @@ public abstract class AnswerTradeRequest extends L2ClientPacket
 	 */
 	public static final class RequestAnswerTradeRequest extends AnswerTradeRequest
 	{
-		/**
-		 * @see AnswerTradeRequest#AnswerTradeRequest()
-		 */
-		public RequestAnswerTradeRequest()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

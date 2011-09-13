@@ -33,12 +33,7 @@ public abstract class SendWareHouseDepositList extends L2ClientPacket
 	 */
 	public static final class RequestTransferToWarehouse extends SendWareHouseDepositList
 	{
-		/**
-		 * @see SendWareHouseDepositList#SendWareHouseDepositList()
-		 */
-		public RequestTransferToWarehouse()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

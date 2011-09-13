@@ -33,12 +33,7 @@ public abstract class RequestPledgeSetMemberPowerGrade extends L2ClientPacket
 	 */
 	public static final class RequestSetPledgeMemberPower extends RequestPledgeSetMemberPowerGrade
 	{
-		/**
-		 * @see RequestPledgeSetMemberPowerGrade#RequestPledgeSetMemberPowerGrade()
-		 */
-		public RequestSetPledgeMemberPower()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

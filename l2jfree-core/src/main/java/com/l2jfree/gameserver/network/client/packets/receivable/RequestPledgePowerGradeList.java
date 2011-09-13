@@ -33,12 +33,7 @@ public abstract class RequestPledgePowerGradeList extends L2ClientPacket
 	 */
 	public static final class RequestPledgePowerList extends RequestPledgePowerGradeList
 	{
-		/**
-		 * @see RequestPledgePowerGradeList#RequestPledgePowerGradeList()
-		 */
-		public RequestPledgePowerList()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

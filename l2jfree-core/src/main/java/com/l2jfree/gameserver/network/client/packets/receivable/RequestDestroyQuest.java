@@ -33,12 +33,7 @@ public abstract class RequestDestroyQuest extends L2ClientPacket
 	 */
 	public static final class RequestAbortActiveQuest extends RequestDestroyQuest
 	{
-		/**
-		 * @see RequestDestroyQuest#RequestDestroyQuest()
-		 */
-		public RequestAbortActiveQuest()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

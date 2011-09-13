@@ -33,12 +33,7 @@ public abstract class RequestGiveNickName extends L2ClientPacket
 	 */
 	public static final class RequestSetTitle extends RequestGiveNickName
 	{
-		/**
-		 * @see RequestGiveNickName#RequestGiveNickName()
-		 */
-		public RequestSetTitle()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

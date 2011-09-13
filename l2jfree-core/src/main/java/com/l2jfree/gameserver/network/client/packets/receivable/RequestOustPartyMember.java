@@ -33,12 +33,7 @@ public abstract class RequestOustPartyMember extends L2ClientPacket
 	 */
 	public static final class RequestDismissPartyMember extends RequestOustPartyMember
 	{
-		/**
-		 * @see RequestOustPartyMember#RequestOustPartyMember()
-		 */
-		public RequestDismissPartyMember()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

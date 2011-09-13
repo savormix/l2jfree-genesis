@@ -33,12 +33,7 @@ public abstract class RequestAllCastleInfo extends L2ClientPacket
 	 */
 	public static final class RequestCastleList extends RequestAllCastleInfo
 	{
-		/**
-		 * @see RequestAllCastleInfo#RequestAllCastleInfo()
-		 */
-		public RequestCastleList()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

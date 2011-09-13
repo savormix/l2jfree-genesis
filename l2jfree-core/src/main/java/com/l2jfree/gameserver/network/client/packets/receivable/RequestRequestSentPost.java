@@ -33,12 +33,7 @@ public abstract class RequestRequestSentPost extends L2ClientPacket
 	 */
 	public static final class RequestShowSentMailMessage extends RequestRequestSentPost
 	{
-		/**
-		 * @see RequestRequestSentPost#RequestRequestSentPost()
-		 */
-		public RequestShowSentMailMessage()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

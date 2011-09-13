@@ -33,12 +33,7 @@ public abstract class RequestConfirmCancelItem extends L2ClientPacket
 	 */
 	public static final class RequestSelectRefinedItem extends RequestConfirmCancelItem
 	{
-		/**
-		 * @see RequestConfirmCancelItem#RequestConfirmCancelItem()
-		 */
-		public RequestSelectRefinedItem()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

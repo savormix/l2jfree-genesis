@@ -37,12 +37,7 @@ public abstract class ValidatePosition extends L2ClientPacket
 	 */
 	public static final class ReportLocation extends ValidatePosition
 	{
-		/**
-		 * @see ValidatePosition#ValidatePosition()
-		 */
-		public ReportLocation()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

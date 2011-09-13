@@ -33,12 +33,7 @@ public abstract class RequestRecipeBookOpen extends L2ClientPacket
 	 */
 	public static final class RequestRecipeList extends RequestRecipeBookOpen
 	{
-		/**
-		 * @see RequestRecipeBookOpen#RequestRecipeBookOpen()
-		 */
-		public RequestRecipeList()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

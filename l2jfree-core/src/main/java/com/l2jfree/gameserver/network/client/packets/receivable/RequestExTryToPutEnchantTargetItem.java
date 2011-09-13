@@ -33,12 +33,7 @@ public abstract class RequestExTryToPutEnchantTargetItem extends L2ClientPacket
 	 */
 	public static final class RequestSelectItemToEnchant extends RequestExTryToPutEnchantTargetItem
 	{
-		/**
-		 * @see RequestExTryToPutEnchantTargetItem#RequestExTryToPutEnchantTargetItem()
-		 */
-		public RequestSelectItemToEnchant()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

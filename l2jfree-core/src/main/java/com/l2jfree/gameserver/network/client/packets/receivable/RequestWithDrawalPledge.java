@@ -33,12 +33,7 @@ public abstract class RequestWithDrawalPledge extends L2ClientPacket
 	 */
 	public static final class RequestLeavePledge extends RequestWithDrawalPledge
 	{
-		/**
-		 * @see RequestWithDrawalPledge#RequestWithDrawalPledge()
-		 */
-		public RequestLeavePledge()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

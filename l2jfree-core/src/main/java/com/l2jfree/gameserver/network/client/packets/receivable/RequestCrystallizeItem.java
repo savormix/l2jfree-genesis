@@ -33,12 +33,7 @@ public abstract class RequestCrystallizeItem extends L2ClientPacket
 	 */
 	public static final class RequestItemCrystallization extends RequestCrystallizeItem
 	{
-		/**
-		 * @see RequestCrystallizeItem#RequestCrystallizeItem()
-		 */
-		public RequestItemCrystallization()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

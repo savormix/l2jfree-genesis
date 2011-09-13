@@ -33,12 +33,7 @@ public abstract class RequestRecipeItemDelete extends L2ClientPacket
 	 */
 	public static final class RequestRecipeRemoval extends RequestRecipeItemDelete
 	{
-		/**
-		 * @see RequestRecipeItemDelete#RequestRecipeItemDelete()
-		 */
-		public RequestRecipeRemoval()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

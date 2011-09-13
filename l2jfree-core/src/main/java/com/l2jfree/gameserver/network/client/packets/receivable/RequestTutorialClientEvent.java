@@ -33,12 +33,7 @@ public abstract class RequestTutorialClientEvent extends L2ClientPacket
 	 */
 	public static final class ReportTutorialEvent extends RequestTutorialClientEvent
 	{
-		/**
-		 * @see RequestTutorialClientEvent#RequestTutorialClientEvent()
-		 */
-		public ReportTutorialEvent()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

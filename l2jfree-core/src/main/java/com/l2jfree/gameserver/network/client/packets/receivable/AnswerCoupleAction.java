@@ -33,12 +33,7 @@ public abstract class AnswerCoupleAction extends L2ClientPacket
 	 */
 	public static final class RequestAnswerMutualAction extends AnswerCoupleAction
 	{
-		/**
-		 * @see AnswerCoupleAction#AnswerCoupleAction()
-		 */
-		public RequestAnswerMutualAction()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

@@ -33,12 +33,7 @@ public abstract class RequestAnswerJoinPledge extends L2ClientPacket
 	 */
 	public static final class RequestAnswerPledgeInvitation extends RequestAnswerJoinPledge
 	{
-		/**
-		 * @see RequestAnswerJoinPledge#RequestAnswerJoinPledge()
-		 */
-		public RequestAnswerPledgeInvitation()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

@@ -33,12 +33,7 @@ public abstract class RequestSendMsnChatLog extends L2ClientPacket
 	 */
 	public static final class ReportMsnChatMessage extends RequestSendMsnChatLog
 	{
-		/**
-		 * @see RequestSendMsnChatLog#RequestSendMsnChatLog()
-		 */
-		public ReportMsnChatMessage()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

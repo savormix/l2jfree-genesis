@@ -33,12 +33,7 @@ public abstract class RequestConfirmRefinerItem extends L2ClientPacket
 	 */
 	public static final class RequestSelectLifestone extends RequestConfirmRefinerItem
 	{
-		/**
-		 * @see RequestConfirmRefinerItem#RequestConfirmRefinerItem()
-		 */
-		public RequestSelectLifestone()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

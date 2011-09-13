@@ -33,12 +33,7 @@ public abstract class RequestSetAllyCrest extends L2ClientPacket
 	 */
 	public static final class RequestSetAllianceCrest extends RequestSetAllyCrest
 	{
-		/**
-		 * @see RequestSetAllyCrest#RequestSetAllyCrest()
-		 */
-		public RequestSetAllianceCrest()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

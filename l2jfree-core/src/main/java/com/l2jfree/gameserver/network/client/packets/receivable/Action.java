@@ -33,12 +33,7 @@ public abstract class Action extends L2ClientPacket
 	 */
 	public static final class RequestInteraction extends Action
 	{
-		/**
-		 * @see Action#Action()
-		 */
-		public RequestInteraction()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

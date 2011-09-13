@@ -33,12 +33,7 @@ public abstract class ExGetOnAirShip extends L2ClientPacket
 	 */
 	public static final class RequestBoardAircraft extends ExGetOnAirShip
 	{
-		/**
-		 * @see ExGetOnAirShip#ExGetOnAirShip()
-		 */
-		public RequestBoardAircraft()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

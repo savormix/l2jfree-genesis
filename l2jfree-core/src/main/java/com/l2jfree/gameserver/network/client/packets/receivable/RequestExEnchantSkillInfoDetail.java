@@ -33,12 +33,7 @@ public abstract class RequestExEnchantSkillInfoDetail extends L2ClientPacket
 	 */
 	public static final class RequestEnchantableSkillInfo extends RequestExEnchantSkillInfoDetail
 	{
-		/**
-		 * @see RequestExEnchantSkillInfoDetail#RequestExEnchantSkillInfoDetail()
-		 */
-		public RequestEnchantableSkillInfo()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

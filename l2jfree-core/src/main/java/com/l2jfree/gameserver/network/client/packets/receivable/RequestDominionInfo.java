@@ -33,12 +33,7 @@ public abstract class RequestDominionInfo extends L2ClientPacket
 	 */
 	public static final class RequestTerritoryList extends RequestDominionInfo
 	{
-		/**
-		 * @see RequestDominionInfo#RequestDominionInfo()
-		 */
-		public RequestTerritoryList()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

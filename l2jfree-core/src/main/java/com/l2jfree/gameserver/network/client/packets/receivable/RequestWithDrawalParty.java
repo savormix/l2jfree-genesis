@@ -33,12 +33,7 @@ public abstract class RequestWithDrawalParty extends L2ClientPacket
 	 */
 	public static final class RequestLeaveParty extends RequestWithDrawalParty
 	{
-		/**
-		 * @see RequestWithDrawalParty#RequestWithDrawalParty()
-		 */
-		public RequestLeaveParty()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

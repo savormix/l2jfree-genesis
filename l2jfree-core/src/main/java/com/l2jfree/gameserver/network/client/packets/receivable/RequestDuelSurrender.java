@@ -33,12 +33,7 @@ public abstract class RequestDuelSurrender extends L2ClientPacket
 	 */
 	public static final class RequestForfeitDuel extends RequestDuelSurrender
 	{
-		/**
-		 * @see RequestDuelSurrender#RequestDuelSurrender()
-		 */
-		public RequestForfeitDuel()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

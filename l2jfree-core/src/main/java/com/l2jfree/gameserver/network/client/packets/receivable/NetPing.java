@@ -33,12 +33,7 @@ public abstract class NetPing extends L2ClientPacket
 	 */
 	public static final class UptimeResponse extends NetPing
 	{
-		/**
-		 * @see NetPing#NetPing()
-		 */
-		public UptimeResponse()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

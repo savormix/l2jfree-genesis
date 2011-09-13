@@ -33,12 +33,7 @@ public abstract class RequestExAddPostFriendForPostBox extends L2ClientPacket
 	 */
 	public static final class RequestAddMailContact extends RequestExAddPostFriendForPostBox
 	{
-		/**
-		 * @see RequestExAddPostFriendForPostBox#RequestExAddPostFriendForPostBox()
-		 */
-		public RequestAddMailContact()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

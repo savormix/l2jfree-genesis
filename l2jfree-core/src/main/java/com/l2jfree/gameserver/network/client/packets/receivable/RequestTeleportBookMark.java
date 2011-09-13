@@ -33,12 +33,7 @@ public abstract class RequestTeleportBookMark extends L2ClientPacket
 	 */
 	public static final class RequestUseTeleportBookmark extends RequestTeleportBookMark
 	{
-		/**
-		 * @see RequestTeleportBookMark#RequestTeleportBookMark()
-		 */
-		public RequestUseTeleportBookmark()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

@@ -33,12 +33,7 @@ public abstract class RequestStopShowCrataeCubeRank extends L2ClientPacket
 	 */
 	public static final class RequestNoMoreKrateisCubeRanking extends RequestStopShowCrataeCubeRank
 	{
-		/**
-		 * @see RequestStopShowCrataeCubeRank#RequestStopShowCrataeCubeRank()
-		 */
-		public RequestNoMoreKrateisCubeRanking()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

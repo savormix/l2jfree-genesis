@@ -33,12 +33,7 @@ public abstract class RequestAllAgitInfo extends L2ClientPacket
 	 */
 	public static final class RequestHideoutList extends RequestAllAgitInfo
 	{
-		/**
-		 * @see RequestAllAgitInfo#RequestAllAgitInfo()
-		 */
-		public RequestHideoutList()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

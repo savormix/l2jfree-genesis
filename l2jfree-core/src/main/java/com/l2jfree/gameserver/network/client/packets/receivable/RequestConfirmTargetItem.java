@@ -33,12 +33,7 @@ public abstract class RequestConfirmTargetItem extends L2ClientPacket
 	 */
 	public static final class RequestSelectItemToRefine extends RequestConfirmTargetItem
 	{
-		/**
-		 * @see RequestConfirmTargetItem#RequestConfirmTargetItem()
-		 */
-		public RequestSelectItemToRefine()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

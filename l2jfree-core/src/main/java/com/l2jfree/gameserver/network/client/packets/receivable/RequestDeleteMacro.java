@@ -33,12 +33,7 @@ public abstract class RequestDeleteMacro extends L2ClientPacket
 	 */
 	public static final class RequestRemoveMacro extends RequestDeleteMacro
 	{
-		/**
-		 * @see RequestDeleteMacro#RequestDeleteMacro()
-		 */
-		public RequestRemoveMacro()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

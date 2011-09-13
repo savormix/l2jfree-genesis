@@ -33,12 +33,7 @@ public abstract class RequestShortCutDel extends L2ClientPacket
 	 */
 	public static final class RequestRemoveShortcut extends RequestShortCutDel
 	{
-		/**
-		 * @see RequestShortCutDel#RequestShortCutDel()
-		 */
-		public RequestRemoveShortcut()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

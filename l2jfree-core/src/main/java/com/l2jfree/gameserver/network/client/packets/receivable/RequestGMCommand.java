@@ -33,12 +33,7 @@ public abstract class RequestGMCommand extends L2ClientPacket
 	 */
 	public static final class RequestView extends RequestGMCommand
 	{
-		/**
-		 * @see RequestGMCommand#RequestGMCommand()
-		 */
-		public RequestView()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

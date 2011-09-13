@@ -33,12 +33,7 @@ public abstract class RequestReload extends L2ClientPacket
 	 */
 	public static final class RequestResendKnownObjectInfo extends RequestReload
 	{
-		/**
-		 * @see RequestReload#RequestReload()
-		 */
-		public RequestResendKnownObjectInfo()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

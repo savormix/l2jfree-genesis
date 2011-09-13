@@ -33,12 +33,7 @@ public abstract class ItemList extends L2ClientPacket
 	 */
 	public static final class RequestItemList extends ItemList
 	{
-		/**
-		 * @see ItemList#ItemList()
-		 */
-		public RequestItemList()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

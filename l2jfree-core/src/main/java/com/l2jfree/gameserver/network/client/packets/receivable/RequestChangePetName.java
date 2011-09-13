@@ -33,12 +33,7 @@ public abstract class RequestChangePetName extends L2ClientPacket
 	 */
 	public static final class RequestNamePet extends RequestChangePetName
 	{
-		/**
-		 * @see RequestChangePetName#RequestChangePetName()
-		 */
-		public RequestNamePet()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

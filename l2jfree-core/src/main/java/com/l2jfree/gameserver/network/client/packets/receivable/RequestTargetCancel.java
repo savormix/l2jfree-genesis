@@ -33,12 +33,7 @@ public abstract class RequestTargetCancel extends L2ClientPacket
 	 */
 	public static final class RequestCancelTarget extends RequestTargetCancel
 	{
-		/**
-		 * @see RequestTargetCancel#RequestTargetCancel()
-		 */
-		public RequestCancelTarget()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

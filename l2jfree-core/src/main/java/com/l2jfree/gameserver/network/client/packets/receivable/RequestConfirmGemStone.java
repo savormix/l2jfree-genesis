@@ -33,12 +33,7 @@ public abstract class RequestConfirmGemStone extends L2ClientPacket
 	 */
 	public static final class RequestSelectGemstone extends RequestConfirmGemStone
 	{
-		/**
-		 * @see RequestConfirmGemStone#RequestConfirmGemStone()
-		 */
-		public RequestSelectGemstone()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

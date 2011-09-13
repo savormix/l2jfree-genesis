@@ -33,12 +33,7 @@ public abstract class RequestSetSeed extends L2ClientPacket
 	 */
 	public static final class RequestSetupSeedSales extends RequestSetSeed
 	{
-		/**
-		 * @see RequestSetSeed#RequestSetSeed()
-		 */
-		public RequestSetupSeedSales()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

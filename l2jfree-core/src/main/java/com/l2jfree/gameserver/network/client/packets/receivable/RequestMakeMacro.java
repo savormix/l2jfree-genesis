@@ -33,12 +33,7 @@ public abstract class RequestMakeMacro extends L2ClientPacket
 	 */
 	public static final class RequestAddMacro extends RequestMakeMacro
 	{
-		/**
-		 * @see RequestMakeMacro#RequestMakeMacro()
-		 */
-		public RequestAddMacro()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

@@ -33,12 +33,7 @@ public abstract class CanNotMoveAnymore extends L2ClientPacket
 	 */
 	public static final class ReportLandingOnGround extends CanNotMoveAnymore
 	{
-		/**
-		 * @see CanNotMoveAnymore#CanNotMoveAnymore()
-		 */
-		public ReportLandingOnGround()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

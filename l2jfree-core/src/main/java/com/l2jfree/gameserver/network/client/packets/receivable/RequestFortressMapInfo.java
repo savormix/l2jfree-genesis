@@ -33,12 +33,7 @@ public abstract class RequestFortressMapInfo extends L2ClientPacket
 	 */
 	public static final class RequestFortressInfo extends RequestFortressMapInfo
 	{
-		/**
-		 * @see RequestFortressMapInfo#RequestFortressMapInfo()
-		 */
-		public RequestFortressInfo()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

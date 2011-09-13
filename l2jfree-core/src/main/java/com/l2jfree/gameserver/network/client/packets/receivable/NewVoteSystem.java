@@ -33,12 +33,7 @@ public abstract class NewVoteSystem extends L2ClientPacket
 	 */
 	public static final class RequestRecommend extends NewVoteSystem
 	{
-		/**
-		 * @see NewVoteSystem#NewVoteSystem()
-		 */
-		public RequestRecommend()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

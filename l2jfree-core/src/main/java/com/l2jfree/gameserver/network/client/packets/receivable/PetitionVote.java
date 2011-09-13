@@ -33,12 +33,7 @@ public abstract class PetitionVote extends L2ClientPacket
 	 */
 	public static final class RequestRateConsultation extends PetitionVote
 	{
-		/**
-		 * @see PetitionVote#PetitionVote()
-		 */
-		public RequestRateConsultation()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

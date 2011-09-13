@@ -33,12 +33,7 @@ public abstract class RequestEnchantItemAttribute extends L2ClientPacket
 	 */
 	public static final class RequestElementalEnchant extends RequestEnchantItemAttribute
 	{
-		/**
-		 * @see RequestEnchantItemAttribute#RequestEnchantItemAttribute()
-		 */
-		public RequestElementalEnchant()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

@@ -33,12 +33,7 @@ public abstract class RequestBBSWrite extends L2ClientPacket
 	 */
 	public static final class RequestSendCommunityBoardMessage extends RequestBBSWrite
 	{
-		/**
-		 * @see RequestBBSWrite#RequestBBSWrite()
-		 */
-		public RequestSendCommunityBoardMessage()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

@@ -33,12 +33,7 @@ public abstract class SnoopQuit extends L2ClientPacket
 	 */
 	public static final class StopEavesdropping extends SnoopQuit
 	{
-		/**
-		 * @see SnoopQuit#SnoopQuit()
-		 */
-		public StopEavesdropping()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

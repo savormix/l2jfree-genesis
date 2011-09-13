@@ -33,12 +33,7 @@ public abstract class RequestRefundItem extends L2ClientPacket
 	 */
 	public static final class RequestBuyback extends RequestRefundItem
 	{
-		/**
-		 * @see RequestRefundItem#RequestRefundItem()
-		 */
-		public RequestBuyback()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

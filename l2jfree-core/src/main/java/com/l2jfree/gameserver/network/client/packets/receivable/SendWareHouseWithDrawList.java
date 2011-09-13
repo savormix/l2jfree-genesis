@@ -33,12 +33,7 @@ public abstract class SendWareHouseWithDrawList extends L2ClientPacket
 	 */
 	public static final class RequestTransferFromWarehouse extends SendWareHouseWithDrawList
 	{
-		/**
-		 * @see SendWareHouseWithDrawList#SendWareHouseWithDrawList()
-		 */
-		public RequestTransferFromWarehouse()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

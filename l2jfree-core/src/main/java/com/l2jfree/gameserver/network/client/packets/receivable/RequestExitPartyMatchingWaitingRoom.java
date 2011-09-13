@@ -33,12 +33,7 @@ public abstract class RequestExitPartyMatchingWaitingRoom extends L2ClientPacket
 	 */
 	public static final class RequestLeavePartyMatching extends RequestExitPartyMatchingWaitingRoom
 	{
-		/**
-		 * @see RequestExitPartyMatchingWaitingRoom#RequestExitPartyMatchingWaitingRoom()
-		 */
-		public RequestLeavePartyMatching()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

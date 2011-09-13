@@ -33,12 +33,7 @@ public abstract class RequestPreviewItem extends L2ClientPacket
 	 */
 	public static final class RequestEquipmentPreview extends RequestPreviewItem
 	{
-		/**
-		 * @see RequestPreviewItem#RequestPreviewItem()
-		 */
-		public RequestEquipmentPreview()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

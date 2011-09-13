@@ -33,12 +33,7 @@ public abstract class FinishRotating extends L2ClientPacket
 	 */
 	public static final class RequestFinishRotation extends FinishRotating
 	{
-		/**
-		 * @see FinishRotating#FinishRotating()
-		 */
-		public RequestFinishRotation()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

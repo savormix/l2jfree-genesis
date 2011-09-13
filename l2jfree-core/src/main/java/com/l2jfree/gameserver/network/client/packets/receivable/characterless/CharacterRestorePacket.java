@@ -38,12 +38,7 @@ public abstract class CharacterRestorePacket extends L2ClientPacket
 	 */
 	public static final class RequestRestoreCharacter extends CharacterRestorePacket
 	{
-		/**
-		 * @see CharacterRestorePacket#CharacterRestorePacket()
-		 */
-		public RequestRestoreCharacter()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

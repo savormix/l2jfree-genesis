@@ -33,12 +33,7 @@ public abstract class RequestConfirmCastleSiegeWaitingList extends L2ClientPacke
 	 */
 	public static final class RequestAnswerDefenseApplication extends RequestConfirmCastleSiegeWaitingList
 	{
-		/**
-		 * @see RequestConfirmCastleSiegeWaitingList#RequestConfirmCastleSiegeWaitingList()
-		 */
-		public RequestAnswerDefenseApplication()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

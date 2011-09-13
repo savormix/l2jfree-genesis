@@ -33,12 +33,7 @@ public abstract class RequestSetCrop extends L2ClientPacket
 	 */
 	public static final class RequestSetupCropExchange extends RequestSetCrop
 	{
-		/**
-		 * @see RequestSetCrop#RequestSetCrop()
-		 */
-		public RequestSetupCropExchange()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

@@ -43,12 +43,7 @@ public abstract class CharacterSelect extends L2ClientPacket
 	 */
 	public static final class RequestSelectCharacter extends CharacterSelect
 	{
-		/**
-		 * @see CharacterSelect#CharacterSelect()
-		 */
-		public RequestSelectCharacter()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

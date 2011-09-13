@@ -33,12 +33,7 @@ public abstract class NotifyStartMiniGame extends L2ClientPacket
 	 */
 	public static final class ReportMinigameStarted extends NotifyStartMiniGame
 	{
-		/**
-		 * @see NotifyStartMiniGame#NotifyStartMiniGame()
-		 */
-		public ReportMinigameStarted()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

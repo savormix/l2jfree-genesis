@@ -33,12 +33,7 @@ public abstract class RequestAllyInfo extends L2ClientPacket
 	 */
 	public static final class RequestMyAllianceInfo extends RequestAllyInfo
 	{
-		/**
-		 * @see RequestAllyInfo#RequestAllyInfo()
-		 */
-		public RequestMyAllianceInfo()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

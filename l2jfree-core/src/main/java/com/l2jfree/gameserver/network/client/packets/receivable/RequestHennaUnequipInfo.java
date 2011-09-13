@@ -33,12 +33,7 @@ public abstract class RequestHennaUnequipInfo extends L2ClientPacket
 	 */
 	public static final class RequestHennaRemovalInfo extends RequestHennaUnequipInfo
 	{
-		/**
-		 * @see RequestHennaUnequipInfo#RequestHennaUnequipInfo()
-		 */
-		public RequestHennaRemovalInfo()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

@@ -33,12 +33,7 @@ public abstract class RequestReceivePost extends L2ClientPacket
 	 */
 	public static final class RequestCollectAttachments extends RequestReceivePost
 	{
-		/**
-		 * @see RequestReceivePost#RequestReceivePost()
-		 */
-		public RequestCollectAttachments()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

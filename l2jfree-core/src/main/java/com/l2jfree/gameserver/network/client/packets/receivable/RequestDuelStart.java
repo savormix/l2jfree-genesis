@@ -33,12 +33,7 @@ public abstract class RequestDuelStart extends L2ClientPacket
 	 */
 	public static final class RequestInviteToDuel extends RequestDuelStart
 	{
-		/**
-		 * @see RequestDuelStart#RequestDuelStart()
-		 */
-		public RequestInviteToDuel()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

@@ -33,12 +33,7 @@ public abstract class RequestHennaEquip extends L2ClientPacket
 	 */
 	public static final class RequestApplyHenna extends RequestHennaEquip
 	{
-		/**
-		 * @see RequestHennaEquip#RequestHennaEquip()
-		 */
-		public RequestApplyHenna()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

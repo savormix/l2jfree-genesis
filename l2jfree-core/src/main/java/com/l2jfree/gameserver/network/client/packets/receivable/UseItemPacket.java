@@ -33,12 +33,7 @@ public abstract class UseItemPacket extends L2ClientPacket
 	 */
 	public static final class RequestUseItem extends UseItemPacket
 	{
-		/**
-		 * @see UseItemPacket#UseItemPacket()
-		 */
-		public RequestUseItem()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

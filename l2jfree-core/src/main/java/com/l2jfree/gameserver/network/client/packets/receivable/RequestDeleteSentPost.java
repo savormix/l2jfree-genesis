@@ -33,12 +33,7 @@ public abstract class RequestDeleteSentPost extends L2ClientPacket
 	 */
 	public static final class RequestDeleteFromOutbox extends RequestDeleteSentPost
 	{
-		/**
-		 * @see RequestDeleteSentPost#RequestDeleteSentPost()
-		 */
-		public RequestDeleteFromOutbox()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

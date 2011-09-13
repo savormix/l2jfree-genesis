@@ -33,12 +33,7 @@ public abstract class RequestRemainTime extends L2ClientPacket
 	 */
 	public static final class RequestWeekTimeRemaining extends RequestRemainTime
 	{
-		/**
-		 * @see RequestRemainTime#RequestRemainTime()
-		 */
-		public RequestWeekTimeRemaining()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

@@ -33,12 +33,7 @@ public abstract class RequestRefineCancel extends L2ClientPacket
 	 */
 	public static final class RequestRefineRemoval extends RequestRefineCancel
 	{
-		/**
-		 * @see RequestRefineCancel#RequestRefineCancel()
-		 */
-		public RequestRefineRemoval()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

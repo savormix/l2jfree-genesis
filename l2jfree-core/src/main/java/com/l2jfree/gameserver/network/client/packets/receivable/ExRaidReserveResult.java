@@ -33,12 +33,7 @@ public abstract class ExRaidReserveResult extends L2ClientPacket
 	 */
 	public static final class RequestRaidReserveResult extends ExRaidReserveResult
 	{
-		/**
-		 * @see ExRaidReserveResult#ExRaidReserveResult()
-		 */
-		public RequestRaidReserveResult()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

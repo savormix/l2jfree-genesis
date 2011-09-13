@@ -33,12 +33,7 @@ public abstract class SendApperingPacket extends L2ClientPacket
 	 */
 	public static final class RequestAppearing extends SendApperingPacket
 	{
-		/**
-		 * @see SendApperingPacket#SendApperingPacket()
-		 */
-		public RequestAppearing()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

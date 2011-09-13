@@ -33,12 +33,7 @@ public abstract class RequestGiveItemToPet extends L2ClientPacket
 	 */
 	public static final class RequestTransferToPet extends RequestGiveItemToPet
 	{
-		/**
-		 * @see RequestGiveItemToPet#RequestGiveItemToPet()
-		 */
-		public RequestTransferToPet()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

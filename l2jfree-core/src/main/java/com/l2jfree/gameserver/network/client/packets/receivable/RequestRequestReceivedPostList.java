@@ -33,12 +33,7 @@ public abstract class RequestRequestReceivedPostList extends L2ClientPacket
 	 */
 	public static final class RequestShowInbox extends RequestRequestReceivedPostList
 	{
-		/**
-		 * @see RequestRequestReceivedPostList#RequestRequestReceivedPostList()
-		 */
-		public RequestShowInbox()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

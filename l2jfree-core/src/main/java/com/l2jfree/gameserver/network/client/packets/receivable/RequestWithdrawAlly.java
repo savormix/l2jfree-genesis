@@ -33,12 +33,7 @@ public abstract class RequestWithdrawAlly extends L2ClientPacket
 	 */
 	public static final class RequestLeaveAlliance extends RequestWithdrawAlly
 	{
-		/**
-		 * @see RequestWithdrawAlly#RequestWithdrawAlly()
-		 */
-		public RequestLeaveAlliance()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

@@ -33,12 +33,7 @@ public abstract class RequestRestartPoint extends L2ClientPacket
 	 */
 	public static final class RequestDefaultRevival extends RequestRestartPoint
 	{
-		/**
-		 * @see RequestRestartPoint#RequestRestartPoint()
-		 */
-		public RequestDefaultRevival()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

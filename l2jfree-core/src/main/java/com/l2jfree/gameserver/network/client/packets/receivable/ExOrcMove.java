@@ -34,12 +34,7 @@ public abstract class ExOrcMove extends L2ClientPacket
 	 */
 	public static final class AnswerProcessBlock extends ExOrcMove
 	{
-		/**
-		 * @see ExOrcMove#ExOrcMove()
-		 */
-		public AnswerProcessBlock()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

@@ -37,12 +37,7 @@ public abstract class EnterWorld extends L2ClientPacket
 	 */
 	public static final class RequestEnterWorld extends EnterWorld
 	{
-		/**
-		 * @see EnterWorld#EnterWorld()
-		 */
-		public RequestEnterWorld()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

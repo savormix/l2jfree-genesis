@@ -39,12 +39,7 @@ public abstract class NewCharacterPacket extends L2ClientPacket
 	 */
 	public static final class RequestCharacterTemplates extends NewCharacterPacket
 	{
-		/**
-		 * @see NewCharacterPacket#NewCharacterPacket()
-		 */
-		public RequestCharacterTemplates()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

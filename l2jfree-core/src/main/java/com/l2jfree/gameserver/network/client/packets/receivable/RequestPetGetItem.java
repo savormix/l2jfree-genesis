@@ -33,12 +33,7 @@ public abstract class RequestPetGetItem extends L2ClientPacket
 	 */
 	public static final class RequestPetTakeItem extends RequestPetGetItem
 	{
-		/**
-		 * @see RequestPetGetItem#RequestPetGetItem()
-		 */
-		public RequestPetTakeItem()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

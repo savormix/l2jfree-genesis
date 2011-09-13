@@ -33,12 +33,7 @@ public abstract class RequestFortressSiegeInfo extends L2ClientPacket
 	 */
 	public static final class RequestFortressSiegeInfoList extends RequestFortressSiegeInfo
 	{
-		/**
-		 * @see RequestFortressSiegeInfo#RequestFortressSiegeInfo()
-		 */
-		public RequestFortressSiegeInfoList()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

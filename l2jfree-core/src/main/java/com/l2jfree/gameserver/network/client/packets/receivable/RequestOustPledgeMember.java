@@ -33,12 +33,7 @@ public abstract class RequestOustPledgeMember extends L2ClientPacket
 	 */
 	public static final class RequestDismissPledgeMember extends RequestOustPledgeMember
 	{
-		/**
-		 * @see RequestOustPledgeMember#RequestOustPledgeMember()
-		 */
-		public RequestDismissPledgeMember()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

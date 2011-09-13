@@ -33,12 +33,7 @@ public abstract class RequestExRemoveItemAttribute extends L2ClientPacket
 	 */
 	public static final class RequestElementRemoval extends RequestExRemoveItemAttribute
 	{
-		/**
-		 * @see RequestExRemoveItemAttribute#RequestExRemoveItemAttribute()
-		 */
-		public RequestElementRemoval()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

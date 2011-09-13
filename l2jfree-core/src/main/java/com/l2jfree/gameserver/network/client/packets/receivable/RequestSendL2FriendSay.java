@@ -33,12 +33,7 @@ public abstract class RequestSendL2FriendSay extends L2ClientPacket
 	 */
 	public static final class RequestSendFriendMessage extends RequestSendL2FriendSay
 	{
-		/**
-		 * @see RequestSendL2FriendSay#RequestSendL2FriendSay()
-		 */
-		public RequestSendFriendMessage()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

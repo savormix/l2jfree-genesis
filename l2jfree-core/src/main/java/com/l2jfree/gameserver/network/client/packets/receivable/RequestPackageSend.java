@@ -33,12 +33,7 @@ public abstract class RequestPackageSend extends L2ClientPacket
 	 */
 	public static final class RequestDimensionalItemTransfer extends RequestPackageSend
 	{
-		/**
-		 * @see RequestPackageSend#RequestPackageSend()
-		 */
-		public RequestDimensionalItemTransfer()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

@@ -33,12 +33,7 @@ public abstract class RequestAnswerJoinParty extends L2ClientPacket
 	 */
 	public static final class RequestAnswerPartyInvitation extends RequestAnswerJoinParty
 	{
-		/**
-		 * @see RequestAnswerJoinParty#RequestAnswerJoinParty()
-		 */
-		public RequestAnswerPartyInvitation()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

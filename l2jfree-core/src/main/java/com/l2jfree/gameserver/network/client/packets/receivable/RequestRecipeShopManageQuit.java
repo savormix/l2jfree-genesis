@@ -33,12 +33,7 @@ public abstract class RequestRecipeShopManageQuit extends L2ClientPacket
 	 */
 	public static final class RequestEndManufacture extends RequestRecipeShopManageQuit
 	{
-		/**
-		 * @see RequestRecipeShopManageQuit#RequestRecipeShopManageQuit()
-		 */
-		public RequestEndManufacture()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

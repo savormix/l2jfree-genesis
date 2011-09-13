@@ -33,12 +33,7 @@ public abstract class RequestCursedWeaponLocation extends L2ClientPacket
 	 */
 	public static final class RequestCursedWeaponInfoList extends RequestCursedWeaponLocation
 	{
-		/**
-		 * @see RequestCursedWeaponLocation#RequestCursedWeaponLocation()
-		 */
-		public RequestCursedWeaponInfoList()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

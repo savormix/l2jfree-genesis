@@ -33,12 +33,7 @@ public abstract class RequestRecipeShopMakeInfo extends L2ClientPacket
 	 */
 	public static final class RequestManufactureRecipeInfo extends RequestRecipeShopMakeInfo
 	{
-		/**
-		 * @see RequestRecipeShopMakeInfo#RequestRecipeShopMakeInfo()
-		 */
-		public RequestManufactureRecipeInfo()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

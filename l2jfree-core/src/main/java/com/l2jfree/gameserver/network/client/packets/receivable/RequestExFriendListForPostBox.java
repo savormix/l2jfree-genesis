@@ -33,12 +33,7 @@ public abstract class RequestExFriendListForPostBox extends L2ClientPacket
 	 */
 	public static final class RequestExtendedFriendList extends RequestExFriendListForPostBox
 	{
-		/**
-		 * @see RequestExFriendListForPostBox#RequestExFriendListForPostBox()
-		 */
-		public RequestExtendedFriendList()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

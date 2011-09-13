@@ -33,12 +33,7 @@ public abstract class TradeDonePacket extends L2ClientPacket
 	 */
 	public static final class RequestEndTrading extends TradeDonePacket
 	{
-		/**
-		 * @see TradeDonePacket#TradeDonePacket()
-		 */
-		public RequestEndTrading()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

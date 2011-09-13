@@ -33,12 +33,7 @@ public abstract class RequestFriendInvite extends L2ClientPacket
 	 */
 	public static final class RequestInviteToFriends extends RequestFriendInvite
 	{
-		/**
-		 * @see RequestFriendInvite#RequestFriendInvite()
-		 */
-		public RequestInviteToFriends()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

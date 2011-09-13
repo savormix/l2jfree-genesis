@@ -33,12 +33,7 @@ public abstract class RequestQuestList extends L2ClientPacket
 	 */
 	public static final class RequestActiveQuestList extends RequestQuestList
 	{
-		/**
-		 * @see RequestQuestList#RequestQuestList()
-		 */
-		public RequestActiveQuestList()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

@@ -33,12 +33,7 @@ public abstract class RequestPetition extends L2ClientPacket
 	 */
 	public static final class RequestConsultation extends RequestPetition
 	{
-		/**
-		 * @see RequestPetition#RequestPetition()
-		 */
-		public RequestConsultation()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

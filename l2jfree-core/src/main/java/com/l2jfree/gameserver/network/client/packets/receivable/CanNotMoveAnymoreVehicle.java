@@ -33,12 +33,7 @@ public abstract class CanNotMoveAnymoreVehicle extends L2ClientPacket
 	 */
 	public static final class ReportLandingInVehicle extends CanNotMoveAnymoreVehicle
 	{
-		/**
-		 * @see CanNotMoveAnymoreVehicle#CanNotMoveAnymoreVehicle()
-		 */
-		public ReportLandingInVehicle()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

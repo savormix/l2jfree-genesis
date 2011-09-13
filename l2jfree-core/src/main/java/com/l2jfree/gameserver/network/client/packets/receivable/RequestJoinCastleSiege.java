@@ -33,12 +33,7 @@ public abstract class RequestJoinCastleSiege extends L2ClientPacket
 	 */
 	public static final class RequestSiegeRegistration extends RequestJoinCastleSiege
 	{
-		/**
-		 * @see RequestJoinCastleSiege#RequestJoinCastleSiege()
-		 */
-		public RequestSiegeRegistration()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

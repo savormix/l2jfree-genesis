@@ -33,12 +33,7 @@ public abstract class RequestPledgePower extends L2ClientPacket
 	 */
 	public static final class RequestUpdatePledgePower extends RequestPledgePower
 	{
-		/**
-		 * @see RequestPledgePower#RequestPledgePower()
-		 */
-		public RequestUpdatePledgePower()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

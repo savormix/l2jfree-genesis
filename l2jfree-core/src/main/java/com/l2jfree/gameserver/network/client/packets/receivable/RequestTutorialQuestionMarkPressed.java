@@ -33,12 +33,7 @@ public abstract class RequestTutorialQuestionMarkPressed extends L2ClientPacket
 	 */
 	public static final class RequestTutorialMarkInfo extends RequestTutorialQuestionMarkPressed
 	{
-		/**
-		 * @see RequestTutorialQuestionMarkPressed#RequestTutorialQuestionMarkPressed()
-		 */
-		public RequestTutorialMarkInfo()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

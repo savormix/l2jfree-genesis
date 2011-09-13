@@ -33,12 +33,7 @@ public abstract class AnswerPartyLootModification extends L2ClientPacket
 	 */
 	public static final class RequestAnswerChangeItemDistribution extends AnswerPartyLootModification
 	{
-		/**
-		 * @see AnswerPartyLootModification#AnswerPartyLootModification()
-		 */
-		public RequestAnswerChangeItemDistribution()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

@@ -33,12 +33,7 @@ public abstract class RequestWriteHeroWords extends L2ClientPacket
 	 */
 	public static final class RequestSetHeroRecordMessage extends RequestWriteHeroWords
 	{
-		/**
-		 * @see RequestWriteHeroWords#RequestWriteHeroWords()
-		 */
-		public RequestSetHeroRecordMessage()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

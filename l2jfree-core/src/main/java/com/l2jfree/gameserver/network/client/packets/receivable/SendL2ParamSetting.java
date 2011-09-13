@@ -33,12 +33,7 @@ public abstract class SendL2ParamSetting extends L2ClientPacket
 	 */
 	public static final class RequestChangeServerParameter extends SendL2ParamSetting
 	{
-		/**
-		 * @see SendL2ParamSetting#SendL2ParamSetting()
-		 */
-		public RequestChangeServerParameter()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

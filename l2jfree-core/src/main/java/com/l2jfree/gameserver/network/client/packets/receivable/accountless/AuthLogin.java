@@ -44,12 +44,7 @@ public abstract class AuthLogin extends L2ClientPacket
 	 */
 	public static final class RequestAuthorization extends AuthLogin
 	{
-		/**
-		 * @see AuthLogin#AuthLogin()
-		 */
-		public RequestAuthorization()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

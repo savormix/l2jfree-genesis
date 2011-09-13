@@ -33,12 +33,7 @@ public abstract class RequestShowboard extends L2ClientPacket
 	 */
 	public static final class RequestCommunityBoard extends RequestShowboard
 	{
-		/**
-		 * @see RequestShowboard#RequestShowboard()
-		 */
-		public RequestCommunityBoard()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

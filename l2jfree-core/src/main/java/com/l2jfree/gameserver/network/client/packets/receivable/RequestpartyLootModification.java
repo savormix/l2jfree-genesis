@@ -33,12 +33,7 @@ public abstract class RequestpartyLootModification extends L2ClientPacket
 	 */
 	public static final class RequestChangeItemDistribution extends RequestpartyLootModification
 	{
-		/**
-		 * @see RequestpartyLootModification#RequestpartyLootModification()
-		 */
-		public RequestChangeItemDistribution()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

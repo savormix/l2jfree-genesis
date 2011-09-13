@@ -33,12 +33,7 @@ public abstract class RequestSeedPhase extends L2ClientPacket
 	 */
 	public static final class RequestGraciaSeedInfo extends RequestSeedPhase
 	{
-		/**
-		 * @see RequestSeedPhase#RequestSeedPhase()
-		 */
-		public RequestGraciaSeedInfo()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

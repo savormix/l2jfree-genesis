@@ -33,12 +33,7 @@ public abstract class RequestPCCafeCouponUse extends L2ClientPacket
 	 */
 	public static final class RequestSubmitCafeCouponNumber extends RequestPCCafeCouponUse
 	{
-		/**
-		 * @see RequestPCCafeCouponUse#RequestPCCafeCouponUse()
-		 */
-		public RequestSubmitCafeCouponNumber()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

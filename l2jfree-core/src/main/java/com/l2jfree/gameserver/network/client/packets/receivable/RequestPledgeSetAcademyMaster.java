@@ -33,12 +33,7 @@ public abstract class RequestPledgeSetAcademyMaster extends L2ClientPacket
 	 */
 	public static final class RequestSetupSponsorship extends RequestPledgeSetAcademyMaster
 	{
-		/**
-		 * @see RequestPledgeSetAcademyMaster#RequestPledgeSetAcademyMaster()
-		 */
-		public RequestSetupSponsorship()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

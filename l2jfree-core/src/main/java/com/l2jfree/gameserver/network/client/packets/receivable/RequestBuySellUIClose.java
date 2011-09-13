@@ -33,12 +33,7 @@ public abstract class RequestBuySellUIClose extends L2ClientPacket
 	 */
 	public static final class ReportClosedShopUI extends RequestBuySellUIClose
 	{
-		/**
-		 * @see RequestBuySellUIClose#RequestBuySellUIClose()
-		 */
-		public ReportClosedShopUI()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

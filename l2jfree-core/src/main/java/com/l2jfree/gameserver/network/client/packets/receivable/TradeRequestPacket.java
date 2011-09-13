@@ -33,12 +33,7 @@ public abstract class TradeRequestPacket extends L2ClientPacket
 	 */
 	public static final class RequestStartTrading extends TradeRequestPacket
 	{
-		/**
-		 * @see TradeRequestPacket#TradeRequestPacket()
-		 */
-		public RequestStartTrading()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

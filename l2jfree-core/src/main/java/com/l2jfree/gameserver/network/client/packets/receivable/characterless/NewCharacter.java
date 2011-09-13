@@ -47,12 +47,7 @@ public abstract class NewCharacter extends L2ClientPacket
 	 */
 	public static final class RequestNewCharacter extends NewCharacter
 	{
-		/**
-		 * @see NewCharacter#NewCharacter()
-		 */
-		public RequestNewCharacter()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

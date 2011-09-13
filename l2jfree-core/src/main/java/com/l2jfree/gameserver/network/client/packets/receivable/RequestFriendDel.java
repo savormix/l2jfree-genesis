@@ -33,12 +33,7 @@ public abstract class RequestFriendDel extends L2ClientPacket
 	 */
 	public static final class RequestRemoveFriend extends RequestFriendDel
 	{
-		/**
-		 * @see RequestFriendDel#RequestFriendDel()
-		 */
-		public RequestRemoveFriend()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

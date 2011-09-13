@@ -34,12 +34,7 @@ public abstract class ReplyGameGuardQuery extends L2ClientPacket
 	 */
 	public static final class AnswerGameGuard extends ReplyGameGuardQuery
 	{
-		/**
-		 * @see ReplyGameGuardQuery#ReplyGameGuardQuery()
-		 */
-		public AnswerGameGuard()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

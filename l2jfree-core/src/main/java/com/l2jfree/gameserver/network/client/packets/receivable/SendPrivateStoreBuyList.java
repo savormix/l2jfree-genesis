@@ -33,12 +33,7 @@ public abstract class SendPrivateStoreBuyList extends L2ClientPacket
 	 */
 	public static final class RequestTransferFromSellShop extends SendPrivateStoreBuyList
 	{
-		/**
-		 * @see SendPrivateStoreBuyList#SendPrivateStoreBuyList()
-		 */
-		public RequestTransferFromSellShop()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

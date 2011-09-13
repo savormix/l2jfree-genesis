@@ -33,12 +33,7 @@ public abstract class RequestBidItemAuction extends L2ClientPacket
 	 */
 	public static final class RequestAuctionBid extends RequestBidItemAuction
 	{
-		/**
-		 * @see RequestBidItemAuction#RequestBidItemAuction()
-		 */
-		public RequestAuctionBid()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

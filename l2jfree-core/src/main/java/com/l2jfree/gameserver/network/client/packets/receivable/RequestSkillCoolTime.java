@@ -33,12 +33,7 @@ public abstract class RequestSkillCoolTime extends L2ClientPacket
 	 */
 	public static final class RequestSkillCooldownList extends RequestSkillCoolTime
 	{
-		/**
-		 * @see RequestSkillCoolTime#RequestSkillCoolTime()
-		 */
-		public RequestSkillCooldownList()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

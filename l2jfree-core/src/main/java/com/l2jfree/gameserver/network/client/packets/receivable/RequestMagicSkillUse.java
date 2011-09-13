@@ -33,12 +33,7 @@ public abstract class RequestMagicSkillUse extends L2ClientPacket
 	 */
 	public static final class RequestUseSkill extends RequestMagicSkillUse
 	{
-		/**
-		 * @see RequestMagicSkillUse#RequestMagicSkillUse()
-		 */
-		public RequestUseSkill()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

@@ -33,12 +33,7 @@ public abstract class RequestOpenMinimap extends L2ClientPacket
 	 */
 	public static final class RequestMiniMap extends RequestOpenMinimap
 	{
-		/**
-		 * @see RequestOpenMinimap#RequestOpenMinimap()
-		 */
-		public RequestMiniMap()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

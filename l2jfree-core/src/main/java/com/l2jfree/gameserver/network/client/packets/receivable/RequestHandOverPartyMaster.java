@@ -33,12 +33,7 @@ public abstract class RequestHandOverPartyMaster extends L2ClientPacket
 	 */
 	public static final class RequestDelegateParty extends RequestHandOverPartyMaster
 	{
-		/**
-		 * @see RequestHandOverPartyMaster#RequestHandOverPartyMaster()
-		 */
-		public RequestDelegateParty()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

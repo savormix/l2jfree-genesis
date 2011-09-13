@@ -33,12 +33,7 @@ public abstract class RequestChangeNicknameColor extends L2ClientPacket
 	 */
 	public static final class RequestColoredTitle extends RequestChangeNicknameColor
 	{
-		/**
-		 * @see RequestChangeNicknameColor#RequestChangeNicknameColor()
-		 */
-		public RequestColoredTitle()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

@@ -33,12 +33,7 @@ public abstract class RequestExFishRanking extends L2ClientPacket
 	 */
 	public static final class RequestRankedCatchList extends RequestExFishRanking
 	{
-		/**
-		 * @see RequestExFishRanking#RequestExFishRanking()
-		 */
-		public RequestRankedCatchList()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

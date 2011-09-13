@@ -33,12 +33,7 @@ public abstract class SetPrivateStoreWholeMsg extends L2ClientPacket
 	 */
 	public static final class RequestUpdatePackageShop extends SetPrivateStoreWholeMsg
 	{
-		/**
-		 * @see SetPrivateStoreWholeMsg#SetPrivateStoreWholeMsg()
-		 */
-		public RequestUpdatePackageShop()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

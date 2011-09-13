@@ -33,12 +33,7 @@ public abstract class RequestExMPCCShowPartyMembersInfo extends L2ClientPacket
 	 */
 	public static final class RequestCommandChannelMemberInfo extends RequestExMPCCShowPartyMembersInfo
 	{
-		/**
-		 * @see RequestExMPCCShowPartyMembersInfo#RequestExMPCCShowPartyMembersInfo()
-		 */
-		public RequestCommandChannelMemberInfo()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

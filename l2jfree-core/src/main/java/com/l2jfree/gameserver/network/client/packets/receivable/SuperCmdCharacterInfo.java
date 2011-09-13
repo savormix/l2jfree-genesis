@@ -33,12 +33,7 @@ public abstract class SuperCmdCharacterInfo extends L2ClientPacket
 	 */
 	public static final class RequestViewPlayerInfo extends SuperCmdCharacterInfo
 	{
-		/**
-		 * @see SuperCmdCharacterInfo#SuperCmdCharacterInfo()
-		 */
-		public RequestViewPlayerInfo()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

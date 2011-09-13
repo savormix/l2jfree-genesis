@@ -33,12 +33,7 @@ public abstract class Say2 extends L2ClientPacket
 	 */
 	public static final class RequestSendChatMessage extends Say2
 	{
-		/**
-		 * @see Say2#Say2()
-		 */
-		public RequestSendChatMessage()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

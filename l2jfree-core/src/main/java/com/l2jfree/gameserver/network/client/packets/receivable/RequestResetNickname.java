@@ -33,12 +33,7 @@ public abstract class RequestResetNickname extends L2ClientPacket
 	 */
 	public static final class RequestResetTitle extends RequestResetNickname
 	{
-		/**
-		 * @see RequestResetNickname#RequestResetNickname()
-		 */
-		public RequestResetTitle()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

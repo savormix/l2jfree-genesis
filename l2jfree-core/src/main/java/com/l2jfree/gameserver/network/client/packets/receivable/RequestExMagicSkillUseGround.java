@@ -33,12 +33,7 @@ public abstract class RequestExMagicSkillUseGround extends L2ClientPacket
 	 */
 	public static final class RequestUseSkillOnGround extends RequestExMagicSkillUseGround
 	{
-		/**
-		 * @see RequestExMagicSkillUseGround#RequestExMagicSkillUseGround()
-		 */
-		public RequestUseSkillOnGround()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

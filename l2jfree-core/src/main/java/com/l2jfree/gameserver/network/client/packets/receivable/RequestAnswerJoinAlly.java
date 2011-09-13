@@ -33,12 +33,7 @@ public abstract class RequestAnswerJoinAlly extends L2ClientPacket
 	 */
 	public static final class RequestAnswerAllianceInvitation extends RequestAnswerJoinAlly
 	{
-		/**
-		 * @see RequestAnswerJoinAlly#RequestAnswerJoinAlly()
-		 */
-		public RequestAnswerAllianceInvitation()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

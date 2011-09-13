@@ -33,12 +33,7 @@ public abstract class RequestPledgeReorganizeMember extends L2ClientPacket
 	 */
 	public static final class RequestSwapUnitMembers extends RequestPledgeReorganizeMember
 	{
-		/**
-		 * @see RequestPledgeReorganizeMember#RequestPledgeReorganizeMember()
-		 */
-		public RequestSwapUnitMembers()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

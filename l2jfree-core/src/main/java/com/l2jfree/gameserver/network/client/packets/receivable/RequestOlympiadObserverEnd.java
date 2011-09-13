@@ -33,12 +33,7 @@ public abstract class RequestOlympiadObserverEnd extends L2ClientPacket
 	 */
 	public static final class RequestEndOlympiadSpectation extends RequestOlympiadObserverEnd
 	{
-		/**
-		 * @see RequestOlympiadObserverEnd#RequestOlympiadObserverEnd()
-		 */
-		public RequestEndOlympiadSpectation()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

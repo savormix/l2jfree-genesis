@@ -33,12 +33,7 @@ public abstract class MoveToLocationInAirShip extends L2ClientPacket
 	 */
 	public static final class RequestMovementInAircraft extends MoveToLocationInAirShip
 	{
-		/**
-		 * @see MoveToLocationInAirShip#MoveToLocationInAirShip()
-		 */
-		public RequestMovementInAircraft()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

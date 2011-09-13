@@ -33,12 +33,7 @@ public abstract class RequestExShowPostFriendListForPostBox extends L2ClientPack
 	 */
 	public static final class RequestMailContactList extends RequestExShowPostFriendListForPostBox
 	{
-		/**
-		 * @see RequestExShowPostFriendListForPostBox#RequestExShowPostFriendListForPostBox()
-		 */
-		public RequestMailContactList()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

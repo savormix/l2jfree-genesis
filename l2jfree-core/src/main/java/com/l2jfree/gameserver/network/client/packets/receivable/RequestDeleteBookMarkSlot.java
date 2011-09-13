@@ -33,12 +33,7 @@ public abstract class RequestDeleteBookMarkSlot extends L2ClientPacket
 	 */
 	public static final class RequestRemoveTeleportBookmark extends RequestDeleteBookMarkSlot
 	{
-		/**
-		 * @see RequestDeleteBookMarkSlot#RequestDeleteBookMarkSlot()
-		 */
-		public RequestRemoveTeleportBookmark()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

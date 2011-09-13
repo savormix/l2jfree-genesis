@@ -40,12 +40,7 @@ public abstract class CharacterDeletePacket extends L2ClientPacket
 	 */
 	public static final class RequestDeleteCharacter extends CharacterDeletePacket
 	{
-		/**
-		 * @see CharacterDeletePacket#CharacterDeletePacket()
-		 */
-		public RequestDeleteCharacter()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

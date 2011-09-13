@@ -33,12 +33,7 @@ public abstract class RequestPrivateStoreQuitSell extends L2ClientPacket
 	 */
 	public static final class RequestEndSellShop extends RequestPrivateStoreQuitSell
 	{
-		/**
-		 * @see RequestPrivateStoreQuitSell#RequestPrivateStoreQuitSell()
-		 */
-		public RequestEndSellShop()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

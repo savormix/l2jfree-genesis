@@ -33,12 +33,7 @@ public abstract class RequestStartShowCrataeCubeRank extends L2ClientPacket
 	 */
 	public static final class RequestKrateisCubeRanking extends RequestStartShowCrataeCubeRank
 	{
-		/**
-		 * @see RequestStartShowCrataeCubeRank#RequestStartShowCrataeCubeRank()
-		 */
-		public RequestKrateisCubeRanking()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

@@ -33,12 +33,7 @@ public abstract class RequestExBlockGameVote extends L2ClientPacket
 	 */
 	public static final class RequestAnswerStartBlockChecker extends RequestExBlockGameVote
 	{
-		/**
-		 * @see RequestExBlockGameVote#RequestExBlockGameVote()
-		 */
-		public RequestAnswerStartBlockChecker()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

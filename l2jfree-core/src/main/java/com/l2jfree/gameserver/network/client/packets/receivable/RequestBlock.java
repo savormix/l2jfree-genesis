@@ -33,12 +33,7 @@ public abstract class RequestBlock extends L2ClientPacket
 	 */
 	public static final class RequestMessageRefusal extends RequestBlock
 	{
-		/**
-		 * @see RequestBlock#RequestBlock()
-		 */
-		public RequestMessageRefusal()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

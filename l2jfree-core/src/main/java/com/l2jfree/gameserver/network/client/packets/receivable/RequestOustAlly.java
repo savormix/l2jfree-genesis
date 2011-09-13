@@ -33,12 +33,7 @@ public abstract class RequestOustAlly extends L2ClientPacket
 	 */
 	public static final class RequestDismissAllianceMember extends RequestOustAlly
 	{
-		/**
-		 * @see RequestOustAlly#RequestOustAlly()
-		 */
-		public RequestDismissAllianceMember()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

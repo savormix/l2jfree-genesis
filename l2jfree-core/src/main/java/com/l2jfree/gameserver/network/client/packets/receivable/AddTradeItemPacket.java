@@ -33,12 +33,7 @@ public abstract class AddTradeItemPacket extends L2ClientPacket
 	 */
 	public static final class RequestOfferItem extends AddTradeItemPacket
 	{
-		/**
-		 * @see AddTradeItemPacket#AddTradeItemPacket()
-		 */
-		public RequestOfferItem()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

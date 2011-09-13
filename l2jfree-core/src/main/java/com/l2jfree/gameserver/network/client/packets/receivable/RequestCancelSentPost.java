@@ -33,12 +33,7 @@ public abstract class RequestCancelSentPost extends L2ClientPacket
 	 */
 	public static final class RequestCancelSentMailMessage extends RequestCancelSentPost
 	{
-		/**
-		 * @see RequestCancelSentPost#RequestCancelSentPost()
-		 */
-		public RequestCancelSentMailMessage()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

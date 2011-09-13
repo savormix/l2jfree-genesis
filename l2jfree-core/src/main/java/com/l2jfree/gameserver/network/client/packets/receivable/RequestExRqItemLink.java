@@ -33,12 +33,7 @@ public abstract class RequestExRqItemLink extends L2ClientPacket
 	 */
 	public static final class RequestLinkItem extends RequestExRqItemLink
 	{
-		/**
-		 * @see RequestExRqItemLink#RequestExRqItemLink()
-		 */
-		public RequestLinkItem()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

@@ -33,12 +33,7 @@ public abstract class RequestObserverEndPacket extends L2ClientPacket
 	 */
 	public static final class RequestEndObservation extends RequestObserverEndPacket
 	{
-		/**
-		 * @see RequestObserverEndPacket#RequestObserverEndPacket()
-		 */
-		public RequestEndObservation()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

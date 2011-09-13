@@ -33,12 +33,7 @@ public abstract class EndScenePlayer extends L2ClientPacket
 	 */
 	public static final class ReportFinishedCinematic extends EndScenePlayer
 	{
-		/**
-		 * @see EndScenePlayer#EndScenePlayer()
-		 */
-		public ReportFinishedCinematic()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

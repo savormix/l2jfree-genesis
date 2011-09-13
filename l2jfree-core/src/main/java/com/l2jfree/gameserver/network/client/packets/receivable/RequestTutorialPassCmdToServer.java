@@ -33,12 +33,7 @@ public abstract class RequestTutorialPassCmdToServer extends L2ClientPacket
 	 */
 	public static final class RequestTutorialCommand extends RequestTutorialPassCmdToServer
 	{
-		/**
-		 * @see RequestTutorialPassCmdToServer#RequestTutorialPassCmdToServer()
-		 */
-		public RequestTutorialCommand()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

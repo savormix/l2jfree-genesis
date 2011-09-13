@@ -33,12 +33,7 @@ public abstract class RequestPrivateStoreBuyManage extends L2ClientPacket
 	 */
 	public static final class RequestBuyShopSetup extends RequestPrivateStoreBuyManage
 	{
-		/**
-		 * @see RequestPrivateStoreBuyManage#RequestPrivateStoreBuyManage()
-		 */
-		public RequestBuyShopSetup()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

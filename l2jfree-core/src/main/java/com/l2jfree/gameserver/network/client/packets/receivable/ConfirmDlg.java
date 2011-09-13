@@ -33,12 +33,7 @@ public abstract class ConfirmDlg extends L2ClientPacket
 	 */
 	public static final class RequestDialogAnswer extends ConfirmDlg
 	{
-		/**
-		 * @see ConfirmDlg#ConfirmDlg()
-		 */
-		public RequestDialogAnswer()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

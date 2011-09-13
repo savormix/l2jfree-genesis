@@ -33,12 +33,7 @@ public abstract class RequestMagicSkillList extends L2ClientPacket
 	 */
 	public static final class ReportCharacterInfo extends RequestMagicSkillList
 	{
-		/**
-		 * @see RequestMagicSkillList#RequestMagicSkillList()
-		 */
-		public ReportCharacterInfo()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

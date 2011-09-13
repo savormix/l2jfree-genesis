@@ -33,12 +33,7 @@ public abstract class SuperCmdSummonCmd extends L2ClientPacket
 	 */
 	public static final class RequestSummonPlayer extends SuperCmdSummonCmd
 	{
-		/**
-		 * @see SuperCmdSummonCmd#SuperCmdSummonCmd()
-		 */
-		public RequestSummonPlayer()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

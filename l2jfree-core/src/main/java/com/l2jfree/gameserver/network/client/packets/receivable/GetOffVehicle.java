@@ -33,12 +33,7 @@ public abstract class GetOffVehicle extends L2ClientPacket
 	 */
 	public static final class RequestDeboardVehicle extends GetOffVehicle
 	{
-		/**
-		 * @see GetOffVehicle#GetOffVehicle()
-		 */
-		public RequestDeboardVehicle()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

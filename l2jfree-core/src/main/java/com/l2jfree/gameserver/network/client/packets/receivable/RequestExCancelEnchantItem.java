@@ -33,12 +33,7 @@ public abstract class RequestExCancelEnchantItem extends L2ClientPacket
 	 */
 	public static final class RequestCancelItemToEnchant extends RequestExCancelEnchantItem
 	{
-		/**
-		 * @see RequestExCancelEnchantItem#RequestExCancelEnchantItem()
-		 */
-		public RequestCancelItemToEnchant()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

@@ -33,12 +33,7 @@ public abstract class RequestExBlockGameEnter extends L2ClientPacket
 	 */
 	public static final class RequestChangeBlockCheckerTeam extends RequestExBlockGameEnter
 	{
-		/**
-		 * @see RequestExBlockGameEnter#RequestExBlockGameEnter()
-		 */
-		public RequestChangeBlockCheckerTeam()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

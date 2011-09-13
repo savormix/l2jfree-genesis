@@ -33,12 +33,7 @@ public abstract class RequestDispel extends L2ClientPacket
 	 */
 	public static final class RequestCancelEffect extends RequestDispel
 	{
-		/**
-		 * @see RequestDispel#RequestDispel()
-		 */
-		public RequestCancelEffect()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

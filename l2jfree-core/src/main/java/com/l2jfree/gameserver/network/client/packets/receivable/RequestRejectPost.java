@@ -33,12 +33,7 @@ public abstract class RequestRejectPost extends L2ClientPacket
 	 */
 	public static final class RequestRejectAttachments extends RequestRejectPost
 	{
-		/**
-		 * @see RequestRejectPost#RequestRejectPost()
-		 */
-		public RequestRejectAttachments()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */

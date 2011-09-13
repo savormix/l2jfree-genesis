@@ -33,12 +33,7 @@ public abstract class RequestPVPMatchRecord extends L2ClientPacket
 	 */
 	public static final class RequestPvPMatchInfo extends RequestPVPMatchRecord
 	{
-		/**
-		 * @see RequestPVPMatchRecord#RequestPVPMatchRecord()
-		 */
-		public RequestPvPMatchInfo()
-		{
-		}
+		// only for convenience
 	}
 	
 	/** Packet's identifier */
