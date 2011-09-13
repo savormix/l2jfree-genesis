@@ -209,7 +209,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		int readPackets = 0;
 		int readBytes = 0;
 		
-		while ((key.interestOps() & SelectionKey.OP_READ) != 0)
+		for (;;)
 		{
 			final int remainingFreeSpace = buf.remaining();
 			int result = -2;
@@ -239,9 +239,12 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 				{
 					buf.flip();
 					// try to read as many packets as possible
-					while ((key.interestOps() & SelectionKey.OP_READ) != 0)
+					for (;;)
 					{
 						final int startPos = buf.position();
+						
+						if (con.isReadingBlocked())
+							break;
 						
 						if (readPackets >= getMaxIncomingPacketsPerPass() || readBytes >= getMaxIncomingBytesPerPass())
 							break;
@@ -255,6 +258,10 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 					break;
 				}
 			}
+			
+			// stop reading, if running a blocking packet
+			if (con.isReadingBlocked())
+				break;
 			
 			// stop reading, if we have reached a config limit
 			if (readPackets >= getMaxIncomingPacketsPerPass() || readBytes >= getMaxIncomingBytesPerPass())
@@ -385,10 +392,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 						{
 							cp.read(getMmoBuffer());
 							
-							client.getPacketQueue().execute(cp);
-							
-							if (cp.blockReadingUntilExecutionIsFinished())
-								client.disableReadInterest();
+							client.executePacket(cp);
 							
 							if (buf.hasRemaining() && // some unused data, a bad sign
 									buf.remaining() > maxLeftoverPadding) // and definitely not padded bytes

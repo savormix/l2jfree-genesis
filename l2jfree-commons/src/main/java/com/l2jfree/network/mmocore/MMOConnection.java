@@ -377,7 +377,7 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 	
 	private FIFORunnableQueue<Runnable> _packetQueue;
 	
-	public FIFORunnableQueue<Runnable> getPacketQueue()
+	private FIFORunnableQueue<Runnable> getPacketQueue()
 	{
 		if (_packetQueue == null)
 			_packetQueue = new FIFORunnableQueue<Runnable>() {
@@ -385,6 +385,27 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 			};
 		
 		return _packetQueue;
+	}
+	
+	private volatile boolean _isReadingBlocked;
+	
+	public boolean isReadingBlocked()
+	{
+		return _isReadingBlocked;
+	}
+	
+	public void executePacket(RP rp)
+	{
+		getPacketQueue().execute(rp);
+		
+		if (rp.blockReadingUntilExecutionIsFinished())
+			_isReadingBlocked = true;
+	}
+	
+	public void packetExecuted(RP rp)
+	{
+		if (rp.blockReadingUntilExecutionIsFinished())
+			_isReadingBlocked = false;
 	}
 	
 	/**

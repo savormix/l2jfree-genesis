@@ -139,8 +139,7 @@ public abstract class ReceivablePacket<T extends MMOConnection<T, RP, SP>, RP ex
 		}
 		finally
 		{
-			if (blockReadingUntilExecutionIsFinished())
-				getClient().enableReadInterest();
+			getClient().packetExecuted((RP)this);
 		}
 	}
 	
