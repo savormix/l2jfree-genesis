@@ -15,6 +15,7 @@
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
 import com.l2jfree.gameserver.gameobjects.L2Player;
+import com.l2jfree.gameserver.modules.sevensigns.Cabal;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
@@ -32,28 +33,28 @@ public abstract class SSQInfoPacket extends StaticPacket
 	public static final class SkyColor extends SSQInfoPacket
 	{
 		/** Smooth transition to normal sky. */
-		public static final SkyColor NORMAL = new SkyColor(0, false);
+		public static final SkyColor NORMAL = new SkyColor(Cabal.NONE, false);
 		/** Smooth transition to dusk sky. */
-		public static final SkyColor DUSK = new SkyColor(1, false);
+		public static final SkyColor DUSK = new SkyColor(Cabal.DUSK, false);
 		/** Smooth transition to dawn sky. */
-		public static final SkyColor DAWN = new SkyColor(2, false);
+		public static final SkyColor DAWN = new SkyColor(Cabal.DAWN, false);
 		
 		/** Normal sky */
-		private static final SkyColor NORMAL_INSTANT = new SkyColor(0, true);
+		private static final SkyColor NORMAL_INSTANT = new SkyColor(Cabal.NONE, true);
 		/** Smooth transition to dusk sky. */
-		private static final SkyColor DUSK_INSTANT = new SkyColor(1, true);
+		private static final SkyColor DUSK_INSTANT = new SkyColor(Cabal.DUSK, true);
 		/** Smooth transition to dawn sky. */
-		private static final SkyColor DAWN_INSTANT = new SkyColor(2, true);
+		private static final SkyColor DAWN_INSTANT = new SkyColor(Cabal.DAWN, true);
 		
 		public static SkyColor getForCharacterSelection()
 		{
 			// TODO: implement
-			final int ssVictor = 0;
+			final Cabal ssVictor = Cabal.NONE;
 			switch (ssVictor)
 			{
-				case 1:
+				case DUSK:
 					return DUSK_INSTANT;
-				case 2:
+				case DAWN:
 					return DAWN_INSTANT;
 				default:
 					return NORMAL_INSTANT;
@@ -65,9 +66,9 @@ public abstract class SSQInfoPacket extends StaticPacket
 		 * 
 		 * @param cabal seven signs victor
 		 * @param instant transition type
-		 * @see SSQInfoPacket#SSQInfoPacket(int, boolean)
+		 * @see SSQInfoPacket#SSQInfoPacket(Cabal, boolean)
 		 */
-		private SkyColor(int cabal, boolean instant)
+		private SkyColor(Cabal cabal, boolean instant)
 		{
 			super(cabal, instant);
 		}
@@ -82,9 +83,9 @@ public abstract class SSQInfoPacket extends StaticPacket
 	 * @param cabal seven signs victor
 	 * @param instant transition type
 	 */
-	private SSQInfoPacket(int cabal, boolean instant)
+	public SSQInfoPacket(Cabal cabal, boolean instant)
 	{
-		_cabal = cabal;
+		_cabal = cabal.ordinal();
 		_instant = instant;
 	}
 	

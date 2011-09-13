@@ -24,6 +24,15 @@ public abstract class CharacterStat implements ICharacterStat
 {
 	public static enum Element
 	{
+		/**
+		 * Not applicable:
+		 * <UL>
+		 * <LI>Item is not a weapon or player has no weapon equipped</LI>
+		 * <LI>[Equipped] Weapon is not elementally enhanced</LI>
+		 * </UL>
+		 */
+		NA(-2),
+		/** Doesn't seem to be used. An in-depth analysis is required */
 		NONE(-1),
 		FIRE(0),
 		WATER(1),
@@ -210,7 +219,7 @@ public abstract class CharacterStat implements ICharacterStat
 	@Override
 	public Element getAttackElement()
 	{
-		return Element.NONE;
+		return Element.NA;
 	}
 	
 	@Override
