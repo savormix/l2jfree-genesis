@@ -38,6 +38,12 @@ public final class RequestAvailableCharacters extends ExGetOnAirShip
 	}
 	
 	@Override
+	protected int getMinimumLength()
+	{
+		return 0;
+	}
+	
+	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		// trigger packet
