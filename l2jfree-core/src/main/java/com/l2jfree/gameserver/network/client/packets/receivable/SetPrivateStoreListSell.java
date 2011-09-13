@@ -17,52 +17,63 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 import java.nio.BufferUnderflowException;
 
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
-import com.l2jfree.gameserver.network.client.packets.sendable.ActionFail.InteractionFinished;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
  */
-public abstract class Action extends L2ClientPacket
+public abstract class SetPrivateStoreListSell extends L2ClientPacket
 {
 	/**
-	 * A nicer name for {@link Action}.
+	 * A nicer name for {@link SetPrivateStoreListSell}.
 	 * 
 	 * @author savormix (generated)
-	 * @see Action
+	 * @see SetPrivateStoreListSell
 	 */
-	public static final class RequestInteraction extends Action
+	public static final class RequestStartSellShop extends SetPrivateStoreListSell
 	{
-		// only for convenience
+		/**
+		 * Constructs this packet.
+		 * 
+		 * @see SetPrivateStoreListSell#SetPrivateStoreListSell()
+		 */
+		public RequestStartSellShop()
+		{
+		}
 	}
 	
 	/** Packet's identifier */
-	public static final int OPCODE = 0x1f;
+	public static final int OPCODE = 0x31;
+	
+	/** Constructs this packet. */
+	public SetPrivateStoreListSell()
+	{
+	}
 	
 	@Override
 	protected int getMinimumLength()
 	{
-		return READ_D + READ_D + READ_D + READ_D + READ_C;
+		return READ_D + READ_D;
 	}
-	
-	/* Fields for storing read data */
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.readD(); // Target OID
-		buf.readD(); // Current client X
-		buf.readD(); // Current client Y
-		buf.readD(); // Current client Z
-		buf.readC(); // Shift (do not move)
+		buf.readD(); // Package sale
+		final int sizeA = buf.readD(); // Offer count
+		for (int i = 0; i < sizeA; i++)
+		{
+			buf.readD(); // Item OID
+			buf.readQ(); // Quantity
+			buf.readQ(); // Price/unit
+		}
 	}
 	
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		// TODO: implement
-		sendPacket(InteractionFinished.PACKET);
 	}
 }

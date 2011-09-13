@@ -16,13 +16,12 @@ package com.l2jfree.gameserver.network.client.packets.sendable;
 
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
-import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
  */
-public abstract class ExGetBookMarkInfoPacket extends L2ServerPacket
+public abstract class ExGetBookMarkInfoPacket extends StaticPacket
 {
 	/**
 	 * A nicer name for {@link ExGetBookMarkInfoPacket}.
@@ -32,12 +31,14 @@ public abstract class ExGetBookMarkInfoPacket extends L2ServerPacket
 	 */
 	public static final class MyTeleportBookmarkList extends ExGetBookMarkInfoPacket
 	{
+		public static final MyTeleportBookmarkList PACKET = new MyTeleportBookmarkList();
+		
 		/**
 		 * Constructs this packet.
 		 * 
 		 * @see ExGetBookMarkInfoPacket#ExGetBookMarkInfoPacket()
 		 */
-		public MyTeleportBookmarkList()
+		private MyTeleportBookmarkList()
 		{
 		}
 	}

@@ -12,33 +12,23 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.gameobjects.item;
+package com.l2jfree.gameserver.network.client.packets.sendable;
 
-import com.l2jfree.gameserver.gameobjects.L2Item;
-import com.l2jfree.gameserver.templates.L2ItemTemplate;
+import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 
 /**
- * @author NB4L1
+ * @author savormix (generated)
  */
-public final class L2StackableItem extends L2Item
+public class ActionFail2 extends L2ServerPacket
 {
-	// TODO
-	private int _count;
-	
-	protected L2StackableItem(int objectId, L2ItemTemplate template)
+	/** Constructs this packet. */
+	public ActionFail2()
 	{
-		super(objectId, template);
 	}
 	
 	@Override
-	public final long getCount()
+	protected int getOpcode()
 	{
-		return _count;
-	}
-	
-	@Override
-	public final boolean isStackable()
-	{
-		return true; // ALWAYS
+		return 0x8f;
 	}
 }

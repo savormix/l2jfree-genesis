@@ -22,44 +22,45 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 /**
  * @author savormix (generated)
  */
-public abstract class PrivateBuyList extends L2ServerPacket
+public abstract class ViewPrivateSellList extends L2ServerPacket
 {
 	/**
-	 * A nicer name for {@link PrivateBuyList}.
+	 * A nicer name for {@link ViewPrivateSellList}.
 	 * 
 	 * @author savormix (generated)
-	 * @see PrivateBuyList
+	 * @see ViewPrivateSellList
 	 */
-	public static final class BuyShopList extends PrivateBuyList
+	public static final class SellShopList extends ViewPrivateSellList
 	{
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @see PrivateBuyList#PrivateBuyList()
+		 * @see ViewPrivateSellList#ViewPrivateSellList()
 		 */
-		public BuyShopList()
+		public SellShopList()
 		{
 		}
 	}
 	
 	/** Constructs this packet. */
-	public PrivateBuyList()
+	public ViewPrivateSellList()
 	{
 	}
 	
 	@Override
 	protected int getOpcode()
 	{
-		return 0xbe;
+		return 0xa1;
 	}
 	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.writeD(0); // Buyer OID
+		buf.writeD(0); // Seller OID
+		buf.writeD(0); // Package sale
 		buf.writeQ(0L); // Adena
-		final int sizeA = 0; // Buyable count
+		final int sizeA = 0; // Sellable count
 		buf.writeD(sizeA);
 		for (int i = 0; i < sizeA; i++)
 		{
@@ -89,7 +90,6 @@ public abstract class PrivateBuyList extends L2ServerPacket
 			buf.writeH(0); // 0
 			buf.writeQ(0L); // Price
 			buf.writeQ(0L); // Reference (shop) price
-			buf.writeQ(0L); // Quantity bought
 		}
 	}
 }

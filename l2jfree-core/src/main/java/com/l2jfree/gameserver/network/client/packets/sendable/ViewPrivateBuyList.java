@@ -22,45 +22,74 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 /**
  * @author savormix (generated)
  */
-public abstract class ShowRadarPacket extends L2ServerPacket
+public abstract class ViewPrivateBuyList extends L2ServerPacket
 {
 	/**
-	 * A nicer name for {@link ShowRadarPacket}.
+	 * A nicer name for {@link ViewPrivateBuyList}.
 	 * 
 	 * @author savormix (generated)
-	 * @see ShowRadarPacket
+	 * @see ViewPrivateBuyList
 	 */
-	public static final class RadarMarker extends ShowRadarPacket
+	public static final class BuyShopList extends ViewPrivateBuyList
 	{
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @see ShowRadarPacket#ShowRadarPacket()
+		 * @see ViewPrivateBuyList#ViewPrivateBuyList()
 		 */
-		public RadarMarker()
+		public BuyShopList()
 		{
 		}
 	}
 	
 	/** Constructs this packet. */
-	public ShowRadarPacket()
+	public ViewPrivateBuyList()
 	{
 	}
 	
 	@Override
 	protected int getOpcode()
 	{
-		return 0xf1;
+		return 0xbe;
 	}
 	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.writeD(0); // Action
-		buf.writeD(0); // Marker
-		buf.writeD(0); // Location X
-		buf.writeD(0); // Location Y
-		buf.writeD(0); // Location Z
+		buf.writeD(0); // Buyer OID
+		buf.writeQ(0L); // Adena
+		final int sizeA = 0; // Buyable count
+		buf.writeD(sizeA);
+		for (int i = 0; i < sizeA; i++)
+		{
+			buf.writeD(0); // Item OID
+			buf.writeD(0); // Item
+			buf.writeD(0); // Slot number
+			buf.writeQ(0L); // Quantity
+			buf.writeH(0); // Main item type
+			buf.writeH(0); // Special item type
+			buf.writeH(0); // Equipped
+			buf.writeD(0); // Used paperdoll slot(s)
+			buf.writeH(0); // Enchant level
+			buf.writeH(0); // Name exists
+			buf.writeD(0); // Augmentation
+			buf.writeD(0); // Mana left
+			buf.writeD(0); // Time remaining
+			buf.writeH(0); // Attack element
+			buf.writeH(0); // Attack element power
+			buf.writeH(0); // Fire defense
+			buf.writeH(0); // Water defense
+			buf.writeH(0); // Wind defense
+			buf.writeH(0); // Earth defense
+			buf.writeH(0); // Holy defense
+			buf.writeH(0); // Dark defense
+			buf.writeH(0); // 0
+			buf.writeH(0); // 0
+			buf.writeH(0); // 0
+			buf.writeQ(0L); // Price
+			buf.writeQ(0L); // Reference (shop) price
+			buf.writeQ(0L); // Quantity bought
+		}
 	}
 }

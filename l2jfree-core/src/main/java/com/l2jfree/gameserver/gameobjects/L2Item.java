@@ -41,7 +41,7 @@ public abstract class L2Item extends L2Object
 		return getTemplate().getName();
 	}
 	
-	public abstract int getCount();
+	public abstract long getCount();
 	
 	public abstract boolean isStackable();
 	

@@ -17,11 +17,13 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 import java.nio.BufferUnderflowException;
 
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
+import com.l2jfree.gameserver.network.client.packets.sendable.ExShowFortressInfo.FortressList;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
+ * @see FortressList
  */
 public abstract class RequestAllFortressInfo extends L2ClientPacket
 {
@@ -57,5 +59,6 @@ public abstract class RequestAllFortressInfo extends L2ClientPacket
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		// TODO: implement
+		sendPacket(FortressList.PACKET);
 	}
 }

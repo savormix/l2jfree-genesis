@@ -22,41 +22,42 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 /**
  * @author savormix (generated)
  */
-public abstract class FriendAddRequestResult extends L2ServerPacket
+public abstract class FriendAddRequest extends L2ServerPacket
 {
 	/**
-	 * A nicer name for {@link FriendAddRequestResult}.
+	 * A nicer name for {@link FriendAddRequest}.
 	 * 
 	 * @author savormix (generated)
-	 * @see FriendAddRequestResult
+	 * @see FriendAddRequest
 	 */
-	public static final class FriendInvitationResult extends FriendAddRequestResult
+	public static final class FriendRequest extends FriendAddRequest
 	{
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @see FriendAddRequestResult#FriendAddRequestResult()
+		 * @see FriendAddRequest#FriendAddRequest()
 		 */
-		public FriendInvitationResult()
+		public FriendRequest()
 		{
 		}
 	}
 	
 	/** Constructs this packet. */
-	public FriendAddRequestResult()
+	public FriendAddRequest()
 	{
 	}
 	
 	@Override
 	protected int getOpcode()
 	{
-		return 0x55;
+		return 0x83;
 	}
 	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.writeD(0); // Accepted
+		buf.writeS(""); // Requestor
+		buf.writeD(0); // 0
 	}
 }

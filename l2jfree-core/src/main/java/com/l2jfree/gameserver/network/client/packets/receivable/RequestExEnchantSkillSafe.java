@@ -23,33 +23,50 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 /**
  * @author savormix (generated)
  */
-public abstract class RequestCastleSiegeInfo extends L2ClientPacket
+public abstract class RequestExEnchantSkillSafe extends L2ClientPacket
 {
 	/**
-	 * A nicer name for {@link RequestCastleSiegeInfo}.
+	 * A nicer name for {@link RequestExEnchantSkillSafe}.
 	 * 
 	 * @author savormix (generated)
-	 * @see RequestCastleSiegeInfo
+	 * @see RequestExEnchantSkillSafe
 	 */
-	public static final class RequestSiegeDefenderList extends RequestCastleSiegeInfo
+	public static final class RequestEnchantSkillSafely extends RequestExEnchantSkillSafe
 	{
-		// only for convenience
+		/**
+		 * Constructs this packet.
+		 * 
+		 * @see RequestExEnchantSkillSafe#RequestExEnchantSkillSafe()
+		 */
+		public RequestEnchantSkillSafely()
+		{
+		}
 	}
 	
 	/** Packet's identifier */
-	public static final int OPCODE = 0xac;
+	public static final int OPCODE = 0xd0;
+	/** Additional packet's identifiers */
+	public static final int[] EXT_OPCODES = { 0x32, 0x00 };
+	/** Second packet's identifier */
+	public static final int OPCODE_2 = 0x32;
+	
+	/** Constructs this packet. */
+	public RequestExEnchantSkillSafe()
+	{
+	}
 	
 	@Override
 	protected int getMinimumLength()
 	{
-		return READ_D;
+		return READ_D + READ_D;
 	}
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.readD(); // Real estate
+		buf.readD(); // Skill
+		buf.readD(); // Level
 	}
 	
 	@Override

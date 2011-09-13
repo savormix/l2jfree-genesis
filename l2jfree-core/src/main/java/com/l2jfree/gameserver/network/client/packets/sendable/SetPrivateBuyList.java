@@ -22,20 +22,20 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 /**
  * @author savormix (generated)
  */
-public abstract class PrivateSellList extends L2ServerPacket
+public abstract class SetPrivateBuyList extends L2ServerPacket
 {
 	/**
-	 * A nicer name for {@link PrivateSellList}.
+	 * A nicer name for {@link SetPrivateBuyList}.
 	 * 
 	 * @author savormix (generated)
-	 * @see PrivateSellList
+	 * @see SetPrivateBuyList
 	 */
-	public static final class BuyShopSetup extends PrivateSellList
+	public static final class BuyShopSetup extends SetPrivateBuyList
 	{
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @see PrivateSellList#PrivateSellList()
+		 * @see SetPrivateBuyList#SetPrivateBuyList()
 		 */
 		public BuyShopSetup()
 		{
@@ -43,7 +43,7 @@ public abstract class PrivateSellList extends L2ServerPacket
 	}
 	
 	/** Constructs this packet. */
-	public PrivateSellList()
+	public SetPrivateBuyList()
 	{
 	}
 	

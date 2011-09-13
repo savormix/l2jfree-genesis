@@ -19,16 +19,16 @@ import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 /**
  * @author savormix (generated)
  */
-public class ActionFail extends L2ServerPacket
+public class ShowRadarPacket2 extends L2ServerPacket
 {
 	/** Constructs this packet. */
-	public ActionFail()
+	public ShowRadarPacket2()
 	{
 	}
 	
 	@Override
 	protected int getOpcode()
 	{
-		return 0x8f;
+		return 0xaa;
 	}
 }

@@ -16,13 +16,12 @@ package com.l2jfree.gameserver.network.client.packets.sendable;
 
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
-import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
  */
-public abstract class EtcStatusUpdatePacket extends L2ServerPacket
+public abstract class EtcStatusUpdatePacket extends StaticPacket
 {
 	/**
 	 * A nicer name for {@link EtcStatusUpdatePacket}.
@@ -32,12 +31,14 @@ public abstract class EtcStatusUpdatePacket extends L2ServerPacket
 	 */
 	public static final class EtcEffectIcons extends EtcStatusUpdatePacket
 	{
+		public static final EtcEffectIcons PACKET = new EtcEffectIcons();
+		
 		/**
 		 * Constructs this packet.
 		 * 
 		 * @see EtcStatusUpdatePacket#EtcStatusUpdatePacket()
 		 */
-		public EtcEffectIcons()
+		private EtcEffectIcons()
 		{
 		}
 	}

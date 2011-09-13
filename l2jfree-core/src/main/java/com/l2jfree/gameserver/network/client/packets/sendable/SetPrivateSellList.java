@@ -14,88 +14,70 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
-import java.util.Collection;
-
-import com.l2jfree.gameserver.gameobjects.L2Item;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
-import com.l2jfree.gameserver.templates.L2ItemTemplate;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
  */
-public abstract class ItemList extends L2ServerPacket
+public abstract class SetPrivateSellList extends L2ServerPacket
 {
 	/**
-	 * A nicer name for {@link ItemList}.
+	 * A nicer name for {@link SetPrivateSellList}.
 	 * 
 	 * @author savormix (generated)
-	 * @see ItemList
+	 * @see SetPrivateSellList
 	 */
-	public static final class MyInventory extends ItemList
+	public static final class SellShopSetup extends SetPrivateSellList
 	{
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @param openWindow whether to open the inventory window
-		 * @param items items in inventory
-		 * @see ItemList#ItemList(boolean, Collection)
+		 * @see SetPrivateSellList#SetPrivateSellList()
 		 */
-		public MyInventory(boolean openWindow, Collection<L2Item> items)
+		public SellShopSetup()
 		{
-			super(openWindow, items);
 		}
 	}
 	
-	private final boolean _openWindow;
-	private final Collection<L2Item> _items;
-	
-	/**
-	 * Constructs this packet.
-	 * 
-	 * @param openWindow whether to open the inventory window
-	 * @param items items in inventory
-	 */
-	public ItemList(boolean openWindow, Collection<L2Item> items)
+	/** Constructs this packet. */
+	public SetPrivateSellList()
 	{
-		_openWindow = openWindow;
-		_items = items;
 	}
 	
 	@Override
 	protected int getOpcode()
 	{
-		return 0x11;
+		return 0xa0;
 	}
 	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.writeH(_openWindow); // Open window
-		buf.writeH(_items.size()); // Item count
-		for (L2Item item : _items)
+		buf.writeD(0); // Seller OID
+		buf.writeD(0); // Package sale
+		buf.writeQ(0L); // Adena
+		final int sizeA = 0; // Sellable count
+		buf.writeD(sizeA);
+		for (int i = 0; i < sizeA; i++)
 		{
-			L2ItemTemplate temp = item.getTemplate();
-			int slot = 0;
-			
-			buf.writeD(item.getObjectId()); // Item OID
-			buf.writeD(temp.getId()); // Item
-			buf.writeD(slot++); // TODO: Slot number (-1 for equipped items, 0..(inv size - 1) for other items)
-			buf.writeQ(item.getCount()); // Quantity
+			buf.writeD(0); // Item OID
+			buf.writeD(0); // Item
+			buf.writeD(0); // Slot number
+			buf.writeQ(0L); // Quantity
 			buf.writeH(0); // Main item type
 			buf.writeH(0); // Special item type
-			buf.writeH(false); // Equipped
+			buf.writeH(0); // Equipped
 			buf.writeD(0); // Used paperdoll slot(s)
 			buf.writeH(0); // Enchant level
 			buf.writeH(0); // Name exists
 			buf.writeD(0); // Augmentation
-			buf.writeD(-1); // Mana left
-			buf.writeD(-9999); // Time remaining
-			// TODO: I'll continue later
-			buf.writeH(-2); // Attack element
+			buf.writeD(0); // Mana left
+			buf.writeD(0); // Time remaining
+			buf.writeH(0); // Attack element
 			buf.writeH(0); // Attack element power
 			buf.writeH(0); // Fire defense
 			buf.writeH(0); // Water defense
@@ -106,16 +88,38 @@ public abstract class ItemList extends L2ServerPacket
 			buf.writeH(0); // 0
 			buf.writeH(0); // 0
 			buf.writeH(0); // 0
+			buf.writeQ(0L); // Reference (shop) price
 		}
-		final int sizeB = 0; // Special item count, branching condition
-		buf.writeH(sizeB);
-		// branch with AboveZero
-		{
-			buf.writeC(0); // Restriction
-		}
+		final int sizeB = 0; // Offer count
+		buf.writeD(sizeB);
 		for (int i = 0; i < sizeB; i++)
 		{
-			buf.writeD(0); // Special item
+			buf.writeD(0); // Item OID
+			buf.writeD(0); // Item
+			buf.writeD(0); // Slot number
+			buf.writeQ(0L); // Quantity
+			buf.writeH(0); // Main item type
+			buf.writeH(0); // Special item type
+			buf.writeH(0); // Equipped
+			buf.writeD(0); // Used paperdoll slot(s)
+			buf.writeH(0); // Enchant level
+			buf.writeH(0); // Name exists
+			buf.writeD(0); // Augmentation
+			buf.writeD(0); // Mana left
+			buf.writeD(0); // Time remaining
+			buf.writeH(0); // Attack element
+			buf.writeH(0); // Attack element power
+			buf.writeH(0); // Fire defense
+			buf.writeH(0); // Water defense
+			buf.writeH(0); // Wind defense
+			buf.writeH(0); // Earth defense
+			buf.writeH(0); // Holy defense
+			buf.writeH(0); // Dark defense
+			buf.writeH(0); // 0
+			buf.writeH(0); // 0
+			buf.writeH(0); // 0
+			buf.writeQ(0L); // Price
+			buf.writeQ(0L); // Reference (shop) price
 		}
 	}
 }

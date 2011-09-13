@@ -28,9 +28,9 @@ public class L2SingularItem extends L2Item
 	}
 	
 	@Override
-	public final int getCount()
+	public final long getCount()
 	{
-		return 1; // ALWAYS
+		return 1L; // ALWAYS
 	}
 	
 	@Override

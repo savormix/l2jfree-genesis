@@ -15,10 +15,18 @@
 package com.l2jfree.gameserver.network.client.packets.receivable;
 
 import java.nio.BufferUnderflowException;
+import java.util.Collection;
+import java.util.Collections;
 
+import com.l2jfree.gameserver.gameobjects.L2Item;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
+import com.l2jfree.gameserver.network.client.packets.sendable.EtcStatusUpdatePacket.EtcEffectIcons;
+import com.l2jfree.gameserver.network.client.packets.sendable.ExGetBookMarkInfoPacket.MyTeleportBookmarkList;
+import com.l2jfree.gameserver.network.client.packets.sendable.ExSearchOrc.DemandProcessBlock;
+import com.l2jfree.gameserver.network.client.packets.sendable.GameGuardQueryPacket.DemandGameGuardStatus;
+import com.l2jfree.gameserver.network.client.packets.sendable.ItemList.MyInventory;
 import com.l2jfree.gameserver.network.client.packets.sendable.UserInfo.MyPlayerInfo;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
@@ -68,6 +76,14 @@ public abstract class EnterWorld extends L2ClientPacket
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		// TODO: implement
+		sendPacket(MyTeleportBookmarkList.PACKET);
+		// send MacroInfo packets
+		sendPacket(EtcEffectIcons.PACKET);
+		sendPacket(new DemandGameGuardStatus());
+		sendPacket(new DemandProcessBlock());
+		Collection<L2Item> fake = Collections.emptyList();
+		sendPacket(new MyInventory(false, fake));
+		
 		sendPacket(MyPlayerInfo.PACKET);
 		
 		// Welcome to Lineage 2, temp solution ^)

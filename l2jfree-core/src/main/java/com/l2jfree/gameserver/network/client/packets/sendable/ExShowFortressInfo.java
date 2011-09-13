@@ -16,13 +16,14 @@ package com.l2jfree.gameserver.network.client.packets.sendable;
 
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
-import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
+import com.l2jfree.gameserver.network.client.packets.receivable.RequestAllFortressInfo.RequestFortressList;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
+ * @see RequestFortressList
  */
-public abstract class ExShowFortressInfo extends L2ServerPacket
+public abstract class ExShowFortressInfo extends StaticPacket
 {
 	/**
 	 * A nicer name for {@link ExShowFortressInfo}.
@@ -32,12 +33,14 @@ public abstract class ExShowFortressInfo extends L2ServerPacket
 	 */
 	public static final class FortressList extends ExShowFortressInfo
 	{
+		public static final FortressList PACKET = new FortressList();
+		
 		/**
 		 * Constructs this packet.
 		 * 
 		 * @see ExShowFortressInfo#ExShowFortressInfo()
 		 */
-		public FortressList()
+		private FortressList()
 		{
 		}
 	}
@@ -64,12 +67,24 @@ public abstract class ExShowFortressInfo extends L2ServerPacket
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
+		// Unowned fortress example:
+		//Fortress (D): Antharas' Fortress (116)
+		//Owner pledge (S): 
+		//Under siege (D): No (0)
+		//Owned for (D): N/A (0)
+		
+		// Owned fortress example:
+		//Fortress (D): Hunter's Fortress (118)
+		//Owner pledge (S): Eximius
+		//Under siege (D): No (0)
+		//Owned for (D): 4 days, 7 hours, 45 minutes, 59 seconds (373559)
+		
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		final int sizeA = 0; // Fort count
+		final int sizeA = 21; // Fort count
 		buf.writeD(sizeA);
 		for (int i = 0; i < sizeA; i++)
 		{
-			buf.writeD(0); // Fortress
+			buf.writeD(101 + i); // Fortress
 			buf.writeS(""); // Owner pledge
 			buf.writeD(0); // Under siege
 			buf.writeD(0); // Owned for

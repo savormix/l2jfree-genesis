@@ -23,21 +23,37 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 /**
  * @author savormix (generated)
  */
-public abstract class SendPrivateStoreBuyList extends L2ClientPacket
+public abstract class RequestExEnchantSkillUntrain extends L2ClientPacket
 {
 	/**
-	 * A nicer name for {@link SendPrivateStoreBuyList}.
+	 * A nicer name for {@link RequestExEnchantSkillUntrain}.
 	 * 
 	 * @author savormix (generated)
-	 * @see SendPrivateStoreBuyList
+	 * @see RequestExEnchantSkillUntrain
 	 */
-	public static final class RequestTransferFromSellShop extends SendPrivateStoreBuyList
+	public static final class RequestUnenchantSkill extends RequestExEnchantSkillUntrain
 	{
-		// only for convenience
+		/**
+		 * Constructs this packet.
+		 * 
+		 * @see RequestExEnchantSkillUntrain#RequestExEnchantSkillUntrain()
+		 */
+		public RequestUnenchantSkill()
+		{
+		}
 	}
 	
 	/** Packet's identifier */
-	public static final int OPCODE = 0x83;
+	public static final int OPCODE = 0xd0;
+	/** Additional packet's identifiers */
+	public static final int[] EXT_OPCODES = { 0x33, 0x00 };
+	/** Second packet's identifier */
+	public static final int OPCODE_2 = 0x33;
+	
+	/** Constructs this packet. */
+	public RequestExEnchantSkillUntrain()
+	{
+	}
 	
 	@Override
 	protected int getMinimumLength()
@@ -49,14 +65,8 @@ public abstract class SendPrivateStoreBuyList extends L2ClientPacket
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.readD(); // Seller OID
-		final int sizeA = buf.readD(); // Item count
-		for (int i = 0; i < sizeA; i++)
-		{
-			buf.readD(); // Item OID
-			buf.readQ(); // Quantity
-			buf.readQ(); // Price/unit
-		}
+		buf.readD(); // Skill
+		buf.readD(); // Level
 	}
 	
 	@Override

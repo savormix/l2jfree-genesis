@@ -22,28 +22,10 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 /**
  * @author savormix (generated)
  */
-public abstract class Dummy extends L2ServerPacket
+public class PlayerNameTitleUpdate extends L2ServerPacket
 {
-	/**
-	 * A nicer name for {@link Dummy}.
-	 * 
-	 * @author savormix (generated)
-	 * @see Dummy
-	 */
-	public static final class PlayerNameTitleUpdate extends Dummy
-	{
-		/**
-		 * Constructs this packet.
-		 * 
-		 * @see Dummy#Dummy()
-		 */
-		public PlayerNameTitleUpdate()
-		{
-		}
-	}
-	
 	/** Constructs this packet. */
-	public Dummy()
+	public PlayerNameTitleUpdate()
 	{
 	}
 	
