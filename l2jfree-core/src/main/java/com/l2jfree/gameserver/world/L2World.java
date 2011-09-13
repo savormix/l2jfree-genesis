@@ -105,8 +105,6 @@ public final class L2World
 	// TODO check replace
 	public static void addObject(L2Object obj)
 	{
-		System.out.println(obj.getObjectId());
-		
 		_objects.add(obj);
 		
 		if (obj instanceof L2Player)
