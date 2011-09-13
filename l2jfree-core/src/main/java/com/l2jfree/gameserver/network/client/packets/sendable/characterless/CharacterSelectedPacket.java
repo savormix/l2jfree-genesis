@@ -89,7 +89,7 @@ public abstract class CharacterSelectedPacket extends L2ServerPacket
 		final PlayerBaseTemplate baseTemplate = template.getPlayerBaseTemplate(appearance.getGender());
 		
 		buf.writeS(activeChar.getName()); // Name
-		buf.writeD(0); // TODO: Character ID
+		buf.writeD(activeChar.getCharacterId()); // Character ID
 		buf.writeS(activeChar.getTitle()); // Title
 		buf.writeD(client.getSessionId()); // Session ID
 		buf.writeD(0); // Pledge ID

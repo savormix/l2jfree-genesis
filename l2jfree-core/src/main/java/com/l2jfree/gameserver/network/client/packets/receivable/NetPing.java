@@ -52,7 +52,7 @@ public abstract class NetPing extends L2ClientPacket
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
 		buf.readD(); // Server uptime
-		buf.readD(); // ???
+		buf.readD(); // Latency??
 		buf.readD(); // ???
 	}
 	

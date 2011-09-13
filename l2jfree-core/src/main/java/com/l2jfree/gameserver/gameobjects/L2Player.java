@@ -198,6 +198,17 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 		setName(playerDB.name);
 	}
 	
+	/**
+	 * Returns a <U>forever</U>-persistent ID that <U>always</U> maps to the <U>same</U> single
+	 * player's character. After character deletion, this ID <B>may not be reclaimed</B>.
+	 * 
+	 * @return character's ID
+	 */
+	public int getCharacterId()
+	{
+		return getObjectId();
+	}
+	
 	@Override
 	public L2PlayerTemplate getTemplate()
 	{

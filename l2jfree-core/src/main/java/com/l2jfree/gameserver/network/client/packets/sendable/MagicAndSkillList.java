@@ -16,13 +16,12 @@ package com.l2jfree.gameserver.network.client.packets.sendable;
 
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
-import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
  */
-public abstract class MagicAndSkillList extends L2ServerPacket
+public abstract class MagicAndSkillList extends StaticPacket
 {
 	/**
 	 * A nicer name for {@link MagicAndSkillList}.
@@ -32,12 +31,14 @@ public abstract class MagicAndSkillList extends L2ServerPacket
 	 */
 	public static final class MyCharacterInfo extends MagicAndSkillList
 	{
+		public static final MyCharacterInfo PACKET = new MyCharacterInfo();
+		
 		/**
 		 * Constructs this packet.
 		 * 
 		 * @see MagicAndSkillList#MagicAndSkillList()
 		 */
-		public MyCharacterInfo()
+		private MyCharacterInfo()
 		{
 		}
 	}
@@ -57,8 +58,8 @@ public abstract class MagicAndSkillList extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.writeD(0); // Character OID
-		buf.writeD(0); // Character ID
+		buf.writeD(activeChar.getObjectId()); // Character OID
+		buf.writeD(activeChar.getCharacterId()); // Character ID
 		buf.writeD(0); // ??? ID (persistent)
 	}
 }

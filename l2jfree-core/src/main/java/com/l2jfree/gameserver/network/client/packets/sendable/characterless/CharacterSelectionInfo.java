@@ -101,7 +101,7 @@ public abstract class CharacterSelectionInfo extends L2ServerPacket
 		for (PlayerDB p : _characters)
 		{
 			buf.writeS(p.name); // Character name
-			buf.writeD(0); // TODO: Character ID
+			buf.writeD(p.objectId); // Character ID (in L2JFree, it matches OID)
 			buf.writeS(p.accountName); // Account name
 			buf.writeD(client.getSessionId()); // Session ID
 			buf.writeD(0); // Pledge ID

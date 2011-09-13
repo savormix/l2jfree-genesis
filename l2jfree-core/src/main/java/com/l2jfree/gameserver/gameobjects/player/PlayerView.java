@@ -148,6 +148,15 @@ public class PlayerView extends CharacterView implements IPlayerView
 		super(activeChar);
 	}
 	
+	/**
+	 * @return character's ID
+	 * @see L2Player#getCharacterId()
+	 */
+	public int getCharacterId()
+	{
+		return getObjectId();
+	}
+	
 	@Override
 	public final L2Player getActiveChar()
 	{

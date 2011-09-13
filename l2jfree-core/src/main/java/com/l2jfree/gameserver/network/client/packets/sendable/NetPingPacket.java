@@ -16,9 +16,7 @@ package com.l2jfree.gameserver.network.client.packets.sendable;
 
 import java.lang.management.ManagementFactory;
 
-import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
-import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
@@ -26,7 +24,7 @@ import com.l2jfree.network.mmocore.MMOBuffer;
  * 
  * @author savormix
  */
-public abstract class NetPingPacket extends L2ServerPacket
+public abstract class NetPingPacket extends StaticPacket
 {
 	/**
 	 * A nicer name for {@link NetPingPacket}.
@@ -60,7 +58,7 @@ public abstract class NetPingPacket extends L2ServerPacket
 	}
 	
 	@Override
-	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
+	protected void writeImpl(L2Client client, MMOBuffer buf) throws RuntimeException
 	{
 		buf.writeD(ManagementFactory.getRuntimeMXBean().getUptime()); // Uptime
 	}

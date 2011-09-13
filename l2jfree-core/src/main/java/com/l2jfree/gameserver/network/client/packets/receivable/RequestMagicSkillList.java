@@ -16,6 +16,7 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 
+import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
@@ -39,6 +40,11 @@ public abstract class RequestMagicSkillList extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x38;
 	
+	private int _characterId;
+	private int _objectId;
+	
+	//private int _id;
+	
 	@Override
 	protected int getMinimumLength()
 	{
@@ -51,14 +57,17 @@ public abstract class RequestMagicSkillList extends L2ClientPacket
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.readD(); // Character ID
-		buf.readD(); // Character OID
-		buf.readD(); // ??? ID (persistent)
+		_characterId = buf.readD(); // Character ID
+		_objectId = buf.readD(); // Character OID
+		/* _id = */buf.readD(); // ??? ID (persistent)
 	}
 	
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		// TODO: implement
+		L2Player activeChar = getClient().getActiveChar();
+		if (_characterId != activeChar.getCharacterId() || _objectId != activeChar.getObjectId())
+			getClient().closeNow();
 	}
 }

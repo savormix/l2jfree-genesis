@@ -71,7 +71,7 @@ public final class L2ClientConnections extends MMOController<L2Client, L2ClientP
 	protected L2Client createClient(SocketChannel socketChannel) throws ClosedChannelException
 	{
 		L2Client client = new L2Client(this, socketChannel);
-		// TODO Auto-generated method stub
+		L2ClientNetPing.getInstance().startTask(client);
 		return client;
 	}
 	
