@@ -30,11 +30,6 @@ public class RequestBR_MinigameLoadScores extends L2ClientPacket
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x8e;
 	
-	/** Constructs this packet. */
-	public RequestBR_MinigameLoadScores()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

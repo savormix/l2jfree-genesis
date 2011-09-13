@@ -39,11 +39,6 @@ public abstract class Action extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x1f;
 	
-	/** Constructs this packet. */
-	public Action()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

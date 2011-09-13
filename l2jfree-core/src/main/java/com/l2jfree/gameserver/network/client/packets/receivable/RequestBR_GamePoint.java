@@ -30,11 +30,6 @@ public class RequestBR_GamePoint extends L2ClientPacket
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x89;
 	
-	/** Constructs this packet. */
-	public RequestBR_GamePoint()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

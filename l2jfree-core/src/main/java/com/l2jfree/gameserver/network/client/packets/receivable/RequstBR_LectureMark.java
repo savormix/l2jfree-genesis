@@ -30,11 +30,6 @@ public class RequstBR_LectureMark extends L2ClientPacket
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x90;
 	
-	/** Constructs this packet. */
-	public RequstBR_LectureMark()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

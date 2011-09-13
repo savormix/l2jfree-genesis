@@ -30,11 +30,6 @@ public class RequestBR_ProductInfo extends L2ClientPacket
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x8b;
 	
-	/** Constructs this packet. */
-	public RequestBR_ProductInfo()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{
