@@ -55,6 +55,7 @@ public abstract class CharacterSelect extends L2ClientPacket
 		return READ_D + READ_H + READ_D + READ_D + READ_D;
 	}
 	
+	/* Fields for storing read data */
 	private int _charSlot;
 	
 	@Override

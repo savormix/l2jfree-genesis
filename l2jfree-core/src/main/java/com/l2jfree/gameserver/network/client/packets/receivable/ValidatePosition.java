@@ -49,12 +49,13 @@ public abstract class ValidatePosition extends L2ClientPacket
 		return READ_D + READ_D + READ_D + READ_D + READ_D;
 	}
 	
+	/* Fields for storing read data */
 	private int _x;
 	private int _y;
 	private int _z;
 	private int _heading;
-	
-	//private int _vehicle;
+	@SuppressWarnings("unused")
+	private int _vehicle;
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
@@ -64,7 +65,7 @@ public abstract class ValidatePosition extends L2ClientPacket
 		_y = buf.readD(); // Current client Y
 		_z = buf.readD(); // Current client Z
 		_heading = buf.readD(); // Heading
-		/*_vehicle = */buf.readD(); // Vehicle OID
+		_vehicle = buf.readD(); // Vehicle OID
 	}
 	
 	@Override

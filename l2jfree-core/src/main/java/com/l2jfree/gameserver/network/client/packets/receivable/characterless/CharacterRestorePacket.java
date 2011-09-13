@@ -50,6 +50,7 @@ public abstract class CharacterRestorePacket extends L2ClientPacket
 		return READ_D;
 	}
 	
+	/* Fields for storing read data */
 	@SuppressWarnings("unused")
 	private int _charSlot;
 	

@@ -60,6 +60,7 @@ public abstract class NewCharacter extends L2ClientPacket
 				+ READ_D + READ_D;
 	}
 	
+	/* Fields for storing read data */
 	private String _name;
 	private int _sex;
 	private int _classId;

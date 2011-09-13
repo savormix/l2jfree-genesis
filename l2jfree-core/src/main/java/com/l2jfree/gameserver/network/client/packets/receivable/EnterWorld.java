@@ -49,6 +49,8 @@ public abstract class EnterWorld extends L2ClientPacket
 		return 84 + 4 + 4 + 4 + 4 + 4;
 	}
 	
+	/* Fields for storing read data */
+	
 	@SuppressWarnings("unused")
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException

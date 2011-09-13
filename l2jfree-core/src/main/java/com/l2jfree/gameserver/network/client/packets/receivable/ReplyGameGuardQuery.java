@@ -23,7 +23,6 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 /**
  * @author savormix (generated)
  */
-@SuppressWarnings("unused")
 public abstract class ReplyGameGuardQuery extends L2ClientPacket
 {
 	/**
@@ -46,6 +45,9 @@ public abstract class ReplyGameGuardQuery extends L2ClientPacket
 		return 4 + READ_D + 4;
 	}
 	
+	/* Fields for storing read data */
+	
+	@SuppressWarnings("unused")
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{

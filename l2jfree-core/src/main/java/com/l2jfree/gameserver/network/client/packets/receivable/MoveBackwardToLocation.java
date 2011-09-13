@@ -47,6 +47,7 @@ public abstract class MoveBackwardToLocation extends L2ClientPacket
 		return READ_D + READ_D + READ_D + READ_D + READ_D + READ_D + READ_D;
 	}
 	
+	/* Fields for storing read data */
 	private int _destinationX;
 	private int _destinationY;
 	private int _destinationZ;

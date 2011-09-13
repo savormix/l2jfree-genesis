@@ -58,6 +58,7 @@ public abstract class AuthLogin extends L2ClientPacket
 				+ READ_D + READ_D + READ_Q;
 	}
 	
+	/* Fields for storing read data */
 	private String _account;
 	private int _accountId1;
 	private int _currentKey;

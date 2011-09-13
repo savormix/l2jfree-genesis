@@ -23,7 +23,6 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 /**
  * @author savormix (generated)
  */
-@SuppressWarnings("unused")
 public abstract class ExOrcMove extends L2ClientPacket
 {
 	/**
@@ -48,6 +47,9 @@ public abstract class ExOrcMove extends L2ClientPacket
 		return 64;
 	}
 	
+	/* Fields for storing read data */
+	
+	@SuppressWarnings("unused")
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{

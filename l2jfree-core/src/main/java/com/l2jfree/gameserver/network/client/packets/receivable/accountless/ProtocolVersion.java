@@ -43,6 +43,7 @@ public class ProtocolVersion extends L2ClientPacket
 		return READ_D;
 	}
 	
+	/* Fields for storing read data */
 	private int _version;
 	
 	@Override
