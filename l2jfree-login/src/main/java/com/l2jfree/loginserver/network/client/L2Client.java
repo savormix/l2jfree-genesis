@@ -42,7 +42,7 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	private final NewCipher _cipher;
 	private boolean _firstTime;
 	
-	private L2ClientState _state;
+	private volatile L2ClientState _state;
 	private SessionKey _sessionKey;
 	
 	private L2Account _account;

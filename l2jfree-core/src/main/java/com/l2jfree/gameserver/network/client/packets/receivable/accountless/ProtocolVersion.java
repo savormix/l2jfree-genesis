@@ -76,4 +76,10 @@ public class ProtocolVersion extends L2ClientPacket
 		
 		sendPacket(new ProtocolAnswer(client.getCipherKey(), seed));
 	}
+	
+	@Override
+	protected boolean blockReadingUntilExecutionIsFinished()
+	{
+		return true;
+	}
 }

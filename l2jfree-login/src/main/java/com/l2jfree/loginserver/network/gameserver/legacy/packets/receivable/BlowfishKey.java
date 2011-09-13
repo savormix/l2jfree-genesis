@@ -79,4 +79,10 @@ public final class BlowfishKey extends L2LegacyGameServerPacket
 	{
 		// time-critical packet
 	}
+	
+	@Override
+	protected boolean blockReadingUntilExecutionIsFinished()
+	{
+		return true;
+	}
 }

@@ -100,4 +100,10 @@ public abstract class AuthLogin extends L2ClientPacket
 		
 		AvailableCharacters.sendToClient(client);
 	}
+	
+	@Override
+	protected boolean blockReadingUntilExecutionIsFinished()
+	{
+		return true;
+	}
 }

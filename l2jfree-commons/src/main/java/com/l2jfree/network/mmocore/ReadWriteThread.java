@@ -209,7 +209,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		int readPackets = 0;
 		int readBytes = 0;
 		
-		while (true)
+		while (key.isReadable())
 		{
 			final int remainingFreeSpace = buf.remaining();
 			int result = -2;
@@ -239,7 +239,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 				{
 					buf.flip();
 					// try to read as many packets as possible
-					for (;;)
+					while (key.isReadable())
 					{
 						final int startPos = buf.position();
 						
@@ -387,6 +387,9 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 							
 							client.getPacketQueue().execute(cp);
 							
+							if (cp.blockReadingUntilExecutionIsFinished())
+								client.disableReadInterest();
+							
 							if (buf.hasRemaining() && // some unused data, a bad sign
 									buf.remaining() > maxLeftoverPadding) // and definitely not padded bytes
 							{
@@ -495,7 +498,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		// don't write additional, if there are still pending content
 		if (!con.hasPendingWriteBuffer())
 		{
-			for (; getDirectWriteBuffer().remaining() >= 2;)
+			while (getDirectWriteBuffer().remaining() >= 2)
 			{
 				final int startPos = getDirectWriteBuffer().position();
 				

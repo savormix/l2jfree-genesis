@@ -58,4 +58,10 @@ public class RequestRestart extends L2ClientPacket
 		client.setState(L2ClientState.CHARACTER_MANAGEMENT);
 		AvailableCharacters.sendToClient(client);
 	}
+	
+	@Override
+	protected boolean blockReadingUntilExecutionIsFinished()
+	{
+		return true;
+	}
 }

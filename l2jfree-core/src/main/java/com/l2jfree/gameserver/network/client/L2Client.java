@@ -43,7 +43,7 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	
 	private final ObfuscationService _deobfuscator;
 	
-	private L2ClientState _state;
+	private volatile L2ClientState _state;
 	private int _bitsInBlock;
 	
 	private String _accountName;

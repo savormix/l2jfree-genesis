@@ -261,4 +261,10 @@ public final class GameServerAuth extends L2LegacyGameServerPacket
 			// all IDs registered or in use
 			lgs.close(new LoginServerFail(L2NoServiceReason.NO_FREE_ID));
 	}
+	
+	@Override
+	protected boolean blockReadingUntilExecutionIsFinished()
+	{
+		return true;
+	}
 }

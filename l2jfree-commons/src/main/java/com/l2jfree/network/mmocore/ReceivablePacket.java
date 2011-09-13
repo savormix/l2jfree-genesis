@@ -106,6 +106,21 @@ public abstract class ReceivablePacket<T extends MMOConnection<T, RP, SP>, RP ex
 	 */
 	protected abstract void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException;
 	
+	/**
+	 * If this packet somehow modifies the connection in a manner, that influences the handling of
+	 * further packets, it must block any further read, until the execution of this packet is
+	 * finished.<br>
+	 * Probably the most common examples are packets that change client states.
+	 * 
+	 * @return
+	 */
+	// TODO it's still not the most optimal solution, because it requires manual override in order to work
+	@SuppressWarnings("static-method")
+	protected boolean blockReadingUntilExecutionIsFinished()
+	{
+		return false;
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public final void run()
@@ -121,6 +136,11 @@ public abstract class ReceivablePacket<T extends MMOConnection<T, RP, SP>, RP ex
 		catch (RuntimeException e)
 		{
 			getClient().getMMOController().report(ErrorMode.FAILED_RUNNING, getClient(), (RP)this, e);
+		}
+		finally
+		{
+			if (blockReadingUntilExecutionIsFinished())
+				getClient().enableReadInterest();
 		}
 	}
 	

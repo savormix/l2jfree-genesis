@@ -62,4 +62,10 @@ public final class RequestServerList extends L2ClientPacket
 		else
 			client.close(new LoginFailure(L2NoServiceReason.ACCESS_FAILED_TRY_AGAIN));
 	}
+	
+	@Override
+	protected boolean blockReadingUntilExecutionIsFinished()
+	{
+		return true;
+	}
 }

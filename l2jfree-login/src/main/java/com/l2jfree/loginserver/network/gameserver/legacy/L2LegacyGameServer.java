@@ -45,7 +45,7 @@ public final class L2LegacyGameServer extends
 	private NewCipher _cipher;
 	
 	private L2LegacyGameServerView _view;
-	private L2LegacyGameServerState _state;
+	private volatile L2LegacyGameServerState _state;
 	private Integer _id;
 	private String _auth;
 	private boolean _allowedToBan;

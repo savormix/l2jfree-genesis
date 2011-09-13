@@ -102,4 +102,10 @@ public abstract class CharacterSelect extends L2ClientPacket
 		sendPacket(SkyColor.getForCharacterSelection());
 		sendPacket(new SelectedCharacterInfo(seed));
 	}
+	
+	@Override
+	protected boolean blockReadingUntilExecutionIsFinished()
+	{
+		return true;
+	}
 }

@@ -212,4 +212,10 @@ public final class RequestAuthLogin extends L2ClientPacket
 			L2Database.close(con);
 		}
 	}
+	
+	@Override
+	protected boolean blockReadingUntilExecutionIsFinished()
+	{
+		return true;
+	}
 }
