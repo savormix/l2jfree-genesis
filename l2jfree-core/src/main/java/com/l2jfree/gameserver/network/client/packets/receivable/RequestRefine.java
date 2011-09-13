@@ -36,6 +36,8 @@ public class RequestRefine extends L2ClientPacket
 		return READ_D + READ_D + READ_D + READ_Q;
 	}
 	
+	/* Fields for storing read data */
+	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{

@@ -45,6 +45,8 @@ public abstract class Say2 extends L2ClientPacket
 		return READ_S + READ_D;
 	}
 	
+	/* Fields for storing read data */
+	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{

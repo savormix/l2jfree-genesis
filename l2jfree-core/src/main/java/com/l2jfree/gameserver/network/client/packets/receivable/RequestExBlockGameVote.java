@@ -47,6 +47,8 @@ public abstract class RequestExBlockGameVote extends L2ClientPacket
 		return READ_D + READ_D;
 	}
 	
+	/* Fields for storing read data */
+	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{

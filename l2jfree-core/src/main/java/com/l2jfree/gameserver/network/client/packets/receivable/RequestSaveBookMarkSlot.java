@@ -49,6 +49,8 @@ public abstract class RequestSaveBookMarkSlot extends L2ClientPacket
 		return READ_S + READ_D + READ_S;
 	}
 	
+	/* Fields for storing read data */
+	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{

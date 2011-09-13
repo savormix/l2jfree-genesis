@@ -45,6 +45,8 @@ public abstract class RequestTargetCancel extends L2ClientPacket
 		return READ_H;
 	}
 	
+	/* Fields for storing read data */
+	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{

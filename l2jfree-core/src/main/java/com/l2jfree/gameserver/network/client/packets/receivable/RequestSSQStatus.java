@@ -45,6 +45,8 @@ public abstract class RequestSSQStatus extends L2ClientPacket
 		return READ_C;
 	}
 	
+	/* Fields for storing read data */
+	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
