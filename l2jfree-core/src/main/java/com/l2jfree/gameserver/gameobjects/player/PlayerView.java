@@ -138,6 +138,9 @@ public class PlayerView extends CharacterView implements IPlayerView
 	private int _x;
 	private int _y;
 	private int _z;
+	private int _destinationX;
+	private int _destinationY;
+	private int _destinationZ;
 	private final int[] _defenceElementPower = new int[Element.values().length];
 	
 	public PlayerView(L2Player activeChar)
@@ -716,6 +719,24 @@ public class PlayerView extends CharacterView implements IPlayerView
 	}
 	
 	@Override
+	public int getDestinationX()
+	{
+		return _destinationX;
+	}
+	
+	@Override
+	public int getDestinationY()
+	{
+		return _destinationY;
+	}
+	
+	@Override
+	public int getDestinationZ()
+	{
+		return _destinationZ;
+	}
+	
+	@Override
 	public boolean isFishing()
 	{
 		return _fishing;
@@ -970,6 +991,16 @@ public class PlayerView extends CharacterView implements IPlayerView
 		_y = position.getY();
 		_z = position.getZ();
 		_heading = position.getHeading();
+	}
+	
+	@Override
+	public void refreshDestinationPosition()
+	{
+		final ObjectPosition destinationPosition = getActiveChar().getDestinationPosition();
+		
+		_destinationX = destinationPosition.getX();
+		_destinationY = destinationPosition.getY();
+		_destinationZ = destinationPosition.getZ();
 	}
 	
 	private final int[] _paperDollObjectIds = new int[PaperDollSlot.TOTAL_SLOTS];

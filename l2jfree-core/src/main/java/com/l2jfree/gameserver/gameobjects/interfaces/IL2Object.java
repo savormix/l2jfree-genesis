@@ -30,6 +30,8 @@ public interface IL2Object extends L2Entity<Integer>
 	
 	public ObjectPosition getPosition();
 	
+	public ObjectPosition getDestinationPosition();
+	
 	public IObjectKnownList getKnownList();
 	
 	@Override

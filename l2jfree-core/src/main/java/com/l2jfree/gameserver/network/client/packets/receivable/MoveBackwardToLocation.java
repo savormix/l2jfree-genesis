@@ -23,6 +23,7 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 /**
  * @author savormix (generated)
  */
+@SuppressWarnings("unused")
 public abstract class MoveBackwardToLocation extends L2ClientPacket
 {
 	/**
@@ -46,6 +47,14 @@ public abstract class MoveBackwardToLocation extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x0f;
 	
+	private int _destinationX;
+	private int _destinationY;
+	private int _destinationZ;
+	private int _clientX;
+	private int _clientY;
+	private int _clientZ;
+	private int _controller;
+	
 	/** Constructs this packet. */
 	public MoveBackwardToLocation()
 	{
@@ -61,18 +70,19 @@ public abstract class MoveBackwardToLocation extends L2ClientPacket
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.readD(); // Destination X
-		buf.readD(); // Destination Y
-		buf.readD(); // Destination Z
-		buf.readD(); // Current client X
-		buf.readD(); // Current client Y
-		buf.readD(); // Current client Z
-		buf.readD(); // Controller
+		_destinationX = buf.readD(); // Destination X
+		_destinationY = buf.readD(); // Destination Y
+		_destinationZ = buf.readD(); // Destination Z
+		_clientX = buf.readD(); // Current client X
+		_clientY = buf.readD(); // Current client Y
+		_clientZ = buf.readD(); // Current client Z
+		_controller = buf.readD(); // Controller
 	}
 	
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		// TODO: implement
+		getClient().getActiveChar().getDestinationPosition().setXYZ(_destinationX, _destinationY, _destinationZ);
 	}
 }

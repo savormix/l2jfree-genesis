@@ -35,6 +35,7 @@ public abstract class L2Object implements IL2Object
 	private final L2Template _template;
 	
 	private final ObjectPosition _position;
+	private final ObjectPosition _destinationPosition;
 	private final IObjectKnownList _knownList;
 	
 	protected L2Object(int objectId, L2Template template)
@@ -43,6 +44,7 @@ public abstract class L2Object implements IL2Object
 		_template = template;
 		
 		_position = PositionComponent.FACTORY.getComponent(this);
+		_destinationPosition = PositionComponent.FACTORY.getComponent(this);
 		_knownList = KnownListComponent.FACTORY.getComponent(this);
 	}
 	
@@ -62,6 +64,12 @@ public abstract class L2Object implements IL2Object
 	public ObjectPosition getPosition()
 	{
 		return _position;
+	}
+	
+	@Override
+	public ObjectPosition getDestinationPosition()
+	{
+		return _destinationPosition;
 	}
 	
 	@Override

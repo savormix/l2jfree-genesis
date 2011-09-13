@@ -212,6 +212,12 @@ public interface IPlayerView extends ICharacterView
 	
 	public int getZ();
 	
+	public int getDestinationX();
+	
+	public int getDestinationY();
+	
+	public int getDestinationZ();
+	
 	public boolean isFishing();
 	
 	public boolean isFlyingMounted();
@@ -235,6 +241,8 @@ public interface IPlayerView extends ICharacterView
 	public boolean isNoble();
 	
 	public void refreshPosition();
+	
+	public void refreshDestinationPosition();
 	
 	public void refreshPaperDoll();
 	

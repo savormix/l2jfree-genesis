@@ -27,6 +27,8 @@ import com.l2jfree.gameserver.network.client.packets.receivable.EnterWorld;
 import com.l2jfree.gameserver.network.client.packets.receivable.EnterWorld.RequestEnterWorld;
 import com.l2jfree.gameserver.network.client.packets.receivable.ExGetOnAirShip;
 import com.l2jfree.gameserver.network.client.packets.receivable.Logout;
+import com.l2jfree.gameserver.network.client.packets.receivable.MoveBackwardToLocation;
+import com.l2jfree.gameserver.network.client.packets.receivable.MoveBackwardToLocation.RequestMovement;
 import com.l2jfree.gameserver.network.client.packets.receivable.RequestManorList;
 import com.l2jfree.gameserver.network.client.packets.receivable.RequestRestart;
 import com.l2jfree.gameserver.network.client.packets.receivable.ValidatePosition;
@@ -142,6 +144,11 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 				if (client.stateEquals(LOGGED_IN))
 					return new ReportLocation();
 				return invalidState(client, ValidatePosition.class, opcode);
+				
+			case MoveBackwardToLocation.OPCODE:
+				if (client.stateEquals(LOGGED_IN))
+					return new RequestMovement();
+				return invalidState(client, MoveBackwardToLocation.class, opcode);
 				
 			default:
 				return unknown(buf, client, opcode);
