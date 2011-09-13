@@ -23,9 +23,9 @@ import com.l2jfree.gameserver.templates.L2ItemTemplate;
  */
 public class L2SingularItem extends L2Item
 {
-	protected L2SingularItem(int objectId, L2ItemTemplate template)
+	protected L2SingularItem(L2ItemTemplate template)
 	{
-		super(objectId, template);
+		super(template);
 	}
 	
 	@Override

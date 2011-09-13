@@ -19,7 +19,7 @@ import com.l2jfree.gameserver.gameobjects.components.KnownListComponent;
 import com.l2jfree.gameserver.gameobjects.components.empty.EmptyObjectKnownList;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IElemental;
 import com.l2jfree.gameserver.templates.L2ItemTemplate;
-import com.l2jfree.network.mmocore.MMOBuffer;
+import com.l2jfree.gameserver.util.IdFactory.IdRange;
 
 /**
  * @author NB4L1
@@ -27,9 +27,15 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 @KnownListComponent(EmptyObjectKnownList.class)
 public abstract class L2Item extends L2Object implements IElemental
 {
-	protected L2Item(int objectId, L2ItemTemplate template)
+	protected L2Item(L2ItemTemplate template)
 	{
-		super(objectId, template);
+		super(template);
+	}
+	
+	@Override
+	protected IdRange getIdRange()
+	{
+		return IdRange.ITEMS;
 	}
 	
 	@Override
@@ -70,18 +76,5 @@ public abstract class L2Item extends L2Object implements IElemental
 	public int getDefenseElementPower(Element element)
 	{
 		return 0;
-	}
-	
-	@Override
-	public final void writeElements(MMOBuffer buf)
-	{
-		buf.writeH(getAttackElementType().getValue()); // Attack element
-		buf.writeH(getAttackElementPower()); // Attack element power
-		buf.writeH(getDefenseElementPower(Element.FIRE)); // Fire defense
-		buf.writeH(getDefenseElementPower(Element.WATER)); // Water defense
-		buf.writeH(getDefenseElementPower(Element.WIND)); // Wind defense
-		buf.writeH(getDefenseElementPower(Element.EARTH)); // Earth defense
-		buf.writeH(getDefenseElementPower(Element.HOLY)); // Holy defense
-		buf.writeH(getDefenseElementPower(Element.DARK)); // Dark defense
 	}
 }

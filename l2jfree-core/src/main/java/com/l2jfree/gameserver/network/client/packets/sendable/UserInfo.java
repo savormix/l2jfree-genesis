@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.gameserver.gameobjects.CharacterStat.Element;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerView;
 import com.l2jfree.gameserver.network.client.L2Client;
@@ -174,7 +175,7 @@ public abstract class UserInfo extends StaticPacket
 		buf.writeD(view.getCursedWeaponLevel()); // Cursed weapon level
 		buf.writeD(view.getTransformationGraphicalId()); // Transformation
 		
-		view.writeElements(buf); // Attack and defense element info
+		Element.writeElements(view, buf); // Attack and defense element info
 		
 		buf.writeD(view.getAgathionId()); // Agathion
 		buf.writeD(view.getFamePoints()); // Fame

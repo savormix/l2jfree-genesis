@@ -25,9 +25,9 @@ public final class L2StackableItem extends L2Item
 	// TODO
 	private long _count;
 	
-	protected L2StackableItem(int objectId, L2ItemTemplate template)
+	protected L2StackableItem(L2ItemTemplate template)
 	{
-		super(objectId, template);
+		super(template);
 	}
 	
 	@Override

@@ -34,9 +34,9 @@ public abstract class L2Character extends L2Object implements IL2Character
 	private final ICharacterView _view;
 	private final IInventory _inventory;
 	
-	protected L2Character(int objectId, L2Template template)
+	protected L2Character(L2Template template)
 	{
-		super(objectId, template);
+		super(template);
 		
 		_stat = StatComponent.FACTORY.getComponent(this);
 		_view = ViewComponent.FACTORY.getComponent(this);

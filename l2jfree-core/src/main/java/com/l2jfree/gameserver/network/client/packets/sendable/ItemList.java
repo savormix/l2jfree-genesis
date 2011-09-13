@@ -16,6 +16,7 @@ package com.l2jfree.gameserver.network.client.packets.sendable;
 
 import java.util.Collection;
 
+import com.l2jfree.gameserver.gameobjects.CharacterStat.Element;
 import com.l2jfree.gameserver.gameobjects.L2Item;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
@@ -94,7 +95,7 @@ public abstract class ItemList extends L2ServerPacket
 			buf.writeD(0); // Augmentation
 			buf.writeD(-1); // Mana left
 			buf.writeD(-9999); // Time remaining
-			item.writeElements(buf); // Attack and defense element info
+			Element.writeElements(item, buf); // Attack and defense element info
 			// 'enchant effects'
 			buf.writeH(0); // 0
 			buf.writeH(0); // 0

@@ -159,7 +159,7 @@ public final class GameServer extends Config
 		
 		final IdFactory ids = IdFactory.getInstance();
 		for (IdRange idRange : IdRange.values())
-			System.out.println(idRange + ": " + ids.getNextId(idRange) + ", " + ids.getNextId(idRange));
+			System.out.println(idRange + ": " + ids.getNextObjectId(idRange) + ", " + ids.getNextObjectId(idRange));
 		
 		Util.printSection("find-and-update-playerdb");
 		final PlayerDB playerDB1 = PlayerDB.find(loaded.getObjectId());

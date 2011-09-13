@@ -22,8 +22,8 @@ import com.l2jfree.gameserver.templates.L2NpcTemplate;
  */
 public abstract class L2Servitor extends L2Summon
 {
-	public L2Servitor(int objectId, L2NpcTemplate template)
+	public L2Servitor(L2NpcTemplate template)
 	{
-		super(objectId, template);
+		super(template);
 	}
 }

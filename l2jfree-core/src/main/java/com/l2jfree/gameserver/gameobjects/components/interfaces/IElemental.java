@@ -15,7 +15,6 @@
 package com.l2jfree.gameserver.gameobjects.components.interfaces;
 
 import com.l2jfree.gameserver.gameobjects.CharacterStat.Element;
-import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix
@@ -27,6 +26,4 @@ public interface IElemental
 	public Element getAttackElementType();
 	
 	public int getDefenseElementPower(Element element);
-	
-	public void writeElements(MMOBuffer buf);
 }

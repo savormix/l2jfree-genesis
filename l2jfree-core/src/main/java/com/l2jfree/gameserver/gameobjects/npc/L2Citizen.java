@@ -22,8 +22,8 @@ import com.l2jfree.gameserver.templates.L2NpcTemplate;
  */
 public abstract class L2Citizen extends L2Npc
 {
-	public L2Citizen(int objectId, L2NpcTemplate template)
+	public L2Citizen(L2NpcTemplate template)
 	{
-		super(objectId, template);
+		super(template);
 	}
 }

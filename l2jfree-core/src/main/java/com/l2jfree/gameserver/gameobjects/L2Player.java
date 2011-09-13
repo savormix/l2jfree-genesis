@@ -67,7 +67,7 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 	{
 		try
 		{
-			final int objectId = IdFactory.getInstance().getNextId(IdRange.PLAYERS);
+			final int objectId = IdFactory.getInstance().getNextPersistentId(IdRange.PLAYERS);
 			
 			final PlayerDB playerDB = new PlayerDB();
 			playerDB.objectId = objectId;
@@ -184,7 +184,7 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 	
 	private L2Player(PlayerDB playerDB)
 	{
-		super(playerDB.objectId, PlayerTemplateTable.getInstance().getPlayerTemplate(playerDB.activeClassId));
+		super(PlayerTemplateTable.getInstance().getPlayerTemplate(playerDB.activeClassId));
 		getPosition().init(playerDB);
 		
 		_accountName = playerDB.accountName;
@@ -196,6 +196,12 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 		getAppearance().init(playerDB);
 		
 		setName(playerDB.name);
+	}
+	
+	@Override
+	protected IdRange getIdRange()
+	{
+		return IdRange.PLAYERS;
 	}
 	
 	/**

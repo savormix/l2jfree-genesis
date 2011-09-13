@@ -21,9 +21,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.BitSet;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.l2jfree.gameserver.sql.PlayerDB;
 import com.l2jfree.sql.L2Database;
-import com.l2jfree.util.concurrent.L2ThreadPool;
 import com.l2jfree.util.logging.L2Logger;
 
 /**
@@ -63,48 +64,49 @@ public final class IdFactory
 	{
 		// TODO
 		CLANS(20 * 1000000, 40 * 1000000),
-		PLAYERS(50 * 1000000, 100 * 1000000, "players"),
+		PLAYERS(50 * 1000000, 100 * 1000000, "players.objectId"),
 		ITEMS(200 * 1000000, 400 * 1000000),
-		TEMPORARY(500 * 1000000, 1000 * 1000000);
+		MISC(500 * 1000000, 1000 * 1000000);
 		
-		private final int _minimumAllowedObjectId;
-		private final int _maximumAllowedObjectId;
-		private final String[] _tables;
+		private final int _minimumAllowedId;
+		private final int _maximumAllowedId;
+		private final String[] _tablesAndColumns;
 		
-		private IdRange(int minimumAllowedObjectId, int maximumAllowedObjectId, String... tables)
+		private IdRange(int minimumAllowedId, int maximumAllowedId, String... tablesAndColumns)
 		{
-			_minimumAllowedObjectId = minimumAllowedObjectId;
-			_maximumAllowedObjectId = maximumAllowedObjectId;
-			_tables = tables;
+			_minimumAllowedId = minimumAllowedId;
+			_maximumAllowedId = maximumAllowedId;
+			_tablesAndColumns = tablesAndColumns;
 		}
 		
-		public String[] getTables()
+		public String[] getTablesAndColumns()
 		{
-			return _tables;
+			return _tablesAndColumns;
 		}
 		
-		public int toBitIndex(int objectId)
+		public int toBitIndex(int id)
 		{
-			return objectId - _minimumAllowedObjectId;
+			return id - _minimumAllowedId;
 		}
 		
-		public int toObjectId(int bitIndex)
+		public int toId(int bitIndex)
 		{
-			return _minimumAllowedObjectId + bitIndex;
+			return _minimumAllowedId + bitIndex;
 		}
 		
-		public boolean isInRange(int objectId, String action)
+		public boolean isInRange(int id, String action)
 		{
-			if (_minimumAllowedObjectId <= objectId && objectId <= _maximumAllowedObjectId)
+			if (_minimumAllowedId <= id && id <= _maximumAllowedId)
 				return true;
 			
-			_log.warn("IdFactory: " + action + " of objectId: " + objectId + " failed, because it's out of range ["
-					+ _minimumAllowedObjectId + ".." + _maximumAllowedObjectId + "}");
+			_log.warn(getClass().getSimpleName() + ": " + action + " of ID: " + id
+					+ " failed, because it's out of range [" + _minimumAllowedId + ".." + _maximumAllowedId + "}");
 			return false;
 		}
 	}
 	
-	private final RangedIdFactory[] _rangedIdFactories = new RangedIdFactory[IdRange.values().length];
+	private final RangedPersistentIdFactory[] _rangedPersistentIdFactories;
+	private final RangedObjectIdFactory[] _rangedObjectIdFactories;
 	
 	private IdFactory() throws SQLException
 	{
@@ -113,8 +115,13 @@ public final class IdFactory
 		removeLeftover();
 		removeExpired();
 		
+		_rangedPersistentIdFactories = new RangedPersistentIdFactory[IdRange.values().length];
 		for (IdRange idRange : IdRange.values())
-			_rangedIdFactories[idRange.ordinal()] = new RangedIdFactory(idRange);
+			_rangedPersistentIdFactories[idRange.ordinal()] = new RangedPersistentIdFactory(idRange);
+		
+		_rangedObjectIdFactories = new RangedObjectIdFactory[IdRange.values().length];
+		for (IdRange idRange : IdRange.values())
+			_rangedObjectIdFactories[idRange.ordinal()] = new RangedObjectIdFactory(idRange);
 		
 		_log.info("IdFactory: Initialized.");
 	}
@@ -180,16 +187,40 @@ public final class IdFactory
 		_log.info("IdFactory: Removed " + removed + " expired entries from database.");
 	}
 	
-	private static final class RangedIdFactory
+	private static abstract class RangedIdFactory
 	{
-		private final IdRange _idRange;
+		protected final IdRange _idRange;
 		
-		private final BitSet _occupiedBits = new BitSet();
-		private volatile int _lastReturnedBitIndex = 0;
+		protected final BitSet _occupiedBits = new BitSet();
+		protected volatile int _lastReturnedBitIndex = 0;
 		
-		private RangedIdFactory(IdRange idRange) throws SQLException
+		private RangedIdFactory(IdRange idRange)
 		{
 			_idRange = idRange;
+		}
+		
+		public synchronized final int getNextId()
+		{
+			final int bitIndex = _occupiedBits.nextClearBit(_lastReturnedBitIndex);
+			final int id = _idRange.toId(bitIndex);
+			
+			if (!_idRange.isInRange(id, "requesting"))
+			{
+				// FIXME there are no more free ids
+			}
+			
+			_occupiedBits.set(bitIndex);
+			_lastReturnedBitIndex = Math.max(bitIndex, _occupiedBits.length() - 1);
+			return id;
+		}
+	}
+	
+	// LOW compaction capability
+	private static final class RangedPersistentIdFactory extends RangedIdFactory
+	{
+		private RangedPersistentIdFactory(IdRange idRange) throws SQLException
+		{
+			super(idRange);
 			
 			int loaded = 0;
 			
@@ -200,15 +231,20 @@ public final class IdFactory
 				
 				final Statement st = con.createStatement();
 				
-				for (String table : _idRange.getTables())
+				for (String tablesAndColumns : _idRange.getTablesAndColumns())
 				{
-					final ResultSet rs = st.executeQuery("SELECT objectId FROM " + table);
+					final String[] split = StringUtils.split(tablesAndColumns, ".", 2);
+					
+					final String table = split[0];
+					final String column = split[1];
+					
+					final ResultSet rs = st.executeQuery("SELECT " + column + " FROM " + table);
 					
 					while (rs.next())
 					{
-						final int objectId = rs.getInt(1);
+						final int id = rs.getInt(1);
 						
-						loadId(objectId);
+						loadId(id);
 						
 						loaded++;
 					}
@@ -224,80 +260,66 @@ public final class IdFactory
 			}
 			
 			_log.info("IdFactory: Loaded " + loaded + " " + _idRange.name().replaceFirst("S$", "")
-					+ " objectIds from database.");
-			
-			L2ThreadPool.scheduleAtFixedRate(new Runnable() {
-				@Override
-				public void run()
-				{
-					resetLastReturnedBitIndex();
-				}
-			}, 60000, 60000);
+					+ " IDs from database.");
 		}
 		
-		private synchronized void loadId(final int objectId)
+		private synchronized void loadId(final int id)
 		{
-			if (!_idRange.isInRange(objectId, "loading"))
+			if (!_idRange.isInRange(id, "loading"))
 				return;
 			
-			final int bitIndex = _idRange.toBitIndex(objectId);
+			final int bitIndex = _idRange.toBitIndex(id);
 			
 			if (_occupiedBits.get(bitIndex))
 			{
-				_log.warn("IdFactory: loading of objectId: " + objectId + " failed, because it's already loaded");
+				_log.warn("IdFactory: loading of ID: " + id + " failed, because it's already loaded");
 				return;
 			}
 			
 			_occupiedBits.set(bitIndex);
+			_lastReturnedBitIndex = Math.max(bitIndex, _occupiedBits.length() - 1);
+		}
+	}
+	
+	private static final class RangedObjectIdFactory extends RangedIdFactory
+	{
+		private RangedObjectIdFactory(IdRange idRange)
+		{
+			super(idRange);
 		}
 		
-		public synchronized void releaseId(final int objectId)
+		public synchronized void releaseId(final int id)
 		{
-			if (!_idRange.isInRange(objectId, "releasing"))
+			if (!_idRange.isInRange(id, "releasing"))
 				return;
 			
-			final int bitIndex = _idRange.toBitIndex(objectId);
+			final int bitIndex = _idRange.toBitIndex(id);
 			
 			if (!_occupiedBits.get(bitIndex))
 			{
-				_log.warn("IdFactory: releasing of objectId: " + objectId + " failed, because it's already free");
+				_log.warn("IdFactory: releasing of ID: " + id + " failed, because it's already free");
 				return;
 			}
 			
 			_occupiedBits.clear(bitIndex);
-		}
-		
-		public synchronized int getNextId()
-		{
-			final int bitIndex = _occupiedBits.nextClearBit(_lastReturnedBitIndex);
-			
-			_occupiedBits.set(bitIndex);
-			_lastReturnedBitIndex = bitIndex;
-			
-			final int objectId = _idRange.toObjectId(bitIndex);
-			
-			if (!_idRange.isInRange(objectId, "requesting"))
-			{
-				// FIXME
-			}
-			
-			return objectId;
-		}
-		
-		public synchronized void resetLastReturnedBitIndex()
-		{
-			// to ensure it uses released ids too :P
-			_lastReturnedBitIndex = 0;
+			// _lastReturnedBitIndex is unmodified for a purpose -> we don't want to reuse this id yet
+			// this is done only for the - almost impossible occasion - that we run out if IDs
+			// so we have to restart from beginning :)
 		}
 	}
 	
-	public int getNextId(IdRange range)
+	public int getNextPersistentId(IdRange range)
 	{
-		return _rangedIdFactories[range.ordinal()].getNextId();
+		return _rangedPersistentIdFactories[range.ordinal()].getNextId();
 	}
 	
-	public void releaseId(IdRange range, int objectId)
+	public int getNextObjectId(IdRange range)
 	{
-		_rangedIdFactories[range.ordinal()].releaseId(objectId);
+		return _rangedObjectIdFactories[range.ordinal()].getNextId();
+	}
+	
+	public void releaseObjectId(IdRange range, int objectId)
+	{
+		_rangedObjectIdFactories[range.ordinal()].releaseId(objectId);
 	}
 }

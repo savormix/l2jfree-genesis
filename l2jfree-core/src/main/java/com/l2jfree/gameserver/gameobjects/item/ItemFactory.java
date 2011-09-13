@@ -24,18 +24,18 @@ import com.l2jfree.gameserver.templates.L2ItemTemplate;
  */
 public final class ItemFactory
 {
-	public static L2Item createItem(int objectId, L2ItemTemplate template)
+	public static L2Item createItem(L2ItemTemplate template)
 	{
 		// TODO
 		final boolean stackable = false;
 		final boolean equipable = false;
 		
 		if (stackable)
-			return new L2StackableItem(objectId, template);
+			return new L2StackableItem(template);
 		
 		if (equipable)
-			return new L2EquipableItem(objectId, template);
+			return new L2EquipableItem(template);
 		
-		return new L2SingularItem(objectId, template);
+		return new L2SingularItem(template);
 	}
 }

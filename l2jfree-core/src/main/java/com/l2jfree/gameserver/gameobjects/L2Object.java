@@ -19,6 +19,8 @@ import com.l2jfree.gameserver.gameobjects.components.PositionComponent;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IObjectKnownList;
 import com.l2jfree.gameserver.gameobjects.interfaces.IL2Object;
 import com.l2jfree.gameserver.templates.L2Template;
+import com.l2jfree.gameserver.util.IdFactory;
+import com.l2jfree.gameserver.util.IdFactory.IdRange;
 import com.l2jfree.gameserver.world.L2World;
 import com.l2jfree.lang.L2TextBuilder;
 import com.l2jfree.util.logging.L2Logger;
@@ -37,13 +39,25 @@ public abstract class L2Object implements IL2Object
 	private final ObjectPosition _position;
 	private final IObjectKnownList _knownList;
 	
-	protected L2Object(int objectId, L2Template template)
+	protected L2Object(L2Template template)
 	{
-		_objectId = objectId;
+		_objectId = IdFactory.getInstance().getNextObjectId(getIdRange());
 		_template = template;
 		
 		_position = PositionComponent.FACTORY.getComponent(this);
 		_knownList = KnownListComponent.FACTORY.getComponent(this);
+	}
+	
+	@SuppressWarnings("static-method")
+	protected IdRange getIdRange()
+	{
+		return IdRange.MISC;
+	}
+	
+	@Override
+	protected void finalize()
+	{
+		IdFactory.getInstance().releaseObjectId(getIdRange(), getObjectId());
 	}
 	
 	@Override

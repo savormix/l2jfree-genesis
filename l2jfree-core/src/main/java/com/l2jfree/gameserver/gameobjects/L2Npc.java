@@ -21,9 +21,9 @@ import com.l2jfree.gameserver.templates.L2NpcTemplate;
  */
 public abstract class L2Npc extends L2Character
 {
-	protected L2Npc(int objectId, L2NpcTemplate template)
+	protected L2Npc(L2NpcTemplate template)
 	{
-		super(objectId, template);
+		super(template);
 	}
 	
 	@Override

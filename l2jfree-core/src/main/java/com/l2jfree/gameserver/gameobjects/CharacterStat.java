@@ -15,6 +15,8 @@
 package com.l2jfree.gameserver.gameobjects;
 
 import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterStat;
+import com.l2jfree.gameserver.gameobjects.components.interfaces.IElemental;
+import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author hex1r0
@@ -51,6 +53,18 @@ public abstract class CharacterStat implements ICharacterStat
 		public int getValue()
 		{
 			return _value;
+		}
+		
+		public static void writeElements(IElemental elemental, MMOBuffer buf)
+		{
+			buf.writeH(elemental.getAttackElementType().getValue()); // Attack element
+			buf.writeH(elemental.getAttackElementPower()); // Attack element power
+			buf.writeH(elemental.getDefenseElementPower(Element.FIRE)); // Fire defense
+			buf.writeH(elemental.getDefenseElementPower(Element.WATER)); // Water defense
+			buf.writeH(elemental.getDefenseElementPower(Element.WIND)); // Wind defense
+			buf.writeH(elemental.getDefenseElementPower(Element.EARTH)); // Earth defense
+			buf.writeH(elemental.getDefenseElementPower(Element.HOLY)); // Holy defense
+			buf.writeH(elemental.getDefenseElementPower(Element.DARK)); // Dark defense
 		}
 	}
 	

@@ -22,8 +22,8 @@ import com.l2jfree.gameserver.templates.L2NpcTemplate;
  */
 public abstract class L2Monster extends L2Npc
 {
-	public L2Monster(int objectId, L2NpcTemplate template)
+	public L2Monster(L2NpcTemplate template)
 	{
-		super(objectId, template);
+		super(template);
 	}
 }

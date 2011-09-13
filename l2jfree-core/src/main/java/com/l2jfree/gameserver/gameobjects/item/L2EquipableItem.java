@@ -24,9 +24,9 @@ public final class L2EquipableItem extends L2SingularItem
 	// TODO
 	private int _enchantLevel;
 	
-	protected L2EquipableItem(int objectId, L2ItemTemplate template)
+	protected L2EquipableItem(L2ItemTemplate template)
 	{
-		super(objectId, template);
+		super(template);
 	}
 	
 	public int getEnchantLevel()

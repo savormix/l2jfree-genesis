@@ -1043,19 +1043,6 @@ public class PlayerView extends CharacterView implements IPlayerView
 	// -- methods for convenience
 	
 	@Override
-	public void writeElements(MMOBuffer buf)
-	{
-		buf.writeH(getAttackElementType().getValue()); // Attack element
-		buf.writeH(getAttackElementPower()); // Attack element power
-		buf.writeH(getDefenseElementPower(Element.FIRE)); // Fire defense
-		buf.writeH(getDefenseElementPower(Element.WATER)); // Water defense
-		buf.writeH(getDefenseElementPower(Element.WIND)); // Wind defense
-		buf.writeH(getDefenseElementPower(Element.EARTH)); // Earth defense
-		buf.writeH(getDefenseElementPower(Element.HOLY)); // Holy defense
-		buf.writeH(getDefenseElementPower(Element.DARK)); // Dark defense
-	}
-	
-	@Override
 	public void writePaperDollObjectIds(MMOBuffer buf, boolean withAccessory)
 	{
 		for (int slot : PlayerView.getSlots(withAccessory))

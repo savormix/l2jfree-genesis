@@ -24,8 +24,8 @@ import com.l2jfree.gameserver.templates.L2NpcTemplate;
 @InventoryComponent(PetInventory.class)
 public abstract class L2Pet extends L2Summon
 {
-	public L2Pet(int objectId, L2NpcTemplate template)
+	public L2Pet(L2NpcTemplate template)
 	{
-		super(objectId, template);
+		super(template);
 	}
 }
