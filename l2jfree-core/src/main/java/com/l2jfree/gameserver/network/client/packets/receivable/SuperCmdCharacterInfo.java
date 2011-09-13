@@ -47,7 +47,7 @@ public abstract class SuperCmdCharacterInfo extends L2ClientPacket
 	public static final int OPCODE = 0x4a;
 	/** Additional packet's identifiers */
 	public static final int[] EXT_OPCODES = { 0x00, 0x00 };
-	/** Second packet's identifier */
+	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x00;
 	
 	/** Constructs this packet. */

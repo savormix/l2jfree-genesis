@@ -29,7 +29,7 @@ public class RequestBR_ProductList extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Additional packet's identifiers */
 	public static final int[] EXT_OPCODES = { 0x8a, 0x00 };
-	/** Second packet's identifier */
+	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x8a;
 	
 	/** Constructs this packet. */

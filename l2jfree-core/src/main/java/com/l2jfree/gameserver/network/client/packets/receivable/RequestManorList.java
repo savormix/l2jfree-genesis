@@ -31,7 +31,7 @@ public class RequestManorList extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Additional packet's identifiers */
 	public static final int[] EXT_OPCODES = { 0x01, 0x00 };
-	/** Second packet's identifier */
+	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x01;
 	
 	/** Constructs this packet. */
