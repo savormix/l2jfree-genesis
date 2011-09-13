@@ -49,13 +49,13 @@ public abstract class CharacterSelect extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x12;
 	
-	private int _charSlot;
-	
 	@Override
 	protected int getMinimumLength()
 	{
 		return READ_D + READ_H + READ_D + READ_D + READ_D;
 	}
+	
+	private int _charSlot;
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException

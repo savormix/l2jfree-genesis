@@ -43,18 +43,18 @@ public abstract class ValidatePosition extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x59;
 	
+	@Override
+	protected int getMinimumLength()
+	{
+		return READ_D + READ_D + READ_D + READ_D + READ_D;
+	}
+	
 	private int _x;
 	private int _y;
 	private int _z;
 	private int _heading;
 	
 	//private int _vehicle;
-	
-	@Override
-	protected int getMinimumLength()
-	{
-		return READ_D + READ_D + READ_D + READ_D + READ_D;
-	}
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException

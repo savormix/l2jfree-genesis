@@ -40,6 +40,12 @@ public abstract class MoveBackwardToLocation extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x0f;
 	
+	@Override
+	protected int getMinimumLength()
+	{
+		return READ_D + READ_D + READ_D + READ_D + READ_D + READ_D + READ_D;
+	}
+	
 	private int _destinationX;
 	private int _destinationY;
 	private int _destinationZ;
@@ -47,12 +53,6 @@ public abstract class MoveBackwardToLocation extends L2ClientPacket
 	private int _clientY;
 	private int _clientZ;
 	private int _controller;
-	
-	@Override
-	protected int getMinimumLength()
-	{
-		return READ_D + READ_D + READ_D + READ_D + READ_D + READ_D + READ_D;
-	}
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException

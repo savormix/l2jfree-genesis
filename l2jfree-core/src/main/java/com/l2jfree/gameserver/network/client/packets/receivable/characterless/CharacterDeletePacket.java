@@ -46,14 +46,14 @@ public abstract class CharacterDeletePacket extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x0d;
 	
-	@SuppressWarnings("unused")
-	private int _charSlot;
-	
 	@Override
 	protected int getMinimumLength()
 	{
 		return READ_D;
 	}
+	
+	@SuppressWarnings("unused")
+	private int _charSlot;
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException

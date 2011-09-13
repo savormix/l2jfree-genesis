@@ -44,14 +44,14 @@ public abstract class CharacterRestorePacket extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x7b;
 	
-	@SuppressWarnings("unused")
-	private int _charSlot;
-	
 	@Override
 	protected int getMinimumLength()
 	{
 		return READ_D;
 	}
+	
+	@SuppressWarnings("unused")
+	private int _charSlot;
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException

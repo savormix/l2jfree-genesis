@@ -37,13 +37,13 @@ public class ProtocolVersion extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x0e;
 	
-	private int _version;
-	
 	@Override
 	protected int getMinimumLength()
 	{
 		return READ_D;
 	}
+	
+	private int _version;
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException

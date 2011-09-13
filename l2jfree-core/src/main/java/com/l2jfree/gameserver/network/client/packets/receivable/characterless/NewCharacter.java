@@ -53,19 +53,19 @@ public abstract class NewCharacter extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x0c;
 	
-	private String _name;
-	private int _sex;
-	private int _classId;
-	private byte _hairStyle;
-	private byte _hairColor;
-	private byte _face;
-	
 	@Override
 	protected int getMinimumLength()
 	{
 		return READ_S + READ_D + READ_D + READ_D + READ_D + READ_D + READ_D + READ_D + READ_D + READ_D + READ_D
 				+ READ_D + READ_D;
 	}
+	
+	private String _name;
+	private int _sex;
+	private int _classId;
+	private byte _hairStyle;
+	private byte _hairColor;
+	private byte _face;
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException

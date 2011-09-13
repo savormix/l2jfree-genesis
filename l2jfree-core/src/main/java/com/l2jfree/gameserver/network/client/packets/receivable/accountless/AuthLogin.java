@@ -50,6 +50,14 @@ public abstract class AuthLogin extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x2b;
 	
+	@Override
+	protected int getMinimumLength()
+	{
+		// account name must not be an empty string
+		return (READ_S * 2) + READ_D + READ_D + READ_D + READ_D // FIXME: in which chronicle were these introduced?
+				+ READ_D + READ_D + READ_Q;
+	}
+	
 	private String _account;
 	private int _accountId1;
 	private int _currentKey;
@@ -58,14 +66,6 @@ public abstract class AuthLogin extends L2ClientPacket
 	private int _unk1;
 	private int _bitsInBlock;
 	private long _unk2;
-	
-	@Override
-	protected int getMinimumLength()
-	{
-		// account name must not be an empty string
-		return (READ_S * 2) + READ_D + READ_D + READ_D + READ_D // FIXME: in which chronicle were these introduced?
-				+ READ_D + READ_D + READ_Q;
-	}
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
