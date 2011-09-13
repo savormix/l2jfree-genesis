@@ -22,6 +22,7 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
+ * @author hex1r0
  */
 @SuppressWarnings("unused")
 public abstract class MoveBackwardToLocation extends L2ClientPacket
@@ -70,6 +71,9 @@ public abstract class MoveBackwardToLocation extends L2ClientPacket
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		// TODO: implement
+		// TODO implement coords checks
+		
+		// FIXME _destinationZ floor/head? needs any correction?
+		getClient().getActiveChar().setDestination(_destinationX, _destinationY, _destinationZ);
 	}
 }

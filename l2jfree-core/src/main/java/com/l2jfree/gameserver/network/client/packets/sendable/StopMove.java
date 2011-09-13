@@ -15,12 +15,14 @@
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
 import com.l2jfree.gameserver.gameobjects.L2Player;
+import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerView;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
+ * @author hex1r0
  */
 public abstract class StopMove extends L2ServerPacket
 {
@@ -32,12 +34,15 @@ public abstract class StopMove extends L2ServerPacket
 	 */
 	public static final class Arrived extends StopMove
 	{
+		/** This packet. */
+		public static final Arrived PACKET = new Arrived();
+		
 		/**
 		 * Constructs this packet.
 		 * 
 		 * @see StopMove#StopMove()
 		 */
-		public Arrived()
+		private Arrived()
 		{
 		}
 	}
@@ -54,13 +59,22 @@ public abstract class StopMove extends L2ServerPacket
 	}
 	
 	@Override
+	public void prepareToSend(L2Client client, L2Player activeChar)
+	{
+		activeChar.getView().refreshPosition();
+	}
+	
+	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.writeD(0); // Actor OID
-		buf.writeD(0); // Location X
-		buf.writeD(0); // Location Y
-		buf.writeD(0); // Location Z
-		buf.writeD(0); // Heading
+		
+		final IPlayerView view = activeChar.getView();
+		
+		buf.writeD(view.getObjectId()); // Actor OID
+		buf.writeD(view.getX()); // Location X
+		buf.writeD(view.getY()); // Location Y
+		buf.writeD(view.getZ()); // Location Z
+		buf.writeD(view.getHeading()); // Heading
 	}
 }

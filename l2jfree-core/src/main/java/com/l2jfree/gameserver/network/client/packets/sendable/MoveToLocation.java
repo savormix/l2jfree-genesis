@@ -21,6 +21,7 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
+ * @author hex1r0
  */
 public abstract class MoveToLocation extends StaticPacket
 {

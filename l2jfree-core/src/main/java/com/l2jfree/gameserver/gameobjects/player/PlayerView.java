@@ -996,11 +996,11 @@ public class PlayerView extends CharacterView implements IPlayerView
 	@Override
 	public void refreshDestinationPosition()
 	{
-		/*final ObjectPosition destinationPosition = getActiveChar().getDestinationPosition();
+		final L2Player p = getActiveChar();
 		
-		_destinationX = destinationPosition.getX();
-		_destinationY = destinationPosition.getY();
-		_destinationZ = destinationPosition.getZ();*/
+		_destinationX = p.getDestinationX();
+		_destinationY = p.getDestinationY();
+		_destinationZ = p.getDestinationZ();
 	}
 	
 	private final int[] _paperDollObjectIds = new int[PaperDollSlot.TOTAL_SLOTS];
