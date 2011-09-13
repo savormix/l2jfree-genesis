@@ -83,6 +83,5 @@ public abstract class MoveBackwardToLocation extends L2ClientPacket
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		// TODO: implement
-		getClient().getActiveChar().getDestinationPosition().setXYZ(_destinationX, _destinationY, _destinationZ);
 	}
 }
