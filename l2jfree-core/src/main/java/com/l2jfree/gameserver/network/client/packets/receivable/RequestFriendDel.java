@@ -34,8 +34,6 @@ public abstract class RequestFriendDel extends L2ClientPacket
 	public static final class RequestRemoveFriend extends RequestFriendDel
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestFriendDel#RequestFriendDel()
 		 */
 		public RequestRemoveFriend()
@@ -45,11 +43,6 @@ public abstract class RequestFriendDel extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x7a;
-	
-	/** Constructs this packet. */
-	public RequestFriendDel()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

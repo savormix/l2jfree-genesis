@@ -38,8 +38,6 @@ public abstract class ValidatePosition extends L2ClientPacket
 	public static final class ReportLocation extends ValidatePosition
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see ValidatePosition#ValidatePosition()
 		 */
 		public ReportLocation()
@@ -56,11 +54,6 @@ public abstract class ValidatePosition extends L2ClientPacket
 	private int _heading;
 	
 	//private int _vehicle;
-	
-	/** Constructs this packet. */
-	public ValidatePosition()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

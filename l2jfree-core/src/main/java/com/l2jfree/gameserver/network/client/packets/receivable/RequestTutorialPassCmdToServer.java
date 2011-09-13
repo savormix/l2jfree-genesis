@@ -34,8 +34,6 @@ public abstract class RequestTutorialPassCmdToServer extends L2ClientPacket
 	public static final class RequestTutorialCommand extends RequestTutorialPassCmdToServer
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestTutorialPassCmdToServer#RequestTutorialPassCmdToServer()
 		 */
 		public RequestTutorialCommand()
@@ -45,11 +43,6 @@ public abstract class RequestTutorialPassCmdToServer extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x86;
-	
-	/** Constructs this packet. */
-	public RequestTutorialPassCmdToServer()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

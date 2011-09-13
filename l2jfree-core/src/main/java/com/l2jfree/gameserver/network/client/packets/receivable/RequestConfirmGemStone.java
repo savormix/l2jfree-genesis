@@ -34,8 +34,6 @@ public abstract class RequestConfirmGemStone extends L2ClientPacket
 	public static final class RequestSelectGemstone extends RequestConfirmGemStone
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestConfirmGemStone#RequestConfirmGemStone()
 		 */
 		public RequestSelectGemstone()
@@ -47,11 +45,6 @@ public abstract class RequestConfirmGemStone extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x28;
-	
-	/** Constructs this packet. */
-	public RequestConfirmGemStone()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

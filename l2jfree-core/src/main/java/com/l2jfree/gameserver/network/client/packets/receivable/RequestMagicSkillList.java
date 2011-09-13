@@ -34,8 +34,6 @@ public abstract class RequestMagicSkillList extends L2ClientPacket
 	public static final class ReportCharacterInfo extends RequestMagicSkillList
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestMagicSkillList#RequestMagicSkillList()
 		 */
 		public ReportCharacterInfo()
@@ -45,11 +43,6 @@ public abstract class RequestMagicSkillList extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x38;
-	
-	/** Constructs this packet. */
-	public RequestMagicSkillList()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

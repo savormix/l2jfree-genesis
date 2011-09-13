@@ -28,11 +28,6 @@ public class RequestSCCheck extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x06;
 	
-	/** Constructs this packet. */
-	public RequestSCCheck()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

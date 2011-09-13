@@ -34,8 +34,6 @@ public abstract class RequestAcquireSkillInfo extends L2ClientPacket
 	public static final class RequestLearnableSkillInfo extends RequestAcquireSkillInfo
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestAcquireSkillInfo#RequestAcquireSkillInfo()
 		 */
 		public RequestLearnableSkillInfo()
@@ -45,11 +43,6 @@ public abstract class RequestAcquireSkillInfo extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x73;
-	
-	/** Constructs this packet. */
-	public RequestAcquireSkillInfo()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

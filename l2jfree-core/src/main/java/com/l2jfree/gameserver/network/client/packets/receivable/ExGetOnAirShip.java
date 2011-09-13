@@ -34,8 +34,6 @@ public abstract class ExGetOnAirShip extends L2ClientPacket
 	public static final class RequestBoardAircraft extends ExGetOnAirShip
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see ExGetOnAirShip#ExGetOnAirShip()
 		 */
 		public RequestBoardAircraft()
@@ -47,11 +45,6 @@ public abstract class ExGetOnAirShip extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x36;
-	
-	/** Constructs this packet. */
-	public ExGetOnAirShip()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

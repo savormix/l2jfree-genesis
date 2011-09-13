@@ -34,8 +34,6 @@ public abstract class RequestRecipeItemMakeInfo extends L2ClientPacket
 	public static final class RequestRecipeInfo extends RequestRecipeItemMakeInfo
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestRecipeItemMakeInfo#RequestRecipeItemMakeInfo()
 		 */
 		public RequestRecipeInfo()
@@ -45,11 +43,6 @@ public abstract class RequestRecipeItemMakeInfo extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xb7;
-	
-	/** Constructs this packet. */
-	public RequestRecipeItemMakeInfo()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

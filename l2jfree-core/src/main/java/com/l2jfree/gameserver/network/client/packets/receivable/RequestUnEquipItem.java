@@ -28,11 +28,6 @@ public class RequestUnEquipItem extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x16;
 	
-	/** Constructs this packet. */
-	public RequestUnEquipItem()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

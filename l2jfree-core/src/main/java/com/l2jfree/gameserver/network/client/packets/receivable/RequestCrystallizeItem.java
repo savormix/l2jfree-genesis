@@ -34,8 +34,6 @@ public abstract class RequestCrystallizeItem extends L2ClientPacket
 	public static final class RequestItemCrystallization extends RequestCrystallizeItem
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestCrystallizeItem#RequestCrystallizeItem()
 		 */
 		public RequestItemCrystallization()
@@ -45,11 +43,6 @@ public abstract class RequestCrystallizeItem extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x2f;
-	
-	/** Constructs this packet. */
-	public RequestCrystallizeItem()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

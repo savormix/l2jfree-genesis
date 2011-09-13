@@ -28,11 +28,6 @@ public class SendTimeCheckPacket extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0xa0;
 	
-	/** Constructs this packet. */
-	public SendTimeCheckPacket()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

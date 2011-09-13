@@ -34,8 +34,6 @@ public abstract class RequestResetNickname extends L2ClientPacket
 	public static final class RequestResetTitle extends RequestResetNickname
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestResetNickname#RequestResetNickname()
 		 */
 		public RequestResetTitle()
@@ -47,11 +45,6 @@ public abstract class RequestResetNickname extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x50;
-	
-	/** Constructs this packet. */
-	public RequestResetNickname()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

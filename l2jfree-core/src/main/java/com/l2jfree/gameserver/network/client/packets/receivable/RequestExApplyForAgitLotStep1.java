@@ -32,11 +32,6 @@ public class RequestExApplyForAgitLotStep1 extends L2ClientPacket
 	/** Packet's third identifier */
 	public static final int OPCODE_3 = 0x12;
 	
-	/** Constructs this packet. */
-	public RequestExApplyForAgitLotStep1()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

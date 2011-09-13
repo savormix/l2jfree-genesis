@@ -34,8 +34,6 @@ public abstract class RequestOlympiadObserverEnd extends L2ClientPacket
 	public static final class RequestEndOlympiadSpectation extends RequestOlympiadObserverEnd
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestOlympiadObserverEnd#RequestOlympiadObserverEnd()
 		 */
 		public RequestEndOlympiadSpectation()
@@ -47,11 +45,6 @@ public abstract class RequestOlympiadObserverEnd extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x29;
-	
-	/** Constructs this packet. */
-	public RequestOlympiadObserverEnd()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

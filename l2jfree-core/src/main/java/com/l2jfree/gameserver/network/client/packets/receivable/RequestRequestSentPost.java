@@ -34,8 +34,6 @@ public abstract class RequestRequestSentPost extends L2ClientPacket
 	public static final class RequestShowSentMailMessage extends RequestRequestSentPost
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestRequestSentPost#RequestRequestSentPost()
 		 */
 		public RequestShowSentMailMessage()
@@ -47,11 +45,6 @@ public abstract class RequestRequestSentPost extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x6e;
-	
-	/** Constructs this packet. */
-	public RequestRequestSentPost()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

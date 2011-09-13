@@ -34,8 +34,6 @@ public abstract class TradeRequestPacket extends L2ClientPacket
 	public static final class RequestStartTrading extends TradeRequestPacket
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see TradeRequestPacket#TradeRequestPacket()
 		 */
 		public RequestStartTrading()
@@ -45,11 +43,6 @@ public abstract class TradeRequestPacket extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x1a;
-	
-	/** Constructs this packet. */
-	public TradeRequestPacket()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

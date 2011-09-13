@@ -34,8 +34,6 @@ public abstract class RequestJoinPledge extends L2ClientPacket
 	public static final class RequestInviteToPledge extends RequestJoinPledge
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestJoinPledge#RequestJoinPledge()
 		 */
 		public RequestInviteToPledge()
@@ -45,11 +43,6 @@ public abstract class RequestJoinPledge extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x26;
-	
-	/** Constructs this packet. */
-	public RequestJoinPledge()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

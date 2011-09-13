@@ -34,8 +34,6 @@ public abstract class SendBypassBuildCmd extends L2ClientPacket
 	public static final class RequestMasterCommand extends SendBypassBuildCmd
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see SendBypassBuildCmd#SendBypassBuildCmd()
 		 */
 		public RequestMasterCommand()
@@ -45,11 +43,6 @@ public abstract class SendBypassBuildCmd extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x74;
-	
-	/** Constructs this packet. */
-	public SendBypassBuildCmd()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

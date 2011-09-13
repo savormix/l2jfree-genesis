@@ -28,11 +28,6 @@ public class RequestDestroyItem extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x60;
 	
-	/** Constructs this packet. */
-	public RequestDestroyItem()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

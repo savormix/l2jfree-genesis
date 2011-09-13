@@ -34,8 +34,6 @@ public abstract class GetOffVehicle extends L2ClientPacket
 	public static final class RequestDeboardVehicle extends GetOffVehicle
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see GetOffVehicle#GetOffVehicle()
 		 */
 		public RequestDeboardVehicle()
@@ -45,11 +43,6 @@ public abstract class GetOffVehicle extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x54;
-	
-	/** Constructs this packet. */
-	public GetOffVehicle()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

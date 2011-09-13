@@ -34,8 +34,6 @@ public abstract class RequestPackageSend extends L2ClientPacket
 	public static final class RequestDimensionalItemTransfer extends RequestPackageSend
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestPackageSend#RequestPackageSend()
 		 */
 		public RequestDimensionalItemTransfer()
@@ -45,11 +43,6 @@ public abstract class RequestPackageSend extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xa8;
-	
-	/** Constructs this packet. */
-	public RequestPackageSend()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

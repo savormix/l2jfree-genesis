@@ -34,8 +34,6 @@ public abstract class RequestExAcceptJoinMPCC extends L2ClientPacket
 	public static final class RequestAnswerCommandChannelInvitation extends RequestExAcceptJoinMPCC
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestExAcceptJoinMPCC#RequestExAcceptJoinMPCC()
 		 */
 		public RequestAnswerCommandChannelInvitation()
@@ -47,11 +45,6 @@ public abstract class RequestExAcceptJoinMPCC extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x07;
-	
-	/** Constructs this packet. */
-	public RequestExAcceptJoinMPCC()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

@@ -34,8 +34,6 @@ public abstract class RequestConfirmCancelItem extends L2ClientPacket
 	public static final class RequestSelectRefinedItem extends RequestConfirmCancelItem
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestConfirmCancelItem#RequestConfirmCancelItem()
 		 */
 		public RequestSelectRefinedItem()
@@ -47,11 +45,6 @@ public abstract class RequestConfirmCancelItem extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x42;
-	
-	/** Constructs this packet. */
-	public RequestConfirmCancelItem()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

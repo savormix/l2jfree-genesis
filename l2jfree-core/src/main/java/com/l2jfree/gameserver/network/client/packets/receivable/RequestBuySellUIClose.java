@@ -34,8 +34,6 @@ public abstract class RequestBuySellUIClose extends L2ClientPacket
 	public static final class ReportClosedShopUI extends RequestBuySellUIClose
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestBuySellUIClose#RequestBuySellUIClose()
 		 */
 		public ReportClosedShopUI()
@@ -47,11 +45,6 @@ public abstract class RequestBuySellUIClose extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x76;
-	
-	/** Constructs this packet. */
-	public RequestBuySellUIClose()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

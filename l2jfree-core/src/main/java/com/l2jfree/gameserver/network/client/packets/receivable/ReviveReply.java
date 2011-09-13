@@ -28,11 +28,6 @@ public class ReviveReply extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x84;
 	
-	/** Constructs this packet. */
-	public ReviveReply()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

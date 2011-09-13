@@ -34,8 +34,6 @@ public abstract class RequestAllyInfo extends L2ClientPacket
 	public static final class RequestMyAllianceInfo extends RequestAllyInfo
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestAllyInfo#RequestAllyInfo()
 		 */
 		public RequestMyAllianceInfo()
@@ -45,11 +43,6 @@ public abstract class RequestAllyInfo extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x2e;
-	
-	/** Constructs this packet. */
-	public RequestAllyInfo()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

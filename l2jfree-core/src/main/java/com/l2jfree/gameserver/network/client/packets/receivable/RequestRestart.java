@@ -34,11 +34,6 @@ public class RequestRestart extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x57;
 	
-	/** Constructs this packet. */
-	public RequestRestart()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

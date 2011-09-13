@@ -34,8 +34,6 @@ public abstract class RequestPrivateStoreManageSell extends L2ClientPacket
 	public static final class RequestSellShopSetup extends RequestPrivateStoreManageSell
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestPrivateStoreManageSell#RequestPrivateStoreManageSell()
 		 */
 		public RequestSellShopSetup()
@@ -45,11 +43,6 @@ public abstract class RequestPrivateStoreManageSell extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x30;
-	
-	/** Constructs this packet. */
-	public RequestPrivateStoreManageSell()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

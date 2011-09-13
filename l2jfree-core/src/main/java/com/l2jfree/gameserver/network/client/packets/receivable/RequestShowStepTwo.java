@@ -30,11 +30,6 @@ public class RequestShowStepTwo extends L2ClientPacket
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x72;
 	
-	/** Constructs this packet. */
-	public RequestShowStepTwo()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

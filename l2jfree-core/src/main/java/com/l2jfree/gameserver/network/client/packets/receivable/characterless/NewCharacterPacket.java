@@ -40,8 +40,6 @@ public abstract class NewCharacterPacket extends L2ClientPacket
 	public static final class RequestCharacterTemplates extends NewCharacterPacket
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see NewCharacterPacket#NewCharacterPacket()
 		 */
 		public RequestCharacterTemplates()
@@ -51,11 +49,6 @@ public abstract class NewCharacterPacket extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x13;
-	
-	/** Constructs this packet. */
-	public NewCharacterPacket()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

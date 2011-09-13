@@ -34,8 +34,6 @@ public abstract class RequestProcureCropList extends L2ClientPacket
 	public static final class RequestExchangeCrop extends RequestProcureCropList
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestProcureCropList#RequestProcureCropList()
 		 */
 		public RequestExchangeCrop()
@@ -47,11 +45,6 @@ public abstract class RequestProcureCropList extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x02;
-	
-	/** Constructs this packet. */
-	public RequestProcureCropList()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

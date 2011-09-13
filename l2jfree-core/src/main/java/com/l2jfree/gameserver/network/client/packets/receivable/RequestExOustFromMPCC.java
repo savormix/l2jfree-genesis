@@ -34,8 +34,6 @@ public abstract class RequestExOustFromMPCC extends L2ClientPacket
 	public static final class RequestDismissCommandChannelMember extends RequestExOustFromMPCC
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestExOustFromMPCC#RequestExOustFromMPCC()
 		 */
 		public RequestDismissCommandChannelMember()
@@ -47,11 +45,6 @@ public abstract class RequestExOustFromMPCC extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x08;
-	
-	/** Constructs this packet. */
-	public RequestExOustFromMPCC()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

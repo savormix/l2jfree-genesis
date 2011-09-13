@@ -34,8 +34,6 @@ public abstract class SuperCmdServerStatus extends L2ClientPacket
 	public static final class RequestViewServerInfo extends SuperCmdServerStatus
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see SuperCmdServerStatus#SuperCmdServerStatus()
 		 */
 		public RequestViewServerInfo()
@@ -47,11 +45,6 @@ public abstract class SuperCmdServerStatus extends L2ClientPacket
 	public static final int OPCODE = 0x4a;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x02;
-	
-	/** Constructs this packet. */
-	public SuperCmdServerStatus()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

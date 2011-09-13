@@ -34,8 +34,6 @@ public abstract class RequestFortressSiegeInfo extends L2ClientPacket
 	public static final class RequestFortressSiegeInfoList extends RequestFortressSiegeInfo
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestFortressSiegeInfo#RequestFortressSiegeInfo()
 		 */
 		public RequestFortressSiegeInfoList()
@@ -47,11 +45,6 @@ public abstract class RequestFortressSiegeInfo extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x3f;
-	
-	/** Constructs this packet. */
-	public RequestFortressSiegeInfo()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

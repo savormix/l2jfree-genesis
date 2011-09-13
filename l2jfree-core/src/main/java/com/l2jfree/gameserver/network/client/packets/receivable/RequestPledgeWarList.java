@@ -30,11 +30,6 @@ public class RequestPledgeWarList extends L2ClientPacket
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x17;
 	
-	/** Constructs this packet. */
-	public RequestPledgeWarList()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

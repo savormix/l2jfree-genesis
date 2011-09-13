@@ -28,11 +28,6 @@ public class RequestFriendList extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x79;
 	
-	/** Constructs this packet. */
-	public RequestFriendList()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

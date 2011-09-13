@@ -34,8 +34,6 @@ public abstract class SendL2ParamSetting extends L2ClientPacket
 	public static final class RequestChangeServerParameter extends SendL2ParamSetting
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see SendL2ParamSetting#SendL2ParamSetting()
 		 */
 		public RequestChangeServerParameter()
@@ -47,11 +45,6 @@ public abstract class SendL2ParamSetting extends L2ClientPacket
 	public static final int OPCODE = 0x4a;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x03;
-	
-	/** Constructs this packet. */
-	public SendL2ParamSetting()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

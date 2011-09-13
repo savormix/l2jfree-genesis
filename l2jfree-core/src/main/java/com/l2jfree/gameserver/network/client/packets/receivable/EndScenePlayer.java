@@ -34,8 +34,6 @@ public abstract class EndScenePlayer extends L2ClientPacket
 	public static final class ReportFinishedCinematic extends EndScenePlayer
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see EndScenePlayer#EndScenePlayer()
 		 */
 		public ReportFinishedCinematic()
@@ -47,11 +45,6 @@ public abstract class EndScenePlayer extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x5b;
-	
-	/** Constructs this packet. */
-	public EndScenePlayer()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

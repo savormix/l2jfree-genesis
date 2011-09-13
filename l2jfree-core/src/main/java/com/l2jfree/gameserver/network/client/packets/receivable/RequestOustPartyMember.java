@@ -34,8 +34,6 @@ public abstract class RequestOustPartyMember extends L2ClientPacket
 	public static final class RequestDismissPartyMember extends RequestOustPartyMember
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestOustPartyMember#RequestOustPartyMember()
 		 */
 		public RequestDismissPartyMember()
@@ -45,11 +43,6 @@ public abstract class RequestOustPartyMember extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x45;
-	
-	/** Constructs this packet. */
-	public RequestOustPartyMember()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

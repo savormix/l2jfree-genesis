@@ -34,8 +34,6 @@ public abstract class RequestRejectPost extends L2ClientPacket
 	public static final class RequestRejectAttachments extends RequestRejectPost
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestRejectPost#RequestRejectPost()
 		 */
 		public RequestRejectAttachments()
@@ -47,11 +45,6 @@ public abstract class RequestRejectPost extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x6b;
-	
-	/** Constructs this packet. */
-	public RequestRejectPost()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

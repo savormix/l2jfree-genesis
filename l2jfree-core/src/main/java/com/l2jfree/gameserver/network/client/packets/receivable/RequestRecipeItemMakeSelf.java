@@ -34,8 +34,6 @@ public abstract class RequestRecipeItemMakeSelf extends L2ClientPacket
 	public static final class RequestUseRecipe extends RequestRecipeItemMakeSelf
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestRecipeItemMakeSelf#RequestRecipeItemMakeSelf()
 		 */
 		public RequestUseRecipe()
@@ -45,11 +43,6 @@ public abstract class RequestRecipeItemMakeSelf extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xb8;
-	
-	/** Constructs this packet. */
-	public RequestRecipeItemMakeSelf()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

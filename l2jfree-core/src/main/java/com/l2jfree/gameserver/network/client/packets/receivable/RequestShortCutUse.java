@@ -28,11 +28,6 @@ public class RequestShortCutUse extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x3e;
 	
-	/** Constructs this packet. */
-	public RequestShortCutUse()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

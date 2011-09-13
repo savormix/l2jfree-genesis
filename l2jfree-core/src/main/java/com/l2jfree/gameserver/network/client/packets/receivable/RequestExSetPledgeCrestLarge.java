@@ -34,8 +34,6 @@ public abstract class RequestExSetPledgeCrestLarge extends L2ClientPacket
 	public static final class RequestSetPledgeInsignia extends RequestExSetPledgeCrestLarge
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestExSetPledgeCrestLarge#RequestExSetPledgeCrestLarge()
 		 */
 		public RequestSetPledgeInsignia()
@@ -47,11 +45,6 @@ public abstract class RequestExSetPledgeCrestLarge extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x11;
-	
-	/** Constructs this packet. */
-	public RequestExSetPledgeCrestLarge()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

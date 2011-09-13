@@ -34,8 +34,6 @@ public abstract class RequestRequestReceivedPost extends L2ClientPacket
 	public static final class RequestShowReceivedMailMessage extends RequestRequestReceivedPost
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestRequestReceivedPost#RequestRequestReceivedPost()
 		 */
 		public RequestShowReceivedMailMessage()
@@ -47,11 +45,6 @@ public abstract class RequestRequestReceivedPost extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x69;
-	
-	/** Constructs this packet. */
-	public RequestRequestReceivedPost()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

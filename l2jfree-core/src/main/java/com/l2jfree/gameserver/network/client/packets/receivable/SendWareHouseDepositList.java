@@ -34,8 +34,6 @@ public abstract class SendWareHouseDepositList extends L2ClientPacket
 	public static final class RequestTransferToWarehouse extends SendWareHouseDepositList
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see SendWareHouseDepositList#SendWareHouseDepositList()
 		 */
 		public RequestTransferToWarehouse()
@@ -45,11 +43,6 @@ public abstract class SendWareHouseDepositList extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x3b;
-	
-	/** Constructs this packet. */
-	public SendWareHouseDepositList()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

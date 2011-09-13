@@ -34,8 +34,6 @@ public abstract class RequestPledgeReorganizeMember extends L2ClientPacket
 	public static final class RequestSwapUnitMembers extends RequestPledgeReorganizeMember
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestPledgeReorganizeMember#RequestPledgeReorganizeMember()
 		 */
 		public RequestSwapUnitMembers()
@@ -47,11 +45,6 @@ public abstract class RequestPledgeReorganizeMember extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x2c;
-	
-	/** Constructs this packet. */
-	public RequestPledgeReorganizeMember()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

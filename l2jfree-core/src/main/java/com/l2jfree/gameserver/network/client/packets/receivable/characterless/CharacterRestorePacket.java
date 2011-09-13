@@ -39,8 +39,6 @@ public abstract class CharacterRestorePacket extends L2ClientPacket
 	public static final class RequestRestoreCharacter extends CharacterRestorePacket
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see CharacterRestorePacket#CharacterRestorePacket()
 		 */
 		public RequestRestoreCharacter()
@@ -53,11 +51,6 @@ public abstract class CharacterRestorePacket extends L2ClientPacket
 	
 	@SuppressWarnings("unused")
 	private int _charSlot;
-	
-	/** Constructs this packet. */
-	public CharacterRestorePacket()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

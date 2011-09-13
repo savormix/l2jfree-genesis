@@ -34,8 +34,6 @@ public abstract class RequestRestartPoint extends L2ClientPacket
 	public static final class RequestDefaultRevival extends RequestRestartPoint
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestRestartPoint#RequestRestartPoint()
 		 */
 		public RequestDefaultRevival()
@@ -45,11 +43,6 @@ public abstract class RequestRestartPoint extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x7d;
-	
-	/** Constructs this packet. */
-	public RequestRestartPoint()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

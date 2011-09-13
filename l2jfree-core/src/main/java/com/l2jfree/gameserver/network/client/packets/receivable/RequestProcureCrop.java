@@ -28,11 +28,6 @@ public class RequestProcureCrop extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0xcf;
 	
-	/** Constructs this packet. */
-	public RequestProcureCrop()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

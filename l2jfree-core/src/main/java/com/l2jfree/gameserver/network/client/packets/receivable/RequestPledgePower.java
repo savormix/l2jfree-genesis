@@ -34,8 +34,6 @@ public abstract class RequestPledgePower extends L2ClientPacket
 	public static final class RequestUpdatePledgePower extends RequestPledgePower
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestPledgePower#RequestPledgePower()
 		 */
 		public RequestUpdatePledgePower()
@@ -45,11 +43,6 @@ public abstract class RequestPledgePower extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xcc;
-	
-	/** Constructs this packet. */
-	public RequestPledgePower()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

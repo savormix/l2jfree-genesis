@@ -34,8 +34,6 @@ public abstract class RequestExDeletePostFriendForPostBox extends L2ClientPacket
 	public static final class RequestRemoveMailContact extends RequestExDeletePostFriendForPostBox
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestExDeletePostFriendForPostBox#RequestExDeletePostFriendForPostBox()
 		 */
 		public RequestRemoveMailContact()
@@ -47,11 +45,6 @@ public abstract class RequestExDeletePostFriendForPostBox extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x85;
-	
-	/** Constructs this packet. */
-	public RequestExDeletePostFriendForPostBox()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

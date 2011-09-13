@@ -34,8 +34,6 @@ public abstract class UseItemPacket extends L2ClientPacket
 	public static final class RequestUseItem extends UseItemPacket
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see UseItemPacket#UseItemPacket()
 		 */
 		public RequestUseItem()
@@ -45,11 +43,6 @@ public abstract class UseItemPacket extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x19;
-	
-	/** Constructs this packet. */
-	public UseItemPacket()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

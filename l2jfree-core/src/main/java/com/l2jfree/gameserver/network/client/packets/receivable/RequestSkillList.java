@@ -28,11 +28,6 @@ public class RequestSkillList extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x50;
 	
-	/** Constructs this packet. */
-	public RequestSkillList()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

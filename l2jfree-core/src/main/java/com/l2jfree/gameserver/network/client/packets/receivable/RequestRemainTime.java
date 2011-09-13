@@ -34,8 +34,6 @@ public abstract class RequestRemainTime extends L2ClientPacket
 	public static final class RequestWeekTimeRemaining extends RequestRemainTime
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestRemainTime#RequestRemainTime()
 		 */
 		public RequestWeekTimeRemaining()
@@ -45,11 +43,6 @@ public abstract class RequestRemainTime extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xb2;
-	
-	/** Constructs this packet. */
-	public RequestRemainTime()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

@@ -34,8 +34,6 @@ public abstract class RequestQuestList extends L2ClientPacket
 	public static final class RequestActiveQuestList extends RequestQuestList
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestQuestList#RequestQuestList()
 		 */
 		public RequestActiveQuestList()
@@ -45,11 +43,6 @@ public abstract class RequestQuestList extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x62;
-	
-	/** Constructs this packet. */
-	public RequestQuestList()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

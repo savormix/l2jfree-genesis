@@ -34,8 +34,6 @@ public abstract class NewVoteSystem extends L2ClientPacket
 	public static final class RequestRecommend extends NewVoteSystem
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see NewVoteSystem#NewVoteSystem()
 		 */
 		public RequestRecommend()
@@ -47,11 +45,6 @@ public abstract class NewVoteSystem extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x7e;
-	
-	/** Constructs this packet. */
-	public NewVoteSystem()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

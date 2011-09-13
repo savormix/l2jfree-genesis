@@ -34,8 +34,6 @@ public abstract class RequestExTryToPutEnchantSupportItem extends L2ClientPacket
 	public static final class RequestSelectItemToSupportEnchant extends RequestExTryToPutEnchantSupportItem
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestExTryToPutEnchantSupportItem#RequestExTryToPutEnchantSupportItem()
 		 */
 		public RequestSelectItemToSupportEnchant()
@@ -47,11 +45,6 @@ public abstract class RequestExTryToPutEnchantSupportItem extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x4d;
-	
-	/** Constructs this packet. */
-	public RequestExTryToPutEnchantSupportItem()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

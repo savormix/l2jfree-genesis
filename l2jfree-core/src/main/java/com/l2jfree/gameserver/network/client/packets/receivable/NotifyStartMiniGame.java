@@ -34,8 +34,6 @@ public abstract class NotifyStartMiniGame extends L2ClientPacket
 	public static final class ReportMinigameStarted extends NotifyStartMiniGame
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see NotifyStartMiniGame#NotifyStartMiniGame()
 		 */
 		public ReportMinigameStarted()
@@ -47,11 +45,6 @@ public abstract class NotifyStartMiniGame extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x56;
-	
-	/** Constructs this packet. */
-	public NotifyStartMiniGame()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

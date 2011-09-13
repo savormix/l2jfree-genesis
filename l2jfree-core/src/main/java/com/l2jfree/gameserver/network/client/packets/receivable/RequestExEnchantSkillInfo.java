@@ -34,8 +34,6 @@ public abstract class RequestExEnchantSkillInfo extends L2ClientPacket
 	public static final class RequestSkillEnchantInfo extends RequestExEnchantSkillInfo
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestExEnchantSkillInfo#RequestExEnchantSkillInfo()
 		 */
 		public RequestSkillEnchantInfo()
@@ -47,11 +45,6 @@ public abstract class RequestExEnchantSkillInfo extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x0e;
-	
-	/** Constructs this packet. */
-	public RequestExEnchantSkillInfo()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

@@ -39,11 +39,6 @@ public class ProtocolVersion extends L2ClientPacket
 	
 	private int _version;
 	
-	/** Constructs this packet. */
-	public ProtocolVersion()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

@@ -30,11 +30,6 @@ public class RequestShowNewUserPetition extends L2ClientPacket
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x70;
 	
-	/** Constructs this packet. */
-	public RequestShowNewUserPetition()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

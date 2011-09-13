@@ -34,8 +34,6 @@ public abstract class RequestShortCutDel extends L2ClientPacket
 	public static final class RequestRemoveShortcut extends RequestShortCutDel
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestShortCutDel#RequestShortCutDel()
 		 */
 		public RequestRemoveShortcut()
@@ -45,11 +43,6 @@ public abstract class RequestShortCutDel extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x3f;
-	
-	/** Constructs this packet. */
-	public RequestShortCutDel()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

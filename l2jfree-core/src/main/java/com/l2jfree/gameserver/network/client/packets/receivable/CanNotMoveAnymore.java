@@ -34,8 +34,6 @@ public abstract class CanNotMoveAnymore extends L2ClientPacket
 	public static final class ReportLandingOnGround extends CanNotMoveAnymore
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see CanNotMoveAnymore#CanNotMoveAnymore()
 		 */
 		public ReportLandingOnGround()
@@ -45,11 +43,6 @@ public abstract class CanNotMoveAnymore extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x47;
-	
-	/** Constructs this packet. */
-	public CanNotMoveAnymore()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

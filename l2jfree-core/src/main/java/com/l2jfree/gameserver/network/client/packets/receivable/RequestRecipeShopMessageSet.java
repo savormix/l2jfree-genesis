@@ -34,8 +34,6 @@ public abstract class RequestRecipeShopMessageSet extends L2ClientPacket
 	public static final class RequestUpdateManufacture extends RequestRecipeShopMessageSet
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestRecipeShopMessageSet#RequestRecipeShopMessageSet()
 		 */
 		public RequestUpdateManufacture()
@@ -45,11 +43,6 @@ public abstract class RequestRecipeShopMessageSet extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xba;
-	
-	/** Constructs this packet. */
-	public RequestRecipeShopMessageSet()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

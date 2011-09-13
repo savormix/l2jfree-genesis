@@ -34,8 +34,6 @@ public abstract class RequestHennaItemInfo extends L2ClientPacket
 	public static final class RequestHennaApplianceInfo extends RequestHennaItemInfo
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestHennaItemInfo#RequestHennaItemInfo()
 		 */
 		public RequestHennaApplianceInfo()
@@ -45,11 +43,6 @@ public abstract class RequestHennaItemInfo extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xc4;
-	
-	/** Constructs this packet. */
-	public RequestHennaItemInfo()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

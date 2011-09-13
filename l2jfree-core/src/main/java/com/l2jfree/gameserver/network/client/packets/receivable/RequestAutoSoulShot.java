@@ -30,11 +30,6 @@ public class RequestAutoSoulShot extends L2ClientPacket
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x0d;
 	
-	/** Constructs this packet. */
-	public RequestAutoSoulShot()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

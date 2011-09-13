@@ -34,8 +34,6 @@ public abstract class RequestDeleteBookMarkSlot extends L2ClientPacket
 	public static final class RequestRemoveTeleportBookmark extends RequestDeleteBookMarkSlot
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestDeleteBookMarkSlot#RequestDeleteBookMarkSlot()
 		 */
 		public RequestRemoveTeleportBookmark()
@@ -49,11 +47,6 @@ public abstract class RequestDeleteBookMarkSlot extends L2ClientPacket
 	public static final int OPCODE_2 = 0x51;
 	/** Packet's third identifier */
 	public static final int OPCODE_3 = 0x03;
-	
-	/** Constructs this packet. */
-	public RequestDeleteBookMarkSlot()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

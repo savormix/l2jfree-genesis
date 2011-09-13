@@ -34,8 +34,6 @@ public abstract class RequestPreviewItem extends L2ClientPacket
 	public static final class RequestEquipmentPreview extends RequestPreviewItem
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestPreviewItem#RequestPreviewItem()
 		 */
 		public RequestEquipmentPreview()
@@ -45,11 +43,6 @@ public abstract class RequestPreviewItem extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xc7;
-	
-	/** Constructs this packet. */
-	public RequestPreviewItem()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

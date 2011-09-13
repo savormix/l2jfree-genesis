@@ -32,11 +32,6 @@ public class RequestManorList extends L2ClientPacket
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x01;
 	
-	/** Constructs this packet. */
-	public RequestManorList()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

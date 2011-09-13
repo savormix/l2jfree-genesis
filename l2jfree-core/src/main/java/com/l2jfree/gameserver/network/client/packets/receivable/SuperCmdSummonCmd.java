@@ -34,8 +34,6 @@ public abstract class SuperCmdSummonCmd extends L2ClientPacket
 	public static final class RequestSummonPlayer extends SuperCmdSummonCmd
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see SuperCmdSummonCmd#SuperCmdSummonCmd()
 		 */
 		public RequestSummonPlayer()
@@ -47,11 +45,6 @@ public abstract class SuperCmdSummonCmd extends L2ClientPacket
 	public static final int OPCODE = 0x4a;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x01;
-	
-	/** Constructs this packet. */
-	public SuperCmdSummonCmd()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

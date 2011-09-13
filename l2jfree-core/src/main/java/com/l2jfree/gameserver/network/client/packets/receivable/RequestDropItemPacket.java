@@ -34,8 +34,6 @@ public abstract class RequestDropItemPacket extends L2ClientPacket
 	public static final class RequestDropItem extends RequestDropItemPacket
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestDropItemPacket#RequestDropItemPacket()
 		 */
 		public RequestDropItem()
@@ -45,11 +43,6 @@ public abstract class RequestDropItemPacket extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x17;
-	
-	/** Constructs this packet. */
-	public RequestDropItemPacket()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

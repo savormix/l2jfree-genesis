@@ -34,8 +34,6 @@ public abstract class CanNotMoveAnymoreAirShip extends L2ClientPacket
 	public static final class ReportLandingInAircraft extends CanNotMoveAnymoreAirShip
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see CanNotMoveAnymoreAirShip#CanNotMoveAnymoreAirShip()
 		 */
 		public ReportLandingInAircraft()
@@ -47,11 +45,6 @@ public abstract class CanNotMoveAnymoreAirShip extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x1f;
-	
-	/** Constructs this packet. */
-	public CanNotMoveAnymoreAirShip()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

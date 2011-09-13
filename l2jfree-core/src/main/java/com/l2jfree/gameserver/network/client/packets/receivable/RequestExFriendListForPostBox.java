@@ -34,8 +34,6 @@ public abstract class RequestExFriendListForPostBox extends L2ClientPacket
 	public static final class RequestExtendedFriendList extends RequestExFriendListForPostBox
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestExFriendListForPostBox#RequestExFriendListForPostBox()
 		 */
 		public RequestExtendedFriendList()
@@ -47,11 +45,6 @@ public abstract class RequestExFriendListForPostBox extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x87;
-	
-	/** Constructs this packet. */
-	public RequestExFriendListForPostBox()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

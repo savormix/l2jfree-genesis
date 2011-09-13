@@ -28,11 +28,6 @@ public class RequestBuyItem extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x40;
 	
-	/** Constructs this packet. */
-	public RequestBuyItem()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

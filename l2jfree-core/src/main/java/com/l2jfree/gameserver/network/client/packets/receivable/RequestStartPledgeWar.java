@@ -28,11 +28,6 @@ public class RequestStartPledgeWar extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x03;
 	
-	/** Constructs this packet. */
-	public RequestStartPledgeWar()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

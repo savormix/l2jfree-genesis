@@ -34,8 +34,6 @@ public abstract class AnswerPartyLootModification extends L2ClientPacket
 	public static final class RequestAnswerChangeItemDistribution extends AnswerPartyLootModification
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see AnswerPartyLootModification#AnswerPartyLootModification()
 		 */
 		public RequestAnswerChangeItemDistribution()
@@ -47,11 +45,6 @@ public abstract class AnswerPartyLootModification extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x79;
-	
-	/** Constructs this packet. */
-	public AnswerPartyLootModification()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

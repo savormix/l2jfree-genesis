@@ -30,11 +30,6 @@ public class RequestMpccPartyMasterList extends L2ClientPacket
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x64;
 	
-	/** Constructs this packet. */
-	public RequestMpccPartyMasterList()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

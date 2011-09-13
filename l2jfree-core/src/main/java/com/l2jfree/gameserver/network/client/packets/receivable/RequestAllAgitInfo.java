@@ -34,8 +34,6 @@ public abstract class RequestAllAgitInfo extends L2ClientPacket
 	public static final class RequestHideoutList extends RequestAllAgitInfo
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestAllAgitInfo#RequestAllAgitInfo()
 		 */
 		public RequestHideoutList()
@@ -47,11 +45,6 @@ public abstract class RequestAllAgitInfo extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x3e;
-	
-	/** Constructs this packet. */
-	public RequestAllAgitInfo()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

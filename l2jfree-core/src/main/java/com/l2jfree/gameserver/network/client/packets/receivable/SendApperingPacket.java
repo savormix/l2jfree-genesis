@@ -34,8 +34,6 @@ public abstract class SendApperingPacket extends L2ClientPacket
 	public static final class RequestAppearing extends SendApperingPacket
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see SendApperingPacket#SendApperingPacket()
 		 */
 		public RequestAppearing()
@@ -45,11 +43,6 @@ public abstract class SendApperingPacket extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x3a;
-	
-	/** Constructs this packet. */
-	public SendApperingPacket()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

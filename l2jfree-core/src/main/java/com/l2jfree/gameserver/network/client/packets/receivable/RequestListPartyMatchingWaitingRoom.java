@@ -34,8 +34,6 @@ public abstract class RequestListPartyMatchingWaitingRoom extends L2ClientPacket
 	public static final class RequestPartyMatchingList extends RequestListPartyMatchingWaitingRoom
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestListPartyMatchingWaitingRoom#RequestListPartyMatchingWaitingRoom()
 		 */
 		public RequestPartyMatchingList()
@@ -47,11 +45,6 @@ public abstract class RequestListPartyMatchingWaitingRoom extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x31;
-	
-	/** Constructs this packet. */
-	public RequestListPartyMatchingWaitingRoom()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

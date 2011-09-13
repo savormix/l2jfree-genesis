@@ -34,8 +34,6 @@ public abstract class RequestWriteHeroWords extends L2ClientPacket
 	public static final class RequestSetHeroRecordMessage extends RequestWriteHeroWords
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestWriteHeroWords#RequestWriteHeroWords()
 		 */
 		public RequestSetHeroRecordMessage()
@@ -47,11 +45,6 @@ public abstract class RequestWriteHeroWords extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x05;
-	
-	/** Constructs this packet. */
-	public RequestWriteHeroWords()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

@@ -28,11 +28,6 @@ public class VoteSociality extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0xc2;
 	
-	/** Constructs this packet. */
-	public VoteSociality()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

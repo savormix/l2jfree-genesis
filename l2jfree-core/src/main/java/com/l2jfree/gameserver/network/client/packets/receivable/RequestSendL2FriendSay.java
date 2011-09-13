@@ -34,8 +34,6 @@ public abstract class RequestSendL2FriendSay extends L2ClientPacket
 	public static final class RequestSendFriendMessage extends RequestSendL2FriendSay
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestSendL2FriendSay#RequestSendL2FriendSay()
 		 */
 		public RequestSendFriendMessage()
@@ -45,11 +43,6 @@ public abstract class RequestSendL2FriendSay extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x6b;
-	
-	/** Constructs this packet. */
-	public RequestSendL2FriendSay()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

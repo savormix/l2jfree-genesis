@@ -34,8 +34,6 @@ public abstract class RequestPrivateStoreQuitSell extends L2ClientPacket
 	public static final class RequestEndSellShop extends RequestPrivateStoreQuitSell
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestPrivateStoreQuitSell#RequestPrivateStoreQuitSell()
 		 */
 		public RequestEndSellShop()
@@ -45,11 +43,6 @@ public abstract class RequestPrivateStoreQuitSell extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x96;
-	
-	/** Constructs this packet. */
-	public RequestPrivateStoreQuitSell()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

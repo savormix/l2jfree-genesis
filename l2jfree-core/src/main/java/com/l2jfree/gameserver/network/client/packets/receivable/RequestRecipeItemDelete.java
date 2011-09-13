@@ -34,8 +34,6 @@ public abstract class RequestRecipeItemDelete extends L2ClientPacket
 	public static final class RequestRecipeRemoval extends RequestRecipeItemDelete
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestRecipeItemDelete#RequestRecipeItemDelete()
 		 */
 		public RequestRecipeRemoval()
@@ -45,11 +43,6 @@ public abstract class RequestRecipeItemDelete extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xb6;
-	
-	/** Constructs this packet. */
-	public RequestRecipeItemDelete()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

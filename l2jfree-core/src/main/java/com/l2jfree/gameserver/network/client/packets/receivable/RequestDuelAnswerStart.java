@@ -34,8 +34,6 @@ public abstract class RequestDuelAnswerStart extends L2ClientPacket
 	public static final class RequestAnswerDuelInvite extends RequestDuelAnswerStart
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestDuelAnswerStart#RequestDuelAnswerStart()
 		 */
 		public RequestAnswerDuelInvite()
@@ -47,11 +45,6 @@ public abstract class RequestDuelAnswerStart extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x1c;
-	
-	/** Constructs this packet. */
-	public RequestDuelAnswerStart()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

@@ -34,8 +34,6 @@ public abstract class RequestDestroyQuest extends L2ClientPacket
 	public static final class RequestAbortActiveQuest extends RequestDestroyQuest
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestDestroyQuest#RequestDestroyQuest()
 		 */
 		public RequestAbortActiveQuest()
@@ -45,11 +43,6 @@ public abstract class RequestDestroyQuest extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x63;
-	
-	/** Constructs this packet. */
-	public RequestDestroyQuest()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

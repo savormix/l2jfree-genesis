@@ -34,8 +34,6 @@ public abstract class RequestReceivePost extends L2ClientPacket
 	public static final class RequestCollectAttachments extends RequestReceivePost
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestReceivePost#RequestReceivePost()
 		 */
 		public RequestCollectAttachments()
@@ -47,11 +45,6 @@ public abstract class RequestReceivePost extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x6a;
-	
-	/** Constructs this packet. */
-	public RequestReceivePost()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

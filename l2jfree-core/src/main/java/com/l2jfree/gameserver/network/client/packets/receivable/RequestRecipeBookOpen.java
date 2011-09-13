@@ -34,8 +34,6 @@ public abstract class RequestRecipeBookOpen extends L2ClientPacket
 	public static final class RequestRecipeList extends RequestRecipeBookOpen
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestRecipeBookOpen#RequestRecipeBookOpen()
 		 */
 		public RequestRecipeList()
@@ -45,11 +43,6 @@ public abstract class RequestRecipeBookOpen extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xb5;
-	
-	/** Constructs this packet. */
-	public RequestRecipeBookOpen()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

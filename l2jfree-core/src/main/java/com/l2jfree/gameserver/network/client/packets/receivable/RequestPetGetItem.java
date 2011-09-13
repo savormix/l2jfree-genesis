@@ -34,8 +34,6 @@ public abstract class RequestPetGetItem extends L2ClientPacket
 	public static final class RequestPetTakeItem extends RequestPetGetItem
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestPetGetItem#RequestPetGetItem()
 		 */
 		public RequestPetTakeItem()
@@ -45,11 +43,6 @@ public abstract class RequestPetGetItem extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x98;
-	
-	/** Constructs this packet. */
-	public RequestPetGetItem()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

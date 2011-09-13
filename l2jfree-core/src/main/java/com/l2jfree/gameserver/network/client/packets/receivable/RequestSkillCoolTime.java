@@ -34,8 +34,6 @@ public abstract class RequestSkillCoolTime extends L2ClientPacket
 	public static final class RequestSkillCooldownList extends RequestSkillCoolTime
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestSkillCoolTime#RequestSkillCoolTime()
 		 */
 		public RequestSkillCooldownList()
@@ -45,11 +43,6 @@ public abstract class RequestSkillCoolTime extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xa6;
-	
-	/** Constructs this packet. */
-	public RequestSkillCoolTime()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

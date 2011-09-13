@@ -30,11 +30,6 @@ public class RequestJump extends L2ClientPacket
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x53;
 	
-	/** Constructs this packet. */
-	public RequestJump()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

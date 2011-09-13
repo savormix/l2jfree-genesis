@@ -34,8 +34,6 @@ public abstract class RequestExMPCCShowPartyMembersInfo extends L2ClientPacket
 	public static final class RequestCommandChannelMemberInfo extends RequestExMPCCShowPartyMembersInfo
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestExMPCCShowPartyMembersInfo#RequestExMPCCShowPartyMembersInfo()
 		 */
 		public RequestCommandChannelMemberInfo()
@@ -47,11 +45,6 @@ public abstract class RequestExMPCCShowPartyMembersInfo extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x2d;
-	
-	/** Constructs this packet. */
-	public RequestExMPCCShowPartyMembersInfo()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

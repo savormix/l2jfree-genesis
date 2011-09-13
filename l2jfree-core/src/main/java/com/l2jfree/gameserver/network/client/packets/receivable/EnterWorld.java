@@ -38,8 +38,6 @@ public abstract class EnterWorld extends L2ClientPacket
 	public static final class RequestEnterWorld extends EnterWorld
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see EnterWorld#EnterWorld()
 		 */
 		public RequestEnterWorld()
@@ -49,11 +47,6 @@ public abstract class EnterWorld extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x11;
-	
-	/** Constructs this packet. */
-	public EnterWorld()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

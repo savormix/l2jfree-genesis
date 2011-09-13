@@ -34,8 +34,6 @@ public abstract class RequestConfirmCastleSiegeWaitingList extends L2ClientPacke
 	public static final class RequestAnswerDefenseApplication extends RequestConfirmCastleSiegeWaitingList
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestConfirmCastleSiegeWaitingList#RequestConfirmCastleSiegeWaitingList()
 		 */
 		public RequestAnswerDefenseApplication()
@@ -45,11 +43,6 @@ public abstract class RequestConfirmCastleSiegeWaitingList extends L2ClientPacke
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xae;
-	
-	/** Constructs this packet. */
-	public RequestConfirmCastleSiegeWaitingList()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

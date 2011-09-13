@@ -34,8 +34,6 @@ public abstract class RequestAllCastleInfo extends L2ClientPacket
 	public static final class RequestCastleList extends RequestAllCastleInfo
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestAllCastleInfo#RequestAllCastleInfo()
 		 */
 		public RequestCastleList()
@@ -47,11 +45,6 @@ public abstract class RequestAllCastleInfo extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x3c;
-	
-	/** Constructs this packet. */
-	public RequestAllCastleInfo()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

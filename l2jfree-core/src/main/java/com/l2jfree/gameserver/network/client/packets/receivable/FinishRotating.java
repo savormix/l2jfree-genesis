@@ -34,8 +34,6 @@ public abstract class FinishRotating extends L2ClientPacket
 	public static final class RequestFinishRotation extends FinishRotating
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see FinishRotating#FinishRotating()
 		 */
 		public RequestFinishRotation()
@@ -45,11 +43,6 @@ public abstract class FinishRotating extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x5c;
-	
-	/** Constructs this packet. */
-	public FinishRotating()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

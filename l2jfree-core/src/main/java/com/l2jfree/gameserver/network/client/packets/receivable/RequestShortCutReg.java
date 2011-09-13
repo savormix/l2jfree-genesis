@@ -34,8 +34,6 @@ public abstract class RequestShortCutReg extends L2ClientPacket
 	public static final class RequestAddShortcut extends RequestShortCutReg
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestShortCutReg#RequestShortCutReg()
 		 */
 		public RequestAddShortcut()
@@ -45,11 +43,6 @@ public abstract class RequestShortCutReg extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x3d;
-	
-	/** Constructs this packet. */
-	public RequestShortCutReg()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

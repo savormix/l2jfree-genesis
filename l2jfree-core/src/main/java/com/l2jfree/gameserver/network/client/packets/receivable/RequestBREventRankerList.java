@@ -30,11 +30,6 @@ public class RequestBREventRankerList extends L2ClientPacket
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x7b;
 	
-	/** Constructs this packet. */
-	public RequestBREventRankerList()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

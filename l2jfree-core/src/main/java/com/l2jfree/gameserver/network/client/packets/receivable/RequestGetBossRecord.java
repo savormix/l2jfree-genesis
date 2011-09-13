@@ -34,8 +34,6 @@ public abstract class RequestGetBossRecord extends L2ClientPacket
 	public static final class RequestMyRaidInfo extends RequestGetBossRecord
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestGetBossRecord#RequestGetBossRecord()
 		 */
 		public RequestMyRaidInfo()
@@ -47,11 +45,6 @@ public abstract class RequestGetBossRecord extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x40;
-	
-	/** Constructs this packet. */
-	public RequestGetBossRecord()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

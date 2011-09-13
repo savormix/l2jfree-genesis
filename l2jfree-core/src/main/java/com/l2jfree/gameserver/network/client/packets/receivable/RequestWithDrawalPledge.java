@@ -34,8 +34,6 @@ public abstract class RequestWithDrawalPledge extends L2ClientPacket
 	public static final class RequestLeavePledge extends RequestWithDrawalPledge
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestWithDrawalPledge#RequestWithDrawalPledge()
 		 */
 		public RequestLeavePledge()
@@ -45,11 +43,6 @@ public abstract class RequestWithDrawalPledge extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x28;
-	
-	/** Constructs this packet. */
-	public RequestWithDrawalPledge()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

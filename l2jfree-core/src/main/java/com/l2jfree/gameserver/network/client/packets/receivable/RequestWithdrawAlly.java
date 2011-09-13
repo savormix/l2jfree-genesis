@@ -34,8 +34,6 @@ public abstract class RequestWithdrawAlly extends L2ClientPacket
 	public static final class RequestLeaveAlliance extends RequestWithdrawAlly
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestWithdrawAlly#RequestWithdrawAlly()
 		 */
 		public RequestLeaveAlliance()
@@ -45,11 +43,6 @@ public abstract class RequestWithdrawAlly extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x8e;
-	
-	/** Constructs this packet. */
-	public RequestWithdrawAlly()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

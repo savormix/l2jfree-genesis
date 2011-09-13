@@ -30,11 +30,6 @@ public class RequestListMpccWaiting extends L2ClientPacket
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x5d;
 	
-	/** Constructs this packet. */
-	public RequestListMpccWaiting()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

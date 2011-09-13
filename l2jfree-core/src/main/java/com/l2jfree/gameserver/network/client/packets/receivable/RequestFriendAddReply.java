@@ -34,8 +34,6 @@ public abstract class RequestFriendAddReply extends L2ClientPacket
 	public static final class RequestAnswerFriendInvitation extends RequestFriendAddReply
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestFriendAddReply#RequestFriendAddReply()
 		 */
 		public RequestAnswerFriendInvitation()
@@ -45,11 +43,6 @@ public abstract class RequestFriendAddReply extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x78;
-	
-	/** Constructs this packet. */
-	public RequestFriendAddReply()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

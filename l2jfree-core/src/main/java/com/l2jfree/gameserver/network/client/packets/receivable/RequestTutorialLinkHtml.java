@@ -34,8 +34,6 @@ public abstract class RequestTutorialLinkHtml extends L2ClientPacket
 	public static final class RequestLinkTutorialHtml extends RequestTutorialLinkHtml
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestTutorialLinkHtml#RequestTutorialLinkHtml()
 		 */
 		public RequestLinkTutorialHtml()
@@ -45,11 +43,6 @@ public abstract class RequestTutorialLinkHtml extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x85;
-	
-	/** Constructs this packet. */
-	public RequestTutorialLinkHtml()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

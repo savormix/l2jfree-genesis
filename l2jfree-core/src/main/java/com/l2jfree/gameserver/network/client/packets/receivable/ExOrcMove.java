@@ -35,8 +35,6 @@ public abstract class ExOrcMove extends L2ClientPacket
 	public static final class AnswerProcessBlock extends ExOrcMove
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see ExOrcMove#ExOrcMove()
 		 */
 		public AnswerProcessBlock()
@@ -48,11 +46,6 @@ public abstract class ExOrcMove extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x1a;
-	
-	/** Constructs this packet. */
-	public ExOrcMove()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

@@ -34,8 +34,6 @@ public abstract class RequestTargetCancel extends L2ClientPacket
 	public static final class RequestCancelTarget extends RequestTargetCancel
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestTargetCancel#RequestTargetCancel()
 		 */
 		public RequestCancelTarget()
@@ -45,11 +43,6 @@ public abstract class RequestTargetCancel extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x48;
-	
-	/** Constructs this packet. */
-	public RequestTargetCancel()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

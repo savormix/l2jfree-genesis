@@ -34,8 +34,6 @@ public abstract class RequestExFishRanking extends L2ClientPacket
 	public static final class RequestRankedCatchList extends RequestExFishRanking
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestExFishRanking#RequestExFishRanking()
 		 */
 		public RequestRankedCatchList()
@@ -47,11 +45,6 @@ public abstract class RequestExFishRanking extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x18;
-	
-	/** Constructs this packet. */
-	public RequestExFishRanking()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

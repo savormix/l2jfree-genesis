@@ -44,8 +44,6 @@ public abstract class CharacterSelect extends L2ClientPacket
 	public static final class RequestSelectCharacter extends CharacterSelect
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see CharacterSelect#CharacterSelect()
 		 */
 		public RequestSelectCharacter()
@@ -57,11 +55,6 @@ public abstract class CharacterSelect extends L2ClientPacket
 	public static final int OPCODE = 0x12;
 	
 	private int _charSlot;
-	
-	/** Constructs this packet. */
-	public CharacterSelect()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

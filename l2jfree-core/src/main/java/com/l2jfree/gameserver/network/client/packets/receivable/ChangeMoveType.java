@@ -28,11 +28,6 @@ public class ChangeMoveType extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x35;
 	
-	/** Constructs this packet. */
-	public ChangeMoveType()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

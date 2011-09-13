@@ -30,11 +30,6 @@ public class RequestManageMpccRoom extends L2ClientPacket
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x5e;
 	
-	/** Constructs this packet. */
-	public RequestManageMpccRoom()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

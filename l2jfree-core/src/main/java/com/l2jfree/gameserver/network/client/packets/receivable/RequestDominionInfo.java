@@ -34,8 +34,6 @@ public abstract class RequestDominionInfo extends L2ClientPacket
 	public static final class RequestTerritoryList extends RequestDominionInfo
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestDominionInfo#RequestDominionInfo()
 		 */
 		public RequestTerritoryList()
@@ -47,11 +45,6 @@ public abstract class RequestDominionInfo extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x58;
-	
-	/** Constructs this packet. */
-	public RequestDominionInfo()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

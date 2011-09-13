@@ -34,8 +34,6 @@ public abstract class SuperCmdCharacterInfo extends L2ClientPacket
 	public static final class RequestViewPlayerInfo extends SuperCmdCharacterInfo
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see SuperCmdCharacterInfo#SuperCmdCharacterInfo()
 		 */
 		public RequestViewPlayerInfo()
@@ -47,11 +45,6 @@ public abstract class SuperCmdCharacterInfo extends L2ClientPacket
 	public static final int OPCODE = 0x4a;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x00;
-	
-	/** Constructs this packet. */
-	public SuperCmdCharacterInfo()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

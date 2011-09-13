@@ -34,8 +34,6 @@ public abstract class RequestMakeMacro extends L2ClientPacket
 	public static final class RequestAddMacro extends RequestMakeMacro
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestMakeMacro#RequestMakeMacro()
 		 */
 		public RequestAddMacro()
@@ -45,11 +43,6 @@ public abstract class RequestMakeMacro extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xcd;
-	
-	/** Constructs this packet. */
-	public RequestMakeMacro()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

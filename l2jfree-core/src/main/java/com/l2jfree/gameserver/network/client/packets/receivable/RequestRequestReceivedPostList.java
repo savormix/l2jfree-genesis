@@ -34,8 +34,6 @@ public abstract class RequestRequestReceivedPostList extends L2ClientPacket
 	public static final class RequestShowInbox extends RequestRequestReceivedPostList
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestRequestReceivedPostList#RequestRequestReceivedPostList()
 		 */
 		public RequestShowInbox()
@@ -47,11 +45,6 @@ public abstract class RequestRequestReceivedPostList extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x67;
-	
-	/** Constructs this packet. */
-	public RequestRequestReceivedPostList()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

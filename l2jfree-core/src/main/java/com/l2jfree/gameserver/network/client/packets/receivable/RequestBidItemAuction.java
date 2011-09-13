@@ -34,8 +34,6 @@ public abstract class RequestBidItemAuction extends L2ClientPacket
 	public static final class RequestAuctionBid extends RequestBidItemAuction
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestBidItemAuction#RequestBidItemAuction()
 		 */
 		public RequestAuctionBid()
@@ -47,11 +45,6 @@ public abstract class RequestBidItemAuction extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x39;
-	
-	/** Constructs this packet. */
-	public RequestBidItemAuction()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

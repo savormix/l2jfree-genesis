@@ -34,8 +34,6 @@ public abstract class RequestMagicSkillUse extends L2ClientPacket
 	public static final class RequestUseSkill extends RequestMagicSkillUse
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestMagicSkillUse#RequestMagicSkillUse()
 		 */
 		public RequestUseSkill()
@@ -45,11 +43,6 @@ public abstract class RequestMagicSkillUse extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x39;
-	
-	/** Constructs this packet. */
-	public RequestMagicSkillUse()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

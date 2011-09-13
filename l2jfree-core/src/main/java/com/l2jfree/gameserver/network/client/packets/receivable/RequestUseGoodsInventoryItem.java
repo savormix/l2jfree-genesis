@@ -30,11 +30,6 @@ public class RequestUseGoodsInventoryItem extends L2ClientPacket
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x92;
 	
-	/** Constructs this packet. */
-	public RequestUseGoodsInventoryItem()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

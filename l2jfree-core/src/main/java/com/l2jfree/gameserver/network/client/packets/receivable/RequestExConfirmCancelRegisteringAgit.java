@@ -32,11 +32,6 @@ public class RequestExConfirmCancelRegisteringAgit extends L2ClientPacket
 	/** Packet's third identifier */
 	public static final int OPCODE_3 = 0x07;
 	
-	/** Constructs this packet. */
-	public RequestExConfirmCancelRegisteringAgit()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

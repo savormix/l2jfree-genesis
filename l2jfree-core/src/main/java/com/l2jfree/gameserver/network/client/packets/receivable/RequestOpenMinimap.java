@@ -34,8 +34,6 @@ public abstract class RequestOpenMinimap extends L2ClientPacket
 	public static final class RequestMiniMap extends RequestOpenMinimap
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestOpenMinimap#RequestOpenMinimap()
 		 */
 		public RequestMiniMap()
@@ -45,11 +43,6 @@ public abstract class RequestOpenMinimap extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x6c;
-	
-	/** Constructs this packet. */
-	public RequestOpenMinimap()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

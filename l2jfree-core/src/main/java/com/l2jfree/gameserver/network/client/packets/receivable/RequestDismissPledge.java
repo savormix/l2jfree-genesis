@@ -28,11 +28,6 @@ public class RequestDismissPledge extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x41;
 	
-	/** Constructs this packet. */
-	public RequestDismissPledge()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

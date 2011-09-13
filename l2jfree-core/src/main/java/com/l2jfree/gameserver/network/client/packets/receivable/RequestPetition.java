@@ -34,8 +34,6 @@ public abstract class RequestPetition extends L2ClientPacket
 	public static final class RequestConsultation extends RequestPetition
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestPetition#RequestPetition()
 		 */
 		public RequestConsultation()
@@ -45,11 +43,6 @@ public abstract class RequestPetition extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x89;
-	
-	/** Constructs this packet. */
-	public RequestPetition()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

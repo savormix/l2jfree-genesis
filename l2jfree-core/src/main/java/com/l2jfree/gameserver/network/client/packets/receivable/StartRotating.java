@@ -34,8 +34,6 @@ public abstract class StartRotating extends L2ClientPacket
 	public static final class RequestStartRotation extends StartRotating
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see StartRotating#StartRotating()
 		 */
 		public RequestStartRotation()
@@ -45,11 +43,6 @@ public abstract class StartRotating extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x5b;
-	
-	/** Constructs this packet. */
-	public StartRotating()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

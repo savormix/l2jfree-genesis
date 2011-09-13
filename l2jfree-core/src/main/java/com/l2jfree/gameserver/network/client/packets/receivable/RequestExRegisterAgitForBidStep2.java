@@ -32,11 +32,6 @@ public class RequestExRegisterAgitForBidStep2 extends L2ClientPacket
 	/** Packet's third identifier */
 	public static final int OPCODE_3 = 0x05;
 	
-	/** Constructs this packet. */
-	public RequestExRegisterAgitForBidStep2()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

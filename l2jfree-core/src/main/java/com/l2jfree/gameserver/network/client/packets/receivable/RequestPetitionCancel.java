@@ -34,8 +34,6 @@ public abstract class RequestPetitionCancel extends L2ClientPacket
 	public static final class RequestAbortConsultation extends RequestPetitionCancel
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestPetitionCancel#RequestPetitionCancel()
 		 */
 		public RequestAbortConsultation()
@@ -45,11 +43,6 @@ public abstract class RequestPetitionCancel extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x8a;
-	
-	/** Constructs this packet. */
-	public RequestPetitionCancel()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

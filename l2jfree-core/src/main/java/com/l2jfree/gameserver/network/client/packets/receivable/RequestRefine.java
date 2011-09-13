@@ -30,11 +30,6 @@ public class RequestRefine extends L2ClientPacket
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x41;
 	
-	/** Constructs this packet. */
-	public RequestRefine()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

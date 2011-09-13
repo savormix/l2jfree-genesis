@@ -34,8 +34,6 @@ public abstract class RequestDismissPartyRoom extends L2ClientPacket
 	public static final class RequestDisbandPartyRoom extends RequestDismissPartyRoom
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestDismissPartyRoom#RequestDismissPartyRoom()
 		 */
 		public RequestDisbandPartyRoom()
@@ -47,11 +45,6 @@ public abstract class RequestDismissPartyRoom extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x0a;
-	
-	/** Constructs this packet. */
-	public RequestDismissPartyRoom()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

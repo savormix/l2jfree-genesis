@@ -41,8 +41,6 @@ public abstract class CharacterDeletePacket extends L2ClientPacket
 	public static final class RequestDeleteCharacter extends CharacterDeletePacket
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see CharacterDeletePacket#CharacterDeletePacket()
 		 */
 		public RequestDeleteCharacter()
@@ -55,11 +53,6 @@ public abstract class CharacterDeletePacket extends L2ClientPacket
 	
 	@SuppressWarnings("unused")
 	private int _charSlot;
-	
-	/** Constructs this packet. */
-	public CharacterDeletePacket()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

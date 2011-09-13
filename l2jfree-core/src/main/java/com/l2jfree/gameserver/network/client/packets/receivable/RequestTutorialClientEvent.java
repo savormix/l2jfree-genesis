@@ -34,8 +34,6 @@ public abstract class RequestTutorialClientEvent extends L2ClientPacket
 	public static final class ReportTutorialEvent extends RequestTutorialClientEvent
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestTutorialClientEvent#RequestTutorialClientEvent()
 		 */
 		public ReportTutorialEvent()
@@ -45,11 +43,6 @@ public abstract class RequestTutorialClientEvent extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x88;
-	
-	/** Constructs this packet. */
-	public RequestTutorialClientEvent()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

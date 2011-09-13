@@ -34,8 +34,6 @@ public abstract class SendPrivateStoreBuyList extends L2ClientPacket
 	public static final class RequestTransferFromSellShop extends SendPrivateStoreBuyList
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see SendPrivateStoreBuyList#SendPrivateStoreBuyList()
 		 */
 		public RequestTransferFromSellShop()
@@ -45,11 +43,6 @@ public abstract class SendPrivateStoreBuyList extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x83;
-	
-	/** Constructs this packet. */
-	public SendPrivateStoreBuyList()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

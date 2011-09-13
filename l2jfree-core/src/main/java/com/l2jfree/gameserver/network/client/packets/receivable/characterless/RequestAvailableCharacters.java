@@ -32,11 +32,6 @@ import com.l2jfree.network.mmocore.MMOBuffer;
  */
 public final class RequestAvailableCharacters extends ExGetOnAirShip
 {
-	/** Constructs this packet. */
-	public RequestAvailableCharacters()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

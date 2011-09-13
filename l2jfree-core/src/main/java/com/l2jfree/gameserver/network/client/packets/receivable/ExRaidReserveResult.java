@@ -34,8 +34,6 @@ public abstract class ExRaidReserveResult extends L2ClientPacket
 	public static final class RequestRaidReserveResult extends ExRaidReserveResult
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see ExRaidReserveResult#ExRaidReserveResult()
 		 */
 		public RequestRaidReserveResult()
@@ -47,11 +45,6 @@ public abstract class ExRaidReserveResult extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x73;
-	
-	/** Constructs this packet. */
-	public ExRaidReserveResult()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

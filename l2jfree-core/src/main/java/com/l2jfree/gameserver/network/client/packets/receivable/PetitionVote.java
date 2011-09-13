@@ -34,8 +34,6 @@ public abstract class PetitionVote extends L2ClientPacket
 	public static final class RequestRateConsultation extends PetitionVote
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see PetitionVote#PetitionVote()
 		 */
 		public RequestRateConsultation()
@@ -45,11 +43,6 @@ public abstract class PetitionVote extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xc9;
-	
-	/** Constructs this packet. */
-	public PetitionVote()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

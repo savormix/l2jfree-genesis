@@ -28,11 +28,6 @@ public class RequestSEKCustom extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x5a;
 	
-	/** Constructs this packet. */
-	public RequestSEKCustom()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

@@ -34,8 +34,6 @@ public abstract class Say2 extends L2ClientPacket
 	public static final class RequestSendChatMessage extends Say2
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see Say2#Say2()
 		 */
 		public RequestSendChatMessage()
@@ -45,11 +43,6 @@ public abstract class Say2 extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x49;
-	
-	/** Constructs this packet. */
-	public Say2()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

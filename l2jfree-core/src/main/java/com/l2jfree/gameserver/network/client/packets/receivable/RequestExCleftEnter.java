@@ -30,11 +30,6 @@ public class RequestExCleftEnter extends L2ClientPacket
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x59;
 	
-	/** Constructs this packet. */
-	public RequestExCleftEnter()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

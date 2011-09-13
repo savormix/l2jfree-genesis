@@ -45,8 +45,6 @@ public abstract class AuthLogin extends L2ClientPacket
 	public static final class RequestAuthorization extends AuthLogin
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see AuthLogin#AuthLogin()
 		 */
 		public RequestAuthorization()
@@ -65,11 +63,6 @@ public abstract class AuthLogin extends L2ClientPacket
 	private int _unk1;
 	private int _bitsInBlock;
 	private long _unk2;
-	
-	/** Constructs this packet. */
-	public AuthLogin()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

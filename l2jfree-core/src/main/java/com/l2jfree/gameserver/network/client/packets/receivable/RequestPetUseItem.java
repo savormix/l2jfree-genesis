@@ -28,11 +28,6 @@ public class RequestPetUseItem extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x94;
 	
-	/** Constructs this packet. */
-	public RequestPetUseItem()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

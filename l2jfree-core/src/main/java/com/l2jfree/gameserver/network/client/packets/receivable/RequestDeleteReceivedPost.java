@@ -34,8 +34,6 @@ public abstract class RequestDeleteReceivedPost extends L2ClientPacket
 	public static final class RequestDeleteFromInbox extends RequestDeleteReceivedPost
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestDeleteReceivedPost#RequestDeleteReceivedPost()
 		 */
 		public RequestDeleteFromInbox()
@@ -47,11 +45,6 @@ public abstract class RequestDeleteReceivedPost extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x68;
-	
-	/** Constructs this packet. */
-	public RequestDeleteReceivedPost()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

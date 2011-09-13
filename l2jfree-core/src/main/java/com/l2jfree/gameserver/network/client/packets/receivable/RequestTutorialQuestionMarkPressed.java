@@ -34,8 +34,6 @@ public abstract class RequestTutorialQuestionMarkPressed extends L2ClientPacket
 	public static final class RequestTutorialMarkInfo extends RequestTutorialQuestionMarkPressed
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestTutorialQuestionMarkPressed#RequestTutorialQuestionMarkPressed()
 		 */
 		public RequestTutorialMarkInfo()
@@ -45,11 +43,6 @@ public abstract class RequestTutorialQuestionMarkPressed extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x87;
-	
-	/** Constructs this packet. */
-	public RequestTutorialQuestionMarkPressed()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

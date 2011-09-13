@@ -34,8 +34,6 @@ public abstract class RequestGMList extends L2ClientPacket
 	public static final class RequestGameMasterList extends RequestGMList
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestGMList#RequestGMList()
 		 */
 		public RequestGameMasterList()
@@ -45,11 +43,6 @@ public abstract class RequestGMList extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x8b;
-	
-	/** Constructs this packet. */
-	public RequestGMList()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

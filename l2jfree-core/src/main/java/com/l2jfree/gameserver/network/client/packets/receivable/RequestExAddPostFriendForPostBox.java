@@ -34,8 +34,6 @@ public abstract class RequestExAddPostFriendForPostBox extends L2ClientPacket
 	public static final class RequestAddMailContact extends RequestExAddPostFriendForPostBox
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestExAddPostFriendForPostBox#RequestExAddPostFriendForPostBox()
 		 */
 		public RequestAddMailContact()
@@ -47,11 +45,6 @@ public abstract class RequestExAddPostFriendForPostBox extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x84;
-	
-	/** Constructs this packet. */
-	public RequestExAddPostFriendForPostBox()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

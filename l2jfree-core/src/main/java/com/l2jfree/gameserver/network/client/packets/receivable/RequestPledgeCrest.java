@@ -28,11 +28,6 @@ public class RequestPledgeCrest extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x67;
 	
-	/** Constructs this packet. */
-	public RequestPledgeCrest()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

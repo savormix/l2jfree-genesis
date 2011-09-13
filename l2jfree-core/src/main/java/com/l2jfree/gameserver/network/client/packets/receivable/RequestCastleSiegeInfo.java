@@ -34,8 +34,6 @@ public abstract class RequestCastleSiegeInfo extends L2ClientPacket
 	public static final class RequestSiegeDefenderList extends RequestCastleSiegeInfo
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestCastleSiegeInfo#RequestCastleSiegeInfo()
 		 */
 		public RequestSiegeDefenderList()
@@ -45,11 +43,6 @@ public abstract class RequestCastleSiegeInfo extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xac;
-	
-	/** Constructs this packet. */
-	public RequestCastleSiegeInfo()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

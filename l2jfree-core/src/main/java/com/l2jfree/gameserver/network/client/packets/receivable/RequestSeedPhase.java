@@ -34,8 +34,6 @@ public abstract class RequestSeedPhase extends L2ClientPacket
 	public static final class RequestGraciaSeedInfo extends RequestSeedPhase
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestSeedPhase#RequestSeedPhase()
 		 */
 		public RequestGraciaSeedInfo()
@@ -47,11 +45,6 @@ public abstract class RequestSeedPhase extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x63;
-	
-	/** Constructs this packet. */
-	public RequestSeedPhase()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

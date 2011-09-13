@@ -34,8 +34,6 @@ public abstract class ItemList extends L2ClientPacket
 	public static final class RequestItemList extends ItemList
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see ItemList#ItemList()
 		 */
 		public RequestItemList()
@@ -45,11 +43,6 @@ public abstract class ItemList extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x14;
-	
-	/** Constructs this packet. */
-	public ItemList()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

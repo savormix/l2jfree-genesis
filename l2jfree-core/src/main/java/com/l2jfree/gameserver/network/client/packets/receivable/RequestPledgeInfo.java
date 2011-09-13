@@ -28,11 +28,6 @@ public class RequestPledgeInfo extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x65;
 	
-	/** Constructs this packet. */
-	public RequestPledgeInfo()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

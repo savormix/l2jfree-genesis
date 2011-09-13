@@ -34,8 +34,6 @@ public abstract class RequestSaveKeyMapping extends L2ClientPacket
 	public static final class RequestSetupUserInterface extends RequestSaveKeyMapping
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestSaveKeyMapping#RequestSaveKeyMapping()
 		 */
 		public RequestSetupUserInterface()
@@ -47,11 +45,6 @@ public abstract class RequestSaveKeyMapping extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x22;
-	
-	/** Constructs this packet. */
-	public RequestSaveKeyMapping()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

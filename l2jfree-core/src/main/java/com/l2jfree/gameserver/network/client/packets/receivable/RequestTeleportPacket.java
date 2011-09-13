@@ -28,11 +28,6 @@ public class RequestTeleportPacket extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x33;
 	
-	/** Constructs this packet. */
-	public RequestTeleportPacket()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

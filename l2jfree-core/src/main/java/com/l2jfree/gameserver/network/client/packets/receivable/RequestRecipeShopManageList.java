@@ -28,11 +28,6 @@ public class RequestRecipeShopManageList extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0xb9;
 	
-	/** Constructs this packet. */
-	public RequestRecipeShopManageList()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

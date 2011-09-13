@@ -34,8 +34,6 @@ public abstract class RequestObserverEndPacket extends L2ClientPacket
 	public static final class RequestEndObservation extends RequestObserverEndPacket
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestObserverEndPacket#RequestObserverEndPacket()
 		 */
 		public RequestEndObservation()
@@ -45,11 +43,6 @@ public abstract class RequestObserverEndPacket extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xc1;
-	
-	/** Constructs this packet. */
-	public RequestObserverEndPacket()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

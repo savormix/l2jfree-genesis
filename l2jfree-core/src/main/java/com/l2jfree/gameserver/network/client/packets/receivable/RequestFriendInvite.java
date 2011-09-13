@@ -34,8 +34,6 @@ public abstract class RequestFriendInvite extends L2ClientPacket
 	public static final class RequestInviteToFriends extends RequestFriendInvite
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestFriendInvite#RequestFriendInvite()
 		 */
 		public RequestInviteToFriends()
@@ -45,11 +43,6 @@ public abstract class RequestFriendInvite extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x77;
-	
-	/** Constructs this packet. */
-	public RequestFriendInvite()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

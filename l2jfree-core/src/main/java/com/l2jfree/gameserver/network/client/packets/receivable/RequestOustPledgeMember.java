@@ -34,8 +34,6 @@ public abstract class RequestOustPledgeMember extends L2ClientPacket
 	public static final class RequestDismissPledgeMember extends RequestOustPledgeMember
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestOustPledgeMember#RequestOustPledgeMember()
 		 */
 		public RequestDismissPledgeMember()
@@ -45,11 +43,6 @@ public abstract class RequestOustPledgeMember extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x29;
-	
-	/** Constructs this packet. */
-	public RequestOustPledgeMember()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

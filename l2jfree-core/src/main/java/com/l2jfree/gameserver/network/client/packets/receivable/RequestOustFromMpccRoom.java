@@ -30,11 +30,6 @@ public class RequestOustFromMpccRoom extends L2ClientPacket
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x60;
 	
-	/** Constructs this packet. */
-	public RequestOustFromMpccRoom()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

@@ -34,8 +34,6 @@ public abstract class RequestConfirmRefinerItem extends L2ClientPacket
 	public static final class RequestSelectLifestone extends RequestConfirmRefinerItem
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestConfirmRefinerItem#RequestConfirmRefinerItem()
 		 */
 		public RequestSelectLifestone()
@@ -47,11 +45,6 @@ public abstract class RequestConfirmRefinerItem extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x27;
-	
-	/** Constructs this packet. */
-	public RequestConfirmRefinerItem()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

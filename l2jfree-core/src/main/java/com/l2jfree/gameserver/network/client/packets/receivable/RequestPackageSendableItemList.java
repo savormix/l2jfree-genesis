@@ -34,8 +34,6 @@ public abstract class RequestPackageSendableItemList extends L2ClientPacket
 	public static final class RequestTransferableItemList extends RequestPackageSendableItemList
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestPackageSendableItemList#RequestPackageSendableItemList()
 		 */
 		public RequestTransferableItemList()
@@ -45,11 +43,6 @@ public abstract class RequestPackageSendableItemList extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xa7;
-	
-	/** Constructs this packet. */
-	public RequestPackageSendableItemList()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

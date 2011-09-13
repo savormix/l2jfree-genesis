@@ -28,11 +28,6 @@ public class RequestSiegeInfo extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x58;
 	
-	/** Constructs this packet. */
-	public RequestSiegeInfo()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

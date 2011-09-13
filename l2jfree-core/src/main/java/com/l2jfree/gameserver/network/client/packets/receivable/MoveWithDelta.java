@@ -28,11 +28,6 @@ public class MoveWithDelta extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x52;
 	
-	/** Constructs this packet. */
-	public MoveWithDelta()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

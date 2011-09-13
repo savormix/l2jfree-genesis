@@ -34,8 +34,6 @@ public abstract class RequestPledgeSetMemberPowerGrade extends L2ClientPacket
 	public static final class RequestSetPledgeMemberPower extends RequestPledgeSetMemberPowerGrade
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestPledgeSetMemberPowerGrade#RequestPledgeSetMemberPowerGrade()
 		 */
 		public RequestSetPledgeMemberPower()
@@ -47,11 +45,6 @@ public abstract class RequestPledgeSetMemberPowerGrade extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x15;
-	
-	/** Constructs this packet. */
-	public RequestPledgeSetMemberPowerGrade()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

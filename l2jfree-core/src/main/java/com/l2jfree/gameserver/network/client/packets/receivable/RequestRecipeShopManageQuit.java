@@ -34,8 +34,6 @@ public abstract class RequestRecipeShopManageQuit extends L2ClientPacket
 	public static final class RequestEndManufacture extends RequestRecipeShopManageQuit
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestRecipeShopManageQuit#RequestRecipeShopManageQuit()
 		 */
 		public RequestEndManufacture()
@@ -45,11 +43,6 @@ public abstract class RequestRecipeShopManageQuit extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xbc;
-	
-	/** Constructs this packet. */
-	public RequestRecipeShopManageQuit()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

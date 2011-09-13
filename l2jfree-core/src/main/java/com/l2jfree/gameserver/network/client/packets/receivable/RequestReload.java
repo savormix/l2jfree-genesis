@@ -34,8 +34,6 @@ public abstract class RequestReload extends L2ClientPacket
 	public static final class RequestResendKnownObjectInfo extends RequestReload
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestReload#RequestReload()
 		 */
 		public RequestResendKnownObjectInfo()
@@ -45,11 +43,6 @@ public abstract class RequestReload extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x6e;
-	
-	/** Constructs this packet. */
-	public RequestReload()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

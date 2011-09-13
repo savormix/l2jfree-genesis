@@ -34,8 +34,6 @@ public abstract class AnswerCoupleAction extends L2ClientPacket
 	public static final class RequestAnswerMutualAction extends AnswerCoupleAction
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see AnswerCoupleAction#AnswerCoupleAction()
 		 */
 		public RequestAnswerMutualAction()
@@ -47,11 +45,6 @@ public abstract class AnswerCoupleAction extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x7a;
-	
-	/** Constructs this packet. */
-	public AnswerCoupleAction()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

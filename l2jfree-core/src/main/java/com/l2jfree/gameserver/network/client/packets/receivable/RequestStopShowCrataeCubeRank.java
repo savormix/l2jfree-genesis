@@ -34,8 +34,6 @@ public abstract class RequestStopShowCrataeCubeRank extends L2ClientPacket
 	public static final class RequestNoMoreKrateisCubeRanking extends RequestStopShowCrataeCubeRank
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestStopShowCrataeCubeRank#RequestStopShowCrataeCubeRank()
 		 */
 		public RequestNoMoreKrateisCubeRanking()
@@ -47,11 +45,6 @@ public abstract class RequestStopShowCrataeCubeRank extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x55;
-	
-	/** Constructs this packet. */
-	public RequestStopShowCrataeCubeRank()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

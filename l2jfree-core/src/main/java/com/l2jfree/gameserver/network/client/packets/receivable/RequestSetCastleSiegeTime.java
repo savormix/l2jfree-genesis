@@ -34,8 +34,6 @@ public abstract class RequestSetCastleSiegeTime extends L2ClientPacket
 	public static final class RequestSiegeTime extends RequestSetCastleSiegeTime
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestSetCastleSiegeTime#RequestSetCastleSiegeTime()
 		 */
 		public RequestSiegeTime()
@@ -45,11 +43,6 @@ public abstract class RequestSetCastleSiegeTime extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xaf;
-	
-	/** Constructs this packet. */
-	public RequestSetCastleSiegeTime()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

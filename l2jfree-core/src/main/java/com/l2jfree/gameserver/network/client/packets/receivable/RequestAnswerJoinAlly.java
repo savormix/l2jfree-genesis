@@ -34,8 +34,6 @@ public abstract class RequestAnswerJoinAlly extends L2ClientPacket
 	public static final class RequestAnswerAllianceInvitation extends RequestAnswerJoinAlly
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestAnswerJoinAlly#RequestAnswerJoinAlly()
 		 */
 		public RequestAnswerAllianceInvitation()
@@ -45,11 +43,6 @@ public abstract class RequestAnswerJoinAlly extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x8d;
-	
-	/** Constructs this packet. */
-	public RequestAnswerJoinAlly()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

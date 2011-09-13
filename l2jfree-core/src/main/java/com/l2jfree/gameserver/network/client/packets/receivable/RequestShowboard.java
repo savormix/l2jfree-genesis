@@ -34,8 +34,6 @@ public abstract class RequestShowboard extends L2ClientPacket
 	public static final class RequestCommunityBoard extends RequestShowboard
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestShowboard#RequestShowboard()
 		 */
 		public RequestCommunityBoard()
@@ -45,11 +43,6 @@ public abstract class RequestShowboard extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x5e;
-	
-	/** Constructs this packet. */
-	public RequestShowboard()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

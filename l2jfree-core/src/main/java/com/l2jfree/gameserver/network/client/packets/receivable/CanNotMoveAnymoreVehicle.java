@@ -34,8 +34,6 @@ public abstract class CanNotMoveAnymoreVehicle extends L2ClientPacket
 	public static final class ReportLandingInVehicle extends CanNotMoveAnymoreVehicle
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see CanNotMoveAnymoreVehicle#CanNotMoveAnymoreVehicle()
 		 */
 		public ReportLandingInVehicle()
@@ -45,11 +43,6 @@ public abstract class CanNotMoveAnymoreVehicle extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x76;
-	
-	/** Constructs this packet. */
-	public CanNotMoveAnymoreVehicle()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

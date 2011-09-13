@@ -34,8 +34,6 @@ public abstract class RequestChangeNicknameColor extends L2ClientPacket
 	public static final class RequestColoredTitle extends RequestChangeNicknameColor
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestChangeNicknameColor#RequestChangeNicknameColor()
 		 */
 		public RequestColoredTitle()
@@ -47,11 +45,6 @@ public abstract class RequestChangeNicknameColor extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x4f;
-	
-	/** Constructs this packet. */
-	public RequestChangeNicknameColor()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

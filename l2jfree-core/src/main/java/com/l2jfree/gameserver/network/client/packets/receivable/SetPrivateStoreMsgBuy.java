@@ -34,8 +34,6 @@ public abstract class SetPrivateStoreMsgBuy extends L2ClientPacket
 	public static final class RequestUpdateBuyShop extends SetPrivateStoreMsgBuy
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see SetPrivateStoreMsgBuy#SetPrivateStoreMsgBuy()
 		 */
 		public RequestUpdateBuyShop()
@@ -45,11 +43,6 @@ public abstract class SetPrivateStoreMsgBuy extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x9d;
-	
-	/** Constructs this packet. */
-	public SetPrivateStoreMsgBuy()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

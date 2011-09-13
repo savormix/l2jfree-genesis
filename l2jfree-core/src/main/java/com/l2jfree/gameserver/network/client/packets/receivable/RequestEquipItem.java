@@ -28,11 +28,6 @@ public class RequestEquipItem extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x15;
 	
-	/** Constructs this packet. */
-	public RequestEquipItem()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

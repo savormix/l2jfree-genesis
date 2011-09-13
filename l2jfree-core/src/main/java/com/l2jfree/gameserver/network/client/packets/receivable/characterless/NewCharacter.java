@@ -48,8 +48,6 @@ public abstract class NewCharacter extends L2ClientPacket
 	public static final class RequestNewCharacter extends NewCharacter
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see NewCharacter#NewCharacter()
 		 */
 		public RequestNewCharacter()
@@ -66,11 +64,6 @@ public abstract class NewCharacter extends L2ClientPacket
 	private byte _hairStyle;
 	private byte _hairColor;
 	private byte _face;
-	
-	/** Constructs this packet. */
-	public NewCharacter()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

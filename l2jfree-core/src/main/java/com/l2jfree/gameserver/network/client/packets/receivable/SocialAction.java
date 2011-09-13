@@ -28,11 +28,6 @@ public class SocialAction extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x34;
 	
-	/** Constructs this packet. */
-	public SocialAction()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

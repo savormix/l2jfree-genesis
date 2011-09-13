@@ -34,8 +34,6 @@ public abstract class RequestFortressMapInfo extends L2ClientPacket
 	public static final class RequestFortressInfo extends RequestFortressMapInfo
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestFortressMapInfo#RequestFortressMapInfo()
 		 */
 		public RequestFortressInfo()
@@ -47,11 +45,6 @@ public abstract class RequestFortressMapInfo extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x48;
-	
-	/** Constructs this packet. */
-	public RequestFortressMapInfo()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

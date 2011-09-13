@@ -34,8 +34,6 @@ public abstract class RequestGMCommand extends L2ClientPacket
 	public static final class RequestView extends RequestGMCommand
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestGMCommand#RequestGMCommand()
 		 */
 		public RequestView()
@@ -45,11 +43,6 @@ public abstract class RequestGMCommand extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x7e;
-	
-	/** Constructs this packet. */
-	public RequestGMCommand()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

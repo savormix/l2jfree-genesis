@@ -34,8 +34,6 @@ public abstract class RequestBBSWrite extends L2ClientPacket
 	public static final class RequestSendCommunityBoardMessage extends RequestBBSWrite
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestBBSWrite#RequestBBSWrite()
 		 */
 		public RequestSendCommunityBoardMessage()
@@ -45,11 +43,6 @@ public abstract class RequestBBSWrite extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x24;
-	
-	/** Constructs this packet. */
-	public RequestBBSWrite()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

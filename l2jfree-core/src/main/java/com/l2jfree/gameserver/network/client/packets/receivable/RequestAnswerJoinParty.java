@@ -34,8 +34,6 @@ public abstract class RequestAnswerJoinParty extends L2ClientPacket
 	public static final class RequestAnswerPartyInvitation extends RequestAnswerJoinParty
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestAnswerJoinParty#RequestAnswerJoinParty()
 		 */
 		public RequestAnswerPartyInvitation()
@@ -45,11 +43,6 @@ public abstract class RequestAnswerJoinParty extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x43;
-	
-	/** Constructs this packet. */
-	public RequestAnswerJoinParty()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

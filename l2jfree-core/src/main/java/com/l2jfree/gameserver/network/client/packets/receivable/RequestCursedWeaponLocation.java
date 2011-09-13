@@ -34,8 +34,6 @@ public abstract class RequestCursedWeaponLocation extends L2ClientPacket
 	public static final class RequestCursedWeaponInfoList extends RequestCursedWeaponLocation
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestCursedWeaponLocation#RequestCursedWeaponLocation()
 		 */
 		public RequestCursedWeaponInfoList()
@@ -47,11 +45,6 @@ public abstract class RequestCursedWeaponLocation extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x2b;
-	
-	/** Constructs this packet. */
-	public RequestCursedWeaponLocation()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

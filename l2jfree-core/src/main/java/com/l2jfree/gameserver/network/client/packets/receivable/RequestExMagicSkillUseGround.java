@@ -34,8 +34,6 @@ public abstract class RequestExMagicSkillUseGround extends L2ClientPacket
 	public static final class RequestUseSkillOnGround extends RequestExMagicSkillUseGround
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestExMagicSkillUseGround#RequestExMagicSkillUseGround()
 		 */
 		public RequestUseSkillOnGround()
@@ -47,11 +45,6 @@ public abstract class RequestExMagicSkillUseGround extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x44;
-	
-	/** Constructs this packet. */
-	public RequestExMagicSkillUseGround()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

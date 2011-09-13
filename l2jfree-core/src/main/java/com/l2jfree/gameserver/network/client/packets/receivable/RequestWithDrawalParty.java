@@ -34,8 +34,6 @@ public abstract class RequestWithDrawalParty extends L2ClientPacket
 	public static final class RequestLeaveParty extends RequestWithDrawalParty
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestWithDrawalParty#RequestWithDrawalParty()
 		 */
 		public RequestLeaveParty()
@@ -45,11 +43,6 @@ public abstract class RequestWithDrawalParty extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x44;
-	
-	/** Constructs this packet. */
-	public RequestWithDrawalParty()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

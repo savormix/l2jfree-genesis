@@ -34,8 +34,6 @@ public abstract class RequestSSQStatus extends L2ClientPacket
 	public static final class RequestSevenSignsInfo extends RequestSSQStatus
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestSSQStatus#RequestSSQStatus()
 		 */
 		public RequestSevenSignsInfo()
@@ -45,11 +43,6 @@ public abstract class RequestSSQStatus extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xc8;
-	
-	/** Constructs this packet. */
-	public RequestSSQStatus()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

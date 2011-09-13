@@ -34,8 +34,6 @@ public abstract class RequestPostItemList extends L2ClientPacket
 	public static final class RequestAttachableItemList extends RequestPostItemList
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestPostItemList#RequestPostItemList()
 		 */
 		public RequestAttachableItemList()
@@ -47,11 +45,6 @@ public abstract class RequestPostItemList extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x65;
-	
-	/** Constructs this packet. */
-	public RequestPostItemList()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

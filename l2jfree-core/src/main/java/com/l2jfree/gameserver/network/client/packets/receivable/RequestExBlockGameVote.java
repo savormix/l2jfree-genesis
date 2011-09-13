@@ -34,8 +34,6 @@ public abstract class RequestExBlockGameVote extends L2ClientPacket
 	public static final class RequestAnswerStartBlockChecker extends RequestExBlockGameVote
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestExBlockGameVote#RequestExBlockGameVote()
 		 */
 		public RequestAnswerStartBlockChecker()
@@ -47,11 +45,6 @@ public abstract class RequestExBlockGameVote extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x5c;
-	
-	/** Constructs this packet. */
-	public RequestExBlockGameVote()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

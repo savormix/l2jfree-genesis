@@ -35,8 +35,6 @@ public abstract class MoveBackwardToLocation extends L2ClientPacket
 	public static final class RequestMovement extends MoveBackwardToLocation
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see MoveBackwardToLocation#MoveBackwardToLocation()
 		 */
 		public RequestMovement()
@@ -54,11 +52,6 @@ public abstract class MoveBackwardToLocation extends L2ClientPacket
 	private int _clientY;
 	private int _clientZ;
 	private int _controller;
-	
-	/** Constructs this packet. */
-	public MoveBackwardToLocation()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

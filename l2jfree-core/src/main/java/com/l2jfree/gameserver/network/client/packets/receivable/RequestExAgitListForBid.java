@@ -32,11 +32,6 @@ public class RequestExAgitListForBid extends L2ClientPacket
 	/** Packet's third identifier */
 	public static final int OPCODE_3 = 0x14;
 	
-	/** Constructs this packet. */
-	public RequestExAgitListForBid()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

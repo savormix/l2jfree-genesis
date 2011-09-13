@@ -34,8 +34,6 @@ public abstract class RequestSendMsnChatLog extends L2ClientPacket
 	public static final class ReportMsnChatMessage extends RequestSendMsnChatLog
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestSendMsnChatLog#RequestSendMsnChatLog()
 		 */
 		public ReportMsnChatMessage()
@@ -45,11 +43,6 @@ public abstract class RequestSendMsnChatLog extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x6d;
-	
-	/** Constructs this packet. */
-	public RequestSendMsnChatLog()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

@@ -34,8 +34,6 @@ public abstract class NetPing extends L2ClientPacket
 	public static final class UptimeResponse extends NetPing
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see NetPing#NetPing()
 		 */
 		public UptimeResponse()
@@ -45,11 +43,6 @@ public abstract class NetPing extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xb1;
-	
-	/** Constructs this packet. */
-	public NetPing()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

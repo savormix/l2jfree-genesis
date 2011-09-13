@@ -34,8 +34,6 @@ public abstract class BypassUserCmd extends L2ClientPacket
 	public static final class RequestPlayerCommand extends BypassUserCmd
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see BypassUserCmd#BypassUserCmd()
 		 */
 		public RequestPlayerCommand()
@@ -45,11 +43,6 @@ public abstract class BypassUserCmd extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xb3;
-	
-	/** Constructs this packet. */
-	public BypassUserCmd()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

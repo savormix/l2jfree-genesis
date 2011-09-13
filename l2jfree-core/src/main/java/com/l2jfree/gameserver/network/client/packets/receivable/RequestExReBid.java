@@ -32,11 +32,6 @@ public class RequestExReBid extends L2ClientPacket
 	/** Packet's third identifier */
 	public static final int OPCODE_3 = 0x10;
 	
-	/** Constructs this packet. */
-	public RequestExReBid()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

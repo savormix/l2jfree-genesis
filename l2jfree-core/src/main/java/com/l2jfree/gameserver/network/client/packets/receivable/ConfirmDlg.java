@@ -34,8 +34,6 @@ public abstract class ConfirmDlg extends L2ClientPacket
 	public static final class RequestDialogAnswer extends ConfirmDlg
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see ConfirmDlg#ConfirmDlg()
 		 */
 		public RequestDialogAnswer()
@@ -45,11 +43,6 @@ public abstract class ConfirmDlg extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xc6;
-	
-	/** Constructs this packet. */
-	public ConfirmDlg()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

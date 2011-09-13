@@ -34,8 +34,6 @@ public abstract class RequestJoinCastleSiege extends L2ClientPacket
 	public static final class RequestSiegeRegistration extends RequestJoinCastleSiege
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestJoinCastleSiege#RequestJoinCastleSiege()
 		 */
 		public RequestSiegeRegistration()
@@ -45,11 +43,6 @@ public abstract class RequestJoinCastleSiege extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xad;
-	
-	/** Constructs this packet. */
-	public RequestJoinCastleSiege()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

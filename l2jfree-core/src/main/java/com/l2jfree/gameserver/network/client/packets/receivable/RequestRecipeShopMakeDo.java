@@ -34,8 +34,6 @@ public abstract class RequestRecipeShopMakeDo extends L2ClientPacket
 	public static final class RequestUseManufacture extends RequestRecipeShopMakeDo
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestRecipeShopMakeDo#RequestRecipeShopMakeDo()
 		 */
 		public RequestUseManufacture()
@@ -45,11 +43,6 @@ public abstract class RequestRecipeShopMakeDo extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xbf;
-	
-	/** Constructs this packet. */
-	public RequestRecipeShopMakeDo()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

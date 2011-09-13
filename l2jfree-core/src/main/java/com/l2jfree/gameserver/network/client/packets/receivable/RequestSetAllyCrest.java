@@ -34,8 +34,6 @@ public abstract class RequestSetAllyCrest extends L2ClientPacket
 	public static final class RequestSetAllianceCrest extends RequestSetAllyCrest
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestSetAllyCrest#RequestSetAllyCrest()
 		 */
 		public RequestSetAllianceCrest()
@@ -45,11 +43,6 @@ public abstract class RequestSetAllyCrest extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x91;
-	
-	/** Constructs this packet. */
-	public RequestSetAllyCrest()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

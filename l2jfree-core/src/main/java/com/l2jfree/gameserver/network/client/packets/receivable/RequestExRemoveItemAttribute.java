@@ -34,8 +34,6 @@ public abstract class RequestExRemoveItemAttribute extends L2ClientPacket
 	public static final class RequestElementRemoval extends RequestExRemoveItemAttribute
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestExRemoveItemAttribute#RequestExRemoveItemAttribute()
 		 */
 		public RequestElementRemoval()
@@ -47,11 +45,6 @@ public abstract class RequestExRemoveItemAttribute extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x23;
-	
-	/** Constructs this packet. */
-	public RequestExRemoveItemAttribute()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

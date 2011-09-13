@@ -34,8 +34,6 @@ public abstract class SetPrivateStoreWholeMsg extends L2ClientPacket
 	public static final class RequestUpdatePackageShop extends SetPrivateStoreWholeMsg
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see SetPrivateStoreWholeMsg#SetPrivateStoreWholeMsg()
 		 */
 		public RequestUpdatePackageShop()
@@ -47,11 +45,6 @@ public abstract class SetPrivateStoreWholeMsg extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x4a;
-	
-	/** Constructs this packet. */
-	public SetPrivateStoreWholeMsg()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

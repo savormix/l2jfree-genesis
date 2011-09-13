@@ -28,11 +28,6 @@ public class Say extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x10;
 	
-	/** Constructs this packet. */
-	public Say()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

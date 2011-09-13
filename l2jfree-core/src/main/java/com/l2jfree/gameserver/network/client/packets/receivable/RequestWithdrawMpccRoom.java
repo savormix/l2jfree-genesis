@@ -30,11 +30,6 @@ public class RequestWithdrawMpccRoom extends L2ClientPacket
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x62;
 	
-	/** Constructs this packet. */
-	public RequestWithdrawMpccRoom()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

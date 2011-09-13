@@ -34,8 +34,6 @@ public abstract class RequestDismissAlly extends L2ClientPacket
 	public static final class RequestDisbandAlliance extends RequestDismissAlly
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestDismissAlly#RequestDismissAlly()
 		 */
 		public RequestDisbandAlliance()
@@ -45,11 +43,6 @@ public abstract class RequestDismissAlly extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x90;
-	
-	/** Constructs this packet. */
-	public RequestDismissAlly()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

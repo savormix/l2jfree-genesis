@@ -34,8 +34,6 @@ public abstract class SnoopQuit extends L2ClientPacket
 	public static final class StopEavesdropping extends SnoopQuit
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see SnoopQuit#SnoopQuit()
 		 */
 		public StopEavesdropping()
@@ -45,11 +43,6 @@ public abstract class SnoopQuit extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xb4;
-	
-	/** Constructs this packet. */
-	public SnoopQuit()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

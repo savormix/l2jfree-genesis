@@ -30,11 +30,6 @@ public class RequestCursedWeaponList extends L2ClientPacket
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x2a;
 	
-	/** Constructs this packet. */
-	public RequestCursedWeaponList()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

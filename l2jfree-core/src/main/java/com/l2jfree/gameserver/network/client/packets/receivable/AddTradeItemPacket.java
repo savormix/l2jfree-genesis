@@ -34,8 +34,6 @@ public abstract class AddTradeItemPacket extends L2ClientPacket
 	public static final class RequestOfferItem extends AddTradeItemPacket
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see AddTradeItemPacket#AddTradeItemPacket()
 		 */
 		public RequestOfferItem()
@@ -45,11 +43,6 @@ public abstract class AddTradeItemPacket extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x1b;
-	
-	/** Constructs this packet. */
-	public AddTradeItemPacket()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

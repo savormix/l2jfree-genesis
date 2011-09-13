@@ -34,8 +34,6 @@ public abstract class MoveToLocationInVehicle extends L2ClientPacket
 	public static final class RequestMovementInVehicle extends MoveToLocationInVehicle
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see MoveToLocationInVehicle#MoveToLocationInVehicle()
 		 */
 		public RequestMovementInVehicle()
@@ -45,11 +43,6 @@ public abstract class MoveToLocationInVehicle extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x75;
-	
-	/** Constructs this packet. */
-	public MoveToLocationInVehicle()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

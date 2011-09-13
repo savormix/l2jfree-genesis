@@ -34,8 +34,6 @@ public abstract class RequestCancelSentPost extends L2ClientPacket
 	public static final class RequestCancelSentMailMessage extends RequestCancelSentPost
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestCancelSentPost#RequestCancelSentPost()
 		 */
 		public RequestCancelSentMailMessage()
@@ -47,11 +45,6 @@ public abstract class RequestCancelSentPost extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x6f;
-	
-	/** Constructs this packet. */
-	public RequestCancelSentPost()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

@@ -34,8 +34,6 @@ public abstract class RequestGiveNickName extends L2ClientPacket
 	public static final class RequestSetTitle extends RequestGiveNickName
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestGiveNickName#RequestGiveNickName()
 		 */
 		public RequestSetTitle()
@@ -45,11 +43,6 @@ public abstract class RequestGiveNickName extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x0b;
-	
-	/** Constructs this packet. */
-	public RequestGiveNickName()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

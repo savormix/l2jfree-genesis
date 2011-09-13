@@ -34,8 +34,6 @@ public abstract class MoveToLocationAirShip extends L2ClientPacket
 	public static final class RequestAircraftMovement extends MoveToLocationAirShip
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see MoveToLocationAirShip#MoveToLocationAirShip()
 		 */
 		public RequestAircraftMovement()
@@ -47,11 +45,6 @@ public abstract class MoveToLocationAirShip extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x38;
-	
-	/** Constructs this packet. */
-	public MoveToLocationAirShip()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

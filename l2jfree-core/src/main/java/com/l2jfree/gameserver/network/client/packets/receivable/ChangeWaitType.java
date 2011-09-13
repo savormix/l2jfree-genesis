@@ -28,11 +28,6 @@ public class ChangeWaitType extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x36;
 	
-	/** Constructs this packet. */
-	public ChangeWaitType()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

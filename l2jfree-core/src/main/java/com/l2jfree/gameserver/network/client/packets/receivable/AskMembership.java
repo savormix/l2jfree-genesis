@@ -30,11 +30,6 @@ public class AskMembership extends L2ClientPacket
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x7c;
 	
-	/** Constructs this packet. */
-	public AskMembership()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

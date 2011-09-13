@@ -34,8 +34,6 @@ public abstract class RequestDuelSurrender extends L2ClientPacket
 	public static final class RequestForfeitDuel extends RequestDuelSurrender
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestDuelSurrender#RequestDuelSurrender()
 		 */
 		public RequestForfeitDuel()
@@ -47,11 +45,6 @@ public abstract class RequestDuelSurrender extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x45;
-	
-	/** Constructs this packet. */
-	public RequestDuelSurrender()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

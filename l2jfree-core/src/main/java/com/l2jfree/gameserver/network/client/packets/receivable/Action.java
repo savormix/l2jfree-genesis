@@ -34,8 +34,6 @@ public abstract class Action extends L2ClientPacket
 	public static final class RequestInteraction extends Action
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see Action#Action()
 		 */
 		public RequestInteraction()

@@ -34,8 +34,6 @@ public abstract class RequestWithDrawPremiumItem extends L2ClientPacket
 	public static final class RequestReceiveDimensionalItem extends RequestWithDrawPremiumItem
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestWithDrawPremiumItem#RequestWithDrawPremiumItem()
 		 */
 		public RequestReceiveDimensionalItem()
@@ -47,11 +45,6 @@ public abstract class RequestWithDrawPremiumItem extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x52;
-	
-	/** Constructs this packet. */
-	public RequestWithDrawPremiumItem()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

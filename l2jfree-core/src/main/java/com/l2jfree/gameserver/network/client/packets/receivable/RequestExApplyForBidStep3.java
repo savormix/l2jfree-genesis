@@ -32,11 +32,6 @@ public class RequestExApplyForBidStep3 extends L2ClientPacket
 	/** Packet's third identifier */
 	public static final int OPCODE_3 = 0x0f;
 	
-	/** Constructs this packet. */
-	public RequestExApplyForBidStep3()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

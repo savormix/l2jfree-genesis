@@ -34,8 +34,6 @@ public abstract class RequestExitPartyMatchingWaitingRoom extends L2ClientPacket
 	public static final class RequestLeavePartyMatching extends RequestExitPartyMatchingWaitingRoom
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestExitPartyMatchingWaitingRoom#RequestExitPartyMatchingWaitingRoom()
 		 */
 		public RequestLeavePartyMatching()
@@ -47,11 +45,6 @@ public abstract class RequestExitPartyMatchingWaitingRoom extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x25;
-	
-	/** Constructs this packet. */
-	public RequestExitPartyMatchingWaitingRoom()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

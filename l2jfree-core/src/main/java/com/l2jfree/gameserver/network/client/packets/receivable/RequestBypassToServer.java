@@ -34,8 +34,6 @@ public abstract class RequestBypassToServer extends L2ClientPacket
 	public static final class RequestHtmlCommand extends RequestBypassToServer
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestBypassToServer#RequestBypassToServer()
 		 */
 		public RequestHtmlCommand()
@@ -45,11 +43,6 @@ public abstract class RequestBypassToServer extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x23;
-	
-	/** Constructs this packet. */
-	public RequestBypassToServer()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

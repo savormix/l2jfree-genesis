@@ -28,11 +28,6 @@ public class RequestDismissParty extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x46;
 	
-	/** Constructs this packet. */
-	public RequestDismissParty()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

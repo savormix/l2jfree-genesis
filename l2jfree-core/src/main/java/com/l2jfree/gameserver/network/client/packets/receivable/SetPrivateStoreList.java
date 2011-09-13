@@ -34,8 +34,6 @@ public abstract class SetPrivateStoreList extends L2ClientPacket
 	public static final class RequestStartSellShop extends SetPrivateStoreList
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see SetPrivateStoreList#SetPrivateStoreList()
 		 */
 		public RequestStartSellShop()
@@ -45,11 +43,6 @@ public abstract class SetPrivateStoreList extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x31;
-	
-	/** Constructs this packet. */
-	public SetPrivateStoreList()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

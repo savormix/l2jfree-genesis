@@ -30,11 +30,6 @@ public class RequestEx2ndPasswordReq extends L2ClientPacket
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x95;
 	
-	/** Constructs this packet. */
-	public RequestEx2ndPasswordReq()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

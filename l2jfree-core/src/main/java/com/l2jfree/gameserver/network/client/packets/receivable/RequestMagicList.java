@@ -28,11 +28,6 @@ public class RequestMagicList extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x4f;
 	
-	/** Constructs this packet. */
-	public RequestMagicList()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

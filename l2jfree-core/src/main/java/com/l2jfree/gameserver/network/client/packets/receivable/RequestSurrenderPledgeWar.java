@@ -28,11 +28,6 @@ public class RequestSurrenderPledgeWar extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x07;
 	
-	/** Constructs this packet. */
-	public RequestSurrenderPledgeWar()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

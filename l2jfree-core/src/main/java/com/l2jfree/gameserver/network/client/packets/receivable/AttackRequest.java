@@ -34,8 +34,6 @@ public abstract class AttackRequest extends L2ClientPacket
 	public static final class RequestAttack extends AttackRequest
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see AttackRequest#AttackRequest()
 		 */
 		public RequestAttack()
@@ -45,11 +43,6 @@ public abstract class AttackRequest extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x32;
-	
-	/** Constructs this packet. */
-	public AttackRequest()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

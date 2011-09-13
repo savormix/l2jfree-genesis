@@ -34,8 +34,6 @@ public abstract class RequestHennaUnequipInfo extends L2ClientPacket
 	public static final class RequestHennaRemovalInfo extends RequestHennaUnequipInfo
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestHennaUnequipInfo#RequestHennaUnequipInfo()
 		 */
 		public RequestHennaRemovalInfo()
@@ -45,11 +43,6 @@ public abstract class RequestHennaUnequipInfo extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x71;
-	
-	/** Constructs this packet. */
-	public RequestHennaUnequipInfo()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

@@ -34,8 +34,6 @@ public abstract class RequestChangePetName extends L2ClientPacket
 	public static final class RequestNamePet extends RequestChangePetName
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestChangePetName#RequestChangePetName()
 		 */
 		public RequestNamePet()
@@ -45,11 +43,6 @@ public abstract class RequestChangePetName extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x93;
-	
-	/** Constructs this packet. */
-	public RequestChangePetName()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

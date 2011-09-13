@@ -32,11 +32,6 @@ public class RequestExAgitInitialize extends L2ClientPacket
 	/** Packet's third identifier */
 	public static final int OPCODE_3 = 0x01;
 	
-	/** Constructs this packet. */
-	public RequestExAgitInitialize()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

@@ -34,8 +34,6 @@ public abstract class RequestSaveInventoryOrder extends L2ClientPacket
 	public static final class ReportInventoryOrder extends RequestSaveInventoryOrder
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestSaveInventoryOrder#RequestSaveInventoryOrder()
 		 */
 		public ReportInventoryOrder()
@@ -47,11 +45,6 @@ public abstract class RequestSaveInventoryOrder extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x24;
-	
-	/** Constructs this packet. */
-	public RequestSaveInventoryOrder()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

@@ -34,8 +34,6 @@ public abstract class RequestPartyMatchConfig extends L2ClientPacket
 	public static final class RequestPartyRooms extends RequestPartyMatchConfig
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestPartyMatchConfig#RequestPartyMatchConfig()
 		 */
 		public RequestPartyRooms()
@@ -45,11 +43,6 @@ public abstract class RequestPartyMatchConfig extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x7f;
-	
-	/** Constructs this packet. */
-	public RequestPartyMatchConfig()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

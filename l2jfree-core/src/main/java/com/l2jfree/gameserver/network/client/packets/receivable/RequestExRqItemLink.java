@@ -34,8 +34,6 @@ public abstract class RequestExRqItemLink extends L2ClientPacket
 	public static final class RequestLinkItem extends RequestExRqItemLink
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestExRqItemLink#RequestExRqItemLink()
 		 */
 		public RequestLinkItem()
@@ -47,11 +45,6 @@ public abstract class RequestExRqItemLink extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x1e;
-	
-	/** Constructs this packet. */
-	public RequestExRqItemLink()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

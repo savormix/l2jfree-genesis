@@ -34,8 +34,6 @@ public abstract class RequestAskJoinPartyRoom extends L2ClientPacket
 	public static final class RequestInviteToPartyRoom extends RequestAskJoinPartyRoom
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestAskJoinPartyRoom#RequestAskJoinPartyRoom()
 		 */
 		public RequestInviteToPartyRoom()
@@ -47,11 +45,6 @@ public abstract class RequestAskJoinPartyRoom extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x2f;
-	
-	/** Constructs this packet. */
-	public RequestAskJoinPartyRoom()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

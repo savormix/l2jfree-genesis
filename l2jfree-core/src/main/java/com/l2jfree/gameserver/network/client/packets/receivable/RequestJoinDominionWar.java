@@ -34,8 +34,6 @@ public abstract class RequestJoinDominionWar extends L2ClientPacket
 	public static final class RequestMercenaryRegistration extends RequestJoinDominionWar
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestJoinDominionWar#RequestJoinDominionWar()
 		 */
 		public RequestMercenaryRegistration()
@@ -47,11 +45,6 @@ public abstract class RequestJoinDominionWar extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x57;
-	
-	/** Constructs this packet. */
-	public RequestJoinDominionWar()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

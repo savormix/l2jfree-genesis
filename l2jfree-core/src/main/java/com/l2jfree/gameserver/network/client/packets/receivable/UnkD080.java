@@ -30,11 +30,6 @@ public class UnkD080 extends L2ClientPacket
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x80;
 	
-	/** Constructs this packet. */
-	public UnkD080()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

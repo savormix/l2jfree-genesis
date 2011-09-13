@@ -28,11 +28,6 @@ public class RequestBuySeed extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0xc5;
 	
-	/** Constructs this packet. */
-	public RequestBuySeed()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

@@ -35,8 +35,6 @@ public abstract class ReplyGameGuardQuery extends L2ClientPacket
 	public static final class AnswerGameGuard extends ReplyGameGuardQuery
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see ReplyGameGuardQuery#ReplyGameGuardQuery()
 		 */
 		public AnswerGameGuard()
@@ -46,11 +44,6 @@ public abstract class ReplyGameGuardQuery extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xcb;
-	
-	/** Constructs this packet. */
-	public ReplyGameGuardQuery()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

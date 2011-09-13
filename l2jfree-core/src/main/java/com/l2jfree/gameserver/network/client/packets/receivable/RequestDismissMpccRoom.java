@@ -30,11 +30,6 @@ public class RequestDismissMpccRoom extends L2ClientPacket
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x61;
 	
-	/** Constructs this packet. */
-	public RequestDismissMpccRoom()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

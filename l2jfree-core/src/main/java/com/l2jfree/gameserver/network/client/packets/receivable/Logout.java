@@ -29,11 +29,6 @@ public class Logout extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x00;
 	
-	/** Constructs this packet. */
-	public Logout()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

@@ -28,11 +28,6 @@ public class RequestPledgeMemberList extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x4d;
 	
-	/** Constructs this packet. */
-	public RequestPledgeMemberList()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

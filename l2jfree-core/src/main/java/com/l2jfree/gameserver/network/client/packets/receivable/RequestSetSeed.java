@@ -34,8 +34,6 @@ public abstract class RequestSetSeed extends L2ClientPacket
 	public static final class RequestSetupSeedSales extends RequestSetSeed
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestSetSeed#RequestSetSeed()
 		 */
 		public RequestSetupSeedSales()
@@ -47,11 +45,6 @@ public abstract class RequestSetSeed extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x03;
-	
-	/** Constructs this packet. */
-	public RequestSetSeed()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

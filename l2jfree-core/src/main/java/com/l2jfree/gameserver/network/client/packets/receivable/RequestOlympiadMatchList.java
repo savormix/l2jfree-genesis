@@ -34,8 +34,6 @@ public abstract class RequestOlympiadMatchList extends L2ClientPacket
 	public static final class RequestSpectatableMatchList extends RequestOlympiadMatchList
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestOlympiadMatchList#RequestOlympiadMatchList()
 		 */
 		public RequestSpectatableMatchList()
@@ -47,11 +45,6 @@ public abstract class RequestOlympiadMatchList extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x2e;
-	
-	/** Constructs this packet. */
-	public RequestOlympiadMatchList()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

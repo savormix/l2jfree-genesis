@@ -34,8 +34,6 @@ public abstract class RequestDeleteMacro extends L2ClientPacket
 	public static final class RequestRemoveMacro extends RequestDeleteMacro
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestDeleteMacro#RequestDeleteMacro()
 		 */
 		public RequestRemoveMacro()
@@ -45,11 +43,6 @@ public abstract class RequestDeleteMacro extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xce;
-	
-	/** Constructs this packet. */
-	public RequestDeleteMacro()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

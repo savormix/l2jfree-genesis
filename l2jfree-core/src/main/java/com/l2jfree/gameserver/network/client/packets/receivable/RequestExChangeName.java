@@ -34,8 +34,6 @@ public abstract class RequestExChangeName extends L2ClientPacket
 	public static final class RequestAnswerPledgeNameChange extends RequestExChangeName
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestExChangeName#RequestExChangeName()
 		 */
 		public RequestAnswerPledgeNameChange()
@@ -47,11 +45,6 @@ public abstract class RequestExChangeName extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x3b;
-	
-	/** Constructs this packet. */
-	public RequestExChangeName()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

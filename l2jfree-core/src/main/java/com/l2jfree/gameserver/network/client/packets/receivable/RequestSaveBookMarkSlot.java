@@ -34,8 +34,6 @@ public abstract class RequestSaveBookMarkSlot extends L2ClientPacket
 	public static final class RequestAddTeleportBookmark extends RequestSaveBookMarkSlot
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestSaveBookMarkSlot#RequestSaveBookMarkSlot()
 		 */
 		public RequestAddTeleportBookmark()
@@ -49,11 +47,6 @@ public abstract class RequestSaveBookMarkSlot extends L2ClientPacket
 	public static final int OPCODE_2 = 0x51;
 	/** Packet's third identifier */
 	public static final int OPCODE_3 = 0x01;
-	
-	/** Constructs this packet. */
-	public RequestSaveBookMarkSlot()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

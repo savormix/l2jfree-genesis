@@ -34,8 +34,6 @@ public abstract class SendWareHouseWithDrawList extends L2ClientPacket
 	public static final class RequestTransferFromWarehouse extends SendWareHouseWithDrawList
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see SendWareHouseWithDrawList#SendWareHouseWithDrawList()
 		 */
 		public RequestTransferFromWarehouse()
@@ -45,11 +43,6 @@ public abstract class SendWareHouseWithDrawList extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x3c;
-	
-	/** Constructs this packet. */
-	public SendWareHouseWithDrawList()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

@@ -30,11 +30,6 @@ public class RequestJoinMpccRoom extends L2ClientPacket
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x5f;
 	
-	/** Constructs this packet. */
-	public RequestJoinMpccRoom()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

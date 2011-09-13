@@ -34,8 +34,6 @@ public abstract class RequestBlock extends L2ClientPacket
 	public static final class RequestMessageRefusal extends RequestBlock
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestBlock#RequestBlock()
 		 */
 		public RequestMessageRefusal()
@@ -45,11 +43,6 @@ public abstract class RequestBlock extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xa9;
-	
-	/** Constructs this packet. */
-	public RequestBlock()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

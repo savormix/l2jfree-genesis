@@ -34,8 +34,6 @@ public abstract class RequestExBlockGameEnter extends L2ClientPacket
 	public static final class RequestChangeBlockCheckerTeam extends RequestExBlockGameEnter
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestExBlockGameEnter#RequestExBlockGameEnter()
 		 */
 		public RequestChangeBlockCheckerTeam()
@@ -47,11 +45,6 @@ public abstract class RequestExBlockGameEnter extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0x5a;
-	
-	/** Constructs this packet. */
-	public RequestExBlockGameEnter()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()

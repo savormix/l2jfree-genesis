@@ -32,11 +32,6 @@ public class RequestExConfirmCancelAgitLot extends L2ClientPacket
 	/** Packet's third identifier */
 	public static final int OPCODE_3 = 0x09;
 	
-	/** Constructs this packet. */
-	public RequestExConfirmCancelAgitLot()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

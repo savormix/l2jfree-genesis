@@ -28,11 +28,6 @@ public class RequestLinkHtml extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x22;
 	
-	/** Constructs this packet. */
-	public RequestLinkHtml()
-	{
-	}
-	
 	@Override
 	protected int getMinimumLength()
 	{

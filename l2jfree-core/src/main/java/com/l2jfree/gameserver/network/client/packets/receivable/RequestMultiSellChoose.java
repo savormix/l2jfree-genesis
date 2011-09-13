@@ -34,8 +34,6 @@ public abstract class RequestMultiSellChoose extends L2ClientPacket
 	public static final class RequestExchange extends RequestMultiSellChoose
 	{
 		/**
-		 * Constructs this packet.
-		 * 
 		 * @see RequestMultiSellChoose#RequestMultiSellChoose()
 		 */
 		public RequestExchange()
@@ -45,11 +43,6 @@ public abstract class RequestMultiSellChoose extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xb0;
-	
-	/** Constructs this packet. */
-	public RequestMultiSellChoose()
-	{
-	}
 	
 	@Override
 	protected int getMinimumLength()
