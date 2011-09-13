@@ -97,20 +97,20 @@ public abstract class L2DBEntity implements L2Entity<Object>
 	public void postLoad()
 	{
 		if (DEBUG)
-			_log.warn(toString(80));
+			_log.info("L2DBEntity.postLoad(): " + toString(80));
 	}
 	
 	@PostPersist
 	public void postPersist()
 	{
 		if (DEBUG)
-			_log.warn(toString(80));
+			_log.info("L2DBEntity.postPersist(): " + toString(80));
 	}
 	
 	@PostUpdate
 	public void postUpdate()
 	{
 		if (DEBUG)
-			_log.warn(toString(80));
+			_log.info("L2DBEntity.postUpdate(): " + toString(80));
 	}
 }
