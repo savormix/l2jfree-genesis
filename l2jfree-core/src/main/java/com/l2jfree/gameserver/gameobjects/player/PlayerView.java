@@ -224,9 +224,9 @@ public class PlayerView extends CharacterView implements IPlayerView
 	}
 	
 	@Override
-	public int getAttackElementType()
+	public Element getAttackElementType()
 	{
-		return _attackElementType.getValue();
+		return _attackElementType;
 	}
 	
 	@Override
@@ -1045,7 +1045,7 @@ public class PlayerView extends CharacterView implements IPlayerView
 	@Override
 	public void writeElements(MMOBuffer buf)
 	{
-		buf.writeH(getAttackElementType()); // Attack element
+		buf.writeH(getAttackElementType().getValue()); // Attack element
 		buf.writeH(getAttackElementPower()); // Attack element power
 		buf.writeH(getDefenseElementPower(Element.FIRE)); // Fire defense
 		buf.writeH(getDefenseElementPower(Element.WATER)); // Water defense

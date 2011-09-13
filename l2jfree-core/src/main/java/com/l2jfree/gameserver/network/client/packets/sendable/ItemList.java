@@ -94,22 +94,16 @@ public abstract class ItemList extends L2ServerPacket
 			buf.writeD(0); // Augmentation
 			buf.writeD(-1); // Mana left
 			buf.writeD(-9999); // Time remaining
-			// TODO: I'll continue later
-			buf.writeH(-2); // Attack element
-			buf.writeH(0); // Attack element power
-			buf.writeH(0); // Fire defense
-			buf.writeH(0); // Water defense
-			buf.writeH(0); // Wind defense
-			buf.writeH(0); // Earth defense
-			buf.writeH(0); // Holy defense
-			buf.writeH(0); // Dark defense
+			item.writeElements(buf); // Attack and defense element info
+			// 'enchant effects'
 			buf.writeH(0); // 0
 			buf.writeH(0); // 0
 			buf.writeH(0); // 0
 		}
-		final int sizeB = 0; // Special item count, branching condition
+		int sizeB = 0; // Special item count, branching condition
 		buf.writeH(sizeB);
 		// branch with AboveZero
+		if (sizeB > 0)
 		{
 			buf.writeC(0); // Restriction
 		}

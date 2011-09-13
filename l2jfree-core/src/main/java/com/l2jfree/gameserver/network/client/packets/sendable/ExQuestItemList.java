@@ -14,9 +14,13 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import java.util.Collection;
+
+import com.l2jfree.gameserver.gameobjects.L2Item;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
+import com.l2jfree.gameserver.templates.L2ItemTemplate;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
@@ -35,18 +39,27 @@ public abstract class ExQuestItemList extends L2ServerPacket
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @see ExQuestItemList#ExQuestItemList()
+		 * @param items items in quest inventory
+		 * @see ExQuestItemList#ExQuestItemList(Collection)
 		 */
-		public QuestInventory()
+		public QuestInventory(Collection<L2Item> items)
 		{
+			super(items);
 		}
 	}
 	
 	private static final int[] EXT_OPCODES = { 0xc6, 0x00 };
 	
-	/** Constructs this packet. */
-	public ExQuestItemList()
+	private final Collection<L2Item> _items;
+	
+	/**
+	 * Constructs this packet.
+	 * 
+	 * @param items items in quest inventory
+	 */
+	public ExQuestItemList(Collection<L2Item> items)
 	{
+		_items = items;
 	}
 	
 	@Override
@@ -65,38 +78,33 @@ public abstract class ExQuestItemList extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		final int sizeA = 0; // Item count
-		buf.writeH(sizeA);
-		for (int i = 0; i < sizeA; i++)
+		buf.writeH(_items.size()); // Item count
+		for (L2Item item : _items)
 		{
-			buf.writeD(0); // Item OID
-			buf.writeD(0); // Item
-			buf.writeD(0); // Slot number
-			buf.writeQ(0L); // Quantity
-			buf.writeH(0); // Main item type
+			L2ItemTemplate temp = item.getTemplate();
+			buf.writeD(item.getObjectId()); // Item OID
+			buf.writeD(temp.getId()); // Item
+			buf.writeD(-1); // Slot number (always -1 (auto))
+			buf.writeQ(item.getCount()); // Quantity
+			buf.writeH(3); // Main item type (quest item)
 			buf.writeH(0); // Special item type
-			buf.writeH(0); // Equipped
+			buf.writeH(false); // Equipped
 			buf.writeD(0); // Used paperdoll slot(s)
 			buf.writeH(0); // Enchant level
 			buf.writeH(0); // Name exists
 			buf.writeD(0); // Augmentation
-			buf.writeD(0); // Mana left
-			buf.writeD(0); // Time remaining
-			buf.writeH(0); // Attack element
-			buf.writeH(0); // Attack element power
-			buf.writeH(0); // Fire defense
-			buf.writeH(0); // Water defense
-			buf.writeH(0); // Wind defense
-			buf.writeH(0); // Earth defense
-			buf.writeH(0); // Holy defense
-			buf.writeH(0); // Dark defense
+			buf.writeD(-1); // Mana left
+			buf.writeD(-9999); // Time remaining
+			item.writeElements(buf); // Attack and defense element info
+			// 'enchant effects'
 			buf.writeH(0); // 0
 			buf.writeH(0); // 0
 			buf.writeH(0); // 0
 		}
-		final int sizeB = 0; // Special item count, branching condition
+		int sizeB = 0; // Special item count, branching condition
 		buf.writeH(sizeB);
 		// branch with AboveZero
+		if (sizeB > 0)
 		{
 			buf.writeC(0); // Restriction
 		}

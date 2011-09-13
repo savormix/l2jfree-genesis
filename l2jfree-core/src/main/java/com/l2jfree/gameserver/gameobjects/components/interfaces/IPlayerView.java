@@ -14,7 +14,6 @@
  */
 package com.l2jfree.gameserver.gameobjects.components.interfaces;
 
-import com.l2jfree.gameserver.gameobjects.CharacterStat.Element;
 import com.l2jfree.gameserver.templates.player.Gender;
 import com.l2jfree.gameserver.templates.player.Race;
 import com.l2jfree.network.mmocore.MMOBuffer;
@@ -22,7 +21,7 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 /**
  * @author NB4L1
  */
-public interface IPlayerView extends ICharacterView
+public interface IPlayerView extends ICharacterView, IElemental
 {
 	public int canEquipCloak();
 	
@@ -41,10 +40,6 @@ public interface IPlayerView extends ICharacterView
 	public int getAllianceCrestId();
 	
 	public int getAllianceId();
-	
-	public int getAttackElementPower();
-	
-	public int getAttackElementType();
 	
 	public double getAttackSpeedMultiplier();
 	
@@ -67,8 +62,6 @@ public interface IPlayerView extends ICharacterView
 	public int getCurrentMP();
 	
 	public int getCursedWeaponLevel();
-	
-	public int getDefenseElementPower(Element element);
 	
 	public int getDEX();
 	
@@ -245,8 +238,6 @@ public interface IPlayerView extends ICharacterView
 	public void refreshDestinationPosition();
 	
 	public void refreshPaperDoll();
-	
-	public void writeElements(MMOBuffer buf);
 	
 	public void writePaperDollObjectIds(MMOBuffer buf, boolean withAccessory);
 	

@@ -12,33 +12,21 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.gameobjects.item;
+package com.l2jfree.gameserver.gameobjects.components.interfaces;
 
-import com.l2jfree.gameserver.gameobjects.L2Item;
-import com.l2jfree.gameserver.templates.L2ItemTemplate;
+import com.l2jfree.gameserver.gameobjects.CharacterStat.Element;
+import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
- * @author NB4L1
+ * @author savormix
  */
-public final class L2StackableItem extends L2Item
+public interface IElemental
 {
-	// TODO
-	private long _count;
+	public int getAttackElementPower();
 	
-	protected L2StackableItem(int objectId, L2ItemTemplate template)
-	{
-		super(objectId, template);
-	}
+	public Element getAttackElementType();
 	
-	@Override
-	public final long getCount()
-	{
-		return _count;
-	}
+	public int getDefenseElementPower(Element element);
 	
-	@Override
-	public final boolean isStackable()
-	{
-		return true; // ALWAYS
-	}
+	public void writeElements(MMOBuffer buf);
 }

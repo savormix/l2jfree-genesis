@@ -14,6 +14,8 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import java.util.Collection;
+
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -35,16 +37,25 @@ public abstract class SkillListPacket extends L2ServerPacket
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @see SkillListPacket#SkillListPacket()
+		 * @param skills available (visible) skills
+		 * @see SkillListPacket#SkillListPacket(Collection)
 		 */
-		public SkillList()
+		public SkillList(Collection<?> skills)
 		{
+			super(skills);
 		}
 	}
 	
-	/** Constructs this packet. */
-	public SkillListPacket()
+	private final Collection<?> _skills;
+	
+	/**
+	 * Constructs this packet.
+	 * 
+	 * @param skills available (visible) skills
+	 */
+	public SkillListPacket(Collection<?> skills)
 	{
+		_skills = skills;
 	}
 	
 	@Override
@@ -57,11 +68,10 @@ public abstract class SkillListPacket extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		final int sizeA = 0; // Skill count
-		buf.writeD(sizeA);
-		for (int i = 0; i < sizeA; i++)
+		buf.writeD(_skills.size()); // Skill count
+		for (Object o : _skills)
 		{
-			buf.writeD(0); // Passive
+			buf.writeD(o.equals(o)); // Passive
 			buf.writeD(0); // Level
 			buf.writeD(0); // Skill
 			buf.writeC(0); // Disabled

@@ -24,9 +24,11 @@ import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.gameserver.network.client.packets.sendable.EtcStatusUpdatePacket.EtcEffectIcons;
 import com.l2jfree.gameserver.network.client.packets.sendable.ExGetBookMarkInfoPacket.MyTeleportBookmarkList;
+import com.l2jfree.gameserver.network.client.packets.sendable.ExQuestItemList.QuestInventory;
 import com.l2jfree.gameserver.network.client.packets.sendable.ExSearchOrc.DemandProcessBlock;
 import com.l2jfree.gameserver.network.client.packets.sendable.GameGuardQueryPacket.DemandGameGuardStatus;
 import com.l2jfree.gameserver.network.client.packets.sendable.ItemList.MyInventory;
+import com.l2jfree.gameserver.network.client.packets.sendable.SkillListPacket.SkillList;
 import com.l2jfree.gameserver.network.client.packets.sendable.UserInfo.MyPlayerInfo;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
@@ -76,13 +78,23 @@ public abstract class EnterWorld extends L2ClientPacket
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		// TODO: implement
-		sendPacket(MyTeleportBookmarkList.PACKET);
 		// send MacroInfo packets
-		sendPacket(EtcEffectIcons.PACKET);
-		sendPacket(new DemandGameGuardStatus());
-		sendPacket(new DemandProcessBlock());
+		sendPacket(MyTeleportBookmarkList.PACKET);
+		sendPacket(EtcEffectIcons.PACKET); // with grade penalty levels because skills (including Expertise X) isn't loaded yet
+		{
+			sendPacket(new DemandGameGuardStatus());
+			sendPacket(new DemandProcessBlock());
+		}
 		Collection<L2Item> fake = Collections.emptyList();
+		// send system messages about game-time dependent skills, like Shadow Sense - either now in effect or no longer in effect
+		sendPacket(new SkillList(fake)); // without nobless/hero skills (temporary skills?; item skills & non-class skills like divine inspiration are included), contact savormix for more info
+		sendPacket(EtcEffectIcons.PACKET); // correct icons
+		// send henna list
+		sendPacket(new SkillList(fake)); // all skills now
+		sendPacket(new SkillList(fake)); // yes, a second time
+		
 		sendPacket(new MyInventory(false, fake));
+		sendPacket(new QuestInventory(fake));
 		
 		sendPacket(MyPlayerInfo.PACKET);
 		

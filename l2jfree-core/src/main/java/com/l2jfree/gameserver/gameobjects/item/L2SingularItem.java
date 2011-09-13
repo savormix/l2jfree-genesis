@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.gameobjects.item;
 
+import com.l2jfree.gameserver.gameobjects.CharacterStat.Element;
 import com.l2jfree.gameserver.gameobjects.L2Item;
 import com.l2jfree.gameserver.templates.L2ItemTemplate;
 
@@ -37,5 +38,26 @@ public class L2SingularItem extends L2Item
 	public final boolean isStackable()
 	{
 		return false; // ALWAYS
+	}
+	
+	@Override
+	public int getAttackElementPower()
+	{
+		// TODO: implement
+		return super.getAttackElementPower();
+	}
+	
+	@Override
+	public Element getAttackElementType()
+	{
+		// TODO: implement
+		return super.getAttackElementType();
+	}
+	
+	@Override
+	public int getDefenseElementPower(Element element)
+	{
+		// TODO: implement
+		return super.getDefenseElementPower(element);
 	}
 }
