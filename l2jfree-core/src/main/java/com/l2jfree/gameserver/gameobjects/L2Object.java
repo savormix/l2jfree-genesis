@@ -99,9 +99,9 @@ public abstract class L2Object implements IL2Object
 		final L2TextBuilder tb = new L2TextBuilder();
 		tb.append("(");
 		tb.append(getClass().getSimpleName());
-		tb.append(") ");
+		tb.append(") objectId: ");
 		tb.append(getObjectId());
-		tb.append(" - ");
+		tb.append(" - name: ");
 		tb.append(getName());
 		
 		return tb.moveToString();

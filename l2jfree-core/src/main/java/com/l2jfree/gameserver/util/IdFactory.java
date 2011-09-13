@@ -64,7 +64,7 @@ public final class IdFactory
 	{
 		// TODO
 		CLANS(20 * 1000000, 40 * 1000000),
-		PLAYERS(50 * 1000000, 100 * 1000000, "players.objectId"),
+		PLAYERS(50 * 1000000, 100 * 1000000, "players.persistentId"),
 		ITEMS(200 * 1000000, 400 * 1000000),
 		MISC(500 * 1000000, 1000 * 1000000);
 		

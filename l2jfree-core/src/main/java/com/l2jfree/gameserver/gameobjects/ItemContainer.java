@@ -31,6 +31,7 @@ import com.l2jfree.util.L2Collections;
 /**
  * @author NB4L1
  */
+// TODO map by objectId and/or persistentId
 public abstract class ItemContainer implements IItemContainer
 {
 	private final Map<Integer, L2Item> _itemsByObjectId = new FastMap<Integer, L2Item>();

@@ -49,18 +49,18 @@ public final class PlayerNameTable
 		return SingletonHolder.INSTANCE;
 	}
 	
-	private final Map<Integer, PlayerInfo> _mapByObjectId = new FastMap<Integer, PlayerInfo>().setShared(true);
+	private final Map<Integer, PlayerInfo> _mapByPersistentId = new FastMap<Integer, PlayerInfo>().setShared(true);
 	private final Map<String, PlayerInfo> _mapByName = new FastMap<String, PlayerInfo>().setShared(true);
 	
 	public static class PlayerInfoWrapper
 	{
-		private final int _objectId;
+		private final int _persistentId;
 		private final String _accountName;
 		private final String _name;
 		
-		public PlayerInfoWrapper(int objectId, String accountName, String name)
+		public PlayerInfoWrapper(int persistentId, String accountName, String name)
 		{
-			_objectId = objectId;
+			_persistentId = persistentId;
 			_accountName = accountName;
 			_name = name;
 		}
@@ -79,13 +79,13 @@ public final class PlayerNameTable
 					final Root<PlayerDB> root = criteria.from(PlayerDB.class);
 					
 					criteria.select(builder.construct(PlayerInfoWrapper.class, //
-							root.get("objectId"), root.get("accountName"), root.get("name")));
+							root.get("persistentId"), root.get("accountName"), root.get("name")));
 					
 					for (PlayerInfoWrapper p : em.createQuery(criteria).getResultList())
 					{
 						final int accessLevel = 0; // p.accessLevel; // TODO
 						
-						update(p._objectId, p._accountName, p._name, accessLevel);
+						update(p._persistentId, p._accountName, p._name, accessLevel);
 					}
 					
 					return null;
@@ -97,12 +97,12 @@ public final class PlayerNameTable
 			_log.warn("", e);
 		}
 		
-		_log.info("PlayerNameTable: Loaded " + _mapByObjectId.size() + " player infos.");
+		_log.info("PlayerNameTable: Loaded " + _mapByPersistentId.size() + " player infos.");
 	}
 	
-	public String getNameByObjectId(Integer objectId)
+	public String getNameByPersistentId(int persistentId)
 	{
-		final PlayerInfo playerInfo = _mapByObjectId.get(objectId);
+		final PlayerInfo playerInfo = _mapByPersistentId.get(persistentId);
 		
 		return playerInfo == null ? null : playerInfo._name;
 	}
@@ -114,16 +114,16 @@ public final class PlayerNameTable
 		return playerInfo == null ? null : playerInfo._name;
 	}
 	
-	public Integer getObjectIdByName(String name)
+	public Integer getPersistentIdByName(String name)
 	{
 		final PlayerInfo playerInfo = _mapByName.get(name.toLowerCase());
 		
-		return playerInfo == null ? null : playerInfo._objectId;
+		return playerInfo == null ? null : playerInfo._persistentId;
 	}
 	
-	public int getAccessLevelByObjectId(Integer objectId)
+	public int getAccessLevelByPersistentId(int persistentId)
 	{
-		final PlayerInfo playerInfo = _mapByObjectId.get(objectId);
+		final PlayerInfo playerInfo = _mapByPersistentId.get(persistentId);
 		
 		return playerInfo == null ? 0 : playerInfo._accessLevel;
 	}
@@ -137,26 +137,26 @@ public final class PlayerNameTable
 	
 	public void update(L2Player player)
 	{
-		update(player.getObjectId(), player.getAccountName(), player.getName(), player.getAccessLevel());
+		update(player.getPersistentId(), player.getAccountName(), player.getName(), player.getAccessLevel());
 	}
 	
-	public void update(int objectId, String accountName, String name, int accessLevel)
+	public void update(int persistentId, String accountName, String name, int accessLevel)
 	{
-		PlayerInfo playerInfo = _mapByObjectId.get(objectId);
+		PlayerInfo playerInfo = _mapByPersistentId.get(persistentId);
 		if (playerInfo == null)
-			playerInfo = new PlayerInfo(objectId);
+			playerInfo = new PlayerInfo(persistentId);
 		
 		playerInfo.updateNames(accountName, name, accessLevel);
 	}
 	
-	public IPlayerInfo getIPlayerInfoByObjectId(Integer objectId)
+	public IPlayerInfo getIPlayerInfoByPersistentId(int persistentId)
 	{
-		final L2Player player = L2World.findPlayer(objectId);
+		final L2Player player = L2World.findPlayerByPersistentId(persistentId);
 		
 		if (player != null)
 			return player;
 		
-		return _mapByObjectId.get(objectId);
+		return _mapByPersistentId.get(persistentId);
 	}
 	
 	public IPlayerInfo getIPlayerInfoByName(String name)
@@ -171,7 +171,7 @@ public final class PlayerNameTable
 	
 	public interface IPlayerInfo
 	{
-		public int getObjectId();
+		public int getPersistentId();
 		
 		public String getAccountName();
 		
@@ -186,16 +186,16 @@ public final class PlayerNameTable
 	
 	private class PlayerInfo implements IPlayerInfo
 	{
-		private final int _objectId;
+		private final int _persistentId;
 		
 		private String _accountName;
 		private String _name;
 		private int _accessLevel;
 		
 		@Override
-		public int getObjectId()
+		public int getPersistentId()
 		{
-			return _objectId;
+			return _persistentId;
 		}
 		
 		@Override
@@ -229,13 +229,13 @@ public final class PlayerNameTable
 			return false;
 		}
 		
-		private PlayerInfo(int objectId)
+		private PlayerInfo(int persistentId)
 		{
-			_objectId = objectId;
+			_persistentId = persistentId;
 			
-			final PlayerInfo playerInfo = _mapByObjectId.put(_objectId, this);
+			final PlayerInfo playerInfo = _mapByPersistentId.put(_persistentId, this);
 			if (playerInfo != null)
-				_log.warn("PlayerNameTable: Duplicated objectId: [" + this + "] - [" + playerInfo + "]");
+				_log.warn("PlayerNameTable: Duplicated persistentId: [" + this + "] - [" + playerInfo + "]");
 		}
 		
 		private void updateNames(String accountName, String name, int accessLevel)
@@ -257,35 +257,35 @@ public final class PlayerNameTable
 		@Override
 		public String toString()
 		{
-			return "objectId: " + _objectId + ", accountName: " + _accountName + ", name: " + _name;
+			return "persistentId: " + _persistentId + ", accountName: " + _accountName + ", name: " + _name;
 		}
 	}
 	
 	public boolean isPlayerNameTaken(String name)
 	{
-		return getObjectIdByName(name) != null;
+		return getPersistentIdByName(name) != null;
 	}
 	
 	public int getPlayerCountForAccount(String account)
 	{
 		int count = 0;
 		
-		for (PlayerInfo playerInfo : _mapByObjectId.values())
+		for (PlayerInfo playerInfo : _mapByPersistentId.values())
 			if (playerInfo._accountName.equalsIgnoreCase(account))
 				count++;
 		
 		return count;
 	}
 	
-	public Iterable<Integer> getObjectIdsForAccount(final String account)
+	public Iterable<Integer> getPersistentIdsForAccount(final String account)
 	{
-		return L2Collections.convertingIterable(_mapByObjectId.values(),
+		return L2Collections.convertingIterable(_mapByPersistentId.values(),
 				new L2Collections.Converter<PlayerInfo, Integer>() {
 					@Override
 					public Integer convert(PlayerInfo playerInfo)
 					{
 						if (playerInfo._accountName.equalsIgnoreCase(account))
-							return playerInfo._objectId;
+							return playerInfo._persistentId;
 						return null;
 					}
 				});

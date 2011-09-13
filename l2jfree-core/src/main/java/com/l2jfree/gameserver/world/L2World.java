@@ -101,6 +101,8 @@ public final class L2World
 	private static final L2EntityMap<L2Object> _objects = new L2ReadWriteEntityMap<L2Object>(50000);
 	private static final FastMap<String, L2Player> _players = new FastMap<String, L2Player>(1000).setShared(true);
 	private static final Collection<L2Player> _unmodifiablePlayers = _players.unmodifiable().values();
+	private static final FastMap<Integer, L2Player> _playersByPersistentId = new FastMap<Integer, L2Player>(1000)
+			.setShared(true);
 	
 	// TODO check replace
 	public static void addObject(L2Object obj)
@@ -112,6 +114,7 @@ public final class L2World
 			final L2Player player = (L2Player)obj;
 			
 			_players.put(player.getName().toLowerCase(), player);
+			_playersByPersistentId.put(player.getPersistentId(), player);
 		}
 	}
 	
@@ -124,6 +127,7 @@ public final class L2World
 			final L2Player player = (L2Player)obj;
 			
 			_players.remove(player.getName().toLowerCase());
+			_playersByPersistentId.remove(player.getPersistentId());
 		}
 	}
 	
@@ -161,6 +165,11 @@ public final class L2World
 	public static L2Player findPlayer(String name)
 	{
 		return _players.get(name.toLowerCase());
+	}
+	
+	public static L2Player findPlayerByPersistentId(int persistentId)
+	{
+		return _playersByPersistentId.get(persistentId);
 	}
 	
 	/**

@@ -322,9 +322,9 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 		int i = 0;
 		for (PlayerDB p : players)
 		{
-			L2Player.disconnectIfOnline(p.objectId);
+			L2Player.disconnectIfOnline(p.persistentId);
 			
-			_playerSlotMap[i++] = p.objectId;
+			_playerSlotMap[i++] = p.persistentId;
 		}
 	}
 	

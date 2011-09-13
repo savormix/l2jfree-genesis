@@ -43,6 +43,7 @@ import com.l2jfree.gameserver.templates.player.Gender;
 import com.l2jfree.gameserver.util.IdFactory;
 import com.l2jfree.gameserver.util.IdFactory.IdRange;
 import com.l2jfree.gameserver.world.L2World;
+import com.l2jfree.lang.L2TextBuilder;
 import com.l2jfree.sql.L2Database;
 import com.l2jfree.util.Rnd;
 
@@ -67,10 +68,11 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 	{
 		try
 		{
-			final int objectId = IdFactory.getInstance().getNextPersistentId(IdRange.PLAYERS);
+			final int persistentId = IdFactory.getInstance().getNextPersistentId(IdRange.PLAYERS);
 			
 			final PlayerDB playerDB = new PlayerDB();
-			playerDB.objectId = objectId;
+			playerDB.persistentId = persistentId;
+			playerDB.creationTime = System.currentTimeMillis();
 			playerDB.name = name;
 			playerDB.accountName = accountName;
 			playerDB.mainClassId = classId;
@@ -99,13 +101,13 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 		}
 	}
 	
-	public static L2Player load(int objectId)
+	public static L2Player load(int persistentId)
 	{
-		L2Player.disconnectIfOnline(objectId);
+		L2Player.disconnectIfOnline(persistentId);
 		
 		try
 		{
-			final PlayerDB playerDB = PlayerDB.find(objectId);
+			final PlayerDB playerDB = PlayerDB.find(persistentId);
 			
 			if (playerDB == null)
 				return null;
@@ -124,7 +126,8 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 		try
 		{
 			final PlayerDB playerDB = new PlayerDB();
-			playerDB.objectId = player.getObjectId();
+			playerDB.persistentId = player.getPersistentId();
+			playerDB.creationTime = player.getCreationTime();
 			playerDB.name = player.getName();
 			playerDB.accountName = player.getAccountName();
 			playerDB.mainClassId = player.getMainClassId();
@@ -152,12 +155,12 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 		}
 	}
 	
-	public static void disconnectIfOnline(int objectId)
+	public static void disconnectIfOnline(int persistentId)
 	{
-		L2Player onlinePlayer = L2World.findPlayer(objectId);
+		L2Player onlinePlayer = L2World.findPlayerByPersistentId(persistentId);
 		
 		if (onlinePlayer == null)
-			onlinePlayer = L2World.findPlayer(PlayerNameTable.getInstance().getNameByObjectId(objectId));
+			onlinePlayer = L2World.findPlayer(PlayerNameTable.getInstance().getNameByPersistentId(persistentId));
 		
 		if (onlinePlayer == null)
 			return;
@@ -170,6 +173,9 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 		
 		new Disconnection(onlinePlayer).defaultSequence(true);
 	}
+	
+	private final int _persistentId;
+	private final long _creationTime;
 	
 	private final String _accountName;
 	
@@ -187,6 +193,8 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 		super(PlayerTemplateTable.getInstance().getPlayerTemplate(playerDB.activeClassId));
 		getPosition().init(playerDB);
 		
+		_persistentId = playerDB.persistentId;
+		_creationTime = playerDB.creationTime;
 		_accountName = playerDB.accountName;
 		
 		_mainClassId = playerDB.mainClassId;
@@ -204,15 +212,49 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 		return IdRange.PLAYERS;
 	}
 	
+	@Override
+	public String toString()
+	{
+		final L2TextBuilder tb = new L2TextBuilder();
+		tb.append("(");
+		tb.append(getClass().getSimpleName());
+		tb.append(") objectId: ");
+		tb.append(getObjectId());
+		tb.append(" - persistentId: ");
+		tb.append(getPersistentId());
+		tb.append(" - name: ");
+		tb.append(getName());
+		
+		return tb.moveToString();
+	}
+	
 	/**
 	 * Returns a <U>forever</U>-persistent ID that <U>always</U> maps to the <U>same</U> single
 	 * player's character. After character deletion, this ID <B>may not be reclaimed</B>.
+	 * 
+	 * @return persistent ID
+	 */
+	@Override
+	public int getPersistentId()
+	{
+		return _persistentId;
+	}
+	
+	/**
+	 * Returns a <U>forever</U>-persistent ID that <U>always</U> maps to the <U>same</U> single
+	 * player's character. After character deletion, this ID <B>may not be reclaimed</B>.<br>
+	 * Alternative way to access {@link #getPersistentId()}.
 	 * 
 	 * @return character's ID
 	 */
 	public int getCharacterId()
 	{
-		return getObjectId();
+		return getPersistentId();
+	}
+	
+	public long getCreationTime()
+	{
+		return _creationTime;
 	}
 	
 	@Override

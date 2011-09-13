@@ -150,7 +150,7 @@ public final class GameServer extends Config
 		final L2Player created = L2Player.create(name, accountName, ClassId.HumanFighter);
 		System.out.println(created);
 		
-		final L2Player loaded = L2Player.load(created.getObjectId());
+		final L2Player loaded = L2Player.load(created.getPersistentId());
 		System.out.println(loaded);
 		
 		System.out.println(created.getPrimaryKey().equals(loaded.getPrimaryKey()));
@@ -162,7 +162,7 @@ public final class GameServer extends Config
 			System.out.println(idRange + ": " + ids.getNextObjectId(idRange) + ", " + ids.getNextObjectId(idRange));
 		
 		Util.printSection("find-and-update-playerdb");
-		final PlayerDB playerDB1 = PlayerDB.find(loaded.getObjectId());
+		final PlayerDB playerDB1 = PlayerDB.find(loaded.getPersistentId());
 		
 		System.out.println(playerDB1);
 		

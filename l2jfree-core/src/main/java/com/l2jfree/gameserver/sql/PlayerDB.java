@@ -46,15 +46,18 @@ import com.l2jfree.sql.L2Database.QueryConfigurator;
 		@NamedQuery(name = "PlayerDB.findByAccount",
 				query = "SELECT p FROM PlayerDB p WHERE p.accountName = :accountName"),
 		@NamedQuery(name = "PlayerDB.setOnline",
-				query = "UPDATE PlayerDB p SET p.online = :online WHERE p.objectId = :objectId"),
+				query = "UPDATE PlayerDB p SET p.online = :online WHERE p.persistentId = :persistentId"),
 		@NamedQuery(name = "PlayerDB.setOfflineAll", query = "UPDATE PlayerDB p SET p.online = 0")
 
 })
 public class PlayerDB extends L2DBEntity
 {
 	@Id
-	@Column(name = "objectId", nullable = false, updatable = false)
-	public int objectId;
+	@Column(name = "persistentId", nullable = false, updatable = false)
+	public int persistentId;
+	
+	@Column(name = "creationTime", nullable = false, updatable = false)
+	public long creationTime;
 	
 	@Column(name = "name", unique = true, nullable = false, length = 35)
 	public String name;
@@ -106,7 +109,7 @@ public class PlayerDB extends L2DBEntity
 	@Override
 	public Object getPrimaryKey()
 	{
-		return objectId;
+		return persistentId;
 	}
 	
 	@Override
@@ -115,9 +118,9 @@ public class PlayerDB extends L2DBEntity
 		return PlayerDB.class;
 	}
 	
-	public static PlayerDB find(int objectId)
+	public static PlayerDB find(int persistentId)
 	{
-		return L2Database.find(PlayerDB.class, objectId);
+		return L2Database.find(PlayerDB.class, persistentId);
 	}
 	
 	public static List<PlayerDB> findByAccount(final String accountName)
@@ -138,7 +141,7 @@ public class PlayerDB extends L2DBEntity
 			public void configure(Query q)
 			{
 				q.setParameter("online", isOnline);
-				q.setParameter("objectId", player.getObjectId());
+				q.setParameter("persistentId", player.getPersistentId());
 			}
 		});
 	}

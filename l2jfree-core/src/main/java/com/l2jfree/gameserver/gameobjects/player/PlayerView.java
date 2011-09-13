@@ -37,6 +37,8 @@ import com.l2jfree.network.mmocore.MMOBuffer;
  */
 public class PlayerView extends CharacterView implements IPlayerView
 {
+	private final int _persistentId;
+	
 	private int _abnormalEffect;
 	private int _accuracy;
 	private int _activeClassId;
@@ -146,15 +148,29 @@ public class PlayerView extends CharacterView implements IPlayerView
 	public PlayerView(L2Player activeChar)
 	{
 		super(activeChar);
+		
+		_persistentId = activeChar.getPersistentId();
 	}
 	
 	/**
+	 * @return persistent ID
+	 * @see L2Player#getPersistentId()
+	 */
+	public int getPersistentId()
+	{
+		return _persistentId;
+	}
+	
+	/**
+	 * Alternative way to access {@link #getPersistentId()}.
+	 * 
 	 * @return character's ID
 	 * @see L2Player#getCharacterId()
+	 * @see L2Player#getPersistentId()
 	 */
 	public int getCharacterId()
 	{
-		return getObjectId();
+		return getPersistentId();
 	}
 	
 	@Override
@@ -515,12 +531,6 @@ public class PlayerView extends CharacterView implements IPlayerView
 	public int getNameColor()
 	{
 		return _nameColor;
-	}
-	
-	@Override
-	public int getObjectId()
-	{
-		return _objectId;
 	}
 	
 	@Override

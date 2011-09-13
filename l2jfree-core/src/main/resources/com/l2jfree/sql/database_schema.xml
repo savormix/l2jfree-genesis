@@ -5,14 +5,15 @@
 		definition="
 			CREATE TABLE players (
 				
-				objectId		INT				NOT NULL,
+				persistentId	INT				NOT NULL,
+				creationTime	TIMESTAMP		NOT NULL,
 				name			VARCHAR(35)		NOT NULL,
 				accountName		VARCHAR(45)		NOT NULL,
 				online			BOOLEAN			NOT NULL	DEFAULT false,
 				mainClassId		SMALLINT		NOT NULL,
 				activeClassId	SMALLINT		NOT NULL,
 				
-				PRIMARY KEY (objectId)
+				PRIMARY KEY (persistentId)
 			);
 			CREATE UNIQUE INDEX name			ON players (name);
 			CREATE        INDEX accountName		ON players (accountName);
@@ -20,25 +21,25 @@
 	<table name="player_appearances" definition="
 				CREATE TABLE player_appearances (
 				
-				objectId		INT				NOT NULL,
+				persistentId	INT				NOT NULL,
 				gender			SMALLINT		NOT NULL,
 				face			SMALLINT		NOT NULL,
 				hairColor		SMALLINT		NOT NULL,
 				hairStyle		SMALLINT		NOT NULL,
 				
-				PRIMARY KEY (objectId)
+				PRIMARY KEY (persistentId)
 			);
 	" />
 	<table name="player_positions" definition="
 				CREATE TABLE player_positions (
 				
-				objectId		INT				NOT NULL,
+				persistentId	INT				NOT NULL,
 				x				INT,
 				y				INT,
 				z				INT,
 				heading			INT,
 				
-				PRIMARY KEY (objectId)
+				PRIMARY KEY (persistentId)
 			);
 	" />
 </database>

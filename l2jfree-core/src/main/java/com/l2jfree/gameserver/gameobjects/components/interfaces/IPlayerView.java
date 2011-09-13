@@ -135,8 +135,6 @@ public interface IPlayerView extends ICharacterView, IElemental
 	
 	public int getNameColor();
 	
-	public int getObjectId();
-	
 	public int getPAtk();
 	
 	public int getPAtkSpd();

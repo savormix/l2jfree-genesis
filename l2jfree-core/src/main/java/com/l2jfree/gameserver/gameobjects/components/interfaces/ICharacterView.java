@@ -21,5 +21,7 @@ import com.l2jfree.gameserver.gameobjects.components.IComponent;
  */
 public interface ICharacterView extends IComponent
 {
+	public int getObjectId();
+	
 	public void refresh();
 }
