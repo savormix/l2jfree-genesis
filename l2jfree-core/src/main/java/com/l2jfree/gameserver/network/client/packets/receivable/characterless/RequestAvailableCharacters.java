@@ -16,7 +16,7 @@ package com.l2jfree.gameserver.network.client.packets.receivable.characterless;
 
 import java.nio.BufferUnderflowException;
 
-import com.l2jfree.gameserver.network.client.packets.receivable.ExGetOnAirShip;
+import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.sendable.characterless.CharCreateOk.CharacterCreateSuccess;
 import com.l2jfree.gameserver.network.client.packets.sendable.characterless.CharacterSelectionInfo.AvailableCharacters;
 import com.l2jfree.network.mmocore.InvalidPacketException;
@@ -27,11 +27,15 @@ import com.l2jfree.network.mmocore.MMOBuffer;
  * Alternate packet definition.
  * 
  * @author savormix
- * @see ExGetOnAirShip
  * @see AvailableCharacters
  */
-public final class RequestAvailableCharacters extends ExGetOnAirShip
+public final class RequestAvailableCharacters extends L2ClientPacket
 {
+	/** Packet's identifier */
+	public static final int OPCODE = 0xd0;
+	/** Packet's second identifier */
+	public static final int OPCODE_2 = 0x36;
+	
 	@Override
 	protected int getMinimumLength()
 	{

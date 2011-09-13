@@ -24,28 +24,19 @@ import java.nio.ByteBuffer;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.gameserver.network.client.packets.receivable.EnterWorld;
-import com.l2jfree.gameserver.network.client.packets.receivable.EnterWorld.RequestEnterWorld;
 import com.l2jfree.gameserver.network.client.packets.receivable.ExGetOnAirShip;
 import com.l2jfree.gameserver.network.client.packets.receivable.Logout;
 import com.l2jfree.gameserver.network.client.packets.receivable.MoveBackwardToLocation;
-import com.l2jfree.gameserver.network.client.packets.receivable.MoveBackwardToLocation.RequestMovement;
 import com.l2jfree.gameserver.network.client.packets.receivable.RequestManorList;
 import com.l2jfree.gameserver.network.client.packets.receivable.RequestRestart;
 import com.l2jfree.gameserver.network.client.packets.receivable.ValidatePosition;
-import com.l2jfree.gameserver.network.client.packets.receivable.ValidatePosition.ReportLocation;
 import com.l2jfree.gameserver.network.client.packets.receivable.accountless.AuthLogin;
-import com.l2jfree.gameserver.network.client.packets.receivable.accountless.AuthLogin.RequestAuthorization;
 import com.l2jfree.gameserver.network.client.packets.receivable.accountless.ProtocolVersion;
 import com.l2jfree.gameserver.network.client.packets.receivable.characterless.CharacterDeletePacket;
-import com.l2jfree.gameserver.network.client.packets.receivable.characterless.CharacterDeletePacket.RequestDeleteCharacter;
 import com.l2jfree.gameserver.network.client.packets.receivable.characterless.CharacterRestorePacket;
-import com.l2jfree.gameserver.network.client.packets.receivable.characterless.CharacterRestorePacket.RequestRestoreCharacter;
 import com.l2jfree.gameserver.network.client.packets.receivable.characterless.CharacterSelect;
-import com.l2jfree.gameserver.network.client.packets.receivable.characterless.CharacterSelect.RequestSelectCharacter;
 import com.l2jfree.gameserver.network.client.packets.receivable.characterless.NewCharacter;
-import com.l2jfree.gameserver.network.client.packets.receivable.characterless.NewCharacter.RequestNewCharacter;
 import com.l2jfree.gameserver.network.client.packets.receivable.characterless.NewCharacterPacket;
-import com.l2jfree.gameserver.network.client.packets.receivable.characterless.NewCharacterPacket.RequestCharacterTemplates;
 import com.l2jfree.gameserver.network.client.packets.receivable.characterless.RequestAvailableCharacters;
 import com.l2jfree.network.mmocore.PacketHandler;
 
@@ -72,7 +63,7 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 				
 			case AuthLogin.OPCODE:
 				if (client.stateEquals(PROTOCOL_OK))
-					return new RequestAuthorization();
+					return new AuthLogin.RequestAuthorization();
 				return invalidState(client, AuthLogin.class, opcode);
 				
 			case Logout.OPCODE:
@@ -82,27 +73,27 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 				
 			case NewCharacter.OPCODE:
 				if (client.stateEquals(CHARACTER_MANAGEMENT))
-					return new RequestNewCharacter();
+					return new NewCharacter.RequestNewCharacter();
 				return invalidState(client, NewCharacter.class, opcode);
 				
 			case CharacterDeletePacket.OPCODE:
 				if (client.stateEquals(CHARACTER_MANAGEMENT))
-					return new RequestDeleteCharacter();
+					return new CharacterDeletePacket.RequestDeleteCharacter();
 				return invalidState(client, CharacterDeletePacket.class, opcode);
 				
 			case CharacterSelect.OPCODE:
 				if (client.stateEquals(CHARACTER_MANAGEMENT))
-					return new RequestSelectCharacter();
+					return new CharacterSelect.RequestSelectCharacter();
 				return invalidState(client, CharacterSelect.class, opcode);
 				
 			case NewCharacterPacket.OPCODE:
 				if (client.stateEquals(CHARACTER_MANAGEMENT))
-					return new RequestCharacterTemplates();
+					return new NewCharacterPacket.RequestCharacterTemplates();
 				return invalidState(client, NewCharacterPacket.class, opcode);
 				
 			case CharacterRestorePacket.OPCODE:
 				if (client.stateEquals(CHARACTER_MANAGEMENT))
-					return new RequestRestoreCharacter();
+					return new CharacterRestorePacket.RequestRestoreCharacter();
 				return invalidState(client, CharacterRestorePacket.class, opcode);
 				
 			case 0xd0:
@@ -119,12 +110,15 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 							return new RequestManorList();
 						return invalidState(client, RequestManorList.class, opcode, opcode2);
 						
-					case ExGetOnAirShip.OPCODE_2:
+					case 0x36:
+						// RequestAvailableCharacters.OPCODE_2
 						if (client.stateEquals(CHARACTER_MANAGEMENT))
 							return new RequestAvailableCharacters();
-						//else if (client.stateEquals(LOGGED_IN))
-						//return new ();
-						return invalidState(client, RequestManorList.class, opcode, opcode2);
+						// ExGetOnAirShip.OPCODE_2
+						else if (client.stateEquals(LOGGED_IN))
+							return new ExGetOnAirShip.RequestBoardAircraft();
+						return invalidState(client, opcode, opcode2);
+						
 					default:
 						return unknown(buf, client, opcode, opcode2);
 				}
@@ -132,7 +126,7 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 			
 			case EnterWorld.OPCODE:
 				if (client.stateEquals(LOGGED_IN))
-					return new RequestEnterWorld();
+					return new EnterWorld.RequestEnterWorld();
 				return invalidState(client, EnterWorld.class, opcode);
 				
 			case RequestRestart.OPCODE:
@@ -142,12 +136,12 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 				
 			case ValidatePosition.OPCODE:
 				if (client.stateEquals(LOGGED_IN))
-					return new ReportLocation();
+					return new ValidatePosition.ReportLocation();
 				return invalidState(client, ValidatePosition.class, opcode);
 				
 			case MoveBackwardToLocation.OPCODE:
 				if (client.stateEquals(LOGGED_IN))
-					return new RequestMovement();
+					return new MoveBackwardToLocation.RequestMovement();
 				return invalidState(client, MoveBackwardToLocation.class, opcode);
 				
 			default:
