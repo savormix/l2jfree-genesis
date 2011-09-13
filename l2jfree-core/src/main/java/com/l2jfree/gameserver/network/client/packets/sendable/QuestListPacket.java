@@ -16,28 +16,31 @@ package com.l2jfree.gameserver.network.client.packets.sendable;
 
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
-import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
  */
-public abstract class QuestListPacket extends L2ServerPacket
+public abstract class QuestListPacket extends StaticPacket
 {
 	/**
-	 * A nicer name for {@link QuestListPacket}.
+	 * A nicer name for {@link QuestListPacket}.<BR>
+	 * <BR>
+	 * Active in a sense they have been started and were not aborted (finished quests are included).
 	 * 
 	 * @author savormix (generated)
 	 * @see QuestListPacket
 	 */
 	public static final class ActiveQuests extends QuestListPacket
 	{
+		public static final ActiveQuests PACKET = new ActiveQuests();
+		
 		/**
 		 * Constructs this packet.
 		 * 
 		 * @see QuestListPacket#QuestListPacket()
 		 */
-		public ActiveQuests()
+		private ActiveQuests()
 		{
 		}
 	}
@@ -57,6 +60,7 @@ public abstract class QuestListPacket extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		// lock for read or use quest view :P
 		final int sizeA = 0; // Quest count
 		buf.writeH(sizeA);
 		for (int i = 0; i < sizeA; i++)
@@ -64,5 +68,6 @@ public abstract class QuestListPacket extends L2ServerPacket
 			buf.writeD(0); // Quest
 			buf.writeD(0); // State
 		}
+		buf.writeB(new byte[128]); // ??? 0
 	}
 }

@@ -19,16 +19,21 @@ import java.util.Collection;
 import java.util.Collections;
 
 import com.l2jfree.gameserver.gameobjects.L2Item;
-import com.l2jfree.gameserver.network.client.L2Client;
+import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
-import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.gameserver.network.client.packets.sendable.EtcStatusUpdatePacket.EtcEffectIcons;
+import com.l2jfree.gameserver.network.client.packets.sendable.ExBRExtraUserInfo.EventPlayerInfo;
+import com.l2jfree.gameserver.network.client.packets.sendable.ExBRPremiumState.PremiumPlayerInfo;
 import com.l2jfree.gameserver.network.client.packets.sendable.ExGetBookMarkInfoPacket.MyTeleportBookmarkList;
 import com.l2jfree.gameserver.network.client.packets.sendable.ExQuestItemList.QuestInventory;
 import com.l2jfree.gameserver.network.client.packets.sendable.ExSearchOrc.DemandProcessBlock;
 import com.l2jfree.gameserver.network.client.packets.sendable.GameGuardQueryPacket.DemandGameGuardStatus;
+import com.l2jfree.gameserver.network.client.packets.sendable.HennaInfoPacket.MyHennaList;
 import com.l2jfree.gameserver.network.client.packets.sendable.ItemList.MyInventory;
+import com.l2jfree.gameserver.network.client.packets.sendable.MagicAndSkillList.MyCharacterInfo;
+import com.l2jfree.gameserver.network.client.packets.sendable.QuestListPacket.ActiveQuests;
 import com.l2jfree.gameserver.network.client.packets.sendable.SkillListPacket.SkillList;
+import com.l2jfree.gameserver.network.client.packets.sendable.SystemMessagePacket.SystemMessage;
 import com.l2jfree.gameserver.network.client.packets.sendable.UserInfo.MyPlayerInfo;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
@@ -77,7 +82,11 @@ public abstract class EnterWorld extends L2ClientPacket
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
+		// WARNING: IF ALTERING, PLEASE RETAIN THE ORDER!
+		// ALSO, IF REMOVING DUPLICATES, COMMENT THEM OUT INSTEAD.
+		
 		// TODO: implement
+		L2Player activeChar = getClient().getActiveChar();
 		// send MacroInfo packets
 		sendPacket(MyTeleportBookmarkList.PACKET);
 		sendPacket(EtcEffectIcons.PACKET); // with grade penalty levels because skills (including Expertise X) isn't loaded yet
@@ -85,33 +94,44 @@ public abstract class EnterWorld extends L2ClientPacket
 			sendPacket(new DemandGameGuardStatus());
 			sendPacket(new DemandProcessBlock());
 		}
-		Collection<L2Item> fake = Collections.emptyList();
 		// send system messages about game-time dependent skills, like Shadow Sense - either now in effect or no longer in effect
-		sendPacket(new SkillList(fake)); // without nobless/hero skills (temporary skills?; item skills & non-class skills like divine inspiration are included), contact savormix for more info
+		Collection<?> fakeSkills = Collections.EMPTY_SET;
+		sendPacket(new SkillList(fakeSkills)); // without noble/hero skills (temporary skills?; item skills & non-class skills like divine inspiration are included), contact savormix for more info
 		sendPacket(EtcEffectIcons.PACKET); // correct icons
-		// send henna list
-		sendPacket(new SkillList(fake)); // all skills now
-		sendPacket(new SkillList(fake)); // yes, a second time
-		
-		sendPacket(new MyInventory(false, fake));
-		sendPacket(new QuestInventory(fake));
-		
-		sendPacket(MyPlayerInfo.PACKET);
-		
-		// Welcome to Lineage 2, temp solution ^)
-		sendPacket(new L2ServerPacket() {
-			@Override
-			protected void writeImpl(L2Client client, MMOBuffer buf) throws RuntimeException
-			{
-				buf.writeD(34);
-				buf.writeD(0);
-			}
-			
-			@Override
-			protected int getOpcode()
-			{
-				return 0x62;
-			}
-		});
+		sendPacket(MyHennaList.PACKET);
+		sendPacket(new SkillList(fakeSkills)); // with noble/hero skills
+		sendPacket(new SkillList(fakeSkills)); // yes, a second time
+		// if in pledge
+		{
+			// send UpdatePledgeMember with self!
+			// send all PledgeUnitInfo (-1 to 2002 :P)
+			// send PledgeSkillList
+		}
+		Collection<L2Item> fakeItems = Collections.emptyList();
+		sendPacket(new MyInventory(false, fakeItems));
+		sendPacket(new QuestInventory(fakeItems));
+		// send shortcut list
+		// send action list with every single action (189, from 0 to 5016)
+		sendPacket(new SkillList(fakeSkills)); // now send with pledge skills AND with armor set skill(s)
+		{
+			sendPacket(MyPlayerInfo.PACKET);
+			sendPacket(new EventPlayerInfo(activeChar));
+			sendPacket(new PremiumPlayerInfo(activeChar));
+		}
+		sendPacket(ActiveQuests.PACKET); // without TW quests
+		// DUMP KNOWNLIST HERE
+		// NpcInfo, StaticObjectInfo, ItemOnGround, PlayerInfo + EventPlayerInfo + Relationships (+ Sell/Buy/PackageShopInfo), AgitDecoInfo, start Movement/StatusUpdate packets
+		sendPacket(new SystemMessage(34));
+		sendPacket(EtcEffectIcons.PACKET); // correct icons (again)
+		// send seven signs system message
+		sendPacket(MyCharacterInfo.PACKET);
+		// send storage slot info
+		// if in pledge
+		{
+			// send clan notice
+		}
+		// send nevit blessing info
+		// send effect icons
+		// and more... but it gets rather messy here.
 	}
 }

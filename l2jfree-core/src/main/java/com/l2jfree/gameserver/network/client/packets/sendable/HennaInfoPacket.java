@@ -16,13 +16,12 @@ package com.l2jfree.gameserver.network.client.packets.sendable;
 
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
-import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
  */
-public abstract class HennaInfoPacket extends L2ServerPacket
+public abstract class HennaInfoPacket extends StaticPacket
 {
 	/**
 	 * A nicer name for {@link HennaInfoPacket}.
@@ -32,12 +31,14 @@ public abstract class HennaInfoPacket extends L2ServerPacket
 	 */
 	public static final class MyHennaList extends HennaInfoPacket
 	{
+		public static final MyHennaList PACKET = new MyHennaList();
+		
 		/**
 		 * Constructs this packet.
 		 * 
 		 * @see HennaInfoPacket#HennaInfoPacket()
 		 */
-		public MyHennaList()
+		private MyHennaList()
 		{
 		}
 	}
@@ -63,13 +64,14 @@ public abstract class HennaInfoPacket extends L2ServerPacket
 		buf.writeC(0); // MEN modifier
 		buf.writeC(0); // DEX modifier
 		buf.writeC(0); // WIT modifier
-		buf.writeD(0); // Available slots
+		// lock for read before writing this
+		buf.writeD(3); // Available slots
 		final int sizeA = 0; // Used slots
 		buf.writeD(sizeA);
 		for (int i = 0; i < sizeA; i++)
 		{
 			buf.writeD(0); // Henna
-			buf.writeD(0); // 1
+			buf.writeD(1); // 1
 		}
 	}
 }

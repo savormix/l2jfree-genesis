@@ -35,18 +35,37 @@ public abstract class ExBRExtraUserInfo extends L2ServerPacket
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @see ExBRExtraUserInfo#ExBRExtraUserInfo()
+		 * @param player a player's character
+		 * @see ExBRExtraUserInfo#ExBRExtraUserInfo(L2Player)
 		 */
-		public EventPlayerInfo()
+		public EventPlayerInfo(L2Player player)
 		{
+			super(player);
 		}
 	}
 	
 	private static final int[] EXT_OPCODES = { 0xda, 0x00 };
 	
-	/** Constructs this packet. */
-	public ExBRExtraUserInfo()
+	// XXX: perhaps use view later
+	private final int _playerObjectId;
+	private final int _effect;
+	private final boolean _active;
+	
+	/**
+	 * Constructs this packet.
+	 * 
+	 * @param player a player's character
+	 */
+	public ExBRExtraUserInfo(L2Player player)
 	{
+		this(player.getObjectId(), 0, false);
+	}
+	
+	private ExBRExtraUserInfo(int playerObjectId, int effect, boolean active)
+	{
+		_playerObjectId = playerObjectId;
+		_effect = effect;
+		_active = active;
 	}
 	
 	@Override
@@ -65,8 +84,8 @@ public abstract class ExBRExtraUserInfo extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.writeD(0); // Actor OID
-		buf.writeD(0); // Event effect
-		buf.writeC(0); // Active
+		buf.writeD(_playerObjectId); // Actor OID
+		buf.writeD(_effect); // Event effect
+		buf.writeC(_active); // Active
 	}
 }

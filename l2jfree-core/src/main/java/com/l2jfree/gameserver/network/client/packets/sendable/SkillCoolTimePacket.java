@@ -16,13 +16,14 @@ package com.l2jfree.gameserver.network.client.packets.sendable;
 
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
-import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
+import com.l2jfree.gameserver.network.client.packets.receivable.RequestSkillCoolTime.RequestSkillCooldownList;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
+ * @see RequestSkillCooldownList
  */
-public abstract class SkillCoolTimePacket extends L2ServerPacket
+public abstract class SkillCoolTimePacket extends StaticPacket
 {
 	/**
 	 * A nicer name for {@link SkillCoolTimePacket}.
@@ -32,12 +33,14 @@ public abstract class SkillCoolTimePacket extends L2ServerPacket
 	 */
 	public static final class SkillCooldownList extends SkillCoolTimePacket
 	{
+		public static final SkillCooldownList PACKET = new SkillCooldownList();
+		
 		/**
 		 * Constructs this packet.
 		 * 
 		 * @see SkillCoolTimePacket#SkillCoolTimePacket()
 		 */
-		public SkillCooldownList()
+		private SkillCooldownList()
 		{
 		}
 	}
@@ -57,6 +60,7 @@ public abstract class SkillCoolTimePacket extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		// lock for read or use skill view :P
 		final int sizeA = 0; // Affected skill count
 		buf.writeD(sizeA);
 		for (int i = 0; i < sizeA; i++)

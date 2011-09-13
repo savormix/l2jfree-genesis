@@ -17,11 +17,13 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 import java.nio.BufferUnderflowException;
 
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
+import com.l2jfree.gameserver.network.client.packets.sendable.SkillCoolTimePacket.SkillCooldownList;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
+ * @see SkillCooldownList
  */
 public abstract class RequestSkillCoolTime extends L2ClientPacket
 {
@@ -48,12 +50,13 @@ public abstract class RequestSkillCoolTime extends L2ClientPacket
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
-		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		// trigger packet
 	}
 	
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		// TODO: implement
+		sendPacket(SkillCooldownList.PACKET);
 	}
 }

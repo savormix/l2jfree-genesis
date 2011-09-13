@@ -33,18 +33,29 @@ public abstract class SystemMessagePacket extends L2ServerPacket
 	public static final class SystemMessage extends SystemMessagePacket
 	{
 		/**
-		 * Constructs this packet.
+		 * Constructs this packet as an immutable system message.
 		 * 
-		 * @see SystemMessagePacket#SystemMessagePacket()
+		 * @param immutableMessageId message ID
+		 * @see SystemMessagePacket#SystemMessagePacket(int)
 		 */
-		public SystemMessage()
+		public SystemMessage(int immutableMessageId)
 		{
+			super(immutableMessageId);
 		}
 	}
 	
-	/** Constructs this packet. */
-	public SystemMessagePacket()
+	private final int _messageId;
+	
+	// TODO: implement 4 real
+	
+	/**
+	 * Constructs this packet as an immutable system message.
+	 * 
+	 * @param immutableMessageId message ID
+	 */
+	public SystemMessagePacket(int immutableMessageId)
 	{
+		_messageId = immutableMessageId;
 	}
 	
 	@Override
@@ -57,7 +68,7 @@ public abstract class SystemMessagePacket extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.writeD(0); // Message
+		buf.writeD(_messageId); // Message
 		final int sizeA = 0; // Parameter count
 		buf.writeD(sizeA);
 		for (int i = 0; i < sizeA; i++)

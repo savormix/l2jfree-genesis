@@ -20,6 +20,9 @@ import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
+ * Sent a single time during a session as a reply to EnterWorld, after MyPlayerInfo and
+ * EventPlayerInfo.
+ * 
  * @author savormix (generated)
  */
 public abstract class ExBRPremiumState extends L2ServerPacket
@@ -35,18 +38,34 @@ public abstract class ExBRPremiumState extends L2ServerPacket
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @see ExBRPremiumState#ExBRPremiumState()
+		 * @param player a player's character
+		 * @see ExBRPremiumState#ExBRPremiumState(L2Player)
 		 */
-		public PremiumPlayerInfo()
+		public PremiumPlayerInfo(L2Player player)
 		{
+			super(player);
 		}
 	}
 	
 	private static final int[] EXT_OPCODES = { 0xd9, 0x00 };
 	
-	/** Constructs this packet. */
-	public ExBRPremiumState()
+	private final int _playerObjectId;
+	private final boolean _active;
+	
+	/**
+	 * Constructs this packet.
+	 * 
+	 * @param player a player's character
+	 */
+	public ExBRPremiumState(L2Player player)
 	{
+		this(player.getObjectId(), false);
+	}
+	
+	private ExBRPremiumState(int playerObjectId, boolean active)
+	{
+		_playerObjectId = playerObjectId;
+		_active = active;
 	}
 	
 	@Override
@@ -65,7 +84,7 @@ public abstract class ExBRPremiumState extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.writeD(0); // Actor OID
-		buf.writeC(0); // Active
+		buf.writeD(_playerObjectId); // Actor OID
+		buf.writeC(_active); // Active
 	}
 }
