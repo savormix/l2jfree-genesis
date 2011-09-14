@@ -16,14 +16,12 @@ package com.l2jfree.util.concurrent;
 
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import com.l2jfree.lang.L2Entity;
-
 /**
  * @author NB4L1
  * @param <K>
  * @param <V>
  */
-public final class L2ReadWriteEntityMap<K, V extends L2Entity<K>> extends L2EntityMap<K, V>
+public final class L2ReadWriteEntityMap<K, V> extends L2EntityMap<K, V>
 {
 	private final ReentrantReadWriteLock _lock = new ReentrantReadWriteLock();
 	private final ReentrantReadWriteLock.ReadLock _read = _lock.readLock();

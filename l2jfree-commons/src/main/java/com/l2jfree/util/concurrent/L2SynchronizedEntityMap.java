@@ -14,14 +14,12 @@
  */
 package com.l2jfree.util.concurrent;
 
-import com.l2jfree.lang.L2Entity;
-
 /**
  * @author NB4L1
  * @param <K>
  * @param <V>
  */
-public final class L2SynchronizedEntityMap<K, V extends L2Entity<K>> extends L2EntityMap<K, V>
+public final class L2SynchronizedEntityMap<K, V> extends L2EntityMap<K, V>
 {
 	public L2SynchronizedEntityMap()
 	{
