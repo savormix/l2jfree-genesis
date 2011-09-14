@@ -36,6 +36,16 @@ public final class L2SharedEntityMap<K, V extends L2Entity<K>> extends L2EntityM
 		super(initialSize);
 	}
 	
+	public L2SharedEntityMap(L2EntityKeyRetriever<K, V> keyRetriever)
+	{
+		super(keyRetriever);
+	}
+	
+	public L2SharedEntityMap(int initialSize, L2EntityKeyRetriever<K, V> keyRetriever)
+	{
+		super(initialSize, keyRetriever);
+	}
+	
 	@Override
 	public Iterator<V> iterator()
 	{

@@ -33,6 +33,16 @@ public final class L2SynchronizedEntityMap<K, V extends L2Entity<K>> extends L2E
 		super(initialSize);
 	}
 	
+	public L2SynchronizedEntityMap(L2EntityKeyRetriever<K, V> keyRetriever)
+	{
+		super(keyRetriever);
+	}
+	
+	public L2SynchronizedEntityMap(int initialSize, L2EntityKeyRetriever<K, V> keyRetriever)
+	{
+		super(initialSize, keyRetriever);
+	}
+	
 	@Override
 	public synchronized int size()
 	{

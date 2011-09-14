@@ -31,9 +31,24 @@ import com.l2jfree.util.L2Collections;
  * @param <K>
  * @param <V>
  */
-public abstract class L2EntityMap<K, V extends L2Entity<K>>
+public abstract class L2EntityMap<K, V>
 {
+	public static abstract class L2EntityKeyRetriever<K, V>
+	{
+		public abstract K getKeyFromValue(V v);
+		
+		public static final L2EntityKeyRetriever<Object, Object> DEFAULT = new L2EntityKeyRetriever<Object, Object>() {
+			@Override
+			public Object getKeyFromValue(Object o)
+			{
+				return ((L2Entity<?>)o).getPrimaryKey();
+			}
+		};
+		
+	}
+	
 	private final int _initialSize;
+	private final L2EntityKeyRetriever<K, V> _keyRetriever;
 	
 	private boolean _initialized = false;
 	private Map<K, V> _map = L2Collections.emptyMap();
@@ -59,12 +74,24 @@ public abstract class L2EntityMap<K, V extends L2Entity<K>>
 	
 	protected L2EntityMap()
 	{
-		this(-1);
+		this(-1, null);
 	}
 	
 	protected L2EntityMap(int initialSize)
 	{
+		this(initialSize, null);
+	}
+	
+	protected L2EntityMap(L2EntityKeyRetriever<K, V> keyRetriever)
+	{
+		this(-1, keyRetriever);
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected L2EntityMap(int initialSize, L2EntityKeyRetriever<K, V> keyRetriever)
+	{
 		_initialSize = initialSize;
+		_keyRetriever = keyRetriever != null ? keyRetriever : (L2EntityKeyRetriever<K, V>)L2EntityKeyRetriever.DEFAULT;
 	}
 	
 	public int size()
@@ -79,7 +106,7 @@ public abstract class L2EntityMap<K, V extends L2Entity<K>>
 	
 	public boolean contains(V obj)
 	{
-		return _map.containsKey(obj.getPrimaryKey());
+		return _map.containsKey(_keyRetriever.getKeyFromValue(obj));
 	}
 	
 	public V get(K id)
@@ -91,7 +118,7 @@ public abstract class L2EntityMap<K, V extends L2Entity<K>>
 	{
 		init();
 		
-		final K primaryKey = obj.getPrimaryKey();
+		final K primaryKey = _keyRetriever.getKeyFromValue(obj);
 		final V oldValue = _map.get(primaryKey);
 		
 		if (oldValue == null || replace(primaryKey, oldValue, obj))
@@ -106,7 +133,7 @@ public abstract class L2EntityMap<K, V extends L2Entity<K>>
 	
 	public void remove(V obj)
 	{
-		_map.remove(obj.getPrimaryKey());
+		_map.remove(_keyRetriever.getKeyFromValue(obj));
 	}
 	
 	public void clear()

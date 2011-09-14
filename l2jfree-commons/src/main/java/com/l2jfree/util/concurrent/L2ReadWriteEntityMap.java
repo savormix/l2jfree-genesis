@@ -39,6 +39,16 @@ public final class L2ReadWriteEntityMap<K, V extends L2Entity<K>> extends L2Enti
 		super(initialSize);
 	}
 	
+	public L2ReadWriteEntityMap(L2EntityKeyRetriever<K, V> keyRetriever)
+	{
+		super(keyRetriever);
+	}
+	
+	public L2ReadWriteEntityMap(int initialSize, L2EntityKeyRetriever<K, V> keyRetriever)
+	{
+		super(initialSize, keyRetriever);
+	}
+	
 	@Override
 	public int size()
 	{
