@@ -29,6 +29,7 @@ import com.l2jfree.gameserver.gameobjects.player.PlayerInventory.PaperDollSlot;
 import com.l2jfree.gameserver.templates.player.Gender;
 import com.l2jfree.gameserver.templates.player.PlayerBaseTemplate;
 import com.l2jfree.gameserver.templates.player.Race;
+import com.l2jfree.gameserver.util.ObjectId;
 import com.l2jfree.gameserver.util.PersistentId;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
@@ -132,7 +133,7 @@ public class PlayerView extends CharacterView implements IPlayerView
 	private int _transformationGraphicalId;
 	private boolean _useDwarvenRecipes;
 	private int _useMinimap;
-	private int _vehicleObjectId;
+	private ObjectId _vehicleObjectId;
 	private int _vitalityPoints;
 	private int _walkSpeed;
 	private int _weaponEnchantGlow;
@@ -685,7 +686,7 @@ public class PlayerView extends CharacterView implements IPlayerView
 	}
 	
 	@Override
-	public int getVehicleObjectId()
+	public ObjectId getVehicleObjectId()
 	{
 		return _vehicleObjectId;
 	}
@@ -835,7 +836,7 @@ public class PlayerView extends CharacterView implements IPlayerView
 		refreshPosition();
 		refreshPaperDoll();
 		
-		_vehicleObjectId = 0; // TODO
+		_vehicleObjectId = null; // TODO
 		
 		_name = p.getName();
 		_title = p.getTitle();
@@ -1023,7 +1024,7 @@ public class PlayerView extends CharacterView implements IPlayerView
 		_destinationZ = p.getDestinationZ();
 	}
 	
-	private final int[] _paperDollObjectIds = new int[PaperDollSlot.TOTAL_SLOTS];
+	private final ObjectId[] _paperDollObjectIds = new ObjectId[PaperDollSlot.TOTAL_SLOTS];
 	private final int[] _paperDollItemDisplayIds = new int[PaperDollSlot.TOTAL_SLOTS];
 	private final int[] _paperDollAugmentationIds = new int[PaperDollSlot.TOTAL_SLOTS];
 	
@@ -1038,7 +1039,7 @@ public class PlayerView extends CharacterView implements IPlayerView
 			
 			if (equipableItem == null)
 			{
-				_paperDollObjectIds[i] = 0;
+				_paperDollObjectIds[i] = null;
 				_paperDollItemDisplayIds[i] = 0;
 				_paperDollAugmentationIds[i] = 0;
 			}

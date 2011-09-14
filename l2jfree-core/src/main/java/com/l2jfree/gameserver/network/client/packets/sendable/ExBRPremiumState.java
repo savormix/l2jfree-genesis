@@ -17,6 +17,7 @@ package com.l2jfree.gameserver.network.client.packets.sendable;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
+import com.l2jfree.gameserver.util.ObjectId;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
@@ -49,7 +50,7 @@ public abstract class ExBRPremiumState extends L2ServerPacket
 	
 	private static final int[] EXT_OPCODES = { 0xd9, 0x00 };
 	
-	private final int _playerObjectId;
+	private final ObjectId _playerObjectId;
 	private final boolean _active;
 	
 	/**
@@ -62,7 +63,7 @@ public abstract class ExBRPremiumState extends L2ServerPacket
 		this(player.getObjectId(), false);
 	}
 	
-	private ExBRPremiumState(int playerObjectId, boolean active)
+	private ExBRPremiumState(ObjectId playerObjectId, boolean active)
 	{
 		_playerObjectId = playerObjectId;
 		_active = active;

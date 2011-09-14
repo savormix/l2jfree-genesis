@@ -21,6 +21,7 @@ import com.l2jfree.gameserver.gameobjects.interfaces.IL2Object;
 import com.l2jfree.gameserver.templates.L2Template;
 import com.l2jfree.gameserver.util.IdFactory;
 import com.l2jfree.gameserver.util.IdFactory.IdRange;
+import com.l2jfree.gameserver.util.ObjectId;
 import com.l2jfree.gameserver.world.L2World;
 import com.l2jfree.lang.L2TextBuilder;
 import com.l2jfree.util.logging.L2Logger;
@@ -33,7 +34,7 @@ public abstract class L2Object implements IL2Object
 	
 	public static final L2Object[] EMPTY_ARRAY = new L2Object[0];
 	
-	private final int _objectId;
+	private final ObjectId _objectId;
 	private final L2Template _template;
 	
 	private final ObjectPosition _position;
@@ -61,7 +62,7 @@ public abstract class L2Object implements IL2Object
 	}
 	
 	@Override
-	public final int getObjectId()
+	public final ObjectId getObjectId()
 	{
 		return _objectId;
 	}
@@ -85,7 +86,7 @@ public abstract class L2Object implements IL2Object
 	}
 	
 	@Override
-	public final Integer getPrimaryKey()
+	public final ObjectId getPrimaryKey()
 	{
 		return getObjectId();
 	}

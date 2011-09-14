@@ -18,6 +18,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IObjectKnownList;
+import com.l2jfree.gameserver.util.ObjectId;
 import com.l2jfree.util.LazyMap;
 
 /**
@@ -27,10 +28,10 @@ public class ObjectKnownList implements IObjectKnownList
 {
 	private final L2Object _activeChar;
 	
-	private final Map<Integer, L2Object> _knownObjects = new LazyMap<Integer, L2Object>().setShared();
-	private final Map<Integer, L2Player> _knownPlayers = new LazyMap<Integer, L2Player>().setShared();
+	private final Map<ObjectId, L2Object> _knownObjects = new LazyMap<ObjectId, L2Object>().setShared();
+	private final Map<ObjectId, L2Player> _knownPlayers = new LazyMap<ObjectId, L2Player>().setShared();
 	
-	private final Map<Integer, L2Object> _knowingObjects = new LazyMap<Integer, L2Object>().setShared();
+	private final Map<ObjectId, L2Object> _knowingObjects = new LazyMap<ObjectId, L2Object>().setShared();
 	
 	public ObjectKnownList(L2Object activeChar)
 	{

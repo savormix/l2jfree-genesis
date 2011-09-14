@@ -15,6 +15,7 @@
 package com.l2jfree.gameserver.gameobjects;
 
 import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterView;
+import com.l2jfree.gameserver.util.ObjectId;
 
 /**
  * @author hex1r0
@@ -23,7 +24,7 @@ import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterView;
 public abstract class CharacterView implements ICharacterView
 {
 	private final L2Character _activeChar;
-	private final int _objectId;
+	private final ObjectId _objectId;
 	
 	protected CharacterView(L2Character activeChar)
 	{
@@ -37,7 +38,7 @@ public abstract class CharacterView implements ICharacterView
 	}
 	
 	@Override
-	public final int getObjectId()
+	public final ObjectId getObjectId()
 	{
 		return _objectId;
 	}

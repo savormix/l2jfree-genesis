@@ -313,13 +313,13 @@ public final class IdFactory
 		return new PersistentId(_rangedPersistentIdFactories[range.ordinal()].getNextId());
 	}
 	
-	public int getNextObjectId(IdRange range)
+	public ObjectId getNextObjectId(IdRange range)
 	{
-		return _rangedObjectIdFactories[range.ordinal()].getNextId();
+		return new ObjectId(_rangedObjectIdFactories[range.ordinal()].getNextId());
 	}
 	
-	public void releaseObjectId(IdRange range, int objectId)
+	public void releaseObjectId(IdRange range, ObjectId objectId)
 	{
-		_rangedObjectIdFactories[range.ordinal()].releaseId(objectId);
+		_rangedObjectIdFactories[range.ordinal()].releaseId(objectId.intValue());
 	}
 }

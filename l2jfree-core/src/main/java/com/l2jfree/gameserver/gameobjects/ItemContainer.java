@@ -26,6 +26,7 @@ import javolution.util.FastMap;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IItemContainer;
 import com.l2jfree.gameserver.gameobjects.item.L2SingularItem;
 import com.l2jfree.gameserver.gameobjects.item.L2StackableItem;
+import com.l2jfree.gameserver.util.ObjectId;
 import com.l2jfree.util.L2Collections;
 
 /**
@@ -34,7 +35,7 @@ import com.l2jfree.util.L2Collections;
 // TODO map by objectId and/or persistentId
 public abstract class ItemContainer implements IItemContainer
 {
-	private final Map<Integer, L2Item> _itemsByObjectId = new FastMap<Integer, L2Item>();
+	private final Map<ObjectId, L2Item> _itemsByObjectId = new FastMap<ObjectId, L2Item>();
 	private final Map<Integer, L2StackableItem> _stackableItemsByItemId = new FastMap<Integer, L2StackableItem>();
 	private final Map<Integer, List<L2SingularItem>> _singularItemsByItemId =
 			new FastMap<Integer, List<L2SingularItem>>();
@@ -45,7 +46,7 @@ public abstract class ItemContainer implements IItemContainer
 	{
 	}
 	
-	public final L2Item getItemByObjectId(int objectId)
+	public final L2Item getItemByObjectId(ObjectId objectId)
 	{
 		_lock.lock();
 		try

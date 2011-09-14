@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import com.l2jfree.gameserver.gameobjects.L2Object;
 import com.l2jfree.gameserver.gameobjects.ObjectPosition;
 import com.l2jfree.gameserver.gameobjects.interfaces.IL2Playable;
+import com.l2jfree.gameserver.util.ObjectId;
 import com.l2jfree.util.ArrayBunch;
 import com.l2jfree.util.L2Arrays;
 import com.l2jfree.util.concurrent.ExclusiveTask;
@@ -78,8 +79,8 @@ public final class L2WorldRegion
 	 * Contains all the objects in this region, when they are actually visible.<br>
 	 * It also means objects are removed during teleport.
 	 */
-	private final L2EntityMap<Integer, L2Object> _objects = new L2ReadWriteEntityMap<Integer, L2Object>();
-	private final L2EntityMap<Integer, IL2Playable> _playables = new L2ReadWriteEntityMap<Integer, IL2Playable>();
+	private final L2EntityMap<ObjectId, L2Object> _objects = new L2ReadWriteEntityMap<ObjectId, L2Object>();
+	private final L2EntityMap<ObjectId, IL2Playable> _playables = new L2ReadWriteEntityMap<ObjectId, IL2Playable>();
 	
 	/**
 	 * @return a thread-safe copy of the objects in this region

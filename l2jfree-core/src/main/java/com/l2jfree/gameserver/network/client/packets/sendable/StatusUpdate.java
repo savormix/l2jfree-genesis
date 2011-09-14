@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
+import com.l2jfree.gameserver.util.ObjectId;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
@@ -72,7 +73,7 @@ public class StatusUpdate extends L2ServerPacket
 	public static final byte CUR_CP = 0x21;
 	public static final byte MAX_CP = 0x22;
 	
-	private final int _objectId;
+	private final ObjectId _objectId;
 	private final ArrayList<Attribute> _attributes = new ArrayList<Attribute>(4);
 	
 	/**

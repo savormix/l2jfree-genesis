@@ -17,6 +17,7 @@ package com.l2jfree.gameserver.network.client.packets.sendable;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
+import com.l2jfree.gameserver.util.ObjectId;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
@@ -47,7 +48,7 @@ public abstract class ExBRExtraUserInfo extends L2ServerPacket
 	private static final int[] EXT_OPCODES = { 0xda, 0x00 };
 	
 	// XXX: perhaps use view later
-	private final int _playerObjectId;
+	private final ObjectId _playerObjectId;
 	private final int _effect;
 	private final boolean _active;
 	
@@ -61,7 +62,7 @@ public abstract class ExBRExtraUserInfo extends L2ServerPacket
 		this(player.getObjectId(), 0, false);
 	}
 	
-	private ExBRExtraUserInfo(int playerObjectId, int effect, boolean active)
+	private ExBRExtraUserInfo(ObjectId playerObjectId, int effect, boolean active)
 	{
 		_playerObjectId = playerObjectId;
 		_effect = effect;

@@ -15,13 +15,14 @@
 package com.l2jfree.gameserver.gameobjects.components.interfaces;
 
 import com.l2jfree.gameserver.gameobjects.components.IComponent;
+import com.l2jfree.gameserver.util.ObjectId;
 
 /**
  * @author NB4L1
  */
 public interface ICharacterView extends IComponent
 {
-	public int getObjectId();
+	public ObjectId getObjectId();
 	
 	public void refresh();
 }

@@ -21,6 +21,7 @@ import javolution.util.FastMap;
 import com.l2jfree.gameserver.gameobjects.L2Character;
 import com.l2jfree.gameserver.gameobjects.L2Object;
 import com.l2jfree.gameserver.gameobjects.L2Player;
+import com.l2jfree.gameserver.util.ObjectId;
 import com.l2jfree.gameserver.util.PersistentId;
 import com.l2jfree.util.concurrent.L2EntityMap;
 import com.l2jfree.util.concurrent.L2ReadWriteEntityMap;
@@ -99,7 +100,7 @@ public final class L2World
 	/**
 	 * Contains all the objects in the world.
 	 */
-	private static final L2EntityMap<Integer, L2Object> _objects = new L2ReadWriteEntityMap<Integer, L2Object>(50000);
+	private static final L2EntityMap<ObjectId, L2Object> _objects = new L2ReadWriteEntityMap<ObjectId, L2Object>(50000);
 	private static final FastMap<String, L2Player> _players = new FastMap<String, L2Player>(1000).setShared(true);
 	private static final Collection<L2Player> _unmodifiablePlayers = _players.unmodifiable().values();
 	private static final FastMap<PersistentId, L2Player> _playersByPersistentId = new FastMap<PersistentId, L2Player>(
@@ -141,24 +142,24 @@ public final class L2World
 		_players.put(newName.toLowerCase(), player);
 	}
 	
-	public static L2Object findObject(Integer objectId)
+	public static L2Object findObject(ObjectId objectId)
 	{
 		return _objects.get(objectId);
 	}
 	
-	public static <T extends L2Object> T findObject(Class<T> clazz, Integer objectId)
+	public static <T extends L2Object> T findObject(Class<T> clazz, ObjectId objectId)
 	{
 		final L2Object obj = findObject(objectId);
 		
 		return clazz.isInstance(obj) ? clazz.cast(obj) : null;
 	}
 	
-	public static L2Character findCharacter(int objectId)
+	public static L2Character findCharacter(ObjectId objectId)
 	{
 		return findObject(L2Character.class, objectId);
 	}
 	
-	public static L2Player findPlayer(int objectId)
+	public static L2Player findPlayer(ObjectId objectId)
 	{
 		return findObject(L2Player.class, objectId);
 	}

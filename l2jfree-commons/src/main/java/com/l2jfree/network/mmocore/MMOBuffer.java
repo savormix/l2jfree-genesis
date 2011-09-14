@@ -294,7 +294,7 @@ public final class MMOBuffer
 	 */
 	public void writeD(Number value)
 	{
-		_buffer.putInt(value.intValue());
+		_buffer.putInt(value == null ? 0 : value.intValue());
 	}
 	
 	/**

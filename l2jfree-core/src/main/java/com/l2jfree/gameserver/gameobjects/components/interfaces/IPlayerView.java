@@ -16,6 +16,7 @@ package com.l2jfree.gameserver.gameobjects.components.interfaces;
 
 import com.l2jfree.gameserver.templates.player.Gender;
 import com.l2jfree.gameserver.templates.player.Race;
+import com.l2jfree.gameserver.util.ObjectId;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
@@ -185,7 +186,7 @@ public interface IPlayerView extends ICharacterView, IElemental
 	
 	public int getTransformationGraphicalId();
 	
-	public int getVehicleObjectId();
+	public ObjectId getVehicleObjectId();
 	
 	public int getVitalityPoints();
 	

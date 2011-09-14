@@ -17,14 +17,15 @@ package com.l2jfree.gameserver.gameobjects.interfaces;
 import com.l2jfree.gameserver.gameobjects.ObjectPosition;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IObjectKnownList;
 import com.l2jfree.gameserver.templates.L2Template;
+import com.l2jfree.gameserver.util.ObjectId;
 import com.l2jfree.lang.L2Entity;
 
 /**
  * @author NB4L1
  */
-public interface IL2Object extends L2Entity<Integer>
+public interface IL2Object extends L2Entity<ObjectId>
 {
-	public int getObjectId();
+	public ObjectId getObjectId();
 	
 	public L2Template getTemplate();
 	
@@ -33,7 +34,7 @@ public interface IL2Object extends L2Entity<Integer>
 	public IObjectKnownList getKnownList();
 	
 	@Override
-	public Integer getPrimaryKey();
+	public ObjectId getPrimaryKey();
 	
 	public String getName();
 	

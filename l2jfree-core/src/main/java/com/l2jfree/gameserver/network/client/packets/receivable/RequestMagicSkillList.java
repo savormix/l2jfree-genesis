@@ -67,7 +67,7 @@ public abstract class RequestMagicSkillList extends L2ClientPacket
 	{
 		// TODO: implement
 		L2Player activeChar = getClient().getActiveChar();
-		if (_characterId != activeChar.getCharacterId().intValue() || _objectId != activeChar.getObjectId())
+		if (_characterId != activeChar.getCharacterId().intValue() || _objectId != activeChar.getObjectId().intValue())
 			getClient().closeNow();
 	}
 }
