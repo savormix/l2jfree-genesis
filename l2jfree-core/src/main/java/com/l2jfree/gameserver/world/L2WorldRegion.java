@@ -78,8 +78,8 @@ public final class L2WorldRegion
 	 * Contains all the objects in this region, when they are actually visible.<br>
 	 * It also means objects are removed during teleport.
 	 */
-	private final L2EntityMap<L2Object> _objects = new L2ReadWriteEntityMap<L2Object>();
-	private final L2EntityMap<IL2Playable> _playables = new L2ReadWriteEntityMap<IL2Playable>();
+	private final L2EntityMap<Integer, L2Object> _objects = new L2ReadWriteEntityMap<Integer, L2Object>();
+	private final L2EntityMap<Integer, IL2Playable> _playables = new L2ReadWriteEntityMap<Integer, IL2Playable>();
 	
 	/**
 	 * @return a thread-safe copy of the objects in this region

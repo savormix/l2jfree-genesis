@@ -18,9 +18,10 @@ import com.l2jfree.lang.L2Entity;
 
 /**
  * @author NB4L1
- * @param <T>
+ * @param <K>
+ * @param <V>
  */
-public final class L2SynchronizedEntityMap<T extends L2Entity<Integer>> extends L2EntityMap<T>
+public final class L2SynchronizedEntityMap<K, V extends L2Entity<K>> extends L2EntityMap<K, V>
 {
 	public L2SynchronizedEntityMap()
 	{
@@ -45,25 +46,25 @@ public final class L2SynchronizedEntityMap<T extends L2Entity<Integer>> extends 
 	}
 	
 	@Override
-	public synchronized boolean contains(T obj)
+	public synchronized boolean contains(V obj)
 	{
 		return super.contains(obj);
 	}
 	
 	@Override
-	public synchronized T get(Integer id)
+	public synchronized V get(K id)
 	{
 		return super.get(id);
 	}
 	
 	@Override
-	public synchronized void add(T obj)
+	public synchronized void add(V obj)
 	{
 		super.add(obj);
 	}
 	
 	@Override
-	public synchronized void remove(T obj)
+	public synchronized void remove(V obj)
 	{
 		super.remove(obj);
 	}
@@ -75,13 +76,13 @@ public final class L2SynchronizedEntityMap<T extends L2Entity<Integer>> extends 
 	}
 	
 	@Override
-	public synchronized T[] toArray(T[] array)
+	public synchronized V[] toArray(V[] array)
 	{
 		return super.toArray(array);
 	}
 	
 	@Override
-	public synchronized T[] toArray(Class<T> clazz)
+	public synchronized V[] toArray(Class<V> clazz)
 	{
 		return super.toArray(clazz);
 	}

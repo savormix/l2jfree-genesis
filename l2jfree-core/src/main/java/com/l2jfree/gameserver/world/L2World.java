@@ -99,7 +99,7 @@ public final class L2World
 	/**
 	 * Contains all the objects in the world.
 	 */
-	private static final L2EntityMap<L2Object> _objects = new L2ReadWriteEntityMap<L2Object>(50000);
+	private static final L2EntityMap<Integer, L2Object> _objects = new L2ReadWriteEntityMap<Integer, L2Object>(50000);
 	private static final FastMap<String, L2Player> _players = new FastMap<String, L2Player>(1000).setShared(true);
 	private static final Collection<L2Player> _unmodifiablePlayers = _players.unmodifiable().values();
 	private static final FastMap<PersistentId, L2Player> _playersByPersistentId = new FastMap<PersistentId, L2Player>(

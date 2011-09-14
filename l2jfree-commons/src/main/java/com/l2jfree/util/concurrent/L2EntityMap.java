@@ -28,14 +28,15 @@ import com.l2jfree.util.L2Collections;
 
 /**
  * @author NB4L1
- * @param <T>
+ * @param <K>
+ * @param <V>
  */
-public abstract class L2EntityMap<T extends L2Entity<Integer>>
+public abstract class L2EntityMap<K, V extends L2Entity<K>>
 {
 	private final int _initialSize;
 	
 	private boolean _initialized = false;
-	private Map<Integer, T> _map = L2Collections.emptyMap();
+	private Map<K, V> _map = L2Collections.emptyMap();
 	
 	private void init()
 	{
@@ -46,9 +47,9 @@ public abstract class L2EntityMap<T extends L2Entity<Integer>>
 				if (!_initialized)
 				{
 					if (_initialSize < 0)
-						_map = new FastMap<Integer, T>().setShared(this instanceof L2SharedEntityMap<?>);
+						_map = new FastMap<K, V>().setShared(this instanceof L2SharedEntityMap<?, ?>);
 					else
-						_map = new FastMap<Integer, T>(_initialSize).setShared(this instanceof L2SharedEntityMap<?>);
+						_map = new FastMap<K, V>(_initialSize).setShared(this instanceof L2SharedEntityMap<?, ?>);
 					
 					_initialized = true;
 				}
@@ -76,34 +77,34 @@ public abstract class L2EntityMap<T extends L2Entity<Integer>>
 		return _map.isEmpty();
 	}
 	
-	public boolean contains(T obj)
+	public boolean contains(V obj)
 	{
 		return _map.containsKey(obj.getPrimaryKey());
 	}
 	
-	public T get(Integer id)
+	public V get(K id)
 	{
 		return _map.get(id);
 	}
 	
-	public void add(T obj)
+	public void add(V obj)
 	{
 		init();
 		
-		final Integer primaryKey = obj.getPrimaryKey();
-		final T oldValue = _map.get(primaryKey);
+		final K primaryKey = obj.getPrimaryKey();
+		final V oldValue = _map.get(primaryKey);
 		
 		if (oldValue == null || replace(primaryKey, oldValue, obj))
 			_map.put(primaryKey, obj);
 	}
 	
-	protected boolean replace(Integer primaryKey, T oldValue, T newValue)
+	protected boolean replace(K primaryKey, V oldValue, V newValue)
 	{
 		throw new IllegalStateException("[" + oldValue + "] replaced with [" + newValue + "] - primaryKey: "
 				+ primaryKey + "!");
 	}
 	
-	public void remove(T obj)
+	public void remove(V obj)
 	{
 		_map.remove(obj.getPrimaryKey());
 	}
@@ -114,10 +115,10 @@ public abstract class L2EntityMap<T extends L2Entity<Integer>>
 	}
 	
 	@SuppressWarnings("unchecked")
-	public T[] toArray(T[] array)
+	public V[] toArray(V[] array)
 	{
 		if (array.length != _map.size())
-			array = (T[])Array.newInstance(array.getClass().getComponentType(), _map.size());
+			array = (V[])Array.newInstance(array.getClass().getComponentType(), _map.size());
 		
 		if (_map.isEmpty() && array.length == 0)
 			return array;
@@ -126,9 +127,9 @@ public abstract class L2EntityMap<T extends L2Entity<Integer>>
 	}
 	
 	@SuppressWarnings("unchecked")
-	public T[] toArray(Class<T> clazz)
+	public V[] toArray(Class<V> clazz)
 	{
-		T[] array = (T[])Array.newInstance(clazz, _map.size());
+		V[] array = (V[])Array.newInstance(clazz, _map.size());
 		
 		if (_map.isEmpty() && array.length == 0)
 			return array;
@@ -136,21 +137,21 @@ public abstract class L2EntityMap<T extends L2Entity<Integer>>
 			return _map.values().toArray(array);
 	}
 	
-	protected Iterator<T> iterator()
+	protected Iterator<V> iterator()
 	{
 		return _map.values().iterator();
 	}
 	
-	protected void executeForEach(ForEachExecutable<T> executable)
+	protected void executeForEach(ForEachExecutable<V> executable)
 	{
 		if (_map.isEmpty())
 			return;
 		
-		Collection<T> values = _map.values();
+		Collection<V> values = _map.values();
 		
 		if (values instanceof FastCollection<?>)
 		{
-			FastCollection<T> values2 = (FastCollection<T>)values;
+			FastCollection<V> values2 = (FastCollection<V>)values;
 			
 			for (Record r = values2.head(), end = values2.tail(); (r = r.getNext()) != end;)
 				executable.execute(values2.valueOf(r));

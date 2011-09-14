@@ -20,9 +20,10 @@ import com.l2jfree.lang.L2Entity;
 
 /**
  * @author NB4L1
- * @param <T>
+ * @param <K>
+ * @param <V>
  */
-public final class L2ReadWriteEntityMap<T extends L2Entity<Integer>> extends L2EntityMap<T>
+public final class L2ReadWriteEntityMap<K, V extends L2Entity<K>> extends L2EntityMap<K, V>
 {
 	private final ReentrantReadWriteLock _lock = new ReentrantReadWriteLock();
 	private final ReentrantReadWriteLock.ReadLock _read = _lock.readLock();
@@ -67,7 +68,7 @@ public final class L2ReadWriteEntityMap<T extends L2Entity<Integer>> extends L2E
 	}
 	
 	@Override
-	public boolean contains(T obj)
+	public boolean contains(V obj)
 	{
 		_read.lock();
 		try
@@ -81,7 +82,7 @@ public final class L2ReadWriteEntityMap<T extends L2Entity<Integer>> extends L2E
 	}
 	
 	@Override
-	public T get(Integer id)
+	public V get(K id)
 	{
 		_read.lock();
 		try
@@ -95,7 +96,7 @@ public final class L2ReadWriteEntityMap<T extends L2Entity<Integer>> extends L2E
 	}
 	
 	@Override
-	public void add(T obj)
+	public void add(V obj)
 	{
 		_write.lock();
 		try
@@ -109,7 +110,7 @@ public final class L2ReadWriteEntityMap<T extends L2Entity<Integer>> extends L2E
 	}
 	
 	@Override
-	public void remove(T obj)
+	public void remove(V obj)
 	{
 		_write.lock();
 		try
@@ -137,7 +138,7 @@ public final class L2ReadWriteEntityMap<T extends L2Entity<Integer>> extends L2E
 	}
 	
 	@Override
-	public T[] toArray(T[] array)
+	public V[] toArray(V[] array)
 	{
 		_read.lock();
 		try
@@ -151,7 +152,7 @@ public final class L2ReadWriteEntityMap<T extends L2Entity<Integer>> extends L2E
 	}
 	
 	@Override
-	public T[] toArray(Class<T> clazz)
+	public V[] toArray(Class<V> clazz)
 	{
 		_read.lock();
 		try
