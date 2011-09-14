@@ -94,13 +94,8 @@ public final class L2WorldRegion
 		return _playables.toArray(IL2Playable.class);
 	}
 	
-	public void addVisibleObject(L2Object object)
+	public synchronized void addVisibleObject(L2Object object)
 	{
-		if (object == null)
-			return;
-		
-		_objects.add(object);
-		
 		if (object instanceof IL2Playable)
 		{
 			if (_playables.isEmpty())
@@ -113,13 +108,12 @@ public final class L2WorldRegion
 			
 			_playables.add((IL2Playable)object);
 		}
+		
+		_objects.add(object);
 	}
 	
-	public void removeVisibleObject(L2Object object)
+	public synchronized void removeVisibleObject(L2Object object)
 	{
-		if (object == null)
-			return;
-		
 		_objects.remove(object);
 		
 		if (object instanceof IL2Playable)
@@ -176,17 +170,33 @@ public final class L2WorldRegion
 		
 		_active = active;
 		
+		final L2Object[] visibleObject = getVisibleObjects();
+		
 		if (active)
 		{
-			for (L2Object obj : getVisibleObjects())
+			// fill up knownlists first
+			final L2Object[][] surroundingObjects = getAllSurroundingVisibleObjects2DArray();
+			
+			for (L2Object obj : visibleObject)
+				if (obj != null)
+					obj.getKnownList().update(surroundingObjects);
+			
+			// call object specific activation method
+			for (L2Object obj : visibleObject)
 				if (obj != null)
 					obj.getPosition().worldRegionActivated();
 		}
 		else
 		{
-			for (L2Object obj : getVisibleObjects())
+			// call object specific deactivation method
+			for (L2Object obj : visibleObject)
 				if (obj != null)
 					obj.getPosition().worldRegionDeactivated();
+			
+			// and finally clear knownlists
+			for (L2Object obj : visibleObject)
+				if (obj != null)
+					obj.getKnownList().removeAllKnownObjects();
 		}
 	}
 	
