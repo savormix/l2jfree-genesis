@@ -21,6 +21,7 @@ import com.l2jfree.gameserver.gameobjects.components.interfaces.IElemental;
 import com.l2jfree.gameserver.templates.L2ItemTemplate;
 import com.l2jfree.gameserver.util.IdFactory;
 import com.l2jfree.gameserver.util.IdFactory.IdRange;
+import com.l2jfree.gameserver.util.PersistentId;
 
 /**
  * @author NB4L1
@@ -28,7 +29,7 @@ import com.l2jfree.gameserver.util.IdFactory.IdRange;
 @KnownListComponent(EmptyObjectKnownList.class)
 public abstract class L2Item extends L2Object implements IElemental
 {
-	private int _persistentId = -1;
+	private PersistentId _persistentId;
 	private final long _creationTime;
 	
 	protected L2Item(L2ItemTemplate template)
@@ -45,14 +46,14 @@ public abstract class L2Item extends L2Object implements IElemental
 		return IdRange.ITEMS;
 	}
 	
-	public int getPersistentId()
+	public PersistentId getPersistentId()
 	{
 		// assign persistentId only on demand (there is no need to take an ID for throw-away items - like herbs, etc)
-		if (_persistentId == -1)
+		if (_persistentId == null)
 		{
 			synchronized (this)
 			{
-				if (_persistentId == -1)
+				if (_persistentId == null)
 					_persistentId = IdFactory.getInstance().getNextPersistentId(IdRange.ITEMS);
 			}
 		}

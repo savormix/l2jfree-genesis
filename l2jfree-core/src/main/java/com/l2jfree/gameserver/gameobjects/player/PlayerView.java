@@ -29,6 +29,7 @@ import com.l2jfree.gameserver.gameobjects.player.PlayerInventory.PaperDollSlot;
 import com.l2jfree.gameserver.templates.player.Gender;
 import com.l2jfree.gameserver.templates.player.PlayerBaseTemplate;
 import com.l2jfree.gameserver.templates.player.Race;
+import com.l2jfree.gameserver.util.PersistentId;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
@@ -37,7 +38,7 @@ import com.l2jfree.network.mmocore.MMOBuffer;
  */
 public class PlayerView extends CharacterView implements IPlayerView
 {
-	private final int _persistentId;
+	private final PersistentId _persistentId;
 	
 	private int _abnormalEffect;
 	private int _accuracy;
@@ -156,7 +157,7 @@ public class PlayerView extends CharacterView implements IPlayerView
 	 * @return persistent ID
 	 * @see L2Player#getPersistentId()
 	 */
-	public int getPersistentId()
+	public PersistentId getPersistentId()
 	{
 		return _persistentId;
 	}
@@ -168,7 +169,7 @@ public class PlayerView extends CharacterView implements IPlayerView
 	 * @see L2Player#getCharacterId()
 	 * @see L2Player#getPersistentId()
 	 */
-	public int getCharacterId()
+	public PersistentId getCharacterId()
 	{
 		return getPersistentId();
 	}

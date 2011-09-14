@@ -42,6 +42,7 @@ import com.l2jfree.gameserver.templates.player.ClassId;
 import com.l2jfree.gameserver.templates.player.Gender;
 import com.l2jfree.gameserver.util.IdFactory;
 import com.l2jfree.gameserver.util.IdFactory.IdRange;
+import com.l2jfree.gameserver.util.PersistentId;
 import com.l2jfree.gameserver.world.L2World;
 import com.l2jfree.lang.L2TextBuilder;
 import com.l2jfree.sql.L2Database;
@@ -68,10 +69,10 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 	{
 		try
 		{
-			final int persistentId = IdFactory.getInstance().getNextPersistentId(IdRange.PLAYERS);
+			final PersistentId persistentId = IdFactory.getInstance().getNextPersistentId(IdRange.PLAYERS);
 			
 			final PlayerDB playerDB = new PlayerDB();
-			playerDB.persistentId = persistentId;
+			playerDB.setPersistentId(persistentId);
 			playerDB.creationTime = System.currentTimeMillis();
 			playerDB.name = name;
 			playerDB.accountName = accountName;
@@ -101,7 +102,7 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 		}
 	}
 	
-	public static L2Player load(int persistentId)
+	public static L2Player load(PersistentId persistentId)
 	{
 		L2Player.disconnectIfOnline(persistentId);
 		
@@ -126,7 +127,7 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 		try
 		{
 			final PlayerDB playerDB = new PlayerDB();
-			playerDB.persistentId = player.getPersistentId();
+			playerDB.setPersistentId(player.getPersistentId());
 			playerDB.creationTime = player.getCreationTime();
 			playerDB.name = player.getName();
 			playerDB.accountName = player.getAccountName();
@@ -155,7 +156,7 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 		}
 	}
 	
-	public static void disconnectIfOnline(int persistentId)
+	public static void disconnectIfOnline(PersistentId persistentId)
 	{
 		L2Player onlinePlayer = L2World.findPlayerByPersistentId(persistentId);
 		
@@ -174,7 +175,7 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 		new Disconnection(onlinePlayer).defaultSequence(true);
 	}
 	
-	private final int _persistentId;
+	private final PersistentId _persistentId;
 	private final long _creationTime;
 	
 	private final String _accountName;
@@ -193,7 +194,7 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 		super(PlayerTemplateTable.getInstance().getPlayerTemplate(playerDB.activeClassId));
 		getPosition().init(playerDB);
 		
-		_persistentId = playerDB.persistentId;
+		_persistentId = playerDB.getPersistentId();
 		_creationTime = playerDB.creationTime;
 		_accountName = playerDB.accountName;
 		
@@ -235,7 +236,7 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 	 * @return persistent ID
 	 */
 	@Override
-	public int getPersistentId()
+	public PersistentId getPersistentId()
 	{
 		return _persistentId;
 	}
@@ -247,7 +248,7 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 	 * 
 	 * @return character's ID
 	 */
-	public int getCharacterId()
+	public PersistentId getCharacterId()
 	{
 		return getPersistentId();
 	}

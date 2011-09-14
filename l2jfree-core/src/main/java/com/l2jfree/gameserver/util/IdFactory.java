@@ -308,9 +308,9 @@ public final class IdFactory
 		}
 	}
 	
-	public int getNextPersistentId(IdRange range)
+	public PersistentId getNextPersistentId(IdRange range)
 	{
-		return _rangedPersistentIdFactories[range.ordinal()].getNextId();
+		return new PersistentId(_rangedPersistentIdFactories[range.ordinal()].getNextId());
 	}
 	
 	public int getNextObjectId(IdRange range)

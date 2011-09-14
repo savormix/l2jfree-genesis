@@ -32,6 +32,7 @@ import javax.persistence.UniqueConstraint;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.templates.player.ClassId;
 import com.l2jfree.gameserver.templates.player.Gender;
+import com.l2jfree.gameserver.util.PersistentId;
 import com.l2jfree.sql.L2DBEntity;
 import com.l2jfree.sql.L2Database;
 import com.l2jfree.sql.L2Database.QueryConfigurator;
@@ -54,7 +55,7 @@ public class PlayerDB extends L2DBEntity
 {
 	@Id
 	@Column(name = "persistentId", nullable = false, updatable = false)
-	public int persistentId;
+	private Integer persistentId;
 	
 	@Column(name = "creationTime", nullable = false, updatable = false)
 	public long creationTime;
@@ -106,6 +107,16 @@ public class PlayerDB extends L2DBEntity
 	
 	// Position
 	
+	public PersistentId getPersistentId()
+	{
+		return new PersistentId(persistentId);
+	}
+	
+	public void setPersistentId(PersistentId persistentId)
+	{
+		this.persistentId = persistentId.intValue();
+	}
+	
 	@Override
 	public Object getPrimaryKey()
 	{
@@ -118,9 +129,9 @@ public class PlayerDB extends L2DBEntity
 		return PlayerDB.class;
 	}
 	
-	public static PlayerDB find(int persistentId)
+	public static PlayerDB find(PersistentId persistentId)
 	{
-		return L2Database.find(PlayerDB.class, persistentId);
+		return L2Database.find(PlayerDB.class, persistentId.intValue());
 	}
 	
 	public static List<PlayerDB> findByAccount(final String accountName)

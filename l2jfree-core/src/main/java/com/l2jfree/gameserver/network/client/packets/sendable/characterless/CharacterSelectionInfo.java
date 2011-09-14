@@ -101,7 +101,7 @@ public abstract class CharacterSelectionInfo extends L2ServerPacket
 		for (PlayerDB p : _characters)
 		{
 			buf.writeS(p.name); // Character name
-			buf.writeD(p.persistentId); // Character ID
+			buf.writeD(p.getPersistentId()); // Character ID
 			buf.writeS(p.accountName); // Account name
 			buf.writeD(client.getSessionId()); // Session ID
 			buf.writeD(0); // Pledge ID

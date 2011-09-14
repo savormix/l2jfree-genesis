@@ -21,6 +21,7 @@ import javolution.util.FastMap;
 import com.l2jfree.gameserver.gameobjects.L2Character;
 import com.l2jfree.gameserver.gameobjects.L2Object;
 import com.l2jfree.gameserver.gameobjects.L2Player;
+import com.l2jfree.gameserver.util.PersistentId;
 import com.l2jfree.util.concurrent.L2EntityMap;
 import com.l2jfree.util.concurrent.L2ReadWriteEntityMap;
 import com.l2jfree.util.logging.L2Logger;
@@ -101,8 +102,8 @@ public final class L2World
 	private static final L2EntityMap<L2Object> _objects = new L2ReadWriteEntityMap<L2Object>(50000);
 	private static final FastMap<String, L2Player> _players = new FastMap<String, L2Player>(1000).setShared(true);
 	private static final Collection<L2Player> _unmodifiablePlayers = _players.unmodifiable().values();
-	private static final FastMap<Integer, L2Player> _playersByPersistentId = new FastMap<Integer, L2Player>(1000)
-			.setShared(true);
+	private static final FastMap<PersistentId, L2Player> _playersByPersistentId = new FastMap<PersistentId, L2Player>(
+			1000).setShared(true);
 	
 	// TODO check replace
 	public static void addObject(L2Object obj)
@@ -167,7 +168,7 @@ public final class L2World
 		return _players.get(name.toLowerCase());
 	}
 	
-	public static L2Player findPlayerByPersistentId(int persistentId)
+	public static L2Player findPlayerByPersistentId(PersistentId persistentId)
 	{
 		return _playersByPersistentId.get(persistentId);
 	}

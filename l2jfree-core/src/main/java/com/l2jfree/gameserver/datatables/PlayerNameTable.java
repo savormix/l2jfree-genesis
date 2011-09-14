@@ -26,6 +26,7 @@ import javolution.util.FastMap;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.gameserver.sql.PlayerDB;
+import com.l2jfree.gameserver.util.PersistentId;
 import com.l2jfree.gameserver.world.L2World;
 import com.l2jfree.sql.L2Database;
 import com.l2jfree.sql.L2Database.L2Query;
@@ -49,18 +50,19 @@ public final class PlayerNameTable
 		return SingletonHolder.INSTANCE;
 	}
 	
-	private final Map<Integer, PlayerInfo> _mapByPersistentId = new FastMap<Integer, PlayerInfo>().setShared(true);
+	private final Map<PersistentId, PlayerInfo> _mapByPersistentId = new FastMap<PersistentId, PlayerInfo>()
+			.setShared(true);
 	private final Map<String, PlayerInfo> _mapByName = new FastMap<String, PlayerInfo>().setShared(true);
 	
 	public static class PlayerInfoWrapper
 	{
-		private final int _persistentId;
+		private final PersistentId _persistentId;
 		private final String _accountName;
 		private final String _name;
 		
-		public PlayerInfoWrapper(int persistentId, String accountName, String name)
+		public PlayerInfoWrapper(Integer persistentId, String accountName, String name)
 		{
-			_persistentId = persistentId;
+			_persistentId = new PersistentId(persistentId);
 			_accountName = accountName;
 			_name = name;
 		}
@@ -100,7 +102,7 @@ public final class PlayerNameTable
 		_log.info("PlayerNameTable: Loaded " + _mapByPersistentId.size() + " player infos.");
 	}
 	
-	public String getNameByPersistentId(int persistentId)
+	public String getNameByPersistentId(PersistentId persistentId)
 	{
 		final PlayerInfo playerInfo = _mapByPersistentId.get(persistentId);
 		
@@ -114,14 +116,14 @@ public final class PlayerNameTable
 		return playerInfo == null ? null : playerInfo._name;
 	}
 	
-	public Integer getPersistentIdByName(String name)
+	public PersistentId getPersistentIdByName(String name)
 	{
 		final PlayerInfo playerInfo = _mapByName.get(name.toLowerCase());
 		
 		return playerInfo == null ? null : playerInfo._persistentId;
 	}
 	
-	public int getAccessLevelByPersistentId(int persistentId)
+	public int getAccessLevelByPersistentId(PersistentId persistentId)
 	{
 		final PlayerInfo playerInfo = _mapByPersistentId.get(persistentId);
 		
@@ -140,7 +142,7 @@ public final class PlayerNameTable
 		update(player.getPersistentId(), player.getAccountName(), player.getName(), player.getAccessLevel());
 	}
 	
-	public void update(int persistentId, String accountName, String name, int accessLevel)
+	public void update(PersistentId persistentId, String accountName, String name, int accessLevel)
 	{
 		PlayerInfo playerInfo = _mapByPersistentId.get(persistentId);
 		if (playerInfo == null)
@@ -149,7 +151,7 @@ public final class PlayerNameTable
 		playerInfo.updateNames(accountName, name, accessLevel);
 	}
 	
-	public IPlayerInfo getIPlayerInfoByPersistentId(int persistentId)
+	public IPlayerInfo getIPlayerInfoByPersistentId(PersistentId persistentId)
 	{
 		final L2Player player = L2World.findPlayerByPersistentId(persistentId);
 		
@@ -171,7 +173,7 @@ public final class PlayerNameTable
 	
 	public interface IPlayerInfo
 	{
-		public int getPersistentId();
+		public PersistentId getPersistentId();
 		
 		public String getAccountName();
 		
@@ -186,14 +188,14 @@ public final class PlayerNameTable
 	
 	private class PlayerInfo implements IPlayerInfo
 	{
-		private final int _persistentId;
+		private final PersistentId _persistentId;
 		
 		private String _accountName;
 		private String _name;
 		private int _accessLevel;
 		
 		@Override
-		public int getPersistentId()
+		public PersistentId getPersistentId()
 		{
 			return _persistentId;
 		}
@@ -229,7 +231,7 @@ public final class PlayerNameTable
 			return false;
 		}
 		
-		private PlayerInfo(int persistentId)
+		private PlayerInfo(PersistentId persistentId)
 		{
 			_persistentId = persistentId;
 			
@@ -277,12 +279,12 @@ public final class PlayerNameTable
 		return count;
 	}
 	
-	public Iterable<Integer> getPersistentIdsForAccount(final String account)
+	public Iterable<PersistentId> getPersistentIdsForAccount(final String account)
 	{
 		return L2Collections.convertingIterable(_mapByPersistentId.values(),
-				new L2Collections.Converter<PlayerInfo, Integer>() {
+				new L2Collections.Converter<PlayerInfo, PersistentId>() {
 					@Override
-					public Integer convert(PlayerInfo playerInfo)
+					public PersistentId convert(PlayerInfo playerInfo)
 					{
 						if (playerInfo._accountName.equalsIgnoreCase(account))
 							return playerInfo._persistentId;
