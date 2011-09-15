@@ -28,8 +28,11 @@ public class PlayerAppearance implements IComponent
 {
 	/** The default hexadecimal color of players' name (white is 0xFFFFFF) */
 	public static final int DEFAULT_NAME_COLOR = 0xFFFFFF;
-	/** The default hexadecimal color of players' title (light blue is 0xFFFF77) */
-	public static final int DEFAULT_TITLE_COLOR = 0xFFFF77;
+	/**
+	 * The default hexadecimal color of players' title (light blue is 0xECF9A2). Verified on
+	 * 2011-09-14 (HF)
+	 */
+	public static final int DEFAULT_TITLE_COLOR = 0xECF9A2;
 	
 	private final L2Player _activeChar;
 	

@@ -50,8 +50,8 @@
 		definition="
 			CREATE TABLE persistent_properties (
 				
-				className		VARCHAR(255)	NOT NULL,
-				propertyName	VARCHAR(255)	NOT NULL,
+				className		VARCHAR(254)	NOT NULL,
+				propertyName	VARCHAR(254)	NOT NULL,
 				propertyValue	TEXT			NOT NULL,
 				
 				PRIMARY KEY (className, propertyName)

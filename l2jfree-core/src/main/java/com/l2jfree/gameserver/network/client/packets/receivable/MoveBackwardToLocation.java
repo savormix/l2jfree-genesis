@@ -47,14 +47,13 @@ public abstract class MoveBackwardToLocation extends L2ClientPacket
 		return READ_D + READ_D + READ_D + READ_D + READ_D + READ_D + READ_D;
 	}
 	
-	/* Fields for storing read data */
 	private int _destinationX;
 	private int _destinationY;
 	private int _destinationZ;
 	private int _clientX;
 	private int _clientY;
 	private int _clientZ;
-	private int _controller;
+	private boolean _mouse;
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
@@ -66,7 +65,7 @@ public abstract class MoveBackwardToLocation extends L2ClientPacket
 		_clientX = buf.readD(); // Current client X
 		_clientY = buf.readD(); // Current client Y
 		_clientZ = buf.readD(); // Current client Z
-		_controller = buf.readD(); // Controller
+		_mouse = buf.readD() != 0; // Controller
 	}
 	
 	@Override

@@ -45,18 +45,32 @@ public abstract class RequestTargetCancel extends L2ClientPacket
 		return READ_H;
 	}
 	
-	/* Fields for storing read data */
+	private boolean _mouse;
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
-		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.readH(); // Controller
+		_mouse = buf.readH() != 0; // Controller
 	}
 	
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		// TODO: implement
+		if (_mouse)
+		{
+			// cancel target
+		}
+		else
+		{
+			// if skill cast is in progress
+			{
+				// cancel skill casting
+			}
+			// else
+			{
+				// cancel target
+			}
+		}
 	}
 }

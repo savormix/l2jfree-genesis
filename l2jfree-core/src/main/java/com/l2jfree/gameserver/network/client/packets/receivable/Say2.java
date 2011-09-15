@@ -17,6 +17,8 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 import java.nio.BufferUnderflowException;
 
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
+import com.l2jfree.gameserver.network.client.packets.sendable.CreatureSay.Chat;
+import com.l2jfree.gameserver.network.client.packets.sendable.CreatureSay.ChatMessage;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
@@ -45,17 +47,20 @@ public abstract class Say2 extends L2ClientPacket
 		return READ_S + READ_D;
 	}
 	
-	/* Fields for storing read data */
+	private String _message;
+	private Chat _chat;
+	private String _recipient;
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.readS(); // Message
-		buf.readD(); // Chat, branching condition
+		_message = buf.readS(); // Message
+		_chat = Chat.VALUES.valueOf(buf.readD()); // Chat, branching condition
 		// branch with PrivateMessage
+		if (_chat == Chat.PRIVATE)
 		{
-			buf.readS(); // Recipient
+			_recipient = buf.readS(); // Recipient
 		}
 	}
 	
@@ -63,5 +68,11 @@ public abstract class Say2 extends L2ClientPacket
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		// TODO: implement
+		final ChatMessage cm;
+		if (_recipient == null)
+			cm = new ChatMessage(getClient().getActiveChar(), _chat, _message);
+		else
+			cm = new ChatMessage(getClient().getActiveChar(), _recipient, _message);
+		sendPacket(cm); // only the sender will see this chat :P
 	}
 }

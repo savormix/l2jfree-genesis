@@ -89,7 +89,7 @@ public abstract class EnterWorld extends L2ClientPacket
 		L2Player activeChar = getClient().getActiveChar();
 		// send MacroInfo packets
 		sendPacket(MyTeleportBookmarkList.PACKET);
-		sendPacket(EtcEffectIcons.PACKET); // with grade penalty levels because skills (including Expertise X) isn't loaded yet
+		sendPacket(EtcEffectIcons.PACKET); // with grade penalty levels because skills (including Expertise X) aren't loaded yet
 		{
 			sendPacket(new DemandGameGuardStatus());
 			sendPacket(new DemandProcessBlock());
@@ -120,7 +120,7 @@ public abstract class EnterWorld extends L2ClientPacket
 		}
 		sendPacket(ActiveQuests.PACKET); // without TW quests
 		// DUMP KNOWNLIST HERE
-		// NpcInfo, StaticObjectInfo, ItemOnGround, PlayerInfo + EventPlayerInfo + Relationships (+ Sell/Buy/PackageShopInfo), AgitDecoInfo, start Movement/StatusUpdate packets
+		// NpcInfo, StaticObjectInfo, ItemOnGround, PlayerInfo (+ Sell/Buy/PackageShopInfo) + EventPlayerInfo + Relationships, AgitDecoInfo, also start sending Movement/StatusUpdate packets
 		sendPacket(new SystemMessage(34));
 		sendPacket(EtcEffectIcons.PACKET); // correct icons (again)
 		// send seven signs system message
@@ -130,7 +130,7 @@ public abstract class EnterWorld extends L2ClientPacket
 		{
 			// send clan notice
 		}
-		// send nevit blessing info
+		// send NevitBlessingInfo
 		// send effect icons
 		// and more... but it gets rather messy here.
 	}

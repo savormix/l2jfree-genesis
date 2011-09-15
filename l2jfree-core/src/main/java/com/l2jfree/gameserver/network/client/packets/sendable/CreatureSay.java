@@ -14,10 +14,13 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.gameserver.gameobjects.L2Character;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
+import com.l2jfree.gameserver.util.ObjectId;
 import com.l2jfree.network.mmocore.MMOBuffer;
+import com.l2jfree.util.EnumValues;
 
 /**
  * @author savormix (generated)
@@ -33,18 +36,95 @@ public abstract class CreatureSay extends L2ServerPacket
 	public static final class ChatMessage extends CreatureSay
 	{
 		/**
-		 * Constructs this packet.
+		 * Constructs a very simple instance of this packet.
 		 * 
-		 * @see CreatureSay#CreatureSay()
+		 * @param chat Chat type
+		 * @param talker Talker name
+		 * @param message Chat message
+		 * @see CreatureSay#CreatureSay(Chat, String, String)
 		 */
-		public ChatMessage()
+		public ChatMessage(Chat chat, String talker, String message)
 		{
+			super(chat, talker, message);
+		}
+		
+		/**
+		 * Constructs an instance of this packet.
+		 * 
+		 * @param talker Talker
+		 * @param chat Chat type
+		 * @param message Chat message
+		 */
+		public ChatMessage(L2Character talker, Chat chat, String message)
+		{
+			super(talker.getObjectId(), chat, -1, talker.getName(), -1, message);
+		}
+		
+		/**
+		 * Constructs an instance of this packet.
+		 * 
+		 * @param talker Talker
+		 * @param recipient Recipient
+		 * @param message Chat message
+		 */
+		public ChatMessage(L2Character talker, String recipient, String message)
+		{
+			super(talker.getObjectId(), Chat.PRIVATE, -1, recipient, -1, message);
 		}
 	}
 	
-	/** Constructs this packet. */
-	public CreatureSay()
+	private final ObjectId _talkerOid;
+	private final Chat _chat;
+	private final int _sysStringTalker;
+	private final String _talker;
+	private final int _fStringMessage;
+	private final String _message;
+	
+	/**
+	 * Constructs a very simple instance of this packet.
+	 * 
+	 * @param chat Chat type
+	 * @param talker Talker name
+	 * @param message Chat message
+	 */
+	public CreatureSay(Chat chat, String talker, String message)
 	{
+		this(null, chat, -1, talker, -1, message);
+	}
+	
+	/**
+	 * Constructs an instance of this packet.
+	 * 
+	 * @param talker Talker
+	 * @param chat Chat type
+	 * @param message Chat message
+	 */
+	public CreatureSay(L2Character talker, Chat chat, String message)
+	{
+		this(talker.getObjectId(), chat, -1, talker.getName(), -1, message);
+	}
+	
+	/**
+	 * Constructs an instance of this packet.
+	 * 
+	 * @param talker Talker
+	 * @param recipient Recipient
+	 * @param message Chat message
+	 */
+	public CreatureSay(L2Character talker, String recipient, String message)
+	{
+		this(talker.getObjectId(), Chat.PRIVATE, -1, recipient, -1, message);
+	}
+	
+	private CreatureSay(ObjectId talkerOid, Chat chat, int sysStringTalker, String talker, int fStringMessage,
+			String message)
+	{
+		_talkerOid = talkerOid;
+		_chat = chat;
+		_sysStringTalker = sysStringTalker;
+		_talker = talker;
+		_fStringMessage = fStringMessage;
+		_message = message;
 	}
 	
 	@Override
@@ -57,20 +137,61 @@ public abstract class CreatureSay extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.writeD(0); // Talker OID
-		buf.writeD(0); // Chat, branching condition
+		buf.writeD(_talkerOid); // Talker OID
+		buf.writeD(_chat); // Chat, branching condition
 		// branch with FerryShout
+		if (_chat == Chat.FERRY)
 		{
-			buf.writeD(0); // Talker
+			buf.writeD(_sysStringTalker); // Talker
 		}
 		// branch with DefaultChat
+		else
 		{
-			buf.writeS(""); // Talker
+			if (_chat == Chat.PRIVATE && activeChar.getObjectId().equals(_talkerOid))
+				buf.append("->");
+			buf.writeS(_talker); // Talker
 		}
-		buf.writeD(0); // Message, branching condition
+		buf.writeD(_fStringMessage); // Message, branching condition
 		// branch with Negative
+		if (_fStringMessage < 0)
 		{
-			buf.writeS(""); // Message
+			buf.writeS(_message); // Message
 		}
+	}
+	
+	public enum Chat
+	{
+		LOCAL,
+		SHOUT,
+		PRIVATE,
+		PARTY,
+		CLAN,
+		SYSTEM, // like local
+		PETITIONER,
+		CONSULTANT,
+		TRADE,
+		ALLIANCE,
+		ANNOUNCEMENT,
+		FERRY, // like shout, but talker is D instead of S
+		FRIEND,
+		MSN,
+		PARTY_ROOM,
+		COMMANDER,
+		COMMAND_CHANNEL,
+		HERO,
+		CRITICAL_ANNOUNCEMENT,
+		SCREEN_ANNOUNCEMENT,
+		TERRITORY,
+		MULTI_PARTY,
+		NPC_LOCAL, // like local, using fstring
+		NPC_SHOUT; // like shout, using fstring
+		
+		public static final EnumValues<Chat> VALUES = new EnumValues<Chat>(Chat.class) {
+			@Override
+			protected Chat defaultValue()
+			{
+				return LOCAL; // for every non-zero value
+			}
+		};
 	}
 }

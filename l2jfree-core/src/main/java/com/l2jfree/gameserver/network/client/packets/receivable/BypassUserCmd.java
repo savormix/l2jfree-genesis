@@ -17,6 +17,8 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 import java.nio.BufferUnderflowException;
 
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
+import com.l2jfree.gameserver.network.client.packets.sendable.CreatureSay.Chat;
+import com.l2jfree.gameserver.network.client.packets.sendable.CreatureSay.ChatMessage;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
@@ -58,5 +60,9 @@ public abstract class BypassUserCmd extends L2ClientPacket
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		// TODO: implement
+		// 2011-09-14 verified on HF to be the default response to unsupported (on NA/EU) user commands
+		// (you can re-verify with '/evangelist on')
+		ChatMessage cm = new ChatMessage(Chat.SYSTEM, "SYS", "Lecture Not Support, Check Server");
+		sendPacket(cm);
 	}
 }
