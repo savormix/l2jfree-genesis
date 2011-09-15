@@ -14,6 +14,8 @@
  */
 package com.l2jfree.config;
 
+import java.lang.reflect.Array;
+
 /**
  * @author NB4L1
  */
@@ -190,6 +192,17 @@ public final class L2Parser
 		{
 			throw new L2ParserException(enumClass, value, e);
 		}
+	}
+	
+	public static Object getAsArray(String value, Class<?> clazz, String separator)
+	{
+		String[] values = value.split(separator);
+		
+		Object array = Array.newInstance(clazz, values.length);
+		for (int i = 0; i < values.length; i++)
+			Array.set(array, i, get(clazz, values[i]));
+		
+		return array;
 	}
 	
 	public static final class L2ParserException extends RuntimeException

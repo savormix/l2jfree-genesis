@@ -434,4 +434,44 @@ public final class L2Properties implements Serializable
 		
 		return L2Parser.getEnum(enumClass, value);
 	}
+	
+	public boolean[] getBoolArray(String name, String separator)
+	{
+		return (boolean[])L2Parser.getAsArray(getProperty(name), Boolean.class, separator);
+	}
+	
+	public byte[] getByteArray(String name, String separator)
+	{
+		return (byte[])L2Parser.getAsArray(getProperty(name), Byte.class, separator);
+	}
+	
+	public short[] getShortArray(String name, String separator)
+	{
+		return (short[])L2Parser.getAsArray(getProperty(name), Short.class, separator);
+	}
+	
+	public int[] getIntArray(String name, String separator)
+	{
+		return (int[])L2Parser.getAsArray(getProperty(name), Integer.class, separator);
+	}
+	
+	public long[] getLongArray(String name, String separator)
+	{
+		return (long[])L2Parser.getAsArray(getProperty(name), Long.class, separator);
+	}
+	
+	public float[] getFloatArray(String name, String separator)
+	{
+		return (float[])L2Parser.getAsArray(getProperty(name), Float.class, separator);
+	}
+	
+	public double[] getDoubleArray(String name, String separator)
+	{
+		return (double[])L2Parser.getAsArray(getProperty(name), Double.class, separator);
+	}
+	
+	public String[] getStringArray(String name, String separator)
+	{
+		return (String[])L2Parser.getAsArray(getProperty(name), String.class, separator);
+	}
 }
