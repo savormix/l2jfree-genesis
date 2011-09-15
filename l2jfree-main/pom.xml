@@ -17,7 +17,7 @@
     <url>http://code.l2jfree.com/changelog/l2jfree/branches/genesis/${project.artifactId}</url>
   </scm>
   <build>
-    <defaultGoal>compile</defaultGoal>
+    <defaultGoal>package</defaultGoal>
     <finalName>${project.artifactId}-${project.version}</finalName>
     <plugins>
       <plugin>
