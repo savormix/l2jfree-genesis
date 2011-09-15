@@ -30,12 +30,17 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import com.l2jfree.gameserver.gameobjects.L2Player;
+import com.l2jfree.gameserver.gameobjects.ObjectPosition;
+import com.l2jfree.gameserver.gameobjects.player.PlayerAppearance;
 import com.l2jfree.gameserver.templates.player.ClassId;
 import com.l2jfree.gameserver.templates.player.Gender;
+import com.l2jfree.gameserver.util.IdFactory;
+import com.l2jfree.gameserver.util.IdFactory.IdRange;
 import com.l2jfree.gameserver.util.PersistentId;
 import com.l2jfree.sql.L2DBEntity;
 import com.l2jfree.sql.L2Database;
 import com.l2jfree.sql.L2Database.QueryConfigurator;
+import com.l2jfree.util.Rnd;
 
 /**
  * @author NB4L1
@@ -127,6 +132,103 @@ public class PlayerDB extends L2DBEntity
 	protected Class<?> getClassForEqualsCheck()
 	{
 		return PlayerDB.class;
+	}
+	
+	public static L2Player create(String name, String accountName, ClassId classId)
+	{
+		return create(name, accountName, classId, Gender.Male, (byte)0, (byte)0, (byte)0); // TODO
+	}
+	
+	public static L2Player create(String name, String accountName, ClassId classId, Gender gender, byte face,
+			byte hairColor, byte hairStyle)
+	{
+		try
+		{
+			final PersistentId persistentId = IdFactory.getInstance().getNextPersistentId(IdRange.PLAYERS);
+			
+			final PlayerDB playerDB = new PlayerDB();
+			playerDB.setPersistentId(persistentId);
+			playerDB.creationTime = System.currentTimeMillis();
+			playerDB.name = name;
+			playerDB.accountName = accountName;
+			playerDB.mainClassId = classId;
+			playerDB.activeClassId = classId;
+			
+			// Appearance
+			playerDB.gender = gender;
+			playerDB.face = face;
+			playerDB.hairColor = hairColor;
+			playerDB.hairStyle = hairStyle;
+			
+			// Position
+			playerDB.x = Rnd.get(1000);
+			playerDB.y = Rnd.get(1000);
+			playerDB.z = Rnd.get(1000);
+			playerDB.heading = Rnd.get(1000);
+			
+			L2Database.persist(playerDB);
+			
+			return new L2Player(playerDB);
+		}
+		catch (RuntimeException e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static L2Player load(PersistentId persistentId)
+	{
+		L2Player.disconnectIfOnline(persistentId);
+		
+		try
+		{
+			final PlayerDB playerDB = PlayerDB.find(persistentId);
+			
+			if (playerDB == null)
+				return null;
+			
+			return new L2Player(playerDB);
+		}
+		catch (RuntimeException e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static void store(L2Player player)
+	{
+		try
+		{
+			final PlayerDB playerDB = new PlayerDB();
+			playerDB.setPersistentId(player.getPersistentId());
+			playerDB.creationTime = player.getCreationTime();
+			playerDB.name = player.getName();
+			playerDB.accountName = player.getAccountName();
+			playerDB.mainClassId = player.getMainClassId();
+			playerDB.activeClassId = player.getActiveClassId();
+			
+			// Appearance
+			final PlayerAppearance appearance = player.getAppearance();
+			playerDB.gender = appearance.getGender();
+			playerDB.face = appearance.getFace();
+			playerDB.hairColor = appearance.getHairColor();
+			playerDB.hairStyle = appearance.getHairStyle();
+			
+			// Position
+			final ObjectPosition position = player.getPosition();
+			playerDB.x = position.getX();
+			playerDB.y = position.getY();
+			playerDB.z = position.getZ();
+			playerDB.heading = position.getHeading();
+			
+			L2Database.merge(playerDB);
+		}
+		catch (RuntimeException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	public static PlayerDB find(PersistentId persistentId)

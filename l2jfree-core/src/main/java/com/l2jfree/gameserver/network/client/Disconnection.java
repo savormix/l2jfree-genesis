@@ -66,10 +66,7 @@ public final class Disconnection
 		try
 		{
 			if (_activeChar != null)
-			{
-				// FIXME
-				//_activeChar.store();
-			}
+				_activeChar.store();
 		}
 		catch (RuntimeException e)
 		{

@@ -332,7 +332,7 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	public L2Player loadCharacterBySlot(int slot)
 	{
 		if (slot >= 0 && slot < _playerSlotMap.length)
-			return L2Player.load(_playerSlotMap[slot]);
+			return PlayerDB.load(_playerSlotMap[slot]);
 		
 		return null;
 	}

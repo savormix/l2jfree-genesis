@@ -155,10 +155,10 @@ public final class GameServer extends Config
 		final String name = Rnd.getString(20, Rnd.LETTERS_AND_DIGITS);
 		final String accountName = Rnd.getString(20, Rnd.LETTERS_AND_DIGITS);
 		
-		final L2Player created = L2Player.create(name, accountName, ClassId.HumanFighter);
+		final L2Player created = PlayerDB.create(name, accountName, ClassId.HumanFighter);
 		System.out.println(created);
 		
-		final L2Player loaded = L2Player.load(created.getPersistentId());
+		final L2Player loaded = PlayerDB.load(created.getPersistentId());
 		System.out.println(loaded);
 		
 		System.out.println(created.getPrimaryKey().equals(loaded.getPrimaryKey()));
@@ -183,11 +183,11 @@ public final class GameServer extends Config
 		System.out.println(playerDB2);
 		
 		Util.printSection("create-and-store-player");
-		final L2Player player = L2Player.create(Rnd.getString(10, Rnd.LETTERS), accountName, ClassId.HumanFighter);
+		final L2Player player = PlayerDB.create(Rnd.getString(10, Rnd.LETTERS), accountName, ClassId.HumanFighter);
 		
 		player.getPosition().setXYZ(Rnd.get(1000), Rnd.get(1000), Rnd.get(1000));
 		player.setName(Rnd.getString(10, Rnd.LETTERS));
 		
-		L2Player.store(player);
+		PlayerDB.store(player);
 	}
 }

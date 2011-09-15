@@ -22,6 +22,7 @@ import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.sendable.characterless.CharCreateFail.CharacterCreateFailure;
 import com.l2jfree.gameserver.network.client.packets.sendable.characterless.CharCreateOk.CharacterCreateSuccess;
+import com.l2jfree.gameserver.sql.PlayerDB;
 import com.l2jfree.gameserver.templates.player.ClassId;
 import com.l2jfree.gameserver.templates.player.ClassLevel;
 import com.l2jfree.gameserver.templates.player.Gender;
@@ -141,7 +142,7 @@ public abstract class NewCharacter extends L2ClientPacket
 				_log.debug("charname: " + _name + " classId: " + _classId);
 			
 			final L2Player player =
-					L2Player.create(_name, account, classId, Gender.VALUES.valueOf(_sex), _face, _hairColor, _hairStyle);
+					PlayerDB.create(_name, account, classId, Gender.VALUES.valueOf(_sex), _face, _hairColor, _hairStyle);
 			
 			player.addToWorld();
 			
