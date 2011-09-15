@@ -10,7 +10,7 @@
   </formats>
   <fileSets>
     <fileSet>
-	  <directory>/data</directory>
+      <directory>/data</directory>
     </fileSet>
   </fileSets>
 </assembly>
