@@ -14,6 +14,8 @@
  */
 package com.l2jfree.gameserver.config;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.L2Config.ConfigPropertiesLoader;
 import com.l2jfree.Shutdown;
@@ -22,6 +24,7 @@ import com.l2jfree.config.L2Properties;
 import com.l2jfree.config.annotation.ConfigClass;
 import com.l2jfree.config.annotation.ConfigField;
 import com.l2jfree.gameserver.DatapackVersion;
+import com.l2jfree.util.ArrayBunch;
 
 /**
  * @author NB4L1
@@ -30,11 +33,8 @@ import com.l2jfree.gameserver.DatapackVersion;
 		"Be aware to don't set client versions lower than required version determined by the datapack version!" })
 public final class VersionConfig extends ConfigPropertiesLoader
 {
-	@ConfigField(name = "MinSupportedClientProtocolVersion", value = "FREYA", eternal = true, comment = { })
-	public static ClientProtocolVersion MIN_SUPPORTED_CLIENT_PROTOCOL_VERSION;
-	
-	@ConfigField(name = "MaxSupportedClientProtocolVersion", value = "FREYA", eternal = true, comment = { })
-	public static ClientProtocolVersion MAX_SUPPORTED_CLIENT_PROTOCOL_VERSION;
+	@ConfigField(name = "SupportedClientProtocolVersions", value = "FREYA", eternal = true, comment = { })
+	public static ClientProtocolVersion[] SUPPORTED_CLIENT_PROTOCOL_VERSIONS;
 	
 	@ConfigField(name = "DatapackVersion", value = "FREYA", eternal = true, comment = { })
 	public static DatapackVersion DATAPACK_VERSION;
@@ -42,29 +42,26 @@ public final class VersionConfig extends ConfigPropertiesLoader
 	@Override
 	protected void loadImpl(L2Properties properties)
 	{
-		if (MIN_SUPPORTED_CLIENT_PROTOCOL_VERSION.isNewerThan(MAX_SUPPORTED_CLIENT_PROTOCOL_VERSION))
+		final ArrayBunch<ClientProtocolVersion> tmp = new ArrayBunch<ClientProtocolVersion>();
+		
+		for (ClientProtocolVersion cpv : SUPPORTED_CLIENT_PROTOCOL_VERSIONS)
 		{
-			System.err.println("Min supported client protocol version " + MIN_SUPPORTED_CLIENT_PROTOCOL_VERSION
-					+ " is newer than max " + MAX_SUPPORTED_CLIENT_PROTOCOL_VERSION + "!");
+			if (!cpv.isEnabled())
+				System.err.println("Configured client protocol version (" + cpv + ") is disabled!");
+			else if (!ArrayUtils.contains(DATAPACK_VERSION.getSupportedClientProtocolVersions(), cpv))
+				System.err.println("Configured client protocol version (" + cpv + ") isn't supported by the datapack!");
+			else
+				tmp.add(cpv);
+		}
+		
+		if (tmp.size() == 0)
+		{
+			System.err.println("No supported client protocol version found!");
 			
 			Shutdown.exit(TerminationStatus.RUNTIME_INVALID_CONFIGURATION);
 		}
 		
-		if (MIN_SUPPORTED_CLIENT_PROTOCOL_VERSION.isOlderThan(DATAPACK_VERSION.getMinimumClientProtocolVersion()))
-		{
-			System.err.println("Too old supported client protocol version " + MIN_SUPPORTED_CLIENT_PROTOCOL_VERSION
-					+ " given for specified datapack version " + DATAPACK_VERSION + "!");
-			
-			Shutdown.exit(TerminationStatus.RUNTIME_INVALID_CONFIGURATION);
-		}
-		
-		if (MAX_SUPPORTED_CLIENT_PROTOCOL_VERSION.isNewerThan(DATAPACK_VERSION.getMaximumClientProtocolVersion()))
-		{
-			System.err.println("Too new supported client protocol version " + MAX_SUPPORTED_CLIENT_PROTOCOL_VERSION
-					+ " given for specified datapack version " + DATAPACK_VERSION + "!");
-			
-			Shutdown.exit(TerminationStatus.RUNTIME_INVALID_CONFIGURATION);
-		}
+		SUPPORTED_CLIENT_PROTOCOL_VERSIONS = tmp.moveToArray(ClientProtocolVersion.class);
 	}
 	
 	public static boolean isSupported(ClientProtocolVersion version)
@@ -72,7 +69,6 @@ public final class VersionConfig extends ConfigPropertiesLoader
 		if (version == null)
 			return false;
 		
-		return !version.isOlderThan(MIN_SUPPORTED_CLIENT_PROTOCOL_VERSION)
-				&& !version.isNewerThan(MAX_SUPPORTED_CLIENT_PROTOCOL_VERSION);
+		return ArrayUtils.contains(SUPPORTED_CLIENT_PROTOCOL_VERSIONS, version);
 	}
 }

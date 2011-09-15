@@ -15,6 +15,7 @@
 package com.l2jfree.gameserver;
 
 import com.l2jfree.ClientProtocolVersion;
+import com.l2jfree.util.ArrayBunch;
 
 /**
  * @author NB4L1
@@ -24,23 +25,21 @@ public enum DatapackVersion
 	FREYA(ClientProtocolVersion.FREYA, ClientProtocolVersion.HIGH_FIVE_UPDATE_3),
 	HIGH_FIVE(ClientProtocolVersion.HIGH_FIVE_UPDATE_3, ClientProtocolVersion.HIGH_FIVE_UPDATE_3);
 	
-	private final ClientProtocolVersion _minimumClientProtocolVersion;
-	private final ClientProtocolVersion _maximumClientProtocolVersion;
+	private final ClientProtocolVersion[] _supportedClientProtocolVersions;
 	
 	private DatapackVersion(ClientProtocolVersion minimumClientProtocolVersion,
 			ClientProtocolVersion maximumClientProtocolVersion)
 	{
-		_minimumClientProtocolVersion = minimumClientProtocolVersion;
-		_maximumClientProtocolVersion = maximumClientProtocolVersion;
+		final ArrayBunch<ClientProtocolVersion> tmp = new ArrayBunch<ClientProtocolVersion>();
+		
+		for (int i = minimumClientProtocolVersion.ordinal(); i <= maximumClientProtocolVersion.ordinal(); i++)
+			tmp.add(ClientProtocolVersion.values()[i]);
+		
+		_supportedClientProtocolVersions = tmp.moveToArray(ClientProtocolVersion.class);
 	}
 	
-	public ClientProtocolVersion getMinimumClientProtocolVersion()
+	public ClientProtocolVersion[] getSupportedClientProtocolVersions()
 	{
-		return _minimumClientProtocolVersion;
-	}
-	
-	public ClientProtocolVersion getMaximumClientProtocolVersion()
-	{
-		return _maximumClientProtocolVersion;
+		return _supportedClientProtocolVersions;
 	}
 }

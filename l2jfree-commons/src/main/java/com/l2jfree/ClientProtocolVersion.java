@@ -20,22 +20,29 @@ package com.l2jfree;
 // dates can be wrong
 public enum ClientProtocolVersion
 {
-	FREYA(216), // 2010-08-24
-	HIGH_FIVE(267), // 2011-02-15
-	HIGH_FIVE_UPDATE_1(268), // 2011-03-15
-	HIGH_FIVE_UPDATE_2(271), // 2011-05-25
-	HIGH_FIVE_UPDATE_3(273); // 2011-06-08
+	FREYA(216, true), // 2010-08-24
+	HIGH_FIVE(267, false), // 2011-02-15
+	HIGH_FIVE_UPDATE_1(268, false), // 2011-03-15
+	HIGH_FIVE_UPDATE_2(271, false), // 2011-05-25
+	HIGH_FIVE_UPDATE_3(273, false); // 2011-06-08
 	
-	private int _version;
+	private final int _version;
+	private final boolean _enabled;
 	
-	private ClientProtocolVersion(int version)
+	private ClientProtocolVersion(int version, boolean enabled)
 	{
 		_version = version;
+		_enabled = enabled;
 	}
 	
 	private int getVersion()
 	{
 		return _version;
+	}
+	
+	public boolean isEnabled()
+	{
+		return _enabled;
 	}
 	
 	public boolean isOlderThan(ClientProtocolVersion version)
@@ -51,7 +58,7 @@ public enum ClientProtocolVersion
 	public static ClientProtocolVersion getByVersion(int version)
 	{
 		for (ClientProtocolVersion cpv : values())
-			if (cpv.getVersion() == version)
+			if (cpv.getVersion() == version && cpv.isEnabled())
 				return cpv;
 		
 		return null;

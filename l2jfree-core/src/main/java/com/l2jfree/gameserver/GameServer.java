@@ -57,7 +57,7 @@ public final class GameServer extends Config
 		if (DatabaseConfig.OPTIMIZE)
 			L2Database.optimize();
 		
-		if (DatabaseConfig.BACKUP_ON_STARTUP)
+		if (DatabaseConfig.BACKUP_ON_STARTUP && !L2Config.LAUNCHED_FROM_IDE)
 			L2Database.backup();
 		
 		Util.printSection("World");
@@ -119,7 +119,7 @@ public final class GameServer extends Config
 				
 				try
 				{
-					if (SystemConfig.DUMP_HEAP_BEFORE_SHUTDOWN)
+					if (SystemConfig.DUMP_HEAP_BEFORE_SHUTDOWN && !L2Config.LAUNCHED_FROM_IDE)
 						L2System.dumpHeap(true);
 				}
 				catch (Throwable t)
@@ -138,7 +138,7 @@ public final class GameServer extends Config
 				
 				try
 				{
-					if (DatabaseConfig.BACKUP_ON_SHUTDOWN)
+					if (DatabaseConfig.BACKUP_ON_SHUTDOWN && !L2Config.LAUNCHED_FROM_IDE)
 						L2Database.backup();
 				}
 				catch (Throwable t)

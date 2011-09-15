@@ -143,6 +143,9 @@ public abstract class L2Config
 	/** A stream where error messages are printed. */
 	public static final PrintStream err = System.err;
 	
+	// TODO temporarily fixed, proper detection required
+	public static boolean LAUNCHED_FROM_IDE = true;
+	
 	static
 	{
 		Locale.setDefault(Locale.ENGLISH);
@@ -695,7 +698,7 @@ public abstract class L2Config
 		_log.info("Server loaded in " + Util.formatNumber(ManagementFactory.getRuntimeMXBean().getUptime())
 				+ " milliseconds.");
 		
-		if (dumpHeap)
+		if (dumpHeap && !L2Config.LAUNCHED_FROM_IDE)
 			L2System.dumpHeap(true);
 		
 		Util.printSection(appName);

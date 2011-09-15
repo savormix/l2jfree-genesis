@@ -15,6 +15,7 @@
 package com.l2jfree.config.converters;
 
 import java.lang.reflect.Array;
+import java.util.Arrays;
 
 import com.l2jfree.lang.L2TextBuilder;
 
@@ -46,6 +47,9 @@ public class DefaultArrayConverter implements Converter
 			Array.set(array, i, getElementConverter().convertFromString(componentType, splitted[i]));
 		}
 		
+		if (Comparable.class.isAssignableFrom(componentType))
+			Arrays.sort((Comparable[])array);
+		
 		return array;
 	}
 	
@@ -56,6 +60,9 @@ public class DefaultArrayConverter implements Converter
 		
 		if (obj == null)
 			return "";
+		
+		if (Comparable.class.isAssignableFrom(componentType))
+			Arrays.sort((Comparable[])obj);
 		
 		final int length = Array.getLength(obj);
 		final L2TextBuilder tb = new L2TextBuilder();

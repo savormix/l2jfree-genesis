@@ -19,6 +19,7 @@ import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SocketChannel;
 import java.util.List;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -39,6 +40,7 @@ import com.l2jfree.util.concurrent.RunnableStatsManager;
  */
 public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2ServerPacket> implements IL2Client
 {
+	private ClientProtocolVersion _version;
 	private final CoreCipher _cipher;
 	private boolean _firstTime;
 	
@@ -214,6 +216,16 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 		tb.append("]");
 		
 		return tb.moveToString();
+	}
+	
+	public ClientProtocolVersion getVersion()
+	{
+		return _version;
+	}
+	
+	public void setVersion(ClientProtocolVersion version)
+	{
+		_version = version;
 	}
 	
 	/**

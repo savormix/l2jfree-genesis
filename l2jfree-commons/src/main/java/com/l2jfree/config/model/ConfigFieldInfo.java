@@ -202,6 +202,12 @@ public final class ConfigFieldInfo
 			out.println("# Default: " + getDefaultValue());
 			if (getField().getType().isEnum())
 				out.println("# Available: " + StringUtils.join(getField().getType().getEnumConstants(), "|"));
+			else if (getField().getType().isArray())
+			{
+				final Class<?> fieldComponentType = getField().getType().getComponentType();
+				if (fieldComponentType.isEnum())
+					out.println("# Available: " + StringUtils.join(fieldComponentType.getEnumConstants(), ","));
+			}
 			out.println("# ");
 			out.println(getName() + " = "
 					+ (mode == null || mode == PrintMode.DEFAULT ? getDefaultValue() : getCurrentValue()));
