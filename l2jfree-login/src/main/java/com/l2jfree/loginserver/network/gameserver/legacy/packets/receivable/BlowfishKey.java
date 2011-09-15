@@ -51,7 +51,7 @@ public final class BlowfishKey extends L2LegacyGameServerPacket
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		// TODO: time-critical packet -> check if blockReadingUntilExecutionIsFinished() is enough
+		// FIXME time-critical packet -> check if isReadingBlocked() is enough
 		
 		// Must stall any packets queued for read!
 		L2LegacyGameServer lgs = getClient();

@@ -387,6 +387,7 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 		return _packetQueue;
 	}
 	
+	// FIXME move buffer operations (parseClientPacket) out of the read/write threads into a client associated queue
 	private volatile boolean _isReadingBlocked;
 	
 	public boolean isReadingBlocked()
