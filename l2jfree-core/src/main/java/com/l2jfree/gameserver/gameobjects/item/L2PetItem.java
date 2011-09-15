@@ -17,41 +17,28 @@ package com.l2jfree.gameserver.gameobjects.item;
 import com.l2jfree.gameserver.templates.L2ItemTemplate;
 
 /**
- * @author NB4L1
+ * @author savormix
  */
-public final class L2EquipableItem extends L2SingularItem
+public final class L2PetItem extends L2SingularItem
 {
 	// TODO
-	private boolean _equipped;
-	private int _enchantLevel;
+	private boolean _named;
+	private int _petLevel;
 	
-	protected L2EquipableItem(L2ItemTemplate template)
+	protected L2PetItem(L2ItemTemplate template)
 	{
 		super(template);
 	}
 	
 	@Override
-	public boolean isEquipable()
-	{
-		return true; // ALWAYS
-	}
-	
-	@Override
-	public boolean isEquipped()
-	{
-		return _equipped;
-	}
-	
-	@Override
 	public int getEnchantLevel()
 	{
-		return _enchantLevel;
+		return _petLevel;
 	}
 	
 	@Override
-	public int getRemainingMana()
+	public boolean isNamed()
 	{
-		// TODO: implement
-		return super.getRemainingMana();
+		return _named;
 	}
 }

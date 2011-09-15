@@ -84,17 +84,17 @@ public abstract class ItemList extends L2ServerPacket
 			
 			buf.writeD(item.getObjectId()); // Item OID
 			buf.writeD(template.getId()); // Item
-			buf.writeD(slot++); // TODO: Slot number (-1 for equipped items, 0..(inv size - 1) for other items)
+			buf.writeD(slot++); // TODO: Slot number (-1 for equipped items, 0..(inv size - 1 - equip count) for other items)
 			buf.writeQ(item.getCount()); // Quantity
-			buf.writeH(0); // Main item type
+			buf.writeH(template.getType()); // Main item type
 			buf.writeH(0); // Special item type
-			buf.writeH(false); // Equipped
-			buf.writeD(0); // Used paperdoll slot(s)
-			buf.writeH(0); // Enchant level
-			buf.writeH(0); // Name exists
+			buf.writeH(item.isEquipped()); // Equipped
+			buf.writeD(template.getEquipSlot().getMask()); // Used paperdoll slot(s)
+			buf.writeH(item.getEnchantLevel()); // Enchant level
+			buf.writeH(item.isNamed()); // Name exists
 			buf.writeD(0); // Augmentation
-			buf.writeD(-1); // Mana left
-			buf.writeD(-9999); // Time remaining
+			buf.writeD(item.getRemainingMana()); // Mana left
+			buf.writeD(item.getRemainingTime()); // Time remaining
 			Element.writeElements(item, buf); // Attack and defense element info
 			// 'enchant effects'
 			buf.writeH(0); // 0

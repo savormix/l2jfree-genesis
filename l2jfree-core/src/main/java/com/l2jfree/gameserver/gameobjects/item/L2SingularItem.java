@@ -41,6 +41,13 @@ public class L2SingularItem extends L2Item
 	}
 	
 	@Override
+	public int getRemainingTime()
+	{
+		// TODO: implement
+		return super.getRemainingTime();
+	}
+	
+	@Override
 	public int getAttackElementPower()
 	{
 		// TODO: implement

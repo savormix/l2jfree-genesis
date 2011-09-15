@@ -66,16 +66,16 @@ public abstract class ExShowScreenMessage extends L2ServerPacket
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
 		buf.writeD(0); // Custom
-		buf.writeD(0); // Message
+		buf.writeD(0); // Message (SM)
 		buf.writeD(0); // Position
 		buf.writeD(0); // ??? 0
 		buf.writeD(0); // Small
 		buf.writeD(0); // ??? 4 or 0
 		buf.writeD(0); // ??? 1
-		buf.writeD(0); // Shifted up
+		buf.writeD(0); // Decorated
 		buf.writeD(0); // Duration
 		buf.writeD(0); // Fade
-		buf.writeD(0); // Message
+		buf.writeD(0); // Message (fstring)
 		buf.writeS(""); // 1st token
 		buf.writeS(""); // 2nd token
 		buf.writeS(""); // 3rd token

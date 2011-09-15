@@ -26,6 +26,7 @@ import com.l2jfree.gameserver.util.PersistentId;
 /**
  * @author NB4L1
  */
+@SuppressWarnings("static-method")
 @KnownListComponent(EmptyObjectKnownList.class)
 public abstract class L2Item extends L2Object implements IElemental
 {
@@ -82,10 +83,34 @@ public abstract class L2Item extends L2Object implements IElemental
 	
 	public abstract boolean isStackable();
 	
-	@SuppressWarnings("static-method")
 	public boolean isEquipable()
 	{
 		return false;
+	}
+	
+	public boolean isEquipped()
+	{
+		return false;
+	}
+	
+	public int getEnchantLevel()
+	{
+		return 0;
+	}
+	
+	public boolean isNamed()
+	{
+		return false;
+	}
+	
+	public int getRemainingMana()
+	{
+		return -1;
+	}
+	
+	public int getRemainingTime()
+	{
+		return -9999;
 	}
 	
 	@Override
