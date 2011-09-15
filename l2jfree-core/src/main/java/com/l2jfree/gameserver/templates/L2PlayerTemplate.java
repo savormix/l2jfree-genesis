@@ -27,8 +27,6 @@ public final class L2PlayerTemplate extends L2Template
 	
 	public L2PlayerTemplate(ClassId classId, PlayerBaseTemplate baseTemplate)
 	{
-		super(-1);
-		
 		_classId = classId;
 		_baseTemplate = baseTemplate;
 	}
@@ -36,6 +34,18 @@ public final class L2PlayerTemplate extends L2Template
 	public ClassId getClassId()
 	{
 		return _classId;
+	}
+	
+	@Override
+	public int getId()
+	{
+		return getClassId().getId();
+	}
+	
+	@Override
+	public String getName()
+	{
+		return getClassId().getName();
 	}
 	
 	public PlayerBaseTemplate getBaseTemplate()

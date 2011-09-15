@@ -19,8 +19,21 @@ package com.l2jfree.gameserver.templates;
  */
 public class L2NpcTemplate extends L2Template
 {
-	public L2NpcTemplate(int id)
+	private final int _npcId;
+	
+	public L2NpcTemplate(int npcId)
 	{
-		super(id);
+		_npcId = npcId;
+	}
+	
+	public int getNpcId()
+	{
+		return _npcId;
+	}
+	
+	@Override
+	public int getId()
+	{
+		return getNpcId();
 	}
 }

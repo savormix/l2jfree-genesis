@@ -19,15 +19,26 @@ package com.l2jfree.gameserver.templates;
  */
 public class L2ItemTemplate extends L2Template
 {
+	private final int _itemId;
 	private final ItemType _type;
 	private final PaperDollSlot _equipSlot;
 	
-	public L2ItemTemplate(int id, ItemType type, PaperDollSlot equipSlot)
+	public L2ItemTemplate(int itemId, ItemType type, PaperDollSlot equipSlot)
 	{
-		super(id);
-		
+		_itemId = itemId;
 		_type = type;
 		_equipSlot = equipSlot;
+	}
+	
+	public int getItemId()
+	{
+		return _itemId;
+	}
+	
+	@Override
+	public int getId()
+	{
+		return getItemId();
 	}
 	
 	public ItemType getType()
