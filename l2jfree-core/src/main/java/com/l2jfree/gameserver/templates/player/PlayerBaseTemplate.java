@@ -21,10 +21,7 @@ public final class PlayerBaseTemplate
 {
 	private final Race _race;
 	private final ClassType _type;
-	private final Gender _gender;
-	
-	private double _collisionRadius;
-	private double _collisionHeight;
+	private final PlayerBaseGenderTemplate[] _genderTemplates;
 	
 	private int _runSpeed;
 	private int _walkSpeed;
@@ -37,7 +34,6 @@ public final class PlayerBaseTemplate
 	private int _attackRange;
 	private int _physicalAttack;
 	private int _breath;
-	private int _safeFallHeight;
 	private int _jump;
 	
 	private int _str;
@@ -47,11 +43,11 @@ public final class PlayerBaseTemplate
 	private int _wit;
 	private int _men;
 	
-	public PlayerBaseTemplate(Race race, ClassType type, Gender gender)
+	public PlayerBaseTemplate(Race race, ClassType type, PlayerBaseGenderTemplate[] genderTemplates)
 	{
 		_race = race;
 		_type = type;
-		_gender = gender;
+		_genderTemplates = genderTemplates;
 	}
 	
 	public Race getRace()
@@ -64,29 +60,9 @@ public final class PlayerBaseTemplate
 		return _type;
 	}
 	
-	public Gender getGender()
+	public PlayerBaseGenderTemplate getGenderTemplate(Gender gender)
 	{
-		return _gender;
-	}
-	
-	public double getCollisionRadius()
-	{
-		return _collisionRadius;
-	}
-	
-	public void setCollisionRadius(double collisionRadius)
-	{
-		_collisionRadius = collisionRadius;
-	}
-	
-	public double getCollisionHeight()
-	{
-		return _collisionHeight;
-	}
-	
-	public void setCollisionHeight(double collisionHeight)
-	{
-		_collisionHeight = collisionHeight;
+		return _genderTemplates[gender.ordinal()];
 	}
 	
 	public int getRunSpeed()
@@ -197,16 +173,6 @@ public final class PlayerBaseTemplate
 	public void setBreath(int breath)
 	{
 		_breath = breath;
-	}
-	
-	public int getSafeFallHeight()
-	{
-		return _safeFallHeight;
-	}
-	
-	public void setSafeFallHeight(int safeFallHeight)
-	{
-		_safeFallHeight = safeFallHeight;
 	}
 	
 	public int getJump()

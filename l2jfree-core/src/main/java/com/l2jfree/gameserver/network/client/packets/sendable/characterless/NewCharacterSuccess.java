@@ -14,11 +14,9 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable.characterless;
 
-import com.l2jfree.gameserver.datatables.PlayerTemplateTable;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.gameserver.templates.player.ClassId;
-import com.l2jfree.gameserver.templates.player.Gender;
 import com.l2jfree.gameserver.templates.player.PlayerBaseTemplate;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
@@ -63,7 +61,7 @@ public abstract class NewCharacterSuccess extends L2ServerPacket
 	private NewCharacterSuccess()
 	{
 		for (int i = 0; i < _baseTemplates.length; i++)
-			_baseTemplates[i] = PlayerTemplateTable.getInstance().getPlayerBaseTemplate(_classes[i], Gender.Male);
+			_baseTemplates[i] = _classes[i].getBaseTemplate();
 	}
 	
 	@Override

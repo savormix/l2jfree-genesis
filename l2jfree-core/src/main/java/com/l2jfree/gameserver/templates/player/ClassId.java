@@ -15,6 +15,7 @@
 package com.l2jfree.gameserver.templates.player;
 
 import com.l2jfree.gameserver.datatables.PlayerTemplateTable;
+import com.l2jfree.gameserver.templates.L2PlayerTemplate;
 import com.l2jfree.util.EnumValues;
 
 /**
@@ -254,9 +255,14 @@ public enum ClassId
 		return _type.isMage() ? ClassType.Mystic : ClassType.Fighter;
 	}
 	
-	public PlayerBaseTemplate getPlayerBaseTemplate(Gender gender)
+	public L2PlayerTemplate getTemplate()
 	{
-		return PlayerTemplateTable.getInstance().getPlayerBaseTemplate(this, gender);
+		return PlayerTemplateTable.getInstance().getTemplate(this);
+	}
+	
+	public PlayerBaseTemplate getBaseTemplate()
+	{
+		return PlayerTemplateTable.getInstance().getBaseTemplate(this);
 	}
 	
 	public static final EnumValues<ClassId> VALUES = new EnumValues<ClassId>(ClassId.class);

@@ -4,6 +4,7 @@ import com.l2jfree.gameserver.templates.L2PlayerTemplate;
 import com.l2jfree.gameserver.templates.player.ClassId;
 import com.l2jfree.gameserver.templates.player.ClassType;
 import com.l2jfree.gameserver.templates.player.Gender;
+import com.l2jfree.gameserver.templates.player.PlayerBaseGenderTemplate;
 import com.l2jfree.gameserver.templates.player.PlayerBaseTemplate;
 import com.l2jfree.gameserver.templates.player.Race;
 import com.l2jfree.util.logging.L2Logger;
@@ -25,7 +26,7 @@ public final class PlayerTemplateTable
 		return SingletonHolder.INSTANCE;
 	}
 	
-	private final PlayerBaseTemplate[][][] _playerBaseTemplates;
+	private final PlayerBaseTemplate[][] _playerBaseTemplates;
 	private final L2PlayerTemplate[] _playerTemplates = new L2PlayerTemplate[ClassId.VALUES.length()];
 	
 	private PlayerTemplateTable()
@@ -34,24 +35,25 @@ public final class PlayerTemplateTable
 		final ClassType[] types = new ClassType[] { ClassType.Fighter, ClassType.Mystic };
 		final Gender[] genders = Gender.values();
 		
-		final PlayerBaseTemplate[][][] tmp = new PlayerBaseTemplate[races.length][types.length][genders.length];
+		final PlayerBaseTemplate[][] baseTemplates = new PlayerBaseTemplate[races.length][types.length];
 		
 		for (Race race : races)
 		{
 			for (ClassType type : types)
 			{
+				if (race == Race.Dwarf || race == Race.Kamael)
+					if (type == ClassType.Mystic)
+						continue;
+				
+				final PlayerBaseGenderTemplate[] genderTemplate = new PlayerBaseGenderTemplate[Gender.VALUES.length()];
 				for (Gender gender : genders)
-				{
-					if (race == Race.Dwarf || race == Race.Kamael)
-						if (type == ClassType.Mystic)
-							continue;
-					
-					tmp[race.ordinal()][type.ordinal()][gender.ordinal()] = new PlayerBaseTemplate(race, type, gender);
-				}
+					genderTemplate[gender.ordinal()] = new PlayerBaseGenderTemplate(gender);
+				
+				baseTemplates[race.ordinal()][type.ordinal()] = new PlayerBaseTemplate(race, type, genderTemplate);
 			}
 		}
 		
-		_playerBaseTemplates = tmp;
+		_playerBaseTemplates = baseTemplates;
 		
 		// TODO load xml
 		
@@ -60,26 +62,26 @@ public final class PlayerTemplateTable
 			if (classId.isDummy())
 				continue;
 			
-			final PlayerBaseTemplate[] playerBaseTemplates =
+			final PlayerBaseTemplate playerBaseTemplate =
 					_playerBaseTemplates[classId.getRace().ordinal()][classId.getBaseType().ordinal()];
 			
-			_playerTemplates[classId.ordinal()] = new L2PlayerTemplate(classId, playerBaseTemplates);
+			_playerTemplates[classId.ordinal()] = new L2PlayerTemplate(classId, playerBaseTemplate);
 		}
 		
 		_log.info("PlayerTemplateTable: Initialized.");
 	}
 	
-	public PlayerBaseTemplate getPlayerBaseTemplate(ClassId classId, Gender gender)
+	public PlayerBaseTemplate getBaseTemplate(ClassId classId)
 	{
-		return getPlayerBaseTemplate(classId.getRace(), classId.getBaseType(), gender);
+		return getBaseTemplate(classId.getRace(), classId.getBaseType());
 	}
 	
-	public PlayerBaseTemplate getPlayerBaseTemplate(Race race, ClassType type, Gender gender)
+	public PlayerBaseTemplate getBaseTemplate(Race race, ClassType type)
 	{
-		return _playerBaseTemplates[race.ordinal()][type.ordinal()][gender.ordinal()];
+		return _playerBaseTemplates[race.ordinal()][type.ordinal()];
 	}
 	
-	public L2PlayerTemplate getPlayerTemplate(ClassId classId)
+	public L2PlayerTemplate getTemplate(ClassId classId)
 	{
 		return _playerTemplates[classId.ordinal()];
 	}

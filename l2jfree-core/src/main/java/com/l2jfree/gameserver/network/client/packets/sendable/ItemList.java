@@ -79,11 +79,11 @@ public abstract class ItemList extends L2ServerPacket
 		buf.writeH(_items.size()); // Item count
 		for (L2Item item : _items)
 		{
-			L2ItemTemplate temp = item.getTemplate();
+			final L2ItemTemplate template = item.getTemplate();
 			int slot = 0;
 			
 			buf.writeD(item.getObjectId()); // Item OID
-			buf.writeD(temp.getId()); // Item
+			buf.writeD(template.getId()); // Item
 			buf.writeD(slot++); // TODO: Slot number (-1 for equipped items, 0..(inv size - 1) for other items)
 			buf.writeQ(item.getCount()); // Quantity
 			buf.writeH(0); // Main item type

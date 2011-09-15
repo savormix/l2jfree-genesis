@@ -15,7 +15,6 @@
 package com.l2jfree.gameserver.gameobjects;
 
 import com.l2jfree.gameserver.datatables.PlayerNameTable;
-import com.l2jfree.gameserver.datatables.PlayerTemplateTable;
 import com.l2jfree.gameserver.gameobjects.components.AppearanceComponent;
 import com.l2jfree.gameserver.gameobjects.components.InventoryComponent;
 import com.l2jfree.gameserver.gameobjects.components.KnownListComponent;
@@ -90,7 +89,7 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 	
 	public L2Player(PlayerDB playerDB)
 	{
-		super(PlayerTemplateTable.getInstance().getPlayerTemplate(playerDB.activeClassId));
+		super(playerDB.activeClassId.getTemplate());
 		getPosition().init(playerDB);
 		
 		_persistentId = playerDB.getPersistentId();

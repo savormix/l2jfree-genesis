@@ -82,9 +82,9 @@ public abstract class ExQuestItemList extends L2ServerPacket
 		buf.writeH(_items.size()); // Item count
 		for (L2Item item : _items)
 		{
-			L2ItemTemplate temp = item.getTemplate();
+			final L2ItemTemplate template = item.getTemplate();
 			buf.writeD(item.getObjectId()); // Item OID
-			buf.writeD(temp.getId()); // Item
+			buf.writeD(template.getId()); // Item
 			buf.writeD(-1); // Slot number (always -1 (auto))
 			buf.writeQ(item.getCount()); // Quantity
 			buf.writeH(3); // Main item type (quest item)

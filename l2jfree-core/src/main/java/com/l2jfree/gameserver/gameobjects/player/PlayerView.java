@@ -27,6 +27,7 @@ import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerView;
 import com.l2jfree.gameserver.gameobjects.item.L2EquipableItem;
 import com.l2jfree.gameserver.gameobjects.player.PlayerInventory.PaperDollSlot;
 import com.l2jfree.gameserver.templates.player.Gender;
+import com.l2jfree.gameserver.templates.player.PlayerBaseGenderTemplate;
 import com.l2jfree.gameserver.templates.player.PlayerBaseTemplate;
 import com.l2jfree.gameserver.templates.player.Race;
 import com.l2jfree.gameserver.util.ObjectId;
@@ -829,7 +830,8 @@ public class PlayerView extends CharacterView implements IPlayerView
 		final L2Player p = getActiveChar();
 		final PlayerAppearance appearance = p.getAppearance();
 		final IPlayerStat stat = p.getStat();
-		final PlayerBaseTemplate baseTemplate = p.getTemplate().getPlayerBaseTemplate(appearance.getGender());
+		final PlayerBaseTemplate baseTemplate = p.getTemplate().getBaseTemplate();
+		final PlayerBaseGenderTemplate genderTemplate = baseTemplate.getGenderTemplate(appearance.getGender());
 		//final IPlayerInventory inv = p.getInventory();
 		//final L2Transformation transformation = p.getTransformation();
 		
@@ -986,8 +988,8 @@ public class PlayerView extends CharacterView implements IPlayerView
 		}
 		else*/
 		{
-			_collisionRadius = baseTemplate.getCollisionRadius();
-			_collisionHeight = baseTemplate.getCollisionHeight();
+			_collisionRadius = genderTemplate.getCollisionRadius();
+			_collisionHeight = genderTemplate.getCollisionHeight();
 		}
 		
 		// TODO
