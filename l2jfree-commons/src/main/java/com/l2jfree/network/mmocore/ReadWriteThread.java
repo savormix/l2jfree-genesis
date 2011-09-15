@@ -322,6 +322,11 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 					parseClientPacket(buf, size, con);
 					buf.position(pos + size);
 				}
+				else
+				{
+					// let's report error to trigger protection
+					getMMOController().report(ErrorMode.EMPTY_PACKET, con, null, null);
+				}
 				
 				return true;
 			}

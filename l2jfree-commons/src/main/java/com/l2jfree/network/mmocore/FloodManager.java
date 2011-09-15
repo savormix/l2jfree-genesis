@@ -30,6 +30,7 @@ public final class FloodManager
 {
 	public static enum ErrorMode
 	{
+		EMPTY_PACKET,
 		INVALID_OPCODE,
 		INVALID_STATE,
 		BUFFER_UNDER_FLOW,
