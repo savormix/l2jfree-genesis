@@ -233,6 +233,31 @@ public final class MMOBuffer
 	}
 	
 	/**
+	 * Writes a signed integer as a single byte. <BR>
+	 * <BR>
+	 * If the given value is out of bounds, it is truncated.
+	 * 
+	 * @param value an enum whose ordinal value will be written
+	 */
+	public void writeC(Enum<?> value)
+	{
+		_buffer.put(value == null ? 0 : (byte)value.ordinal());
+	}
+	
+	/**
+	 * Writes a signed integer as a single byte. <BR>
+	 * <BR>
+	 * If the given value is out of bounds, it is truncated.
+	 * 
+	 * @param value a number from the interval [{@link java.lang.Byte#MIN_VALUE};
+	 *            {@link java.lang.Byte#MAX_VALUE}]
+	 */
+	public void writeC(Number value)
+	{
+		_buffer.put(value == null ? 0 : value.byteValue());
+	}
+	
+	/**
 	 * Writes a boolean as a word (two bytes).
 	 * 
 	 * @param value <TT>true</TT> or <TT>false</TT>
@@ -253,6 +278,31 @@ public final class MMOBuffer
 	public void writeH(int value)
 	{
 		_buffer.putShort((short)value);
+	}
+	
+	/**
+	 * Writes a signed integer as a word (two bytes). <BR>
+	 * <BR>
+	 * If the given value is out of bounds, it is truncated.
+	 * 
+	 * @param value an enum whose ordinal value will be written
+	 */
+	public void writeH(Enum<?> value)
+	{
+		_buffer.putShort(value == null ? 0 : (short)value.ordinal());
+	}
+	
+	/**
+	 * Writes a signed integer as a word (two bytes). <BR>
+	 * <BR>
+	 * If the given value is out of bounds, it is truncated.
+	 * 
+	 * @param value a number from the interval [{@link java.lang.Short#MIN_VALUE};
+	 *            {@link java.lang.Short#MAX_VALUE}]
+	 */
+	public void writeH(Number value)
+	{
+		_buffer.putShort(value == null ? 0 : value.shortValue());
 	}
 	
 	/**
@@ -283,7 +333,7 @@ public final class MMOBuffer
 	 */
 	public void writeD(Enum<?> value)
 	{
-		_buffer.putInt(value.ordinal());
+		_buffer.putInt(value == null ? 0 : value.ordinal());
 	}
 	
 	/**
