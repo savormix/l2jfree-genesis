@@ -27,8 +27,8 @@ public final class PlayerBaseTemplate
 	private int _walkSpeed;
 	private int _runSpeedInWater;
 	private int _walkSpeedInWater;
-	private int _runSpeedFlying;
-	private int _walkSpeedFlying;
+	private int _runSpeedInAir;
+	private int _walkSpeedInAir;
 	private int _runSpeedNoble; // TODO find out what this is
 	private int _walkSpeedNoble; // TODO find out what this is
 	private int _attackRange;
@@ -105,24 +105,24 @@ public final class PlayerBaseTemplate
 		_walkSpeedInWater = walkSpeedInWater;
 	}
 	
-	public int getWalkSpeedFlying()
+	public int getWalkSpeedInAir()
 	{
-		return _walkSpeedFlying;
+		return _walkSpeedInAir;
 	}
 	
-	public void setWalkSpeedFlying(int walkSpeedFlying)
+	public void setWalkSpeedInAir(int walkSpeedInAir)
 	{
-		_walkSpeedFlying = walkSpeedFlying;
+		_walkSpeedInAir = walkSpeedInAir;
 	}
 	
-	public int getRunSpeedFlying()
+	public int getRunSpeedInAir()
 	{
-		return _runSpeedFlying;
+		return _runSpeedInAir;
 	}
 	
-	public void setRunSpeedFlying(int runSpeedFlying)
+	public void setRunSpeedInAir(int runSpeedInAir)
 	{
-		_runSpeedFlying = runSpeedFlying;
+		_runSpeedInAir = runSpeedInAir;
 	}
 	
 	public int getWalkSpeedNoble()
