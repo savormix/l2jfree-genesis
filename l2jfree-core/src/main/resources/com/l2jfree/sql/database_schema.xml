@@ -27,6 +27,8 @@
 				face			SMALLINT		NOT NULL,
 				hairColor		SMALLINT		NOT NULL,
 				hairStyle		SMALLINT		NOT NULL,
+				nameColor		CHAR(6),
+				titleColor		CHAR(6),
 				
 				PRIMARY KEY (persistentId)
 			);

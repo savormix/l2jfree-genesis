@@ -90,7 +90,7 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 	public L2Player(PlayerDB playerDB)
 	{
 		super(playerDB.activeClassId.getTemplate());
-		getPosition().init(playerDB);
+		getPosition().load(playerDB);
 		
 		_persistentId = playerDB.getPersistentId();
 		_creationTime = playerDB.creationTime;
@@ -100,7 +100,7 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 		_activeClassId = playerDB.activeClassId;
 		
 		_appearance = AppearanceComponent.FACTORY.getComponent(this);
-		getAppearance().init(playerDB);
+		getAppearance().load(playerDB);
 		
 		setName(playerDB.name);
 	}

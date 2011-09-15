@@ -30,8 +30,6 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import com.l2jfree.gameserver.gameobjects.L2Player;
-import com.l2jfree.gameserver.gameobjects.ObjectPosition;
-import com.l2jfree.gameserver.gameobjects.player.PlayerAppearance;
 import com.l2jfree.gameserver.templates.player.ClassId;
 import com.l2jfree.gameserver.templates.player.Gender;
 import com.l2jfree.gameserver.util.IdFactory;
@@ -95,6 +93,12 @@ public class PlayerDB extends L2DBEntity
 	
 	@Column(name = "hairStyle", nullable = false, table = "player_appearances")
 	public byte hairStyle;
+	
+	@Column(name = "nameColor", length = 6, table = "player_appearances")
+	public String nameColor;
+	
+	@Column(name = "titleColor", length = 6, table = "player_appearances")
+	public String titleColor;
 	// Appearance
 	
 	// Position
@@ -210,18 +214,10 @@ public class PlayerDB extends L2DBEntity
 			playerDB.activeClassId = player.getActiveClassId();
 			
 			// Appearance
-			final PlayerAppearance appearance = player.getAppearance();
-			playerDB.gender = appearance.getGender();
-			playerDB.face = appearance.getFace();
-			playerDB.hairColor = appearance.getHairColor();
-			playerDB.hairStyle = appearance.getHairStyle();
+			player.getAppearance().store(playerDB);
 			
 			// Position
-			final ObjectPosition position = player.getPosition();
-			playerDB.x = position.getX();
-			playerDB.y = position.getY();
-			playerDB.z = position.getZ();
-			playerDB.heading = position.getHeading();
+			player.getPosition().store(playerDB);
 			
 			L2Database.merge(playerDB);
 		}

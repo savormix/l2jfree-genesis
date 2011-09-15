@@ -81,7 +81,7 @@ public final class PersistentId extends Number implements Comparable<PersistentI
 	@Override
 	public boolean equals(Object obj)
 	{
-		if (!(obj instanceof ObjectId))
+		if (!(obj instanceof PersistentId))
 			return false;
 		
 		return _value == ((PersistentId)obj)._value;

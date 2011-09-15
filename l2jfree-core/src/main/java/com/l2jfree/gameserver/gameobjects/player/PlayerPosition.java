@@ -28,11 +28,19 @@ public class PlayerPosition extends ObjectPosition
 		super(activeChar);
 	}
 	
-	public void init(PlayerDB playerDB)
+	public void load(PlayerDB playerDB)
 	{
 		setXYZ(playerDB.x, playerDB.y, playerDB.z);
 		
 		setHeading(playerDB.heading);
+	}
+	
+	public void store(PlayerDB playerDB)
+	{
+		playerDB.x = getX();
+		playerDB.y = getY();
+		playerDB.z = getZ();
+		playerDB.heading = getHeading();
 	}
 	
 	@Override

@@ -18,6 +18,7 @@ import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.gameobjects.components.IComponent;
 import com.l2jfree.gameserver.sql.PlayerDB;
 import com.l2jfree.gameserver.templates.player.Gender;
+import com.l2jfree.util.HexUtil;
 
 /**
  * @author NB4L1
@@ -25,28 +26,52 @@ import com.l2jfree.gameserver.templates.player.Gender;
 // TODO sql
 public class PlayerAppearance implements IComponent
 {
+	/** The default hexadecimal color of players' name (white is 0xFFFFFF) */
+	public static final int DEFAULT_NAME_COLOR = 0xFFFFFF;
+	/** The default hexadecimal color of players' title (light blue is 0xFFFF77) */
+	public static final int DEFAULT_TITLE_COLOR = 0xFFFF77;
+	
 	private final L2Player _activeChar;
 	
 	private Gender _gender;
 	private byte _face;
 	private byte _hairColor;
 	private byte _hairStyle;
-	private int _nameColor;
-	private int _titleColor;
+	private int _nameColor = DEFAULT_NAME_COLOR;
+	private int _titleColor = DEFAULT_TITLE_COLOR;
 	
 	public PlayerAppearance(L2Player activeChar)
 	{
 		_activeChar = activeChar;
 	}
 	
-	public void init(PlayerDB playerDB)
+	public void load(PlayerDB playerDB)
 	{
 		_gender = playerDB.gender;
 		_face = playerDB.face;
 		_hairColor = playerDB.hairColor;
 		_hairStyle = playerDB.hairStyle;
-		//TODO _nameColor = playerDB.nameColor;
-		//TODO_titleColor = playerDB.nameColor;
+		if (playerDB.nameColor != null)
+			_nameColor = reverseRGBChanels(Integer.decode("0x" + playerDB.nameColor));
+		if (playerDB.titleColor != null)
+			_titleColor = reverseRGBChanels(Integer.decode("0x" + playerDB.titleColor));
+	}
+	
+	public void store(PlayerDB playerDB)
+	{
+		playerDB.gender = _gender;
+		playerDB.face = _face;
+		playerDB.hairColor = _hairColor;
+		playerDB.hairStyle = _hairStyle;
+		if (_nameColor != DEFAULT_NAME_COLOR)
+			playerDB.nameColor = HexUtil.fillHex(reverseRGBChanels(_nameColor), 6);
+		if (_titleColor != DEFAULT_TITLE_COLOR)
+			playerDB.titleColor = HexUtil.fillHex(reverseRGBChanels(_titleColor), 6);
+	}
+	
+	private static int reverseRGBChanels(int rgbColor)
+	{
+		return (Integer.reverseBytes(rgbColor) >> 8) & 0xFFFFFF;
 	}
 	
 	public final L2Player getActiveChar()
@@ -99,8 +124,28 @@ public class PlayerAppearance implements IComponent
 		return _nameColor;
 	}
 	
+	public void setNameColor(int nameColor)
+	{
+		_nameColor = nameColor;
+	}
+	
+	public void setNameColor(int red, int green, int blue)
+	{
+		setNameColor((red & 0xFF) + ((green & 0xFF) << 8) + ((blue & 0xFF) << 16));
+	}
+	
 	public int getTitleColor()
 	{
 		return _titleColor;
+	}
+	
+	public void setTitleColor(int titleColor)
+	{
+		_titleColor = titleColor;
+	}
+	
+	public void setTitleColor(int red, int green, int blue)
+	{
+		setTitleColor((red & 0xFF) + ((green & 0xFF) << 8) + ((blue & 0xFF) << 16));
 	}
 }
