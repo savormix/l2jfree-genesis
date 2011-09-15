@@ -35,6 +35,9 @@ public @interface ViewComponent
 {
 	public Class<? extends ICharacterView> value();
 	
-	public static final ComponentFactory<L2Character, ICharacterView> FACTORY =
-			new ComponentFactory<L2Character, ICharacterView>(L2Character.class, ViewComponent.class);
+	public static final class Factory
+	{
+		public static final ComponentFactory<L2Character, ICharacterView> INSTANCE =
+				new ComponentFactory<L2Character, ICharacterView>(L2Character.class, ViewComponent.class);
+	}
 }

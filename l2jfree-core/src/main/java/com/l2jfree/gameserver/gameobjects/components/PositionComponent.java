@@ -35,6 +35,9 @@ public @interface PositionComponent
 {
 	public Class<? extends ObjectPosition> value();
 	
-	public static final ComponentFactory<L2Object, ObjectPosition> FACTORY =
-			new ComponentFactory<L2Object, ObjectPosition>(L2Object.class, PositionComponent.class);
+	public static final class Factory
+	{
+		public static final ComponentFactory<L2Object, ObjectPosition> INSTANCE =
+				new ComponentFactory<L2Object, ObjectPosition>(L2Object.class, PositionComponent.class);
+	}
 }

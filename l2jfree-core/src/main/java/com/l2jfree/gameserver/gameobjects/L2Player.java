@@ -101,7 +101,7 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 		_mainClassId = playerDB.mainClassId;
 		_activeClassId = playerDB.activeClassId;
 		
-		_appearance = AppearanceComponent.FACTORY.getComponent(this);
+		_appearance = AppearanceComponent.Factory.INSTANCE.getComponent(this);
 		getAppearance().load(playerDB);
 		
 		setName(playerDB.name);

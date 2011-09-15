@@ -35,6 +35,9 @@ public @interface InventoryComponent
 {
 	public Class<? extends IInventory> value();
 	
-	public static final ComponentFactory<L2Character, IInventory> FACTORY =
-			new ComponentFactory<L2Character, IInventory>(L2Character.class, InventoryComponent.class);
+	public static final class Factory
+	{
+		public static final ComponentFactory<L2Character, IInventory> INSTANCE =
+				new ComponentFactory<L2Character, IInventory>(L2Character.class, InventoryComponent.class);
+	}
 }

@@ -38,9 +38,9 @@ public abstract class L2Character extends L2Object implements IL2Character
 	{
 		super(template);
 		
-		_stat = StatComponent.FACTORY.getComponent(this);
-		_view = ViewComponent.FACTORY.getComponent(this);
-		_inventory = InventoryComponent.FACTORY.getComponent(this);
+		_stat = StatComponent.Factory.INSTANCE.getComponent(this);
+		_view = ViewComponent.Factory.INSTANCE.getComponent(this);
+		_inventory = InventoryComponent.Factory.INSTANCE.getComponent(this);
 	}
 	
 	@Override

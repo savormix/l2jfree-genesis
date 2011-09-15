@@ -35,6 +35,9 @@ public @interface KnownListComponent
 {
 	public Class<? extends IObjectKnownList> value();
 	
-	public static final ComponentFactory<L2Object, IObjectKnownList> FACTORY =
-			new ComponentFactory<L2Object, IObjectKnownList>(L2Object.class, KnownListComponent.class);
+	public static final class Factory
+	{
+		public static final ComponentFactory<L2Object, IObjectKnownList> INSTANCE =
+				new ComponentFactory<L2Object, IObjectKnownList>(L2Object.class, KnownListComponent.class);
+	}
 }

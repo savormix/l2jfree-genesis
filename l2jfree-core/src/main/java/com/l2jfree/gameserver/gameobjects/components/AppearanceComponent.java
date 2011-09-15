@@ -35,6 +35,9 @@ public @interface AppearanceComponent
 {
 	public Class<? extends PlayerAppearance> value();
 	
-	public static final ComponentFactory<L2Player, PlayerAppearance> FACTORY =
-			new ComponentFactory<L2Player, PlayerAppearance>(L2Player.class, AppearanceComponent.class);
+	public static final class Factory
+	{
+		public static final ComponentFactory<L2Player, PlayerAppearance> INSTANCE =
+				new ComponentFactory<L2Player, PlayerAppearance>(L2Player.class, AppearanceComponent.class);
+	}
 }

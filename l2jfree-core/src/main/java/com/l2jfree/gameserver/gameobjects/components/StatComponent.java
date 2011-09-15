@@ -35,6 +35,9 @@ public @interface StatComponent
 {
 	public Class<? extends ICharacterStat> value();
 	
-	public static final ComponentFactory<L2Character, ICharacterStat> FACTORY =
-			new ComponentFactory<L2Character, ICharacterStat>(L2Character.class, StatComponent.class);
+	public static final class Factory
+	{
+		public static final ComponentFactory<L2Character, ICharacterStat> INSTANCE =
+				new ComponentFactory<L2Character, ICharacterStat>(L2Character.class, StatComponent.class);
+	}
 }

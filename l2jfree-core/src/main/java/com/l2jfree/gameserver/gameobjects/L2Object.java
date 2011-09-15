@@ -45,8 +45,8 @@ public abstract class L2Object implements IL2Object
 		_objectId = IdFactory.getInstance().getNextObjectId(getIdRange());
 		_template = template;
 		
-		_position = PositionComponent.FACTORY.getComponent(this);
-		_knownList = KnownListComponent.FACTORY.getComponent(this);
+		_position = PositionComponent.Factory.INSTANCE.getComponent(this);
+		_knownList = KnownListComponent.Factory.INSTANCE.getComponent(this);
 	}
 	
 	@SuppressWarnings("static-method")
