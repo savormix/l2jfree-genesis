@@ -30,18 +30,25 @@ import com.l2jfree.util.ArrayBunch;
  * @author NB4L1
  */
 @ConfigClass(folderName = "config", fileName = "version", comment = { "WARNING!", //
-		"Be aware to don't set client versions lower than required version determined by the datapack version!" })
+		"Be aware to don't set client versions not supported by the datapack version!" })
 public final class VersionConfig extends ConfigPropertiesLoader
 {
-	@ConfigField(name = "SupportedClientProtocolVersions", value = "FREYA", eternal = true, comment = { })
-	public static ClientProtocolVersion[] SUPPORTED_CLIENT_PROTOCOL_VERSIONS;
-	
 	@ConfigField(name = "DatapackVersion", value = "FREYA", eternal = true, comment = { })
 	public static DatapackVersion DATAPACK_VERSION;
+	
+	@ConfigField(name = "SupportedClientProtocolVersions", value = "FREYA", eternal = true, comment = { })
+	public static ClientProtocolVersion[] SUPPORTED_CLIENT_PROTOCOL_VERSIONS;
 	
 	@Override
 	protected void loadImpl(L2Properties properties)
 	{
+		if (!DATAPACK_VERSION.isEnabled())
+		{
+			System.err.println("Configured datapack version (" + DATAPACK_VERSION + ") is disabled!");
+			
+			Shutdown.exit(TerminationStatus.RUNTIME_INVALID_CONFIGURATION);
+		}
+		
 		final ArrayBunch<ClientProtocolVersion> tmp = new ArrayBunch<ClientProtocolVersion>();
 		
 		for (ClientProtocolVersion cpv : SUPPORTED_CLIENT_PROTOCOL_VERSIONS)
