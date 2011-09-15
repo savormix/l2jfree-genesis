@@ -18,9 +18,10 @@
 			CREATE UNIQUE INDEX name			ON players (name);
 			CREATE        INDEX accountName		ON players (accountName);
 	" />
-	<table name="player_appearances" definition="
-				CREATE TABLE player_appearances (
-				
+	<table name="player_appearances"
+		definition="
+			CREATE TABLE player_appearances (
+			
 				persistentId	INT				NOT NULL,
 				gender			SMALLINT		NOT NULL,
 				face			SMALLINT		NOT NULL,
@@ -30,8 +31,9 @@
 				PRIMARY KEY (persistentId)
 			);
 	" />
-	<table name="player_positions" definition="
-				CREATE TABLE player_positions (
+	<table name="player_positions"
+		definition="
+			CREATE TABLE player_positions (
 				
 				persistentId	INT				NOT NULL,
 				x				INT,
@@ -40,6 +42,17 @@
 				heading			INT,
 				
 				PRIMARY KEY (persistentId)
+			);
+	" />
+	<table name="persistent_properties"
+		definition="
+			CREATE TABLE persistent_properties (
+				
+				className		VARCHAR(255)	NOT NULL,
+				propertyName	VARCHAR(255)	NOT NULL,
+				propertyValue	TEXT			NOT NULL,
+				
+				PRIMARY KEY (className, propertyName)
 			);
 	" />
 </database>

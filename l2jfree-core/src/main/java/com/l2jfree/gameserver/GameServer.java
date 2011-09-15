@@ -28,6 +28,7 @@ import com.l2jfree.gameserver.gameobjects.components.ComponentFactory;
 import com.l2jfree.gameserver.network.client.Disconnection;
 import com.l2jfree.gameserver.network.client.L2ClientConnections;
 import com.l2jfree.gameserver.network.client.L2ClientSecurity;
+import com.l2jfree.gameserver.sql.PersistentProperties;
 import com.l2jfree.gameserver.sql.PlayerDB;
 import com.l2jfree.gameserver.templates.player.ClassId;
 import com.l2jfree.gameserver.util.IdFactory;
@@ -35,6 +36,7 @@ import com.l2jfree.gameserver.util.IdFactory.IdRange;
 import com.l2jfree.gameserver.world.L2World;
 import com.l2jfree.lang.L2System;
 import com.l2jfree.sql.L2Database;
+import com.l2jfree.sql.SQLQueryQueue;
 import com.l2jfree.util.Rnd;
 
 /**
@@ -61,9 +63,11 @@ public final class GameServer extends Config
 		Util.printSection("World");
 		
 		IdFactory.getInstance();
+		SQLQueryQueue.getInstance();
 		
 		L2Config.load(L2World.class);
 		L2Config.load(ComponentFactory.class);
+		L2Config.load(PersistentProperties.class);
 		
 		PlayerNameTable.getInstance();
 		
@@ -108,6 +112,10 @@ public final class GameServer extends Config
 						_log.warn("Orderly shutdown sequence interrupted", t);
 					}
 				}
+				
+				PersistentProperties.store();
+				
+				SQLQueryQueue.getInstance().executeNow();
 				
 				try
 				{

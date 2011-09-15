@@ -29,7 +29,7 @@ public abstract class FIFOExecutableQueue implements Runnable
 	
 	private volatile byte _state = NONE;
 	
-	protected final void execute()
+	public final void execute()
 	{
 		lock();
 		try
@@ -47,7 +47,7 @@ public abstract class FIFOExecutableQueue implements Runnable
 		L2ThreadPool.execute(this);
 	}
 	
-	protected final void executeNow()
+	public final void executeNow()
 	{
 		lock();
 		try
