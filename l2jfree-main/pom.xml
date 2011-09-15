@@ -223,5 +223,6 @@
     <module>../l2jfree-commons</module>
     <module>../l2jfree-login</module>
     <module>../l2jfree-core</module>
+    <module>../l2jfree-datapack</module>
   </modules>
 </project>
