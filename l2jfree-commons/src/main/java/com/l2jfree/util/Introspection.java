@@ -14,9 +14,11 @@
  */
 package com.l2jfree.util;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 
@@ -188,18 +190,8 @@ public final class Introspection
 				Object val = f.get(accessor);
 				if (accessor == val)
 					dest.append("this");
-				else if (val instanceof boolean[])
-					dest.append(Arrays.toString((boolean[])val));
-				else if (val instanceof int[])
-					dest.append(Arrays.toString((int[])val));
-				else if (val instanceof long[])
-					dest.append(Arrays.toString((long[])val));
-				else if (val instanceof double[])
-					dest.append(Arrays.toString((double[])val));
-				else if (val instanceof Object[])
-					dest.append(Arrays.deepToString((Object[])val));
 				else
-					dest.append(val);
+					deepToString(val, dest, null);
 			}
 			catch (Exception e)
 			{
@@ -220,5 +212,54 @@ public final class Introspection
 				dest.append(eol);
 		}
 		return !init;
+	}
+	
+	private static void deepToString(Object obj, StringBuilder dest, Set<Object> dejaVu) throws SecurityException,
+			NoSuchMethodException
+	{
+		if (obj == null)
+		{
+			dest.append("null");
+			return;
+		}
+		
+		if (obj.getClass().isArray())
+		{
+			final int length = Array.getLength(obj);
+			
+			if (length == 0)
+			{
+				dest.append("[]");
+				return;
+			}
+			
+			if (dejaVu == null)
+				dejaVu = new HashSet<Object>();
+			dejaVu.add(obj);
+			
+			dest.append('[');
+			for (int i = 0; i < length; i++)
+			{
+				if (i != 0)
+					dest.append(", ");
+				
+				final Object element = Array.get(obj, i);
+				
+				if (dejaVu.contains(element))
+					dest.append("[...]");
+				else
+					deepToString(element, dest, dejaVu);
+			}
+			dest.append(']');
+			
+			dejaVu.remove(obj);
+		}
+		else
+		{
+			if (obj.getClass().getMethod("toString").getDeclaringClass() == Object.class)
+				dest.append(Introspection.toString(obj));
+			else
+				dest.append(obj.toString());
+		}
 	}
 }

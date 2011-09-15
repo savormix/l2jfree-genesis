@@ -105,6 +105,11 @@ public final class L2Properties implements Serializable
 		load(properties);
 	}
 	
+	public L2Properties(L2Properties properties)
+	{
+		load(properties);
+	}
+	
 	// ===================================================================================
 	
 	public void load(String name) throws IOException
@@ -164,6 +169,12 @@ public final class L2Properties implements Serializable
 	public void load(Properties properties)
 	{
 		for (Map.Entry<Object, Object> entry : properties.entrySet())
+			setProperty(entry.getKey(), entry.getValue());
+	}
+	
+	public void load(L2Properties properties)
+	{
+		for (Map.Entry<String, String> entry : properties.entrySet())
 			setProperty(entry.getKey(), entry.getValue());
 	}
 	
