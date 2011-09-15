@@ -19,6 +19,8 @@ import java.util.NoSuchElementException;
 
 import org.w3c.dom.Node;
 
+import com.l2jfree.config.L2Properties;
+
 /**
  * @author NB4L1
  */
@@ -143,5 +145,15 @@ public final class L2XML
 			return attr.getNodeValue();
 		
 		return defaultValue;
+	}
+	
+	public static L2Properties getSetters(Node node)
+	{
+		final L2Properties result = new L2Properties();
+		
+		for (Node n : L2XML.listNodesByNodeName(node, "set"))
+			result.load(n);
+		
+		return result;
 	}
 }

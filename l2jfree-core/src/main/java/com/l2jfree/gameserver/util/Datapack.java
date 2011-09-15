@@ -63,4 +63,9 @@ public final class Datapack
 				throw new IllegalStateException(VersionConfig.DATAPACK_VERSION + " isn't supported yet!");
 		}
 	}
+	
+	public static File getDatapackFile(String relativePathToDataFolder)
+	{
+		return new File(getDataFolder(), relativePathToDataFolder);
+	}
 }
