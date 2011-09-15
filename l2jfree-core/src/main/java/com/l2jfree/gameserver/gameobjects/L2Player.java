@@ -35,6 +35,8 @@ import com.l2jfree.gameserver.network.client.Disconnection;
 import com.l2jfree.gameserver.network.client.EmptyClient;
 import com.l2jfree.gameserver.network.client.IL2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
+import com.l2jfree.gameserver.network.client.packets.sendable.CreatureSay.Chat;
+import com.l2jfree.gameserver.network.client.packets.sendable.CreatureSay.ChatMessage;
 import com.l2jfree.gameserver.sql.PlayerDB;
 import com.l2jfree.gameserver.templates.L2PlayerTemplate;
 import com.l2jfree.gameserver.templates.player.ClassId;
@@ -346,5 +348,12 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 	{
 		return _destinationZ;
 	}
+	
 	// -------------------------
+	
+	public void sendCMessage(Chat chatType, String sender, String message)
+	{
+		ChatMessage cm = new ChatMessage(chatType, sender, message);
+		sendPacket(cm);
+	}
 }
