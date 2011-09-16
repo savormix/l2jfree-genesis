@@ -250,7 +250,7 @@ public class PlayerDB extends L2DBEntity
 			public void configure(Query q)
 			{
 				q.setParameter("online", isOnline);
-				q.setParameter("persistentId", player.getPersistentId());
+				q.setParameter("persistentId", player.getPersistentId().intValue());
 			}
 		});
 	}
