@@ -12,35 +12,37 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.gameobjects.interfaces;
+package com.l2jfree.gameserver.gameobjects.components.empty;
 
-import com.l2jfree.gameserver.gameobjects.ObjectPosition;
-import com.l2jfree.gameserver.gameobjects.components.interfaces.IObjectKnownList;
+import com.l2jfree.gameserver.gameobjects.L2Object;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IObjectMovement;
-import com.l2jfree.gameserver.templates.L2Template;
-import com.l2jfree.gameserver.util.ObjectId;
-import com.l2jfree.lang.L2Entity;
 
 /**
  * @author NB4L1
  */
-public interface IL2Object extends L2Entity<ObjectId>
+public class EmptyObjectMovement implements IObjectMovement
 {
-	public ObjectId getObjectId();
-	
-	public L2Template getTemplate();
-	
-	public ObjectPosition getPosition();
-	
-	public IObjectKnownList getKnownList();
-	
-	public IObjectMovement getMovement();
+	public EmptyObjectMovement(@SuppressWarnings("unused") L2Object activeChar)
+	{
+		// do nothing
+	}
 	
 	@Override
-	public ObjectId getPrimaryKey();
-	
-	public String getName();
+	public boolean isArrived()
+	{
+		// do nothing
+		return false;
+	}
 	
 	@Override
-	public String toString();
+	public void revalidateMovement()
+	{
+		// do nothing
+	}
+	
+	@Override
+	public void movementFinished()
+	{
+		// do nothing
+	}
 }

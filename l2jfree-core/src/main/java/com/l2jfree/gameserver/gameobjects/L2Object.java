@@ -15,8 +15,11 @@
 package com.l2jfree.gameserver.gameobjects;
 
 import com.l2jfree.gameserver.gameobjects.components.KnownListComponent;
+import com.l2jfree.gameserver.gameobjects.components.MovementComponent;
 import com.l2jfree.gameserver.gameobjects.components.PositionComponent;
+import com.l2jfree.gameserver.gameobjects.components.empty.EmptyObjectMovement;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IObjectKnownList;
+import com.l2jfree.gameserver.gameobjects.components.interfaces.IObjectMovement;
 import com.l2jfree.gameserver.gameobjects.interfaces.IL2Object;
 import com.l2jfree.gameserver.templates.L2Template;
 import com.l2jfree.gameserver.util.IdFactory;
@@ -28,6 +31,7 @@ import com.l2jfree.util.logging.L2Logger;
 
 @PositionComponent(ObjectPosition.class)
 @KnownListComponent(ObjectKnownList.class)
+@MovementComponent(EmptyObjectMovement.class)
 public abstract class L2Object implements IL2Object
 {
 	protected static final L2Logger _log = L2Logger.getLogger(L2Object.class);
@@ -39,6 +43,7 @@ public abstract class L2Object implements IL2Object
 	
 	private final ObjectPosition _position;
 	private final IObjectKnownList _knownList;
+	private final IObjectMovement _movement;
 	
 	protected L2Object(L2Template template)
 	{
@@ -47,6 +52,7 @@ public abstract class L2Object implements IL2Object
 		
 		_position = PositionComponent.Factory.INSTANCE.getComponent(this);
 		_knownList = KnownListComponent.Factory.INSTANCE.getComponent(this);
+		_movement = MovementComponent.Factory.INSTANCE.getComponent(this);
 	}
 	
 	@SuppressWarnings("static-method")
@@ -83,6 +89,12 @@ public abstract class L2Object implements IL2Object
 	public IObjectKnownList getKnownList()
 	{
 		return _knownList;
+	}
+	
+	@Override
+	public IObjectMovement getMovement()
+	{
+		return _movement;
 	}
 	
 	@Override

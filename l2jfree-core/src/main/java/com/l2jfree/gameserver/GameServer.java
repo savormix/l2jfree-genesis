@@ -33,6 +33,7 @@ import com.l2jfree.gameserver.network.client.L2ClientSecurity;
 import com.l2jfree.gameserver.network.loginserver.legacy.L2LegacyLoginServerController;
 import com.l2jfree.gameserver.sql.PersistentProperties;
 import com.l2jfree.gameserver.util.IdFactory;
+import com.l2jfree.gameserver.util.MovementController;
 import com.l2jfree.gameserver.world.L2World;
 import com.l2jfree.lang.L2System;
 import com.l2jfree.sql.L2Database;
@@ -67,6 +68,8 @@ public final class GameServer extends Config
 		L2Config.load(L2World.class);
 		L2Config.load(ComponentFactory.class);
 		L2Config.load(PersistentProperties.class);
+		
+		MovementController.getInstance();
 		
 		PlayerNameTable.getInstance();
 		

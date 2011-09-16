@@ -12,35 +12,32 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.gameobjects.interfaces;
+package com.l2jfree.gameserver.gameobjects.components;
 
-import com.l2jfree.gameserver.gameobjects.ObjectPosition;
-import com.l2jfree.gameserver.gameobjects.components.interfaces.IObjectKnownList;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+import com.l2jfree.gameserver.gameobjects.L2Object;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IObjectMovement;
-import com.l2jfree.gameserver.templates.L2Template;
-import com.l2jfree.gameserver.util.ObjectId;
-import com.l2jfree.lang.L2Entity;
 
 /**
  * @author NB4L1
  */
-public interface IL2Object extends L2Entity<ObjectId>
+@Inherited
+@Documented
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface MovementComponent
 {
-	public ObjectId getObjectId();
+	public Class<? extends IObjectMovement> value();
 	
-	public L2Template getTemplate();
-	
-	public ObjectPosition getPosition();
-	
-	public IObjectKnownList getKnownList();
-	
-	public IObjectMovement getMovement();
-	
-	@Override
-	public ObjectId getPrimaryKey();
-	
-	public String getName();
-	
-	@Override
-	public String toString();
+	public static final class Factory
+	{
+		public static final ComponentFactory<L2Object, IObjectMovement> INSTANCE =
+				new ComponentFactory<L2Object, IObjectMovement>(L2Object.class, MovementComponent.class);
+	}
 }
