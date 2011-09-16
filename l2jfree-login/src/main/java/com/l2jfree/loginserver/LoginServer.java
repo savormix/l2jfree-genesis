@@ -23,10 +23,8 @@ import com.l2jfree.loginserver.config.NetworkConfig;
 import com.l2jfree.loginserver.config.ServiceConfig;
 import com.l2jfree.loginserver.config.SystemConfig;
 import com.l2jfree.loginserver.network.client.L2ClientController;
-import com.l2jfree.loginserver.network.client.L2ClientSecurity;
 import com.l2jfree.loginserver.network.gameserver.L2GameServerCache;
 import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServerController;
-import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServerSecurity;
 import com.l2jfree.sql.L2Database;
 
 /**
@@ -56,38 +54,33 @@ public final class LoginServer extends Config
 		
 		//LoginStatusServer.initInstance();
 		
-		if (NetworkConfig.ENABLE_LEGACY || ServiceConfig.FORCE_LEGACY)
+		try
 		{
-			L2LegacyGameServerSecurity.getInstance();
-			
-			try
+			if (NetworkConfig.ENABLE_LEGACY || ServiceConfig.FORCE_LEGACY)
 			{
-				L2LegacyGameServerController.getInstance().openServerSocket(NetworkConfig.LEGACY_LISTEN_IP,
-						NetworkConfig.LEGACY_LISTEN_PORT);
-				L2LegacyGameServerController.getInstance().start();
-			}
-			catch (Throwable e)
-			{
-				_log.fatal("Could not start legacy listener!", e);
-				Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
-				return;
+				final L2LegacyGameServerController lgsc = L2LegacyGameServerController.getInstance();
+				lgsc.openServerSocket(NetworkConfig.LEGACY_LISTEN_IP, NetworkConfig.LEGACY_LISTEN_PORT);
+				lgsc.start();
 			}
 		}
-		
+		catch (Throwable e)
 		{
-			L2ClientSecurity.getInstance();
-			
-			try
-			{
-				L2ClientController.getInstance().openServerSocket(NetworkConfig.LISTEN_IP, NetworkConfig.LISTEN_PORT);
-				L2ClientController.getInstance().start();
-			}
-			catch (Throwable e)
-			{
-				_log.fatal("Could not start login server!", e);
-				Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
-				return;
-			}
+			_log.fatal("Could not start Legacy Game Server listener!", e);
+			Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
+			return;
+		}
+		
+		try
+		{
+			final L2ClientController lcc = L2ClientController.getInstance();
+			lcc.openServerSocket(NetworkConfig.LISTEN_IP, NetworkConfig.LISTEN_PORT);
+			lcc.start();
+		}
+		catch (Throwable e)
+		{
+			_log.fatal("Could not start Login Server!", e);
+			Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
+			return;
 		}
 		
 		// TODO

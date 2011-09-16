@@ -14,8 +14,6 @@
  */
 package com.l2jfree.gameserver;
 
-import java.net.UnknownHostException;
-
 import com.l2jfree.L2Config;
 import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
@@ -29,7 +27,6 @@ import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.gameobjects.components.ComponentFactory;
 import com.l2jfree.gameserver.network.client.Disconnection;
 import com.l2jfree.gameserver.network.client.L2ClientConnections;
-import com.l2jfree.gameserver.network.client.L2ClientSecurity;
 import com.l2jfree.gameserver.network.loginserver.legacy.L2LegacyLoginServerController;
 import com.l2jfree.gameserver.sql.PersistentProperties;
 import com.l2jfree.gameserver.util.IdFactory;
@@ -81,31 +78,30 @@ public final class GameServer extends Config
 		
 		Util.printSection("Network");
 		
+		try
 		{
-			L2ClientSecurity.getInstance();
-			
-			try
-			{
-				L2ClientConnections.getInstance().openServerSocket(NetworkConfig.LISTEN_IP, NetworkConfig.LISTEN_PORT);
-				L2ClientConnections.getInstance().start();
-			}
-			catch (Throwable e)
-			{
-				_log.fatal("Could not start Game Server!", e);
-				Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
-				return;
-			}
-			
-			try
-			{
-				L2LegacyLoginServerController.getInstance().connect(NetworkConfig.LOGIN_HOST, NetworkConfig.LOGIN_PORT,
-						true);
-				L2LegacyLoginServerController.getInstance().start();
-			}
-			catch (UnknownHostException e)
-			{
-				_log.warn("Conuld not connect to login server: ", e);
-			}
+			final L2LegacyLoginServerController llsc = L2LegacyLoginServerController.getInstance();
+			llsc.connect(NetworkConfig.LOGIN_HOST, NetworkConfig.LOGIN_PORT, true);
+			llsc.start();
+		}
+		catch (Throwable e)
+		{
+			_log.fatal("Could not connect to the Login Server!", e);
+			Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
+			return;
+		}
+		
+		try
+		{
+			final L2ClientConnections lcc = L2ClientConnections.getInstance();
+			lcc.openServerSocket(NetworkConfig.LISTEN_IP, NetworkConfig.LISTEN_PORT);
+			lcc.start();
+		}
+		catch (Throwable e)
+		{
+			_log.fatal("Could not start Game Server!", e);
+			Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
+			return;
 		}
 		
 		// TODO
@@ -143,6 +139,15 @@ public final class GameServer extends Config
 				try
 				{
 					L2ClientConnections.getInstance().shutdown();
+				}
+				catch (Throwable t)
+				{
+					_log.warn("Orderly shutdown sequence interrupted", t);
+				}
+				
+				try
+				{
+					L2LegacyLoginServerController.getInstance().shutdown();
 				}
 				catch (Throwable t)
 				{

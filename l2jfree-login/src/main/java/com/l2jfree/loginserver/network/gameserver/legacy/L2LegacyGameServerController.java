@@ -72,6 +72,8 @@ public final class L2LegacyGameServerController extends
 	{
 		super(config, L2LegacyGameServerPacketHandler.getInstance());
 		
+		L2LegacyGameServerSecurity.getInstance();
+		
 		_gameServers = FastMap.newInstance();
 		_gameServers.setShared(true);
 	}

@@ -72,6 +72,8 @@ public final class L2ClientController extends MMOController<L2Client, L2ClientPa
 	{
 		super(config, L2ClientPacketHandler.getInstance());
 		
+		L2ClientSecurity.getInstance();
+		
 		_authorized = FastMap.newInstance();
 		_authorized.setShared(true);
 	}

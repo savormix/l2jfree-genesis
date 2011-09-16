@@ -64,6 +64,8 @@ public final class L2ClientConnections extends MMOController<L2Client, L2ClientP
 	private L2ClientConnections(MMOConfig config) throws IOException
 	{
 		super(config, L2ClientPacketHandler.getInstance());
+		
+		L2ClientSecurity.getInstance();
 		// TODO Auto-generated constructor stub
 	}
 	
