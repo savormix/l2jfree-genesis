@@ -34,4 +34,18 @@ public abstract class SendablePacket<T extends MMOConnection<T, RP, SP>, RP exte
 	 * @throws RuntimeException if a generic failure occurs while writing
 	 */
 	protected abstract void write(T client, MMOBuffer buf) throws RuntimeException;
+	
+	/**
+	 * Called after the packet has been successfully written into the {@link MMOBuffer} and
+	 * enciphered.<br>
+	 * NOTE: Executed on the selector thread!<br>
+	 * NOTE 2: Best opportunity to change cipher :)
+	 * 
+	 * @param client
+	 * @throws RuntimeException
+	 */
+	protected void packetWritten(T client) throws RuntimeException
+	{
+		// do nothing at default
+	}
 }

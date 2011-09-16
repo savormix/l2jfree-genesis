@@ -587,6 +587,16 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		
 		// set the write buffer
 		getMmoBuffer().setByteBuffer(null);
+		
+		try
+		{
+			sp.packetWritten(client);
+		}
+		catch (RuntimeException e)
+		{
+			MMOController._log.fatal("Failed packetWritten: " + client + " - " + sp.getType() + " - "
+					+ getMMOController().getVersionInfo(), e);
+		}
 	}
 	
 	private void closePendingConnections()

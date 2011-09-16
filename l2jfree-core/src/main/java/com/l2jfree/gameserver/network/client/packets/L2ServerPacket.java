@@ -27,6 +27,8 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 public abstract class L2ServerPacket extends DefaultSendablePacket<L2Client, L2ClientPacket, L2ServerPacket>
 {
 	/**
+	 * NOTE: Executed on the thread sending the packet.
+	 * 
 	 * @param client
 	 * @param activeChar
 	 * @return true, if the client can receive this packet, false otherwise
@@ -39,6 +41,8 @@ public abstract class L2ServerPacket extends DefaultSendablePacket<L2Client, L2C
 	}
 	
 	/**
+	 * NOTE: Executed on the thread sending the packet.
+	 * 
 	 * @param client
 	 * @param activeChar
 	 */
@@ -48,6 +52,8 @@ public abstract class L2ServerPacket extends DefaultSendablePacket<L2Client, L2C
 	}
 	
 	/**
+	 * NOTE: Executed on the thread sending the packet.
+	 * 
 	 * @param client
 	 * @param activeChar
 	 */
