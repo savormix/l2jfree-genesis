@@ -31,15 +31,17 @@ public interface IObjectKnownList extends IComponent
 	
 	public Collection<L2Object> getKnowingObjects();
 	
-	public boolean removeObject(L2Object obj);
+	public boolean removeKnownObject(L2Object obj);
 	
 	public void addKnowingObject(L2Object obj);
 	
 	public void removeKnowingObject(L2Object obj);
 	
-	public void update(L2Object obj);
+	public void updateObject(L2Object obj);
 	
-	public void update(L2Object[][] surroundingObjects);
+	public void updateSurroundingObjects(L2Object[][] surroundingObjects);
 	
 	public void removeAllKnownObjects();
+	
+	public void updateKnownList(boolean force);
 }

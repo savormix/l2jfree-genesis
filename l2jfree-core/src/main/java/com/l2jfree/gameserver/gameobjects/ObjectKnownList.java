@@ -66,7 +66,7 @@ public class ObjectKnownList implements IObjectKnownList
 		return object != null && (_activeChar == object || _knownObjects.containsKey(object.getObjectId()));
 	}
 	
-	protected boolean addObject(L2Object obj)
+	protected boolean addKnownObject(L2Object obj)
 	{
 		if (obj == null || obj == _activeChar)
 			return false;
@@ -83,7 +83,7 @@ public class ObjectKnownList implements IObjectKnownList
 	}
 	
 	@Override
-	public boolean removeObject(L2Object obj)
+	public boolean removeKnownObject(L2Object obj)
 	{
 		if (obj == null || obj == _activeChar)
 			return false;
@@ -134,7 +134,7 @@ public class ObjectKnownList implements IObjectKnownList
 	}
 	
 	@Override
-	public final void update(L2Object obj)
+	public final void updateObject(L2Object obj)
 	{
 		final boolean knows = knowsObject(obj);
 		final boolean shouldKnow = shouldKnowObject(obj);
@@ -143,24 +143,24 @@ public class ObjectKnownList implements IObjectKnownList
 		if (knows)
 		{
 			if (!shouldKnow && getDistanceToRemoveObject(obj) > distance)
-				removeObject(obj);
+				removeKnownObject(obj);
 		}
 		else
 		{
 			if (shouldKnow && getDistanceToAddObject(obj) > distance)
-				addObject(obj);
+				addKnownObject(obj);
 		}
 	}
 	
 	@Override
-	public final void update(L2Object[][] surroundingObjects)
+	public final void updateSurroundingObjects(L2Object[][] surroundingObjects)
 	{
 		for (L2Object[] regionObjects : surroundingObjects)
 		{
 			for (L2Object obj : regionObjects)
 			{
-				update(obj);
-				obj.getKnownList().update(_activeChar);
+				updateObject(obj);
+				obj.getKnownList().updateObject(_activeChar);
 			}
 		}
 	}
@@ -169,10 +169,10 @@ public class ObjectKnownList implements IObjectKnownList
 	public void removeAllKnownObjects()
 	{
 		for (L2Object obj : _knownObjects.values())
-			removeObject(obj);
+			removeKnownObject(obj);
 		
 		for (L2Object obj : _knowingObjects.values())
-			obj.getKnownList().removeObject(_activeChar);
+			obj.getKnownList().removeKnownObject(_activeChar);
 		
 		_knownObjects.clear();
 		_knownPlayers.clear();
@@ -181,16 +181,17 @@ public class ObjectKnownList implements IObjectKnownList
 	
 	private long _lastUpdate;
 	
-	public synchronized final void updateKnownObjects(boolean force)
+	@Override
+	public synchronized final void updateKnownList(boolean force)
 	{
-		if (System.currentTimeMillis() - _lastUpdate < 100)
+		if (System.currentTimeMillis() - _lastUpdate < 100 && !force)
 			return;
 		
 		for (L2Object obj : _knownObjects.values())
-			update(obj);
+			updateObject(obj);
 		
 		for (L2Object obj : _knowingObjects.values())
-			obj.getKnownList().update(_activeChar);
+			obj.getKnownList().updateObject(_activeChar);
 		
 		_activeChar.getPosition().getWorldRegion().updateKnownList(_activeChar, force);
 		

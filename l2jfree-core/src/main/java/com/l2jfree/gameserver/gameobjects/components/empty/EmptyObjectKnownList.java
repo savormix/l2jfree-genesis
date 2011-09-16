@@ -50,38 +50,44 @@ public class EmptyObjectKnownList implements IObjectKnownList
 	}
 	
 	@Override
-	public boolean removeObject(L2Object activeChar)
+	public boolean removeKnownObject(L2Object obj)
 	{
 		// do nothing
 		return false;
 	}
 	
 	@Override
-	public void addKnowingObject(L2Object activeChar)
+	public void addKnowingObject(L2Object obj)
 	{
 		// do nothing
 	}
 	
 	@Override
-	public void removeKnowingObject(L2Object activeChar)
+	public void removeKnowingObject(L2Object obj)
 	{
 		// do nothing
 	}
 	
 	@Override
-	public void update(L2Object activeChar)
+	public void updateObject(L2Object obj)
 	{
 		// do nothing
 	}
 	
 	@Override
-	public void update(L2Object[][] surroundingObjects)
+	public void updateSurroundingObjects(L2Object[][] surroundingObjects)
 	{
 		// do nothing
 	}
 	
 	@Override
 	public void removeAllKnownObjects()
+	{
+		// do nothing
+	}
+	
+	@Override
+	public void updateKnownList(boolean force)
 	{
 		// do nothing
 	}

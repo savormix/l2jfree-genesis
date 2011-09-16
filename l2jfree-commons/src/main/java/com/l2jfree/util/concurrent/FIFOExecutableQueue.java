@@ -16,11 +16,15 @@ package com.l2jfree.util.concurrent;
 
 import java.util.concurrent.locks.ReentrantLock;
 
+import com.l2jfree.util.logging.L2Logger;
+
 /**
  * @author NB4L1
  */
 public abstract class FIFOExecutableQueue implements Runnable
 {
+	private static final L2Logger _log = L2Logger.getLogger(FIFOExecutableQueue.class);
+	
 	private static final byte NONE = 0;
 	private static final byte QUEUED = 1;
 	private static final byte RUNNING = 2;
@@ -88,11 +92,19 @@ public abstract class FIFOExecutableQueue implements Runnable
 				{
 					removeAndExecuteAll();
 				}
+				catch (RuntimeException e)
+				{
+					_log.warn("", e);
+				}
 				finally
 				{
 					setState(RUNNING, QUEUED);
 				}
 			}
+		}
+		catch (RuntimeException e)
+		{
+			_log.warn("", e);
 		}
 		finally
 		{

@@ -26,9 +26,13 @@ import com.l2jfree.util.concurrent.ExclusiveTask;
 import com.l2jfree.util.concurrent.FIFOSimpleExecutableQueue;
 import com.l2jfree.util.concurrent.L2EntityMap;
 import com.l2jfree.util.concurrent.L2ReadWriteEntityMap;
+import com.l2jfree.util.concurrent.RunnableStatsManager;
+import com.l2jfree.util.logging.L2Logger;
 
 public final class L2WorldRegion
 {
+	private static final L2Logger _log = L2Logger.getLogger(L2WorldRegion.class);
+	
 	private final int _tileX;
 	private final int _tileY;
 	
@@ -180,7 +184,7 @@ public final class L2WorldRegion
 			
 			for (L2Object obj : visibleObject)
 				if (obj != null)
-					obj.getKnownList().update(surroundingObjects);
+					obj.getKnownList().updateSurroundingObjects(surroundingObjects);
 			
 			// call object specific activation method
 			for (L2Object obj : visibleObject)
@@ -218,14 +222,29 @@ public final class L2WorldRegion
 			final L2Object[][] surroundingObjects = getAllSurroundingVisibleObjects2DArray();
 			
 			for (L2Object obj; (obj = removeFirst()) != null;)
-				obj.getKnownList().update(surroundingObjects);
+			{
+				final long begin = System.nanoTime();
+				
+				try
+				{
+					obj.getKnownList().updateSurroundingObjects(surroundingObjects);
+				}
+				catch (RuntimeException e)
+				{
+					_log.warn("Exception in a KnownList update!", e);
+				}
+				finally
+				{
+					RunnableStatsManager.handleStats(obj.getClass(), "updateKnownList()", System.nanoTime() - begin);
+				}
+			}
 		}
 	};
 	
 	public void updateKnownList(L2Object obj, boolean force)
 	{
 		if (force)
-			obj.getKnownList().update(getAllSurroundingVisibleObjects2DArray());
+			obj.getKnownList().updateSurroundingObjects(getAllSurroundingVisibleObjects2DArray());
 		else
 			_knownListUpdater.execute(obj);
 	}

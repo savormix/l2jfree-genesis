@@ -15,6 +15,7 @@
 package com.l2jfree.sql;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import com.l2jfree.util.concurrent.FIFOSimpleExecutableQueue;
 import com.l2jfree.util.concurrent.L2ThreadPool;
@@ -76,7 +77,7 @@ public final class SQLQueryQueue extends FIFOSimpleExecutableQueue<SQLQuery>
 				}
 			}
 		}
-		catch (Exception e)
+		catch (SQLException e)
 		{
 			_log.fatal("", e);
 		}

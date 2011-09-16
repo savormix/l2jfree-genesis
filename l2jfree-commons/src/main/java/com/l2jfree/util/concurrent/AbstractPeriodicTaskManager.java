@@ -24,7 +24,7 @@ import com.l2jfree.util.logging.L2Logger;
 /**
  * @author NB4L1
  */
-abstract class AbstractPeriodicTaskManager implements Runnable, StartupHook
+public abstract class AbstractPeriodicTaskManager implements Runnable, StartupHook
 {
 	static final L2Logger _log = L2Logger.getLogger(AbstractPeriodicTaskManager.class);
 	
@@ -34,7 +34,7 @@ abstract class AbstractPeriodicTaskManager implements Runnable, StartupHook
 	
 	private final int _period;
 	
-	AbstractPeriodicTaskManager(int period)
+	protected AbstractPeriodicTaskManager(int period)
 	{
 		_period = period;
 		
