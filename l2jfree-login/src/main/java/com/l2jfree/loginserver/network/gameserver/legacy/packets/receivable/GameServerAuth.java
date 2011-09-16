@@ -27,10 +27,10 @@ import com.l2jfree.loginserver.network.gameserver.L2GameServerCache;
 import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServer;
 import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServerController;
 import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServerState;
-import com.l2jfree.loginserver.network.gameserver.legacy.L2NoServiceReason;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyGameServerPacket;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable.AuthResponse;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable.LoginServerFail;
+import com.l2jfree.network.legacy.LoginServerFailReason;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 import com.l2jfree.sql.L2Database;
@@ -84,7 +84,7 @@ public final class GameServerAuth extends L2LegacyGameServerPacket
 			{
 				if (!_acceptAlternateId || ServiceConfig.STRICT_AUTHORIZATION)
 					// desired ID is not available
-					lgs.close(new LoginServerFail(L2NoServiceReason.ALREADY_LOGGED_IN));
+					lgs.close(new LoginServerFail(LoginServerFailReason.ALREADY_LOGGED_IN));
 				else
 					// game server can take any ID and login server may assign them
 					tryAssignAvailableId(lgs);
@@ -118,7 +118,7 @@ public final class GameServerAuth extends L2LegacyGameServerPacket
 				catch (SQLException e)
 				{
 					_log.error("Could not obtain game server data!", e);
-					lgs.close(new LoginServerFail(L2NoServiceReason.NO_FREE_ID));
+					lgs.close(new LoginServerFail(LoginServerFailReason.NO_FREE_ID));
 					return;
 				}
 				finally
@@ -133,7 +133,7 @@ public final class GameServerAuth extends L2LegacyGameServerPacket
 					{
 						if (!_acceptAlternateId || ServiceConfig.STRICT_AUTHORIZATION)
 							// desired ID is not available
-							lgs.close(new LoginServerFail(L2NoServiceReason.WRONG_HEXID));
+							lgs.close(new LoginServerFail(LoginServerFailReason.WRONG_HEXID));
 						else
 							// game server can take any ID and login server may assign them
 							tryAssignAvailableId(lgs);
@@ -144,7 +144,7 @@ public final class GameServerAuth extends L2LegacyGameServerPacket
 				}
 				else if (ServiceConfig.STRICT_AUTHORIZATION) // ID is free, but not available
 				{
-					lgs.close(new LoginServerFail(L2NoServiceReason.WRONG_HEXID));
+					lgs.close(new LoginServerFail(LoginServerFailReason.WRONG_HEXID));
 				}
 				else
 				// ID is available for persistent use
@@ -232,7 +232,7 @@ public final class GameServerAuth extends L2LegacyGameServerPacket
 		catch (SQLException e)
 		{
 			_log.error("Could not obtain game server data!", e);
-			lgs.close(new LoginServerFail(L2NoServiceReason.NO_FREE_ID));
+			lgs.close(new LoginServerFail(LoginServerFailReason.NO_FREE_ID));
 			return;
 		}
 		finally
@@ -260,7 +260,7 @@ public final class GameServerAuth extends L2LegacyGameServerPacket
 			finishAuthorization(newId, null, false, lgs);
 		else
 			// all IDs registered or in use
-			lgs.close(new LoginServerFail(L2NoServiceReason.NO_FREE_ID));
+			lgs.close(new LoginServerFail(LoginServerFailReason.NO_FREE_ID));
 	}
 	
 	@Override

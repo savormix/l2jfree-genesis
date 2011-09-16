@@ -15,8 +15,8 @@
 package com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable;
 
 import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServer;
-import com.l2jfree.loginserver.network.gameserver.legacy.L2NoServiceReason;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyLoginServerPacket;
+import com.l2jfree.network.legacy.LoginServerFailReason;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
@@ -24,16 +24,16 @@ import com.l2jfree.network.mmocore.MMOBuffer;
  */
 public final class LoginServerFail extends L2LegacyLoginServerPacket
 {
-	private final int _reason;
+	private final LoginServerFailReason _reason;
 	
 	/**
 	 * Constructs a packet to inform about failed authentication.
 	 * 
 	 * @param reason failure reason
 	 */
-	public LoginServerFail(L2NoServiceReason reason)
+	public LoginServerFail(LoginServerFailReason reason)
 	{
-		_reason = reason.getId();
+		_reason = reason;
 	}
 	
 	@Override

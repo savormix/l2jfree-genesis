@@ -17,17 +17,16 @@ package com.l2jfree.network.legacy;
 import com.l2jfree.util.EnumValues;
 
 /** This enum was designed for non-nio LS<->GS connections. */
-@Deprecated
 public enum LoginServerFailReason
 {
-	REASON_NONE("None"), // 0x00
-	REASON_IP_BANNED("Reason: ip banned"), // 0x01
-	REASON_IP_RESERVED("Reason: ip reserved"), // 0x02
-	REASON_WRONG_HEXID("Reason: wrong hexid"), // 0x03
-	REASON_ID_RESERVED("Reason: id reserved"), // 0x04
-	REASON_NO_FREE_ID("Reason: no free ID"), // 0x05
-	REASON_NOT_AUTHED("Not authed"), // 0x06
-	REASON_ALREADY_LOGGED_IN("Reason: already logged in"); // 0x07
+	NONE("None"), // 0x00
+	IP_BANNED("Reason: ip banned"), // 0x01
+	IP_RESERVED("Reason: ip reserved"), // 0x02
+	WRONG_HEXID("Reason: wrong hexid"), // 0x03
+	ID_RESERVED("Reason: id reserved"), // 0x04
+	NO_FREE_ID("Reason: no free ID"), // 0x05
+	NOT_AUTHED("Not authed"), // 0x06
+	ALREADY_LOGGED_IN("Reason: already logged in"); // 0x07
 	
 	private final String _reason;
 	
@@ -46,7 +45,7 @@ public enum LoginServerFailReason
 		@Override
 		protected LoginServerFailReason defaultValue()
 		{
-			return REASON_NONE;
+			return NONE;
 		}
 	};
 	

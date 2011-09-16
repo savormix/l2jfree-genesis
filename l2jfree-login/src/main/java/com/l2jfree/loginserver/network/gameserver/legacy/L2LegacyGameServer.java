@@ -27,6 +27,7 @@ import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyGameSer
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyLoginServerPacket;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable.LoginServerFail;
 import com.l2jfree.loginserver.network.gameserver.legacy.status.L2LegacyStatus;
+import com.l2jfree.network.legacy.LoginServerFailReason;
 import com.l2jfree.network.mmocore.DataSizeHolder;
 import com.l2jfree.network.mmocore.MMOConnection;
 import com.l2jfree.security.NewCipher;
@@ -145,7 +146,7 @@ public final class L2LegacyGameServer extends
 	@Override
 	protected L2LegacyLoginServerPacket getDefaultClosePacket()
 	{
-		return new LoginServerFail(L2NoServiceReason.NO_FREE_ID);
+		return new LoginServerFail(LoginServerFailReason.NO_FREE_ID);
 	}
 	
 	@Override

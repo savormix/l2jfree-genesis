@@ -25,8 +25,8 @@ import javolution.util.FastMap;
 
 import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServer;
 import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServerController;
-import com.l2jfree.loginserver.network.gameserver.legacy.L2NoServiceReason;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable.LoginServerFail;
+import com.l2jfree.network.legacy.LoginServerFailReason;
 import com.l2jfree.sql.L2Database;
 import com.l2jfree.util.concurrent.L2ThreadPool;
 import com.l2jfree.util.logging.L2Logger;
@@ -148,7 +148,7 @@ public class L2GameServerCache
 							if (lgs != null && !gameServerAuthData.equals(lgs.getAuth()))
 							{
 								// invalid authorization, impostor online
-								lgs.close(new LoginServerFail(L2NoServiceReason.NOT_AUTHED));
+								lgs.close(new LoginServerFail(LoginServerFailReason.NOT_AUTHED));
 								_log.info("Connection with game server on ID " + gameServerId
 										+ " has been terminated: no longer authorized!");
 							}
@@ -190,7 +190,7 @@ public class L2GameServerCache
 						L2LegacyGameServer lgs = L2LegacyGameServerController.getInstance().getById(gameServerId);
 						if (lgs != null && lgs.getAuth() != null) // was authorized based on old data
 						{
-							lgs.close(new LoginServerFail(L2NoServiceReason.NOT_AUTHED));
+							lgs.close(new LoginServerFail(LoginServerFailReason.NOT_AUTHED));
 							_log.info("Connection with game server on ID " + gameServerId
 									+ " has been terminated: no longer authorized!");
 						}
