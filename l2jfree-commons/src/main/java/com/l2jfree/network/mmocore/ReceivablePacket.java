@@ -137,10 +137,6 @@ public abstract class ReceivablePacket<T extends MMOConnection<T, RP, SP>, RP ex
 		{
 			getClient().getMMOController().report(ErrorMode.FAILED_RUNNING, getClient(), (RP)this, e);
 		}
-		finally
-		{
-			getClient().packetExecuted((RP)this);
-		}
 	}
 	
 	/**

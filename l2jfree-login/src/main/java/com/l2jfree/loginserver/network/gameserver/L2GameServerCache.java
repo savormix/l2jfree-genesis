@@ -23,6 +23,7 @@ import java.util.HashMap;
 
 import javolution.util.FastMap;
 
+import com.l2jfree.loginserver.config.ServiceConfig;
 import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServer;
 import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServerController;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable.LoginServerFail;
@@ -145,7 +146,8 @@ public class L2GameServerCache
 						if (getGameServers().containsKey(gameServerId)) // cached
 						{
 							L2LegacyGameServer lgs = L2LegacyGameServerController.getInstance().getById(gameServerId);
-							if (lgs != null && !gameServerAuthData.equals(lgs.getAuth()))
+							if (lgs != null && !gameServerAuthData.equals(lgs.getAuth())
+									&& ServiceConfig.STRICT_AUTHORIZATION) // TODO it is okay here?
 							{
 								// invalid authorization, impostor online
 								lgs.close(new LoginServerFail(LoginServerFailReason.NOT_AUTHED));

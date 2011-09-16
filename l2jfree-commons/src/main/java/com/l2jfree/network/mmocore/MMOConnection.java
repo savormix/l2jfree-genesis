@@ -388,25 +388,12 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 	}
 	
 	// FIXME move buffer operations (parseClientPacket) out of the read/write threads into a client associated queue
-	private volatile boolean _isReadingBlocked;
-	
-	public boolean isReadingBlocked()
-	{
-		return _isReadingBlocked;
-	}
-	
 	public void executePacket(RP rp)
 	{
-		getPacketQueue().execute(rp);
-		
 		if (rp.blockReadingUntilExecutionIsFinished())
-			_isReadingBlocked = true;
-	}
-	
-	public void packetExecuted(RP rp)
-	{
-		if (rp.blockReadingUntilExecutionIsFinished())
-			_isReadingBlocked = false;
+			getPacketQueue().executeNow(rp);
+		else
+			getPacketQueue().execute(rp);
 	}
 	
 	/**

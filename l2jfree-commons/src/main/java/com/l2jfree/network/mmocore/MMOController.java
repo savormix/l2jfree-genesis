@@ -25,6 +25,8 @@ import javolution.util.FastList;
 
 import org.apache.commons.lang3.ObjectUtils;
 
+import com.l2jfree.Startup;
+import com.l2jfree.Startup.StartupHook;
 import com.l2jfree.network.mmocore.FloodManager.ErrorMode;
 import com.l2jfree.network.mmocore.FloodManager.Result;
 
@@ -192,16 +194,22 @@ public abstract class MMOController<T extends MMOConnection<T, RP, SP>, RP exten
 	 */
 	public final void start()
 	{
-		_started = true;
-		
-		if (_acceptorThread != null)
-			_acceptorThread.start();
-		
-		for (ConnectorThread<T, RP, SP> connectorThread : _connectorThreads)
-			connectorThread.start();
-		
-		for (ReadWriteThread<T, RP, SP> readWriteThread : _readWriteThreads)
-			readWriteThread.start();
+		Startup.addStartupHook(new StartupHook() {
+			@Override
+			public void onStartup()
+			{
+				_started = true;
+				
+				if (_acceptorThread != null)
+					_acceptorThread.start();
+				
+				for (ConnectorThread<T, RP, SP> connectorThread : _connectorThreads)
+					connectorThread.start();
+				
+				for (ReadWriteThread<T, RP, SP> readWriteThread : _readWriteThreads)
+					readWriteThread.start();
+			}
+		});
 	}
 	
 	/**

@@ -132,5 +132,7 @@ public final class LoginServer extends Config
 		
 		L2Config.applicationLoaded("l2jfree-login", LoginInfo.getFullVersionInfo(),
 				SystemConfig.DUMP_HEAP_AFTER_STARTUP);
+		
+		ServiceConfig.STRICT_AUTHORIZATION = false;
 	}
 }

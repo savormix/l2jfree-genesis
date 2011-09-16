@@ -142,6 +142,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 	@Override
 	protected void handle(SelectionKey key)
 	{
+		System.out.println("ReadWriteThread.handle() " + key.interestOps() + " " + key.readyOps());
 		switch (key.readyOps())
 		{
 			case SelectionKey.OP_CONNECT:
@@ -195,6 +196,8 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 	
 	private void readPacket(SelectionKey key)
 	{
+		System.out.println("ReadWriteThread.readPacket()");
+		
 		@SuppressWarnings("unchecked")
 		T con = (T)key.attachment();
 		
@@ -243,10 +246,6 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 					{
 						final int startPos = buf.position();
 						
-						// FIXME hangs connection
-						/*if (con.isReadingBlocked())
-							break;*/
-						
 						if (readPackets >= getMaxIncomingPacketsPerPass() || readBytes >= getMaxIncomingBytesPerPass())
 							break;
 						
@@ -259,11 +258,6 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 					break;
 				}
 			}
-			
-			// stop reading, if running a blocking packet
-			// FIXME hangs connection
-			/*if (con.isReadingBlocked())
-				break;*/
 			
 			// stop reading, if we have reached a config limit
 			if (readPackets >= getMaxIncomingPacketsPerPass() || readBytes >= getMaxIncomingBytesPerPass())
@@ -370,6 +364,8 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 				
 				if (cp != null)
 				{
+					System.out.println("READ: " + cp.getClass().getSimpleName() + " " + client.getState());
+					
 					// remove useless bytes #2, using packet specs
 					int maxLeftoverPadding = maxPossiblePadding;
 					final int overflow = buf.remaining() - cp.getMaximumLength();
@@ -433,6 +429,8 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 	
 	private void writePacket(SelectionKey key)
 	{
+		System.out.println("ReadWriteThread.writePacket()");
+		
 		@SuppressWarnings("unchecked")
 		T con = (T)key.attachment();
 		
@@ -525,6 +523,8 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 					if (sp == null)
 						break;
 				}
+				
+				System.out.println("WRITE: " + sp.getClass().getSimpleName() + " " + con.getState());
 				
 				// put into WriteBuffer
 				putPacketIntoWriteBuffer(con, sp);

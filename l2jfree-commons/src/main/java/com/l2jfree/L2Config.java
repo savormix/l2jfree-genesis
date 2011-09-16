@@ -681,8 +681,6 @@ public abstract class L2Config
 	
 	protected static void applicationLoaded(String appName, String[] versionInfo, boolean dumpHeap)
 	{
-		Startup.onStartup();
-		
 		Util.printSection("Summary");
 		for (String line : versionInfo)
 			_log.info(line);
@@ -702,6 +700,8 @@ public abstract class L2Config
 			L2System.dumpHeap(true);
 		
 		Util.printSection(appName);
+		
+		Startup.onStartup();
 	}
 	
 	protected static void shutdownApplication()

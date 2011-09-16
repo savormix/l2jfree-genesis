@@ -44,6 +44,8 @@ public final class L2LegacyLoginServer extends
 			throws ClosedChannelException
 	{
 		super(mmoController, socketChannel);
+		
+		_state = L2LegacyLoginServerState.CONNECTED;
 	}
 	
 	@Override
