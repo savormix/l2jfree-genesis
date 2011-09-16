@@ -83,13 +83,13 @@ public abstract class CharacterStat implements ICharacterStat
 	@Override
 	public double getMovementSpeedMultiplier()
 	{
-		return 0;
+		return 1; // FIXME
 	}
 	
 	@Override
 	public double getAttackSpeedMultiplier()
 	{
-		return 0;
+		return 1; // FIXME
 	}
 	
 	@Override
@@ -106,12 +106,6 @@ public abstract class CharacterStat implements ICharacterStat
 	
 	@Override
 	public int getPAtk(Object object)
-	{
-		return 0;
-	}
-	
-	@Override
-	public int getPDef(Object object)
 	{
 		return 0;
 	}
@@ -135,19 +129,7 @@ public abstract class CharacterStat implements ICharacterStat
 	}
 	
 	@Override
-	public int getAccuracy()
-	{
-		return 0;
-	}
-	
-	@Override
-	public int getEvasionRate(Object object)
-	{
-		return 0;
-	}
-	
-	@Override
-	public int getCriticalHit(Object object)
+	public int getPDef(Object object)
 	{
 		return 0;
 	}
@@ -159,9 +141,27 @@ public abstract class CharacterStat implements ICharacterStat
 	}
 	
 	@Override
-	public int getLevel()
+	public int getAccuracy()
 	{
 		return 0;
+	}
+	
+	@Override
+	public int getEvasion(Object object)
+	{
+		return 0;
+	}
+	
+	@Override
+	public int getCriticalHit(Object object)
+	{
+		return 0;
+	}
+	
+	@Override
+	public int getLevel()
+	{
+		return 1; // FIXME
 	}
 	
 	@Override

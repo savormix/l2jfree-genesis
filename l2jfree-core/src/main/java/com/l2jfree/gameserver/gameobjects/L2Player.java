@@ -105,6 +105,7 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 		getAppearance().load(playerDB);
 		
 		setName(playerDB.name);
+		setTitle(playerDB.title);
 	}
 	
 	@Override

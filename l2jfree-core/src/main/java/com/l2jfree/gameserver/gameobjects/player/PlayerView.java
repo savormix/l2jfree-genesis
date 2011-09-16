@@ -68,6 +68,7 @@ public class PlayerView extends CharacterView implements IPlayerView
 	private int _evasionRate;
 	private long _exp;
 	private int _expPercent;
+	private int _sp;
 	private byte _face;
 	private int _famePoints;
 	private boolean _fishing;
@@ -155,10 +156,17 @@ public class PlayerView extends CharacterView implements IPlayerView
 		_persistentId = activeChar.getPersistentId();
 	}
 	
+	@Override
+	public final L2Player getActiveChar()
+	{
+		return (L2Player)super.getActiveChar();
+	}
+	
 	/**
 	 * @return persistent ID
 	 * @see L2Player#getPersistentId()
 	 */
+	@Override
 	public PersistentId getPersistentId()
 	{
 		return _persistentId;
@@ -171,15 +179,10 @@ public class PlayerView extends CharacterView implements IPlayerView
 	 * @see L2Player#getCharacterId()
 	 * @see L2Player#getPersistentId()
 	 */
-	public PersistentId getCharacterId()
-	{
-		return getPersistentId();
-	}
-	
 	@Override
-	public final L2Player getActiveChar()
+	public int getCharacterId()
 	{
-		return (L2Player)super.getActiveChar();
+		return getPersistentId().intValue();
 	}
 	
 	@Override
@@ -348,6 +351,12 @@ public class PlayerView extends CharacterView implements IPlayerView
 	public double getExpPercent()
 	{
 		return _expPercent;
+	}
+	
+	@Override
+	public int getSP()
+	{
+		return _sp;
 	}
 	
 	@Override
@@ -854,6 +863,7 @@ public class PlayerView extends CharacterView implements IPlayerView
 		
 		_exp = stat.getExp();
 		_expPercent = 0; // TODO
+		_sp = stat.getCurrentSP();
 		_str = stat.getSTR();
 		_dex = stat.getDEX();
 		_con = stat.getCON();
@@ -891,7 +901,7 @@ public class PlayerView extends CharacterView implements IPlayerView
 		_mAtkSpd = stat.getMAtkSpd();
 		
 		_accuracy = stat.getAccuracy();
-		_evasionRate = stat.getEvasionRate(0);
+		_evasionRate = stat.getEvasion(0);
 		_criticalHit = stat.getCriticalHit(0);
 		
 		_movementSpeedMultiplier = stat.getMovementSpeedMultiplier();

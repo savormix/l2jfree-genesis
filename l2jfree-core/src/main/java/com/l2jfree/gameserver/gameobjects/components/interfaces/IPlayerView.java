@@ -17,6 +17,7 @@ package com.l2jfree.gameserver.gameobjects.components.interfaces;
 import com.l2jfree.gameserver.templates.player.Gender;
 import com.l2jfree.gameserver.templates.player.Race;
 import com.l2jfree.gameserver.util.ObjectId;
+import com.l2jfree.gameserver.util.PersistentId;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
@@ -24,6 +25,10 @@ import com.l2jfree.network.mmocore.MMOBuffer;
  */
 public interface IPlayerView extends ICharacterView, IElemental
 {
+	public PersistentId getPersistentId();
+	
+	public int getCharacterId();
+	
 	public int canEquipCloak();
 	
 	public boolean canUseDwarvenRecipes();
@@ -73,6 +78,8 @@ public interface IPlayerView extends ICharacterView, IElemental
 	public long getExp();
 	
 	public double getExpPercent();
+	
+	public int getSP();
 	
 	public int getFace();
 	

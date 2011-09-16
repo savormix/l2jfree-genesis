@@ -21,6 +21,8 @@ public interface IPlayerStat extends ICharacterStat
 {
 	public int getMaxSP();
 	
+	public int getCurrentSP();
+	
 	public int getMaxCP();
 	
 	public int getCurrentCP();

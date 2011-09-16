@@ -66,6 +66,9 @@ public class PlayerDB extends L2DBEntity
 	@Column(name = "name", unique = true, nullable = false, length = 35)
 	public String name;
 	
+	@Column(name = "title", length = 16)
+	public String title;
+	
 	@Column(name = "accountName", nullable = false, updatable = false, length = 45)
 	public String accountName;
 	
@@ -209,6 +212,7 @@ public class PlayerDB extends L2DBEntity
 			playerDB.setPersistentId(player.getPersistentId());
 			playerDB.creationTime = player.getCreationTime();
 			playerDB.name = player.getName();
+			playerDB.title = player.getTitle();
 			playerDB.accountName = player.getAccountName();
 			playerDB.mainClassId = player.getMainClassId();
 			playerDB.activeClassId = player.getActiveClassId();

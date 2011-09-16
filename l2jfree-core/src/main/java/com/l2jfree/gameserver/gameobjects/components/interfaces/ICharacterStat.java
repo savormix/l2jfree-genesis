@@ -42,7 +42,7 @@ public interface ICharacterStat extends IComponent
 	
 	public int getAccuracy();
 	
-	public int getEvasionRate(Object object);
+	public int getEvasion(Object object);
 	
 	public int getCriticalHit(Object object);
 	

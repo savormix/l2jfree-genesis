@@ -42,6 +42,12 @@ public class PlayerStat extends CharacterStat implements IPlayerStat
 	}
 	
 	@Override
+	public int getCurrentSP()
+	{
+		return 0;
+	}
+	
+	@Override
 	public int getMaxCP()
 	{
 		return 0;
@@ -50,7 +56,7 @@ public class PlayerStat extends CharacterStat implements IPlayerStat
 	@Override
 	public int getCurrentCP()
 	{
-		return 0;
+		return getMaxCP(); // FIXME
 	}
 	
 	@Override
@@ -62,7 +68,8 @@ public class PlayerStat extends CharacterStat implements IPlayerStat
 	@Override
 	public int getMaxCarriedWeight()
 	{
-		return 0;
+		// TODO formulas
+		return 100;
 	}
 	
 	@Override
@@ -94,4 +101,173 @@ public class PlayerStat extends CharacterStat implements IPlayerStat
 	{
 		return 0;
 	}
+	
+	/*
+	@Override
+	public double getRunSpeed()
+	{
+		// TODO formulas
+		return getActiveChar().getTemplate().getPlayerBaseTemplate(getActiveChar().getAppearance().getGender())
+				.getRunSpeed();
+	}
+	
+	@Override
+	public double getWalkSpeed()
+	{
+		// TODO formulas
+		return getActiveChar().getTemplate().getPlayerBaseTemplate(getActiveChar().getAppearance().getGender())
+				.getWalkSpeed();
+	}
+	
+	@Override
+	public int getPAtk(Object object)
+	{
+		// TODO formulas
+		return getActiveChar().getTemplate().getPlayerBaseTemplate(getActiveChar().getAppearance().getGender())
+				.getPAtk();
+	}
+	
+	@Override
+	public int getPAtkSpd()
+	{
+		// TODO formulas
+		return getActiveChar().getTemplate().getPlayerBaseTemplate(getActiveChar().getAppearance().getGender())
+				.getPAtkSpd();
+	}
+	
+	@Override
+	public int getMAtk(Object object, Object object2)
+	{
+		// TODO formulas
+		return getActiveChar().getTemplate().getPlayerBaseTemplate(getActiveChar().getAppearance().getGender())
+				.getMAtk();
+	}
+	
+	@Override
+	public int getMAtkSpd()
+	{
+		// TODO formulas
+		return getActiveChar().getTemplate().getPlayerBaseTemplate(getActiveChar().getAppearance().getGender())
+				.getMAtkSpd();
+	}
+	
+	@Override
+	public int getPDef(Object object)
+	{
+		// TODO formulas
+		return getActiveChar().getTemplate().getPlayerBaseTemplate(getActiveChar().getAppearance().getGender())
+				.getPDef();
+	}
+	
+	@Override
+	public int getMDef(Object object, Object object2)
+	{
+		// TODO formulas
+		return getActiveChar().getTemplate().getPlayerBaseTemplate(getActiveChar().getAppearance().getGender())
+				.getMDef();
+	}
+	
+	@Override
+	public int getAccuracy()
+	{
+		// TODO formulas
+		return getActiveChar().getTemplate().getPlayerBaseTemplate(getActiveChar().getAppearance().getGender())
+				.getAccuracy();
+	}
+	
+	@Override
+	public int getEvasion(Object object)
+	{
+		// TODO formulas
+		return getActiveChar().getTemplate().getPlayerBaseTemplate(getActiveChar().getAppearance().getGender())
+				.getEvasion();
+	}
+	
+	@Override
+	public int getCriticalHit(Object object)
+	{
+		// TODO formulas
+		return getActiveChar().getTemplate().getPlayerBaseTemplate(getActiveChar().getAppearance().getGender())
+				.getCriticalHit();
+	}
+	
+	@Override
+	public long getExp()
+	{
+		return 0;
+	}
+	
+	@Override
+	public int getSTR()
+	{
+		// TODO formulas
+		return getActiveChar().getTemplate().getPlayerBaseTemplate(getActiveChar().getAppearance().getGender())
+				.getSTR();
+	}
+	
+	@Override
+	public int getDEX()
+	{
+		// TODO formulas
+		return getActiveChar().getTemplate().getPlayerBaseTemplate(getActiveChar().getAppearance().getGender())
+				.getDEX();
+	}
+	
+	@Override
+	public int getCON()
+	{
+		// TODO formulas
+		return getActiveChar().getTemplate().getPlayerBaseTemplate(getActiveChar().getAppearance().getGender())
+				.getCON();
+	}
+	
+	@Override
+	public int getINT()
+	{
+		// TODO formulas
+		return getActiveChar().getTemplate().getPlayerBaseTemplate(getActiveChar().getAppearance().getGender())
+				.getINT();
+	}
+	
+	@Override
+	public int getWIT()
+	{
+		// TODO formulas
+		return getActiveChar().getTemplate().getPlayerBaseTemplate(getActiveChar().getAppearance().getGender())
+				.getWIT();
+	}
+	
+	@Override
+	public int getMEN()
+	{
+		// TODO formulas
+		return getActiveChar().getTemplate().getPlayerBaseTemplate(getActiveChar().getAppearance().getGender())
+				.getMEN();
+	}
+	
+	@Override
+	public int getMaxHP()
+	{
+		// TODO formulas
+		return (int)getActiveChar().getTemplate().getHP(getLevel());
+	}
+	
+	@Override
+	public int getCurrentHP()
+	{
+		return getMaxHP(); // FIXME
+	}
+	
+	@Override
+	public int getMaxMP()
+	{
+		// TODO formulas
+		return (int)getActiveChar().getTemplate().getMP(getLevel());
+	}
+	
+	@Override
+	public int getCurrentMP()
+	{
+		return getMaxMP(); // FIXME
+	}*/
 }

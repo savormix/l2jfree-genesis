@@ -15,12 +15,9 @@
 package com.l2jfree.gameserver.network.client.packets.sendable.characterless;
 
 import com.l2jfree.gameserver.gameobjects.L2Player;
-import com.l2jfree.gameserver.gameobjects.ObjectPosition;
-import com.l2jfree.gameserver.gameobjects.player.PlayerAppearance;
+import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerView;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
-import com.l2jfree.gameserver.templates.L2PlayerTemplate;
-import com.l2jfree.gameserver.templates.player.PlayerBaseTemplate;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
@@ -70,10 +67,20 @@ public abstract class CharacterSelectedPacket extends L2ServerPacket
 	}
 	
 	@Override
+	public void prepareToSend(L2Client client, L2Player activeChar)
+	{
+		// hex1r0: can be null? this packets is sent from CharacterSelect.RequestSelectCharacter, 
+		// so all required null checks have to be done there 
+		activeChar.getView().refresh();
+	}
+	
+	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
 		
+		// hex1r0: can be null? this packets is sent from CharacterSelect.RequestSelectCharacter, 
+		// so all required null checks have to be done there
 		// server sends this packet right AFTER an active char has been selected
 		if (activeChar == null)
 		{
@@ -82,41 +89,37 @@ public abstract class CharacterSelectedPacket extends L2ServerPacket
 			return;
 		}
 		
-		// FIXME: use views to provide data reliably or no longer applicable?
-		final PlayerAppearance appearance = activeChar.getAppearance();
-		final ObjectPosition position = activeChar.getPosition();
-		final L2PlayerTemplate template = activeChar.getTemplate();
-		final PlayerBaseTemplate baseTemplate = template.getBaseTemplate();
+		final IPlayerView view = activeChar.getView();
 		
-		buf.writeS(activeChar.getName()); // Name
-		buf.writeD(activeChar.getCharacterId()); // Character ID
-		buf.writeS(activeChar.getTitle()); // Title
+		buf.writeS(view.getName()); // Name
+		buf.writeD(view.getCharacterId()); // Character ID
+		buf.writeS(view.getTitle()); // Title
 		buf.writeD(client.getSessionId()); // Session ID
-		buf.writeD(0); // Pledge ID
+		buf.writeD(view.getPledgeId()); // Pledge ID
 		buf.writeD(0); // 0
-		buf.writeD(appearance.getGender()); // Sex
-		buf.writeD(baseTemplate.getRace()); // Race
-		buf.writeD(template.getClassId()); // Main class
+		buf.writeD(view.getGender()); // Sex
+		buf.writeD(view.getRace()); // Race
+		buf.writeD(view.getMainClassId()); // Main class
 		buf.writeD(1); // Selected??
-		buf.writeD(position.getX()); // Location X
-		buf.writeD(position.getY()); // Location Y
-		buf.writeD(position.getZ()); // Location Z
-		buf.writeF(100D); // Current HP
-		buf.writeF(30D); // Current MP
-		buf.writeD(0); // SP
-		buf.writeQ(0L); // XP
-		buf.writeD(1); // Level
-		buf.writeD(0); // Karma
-		buf.writeD(0); // PK Count
-		buf.writeD(1); // INT
-		buf.writeD(1); // STR
-		buf.writeD(1); // CON
-		buf.writeD(1); // MEN
-		buf.writeD(1); // DEX
-		buf.writeD(1); // WIT
+		buf.writeD(view.getX()); // Location X
+		buf.writeD(view.getY()); // Location Y
+		buf.writeD(view.getZ()); // Location Z
+		buf.writeF(view.getCurrentHP()); // Current HP
+		buf.writeF(view.getCurrentMP()); // Current MP
+		buf.writeD(view.getSP()); // SP
+		buf.writeQ(view.getExp()); // XP
+		buf.writeD(view.getLevel()); // Level
+		buf.writeD(view.getKarma()); // Karma
+		buf.writeD(view.getPkCount()); // PK Count
+		buf.writeD(view.getINT()); // INT
+		buf.writeD(view.getSTR()); // STR
+		buf.writeD(view.getCON()); // CON
+		buf.writeD(view.getMEN()); // MEN
+		buf.writeD(view.getDEX()); // DEX
+		buf.writeD(view.getWIT()); // WIT
 		buf.writeD(0); // Game time
 		buf.writeD(0); // 0
-		buf.writeD(template.getClassId()); // Current class
+		buf.writeD(view.getActiveClassId()); // Current class
 		buf.writeD(0); // 0
 		buf.writeD(0); // 0
 		buf.writeD(0); // 0

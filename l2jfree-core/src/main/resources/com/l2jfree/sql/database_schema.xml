@@ -8,6 +8,7 @@
 				persistentId	INT				NOT NULL,
 				creationTime	TIMESTAMP		NOT NULL,
 				name			VARCHAR(35)		NOT NULL,
+				title			VARCHAR(16),
 				accountName		VARCHAR(45)		NOT NULL,
 				online			BOOLEAN			NOT NULL	DEFAULT false,
 				mainClassId		SMALLINT		NOT NULL,
