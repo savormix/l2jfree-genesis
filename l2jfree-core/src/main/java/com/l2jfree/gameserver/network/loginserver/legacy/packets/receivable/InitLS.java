@@ -84,4 +84,10 @@ public class InitLS extends L2LegacyLoginServerPacket
 				NetworkConfig.LISTEN_PORT, true, ReportedConfig.MAX_ONLINE, NetworkConfig.SUBNETS, NetworkConfig.HOSTS));
 		getClient().setState(L2LegacyLoginServerState.KEYS_EXCHANGED);
 	}
+	
+	@Override
+	protected boolean blockReadingUntilExecutionIsFinished()
+	{
+		return true;
+	}
 }

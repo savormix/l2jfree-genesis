@@ -60,4 +60,10 @@ public class AuthResponse extends L2LegacyLoginServerPacket
 		serverStatus.addAttribute(ServerStatusAttributes.TEST_SERVER, false);
 		sendPacket(serverStatus);
 	}
+	
+	@Override
+	protected boolean blockReadingUntilExecutionIsFinished()
+	{
+		return true;
+	}
 }
