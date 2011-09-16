@@ -14,10 +14,12 @@
  */
 package com.l2jfree.gameserver.gameobjects;
 
+import com.l2jfree.gameserver.gameobjects.components.AiComponent;
 import com.l2jfree.gameserver.gameobjects.components.InventoryComponent;
 import com.l2jfree.gameserver.gameobjects.components.StatComponent;
 import com.l2jfree.gameserver.gameobjects.components.ViewComponent;
 import com.l2jfree.gameserver.gameobjects.components.empty.EmptyInventory;
+import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterAi;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterStat;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterView;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IInventory;
@@ -30,6 +32,7 @@ import com.l2jfree.gameserver.templates.L2Template;
 @InventoryComponent(EmptyInventory.class)
 public abstract class L2Character extends L2Object implements IL2Character
 {
+	private final ICharacterAi _ai;
 	private final ICharacterStat _stat;
 	private final ICharacterView _view;
 	private final IInventory _inventory;
@@ -38,9 +41,16 @@ public abstract class L2Character extends L2Object implements IL2Character
 	{
 		super(template);
 		
+		_ai = AiComponent.Factory.INSTANCE.getComponent(this);
 		_stat = StatComponent.Factory.INSTANCE.getComponent(this);
 		_view = ViewComponent.Factory.INSTANCE.getComponent(this);
 		_inventory = InventoryComponent.Factory.INSTANCE.getComponent(this);
+	}
+	
+	@Override
+	public ICharacterAi getAi()
+	{
+		return _ai;
 	}
 	
 	@Override

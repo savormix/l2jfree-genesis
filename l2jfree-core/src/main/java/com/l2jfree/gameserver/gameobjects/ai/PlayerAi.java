@@ -12,25 +12,42 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.gameobjects.interfaces;
+package com.l2jfree.gameserver.gameobjects.ai;
 
-import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterAi;
-import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterStat;
-import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterView;
-import com.l2jfree.gameserver.gameobjects.components.interfaces.IInventory;
+import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerAi;
 
 /**
- * @author NB4L1
+ * @author hex1r0
  */
-public interface IL2Character extends IL2Object
+public class PlayerAi extends CharacterAi implements IPlayerAi
 {
-	public ICharacterAi getAi();
 	
-	public ICharacterStat getStat();
+	@Override
+	protected void onIntentionIdle()
+	{
+		// TODO Auto-generated method stub
+		
+	}
 	
-	public ICharacterView getView();
+	@Override
+	protected void onIntentionActive()
+	{
+		// TODO Auto-generated method stub
+		
+	}
 	
-	public IInventory getInventory();
+	@Override
+	protected void onIntentionMoveTo(int x, int y, int z)
+	{
+		// TODO Auto-generated method stub
+		
+	}
 	
-	public void setName(String name);
+	@Override
+	protected void onEvtArrived()
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	// TODO
 }
