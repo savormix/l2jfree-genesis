@@ -15,6 +15,8 @@
 package com.l2jfree.gameserver.gameobjects;
 
 import com.l2jfree.gameserver.datatables.PlayerNameTable;
+import com.l2jfree.gameserver.gameobjects.ai.PlayerAi;
+import com.l2jfree.gameserver.gameobjects.components.AiComponent;
 import com.l2jfree.gameserver.gameobjects.components.AppearanceComponent;
 import com.l2jfree.gameserver.gameobjects.components.InventoryComponent;
 import com.l2jfree.gameserver.gameobjects.components.KnownListComponent;
@@ -50,6 +52,7 @@ import com.l2jfree.lang.L2TextBuilder;
  */
 @PositionComponent(PlayerPosition.class)
 @KnownListComponent(PlayerKnownList.class)
+@AiComponent(PlayerAi.class)
 @StatComponent(PlayerStat.class)
 @ViewComponent(PlayerView.class)
 @InventoryComponent(PlayerInventory.class)

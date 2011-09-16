@@ -16,6 +16,7 @@ package com.l2jfree.gameserver.gameobjects.ai;
 
 import java.lang.reflect.Array;
 
+import com.l2jfree.gameserver.gameobjects.L2Character;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterAi;
 
 /**
@@ -23,6 +24,18 @@ import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterAi;
  */
 public abstract class CharacterAi implements ICharacterAi
 {
+	private final L2Character _activeChar;
+	
+	protected CharacterAi(L2Character activeChar)
+	{
+		_activeChar = activeChar;
+	}
+	
+	public L2Character getActiveChar()
+	{
+		return _activeChar;
+	}
+	
 	// Will be populated with necessary values
 	public static enum Intention
 	{

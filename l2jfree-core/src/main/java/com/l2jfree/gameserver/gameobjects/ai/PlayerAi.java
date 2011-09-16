@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.gameobjects.ai;
 
+import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerAi;
 
 /**
@@ -21,6 +22,16 @@ import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerAi;
  */
 public class PlayerAi extends CharacterAi implements IPlayerAi
 {
+	public PlayerAi(L2Player activeChar)
+	{
+		super(activeChar);
+	}
+	
+	@Override
+	public L2Player getActiveChar()
+	{
+		return getActiveChar();
+	}
 	
 	@Override
 	protected void onIntentionIdle()
@@ -49,5 +60,7 @@ public class PlayerAi extends CharacterAi implements IPlayerAi
 		// TODO Auto-generated method stub
 		
 	}
+	
 	// TODO
+	
 }
