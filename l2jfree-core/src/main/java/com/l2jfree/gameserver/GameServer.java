@@ -14,6 +14,8 @@
  */
 package com.l2jfree.gameserver;
 
+import java.net.UnknownHostException;
+
 import com.l2jfree.L2Config;
 import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
@@ -28,16 +30,13 @@ import com.l2jfree.gameserver.gameobjects.components.ComponentFactory;
 import com.l2jfree.gameserver.network.client.Disconnection;
 import com.l2jfree.gameserver.network.client.L2ClientConnections;
 import com.l2jfree.gameserver.network.client.L2ClientSecurity;
+import com.l2jfree.gameserver.network.loginserver.legacy.L2LegacyLoginServerController;
 import com.l2jfree.gameserver.sql.PersistentProperties;
-import com.l2jfree.gameserver.sql.PlayerDB;
-import com.l2jfree.gameserver.templates.player.ClassId;
 import com.l2jfree.gameserver.util.IdFactory;
-import com.l2jfree.gameserver.util.IdFactory.IdRange;
 import com.l2jfree.gameserver.world.L2World;
 import com.l2jfree.lang.L2System;
 import com.l2jfree.sql.L2Database;
 import com.l2jfree.sql.SQLQueryQueue;
-import com.l2jfree.util.Rnd;
 
 /**
  * This class contains the application entry point.
@@ -92,6 +91,17 @@ public final class GameServer extends Config
 				_log.fatal("Could not start Game Server!", e);
 				Shutdown.exit(TerminationStatus.RUNTIME_INITIALIZATION_FAILURE);
 				return;
+			}
+			
+			try
+			{
+				L2LegacyLoginServerController.getInstance().connect(NetworkConfig.LOGIN_HOST, NetworkConfig.LOGIN_PORT,
+						true);
+				L2LegacyLoginServerController.getInstance().start();
+			}
+			catch (UnknownHostException e)
+			{
+				_log.warn("Conuld not connect to login server: ", e);
 			}
 		}
 		
@@ -149,45 +159,5 @@ public final class GameServer extends Config
 		});
 		
 		L2Config.applicationLoaded("l2jfree-core", CoreInfo.getFullVersionInfo(), SystemConfig.DUMP_HEAP_AFTER_STARTUP);
-		
-		// TODO remove the rest :D once in the distant future
-		
-		final String name = Rnd.getString(20, Rnd.LETTERS_AND_DIGITS);
-		final String accountName = Rnd.getString(20, Rnd.LETTERS_AND_DIGITS);
-		
-		final L2Player created = PlayerDB.create(name, accountName, ClassId.HumanFighter);
-		System.out.println(created);
-		
-		final L2Player loaded = PlayerDB.load(created.getPersistentId());
-		System.out.println(loaded);
-		
-		System.out.println(created.getPrimaryKey().equals(loaded.getPrimaryKey()));
-		System.out.println(created.getName().equals(loaded.getName()));
-		System.out.println(created.getAccountName().equals(loaded.getAccountName()));
-		
-		final IdFactory ids = IdFactory.getInstance();
-		for (IdRange idRange : IdRange.values())
-			System.out.println(idRange + ": " + ids.getNextObjectId(idRange) + ", " + ids.getNextObjectId(idRange));
-		
-		Util.printSection("find-and-update-playerdb");
-		final PlayerDB playerDB1 = PlayerDB.find(loaded.getPersistentId());
-		
-		System.out.println(playerDB1);
-		
-		playerDB1.online = true;
-		playerDB1.x = Rnd.get(10000);
-		
-		final PlayerDB playerDB2 = L2Database.mergeAndDetach(playerDB1);
-		
-		System.out.println(playerDB1);
-		System.out.println(playerDB2);
-		
-		Util.printSection("create-and-store-player");
-		final L2Player player = PlayerDB.create(Rnd.getString(10, Rnd.LETTERS), accountName, ClassId.HumanFighter);
-		
-		player.getPosition().setXYZ(Rnd.get(1000), Rnd.get(1000), Rnd.get(1000));
-		player.setName(Rnd.getString(10, Rnd.LETTERS));
-		
-		PlayerDB.store(player);
 	}
 }

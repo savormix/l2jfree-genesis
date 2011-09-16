@@ -46,8 +46,11 @@ public final class ServiceConfig extends ConfigPropertiesLoader
 			"It is a bad idea to show it, as it must be accepted to continue.", //
 			"Implementation notice:", //
 			"A session key is exchanged in the background." })
-	@ConfigGroupEnding(name = "CLIENT")
 	public static boolean SHOW_EULA;
+	
+	@ConfigField(name = "AutoCreateAccounts", value = "true", eternal = true, comment = { })
+	@ConfigGroupEnding(name = "CLIENT")
+	public static boolean AUTO_CREATE_ACCOUNTS;
 	
 	/** Whether to authorize only registered game servers */
 	@ConfigGroupBeginning(name = "GAME SERVER")

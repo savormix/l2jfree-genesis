@@ -27,6 +27,7 @@ import com.l2jfree.gameserver.network.client.packets.receivable.EnterWorld;
 import com.l2jfree.gameserver.network.client.packets.receivable.ExGetOnAirShip;
 import com.l2jfree.gameserver.network.client.packets.receivable.Logout;
 import com.l2jfree.gameserver.network.client.packets.receivable.MoveBackwardToLocation;
+import com.l2jfree.gameserver.network.client.packets.receivable.NetPing;
 import com.l2jfree.gameserver.network.client.packets.receivable.RequestManorList;
 import com.l2jfree.gameserver.network.client.packets.receivable.RequestRestart;
 import com.l2jfree.gameserver.network.client.packets.receivable.ValidatePosition;
@@ -158,6 +159,11 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 				if (client.stateEquals(LOGGED_IN))
 					return new MoveBackwardToLocation.RequestMovement();
 				return invalidState(client, MoveBackwardToLocation.class, opcode);
+				
+			case NetPing.OPCODE:
+				if (client.stateEquals(LOGGED_IN))
+					return new NetPing.UptimeResponse();
+				return invalidState(client, NetPing.class, opcode);
 				
 			default:
 				return unknown(buf, client, opcode);

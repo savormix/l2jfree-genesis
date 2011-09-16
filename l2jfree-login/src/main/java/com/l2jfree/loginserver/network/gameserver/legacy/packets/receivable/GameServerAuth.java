@@ -188,11 +188,12 @@ public final class GameServerAuth extends L2LegacyGameServerPacket
 		
 		// FIXME subnet-based hosts
 		// REGRESSION -->
-		lgs.setHost(null);
-		for (int i = 0; i < _hosts.length; i++)
+		lgs.setHost("127.0.0.1");//lgs.setHost(null);
+		/*for (int i = 0; i < _hosts.length; i++)
 			if (_hosts[i++].startsWith("0"))
 				lgs.setHost(_hosts[i]);
-		
+		*/
+		lgs.setHost("127.0.0.1");
 		if (lgs.getHost() == null)
 		{
 			lgs.setHost("127.0.0.1");

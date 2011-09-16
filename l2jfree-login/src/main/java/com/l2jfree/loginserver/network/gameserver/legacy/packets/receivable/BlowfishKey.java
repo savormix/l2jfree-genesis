@@ -46,13 +46,8 @@ public final class BlowfishKey extends L2LegacyGameServerPacket
 	{
 		int size = buf.readD();
 		_enciphered = buf.readB(new byte[size]);
-	}
-	
-	@Override
-	protected void runImpl() throws InvalidPacketException, RuntimeException
-	{
-		// FIXME time-critical packet -> check if isReadingBlocked() is enough
 		
+		// if this part is in runImpl() LS<->GS cannot exchange keys
 		// Must stall any packets queued for read!
 		L2LegacyGameServer lgs = getClient();
 		byte[] padded;
@@ -78,6 +73,12 @@ public final class BlowfishKey extends L2LegacyGameServerPacket
 		
 		lgs.initCipher(key);
 		lgs.setState(L2LegacyGameServerState.KEYS_EXCHANGED);
+	}
+	
+	@Override
+	protected void runImpl() throws InvalidPacketException, RuntimeException
+	{
+		// FIXME time-critical packet -> check if isReadingBlocked() is enough
 	}
 	
 	@Override

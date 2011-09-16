@@ -35,4 +35,17 @@ public final class NetworkConfig extends ConfigPropertiesLoader
 	@ConfigField(name = "ListenPort", value = "7777", eternal = true,
 			comment = { "Game Server will listen for CLIENT connections on this port." })
 	public static int LISTEN_PORT;
+	
+	@ConfigField(name = "Subnets", value = "127.0.0.0/8,10.0.0.0/8,172.16.0.0/19,192.168.0.0/16", eternal = true,
+			comment = { })
+	public static String[] SUBNETS;
+	
+	@ConfigField(name = "Hosts", value = "127.0.0.1,10.0.0.0,172.16.0.0,192.168.0.0", eternal = true, comment = { })
+	public static String[] HOSTS;
+	
+	@ConfigField(name = "LoginHost", value = "127.0.0.1", eternal = true, comment = { })
+	public static String LOGIN_HOST;
+	
+	@ConfigField(name = "LoginPort", value = "9014", eternal = true, comment = { })
+	public static int LOGIN_PORT;
 }

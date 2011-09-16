@@ -30,6 +30,10 @@ public final class ReportedConfig extends ConfigPropertiesLoader
 			comment = { "Server's name shown in the server list depends on this ID." })
 	public static int ID;
 	
+	@ConfigField(name = "AcceptAlternateID", value = "true", eternal = true, comment = { "If set to true, "
+			+ "the login will give an other ID to the server if the requested ID is already reserved." })
+	public static boolean ACCEPT_ALTERNATE_ID;
+	
 	// TODO: when reloading, notify login servers
 	@ConfigField(name = "AgeRestriction", value = "0", comment = { "Minimum allowed player age." })
 	public static int AGE_RESTRICTION;

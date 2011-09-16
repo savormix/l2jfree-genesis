@@ -243,8 +243,9 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 					{
 						final int startPos = buf.position();
 						
-						if (con.isReadingBlocked())
-							break;
+						// FIXME hangs connection
+						/*if (con.isReadingBlocked())
+							break;*/
 						
 						if (readPackets >= getMaxIncomingPacketsPerPass() || readBytes >= getMaxIncomingBytesPerPass())
 							break;
@@ -260,8 +261,9 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 			}
 			
 			// stop reading, if running a blocking packet
-			if (con.isReadingBlocked())
-				break;
+			// FIXME hangs connection
+			/*if (con.isReadingBlocked())
+				break;*/
 			
 			// stop reading, if we have reached a config limit
 			if (readPackets >= getMaxIncomingPacketsPerPass() || readBytes >= getMaxIncomingBytesPerPass())

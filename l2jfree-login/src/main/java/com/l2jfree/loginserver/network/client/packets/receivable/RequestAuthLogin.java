@@ -126,7 +126,33 @@ public final class RequestAuthLogin extends L2ClientPacket
 					con.prepareStatement("SELECT password, superUser, birthDate, banReason, lastServerId FROM account WHERE username LIKE ?");
 			ps.setString(1, user);
 			ResultSet rs = ps.executeQuery();
-			if (rs.next())
+			
+			if (!rs.next())
+			{
+				if (ServiceConfig.AUTO_CREATE_ACCOUNTS)
+				{
+					boolean isSuperUser = true; // TODO
+					Date birthDate = null;
+					PreparedStatement ps2 =
+							con.prepareStatement("INSERT INTO account(username, password, superUser, birthDate, banReason, lastServerId) VALUES (?, ?, ?, ?, ?, ?)");
+					ps2.setString(1, user);
+					ps2.setString(2, password);
+					ps2.setBoolean(3, true);
+					ps2.setDate(4, birthDate);
+					ps2.setInt(5, 0);
+					ps2.setInt(6, 0);
+					if (ps2.executeUpdate() > 0)
+					{
+						_log.info("New account " + user + " created");
+						requestLogin(con, user, isSuperUser, birthDate, 0);
+					}
+					ps2.close();
+				}
+				else
+					// no such user
+					client.close(new LoginFailure(L2NoServiceReason.PASSWORD_INCORRECT));
+			}
+			else
 			{
 				if (password.equals(rs.getString("password")))
 				{
@@ -146,25 +172,8 @@ public final class RequestAuthLogin extends L2ClientPacket
 						}
 						
 						if (offline)
-						{
-							final boolean superUser = rs.getBoolean("superUser");
-							final Date birthDate = rs.getDate("birthDate");
-							final int lastServerId = rs.getInt("lastServerId");
-							
-							final L2Account la = new L2Account(user, superUser, birthDate, lastServerId);
-							client.setAccount(la);
-							
-							if (ServiceConfig.SHOW_EULA)
-							{
-								client.setState(L2ClientState.LOGGED_IN);
-								client.sendPacket(new LoginSuccess(client));
-							}
-							else
-							{
-								client.setState(L2ClientState.VIEWING_LIST);
-								client.sendPacket(new ServerList());
-							}
-						}
+							requestLogin(con, user, rs.getBoolean("superUser"), rs.getDate("birthDate"),
+									rs.getInt("lastServerId"));
 					}
 					else
 						// suspended
@@ -174,33 +183,8 @@ public final class RequestAuthLogin extends L2ClientPacket
 					// wrong password
 					client.close(new LoginFailure(L2NoServiceReason.PASSWORD_INCORRECT));
 			}
-			else
-				// no such user
-				client.close(new LoginFailure(L2NoServiceReason.PASSWORD_INCORRECT));
 			rs.close();
 			ps.close();
-			
-			if (ban == 0)
-			{
-				ps = con.prepareStatement("UPDATE account SET lastLogin = ? WHERE username = ?");
-				ps.setLong(1, System.currentTimeMillis());
-				ps.setString(2, user);
-				ps.executeUpdate();
-				ps.close();
-				try
-				{
-					ps = con.prepareStatement("INSERT INTO logins (username, ipv4, date_) VALUES (?, ?, ?)");
-					ps.setString(1, user);
-					ps.setString(2, client.getHostAddress());
-					ps.setDate(3, new Date(System.currentTimeMillis()));
-					ps.executeUpdate();
-					ps.close();
-				}
-				catch (SQLException e)
-				{
-					// one entry per IP per day by default
-				}
-			}
 		}
 		catch (SQLException e)
 		{
@@ -210,6 +194,43 @@ public final class RequestAuthLogin extends L2ClientPacket
 		finally
 		{
 			L2Database.close(con);
+		}
+	}
+	
+	private void requestLogin(Connection con, String user, boolean isSuperUser, Date birthDate, int lastServerId)
+			throws SQLException
+	{
+		L2Account la = new L2Account(user, isSuperUser, birthDate, lastServerId);
+		getClient().setAccount(la);
+		
+		if (ServiceConfig.SHOW_EULA)
+		{
+			getClient().setState(L2ClientState.LOGGED_IN);
+			getClient().sendPacket(new LoginSuccess(getClient()));
+		}
+		else
+		{
+			getClient().setState(L2ClientState.VIEWING_LIST);
+			getClient().sendPacket(new ServerList());
+		}
+		
+		PreparedStatement ps = con.prepareStatement("UPDATE account SET lastLogin = ? WHERE username = ?");
+		ps.setLong(1, System.currentTimeMillis());
+		ps.setString(2, user);
+		ps.executeUpdate();
+		ps.close();
+		try
+		{
+			ps = con.prepareStatement("INSERT INTO logins (username, ipv4, date_) VALUES (?, ?, ?)");
+			ps.setString(1, user);
+			ps.setString(2, getClient().getHostAddress());
+			ps.setDate(3, new Date(System.currentTimeMillis()));
+			ps.executeUpdate();
+			ps.close();
+		}
+		catch (SQLException e)
+		{
+			// one entry per IP per day by default
 		}
 	}
 	
