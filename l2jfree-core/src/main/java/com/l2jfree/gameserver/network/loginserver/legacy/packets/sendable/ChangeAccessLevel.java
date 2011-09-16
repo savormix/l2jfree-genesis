@@ -14,58 +14,35 @@
  */
 package com.l2jfree.gameserver.network.loginserver.legacy.packets.sendable;
 
-import java.util.LinkedList;
-
 import com.l2jfree.gameserver.network.loginserver.legacy.L2LegacyLoginServer;
 import com.l2jfree.gameserver.network.loginserver.legacy.packets.L2LegacyGameServerPacket;
-import com.l2jfree.network.legacy.ServerStatusAttributes;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
- * @author hex1r0
+ * @author NB4L1
  */
-public class ServerStatus extends L2LegacyGameServerPacket
+// TODO
+public class ChangeAccessLevel extends L2LegacyGameServerPacket
 {
-	private static final class Attribute
+	private final String _player;
+	private final int _access;
+	
+	public ChangeAccessLevel(String player, int access)
 	{
-		public final int _id;
-		public final int _value;
-		
-		private Attribute(ServerStatusAttributes type, int value)
-		{
-			_id = type.ordinal();
-			_value = value;
-		}
+		_player = player;
+		_access = access;
 	}
-	
-	public static final int OPCODE = 0x06;
-	
-	private final LinkedList<Attribute> _attributes = new LinkedList<ServerStatus.Attribute>();
 	
 	@Override
 	protected int getOpcode()
 	{
-		return OPCODE;
+		return 0x04;
 	}
 	
 	@Override
 	protected void writeImpl(L2LegacyLoginServer client, MMOBuffer buf) throws RuntimeException
 	{
-		buf.writeD(_attributes.size());
-		for (Attribute att : _attributes)
-		{
-			buf.writeD(att._id);
-			buf.writeD(att._value);
-		}
-	}
-	
-	public void addAttribute(ServerStatusAttributes type, int value)
-	{
-		_attributes.add(new Attribute(type, value));
-	}
-	
-	public void addAttribute(ServerStatusAttributes type, boolean value)
-	{
-		addAttribute(type, value ? 0x01 : 0x00);
+		buf.writeD(_access);
+		buf.writeS(_player);
 	}
 }

@@ -19,26 +19,40 @@ import com.l2jfree.util.EnumValues;
 // Good, Normal and Full are not used for years
 // Oh and they wont be used. ever.
 /** This enum was designed for non-nio LS<->GS connections. */
-@Deprecated
 public enum ServerStatus
 {
-	STATUS_AUTO,
-	STATUS_GOOD,
-	STATUS_NORMAL,
-	STATUS_FULL,
-	STATUS_DOWN,
-	STATUS_GM_ONLY;
+	/** Online */
+	AUTO("Auto"),
+	/** Online */
+	GOOD("Good"),
+	/** Online */
+	NORMAL("Normal"),
+	/** Online */
+	FULL("Full"),
+	/** Offline */
+	DOWN("Down"),
+	/** Online for GMs */
+	GM_ONLY("GM only");
+	
+	private final String _status;
+	
+	private ServerStatus(String status)
+	{
+		_status = status;
+	}
+	
+	public String getStatus()
+	{
+		return _status;
+	}
 	
 	public static final EnumValues<ServerStatus> VALUES = new EnumValues<ServerStatus>(ServerStatus.class) {
 		@Override
 		protected ServerStatus defaultValue()
 		{
-			return STATUS_AUTO;
+			// TODO
+			// _log.warn("Unknown legacy status ID: " + id);
+			return AUTO;
 		}
 	};
-	
-	public static ServerStatus valueOf(int index)
-	{
-		return VALUES.valueOf(index);
-	}
 }

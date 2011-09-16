@@ -18,9 +18,11 @@ import java.nio.ByteBuffer;
 
 import com.l2jfree.gameserver.network.loginserver.legacy.packets.L2LegacyGameServerPacket;
 import com.l2jfree.gameserver.network.loginserver.legacy.packets.L2LegacyLoginServerPacket;
+import com.l2jfree.gameserver.network.loginserver.legacy.packets.receivable.AuthResponse;
 import com.l2jfree.gameserver.network.loginserver.legacy.packets.receivable.InitLS;
+import com.l2jfree.gameserver.network.loginserver.legacy.packets.receivable.KickPlayer;
 import com.l2jfree.gameserver.network.loginserver.legacy.packets.receivable.LoginServerFail;
-import com.l2jfree.gameserver.network.loginserver.legacy.packets.receivable.RegistrationSucceed;
+import com.l2jfree.gameserver.network.loginserver.legacy.packets.receivable.PlayerAuthResponse;
 import com.l2jfree.network.mmocore.PacketHandler;
 
 /**
@@ -40,18 +42,36 @@ public final class L2LegacyLoginServerPacketHandler extends
 		switch (opcode)
 		{
 			case InitLS.OPCODE:
-				return new InitLS();
+				if (client.stateEquals(L2LegacyLoginServerState.CONNECTED))
+					return new InitLS();
+				return invalidState(client, InitLS.class, opcode);
 				
 			case LoginServerFail.OPCODE:
-				return new LoginServerFail();
+				if (client.stateEquals(L2LegacyLoginServerState.KEYS_EXCHANGED))
+					return new LoginServerFail();
+				return invalidState(client, LoginServerFail.class, opcode);
 				
-			case RegistrationSucceed.OPCODE:
-				return new RegistrationSucceed();
+			case AuthResponse.OPCODE:
+				if (client.stateEquals(L2LegacyLoginServerState.KEYS_EXCHANGED))
+					return new AuthResponse();
+				return invalidState(client, AuthResponse.class, opcode);
 				
 			default:
-				return unknown(buf, client, opcode);
+				if (!client.stateEquals(L2LegacyLoginServerState.AUTHED))
+					return invalidState(client, opcode);
+				
+				switch (opcode)
+				{
+					case PlayerAuthResponse.OPCODE:
+						return new PlayerAuthResponse();
+						
+					case KickPlayer.OPCODE:
+						return new KickPlayer();
+						
+					default:
+						return unknown(buf, client, opcode);
+				}
 		}
-		
 	}
 	
 	/**

@@ -14,58 +14,46 @@
  */
 package com.l2jfree.gameserver.network.loginserver.legacy.packets.sendable;
 
-import java.util.LinkedList;
-
 import com.l2jfree.gameserver.network.loginserver.legacy.L2LegacyLoginServer;
 import com.l2jfree.gameserver.network.loginserver.legacy.packets.L2LegacyGameServerPacket;
-import com.l2jfree.network.legacy.ServerStatusAttributes;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
- * @author hex1r0
+ * @author NB4L1
  */
-public class ServerStatus extends L2LegacyGameServerPacket
+public class PlayerTraceRt extends L2LegacyGameServerPacket
 {
-	private static final class Attribute
+	private final String _account;
+	private final String _pcIp;
+	private final String _hop1;
+	private final String _hop2;
+	private final String _hop3;
+	private final String _hop4;
+	
+	public PlayerTraceRt(String account, String pcIp, String hop1, String hop2, String hop3, String hop4)
 	{
-		public final int _id;
-		public final int _value;
-		
-		private Attribute(ServerStatusAttributes type, int value)
-		{
-			_id = type.ordinal();
-			_value = value;
-		}
+		_account = account;
+		_pcIp = pcIp;
+		_hop1 = hop1;
+		_hop2 = hop2;
+		_hop3 = hop3;
+		_hop4 = hop4;
 	}
-	
-	public static final int OPCODE = 0x06;
-	
-	private final LinkedList<Attribute> _attributes = new LinkedList<ServerStatus.Attribute>();
 	
 	@Override
 	protected int getOpcode()
 	{
-		return OPCODE;
+		return 0x07;
 	}
 	
 	@Override
 	protected void writeImpl(L2LegacyLoginServer client, MMOBuffer buf) throws RuntimeException
 	{
-		buf.writeD(_attributes.size());
-		for (Attribute att : _attributes)
-		{
-			buf.writeD(att._id);
-			buf.writeD(att._value);
-		}
-	}
-	
-	public void addAttribute(ServerStatusAttributes type, int value)
-	{
-		_attributes.add(new Attribute(type, value));
-	}
-	
-	public void addAttribute(ServerStatusAttributes type, boolean value)
-	{
-		addAttribute(type, value ? 0x01 : 0x00);
+		buf.writeS(_account);
+		buf.writeS(_pcIp);
+		buf.writeS(_hop1);
+		buf.writeS(_hop2);
+		buf.writeS(_hop3);
+		buf.writeS(_hop4);
 	}
 }

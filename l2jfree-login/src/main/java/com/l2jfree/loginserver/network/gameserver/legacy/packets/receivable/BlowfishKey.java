@@ -38,7 +38,7 @@ public final class BlowfishKey extends L2LegacyGameServerPacket
 	@Override
 	protected int getMinimumLength()
 	{
-		return 5;
+		return READ_D;
 	}
 	
 	@Override

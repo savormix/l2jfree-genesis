@@ -16,45 +16,35 @@ package com.l2jfree.gameserver.network.loginserver.legacy.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 
-import com.l2jfree.gameserver.config.ReportedConfig;
 import com.l2jfree.gameserver.network.loginserver.legacy.packets.L2LegacyLoginServerPacket;
-import com.l2jfree.gameserver.network.loginserver.legacy.packets.sendable.ServerStatus;
-import com.l2jfree.gameserver.network.loginserver.legacy.packets.sendable.ServerStatus.ServerStatusAttributes;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
- * @author hex1r0
+ * @author NB4L1
  */
-public class RegistrationSucceed extends L2LegacyLoginServerPacket
+public class KickPlayer extends L2LegacyLoginServerPacket
 {
-	public static final int OPCODE = 0x02;
-	
-	private int _serverId;
-	private String _serverName;
+	public static final int OPCODE = 0x04;
 	
 	@Override
 	protected int getMinimumLength()
 	{
-		return READ_C + READ_S;
+		return READ_S;
 	}
+	
+	private String _account;
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
-		_serverId = buf.readC();
-		_serverName = buf.readS();
+		_account = buf.readS();
 	}
 	
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		_log.info("Registered on login server as " + _serverId + " : " + _serverName);
-		ServerStatus serverStatus = new ServerStatus();
-		serverStatus.addAttribute(ServerStatusAttributes.SERVER_LIST_STATUS, 0);
-		serverStatus.addAttribute(ServerStatusAttributes.SERVER_LIST_CLOCK, false);
-		serverStatus.addAttribute(ServerStatusAttributes.SERVER_LIST_BRACKETS, ReportedConfig.BRACKETS);
-		serverStatus.addAttribute(ServerStatusAttributes.TEST_SERVER, false);
-		sendPacket(serverStatus);
+		// TODO Auto-generated method stub
+		_log.info("KickPlayer: kick request issues by login for " + _account);
 	}
 }

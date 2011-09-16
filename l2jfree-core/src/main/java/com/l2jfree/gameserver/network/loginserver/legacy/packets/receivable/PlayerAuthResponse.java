@@ -17,34 +17,36 @@ package com.l2jfree.gameserver.network.loginserver.legacy.packets.receivable;
 import java.nio.BufferUnderflowException;
 
 import com.l2jfree.gameserver.network.loginserver.legacy.packets.L2LegacyLoginServerPacket;
-import com.l2jfree.network.legacy.LoginServerFailReason;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
- * @author hex1r0
+ * @author NB4L1
  */
-public class LoginServerFail extends L2LegacyLoginServerPacket
+public class PlayerAuthResponse extends L2LegacyLoginServerPacket
 {
-	public static final int OPCODE = 0x01;
+	public static final int OPCODE = 0x03;
 	
 	@Override
 	protected int getMinimumLength()
 	{
-		return READ_C;
+		return READ_S + READ_C;
 	}
 	
-	private LoginServerFailReason _reason;
+	private String _account;
+	private boolean _authed;
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
-		_reason = LoginServerFailReason.VALUES.valueOf(buf.readC());
+		_account = buf.readS();
+		_authed = (buf.readC() != 0);
 	}
 	
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		_log.info("Game Server registration failed: " + _reason.getReasonString());
+		// TODO Auto-generated method stub
+		_log.info("PlayerAuthResponse: " + _account + " " + _authed);
 	}
 }

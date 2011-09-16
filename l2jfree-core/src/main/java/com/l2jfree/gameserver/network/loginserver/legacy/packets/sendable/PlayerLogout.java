@@ -12,43 +12,33 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.loginserver.network.gameserver.legacy.status;
+package com.l2jfree.gameserver.network.loginserver.legacy.packets.sendable;
 
-import com.l2jfree.util.EnumValues;
+import com.l2jfree.gameserver.network.loginserver.legacy.L2LegacyLoginServer;
+import com.l2jfree.gameserver.network.loginserver.legacy.packets.L2LegacyGameServerPacket;
+import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
- * @author savormix
+ * @author NB4L1
  */
-public enum L2LegacyManagedState
+public class PlayerLogout extends L2LegacyGameServerPacket
 {
-	/** Online status */
-	STATUS(1),
-	/** Server types */
-	TYPE(2),
-	/** Square brackets */
-	BRACKETS(3),
-	/** Maximum online players */
-	MAX_PLAYERS(4),
-	/** Minimal player age */
-	AGE_LIMIT(5);
+	private final String _player;
 	
-	private final Integer _id;
-	
-	private L2LegacyManagedState(int id)
+	public PlayerLogout(String player)
 	{
-		_id = id;
+		_player = player;
 	}
 	
-	/**
-	 * Returns the state's type ID.
-	 * 
-	 * @return state ID
-	 */
-	public Integer getId()
+	@Override
+	protected int getOpcode()
 	{
-		return _id;
+		return 0x03;
 	}
 	
-	public static final EnumValues<L2LegacyManagedState> VALUES = new EnumValues<L2LegacyManagedState>(
-			L2LegacyManagedState.class);
+	@Override
+	protected void writeImpl(L2LegacyLoginServer client, MMOBuffer buf) throws RuntimeException
+	{
+		buf.writeS(_player);
+	}
 }

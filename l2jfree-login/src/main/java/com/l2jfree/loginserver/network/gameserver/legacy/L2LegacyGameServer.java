@@ -26,8 +26,8 @@ import javolution.util.FastSet;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyGameServerPacket;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyLoginServerPacket;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable.LoginServerFail;
-import com.l2jfree.loginserver.network.gameserver.legacy.status.L2LegacyStatus;
 import com.l2jfree.network.legacy.LoginServerFailReason;
+import com.l2jfree.network.legacy.ServerStatus;
 import com.l2jfree.network.mmocore.DataSizeHolder;
 import com.l2jfree.network.mmocore.MMOConnection;
 import com.l2jfree.security.NewCipher;
@@ -58,7 +58,7 @@ public final class L2LegacyGameServer extends
 	private int _maxPlayers;
 	
 	// ServerStatus
-	private L2LegacyStatus _status;
+	private ServerStatus _status;
 	private int _types;
 	private boolean _brackets;
 	private int _age;
@@ -90,7 +90,7 @@ public final class L2LegacyGameServer extends
 		
 		_host = "0.0.0.0";
 		
-		_status = L2LegacyStatus.DOWN;
+		_status = ServerStatus.DOWN;
 		_onlineAccounts = FastSet.newInstance();
 		_pvp = true;
 	}
@@ -378,7 +378,7 @@ public final class L2LegacyGameServer extends
 	 * 
 	 * @return server status
 	 */
-	public L2LegacyStatus getStatus()
+	public ServerStatus getStatus()
 	{
 		return _status;
 	}
@@ -388,7 +388,7 @@ public final class L2LegacyGameServer extends
 	 * 
 	 * @param status server status
 	 */
-	public void setStatus(L2LegacyStatus status)
+	public void setStatus(ServerStatus status)
 	{
 		if (status != null)
 			_status = status;

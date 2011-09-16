@@ -21,7 +21,7 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 /**
  * @author hex1r0
  */
-public class RequestAuth extends L2LegacyGameServerPacket
+public class AuthRequest extends L2LegacyGameServerPacket
 {
 	/** Packet's identifier */
 	public static final int OPCODE = 0x01;
@@ -35,7 +35,7 @@ public class RequestAuth extends L2LegacyGameServerPacket
 	private final String[] _subnets;
 	private final String[] _hosts;
 	
-	public RequestAuth(int serverId, boolean acceptAlternateId, byte[] hexId, int port, boolean reserveHost,
+	public AuthRequest(int serverId, boolean acceptAlternateId, byte[] hexId, int port, boolean reserveHost,
 			int maxPlayers, String[] subnets, String[] hosts)
 	{
 		_serverId = serverId;

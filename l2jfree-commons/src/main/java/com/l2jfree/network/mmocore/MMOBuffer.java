@@ -107,6 +107,20 @@ public final class MMOBuffer
 	}
 	
 	/**
+	 * Reads <TT>length</TT> bytes into a new array.
+	 * 
+	 * @param length the length of the return array
+	 * @return the create array
+	 * @see java.nio.ByteBuffer#get(byte[])
+	 */
+	public byte[] readB(int length)
+	{
+		byte[] bytes = new byte[length];
+		_buffer.get(bytes);
+		return bytes;
+	}
+	
+	/**
 	 * Reads one byte (char in C) as a signed integer.
 	 * 
 	 * @return a number from the interval [{@link java.lang.Byte#MIN_VALUE};

@@ -17,7 +17,7 @@ package com.l2jfree.loginserver.network.gameserver.legacy;
 import java.net.InetAddress;
 
 import com.l2jfree.loginserver.network.gameserver.L2GameServerView;
-import com.l2jfree.loginserver.network.gameserver.legacy.status.L2LegacyStatus;
+import com.l2jfree.network.legacy.ServerStatus;
 
 /**
  * @author savormix
@@ -59,7 +59,7 @@ public final class L2LegacyGameServerView extends L2GameServerView
 		setPvp(gs.isPvp());
 		setOnlinePlayers(gs.getOnlineAccounts().size());
 		setMaxPlayers(gs.getMaxPlayers());
-		setOnline(gs.getStatus() != L2LegacyStatus.DOWN);
+		setOnline(gs.getStatus() != ServerStatus.DOWN);
 		setTypes(gs.getTypes());
 		setBrackets(gs.isBrackets());
 	}

@@ -48,9 +48,4 @@ public enum LoginServerFailReason
 			return NONE;
 		}
 	};
-	
-	public static LoginServerFailReason valueOf(int index)
-	{
-		return VALUES.valueOf(index);
-	}
 }

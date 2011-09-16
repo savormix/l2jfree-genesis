@@ -23,8 +23,7 @@ import javolution.util.FastMap;
 import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServer;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyGameServerPacket;
 import com.l2jfree.loginserver.network.gameserver.legacy.status.L2LegacyAgeLimit;
-import com.l2jfree.loginserver.network.gameserver.legacy.status.L2LegacyManagedState;
-import com.l2jfree.loginserver.network.gameserver.legacy.status.L2LegacyStatus;
+import com.l2jfree.network.legacy.ServerStatusAttributes;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
@@ -67,27 +66,28 @@ public final class ServerStatus extends L2LegacyGameServerPacket
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		final L2LegacyGameServer lgs = getClient();
-		for (L2LegacyManagedState llms : L2LegacyManagedState.VALUES)
+		for (ServerStatusAttributes llms : ServerStatusAttributes.VALUES)
 		{
-			Integer val = _status.remove(llms.getId());
+			Integer val = _status.remove(llms.ordinal());
 			if (val == null)
 				continue;
 			
 			switch (llms)
 			{
-				case STATUS:
-					lgs.setStatus(L2LegacyStatus.getById(val));
+				case SERVER_LIST_STATUS:
+					lgs.setStatus(com.l2jfree.network.legacy.ServerStatus.VALUES.valueOf(val));
 					break;
-				case TYPE:
-					lgs.setTypes(val);
-					break;
-				case BRACKETS:
+				// FIXME
+				//case TYPE:
+				//	lgs.setTypes(val);
+				//	break;
+				case SERVER_LIST_BRACKETS:
 					lgs.setBrackets(val.intValue() == 0);
 					break;
-				case MAX_PLAYERS:
+				case SERVER_LIST_MAX_PLAYERS:
 					lgs.setMaxPlayers(val);
 					break;
-				case AGE_LIMIT:
+				case SERVER_AGE_LIMITATION:
 					lgs.setAge(val);
 					if (!L2LegacyAgeLimit.isDisplayed(lgs))
 						_log.info("Game server on ID " + lgs.getId() + " specified an invisible age limit.");

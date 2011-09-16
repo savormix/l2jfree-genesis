@@ -18,7 +18,7 @@ import com.l2jfree.util.EnumValues;
 
 // Compatible, legacy values
 /** This enum was designed for non-nio LS<->GS connections. */
-@Deprecated
+// FIXME revise enums + switch-cases based on them
 public enum ServerStatusAttributes
 {
 	NONE,

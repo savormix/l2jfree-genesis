@@ -28,7 +28,7 @@ import com.l2jfree.loginserver.network.client.packets.sendable.PlayFailure;
 import com.l2jfree.loginserver.network.client.packets.sendable.PlaySuccess;
 import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServer;
 import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServerController;
-import com.l2jfree.loginserver.network.gameserver.legacy.status.L2LegacyStatus;
+import com.l2jfree.network.legacy.ServerStatus;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 import com.l2jfree.sql.L2Database;
@@ -70,7 +70,7 @@ public final class RequestServerLogin extends L2ClientPacket
 		}
 		
 		final L2LegacyGameServer lgs = L2LegacyGameServerController.getInstance().getById(_serverId);
-		if (lgs == null || lgs.getStatus() == L2LegacyStatus.DOWN) // server down
+		if (lgs == null || lgs.getStatus() == ServerStatus.DOWN) // server down
 		{
 			client.close(new PlayFailure(L2NoServiceReason.MAINTENANCE_UNDERGOING));
 			return;
@@ -85,7 +85,7 @@ public final class RequestServerLogin extends L2ClientPacket
 		
 		if (!acc.isSuperUser()) // normal account
 		{
-			if (lgs.getStatus() == L2LegacyStatus.GM_ONLY) // restricted access
+			if (lgs.getStatus() == ServerStatus.GM_ONLY) // restricted access
 			{
 				client.close(new PlayFailure(L2NoServiceReason.MAINTENANCE_UNDERGOING));
 				return;

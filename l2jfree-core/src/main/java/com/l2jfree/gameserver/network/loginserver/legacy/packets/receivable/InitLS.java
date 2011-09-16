@@ -24,9 +24,10 @@ import java.security.spec.RSAPublicKeySpec;
 
 import com.l2jfree.gameserver.config.NetworkConfig;
 import com.l2jfree.gameserver.config.ReportedConfig;
+import com.l2jfree.gameserver.network.loginserver.legacy.L2LegacyLoginServerState;
 import com.l2jfree.gameserver.network.loginserver.legacy.packets.L2LegacyLoginServerPacket;
+import com.l2jfree.gameserver.network.loginserver.legacy.packets.sendable.AuthRequest;
 import com.l2jfree.gameserver.network.loginserver.legacy.packets.sendable.BlowFishKey;
-import com.l2jfree.gameserver.network.loginserver.legacy.packets.sendable.RequestAuth;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 import com.l2jfree.util.Rnd;
@@ -36,39 +37,31 @@ import com.l2jfree.util.Rnd;
  */
 public class InitLS extends L2LegacyLoginServerPacket
 {
-	public static final int OPCODE = 0;
-	
-	private int _rev;
-	private byte[] _keyRSA;
+	public static final int OPCODE = 0x00;
 	
 	@Override
 	protected int getMinimumLength()
 	{
-		return 5;
+		return READ_D + READ_D;
 	}
+	
+	private int _rev;
+	private byte[] _keyRSA;
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		_rev = buf.readD();
 		int size = buf.readD();
-		_keyRSA = new byte[size];
-		buf.readB(_keyRSA);
-	}
-	
-	public int getRevision()
-	{
-		return _rev;
-	}
-	
-	public byte[] getRSAKey()
-	{
-		return _keyRSA;
+		_keyRSA = buf.readB(size);
 	}
 	
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
+		// TODO
+		_log.info("InitLS - revision: " + _rev);
+		
 		RSAPublicKey publicKey;
 		try
 		{
@@ -87,7 +80,8 @@ public class InitLS extends L2LegacyLoginServerPacket
 		
 		sendPacket(new BlowFishKey(blowfishKey, publicKey));
 		
-		sendPacket(new RequestAuth(ReportedConfig.ID, ReportedConfig.ACCEPT_ALTERNATE_ID, new byte[10],
+		sendPacket(new AuthRequest(ReportedConfig.ID, ReportedConfig.ACCEPT_ALTERNATE_ID, new byte[10],
 				NetworkConfig.LISTEN_PORT, true, ReportedConfig.MAX_ONLINE, NetworkConfig.SUBNETS, NetworkConfig.HOSTS));
+		getClient().setState(L2LegacyLoginServerState.KEYS_EXCHANGED);
 	}
 }

@@ -129,8 +129,7 @@ public final class L2LegacyLoginServer extends
 	@Override
 	protected boolean isAuthed()
 	{
-		// TODO Auto-generated method stub
-		return true;
+		return getState() != L2LegacyLoginServerState.CONNECTED;
 	}
 	
 	/**
