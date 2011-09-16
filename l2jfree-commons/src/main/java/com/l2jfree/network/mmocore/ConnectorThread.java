@@ -17,6 +17,8 @@ package com.l2jfree.network.mmocore;
 import java.net.InetSocketAddress;
 import java.nio.channels.SocketChannel;
 
+import com.l2jfree.Util;
+
 /**
  * {@link MMOController} associated {@link WorkerThread} responsible for connecting to other hosts.
  * 
@@ -65,6 +67,8 @@ final class ConnectorThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 					}
 				}
 				
+				Util.printSection(getMMOController().getClass().getSimpleName() + " "
+						+ selectable.socket().getRemoteSocketAddress().toString());
 				final T con = getMMOController().createClient(selectable);
 				con.enableReadInterest();
 				

@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SocketChannel;
 
-import com.l2jfree.Util;
 import com.l2jfree.gameserver.network.loginserver.legacy.packets.L2LegacyGameServerPacket;
 import com.l2jfree.gameserver.network.loginserver.legacy.packets.L2LegacyLoginServerPacket;
 import com.l2jfree.network.mmocore.MMOConfig;
@@ -76,7 +75,6 @@ public class L2LegacyLoginServerController extends
 	@Override
 	protected L2LegacyLoginServer createClient(SocketChannel socketChannel) throws ClosedChannelException
 	{
-		Util.printSection(socketChannel.socket().getRemoteSocketAddress().toString());
 		L2LegacyLoginServer lls = new L2LegacyLoginServer(this, socketChannel);
 		
 		return lls;
