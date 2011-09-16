@@ -33,22 +33,28 @@ public abstract class CharInfo extends StaticPacket
 	 */
 	public static final class PlayerInfo extends CharInfo
 	{
-		/** This packet. */
-		public static final PlayerInfo PACKET = new PlayerInfo();
-		
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @see CharInfo#CharInfo()
+		 * @see CharInfo#CharInfo(L2Player)
 		 */
-		private PlayerInfo()
+		private PlayerInfo(L2Player player)
 		{
+			super(player);
 		}
 	}
 	
-	/** Constructs this packet. */
-	public CharInfo()
+	private final L2Player _player;
+	
+	/**
+	 * Constructs this packet.
+	 * 
+	 * @param player
+	 */
+	public CharInfo(L2Player player)
 	{
+		_player = player;
+		_player.getView().refresh();
 	}
 	
 	@Override
@@ -58,16 +64,10 @@ public abstract class CharInfo extends StaticPacket
 	}
 	
 	@Override
-	public void prepareToSend(L2Client client, L2Player activeChar)
-	{
-		activeChar.getView().refresh();
-	}
-	
-	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		final IPlayerView view = activeChar.getView();
+		final IPlayerView view = _player.getView();
 		
 		buf.writeD(view.getX()); // Location X
 		buf.writeD(view.getY()); // Location Y
