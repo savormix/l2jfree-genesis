@@ -435,43 +435,95 @@ public final class L2Properties implements Serializable
 		return L2Parser.getEnum(enumClass, value);
 	}
 	
-	public boolean[] getBoolArray(String name, String separator)
+	public boolean[] getBooleanArray(Object name, String regex)
 	{
-		return (boolean[])L2Parser.getAsArray(getProperty(name), Boolean.class, separator);
+		return (boolean[])L2Parser.getArray(Boolean.TYPE, getProperty(name), regex);
 	}
 	
-	public byte[] getByteArray(String name, String separator)
+	public boolean[] getBooleanArray(Object name, String regex, String defaultValue)
 	{
-		return (byte[])L2Parser.getAsArray(getProperty(name), Byte.class, separator);
+		return (boolean[])L2Parser.getArray(Boolean.TYPE, getProperty(name, defaultValue), regex);
 	}
 	
-	public short[] getShortArray(String name, String separator)
+	public byte[] getByteArray(Object name, String regex)
 	{
-		return (short[])L2Parser.getAsArray(getProperty(name), Short.class, separator);
+		return (byte[])L2Parser.getArray(Byte.TYPE, getProperty(name), regex);
 	}
 	
-	public int[] getIntArray(String name, String separator)
+	public byte[] getByteArray(Object name, String regex, String defaultValue)
 	{
-		return (int[])L2Parser.getAsArray(getProperty(name), Integer.class, separator);
+		return (byte[])L2Parser.getArray(Byte.TYPE, getProperty(name, defaultValue), regex);
 	}
 	
-	public long[] getLongArray(String name, String separator)
+	public short[] getShortArray(Object name, String regex)
 	{
-		return (long[])L2Parser.getAsArray(getProperty(name), Long.class, separator);
+		return (short[])L2Parser.getArray(Short.TYPE, getProperty(name), regex);
 	}
 	
-	public float[] getFloatArray(String name, String separator)
+	public short[] getShortArray(Object name, String regex, String defaultValue)
 	{
-		return (float[])L2Parser.getAsArray(getProperty(name), Float.class, separator);
+		return (short[])L2Parser.getArray(Short.TYPE, getProperty(name, defaultValue), regex);
 	}
 	
-	public double[] getDoubleArray(String name, String separator)
+	public int[] getIntegerArray(Object name, String regex)
 	{
-		return (double[])L2Parser.getAsArray(getProperty(name), Double.class, separator);
+		return (int[])L2Parser.getArray(Integer.TYPE, getProperty(name), regex);
 	}
 	
-	public String[] getStringArray(String name, String separator)
+	public int[] getIntegerArray(Object name, String regex, String defaultValue)
 	{
-		return (String[])L2Parser.getAsArray(getProperty(name), String.class, separator);
+		return (int[])L2Parser.getArray(Integer.TYPE, getProperty(name, defaultValue), regex);
+	}
+	
+	public long[] getLongArray(Object name, String regex)
+	{
+		return (long[])L2Parser.getArray(Long.TYPE, getProperty(name), regex);
+	}
+	
+	public long[] getLongArray(Object name, String regex, String defaultValue)
+	{
+		return (long[])L2Parser.getArray(Long.TYPE, getProperty(name, defaultValue), regex);
+	}
+	
+	public float[] getFloatArray(Object name, String regex)
+	{
+		return (float[])L2Parser.getArray(Float.TYPE, getProperty(name), regex);
+	}
+	
+	public float[] getFloatArray(Object name, String regex, String defaultValue)
+	{
+		return (float[])L2Parser.getArray(Float.TYPE, getProperty(name, defaultValue), regex);
+	}
+	
+	public double[] getDoubleArray(Object name, String regex)
+	{
+		return (double[])L2Parser.getArray(Double.TYPE, getProperty(name), regex);
+	}
+	
+	public double[] getDoubleArray(Object name, String regex, String defaultValue)
+	{
+		return (double[])L2Parser.getArray(Double.TYPE, getProperty(name, defaultValue), regex);
+	}
+	
+	public String[] getStringArray(Object name, String regex)
+	{
+		return (String[])L2Parser.getArray(String.class, getProperty(name), regex);
+	}
+	
+	public String[] getStringArray(Object name, String regex, String defaultValue)
+	{
+		return (String[])L2Parser.getArray(String.class, getProperty(name, defaultValue), regex);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <T extends Enum<T>> T[] getEnumArray(Class<T> enumClass, Object name, String regex)
+	{
+		return (T[])L2Parser.getArray(enumClass, getProperty(name), regex);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <T extends Enum<T>> T[] getEnumArray(Class<T> enumClass, Object name, String regex, String defaultValue)
+	{
+		return (T[])L2Parser.getArray(enumClass, getProperty(name, defaultValue), regex);
 	}
 }

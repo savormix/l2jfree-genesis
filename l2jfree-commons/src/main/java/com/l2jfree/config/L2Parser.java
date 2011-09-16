@@ -194,13 +194,14 @@ public final class L2Parser
 		}
 	}
 	
-	public static Object getAsArray(String value, Class<?> clazz, String separator)
+	public static Object getArray(Class<?> componentClass, String value, String regex)
 	{
-		String[] values = value.split(separator);
+		final String[] values = value.split(regex);
 		
-		Object array = Array.newInstance(clazz, values.length);
+		final Object array = Array.newInstance(componentClass, values.length);
+		
 		for (int i = 0; i < values.length; i++)
-			Array.set(array, i, get(clazz, values[i]));
+			Array.set(array, i, get(componentClass, values[i]));
 		
 		return array;
 	}

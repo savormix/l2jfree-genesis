@@ -17,6 +17,7 @@ package com.l2jfree.sql;
 import java.sql.Connection;
 
 import com.l2jfree.util.concurrent.FIFOSimpleExecutableQueue;
+import com.l2jfree.util.concurrent.L2ThreadPool;
 import com.l2jfree.util.concurrent.RunnableStatsManager;
 import com.l2jfree.util.logging.L2Logger;
 
@@ -39,7 +40,13 @@ public final class SQLQueryQueue extends FIFOSimpleExecutableQueue<SQLQuery>
 	
 	private SQLQueryQueue()
 	{
-		// singleton
+		L2ThreadPool.scheduleAtFixedRate(new Runnable() {
+			@Override
+			public void run()
+			{
+				executeNow();
+			}
+		}, 60000, 60000);
 	}
 	
 	@Override
