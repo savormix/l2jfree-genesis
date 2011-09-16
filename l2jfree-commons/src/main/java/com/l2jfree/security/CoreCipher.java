@@ -20,7 +20,7 @@ import java.nio.ByteOrder;
 /**
  * @author savormix
  */
-public class CoreCipher
+public class CoreCipher implements ICipher
 {
 	private static final int VALID_KEY_LENGTH = 16;
 	
@@ -65,6 +65,7 @@ public class CoreCipher
 	 * @param buf a byte buffer
 	 * @param size packet's size
 	 */
+	@Override
 	public void encipher(ByteBuffer buf, final int size)
 	{
 		encipher(buf, buf.position(), size);
@@ -101,6 +102,7 @@ public class CoreCipher
 	 * @param buf a byte buffer
 	 * @param size packet's size
 	 */
+	@Override
 	public void decipher(ByteBuffer buf, final int size)
 	{
 		decipher(buf, buf.position(), size);

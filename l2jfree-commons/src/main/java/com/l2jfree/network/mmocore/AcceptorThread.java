@@ -24,6 +24,8 @@ import java.nio.channels.SocketChannel;
 
 import org.apache.commons.io.IOUtils;
 
+import com.l2jfree.Util;
+
 /**
  * {@link MMOController} associated {@link WorkerThread} responsible for accepting new connections.
  * 
@@ -80,6 +82,8 @@ final class AcceptorThread<T extends MMOConnection<T, RP, SP>, RP extends Receiv
 				{
 					sc.configureBlocking(false);
 					
+					Util.printSection(getMMOController().getClass().getSimpleName() + " "
+							+ sc.socket().getRemoteSocketAddress().toString());
 					final T con = getMMOController().createClient(sc);
 					con.enableReadInterest();
 				}

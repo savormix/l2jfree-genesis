@@ -352,8 +352,22 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 	 */
 	protected abstract void onForcedDisconnection();
 	
+	/**
+	 * Must keep the position untouched.
+	 * 
+	 * @param buf
+	 * @param size
+	 * @return
+	 */
 	protected abstract boolean decipher(ByteBuffer buf, DataSizeHolder size);
 	
+	/**
+	 * Must change the position to the end of the enciphered data.
+	 * 
+	 * @param buf
+	 * @param size
+	 * @return
+	 */
 	protected abstract boolean encipher(ByteBuffer buf, int size);
 	
 	/**

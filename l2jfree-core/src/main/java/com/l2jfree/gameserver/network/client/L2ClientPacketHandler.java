@@ -161,7 +161,7 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 				return invalidState(client, MoveBackwardToLocation.class, opcode);
 				
 			case NetPing.OPCODE:
-				if (client.stateEquals(LOGGED_IN))
+				if (client.stateEquals(CHARACTER_MANAGEMENT, LOGGED_IN))
 					return new NetPing.UptimeResponse();
 				return invalidState(client, NetPing.class, opcode);
 				

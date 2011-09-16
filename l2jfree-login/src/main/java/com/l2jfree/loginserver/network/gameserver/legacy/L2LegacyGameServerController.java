@@ -22,7 +22,6 @@ import java.util.Collection;
 
 import javolution.util.FastMap;
 
-import com.l2jfree.Util;
 import com.l2jfree.loginserver.LoginInfo;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyGameServerPacket;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyLoginServerPacket;
@@ -82,7 +81,6 @@ public final class L2LegacyGameServerController extends
 	@Override
 	protected L2LegacyGameServer createClient(SocketChannel socketChannel) throws ClosedChannelException
 	{
-		Util.printSection(socketChannel.socket().getRemoteSocketAddress().toString());
 		L2LegacyGameServer lgs = new L2LegacyGameServer(this, socketChannel);
 		lgs.sendPacket(new InitLS((RSAPublicKey)lgs.getPublicKey()));
 		return lgs;
