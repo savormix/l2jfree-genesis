@@ -34,34 +34,5 @@ public class PlayerAI extends CharacterAI implements IPlayerAI
 		return getActiveChar();
 	}
 	
-	@Override
-	protected void onIntentionIdle()
-	{
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
-	protected void onIntentionActive()
-	{
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
-	protected void onIntentionMoveTo(int x, int y, int z)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
-	protected void onEvtArrived()
-	{
-		// TODO Auto-generated method stub
-		
-	}
-	
 	// TODO
-	
 }

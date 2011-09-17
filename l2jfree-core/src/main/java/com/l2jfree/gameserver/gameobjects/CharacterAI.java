@@ -14,13 +14,12 @@
  */
 package com.l2jfree.gameserver.gameobjects;
 
-import java.lang.reflect.Array;
-
 import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterAI;
 
 /**
  * @author hex1r0
  */
+@SuppressWarnings("unused")
 public abstract class CharacterAI implements ICharacterAI
 {
 	private final L2Character _activeChar;
@@ -35,68 +34,99 @@ public abstract class CharacterAI implements ICharacterAI
 		return _activeChar;
 	}
 	
-	// Will be populated with necessary values
-	public static enum Intention
+	public static abstract class Desire
 	{
-		/** Do nothing */
-		IDLE,
-		
-		/** Watch for everything that happens with surrounding objects */
-		ACTIVE,
-		
-		/** Move to target position */
-		MOVE_TO,
+		protected abstract void execute(CharacterAI ai);
 	}
 	
-	// Will be populated with necessary values
-	public static enum Event
+	public static class IdleDesire extends Desire
 	{
-		/** Active character arrived to target position */
-		ARRIVED,
-	}
-	
-	public final void setIntention(Intention intention)
-	{
-		setIntention(intention, null);
-	}
-	
-	public final void setIntention(Intention intention, Object[] args)
-	{
-		switch (intention)
+		@Override
+		protected void execute(CharacterAI ai)
 		{
-			case IDLE:
-				onIntentionIdle();
-				break;
-			case ACTIVE:
-				onIntentionActive();
-				break;
-			case MOVE_TO:
-				onIntentionMoveTo((Integer)Array.get(args[0], 0), (Integer)Array.get(args[0], 1),
-						(Integer)Array.get(args[0], 2));
-				break;
+			ai.onIntentionIdle();
 		}
 	}
 	
-	protected abstract void onIntentionIdle();
-	
-	protected abstract void onIntentionActive();
-	
-	protected abstract void onIntentionMoveTo(int x, int y, int z);
-	
-	public final void notifyEvent(Event event)
+	public static class ActiveDesire extends Desire
 	{
-		notifyEvent(event, null);
-	}
-	
-	public final void notifyEvent(Event event, Object[] args)
-	{
-		switch (event)
+		@Override
+		protected void execute(CharacterAI ai)
 		{
-			case ARRIVED:
-				onEvtArrived();
-				break;
+			ai.onIntentionActive();
 		}
 	}
 	
-	protected abstract void onEvtArrived();
+	public static class MoveDesire extends Desire
+	{
+		private final int _x;
+		private final int _y;
+		private final int _z;
+		
+		public MoveDesire(int x, int y, int z)
+		{
+			_x = x;
+			_y = y;
+			_z = z;
+		}
+		
+		@Override
+		protected void execute(CharacterAI ai)
+		{
+			ai.onIntentionMove(_x, _y, _z);
+		}
+	}
+	
+	public void addDesire(Desire desire)
+	{
+		// TODO
+		// adds a new desire
+		
+		think();
+	}
+	
+	public void setDesire(Desire desire)
+	{
+		// TODO
+		// replaces all previous desire with the given one
+		
+		think();
+	}
+	
+	@SuppressWarnings("null")
+	public void think()
+	{
+		// TODO implement
+		// check if it "can" think right now
+		// if yes, then find most important desire, 
+		Desire mostDesired = null;
+		
+		// and behave according to it... schedule asynchronously if necessary
+		if (mostDesired != null)
+			mostDesired.execute(this);
+		else
+			onIntentionIdle();
+	}
+	
+	// intention handlers
+	protected void onIntentionIdle()
+	{
+		// do nothing at default
+	}
+	
+	protected void onIntentionActive()
+	{
+		// do nothing at default
+	}
+	
+	protected void onIntentionMove(int x, int y, int z)
+	{
+		// do nothing at default
+	}
+	
+	// event handlers
+	public void onEventArrived()
+	{
+		// do nothing at default
+	}
 }
