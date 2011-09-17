@@ -12,25 +12,14 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.gameobjects.interfaces;
+package com.l2jfree.gameserver.gameobjects.components.interfaces;
 
-import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterAI;
-import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterStat;
-import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterView;
-import com.l2jfree.gameserver.gameobjects.components.interfaces.IInventory;
+import com.l2jfree.gameserver.gameobjects.components.IComponent;
 
 /**
- * @author NB4L1
+ * @author hex1r0
  */
-public interface IL2Character extends IL2Object
+public interface ICharacterAI extends IComponent
 {
-	public ICharacterAI getAI();
-	
-	public ICharacterStat getStat();
-	
-	public ICharacterView getView();
-	
-	public IInventory getInventory();
-	
-	public void setName(String name);
+	// TODO	
 }

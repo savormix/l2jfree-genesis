@@ -15,18 +15,19 @@
 package com.l2jfree.gameserver.gameobjects;
 
 import com.l2jfree.gameserver.datatables.PlayerNameTable;
-import com.l2jfree.gameserver.gameobjects.ai.PlayerAi;
-import com.l2jfree.gameserver.gameobjects.components.AiComponent;
+import com.l2jfree.gameserver.gameobjects.components.AIComponent;
 import com.l2jfree.gameserver.gameobjects.components.AppearanceComponent;
 import com.l2jfree.gameserver.gameobjects.components.InventoryComponent;
 import com.l2jfree.gameserver.gameobjects.components.KnownListComponent;
 import com.l2jfree.gameserver.gameobjects.components.PositionComponent;
 import com.l2jfree.gameserver.gameobjects.components.StatComponent;
 import com.l2jfree.gameserver.gameobjects.components.ViewComponent;
+import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerAI;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerInventory;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerStat;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerView;
 import com.l2jfree.gameserver.gameobjects.interfaces.IL2Playable;
+import com.l2jfree.gameserver.gameobjects.player.PlayerAI;
 import com.l2jfree.gameserver.gameobjects.player.PlayerAppearance;
 import com.l2jfree.gameserver.gameobjects.player.PlayerInventory;
 import com.l2jfree.gameserver.gameobjects.player.PlayerKnownList;
@@ -52,7 +53,7 @@ import com.l2jfree.lang.L2TextBuilder;
  */
 @PositionComponent(PlayerPosition.class)
 @KnownListComponent(PlayerKnownList.class)
-@AiComponent(PlayerAi.class)
+@AIComponent(PlayerAI.class)
 @StatComponent(PlayerStat.class)
 @ViewComponent(PlayerView.class)
 @InventoryComponent(PlayerInventory.class)
@@ -172,6 +173,12 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 	public PlayerPosition getPosition()
 	{
 		return (PlayerPosition)super.getPosition();
+	}
+	
+	@Override
+	public IPlayerAI getAI()
+	{
+		return (IPlayerAI)super.getAI();
 	}
 	
 	@Override

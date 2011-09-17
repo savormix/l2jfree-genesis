@@ -12,25 +12,32 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.gameobjects.interfaces;
+package com.l2jfree.gameserver.gameobjects.components;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+import com.l2jfree.gameserver.gameobjects.L2Character;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterAI;
-import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterStat;
-import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterView;
-import com.l2jfree.gameserver.gameobjects.components.interfaces.IInventory;
 
 /**
- * @author NB4L1
+ * @author hex1r0
  */
-public interface IL2Character extends IL2Object
+@Inherited
+@Documented
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface AIComponent
 {
-	public ICharacterAI getAI();
+	public Class<? extends ICharacterAI> value();
 	
-	public ICharacterStat getStat();
-	
-	public ICharacterView getView();
-	
-	public IInventory getInventory();
-	
-	public void setName(String name);
+	public static final class Factory
+	{
+		public static final ComponentFactory<L2Character, ICharacterAI> INSTANCE =
+				new ComponentFactory<L2Character, ICharacterAI>(L2Character.class, AIComponent.class);
+	}
 }
