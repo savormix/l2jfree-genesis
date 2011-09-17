@@ -40,8 +40,6 @@ import com.l2jfree.network.mmocore.MMOBuffer;
  */
 public class PlayerView extends CharacterView implements IPlayerView
 {
-	private final PersistentId _persistentId;
-	
 	private int _abnormalEffect;
 	private int _accuracy;
 	private int _activeClassId;
@@ -152,8 +150,6 @@ public class PlayerView extends CharacterView implements IPlayerView
 	public PlayerView(L2Player activeChar)
 	{
 		super(activeChar);
-		
-		_persistentId = activeChar.getPersistentId();
 	}
 	
 	@Override
@@ -169,7 +165,7 @@ public class PlayerView extends CharacterView implements IPlayerView
 	@Override
 	public PersistentId getPersistentId()
 	{
-		return _persistentId;
+		return getActiveChar().getPersistentId();
 	}
 	
 	/**

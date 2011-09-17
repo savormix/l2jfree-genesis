@@ -31,7 +31,8 @@ import com.l2jfree.gameserver.util.PersistentId;
 import com.l2jfree.lang.L2TextBuilder;
 import com.l2jfree.network.mmocore.DataSizeHolder;
 import com.l2jfree.network.mmocore.MMOConnection;
-import com.l2jfree.security.CoreCipher;
+import com.l2jfree.security.EmptyCipher;
+import com.l2jfree.security.ICipher;
 import com.l2jfree.security.ObfuscationService;
 import com.l2jfree.util.concurrent.RunnableStatsManager;
 
@@ -41,8 +42,7 @@ import com.l2jfree.util.concurrent.RunnableStatsManager;
 public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2ServerPacket> implements IL2Client
 {
 	private ClientProtocolVersion _version;
-	private final CoreCipher _cipher;
-	private boolean _firstTime;
+	private ICipher _cipher;
 	
 	private final ObfuscationService _deobfuscator;
 	
@@ -66,8 +66,7 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 		super(mmoController, socketChannel);
 		
 		// TODO Auto-generated constructor stub
-		_cipher = new CoreCipher(L2ClientSecurity.getInstance().getKey());
-		_firstTime = true;
+		_cipher = new EmptyCipher();
 		
 		_deobfuscator = new ObfuscationService();
 		
@@ -78,9 +77,6 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	@Override
 	protected boolean decipher(ByteBuffer buf, DataSizeHolder size)
 	{
-		if (isFirstTime())
-			return true;
-		
 		// at this point, cipher cannot be null
 		getCipher().decipher(buf, size.getSize());
 		
@@ -91,10 +87,7 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	@Override
 	protected boolean encipher(ByteBuffer buf, int size)
 	{
-		if (isFirstTime())
-			setFirstTime(false);
-		else
-			getCipher().encipher(buf, size);
+		getCipher().encipher(buf, size);
 		
 		buf.position(buf.position() + size);
 		return true;
@@ -228,29 +221,14 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 		_version = version;
 	}
 	
-	/**
-	 * Returns the complete cipher's key.
-	 * 
-	 * @return cipher's key
-	 */
-	public ByteBuffer getCipherKey()
-	{
-		return getCipher().getKey();
-	}
-	
-	private CoreCipher getCipher()
+	private ICipher getCipher()
 	{
 		return _cipher;
 	}
 	
-	private boolean isFirstTime()
+	public void setCipher(ICipher cipher)
 	{
-		return _firstTime;
-	}
-	
-	private void setFirstTime(boolean firstTime)
-	{
-		_firstTime = firstTime;
+		_cipher = cipher;
 	}
 	
 	/**

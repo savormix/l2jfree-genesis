@@ -23,7 +23,6 @@ import com.l2jfree.gameserver.network.client.packets.sendable.SSQInfoPacket.SkyC
 import com.l2jfree.gameserver.network.client.packets.sendable.characterless.CharacterSelectedPacket.SelectedCharacterInfo;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
-import com.l2jfree.util.Rnd;
 
 /**
  * Sent when a character is selected and player clicks the 'Start' button.
@@ -95,12 +94,10 @@ public abstract class CharacterSelect extends L2ClientPacket
 		player.setClient(getClient());
 		player.addToWorld();
 		
-		final int seed = Rnd.nextInt();
-		getClient().getDeobfuscator().init(seed);
 		getClient().setState(L2ClientState.LOGGED_IN);
 		
 		sendPacket(SkyColor.getForCharacterSelection());
-		sendPacket(new SelectedCharacterInfo(seed));
+		sendPacket(new SelectedCharacterInfo());
 	}
 	
 	@Override

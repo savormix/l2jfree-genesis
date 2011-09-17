@@ -14,12 +14,14 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable.characterless;
 
-import java.nio.ByteBuffer;
-
 import com.l2jfree.gameserver.config.ReportedConfig;
 import com.l2jfree.gameserver.network.client.L2Client;
+import com.l2jfree.gameserver.network.client.L2ClientSecurity;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
+import com.l2jfree.security.CoreCipher;
+import com.l2jfree.security.ICipher;
+import com.l2jfree.util.Rnd;
 
 /**
  * @author savormix
@@ -35,24 +37,17 @@ public abstract class VersionCheck extends L2ServerPacket
 	public static final class ProtocolAnswer extends VersionCheck
 	{
 		/** Default response to unsupported protocol versions. */
-		public static final ProtocolAnswer INCOMPATIBLE = new ProtocolAnswer();
+		public static final ProtocolAnswer INCOMPATIBLE = new ProtocolAnswer(false);
 		
 		/**
-		 * Constructs a packet to inform the client about protocol compatibility and keys to be used
-		 * in further communications.
+		 * Constructs a packet to inform the client about protocol compatibility/incompatibility and
+		 * keys to be used in further communications.
 		 * 
-		 * @param key complete cipher's key
-		 * @param obfusKey client packet opcode obfuscation key
+		 * @param compatible whether protocol versions are compatible
 		 */
-		public ProtocolAnswer(ByteBuffer key, int obfusKey)
+		public ProtocolAnswer(boolean compatible)
 		{
-			super(true, key, obfusKey);
-		}
-		
-		/** Constructs a packet to inform the client about protocol incompatibility. */
-		private ProtocolAnswer()
-		{
-			super(false, ByteBuffer.allocate(CLIENT_KEY_LENGTH), 0);
+			super(compatible);
 		}
 	}
 	
@@ -60,6 +55,7 @@ public abstract class VersionCheck extends L2ServerPacket
 	
 	private final boolean _compatible;
 	private final byte[] _key;
+	private final ICipher _cipher;
 	private final int _obfusKey;
 	
 	/**
@@ -67,15 +63,25 @@ public abstract class VersionCheck extends L2ServerPacket
 	 * further communications.
 	 * 
 	 * @param compatible whether protocol versions are compatible
-	 * @param key complete cipher's key
-	 * @param obfusKey client packet opcode obfuscation key
 	 */
-	private VersionCheck(boolean compatible, ByteBuffer key, int obfusKey)
+	private VersionCheck(boolean compatible)
 	{
 		_compatible = compatible;
 		_key = new byte[CLIENT_KEY_LENGTH];
-		key.get(_key, 0, _key.length);
-		_obfusKey = obfusKey;
+		
+		if (_compatible)
+		{
+			final CoreCipher cipher = new CoreCipher(L2ClientSecurity.getInstance().getKey());
+			cipher.getKey().get(_key);
+			
+			_cipher = cipher;
+			_obfusKey = Rnd.nextInt();
+		}
+		else
+		{
+			_cipher = null;
+			_obfusKey = 0;
+		}
 	}
 	
 	@Override
@@ -95,5 +101,15 @@ public abstract class VersionCheck extends L2ServerPacket
 		buf.writeC(0x01); // 1
 		
 		buf.writeD(_obfusKey); // Character management obfuscation key
+	}
+	
+	@Override
+	protected void packetWritten(L2Client client) throws RuntimeException
+	{
+		if (_compatible)
+		{
+			client.setCipher(_cipher);
+			client.getDeobfuscator().init(_obfusKey);
+		}
 	}
 }

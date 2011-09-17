@@ -24,7 +24,6 @@ import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.sendable.characterless.VersionCheck.ProtocolAnswer;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
-import com.l2jfree.util.Rnd;
 
 /**
  * Sent by the client immediately after creating a connection.
@@ -70,12 +69,10 @@ public class ProtocolVersion extends L2ClientPacket
 			return;
 		}
 		
-		final int seed = Rnd.nextInt();
 		client.setVersion(version);
-		client.getDeobfuscator().init(seed);
 		client.setState(L2ClientState.PROTOCOL_OK);
 		
-		sendPacket(new ProtocolAnswer(client.getCipherKey(), seed));
+		sendPacket(new ProtocolAnswer(true));
 	}
 	
 	@Override

@@ -24,12 +24,10 @@ import com.l2jfree.gameserver.util.ObjectId;
 public abstract class CharacterView implements ICharacterView
 {
 	private final L2Character _activeChar;
-	private final ObjectId _objectId;
 	
 	protected CharacterView(L2Character activeChar)
 	{
 		_activeChar = activeChar;
-		_objectId = activeChar.getObjectId();
 	}
 	
 	public L2Character getActiveChar()
@@ -40,7 +38,7 @@ public abstract class CharacterView implements ICharacterView
 	@Override
 	public final ObjectId getObjectId()
 	{
-		return _objectId;
+		return getActiveChar().getObjectId();
 	}
 	
 	@Override

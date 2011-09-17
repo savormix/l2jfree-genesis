@@ -19,6 +19,7 @@ import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerView;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
+import com.l2jfree.util.Rnd;
 
 /**
  * Sent to client after a character is selected by pressing the 'Start' button.
@@ -39,12 +40,11 @@ public abstract class CharacterSelectedPacket extends L2ServerPacket
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @param obfusKey client packet opcode obfuscation key
-		 * @see CharacterSelectedPacket#CharacterSelectedPacket(int)
+		 * @see CharacterSelectedPacket#CharacterSelectedPacket()
 		 */
-		public SelectedCharacterInfo(int obfusKey)
+		public SelectedCharacterInfo()
 		{
-			super(obfusKey);
+			super();
 		}
 	}
 	
@@ -52,12 +52,10 @@ public abstract class CharacterSelectedPacket extends L2ServerPacket
 	
 	/**
 	 * Constructs this packet.
-	 * 
-	 * @param obfusKey client packet opcode obfuscation key
 	 */
-	public CharacterSelectedPacket(int obfusKey)
+	public CharacterSelectedPacket()
 	{
-		_obfusKey = obfusKey;
+		_obfusKey = Rnd.nextInt();
 	}
 	
 	@Override
@@ -126,5 +124,11 @@ public abstract class CharacterSelectedPacket extends L2ServerPacket
 		buf.writeD(0); // 0
 		buf.writeB(new byte[64]); // Unk
 		buf.writeD(_obfusKey); // In-world obfuscation key
+	}
+	
+	@Override
+	protected void packetWritten(L2Client client) throws RuntimeException
+	{
+		client.getDeobfuscator().init(_obfusKey);
 	}
 }
