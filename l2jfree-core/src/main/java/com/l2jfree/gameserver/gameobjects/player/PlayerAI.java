@@ -31,7 +31,7 @@ public class PlayerAI extends CharacterAI implements IPlayerAI
 	@Override
 	public L2Player getActiveChar()
 	{
-		return getActiveChar();
+		return (L2Player)super.getActiveChar();
 	}
 	
 	// TODO
