@@ -26,7 +26,7 @@ import com.l2jfree.gameserver.datatables.PlayerTemplateTable;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.gameobjects.components.ComponentFactory;
 import com.l2jfree.gameserver.network.client.Disconnection;
-import com.l2jfree.gameserver.network.client.L2ClientConnections;
+import com.l2jfree.gameserver.network.client.L2ClientController;
 import com.l2jfree.gameserver.network.loginserver.legacy.L2LegacyLoginServerController;
 import com.l2jfree.gameserver.sql.PersistentProperties;
 import com.l2jfree.gameserver.util.IdFactory;
@@ -93,7 +93,7 @@ public final class GameServer extends Config
 		
 		try
 		{
-			final L2ClientConnections lcc = L2ClientConnections.getInstance();
+			final L2ClientController lcc = L2ClientController.getInstance();
 			lcc.openServerSocket(NetworkConfig.LISTEN_IP, NetworkConfig.LISTEN_PORT);
 			lcc.start();
 		}
@@ -138,7 +138,7 @@ public final class GameServer extends Config
 				
 				try
 				{
-					L2ClientConnections.getInstance().shutdown();
+					L2ClientController.getInstance().shutdown();
 				}
 				catch (Throwable t)
 				{
