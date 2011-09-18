@@ -39,6 +39,8 @@ public abstract class L2Character extends L2Object implements IL2Character
 	private final ICharacterView _view;
 	private final IInventory _inventory;
 	
+	private L2Object _target;
+	
 	protected L2Character(L2Template template)
 	{
 		super(template);
@@ -77,5 +79,18 @@ public abstract class L2Character extends L2Object implements IL2Character
 	public void setName(String name)
 	{
 		throw new UnsupportedOperationException("setName() is unsupported for " + getClass().getSimpleName());
+	}
+	
+	@Override
+	public L2Object getTarget()
+	{
+		return _target;
+	}
+	
+	@Override
+	public void setTarget(L2Object target)
+	{
+		// TODO
+		_target = target;
 	}
 }

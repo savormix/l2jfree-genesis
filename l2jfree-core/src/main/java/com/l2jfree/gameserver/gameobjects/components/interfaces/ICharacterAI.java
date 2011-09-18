@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.gameobjects.components.interfaces;
 
+import com.l2jfree.gameserver.gameobjects.ai.AIDesire;
 import com.l2jfree.gameserver.gameobjects.components.IComponent;
 
 /**
@@ -24,6 +25,12 @@ public interface ICharacterAI extends IComponent
 	public void worldRegionActivated();
 	
 	public void worldRegionDeactivated();
+	
+	public void addDesire(AIDesire desire);
+	
+	public void setDesire(AIDesire desire);
+	
+	public void clearDesires();
 	
 	// TODO	
 }

@@ -23,15 +23,19 @@ import com.l2jfree.gameserver.gameobjects.L2Object;
 public class OnActionDesire extends AIDesire
 {
 	private final L2Object _target;
+	private final boolean _cantMove;
+	private final boolean _forceAttack;
 	
-	public OnActionDesire(L2Object target)
+	public OnActionDesire(L2Object target, boolean cantMove, boolean forceAttack)
 	{
 		_target = target;
+		_cantMove = cantMove;
+		_forceAttack = forceAttack;
 	}
 	
 	@Override
 	public void execute(CharacterAI ai)
 	{
-		ai.onIntentionOnAction(_target);
+		ai.onIntentionOnAction(_target, _cantMove, _forceAttack);
 	}
 }

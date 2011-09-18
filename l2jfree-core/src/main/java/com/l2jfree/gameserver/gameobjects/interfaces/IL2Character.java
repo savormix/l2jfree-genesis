@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.gameobjects.interfaces;
 
+import com.l2jfree.gameserver.gameobjects.L2Object;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterAI;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterStat;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterView;
@@ -33,4 +34,8 @@ public interface IL2Character extends IL2Object
 	public IInventory getInventory();
 	
 	public void setName(String name);
+	
+	public L2Object getTarget();
+	
+	public void setTarget(L2Object target);
 }

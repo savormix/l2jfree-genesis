@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.gameobjects;
 
+import com.l2jfree.gameserver.gameobjects.ai.OnActionDesire;
 import com.l2jfree.gameserver.gameobjects.components.KnownListComponent;
 import com.l2jfree.gameserver.gameobjects.components.MovementComponent;
 import com.l2jfree.gameserver.gameobjects.components.PositionComponent;
@@ -159,5 +160,19 @@ public abstract class L2Object implements IL2Object
 		
 		L2World.removeObject(this);
 		return true;
+	}
+	
+	public final void onAction(L2Player player, boolean cantMove, boolean forceAttack)
+	{
+		if (player.getTarget() != this)
+		{
+			// check if player's target can be changed
+			player.setTarget(this);
+			// send packets according to the change
+			return;
+		}
+		
+		//player.sendPacket(...); // UpdateLocation/ItemOnGround/etc
+		player.getAI().addDesire(new OnActionDesire(this, cantMove, forceAttack));
 	}
 }

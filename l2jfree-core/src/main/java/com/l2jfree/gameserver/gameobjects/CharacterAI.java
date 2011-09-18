@@ -47,6 +47,7 @@ public abstract class CharacterAI implements ICharacterAI
 		// TODO
 	}
 	
+	@Override
 	public void addDesire(AIDesire desire)
 	{
 		// TODO
@@ -55,6 +56,7 @@ public abstract class CharacterAI implements ICharacterAI
 		think();
 	}
 	
+	@Override
 	public void setDesire(AIDesire desire)
 	{
 		// TODO
@@ -63,6 +65,7 @@ public abstract class CharacterAI implements ICharacterAI
 		think();
 	}
 	
+	@Override
 	public void clearDesires()
 	{
 		// TODO
@@ -93,7 +96,7 @@ public abstract class CharacterAI implements ICharacterAI
 		// do nothing at default
 	}
 	
-	public void onIntentionOnAction(L2Object target)
+	public void onIntentionOnAction(L2Object target, boolean cantMove, boolean forceAttack)
 	{
 		// do nothing at default
 	}
