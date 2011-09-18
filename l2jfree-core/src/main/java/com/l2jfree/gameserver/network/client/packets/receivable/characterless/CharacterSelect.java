@@ -94,7 +94,7 @@ public abstract class CharacterSelect extends L2ClientPacket
 		player.setClient(getClient());
 		player.addToWorld();
 		
-		getClient().setState(L2ClientState.LOGGED_IN);
+		getClient().setState(L2ClientState.CHARACTER_SELECTED);
 		
 		sendPacket(SkyColor.getForCharacterSelection());
 		sendPacket(new SelectedCharacterInfo());

@@ -25,6 +25,8 @@ public enum L2ClientState
 	PROTOCOL_OK,
 	/** Client has logged in with a valid account. */
 	CHARACTER_MANAGEMENT,
+	/** Client has selected a character, but hasn't logged into the game world yet. */
+	CHARACTER_SELECTED,
 	/** Client has logged into the game world with a character. */
 	LOGGED_IN;
 }

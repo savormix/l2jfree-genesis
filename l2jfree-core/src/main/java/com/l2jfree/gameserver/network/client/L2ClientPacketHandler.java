@@ -15,6 +15,7 @@
 package com.l2jfree.gameserver.network.client;
 
 import static com.l2jfree.gameserver.network.client.L2ClientState.CHARACTER_MANAGEMENT;
+import static com.l2jfree.gameserver.network.client.L2ClientState.CHARACTER_SELECTED;
 import static com.l2jfree.gameserver.network.client.L2ClientState.CONNECTED;
 import static com.l2jfree.gameserver.network.client.L2ClientState.LOGGED_IN;
 import static com.l2jfree.gameserver.network.client.L2ClientState.PROTOCOL_OK;
@@ -83,7 +84,7 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 				return invalidState(client, AuthLogin.class, opcode);
 				
 			case Logout.OPCODE: // 0x00
-				if (client.stateEquals(CHARACTER_MANAGEMENT, LOGGED_IN))
+				if (client.stateEquals(CHARACTER_MANAGEMENT, CHARACTER_SELECTED, LOGGED_IN))
 					return new Logout();
 				return invalidState(client, Logout.class, opcode);
 				
@@ -113,9 +114,14 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 				return invalidState(client, CharacterRestorePacket.class, opcode);
 				
 			case NetPing.OPCODE: // 0xb1
-				if (client.stateEquals(CHARACTER_MANAGEMENT, LOGGED_IN))
+				if (client.stateEquals(CHARACTER_MANAGEMENT, CHARACTER_SELECTED, LOGGED_IN))
 					return new NetPing.UptimeResponse();
 				return invalidState(client, NetPing.class, opcode);
+				
+			case EnterWorld.OPCODE: // 0x11
+				if (client.stateEquals(CHARACTER_SELECTED))
+					return new EnterWorld.RequestEnterWorld();
+				return invalidState(client, EnterWorld.class, opcode);
 				
 			case 0xd0:
 			{
@@ -149,11 +155,6 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 				if (client.stateEquals(LOGGED_IN))
 					return new MoveBackwardToLocation.RequestMovement();
 				return invalidState(client, MoveBackwardToLocation.class, opcode);
-				
-			case EnterWorld.OPCODE: // 0x11
-				if (client.stateEquals(LOGGED_IN))
-					return new EnterWorld.RequestEnterWorld();
-				return invalidState(client, EnterWorld.class, opcode);
 				
 			case RequestRestart.OPCODE: // 0x57
 				if (client.stateEquals(LOGGED_IN))

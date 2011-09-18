@@ -20,6 +20,7 @@ import java.util.Collections;
 
 import com.l2jfree.gameserver.gameobjects.L2Item;
 import com.l2jfree.gameserver.gameobjects.L2Player;
+import com.l2jfree.gameserver.network.client.L2ClientState;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.sendable.EtcStatusUpdatePacket.EtcEffectIcons;
 import com.l2jfree.gameserver.network.client.packets.sendable.ExBRExtraUserInfo.EventPlayerInfo;
@@ -86,7 +87,17 @@ public abstract class EnterWorld extends L2ClientPacket
 		// ALSO, IF REMOVING DUPLICATES, COMMENT THEM OUT INSTEAD.
 		
 		// TODO: implement
-		L2Player activeChar = getClient().getActiveChar();
+		final L2Player activeChar = getClient().getActiveChar();
+		
+		if (activeChar == null)
+		{
+			_log.fatal("activeChar == null");
+			getClient().closeNow();
+			return;
+		}
+		
+		getClient().setState(L2ClientState.LOGGED_IN);
+		
 		// send MacroInfo packets
 		sendPacket(MyTeleportBookmarkList.PACKET);
 		sendPacket(EtcEffectIcons.PACKET); // with grade penalty levels because skills (including Expertise X) aren't loaded yet
