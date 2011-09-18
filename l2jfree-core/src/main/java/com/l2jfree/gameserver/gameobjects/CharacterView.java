@@ -15,6 +15,7 @@
 package com.l2jfree.gameserver.gameobjects;
 
 import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterView;
+import com.l2jfree.gameserver.gameobjects.components.interfaces.IObjectMovement;
 import com.l2jfree.gameserver.util.ObjectId;
 
 /**
@@ -42,10 +43,82 @@ public abstract class CharacterView implements ICharacterView
 	}
 	
 	@Override
-	public final void refresh()
+	public void refresh()
 	{
-		refreshImpl();
+		refreshPosition();
 	}
 	
-	protected abstract void refreshImpl();
+	// ============================================================
+	private int _x;
+	private int _y;
+	private int _z;
+	private int _heading;
+	
+	@Override
+	public final void refreshPosition()
+	{
+		final ObjectPosition position = getActiveChar().getPosition();
+		
+		_x = position.getX();
+		_y = position.getY();
+		_z = position.getZ();
+		_heading = position.getHeading();
+	}
+	
+	@Override
+	public final int getX()
+	{
+		return _x;
+	}
+	
+	@Override
+	public final int getY()
+	{
+		return _y;
+	}
+	
+	@Override
+	public final int getZ()
+	{
+		return _z;
+	}
+	
+	@Override
+	public final int getHeading()
+	{
+		return _heading;
+	}
+	
+	// ============================================================
+	private int _destinationX;
+	private int _destinationY;
+	private int _destinationZ;
+	
+	@Override
+	public final void refreshDestination()
+	{
+		final IObjectMovement movement = getActiveChar().getMovement();
+		
+		_destinationX = movement.getDestinationX();
+		_destinationY = movement.getDestinationY();
+		_destinationZ = movement.getDestinationZ();
+	}
+	
+	@Override
+	public final int getDestinationX()
+	{
+		return _destinationX;
+	}
+	
+	@Override
+	public final int getDestinationY()
+	{
+		return _destinationY;
+	}
+	
+	@Override
+	public final int getDestinationZ()
+	{
+		return _destinationZ;
+	}
 }

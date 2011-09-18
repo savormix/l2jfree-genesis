@@ -25,4 +25,24 @@ public interface ICharacterView extends IComponent
 	public ObjectId getObjectId();
 	
 	public void refresh();
+	
+	// ============================================================
+	public void refreshPosition();
+	
+	public int getX();
+	
+	public int getY();
+	
+	public int getZ();
+	
+	public int getHeading();
+	
+	// ============================================================
+	public void refreshDestination();
+	
+	public int getDestinationX();
+	
+	public int getDestinationY();
+	
+	public int getDestinationZ();
 }

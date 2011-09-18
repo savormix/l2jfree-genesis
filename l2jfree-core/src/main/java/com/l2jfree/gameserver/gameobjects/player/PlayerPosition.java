@@ -16,6 +16,7 @@ package com.l2jfree.gameserver.gameobjects.player;
 
 import com.l2jfree.gameserver.gameobjects.CharacterPosition;
 import com.l2jfree.gameserver.gameobjects.L2Player;
+import com.l2jfree.gameserver.network.client.packets.sendable.ValidateLocation.UpdateLocation;
 import com.l2jfree.gameserver.sql.PlayerDB;
 
 /**
@@ -51,13 +52,24 @@ public class PlayerPosition extends CharacterPosition
 	
 	public void setClientXYZ(int clientX, int clientY, int clientZ)
 	{
-		// TODO add some semi-validation to coordinates received from client, BUT DO NOT TAKE THEM AS VALID!
-		_log.info(getActiveChar() + " clientX: " + clientX + ", clientY: " + clientY + ", clientZ: " + clientZ);
+		setClientPosition(clientX, clientY, clientZ, Integer.MAX_VALUE);
 	}
 	
-	public void setClientHeading(int clientHeading)
+	public void setClientPosition(int clientX, int clientY, int clientZ, int clientHeading)
 	{
-		// TODO add some semi-validation to heading received from client, BUT DO NOT TAKE IT AS VALID!
-		_log.info(getActiveChar() + " clientHeading: " + clientHeading);
+		// TODO add some semi-validation for received data from client, BUT DO NOT TAKE IT AS VALID!
+		_log.info(getActiveChar() + " clientX: " + clientX + ", clientY: " + clientY + ", clientZ: " + clientZ);
+		if (clientHeading != Integer.MAX_VALUE)
+			_log.info(getActiveChar() + " clientHeading: " + clientHeading);
+		
+		// FIXME only temporarily while we don't have proper movement
+		setXYZ(clientX, clientY, clientZ);
+		if (clientHeading != Integer.MAX_VALUE)
+			setHeading(clientHeading);
+		
+		// TODO: perhaps make an iterative task instead of replying every time
+		// even though we have flood protection
+		// broadcast?
+		getActiveChar().sendPacket(new UpdateLocation(getActiveChar()));
 	}
 }

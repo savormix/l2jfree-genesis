@@ -29,6 +29,10 @@ public interface IPlayerView extends ICharacterView, IElemental
 	
 	public int getCharacterId();
 	
+	// ============================================================
+	@Override
+	public void refresh();
+	
 	public int canEquipCloak();
 	
 	public boolean canUseDwarvenRecipes();
@@ -100,8 +104,6 @@ public interface IPlayerView extends ICharacterView, IElemental
 	public int getHairColor();
 	
 	public int getHairStyle();
-	
-	public int getHeading();
 	
 	public int getINT();
 	
@@ -205,18 +207,6 @@ public interface IPlayerView extends ICharacterView, IElemental
 	
 	public int getWIT();
 	
-	public int getX();
-	
-	public int getY();
-	
-	public int getZ();
-	
-	public int getDestinationX();
-	
-	public int getDestinationY();
-	
-	public int getDestinationZ();
-	
 	public boolean isFishing();
 	
 	public boolean isFlyingMounted();
@@ -239,10 +229,7 @@ public interface IPlayerView extends ICharacterView, IElemental
 	
 	public boolean isNoble();
 	
-	public void refreshPosition();
-	
-	public void refreshDestinationPosition();
-	
+	// ============================================================
 	public void refreshPaperDoll();
 	
 	public void writePaperDollObjectIds(MMOBuffer buf, boolean withAccessory);
@@ -251,5 +238,6 @@ public interface IPlayerView extends ICharacterView, IElemental
 	
 	public void writePaperDollAugmentationIds(MMOBuffer buf, boolean withAccessory);
 	
+	// ============================================================
 	public void writeCubics(MMOBuffer buf);
 }

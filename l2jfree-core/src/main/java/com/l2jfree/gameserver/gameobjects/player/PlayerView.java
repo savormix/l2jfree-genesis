@@ -20,8 +20,6 @@ import java.util.List;
 import com.l2jfree.gameserver.gameobjects.CharacterStat.Element;
 import com.l2jfree.gameserver.gameobjects.CharacterView;
 import com.l2jfree.gameserver.gameobjects.L2Player;
-import com.l2jfree.gameserver.gameobjects.ObjectPosition;
-import com.l2jfree.gameserver.gameobjects.components.interfaces.IObjectMovement;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerInventory;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerStat;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerView;
@@ -41,6 +39,40 @@ import com.l2jfree.network.mmocore.MMOBuffer;
  */
 public class PlayerView extends CharacterView implements IPlayerView
 {
+	public PlayerView(L2Player activeChar)
+	{
+		super(activeChar);
+	}
+	
+	@Override
+	public final L2Player getActiveChar()
+	{
+		return (L2Player)super.getActiveChar();
+	}
+	
+	/**
+	 * @return persistent ID
+	 * @see L2Player#getPersistentId()
+	 */
+	@Override
+	public PersistentId getPersistentId()
+	{
+		return getActiveChar().getPersistentId();
+	}
+	
+	/**
+	 * Alternative way to access {@link #getPersistentId()}.
+	 * 
+	 * @return character's ID
+	 * @see L2Player#getCharacterId()
+	 * @see L2Player#getPersistentId()
+	 */
+	@Override
+	public int getCharacterId()
+	{
+		return getPersistentId().intValue();
+	}
+	
 	private int _abnormalEffect;
 	private int _accuracy;
 	private int _activeClassId;
@@ -81,7 +113,6 @@ public class PlayerView extends CharacterView implements IPlayerView
 	private boolean _gm;
 	private byte _hairColor;
 	private byte _hairStyle;
-	private int _heading;
 	private boolean _hero;
 	private int _inPvPAction;
 	private int _int;
@@ -140,46 +171,189 @@ public class PlayerView extends CharacterView implements IPlayerView
 	private int _weaponEnchantGlow;
 	private int _weaponStatus;
 	private int _wit;
-	private int _x;
-	private int _y;
-	private int _z;
-	private int _destinationX;
-	private int _destinationY;
-	private int _destinationZ;
 	private final int[] _defenceElementPower = new int[Element.values().length];
 	
-	public PlayerView(L2Player activeChar)
-	{
-		super(activeChar);
-	}
-	
 	@Override
-	public final L2Player getActiveChar()
+	public void refresh()
 	{
-		return (L2Player)super.getActiveChar();
-	}
-	
-	/**
-	 * @return persistent ID
-	 * @see L2Player#getPersistentId()
-	 */
-	@Override
-	public PersistentId getPersistentId()
-	{
-		return getActiveChar().getPersistentId();
-	}
-	
-	/**
-	 * Alternative way to access {@link #getPersistentId()}.
-	 * 
-	 * @return character's ID
-	 * @see L2Player#getCharacterId()
-	 * @see L2Player#getPersistentId()
-	 */
-	@Override
-	public int getCharacterId()
-	{
-		return getPersistentId().intValue();
+		super.refresh();
+		
+		final L2Player p = getActiveChar();
+		final PlayerAppearance appearance = p.getAppearance();
+		final IPlayerStat stat = p.getStat();
+		final PlayerBaseTemplate baseTemplate = p.getTemplate().getBaseTemplate();
+		final PlayerBaseGenderTemplate genderTemplate = baseTemplate.getGenderTemplate(appearance.getGender());
+		//final IPlayerInventory inv = p.getInventory();
+		//final L2Transformation transformation = p.getTransformation();
+		
+		refreshPaperDoll();
+		
+		_vehicleObjectId = null; // TODO
+		
+		_name = p.getName();
+		_title = p.getTitle();
+		
+		_race = baseTemplate.getRace();
+		_gender = appearance.getGender();
+		_mainClassId = p.getMainClassId().ordinal();
+		_activeClassId = p.getActiveClassId().ordinal();
+		
+		// --
+		
+		_level = stat.getLevel();
+		
+		_exp = stat.getExp();
+		_expPercent = 0; // TODO
+		_sp = stat.getCurrentSP();
+		_str = stat.getSTR();
+		_dex = stat.getDEX();
+		_con = stat.getCON();
+		_int = stat.getINT();
+		_wit = stat.getWIT();
+		_men = stat.getMEN();
+		
+		_maxHp = stat.getMaxHP();
+		_currentHp = stat.getCurrentHP();
+		
+		_maxMp = stat.getMaxMP();
+		_currentMp = stat.getCurrentMP();
+		
+		_maxSp = stat.getMaxSP();
+		
+		_maxCp = stat.getMaxCP();
+		_currentCp = stat.getCurrentCP();
+		
+		_carriedWeight = stat.getCarriedWeight();
+		_maxCarriedWeight = stat.getMaxCarriedWeight();
+		
+		_karmaPoints = stat.getKarmaPoints();
+		_vitalityPoints = stat.getVitalityPoints();
+		_famePoints = stat.getFamePoints();
+		
+		_pkCount = stat.getPkCount();
+		_pvpCount = stat.getPvPCount();
+		
+		_pAtk = stat.getPAtk(0);
+		_pDef = stat.getPDef(0);
+		_pAtkSpd = stat.getPAtkSpd();
+		
+		_mAtk = stat.getMAtk(0, 0);
+		_mDef = stat.getMDef(0, 0);
+		_mAtkSpd = stat.getMAtkSpd();
+		
+		_accuracy = stat.getAccuracy();
+		_evasionRate = stat.getEvasion(0);
+		_criticalHit = stat.getCriticalHit(0);
+		
+		_movementSpeedMultiplier = stat.getMovementSpeedMultiplier();
+		_attackSpeedMultiplier = stat.getAttackSpeedMultiplier();
+		
+		_runSpeed = (int)(stat.getRunSpeed() / _movementSpeedMultiplier);
+		_walkSpeed = (int)(stat.getWalkSpeed() / _movementSpeedMultiplier);
+		
+		_flyRunSpeed = 0; // getActiveChar().isFlying() ? _runSpeed : 0; // TODO
+		_flyWalkSpeed = 0; // getActiveChar().isFlying() ? _walkSpeed : 0; // TODO
+		
+		_attackElementType = stat.getAttackElement();
+		_attackElementPower = stat.getAttackElementPower(_attackElementType);
+		_defenceElementPower[Element.FIRE.getValue()] = stat.getDefenseElementPower(Element.FIRE);
+		_defenceElementPower[Element.WATER.getValue()] = stat.getDefenseElementPower(Element.WATER);
+		_defenceElementPower[Element.WIND.getValue()] = stat.getDefenseElementPower(Element.WIND);
+		_defenceElementPower[Element.EARTH.getValue()] = stat.getDefenseElementPower(Element.EARTH);
+		_defenceElementPower[Element.HOLY.getValue()] = stat.getDefenseElementPower(Element.HOLY);
+		_defenceElementPower[Element.DARK.getValue()] = stat.getDefenseElementPower(Element.DARK);
+		
+		// --
+		
+		_remainingRecommendaions = 0;//getRemainingRecommendations(); // Recommendations
+		_receivedRecommendations = 0;//getReceivedRecommendations(); // Evaluation score
+		
+		_weaponStatus = 20; // TODO
+		
+		_maxInventorySlots = 0;//inv.getMaxInventorySlots(); // Inventory slots
+		_maxTalismanSlots = 0;//inv.getMaxTalismanSlots(); // Talisman slots
+		_equipCloak = 0;//inv.canEquipCloak(); // Can equip cloak
+		_agathionId = 0;//inv.getAgathionId(); // Agathion
+		
+		_weaponEnchantGlow = 0;//inv.getWeaponEnchantGlow(); // Weapon enchant glow
+		
+		_inPvPAction = 0;//isInPvPAction(); // In PvP
+		
+		_hairStyle = appearance.getHairStyle(); // Hair style
+		_hairColor = appearance.getHairColor(); // Hair color
+		_face = appearance.getFace(); // Face
+		_nameColor = appearance.getNameColor();
+		_titleColor = appearance.getTitleColor();
+		_specialEffect = 0;//getSpecialEffect(); // Special effect
+		_cubics = new int[0]; //getCubicData()
+		
+		_race = baseTemplate.getRace();
+		_gender = appearance.getGender();
+		
+		_gm = p.isGM();
+		
+		_pledgeId = 0;//getPledgeId(); // Pledge ID
+		_pledgeCrestId = 0;//getPledgeCrestId(); // Pledge crest ID
+		_allianceId = 0;//getAllianceId(); // Alliance ID
+		_allianceCrestId = 0;//getAllianceCrestId(); // Alliance crest ID
+		_siegeRelation = 0;//getSiegeRelation(); // Siege participation
+		_pledgePrivileges = 0;//getPledgePrivileges(); // Pledge privileges
+		_pledgeInsigniaId = 0;//getPledgeInsigniaId(); // Pledge insignia ID
+		_pledgeRank = 0;//getPledgeRank(); // Pledge rank
+		_pledgeUnit = 0;//getPledgeUnit(); // Pledge unit
+		
+		_mountType = 0;//getMountType(); // Mount type
+		_mountNpcId = 0;//getMountNpcId(); // Mount
+		_flyingMounted = false;//isFlyingMounted(); // Flying with mount
+		
+		_privateStoreType = 0;//getPrivateStore(); // Private store
+		_useDwarvenRecipes = false;//canUseDwarvenRecipes(); // Can use dwarven recipes
+		
+		_lookingForParty = false;//isLookingForParty(); // Looking for party
+		_abnormalEffect = 0;//getAbnormalEffect(); // Abnormal effect
+		
+		_duelTeam = 0;//getDuelTeam(); // Duel team
+		
+		_noble = false;//isNoble(); // Noble
+		_hero = false;//isHero(); // Hero
+		
+		_fishing = false;//isFishing(); // Fishing
+		_fishLureX = 0;//getFishLureX(); // Fishing lure X
+		_fishLureY = 0;//getFishLureY(); // Fishing lure Y
+		_fishLureZ = 0;//getFishLureZ(); // Fishing lure Z
+		
+		_moving = isMoving(); // Moving
+		
+		_useMinimap = 0;//canUseMinimap(); // Can use minimap
+		
+		// TODO
+		/*if (p.getMountType() != 0)
+		{	final L2NpcTemplate template = NpcTable.getInstance().getTemplate(p.getMountNpcId());
+			
+			_collisionRadius = template.getCollisionRadius();
+			_collisionHeight = template.getCollisionHeight();
+		}
+		else if (transformation != 0 && !transformation.isStance())
+		{	_collisionRadius = transformation.getCollisionRadius(cha);
+			_collisionHeight = transformation.getCollisionHeight(cha);
+		}
+		else*/
+		{
+			_collisionRadius = genderTemplate.getCollisionRadius();
+			_collisionHeight = genderTemplate.getCollisionHeight();
+		}
+		
+		// TODO
+		/*if (p.isCursedWeaponEquipped())
+			_cursedWeaponLevel = CursedWeaponsManager.getInstance().getLevel(p.getCursedWeaponEquippedId());
+		else*/
+		_cursedWeaponLevel = 0;
+		
+		// TODO
+		/*if (transformation != 0)
+			_transformationGraphicalId = transformation.getGraphicalId();
+		else*/
+		_transformationGraphicalId = 0;
 	}
 	
 	@Override
@@ -414,12 +588,6 @@ public class PlayerView extends CharacterView implements IPlayerView
 	public int getHairStyle()
 	{
 		return _hairStyle;
-	}
-	
-	@Override
-	public int getHeading()
-	{
-		return _heading;
 	}
 	
 	@Override
@@ -729,42 +897,6 @@ public class PlayerView extends CharacterView implements IPlayerView
 	}
 	
 	@Override
-	public int getX()
-	{
-		return _x;
-	}
-	
-	@Override
-	public int getY()
-	{
-		return _y;
-	}
-	
-	@Override
-	public int getZ()
-	{
-		return _z;
-	}
-	
-	@Override
-	public int getDestinationX()
-	{
-		return _destinationX;
-	}
-	
-	@Override
-	public int getDestinationY()
-	{
-		return _destinationY;
-	}
-	
-	@Override
-	public int getDestinationZ()
-	{
-		return _destinationZ;
-	}
-	
-	@Override
 	public boolean isFishing()
 	{
 		return _fishing;
@@ -830,209 +962,7 @@ public class PlayerView extends CharacterView implements IPlayerView
 		return _noble;
 	}
 	
-	@Override
-	protected void refreshImpl()
-	{
-		final L2Player p = getActiveChar();
-		final PlayerAppearance appearance = p.getAppearance();
-		final IPlayerStat stat = p.getStat();
-		final PlayerBaseTemplate baseTemplate = p.getTemplate().getBaseTemplate();
-		final PlayerBaseGenderTemplate genderTemplate = baseTemplate.getGenderTemplate(appearance.getGender());
-		//final IPlayerInventory inv = p.getInventory();
-		//final L2Transformation transformation = p.getTransformation();
-		
-		refreshPosition();
-		refreshPaperDoll();
-		
-		_vehicleObjectId = null; // TODO
-		
-		_name = p.getName();
-		_title = p.getTitle();
-		
-		_race = baseTemplate.getRace();
-		_gender = appearance.getGender();
-		_mainClassId = p.getMainClassId().ordinal();
-		_activeClassId = p.getActiveClassId().ordinal();
-		
-		// --
-		
-		_level = stat.getLevel();
-		
-		_exp = stat.getExp();
-		_expPercent = 0; // TODO
-		_sp = stat.getCurrentSP();
-		_str = stat.getSTR();
-		_dex = stat.getDEX();
-		_con = stat.getCON();
-		_int = stat.getINT();
-		_wit = stat.getWIT();
-		_men = stat.getMEN();
-		
-		_maxHp = stat.getMaxHP();
-		_currentHp = stat.getCurrentHP();
-		
-		_maxMp = stat.getMaxMP();
-		_currentMp = stat.getCurrentMP();
-		
-		_maxSp = stat.getMaxSP();
-		
-		_maxCp = stat.getMaxCP();
-		_currentCp = stat.getCurrentCP();
-		
-		_carriedWeight = stat.getCarriedWeight();
-		_maxCarriedWeight = stat.getMaxCarriedWeight();
-		
-		_karmaPoints = stat.getKarmaPoints();
-		_vitalityPoints = stat.getVitalityPoints();
-		_famePoints = stat.getFamePoints();
-		
-		_pkCount = stat.getPkCount();
-		_pvpCount = stat.getPvPCount();
-		
-		_pAtk = stat.getPAtk(0);
-		_pDef = stat.getPDef(0);
-		_pAtkSpd = stat.getPAtkSpd();
-		
-		_mAtk = stat.getMAtk(0, 0);
-		_mDef = stat.getMDef(0, 0);
-		_mAtkSpd = stat.getMAtkSpd();
-		
-		_accuracy = stat.getAccuracy();
-		_evasionRate = stat.getEvasion(0);
-		_criticalHit = stat.getCriticalHit(0);
-		
-		_movementSpeedMultiplier = stat.getMovementSpeedMultiplier();
-		_attackSpeedMultiplier = stat.getAttackSpeedMultiplier();
-		
-		_runSpeed = (int)(stat.getRunSpeed() / _movementSpeedMultiplier);
-		_walkSpeed = (int)(stat.getWalkSpeed() / _movementSpeedMultiplier);
-		
-		_flyRunSpeed = 0; // getActiveChar().isFlying() ? _runSpeed : 0; // TODO
-		_flyWalkSpeed = 0; // getActiveChar().isFlying() ? _walkSpeed : 0; // TODO
-		
-		_attackElementType = stat.getAttackElement();
-		_attackElementPower = stat.getAttackElementPower(_attackElementType);
-		_defenceElementPower[Element.FIRE.getValue()] = stat.getDefenseElementPower(Element.FIRE);
-		_defenceElementPower[Element.WATER.getValue()] = stat.getDefenseElementPower(Element.WATER);
-		_defenceElementPower[Element.WIND.getValue()] = stat.getDefenseElementPower(Element.WIND);
-		_defenceElementPower[Element.EARTH.getValue()] = stat.getDefenseElementPower(Element.EARTH);
-		_defenceElementPower[Element.HOLY.getValue()] = stat.getDefenseElementPower(Element.HOLY);
-		_defenceElementPower[Element.DARK.getValue()] = stat.getDefenseElementPower(Element.DARK);
-		
-		// --
-		
-		_remainingRecommendaions = 0;//getRemainingRecommendations(); // Recommendations
-		_receivedRecommendations = 0;//getReceivedRecommendations(); // Evaluation score
-		
-		_weaponStatus = 20; // TODO
-		
-		_maxInventorySlots = 0;//inv.getMaxInventorySlots(); // Inventory slots
-		_maxTalismanSlots = 0;//inv.getMaxTalismanSlots(); // Talisman slots
-		_equipCloak = 0;//inv.canEquipCloak(); // Can equip cloak
-		_agathionId = 0;//inv.getAgathionId(); // Agathion
-		
-		_weaponEnchantGlow = 0;//inv.getWeaponEnchantGlow(); // Weapon enchant glow
-		
-		_inPvPAction = 0;//isInPvPAction(); // In PvP
-		
-		_hairStyle = appearance.getHairStyle(); // Hair style
-		_hairColor = appearance.getHairColor(); // Hair color
-		_face = appearance.getFace(); // Face
-		_nameColor = appearance.getNameColor();
-		_titleColor = appearance.getTitleColor();
-		_specialEffect = 0;//getSpecialEffect(); // Special effect
-		_cubics = new int[0]; //getCubicData()
-		
-		_race = baseTemplate.getRace();
-		_gender = appearance.getGender();
-		
-		_gm = p.isGM();
-		
-		_pledgeId = 0;//getPledgeId(); // Pledge ID
-		_pledgeCrestId = 0;//getPledgeCrestId(); // Pledge crest ID
-		_allianceId = 0;//getAllianceId(); // Alliance ID
-		_allianceCrestId = 0;//getAllianceCrestId(); // Alliance crest ID
-		_siegeRelation = 0;//getSiegeRelation(); // Siege participation
-		_pledgePrivileges = 0;//getPledgePrivileges(); // Pledge privileges
-		_pledgeInsigniaId = 0;//getPledgeInsigniaId(); // Pledge insignia ID
-		_pledgeRank = 0;//getPledgeRank(); // Pledge rank
-		_pledgeUnit = 0;//getPledgeUnit(); // Pledge unit
-		
-		_mountType = 0;//getMountType(); // Mount type
-		_mountNpcId = 0;//getMountNpcId(); // Mount
-		_flyingMounted = false;//isFlyingMounted(); // Flying with mount
-		
-		_privateStoreType = 0;//getPrivateStore(); // Private store
-		_useDwarvenRecipes = false;//canUseDwarvenRecipes(); // Can use dwarven recipes
-		
-		_lookingForParty = false;//isLookingForParty(); // Looking for party
-		_abnormalEffect = 0;//getAbnormalEffect(); // Abnormal effect
-		
-		_duelTeam = 0;//getDuelTeam(); // Duel team
-		
-		_noble = false;//isNoble(); // Noble
-		_hero = false;//isHero(); // Hero
-		
-		_fishing = false;//isFishing(); // Fishing
-		_fishLureX = 0;//getFishLureX(); // Fishing lure X
-		_fishLureY = 0;//getFishLureY(); // Fishing lure Y
-		_fishLureZ = 0;//getFishLureZ(); // Fishing lure Z
-		
-		_moving = isMoving(); // Moving
-		
-		_useMinimap = 0;//canUseMinimap(); // Can use minimap
-		
-		// TODO
-		/*if (p.getMountType() != 0)
-		{	final L2NpcTemplate template = NpcTable.getInstance().getTemplate(p.getMountNpcId());
-			
-			_collisionRadius = template.getCollisionRadius();
-			_collisionHeight = template.getCollisionHeight();
-		}
-		else if (transformation != 0 && !transformation.isStance())
-		{	_collisionRadius = transformation.getCollisionRadius(cha);
-			_collisionHeight = transformation.getCollisionHeight(cha);
-		}
-		else*/
-		{
-			_collisionRadius = genderTemplate.getCollisionRadius();
-			_collisionHeight = genderTemplate.getCollisionHeight();
-		}
-		
-		// TODO
-		/*if (p.isCursedWeaponEquipped())
-			_cursedWeaponLevel = CursedWeaponsManager.getInstance().getLevel(p.getCursedWeaponEquippedId());
-		else*/
-		_cursedWeaponLevel = 0;
-		
-		// TODO
-		/*if (transformation != 0)
-			_transformationGraphicalId = transformation.getGraphicalId();
-		else*/
-		_transformationGraphicalId = 0;
-	}
-	
-	@Override
-	public void refreshPosition()
-	{
-		final ObjectPosition position = getActiveChar().getPosition();
-		
-		_x = position.getX();
-		_y = position.getY();
-		_z = position.getZ();
-		_heading = position.getHeading();
-	}
-	
-	@Override
-	public void refreshDestinationPosition()
-	{
-		final IObjectMovement movement = getActiveChar().getMovement();
-		
-		_destinationX = movement.getDestinationX();
-		_destinationY = movement.getDestinationY();
-		_destinationZ = movement.getDestinationZ();
-	}
-	
+	// ============================================================
 	private final ObjectId[] _paperDollObjectIds = new ObjectId[PaperDollSlot.TOTAL_SLOTS];
 	private final int[] _paperDollItemDisplayIds = new int[PaperDollSlot.TOTAL_SLOTS];
 	private final int[] _paperDollAugmentationIds = new int[PaperDollSlot.TOTAL_SLOTS];
@@ -1062,7 +992,6 @@ public class PlayerView extends CharacterView implements IPlayerView
 	}
 	
 	// -- methods for convenience
-	
 	@Override
 	public void writePaperDollObjectIds(MMOBuffer buf, boolean withAccessory)
 	{
@@ -1084,6 +1013,7 @@ public class PlayerView extends CharacterView implements IPlayerView
 			buf.writeD(_paperDollAugmentationIds[slot]);
 	}
 	
+	// ============================================================
 	@Override
 	public void writeCubics(MMOBuffer buf)
 	{

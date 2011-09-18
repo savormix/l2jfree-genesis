@@ -18,7 +18,6 @@ import java.nio.BufferUnderflowException;
 
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
-import com.l2jfree.gameserver.network.client.packets.sendable.ValidateLocation.UpdateLocation;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
@@ -75,11 +74,6 @@ public abstract class ValidatePosition extends L2ClientPacket
 		if (activeChar == null)
 			return;
 		
-		activeChar.getPosition().setClientXYZ(_clientX, _clientY, _clientZ);
-		activeChar.getPosition().setClientHeading(_clientHeading);
-		
-		// TODO: perhaps make an iterative task instead of replying every time
-		// even though we have flood protection
-		sendPacket(UpdateLocation.PACKET);
+		activeChar.getPosition().setClientPosition(_clientX, _clientY, _clientZ, _clientHeading);
 	}
 }

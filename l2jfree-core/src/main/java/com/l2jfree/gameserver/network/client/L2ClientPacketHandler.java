@@ -24,6 +24,9 @@ import java.nio.ByteBuffer;
 
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
+import com.l2jfree.gameserver.network.client.packets.receivable.Action;
+import com.l2jfree.gameserver.network.client.packets.receivable.Attack;
+import com.l2jfree.gameserver.network.client.packets.receivable.AttackRequest;
 import com.l2jfree.gameserver.network.client.packets.receivable.EnterWorld;
 import com.l2jfree.gameserver.network.client.packets.receivable.ExGetOnAirShip;
 import com.l2jfree.gameserver.network.client.packets.receivable.Logout;
@@ -31,6 +34,7 @@ import com.l2jfree.gameserver.network.client.packets.receivable.MoveBackwardToLo
 import com.l2jfree.gameserver.network.client.packets.receivable.NetPing;
 import com.l2jfree.gameserver.network.client.packets.receivable.RequestManorList;
 import com.l2jfree.gameserver.network.client.packets.receivable.RequestRestart;
+import com.l2jfree.gameserver.network.client.packets.receivable.Say2;
 import com.l2jfree.gameserver.network.client.packets.receivable.ValidatePosition;
 import com.l2jfree.gameserver.network.client.packets.receivable.accountless.AuthLogin;
 import com.l2jfree.gameserver.network.client.packets.receivable.accountless.ProtocolVersion;
@@ -151,10 +155,30 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 				}
 			}
 			
+			case Attack.OPCODE: // 0x01
+				if (client.stateEquals(LOGGED_IN))
+					return new Attack.RequestAttack();
+				return invalidState(client, Attack.class, opcode);
+				
 			case MoveBackwardToLocation.OPCODE: // 0x0f
 				if (client.stateEquals(LOGGED_IN))
 					return new MoveBackwardToLocation.RequestMovement();
 				return invalidState(client, MoveBackwardToLocation.class, opcode);
+				
+			case Action.OPCODE: // 0x1f
+				if (client.stateEquals(LOGGED_IN))
+					return new Action.RequestInteraction();
+				return invalidState(client, Action.class, opcode);
+				
+			case AttackRequest.OPCODE: // 0x32
+				if (client.stateEquals(LOGGED_IN))
+					return new AttackRequest.RequestAttack();
+				return invalidState(client, AttackRequest.class, opcode);
+				
+			case Say2.OPCODE: // 0x49
+				if (client.stateEquals(LOGGED_IN))
+					return new Say2.RequestSendChatMessage();
+				return invalidState(client, Say2.class, opcode);
 				
 			case RequestRestart.OPCODE: // 0x57
 				if (client.stateEquals(LOGGED_IN))

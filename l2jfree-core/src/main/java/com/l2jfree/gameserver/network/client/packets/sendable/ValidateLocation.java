@@ -14,16 +14,18 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.gameserver.gameobjects.L2Character;
 import com.l2jfree.gameserver.gameobjects.L2Player;
-import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerView;
+import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterView;
 import com.l2jfree.gameserver.network.client.L2Client;
+import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
  * @author hex1r0
  */
-public abstract class ValidateLocation extends StaticPacket
+public abstract class ValidateLocation extends L2ServerPacket
 {
 	/**
 	 * A nicer name for {@link ValidateLocation}.
@@ -33,22 +35,28 @@ public abstract class ValidateLocation extends StaticPacket
 	 */
 	public static final class UpdateLocation extends ValidateLocation
 	{
-		/** This packet. */
-		public static final UpdateLocation PACKET = new UpdateLocation();
-		
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @see ValidateLocation#ValidateLocation()
+		 * @see ValidateLocation#ValidateLocation(L2Character)
 		 */
-		private UpdateLocation()
+		public UpdateLocation(L2Character activeChar)
 		{
+			super(activeChar);
 		}
 	}
 	
-	/** Constructs this packet. */
-	public ValidateLocation()
+	private final L2Character _activeChar;
+	
+	/**
+	 * Constructs this packet.
+	 * 
+	 * @param activeChar
+	 */
+	private ValidateLocation(L2Character activeChar)
 	{
+		_activeChar = activeChar;
+		_activeChar.getView().refreshPosition();
 	}
 	
 	@Override
@@ -58,15 +66,9 @@ public abstract class ValidateLocation extends StaticPacket
 	}
 	
 	@Override
-	public void prepareToSend(L2Client client, L2Player activeChar)
-	{
-		activeChar.getView().refreshPosition();
-	}
-	
-	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
-		final IPlayerView view = activeChar.getView();
+		final ICharacterView view = _activeChar.getView();
 		
 		buf.writeD(view.getObjectId()); // Actor OID
 		buf.writeD(view.getX()); // Location X

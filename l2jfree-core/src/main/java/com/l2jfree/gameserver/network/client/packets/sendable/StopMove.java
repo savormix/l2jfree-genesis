@@ -14,8 +14,9 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.gameserver.gameobjects.L2Character;
 import com.l2jfree.gameserver.gameobjects.L2Player;
-import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerView;
+import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterView;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
@@ -34,22 +35,28 @@ public abstract class StopMove extends L2ServerPacket
 	 */
 	public static final class Arrived extends StopMove
 	{
-		/** This packet. */
-		public static final Arrived PACKET = new Arrived();
-		
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @see StopMove#StopMove()
+		 * @see StopMove#StopMove(L2Character)
 		 */
-		private Arrived()
+		public Arrived(L2Character activeChar)
 		{
+			super(activeChar);
 		}
 	}
 	
-	/** Constructs this packet. */
-	public StopMove()
+	private final L2Character _activeChar;
+	
+	/**
+	 * Constructs this packet.
+	 * 
+	 * @param activeChar
+	 */
+	private StopMove(L2Character activeChar)
 	{
+		_activeChar = activeChar;
+		_activeChar.getView().refreshPosition();
 	}
 	
 	@Override
@@ -59,17 +66,9 @@ public abstract class StopMove extends L2ServerPacket
 	}
 	
 	@Override
-	public void prepareToSend(L2Client client, L2Player activeChar)
-	{
-		activeChar.getView().refreshPosition();
-	}
-	
-	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
-		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		
-		final IPlayerView view = activeChar.getView();
+		final ICharacterView view = _activeChar.getView();
 		
 		buf.writeD(view.getObjectId()); // Actor OID
 		buf.writeD(view.getX()); // Location X
