@@ -72,45 +72,50 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 	{
 		switch (opcode)
 		{
-			case ProtocolVersion.OPCODE:
+			case ProtocolVersion.OPCODE: // 0x0e
 				if (client.stateEquals(CONNECTED))
 					return new ProtocolVersion();
 				return invalidState(client, ProtocolVersion.class, opcode);
 				
-			case AuthLogin.OPCODE:
+			case AuthLogin.OPCODE: // 0x2b
 				if (client.stateEquals(PROTOCOL_OK))
 					return new AuthLogin.RequestAuthorization();
 				return invalidState(client, AuthLogin.class, opcode);
 				
-			case Logout.OPCODE:
-				if (client.stateEquals(CHARACTER_MANAGEMENT) || client.stateEquals(LOGGED_IN))
+			case Logout.OPCODE: // 0x00
+				if (client.stateEquals(CHARACTER_MANAGEMENT, LOGGED_IN))
 					return new Logout();
 				return invalidState(client, Logout.class, opcode);
 				
-			case NewCharacter.OPCODE:
+			case NewCharacter.OPCODE: // 0x0c
 				if (client.stateEquals(CHARACTER_MANAGEMENT))
 					return new NewCharacter.RequestNewCharacter();
 				return invalidState(client, NewCharacter.class, opcode);
 				
-			case CharacterDeletePacket.OPCODE:
+			case CharacterDeletePacket.OPCODE: // 0x0d
 				if (client.stateEquals(CHARACTER_MANAGEMENT))
 					return new CharacterDeletePacket.RequestDeleteCharacter();
 				return invalidState(client, CharacterDeletePacket.class, opcode);
 				
-			case CharacterSelect.OPCODE:
+			case CharacterSelect.OPCODE: // 0x12
 				if (client.stateEquals(CHARACTER_MANAGEMENT))
 					return new CharacterSelect.RequestSelectCharacter();
 				return invalidState(client, CharacterSelect.class, opcode);
 				
-			case NewCharacterPacket.OPCODE:
+			case NewCharacterPacket.OPCODE: // 0x13
 				if (client.stateEquals(CHARACTER_MANAGEMENT))
 					return new NewCharacterPacket.RequestCharacterTemplates();
 				return invalidState(client, NewCharacterPacket.class, opcode);
 				
-			case CharacterRestorePacket.OPCODE:
+			case CharacterRestorePacket.OPCODE: // 0x7b
 				if (client.stateEquals(CHARACTER_MANAGEMENT))
 					return new CharacterRestorePacket.RequestRestoreCharacter();
 				return invalidState(client, CharacterRestorePacket.class, opcode);
+				
+			case NetPing.OPCODE: // 0xb1
+				if (client.stateEquals(CHARACTER_MANAGEMENT, LOGGED_IN))
+					return new NetPing.UptimeResponse();
+				return invalidState(client, NetPing.class, opcode);
 				
 			case 0xd0:
 			{
@@ -121,16 +126,16 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 				
 				switch (opcode2)
 				{
-					case RequestManorList.OPCODE_2:
+					case RequestManorList.OPCODE_2: // 0x01
 						if (client.stateEquals(LOGGED_IN))
 							return new RequestManorList();
 						return invalidState(client, RequestManorList.class, opcode, opcode2);
 						
 					case 0x36:
-						// RequestAvailableCharacters.OPCODE_2
+						// RequestAvailableCharacters.OPCODE_2 // 0x36
 						if (client.stateEquals(CHARACTER_MANAGEMENT))
 							return new RequestAvailableCharacters();
-						// ExGetOnAirShip.OPCODE_2
+						// ExGetOnAirShip.OPCODE_2 // 0x36
 						else if (client.stateEquals(LOGGED_IN))
 							return new ExGetOnAirShip.RequestBoardAircraft();
 						return invalidState(client, opcode, opcode2);
@@ -140,30 +145,25 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 				}
 			}
 			
-			case EnterWorld.OPCODE:
-				if (client.stateEquals(LOGGED_IN))
-					return new EnterWorld.RequestEnterWorld();
-				return invalidState(client, EnterWorld.class, opcode);
-				
-			case RequestRestart.OPCODE:
-				if (client.stateEquals(LOGGED_IN))
-					return new RequestRestart();
-				return invalidState(client, RequestRestart.class, opcode);
-				
-			case ValidatePosition.OPCODE:
-				if (client.stateEquals(LOGGED_IN))
-					return new ValidatePosition.ReportLocation();
-				return invalidState(client, ValidatePosition.class, opcode);
-				
-			case MoveBackwardToLocation.OPCODE:
+			case MoveBackwardToLocation.OPCODE: // 0x0f
 				if (client.stateEquals(LOGGED_IN))
 					return new MoveBackwardToLocation.RequestMovement();
 				return invalidState(client, MoveBackwardToLocation.class, opcode);
 				
-			case NetPing.OPCODE:
-				if (client.stateEquals(CHARACTER_MANAGEMENT, LOGGED_IN))
-					return new NetPing.UptimeResponse();
-				return invalidState(client, NetPing.class, opcode);
+			case EnterWorld.OPCODE: // 0x11
+				if (client.stateEquals(LOGGED_IN))
+					return new EnterWorld.RequestEnterWorld();
+				return invalidState(client, EnterWorld.class, opcode);
+				
+			case RequestRestart.OPCODE: // 0x57
+				if (client.stateEquals(LOGGED_IN))
+					return new RequestRestart();
+				return invalidState(client, RequestRestart.class, opcode);
+				
+			case ValidatePosition.OPCODE: // 0x59
+				if (client.stateEquals(LOGGED_IN))
+					return new ValidatePosition.ReportLocation();
+				return invalidState(client, ValidatePosition.class, opcode);
 				
 			default:
 				return unknown(buf, client, opcode);
