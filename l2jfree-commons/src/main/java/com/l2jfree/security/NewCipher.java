@@ -35,7 +35,7 @@ import com.l2jfree.util.LookupTable;
  * @see #verifyChecksum(ByteBuffer, int, int, boolean)
  * @see #encXORPass(byte[], int, int, int)
  */
-public class NewCipher
+public class NewCipher implements ICipher
 {
 	private static final LookupTable<Integer> _checks = new LookupTable<Integer>();
 	
@@ -402,6 +402,7 @@ public class NewCipher
 	 * @param buf a byte buffer
 	 * @param size packet's size
 	 */
+	@Override
 	public void encipher(ByteBuffer buf, final int size)
 	{
 		encipher(buf, buf.position(), size);
@@ -435,6 +436,7 @@ public class NewCipher
 	 * @param buf a byte buffer
 	 * @param size packet's size
 	 */
+	@Override
 	public void decipher(ByteBuffer buf, final int size)
 	{
 		decipher(buf, buf.position(), size);

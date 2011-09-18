@@ -31,6 +31,7 @@ import com.l2jfree.gameserver.util.PersistentId;
 import com.l2jfree.lang.L2TextBuilder;
 import com.l2jfree.network.mmocore.DataSizeHolder;
 import com.l2jfree.network.mmocore.MMOConnection;
+import com.l2jfree.security.CoreCipher;
 import com.l2jfree.security.EmptyCipher;
 import com.l2jfree.security.ICipher;
 import com.l2jfree.security.ObfuscationService;
@@ -226,7 +227,7 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 		return _cipher;
 	}
 	
-	public void setCipher(ICipher cipher)
+	public void setCipher(CoreCipher cipher)
 	{
 		_cipher = cipher;
 	}

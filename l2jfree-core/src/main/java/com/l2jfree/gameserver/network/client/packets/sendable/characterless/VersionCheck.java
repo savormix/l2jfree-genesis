@@ -20,7 +20,6 @@ import com.l2jfree.gameserver.network.client.L2ClientSecurity;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 import com.l2jfree.security.CoreCipher;
-import com.l2jfree.security.ICipher;
 import com.l2jfree.util.Rnd;
 
 /**
@@ -55,7 +54,7 @@ public abstract class VersionCheck extends L2ServerPacket
 	
 	private final boolean _compatible;
 	private final byte[] _key;
-	private final ICipher _cipher;
+	private final CoreCipher _cipher;
 	private final int _obfusKey;
 	
 	/**
@@ -71,10 +70,8 @@ public abstract class VersionCheck extends L2ServerPacket
 		
 		if (_compatible)
 		{
-			final CoreCipher cipher = new CoreCipher(L2ClientSecurity.getInstance().getKey());
-			cipher.getKey().get(_key);
-			
-			_cipher = cipher;
+			_cipher = new CoreCipher(L2ClientSecurity.getInstance().getKey());
+			_cipher.getKey().get(_key);
 			_obfusKey = Rnd.nextInt();
 		}
 		else

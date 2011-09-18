@@ -15,9 +15,11 @@
 package com.l2jfree.loginserver.network.client.packets.sendable;
 
 import com.l2jfree.loginserver.network.client.L2Client;
+import com.l2jfree.loginserver.network.client.L2ClientSecurity;
 import com.l2jfree.loginserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.loginserver.network.client.packets.receivable.AuthGameGuard;
 import com.l2jfree.network.mmocore.MMOBuffer;
+import com.l2jfree.security.NewCipher;
 
 /**
  * This packet is sent by the login server immediately after a connection is established. The client
@@ -31,31 +33,20 @@ public final class Init extends L2ServerPacket
 	private final int _protocol;
 	private final byte[] _publicKey;
 	private final byte[] _blowfishKey;
+	private final NewCipher _cipher;
 	
 	/**
-	 * Creates a packet to inform about security parameters used during communication.
+	 * Creates a packet to inform about security parameters used in further communications.
 	 * 
 	 * @param client a connection wrapper with assigned parameters
 	 */
 	public Init(L2Client client)
 	{
-		this(client.getSessionId(), client.getProtocol(), client.getPublicKey(), client.getBlowfishKey());
-	}
-	
-	/**
-	 * Creates a packet to inform about security parameters used in further communications.
-	 * 
-	 * @param sessionId Session ID
-	 * @param protocol Protocol revision
-	 * @param publicKey Public key
-	 * @param blowfishKey Blowfish key
-	 */
-	private Init(int sessionId, int protocol, byte[] publicKey, byte[] blowfishKey)
-	{
-		_sessionId = sessionId;
-		_protocol = protocol;
-		_publicKey = publicKey;
-		_blowfishKey = blowfishKey;
+		_sessionId = client.getSessionId();
+		_protocol = client.getProtocol();
+		_publicKey = client.getPublicKey();
+		_cipher = new NewCipher(L2ClientSecurity.getInstance().getBlowfishKey());
+		_blowfishKey = _cipher.getBlowfishKey();
 	}
 	
 	@Override
@@ -77,5 +68,11 @@ public final class Init extends L2ServerPacket
 		
 		buf.writeB(_blowfishKey);
 		buf.writeC(0x00); // C string termination
+	}
+	
+	@Override
+	protected void packetWritten(L2Client client) throws RuntimeException
+	{
+		client.setCipher(_cipher);
 	}
 }

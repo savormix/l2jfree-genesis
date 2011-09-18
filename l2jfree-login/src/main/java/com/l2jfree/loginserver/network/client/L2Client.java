@@ -36,11 +36,18 @@ import com.l2jfree.util.Rnd;
  */
 public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2ServerPacket>
 {
+	private static final class DefaultLoginCipher extends NewCipher
+	{
+		public DefaultLoginCipher(byte[] blowfishKey)
+		{
+			super(blowfishKey);
+		}
+	}
+	
 	private final int _sessionId;
 	private final int _protocol;
 	private final ScrambledKeyPair _keyPair;
-	private final NewCipher _cipher;
-	private boolean _firstTime;
+	private NewCipher _cipher;
 	
 	private volatile L2ClientState _state;
 	private SessionKey _sessionKey;
@@ -63,8 +70,7 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 		_sessionId = L2ClientSecurity.getInstance().getNextSessionId();
 		_protocol = protocol;
 		_keyPair = L2ClientSecurity.getInstance().getKeyPair();
-		_cipher = new NewCipher(L2ClientSecurity.getInstance().getBlowfishKey());
-		_firstTime = true;
+		_cipher = new DefaultLoginCipher(HexUtil.HexStringToBytes("6b 60 cb 5b 82 ce 90 b1 cc 2b 6c 55 6c 6c 6c 6c"));
 		_state = L2ClientState.CONNECTED;
 		_sessionKey = null;
 		_account = null;
@@ -107,7 +113,7 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	@Override
 	protected boolean encipher(ByteBuffer buf, int size)
 	{
-		final boolean first = isFirstTime();
+		final boolean first = (getCipher() instanceof DefaultLoginCipher);
 		final int offset = buf.position();
 		
 		size += 4; // checksum
@@ -132,12 +138,7 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 		else
 			NewCipher.appendChecksum(buf, size);
 		
-		final NewCipher cipher;
-		if (first)
-			cipher = new NewCipher(HexUtil.HexStringToBytes("6b 60 cb 5b 82 ce 90 b1 cc 2b 6c 55 6c 6c 6c 6c"));
-		else
-			cipher = getCipher();
-		cipher.encipher(buf, size);
+		getCipher().encipher(buf, size);
 		
 		buf.position(offset + size);
 		return true;
@@ -223,21 +224,9 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 		return _cipher;
 	}
 	
-	private boolean isFirstTime()
+	public void setCipher(NewCipher cipher)
 	{
-		boolean ft = _firstTime;
-		_firstTime = false;
-		return ft;
-	}
-	
-	/**
-	 * Returns the Blowfish key.
-	 * 
-	 * @return Blowfish key
-	 */
-	public byte[] getBlowfishKey()
-	{
-		return getCipher().getBlowfishKey();
+		_cipher = cipher;
 	}
 	
 	/**
