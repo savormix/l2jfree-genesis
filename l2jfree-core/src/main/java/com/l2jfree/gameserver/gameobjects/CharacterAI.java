@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.gameobjects;
 
+import com.l2jfree.gameserver.gameobjects.ai.AIDesire;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterAI;
 
 /**
@@ -34,50 +35,19 @@ public abstract class CharacterAI implements ICharacterAI
 		return _activeChar;
 	}
 	
-	public static abstract class Desire
+	@Override
+	public void worldRegionActivated()
 	{
-		protected abstract void execute(CharacterAI ai);
+		// TODO
 	}
 	
-	public static class IdleDesire extends Desire
+	@Override
+	public void worldRegionDeactivated()
 	{
-		@Override
-		protected void execute(CharacterAI ai)
-		{
-			ai.onIntentionIdle();
-		}
+		// TODO
 	}
 	
-	public static class ActiveDesire extends Desire
-	{
-		@Override
-		protected void execute(CharacterAI ai)
-		{
-			ai.onIntentionActive();
-		}
-	}
-	
-	public static class MoveDesire extends Desire
-	{
-		private final int _x;
-		private final int _y;
-		private final int _z;
-		
-		public MoveDesire(int x, int y, int z)
-		{
-			_x = x;
-			_y = y;
-			_z = z;
-		}
-		
-		@Override
-		protected void execute(CharacterAI ai)
-		{
-			ai.onIntentionMove(_x, _y, _z);
-		}
-	}
-	
-	public void addDesire(Desire desire)
+	public void addDesire(AIDesire desire)
 	{
 		// TODO
 		// adds a new desire
@@ -85,12 +55,18 @@ public abstract class CharacterAI implements ICharacterAI
 		think();
 	}
 	
-	public void setDesire(Desire desire)
+	public void setDesire(AIDesire desire)
 	{
 		// TODO
 		// replaces all previous desire with the given one
 		
 		think();
+	}
+	
+	public void clearDesires()
+	{
+		// TODO
+		// remove all previous desires
 	}
 	
 	@SuppressWarnings("null")
@@ -99,27 +75,25 @@ public abstract class CharacterAI implements ICharacterAI
 		// TODO implement
 		// check if it "can" think right now
 		// if yes, then find most important desire, 
-		Desire mostDesired = null;
+		AIDesire mostDesired = null;
 		
 		// and behave according to it... schedule asynchronously if necessary
 		if (mostDesired != null)
 			mostDesired.execute(this);
 		else
-			onIntentionIdle();
+		{
+			// search for anything to do, check for surrounding objects, etc
+			// if there is nothing, then simply stop any pending execution, and return
+		}
 	}
 	
 	// intention handlers
-	protected void onIntentionIdle()
+	public void onIntentionMove(int x, int y, int z)
 	{
 		// do nothing at default
 	}
 	
-	protected void onIntentionActive()
-	{
-		// do nothing at default
-	}
-	
-	protected void onIntentionMove(int x, int y, int z)
+	public void onIntentionOnAction(L2Object target)
 	{
 		// do nothing at default
 	}

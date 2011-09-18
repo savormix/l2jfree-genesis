@@ -21,5 +21,9 @@ import com.l2jfree.gameserver.gameobjects.components.IComponent;
  */
 public interface ICharacterAI extends IComponent
 {
+	public void worldRegionActivated();
+	
+	public void worldRegionDeactivated();
+	
 	// TODO	
 }

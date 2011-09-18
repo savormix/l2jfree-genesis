@@ -12,40 +12,29 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.gameobjects.player;
+package com.l2jfree.gameserver.gameobjects.ai;
 
-import com.l2jfree.gameserver.gameobjects.CharacterPosition;
-import com.l2jfree.gameserver.gameobjects.L2Player;
-import com.l2jfree.gameserver.sql.PlayerDB;
+import com.l2jfree.gameserver.gameobjects.CharacterAI;
 
 /**
  * @author NB4L1
  */
-public class PlayerPosition extends CharacterPosition
+public class MoveDesire extends AIDesire
 {
-	public PlayerPosition(L2Player activeChar)
-	{
-		super(activeChar);
-	}
+	private final int _x;
+	private final int _y;
+	private final int _z;
 	
-	public void load(PlayerDB playerDB)
+	public MoveDesire(int x, int y, int z)
 	{
-		setXYZ(playerDB.x, playerDB.y, playerDB.z);
-		
-		setHeading(playerDB.heading);
-	}
-	
-	public void store(PlayerDB playerDB)
-	{
-		playerDB.x = getX();
-		playerDB.y = getY();
-		playerDB.z = getZ();
-		playerDB.heading = getHeading();
+		_x = x;
+		_y = y;
+		_z = z;
 	}
 	
 	@Override
-	public final L2Player getActiveChar()
+	public void execute(CharacterAI ai)
 	{
-		return (L2Player)super.getActiveChar();
+		ai.onIntentionMove(_x, _y, _z);
 	}
 }

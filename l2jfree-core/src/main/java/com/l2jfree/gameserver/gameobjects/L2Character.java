@@ -16,6 +16,7 @@ package com.l2jfree.gameserver.gameobjects;
 
 import com.l2jfree.gameserver.gameobjects.components.AIComponent;
 import com.l2jfree.gameserver.gameobjects.components.InventoryComponent;
+import com.l2jfree.gameserver.gameobjects.components.PositionComponent;
 import com.l2jfree.gameserver.gameobjects.components.StatComponent;
 import com.l2jfree.gameserver.gameobjects.components.ViewComponent;
 import com.l2jfree.gameserver.gameobjects.components.empty.EmptyInventory;
@@ -29,6 +30,7 @@ import com.l2jfree.gameserver.templates.L2Template;
 /**
  * @author NB4L1
  */
+@PositionComponent(CharacterPosition.class)
 @InventoryComponent(EmptyInventory.class)
 public abstract class L2Character extends L2Object implements IL2Character
 {

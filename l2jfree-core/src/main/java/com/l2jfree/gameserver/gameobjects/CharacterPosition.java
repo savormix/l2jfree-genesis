@@ -12,40 +12,37 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.gameobjects.player;
-
-import com.l2jfree.gameserver.gameobjects.CharacterPosition;
-import com.l2jfree.gameserver.gameobjects.L2Player;
-import com.l2jfree.gameserver.sql.PlayerDB;
+package com.l2jfree.gameserver.gameobjects;
 
 /**
  * @author NB4L1
  */
-public class PlayerPosition extends CharacterPosition
+public class CharacterPosition extends ObjectPosition
 {
-	public PlayerPosition(L2Player activeChar)
+	public CharacterPosition(L2Character activeChar)
 	{
 		super(activeChar);
 	}
 	
-	public void load(PlayerDB playerDB)
+	@Override
+	public L2Character getActiveChar()
 	{
-		setXYZ(playerDB.x, playerDB.y, playerDB.z);
-		
-		setHeading(playerDB.heading);
-	}
-	
-	public void store(PlayerDB playerDB)
-	{
-		playerDB.x = getX();
-		playerDB.y = getY();
-		playerDB.z = getZ();
-		playerDB.heading = getHeading();
+		return (L2Character)super.getActiveChar();
 	}
 	
 	@Override
-	public final L2Player getActiveChar()
+	public void worldRegionActivated()
 	{
-		return (L2Player)super.getActiveChar();
+		super.worldRegionActivated();
+		
+		getActiveChar().getAI().worldRegionActivated();
+	}
+	
+	@Override
+	public void worldRegionDeactivated()
+	{
+		super.worldRegionDeactivated();
+		
+		getActiveChar().getAI().worldRegionDeactivated();
 	}
 }
