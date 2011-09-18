@@ -21,6 +21,12 @@ import com.l2jfree.gameserver.gameobjects.components.IComponent;
  */
 public interface IObjectMovement extends IComponent
 {
+	public int getDestinationX();
+	
+	public int getDestinationY();
+	
+	public int getDestinationZ();
+	
 	public boolean isArrived();
 	
 	public void revalidateMovement();

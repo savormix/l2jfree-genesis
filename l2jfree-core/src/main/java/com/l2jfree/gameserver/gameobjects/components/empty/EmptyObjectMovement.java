@@ -28,9 +28,26 @@ public class EmptyObjectMovement implements IObjectMovement
 	}
 	
 	@Override
+	public int getDestinationX()
+	{
+		return 0;
+	}
+	
+	@Override
+	public int getDestinationY()
+	{
+		return 0;
+	}
+	
+	@Override
+	public int getDestinationZ()
+	{
+		return 0;
+	}
+	
+	@Override
 	public boolean isArrived()
 	{
-		// do nothing
 		return false;
 	}
 	

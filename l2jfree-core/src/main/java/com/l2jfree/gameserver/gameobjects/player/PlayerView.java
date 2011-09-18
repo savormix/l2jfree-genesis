@@ -21,6 +21,7 @@ import com.l2jfree.gameserver.gameobjects.CharacterStat.Element;
 import com.l2jfree.gameserver.gameobjects.CharacterView;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.gameobjects.ObjectPosition;
+import com.l2jfree.gameserver.gameobjects.components.interfaces.IObjectMovement;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerInventory;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerStat;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerView;
@@ -1025,11 +1026,11 @@ public class PlayerView extends CharacterView implements IPlayerView
 	@Override
 	public void refreshDestinationPosition()
 	{
-		final L2Player p = getActiveChar();
+		final IObjectMovement movement = getActiveChar().getMovement();
 		
-		_destinationX = p.getDestinationX();
-		_destinationY = p.getDestinationY();
-		_destinationZ = p.getDestinationZ();
+		_destinationX = movement.getDestinationX();
+		_destinationY = movement.getDestinationY();
+		_destinationZ = movement.getDestinationZ();
 	}
 	
 	private final ObjectId[] _paperDollObjectIds = new ObjectId[PaperDollSlot.TOTAL_SLOTS];

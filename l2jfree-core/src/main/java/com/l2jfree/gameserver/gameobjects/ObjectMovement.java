@@ -34,6 +34,27 @@ public abstract class ObjectMovement implements IObjectMovement
 		return _activeChar;
 	}
 	
+	@Override
+	public int getDestinationX()
+	{
+		// TODO
+		return 0;
+	}
+	
+	@Override
+	public int getDestinationY()
+	{
+		// TODO
+		return 0;
+	}
+	
+	@Override
+	public int getDestinationZ()
+	{
+		// TODO
+		return 0;
+	}
+	
 	public void startMovement()
 	{
 		// TODO

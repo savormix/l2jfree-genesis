@@ -16,6 +16,7 @@ package com.l2jfree.gameserver.gameobjects;
 
 import com.l2jfree.gameserver.gameobjects.ai.AIDesire;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterAI;
+import com.l2jfree.util.Introspection;
 
 /**
  * @author hex1r0
@@ -52,6 +53,7 @@ public abstract class CharacterAI implements ICharacterAI
 	{
 		// TODO
 		// adds a new desire
+		_log.info(getActiveChar() + ".addDesire(): " + Introspection.toString(desire));
 		
 		think();
 	}
@@ -61,6 +63,7 @@ public abstract class CharacterAI implements ICharacterAI
 	{
 		// TODO
 		// replaces all previous desire with the given one
+		_log.info(getActiveChar() + ".setDesire(): " + Introspection.toString(desire));
 		
 		think();
 	}
@@ -70,6 +73,7 @@ public abstract class CharacterAI implements ICharacterAI
 	{
 		// TODO
 		// remove all previous desires
+		_log.info(getActiveChar() + ".clearDesires(): ");
 	}
 	
 	@SuppressWarnings("null")

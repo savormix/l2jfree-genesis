@@ -332,36 +332,6 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 		}
 	}
 	
-	// -------------------------
-	// FIXME temporal solution , until we implement movement
-	int _destinationX;
-	int _destinationY;
-	int _destinationZ;
-	
-	public int getDestinationX()
-	{
-		return _destinationX;
-	}
-	
-	public void setDestination(int x, int y, int z)
-	{
-		_destinationX = x;
-		_destinationY = y;
-		_destinationZ = z;
-	}
-	
-	public int getDestinationY()
-	{
-		return _destinationY;
-	}
-	
-	public int getDestinationZ()
-	{
-		return _destinationZ;
-	}
-	
-	// -------------------------
-	
 	public void sendCMessage(Chat chatType, String sender, String message)
 	{
 		ChatMessage cm = new ChatMessage(chatType, sender, message);

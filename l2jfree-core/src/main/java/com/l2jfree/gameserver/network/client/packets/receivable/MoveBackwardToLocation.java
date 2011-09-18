@@ -17,6 +17,7 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 import java.nio.BufferUnderflowException;
 
 import com.l2jfree.gameserver.gameobjects.L2Player;
+import com.l2jfree.gameserver.gameobjects.ai.MoveDesire;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
@@ -72,7 +73,7 @@ public abstract class MoveBackwardToLocation extends L2ClientPacket
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		// TODO implement coords checks
+		// TODO implement coords checks + mouse involvement
 		final L2Player activeChar = getClient().getActiveChar();
 		if (activeChar == null)
 			return;
@@ -80,6 +81,6 @@ public abstract class MoveBackwardToLocation extends L2ClientPacket
 		activeChar.getPosition().setClientXYZ(_clientX, _clientY, _clientZ);
 		
 		// FIXME _destinationZ floor/head? needs any correction?
-		activeChar.setDestination(_destinationX, _destinationY, _destinationZ);
+		activeChar.getAI().addDesire(new MoveDesire(_destinationX, _destinationY, _destinationZ));
 	}
 }
