@@ -48,4 +48,16 @@ public class PlayerPosition extends CharacterPosition
 	{
 		return (L2Player)super.getActiveChar();
 	}
+	
+	public void setClientXYZ(int clientX, int clientY, int clientZ)
+	{
+		// TODO add some semi-validation to coordinates received from client, BUT DO NOT TAKE THEM AS VALID!
+		_log.info(getActiveChar() + " clientX: " + clientX + ", clientY: " + clientY + ", clientZ: " + clientZ);
+	}
+	
+	public void setClientHeading(int clientHeading)
+	{
+		// TODO add some semi-validation to heading received from client, BUT DO NOT TAKE IT AS VALID!
+		_log.info(getActiveChar() + " clientHeading: " + clientHeading);
+	}
 }

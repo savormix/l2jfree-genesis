@@ -17,7 +17,6 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 import java.nio.BufferUnderflowException;
 
 import com.l2jfree.gameserver.gameobjects.L2Player;
-import com.l2jfree.gameserver.gameobjects.ObjectPosition;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.sendable.ValidateLocation.UpdateLocation;
 import com.l2jfree.network.mmocore.InvalidPacketException;
@@ -50,10 +49,10 @@ public abstract class ValidatePosition extends L2ClientPacket
 	}
 	
 	/* Fields for storing read data */
-	private int _x;
-	private int _y;
-	private int _z;
-	private int _heading;
+	private int _clientX;
+	private int _clientY;
+	private int _clientZ;
+	private int _clientHeading;
 	@SuppressWarnings("unused")
 	private int _vehicle;
 	
@@ -61,10 +60,10 @@ public abstract class ValidatePosition extends L2ClientPacket
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		_x = buf.readD(); // Current client X
-		_y = buf.readD(); // Current client Y
-		_z = buf.readD(); // Current client Z
-		_heading = buf.readD(); // Heading
+		_clientX = buf.readD(); // Current client X
+		_clientY = buf.readD(); // Current client Y
+		_clientZ = buf.readD(); // Current client Z
+		_clientHeading = buf.readD(); // Heading
 		_vehicle = buf.readD(); // Vehicle OID
 	}
 	
@@ -72,12 +71,13 @@ public abstract class ValidatePosition extends L2ClientPacket
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		// TODO: implement
-		L2Player activeChar = getClient().getActiveChar();
-		ObjectPosition position = activeChar.getPosition();
-		{
-			position.setXYZ(_x, _y, _z);
-			position.setHeading(_heading);
-		}
+		final L2Player activeChar = getClient().getActiveChar();
+		if (activeChar == null)
+			return;
+		
+		activeChar.getPosition().setClientXYZ(_clientX, _clientY, _clientZ);
+		activeChar.getPosition().setClientHeading(_clientHeading);
+		
 		// TODO: perhaps make an iterative task instead of replying every time
 		// even though we have flood protection
 		sendPacket(UpdateLocation.PACKET);

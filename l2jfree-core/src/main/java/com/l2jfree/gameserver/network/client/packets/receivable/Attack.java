@@ -16,6 +16,7 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 
+import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
@@ -46,15 +47,18 @@ public abstract class Attack extends L2ClientPacket
 	}
 	
 	/* Fields for storing read data */
+	private int _clientX;
+	private int _clientY;
+	private int _clientZ;
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
 		buf.readD(); // Target OID
-		buf.readD(); // Current client X
-		buf.readD(); // Current client Y
-		buf.readD(); // Current client Z
+		_clientX = buf.readD(); // Current client X
+		_clientY = buf.readD(); // Current client Y
+		_clientZ = buf.readD(); // Current client Z
 		buf.readC(); // Shift (do not move)
 	}
 	
@@ -62,5 +66,10 @@ public abstract class Attack extends L2ClientPacket
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		// TODO: implement
+		final L2Player activeChar = getClient().getActiveChar();
+		if (activeChar == null)
+			return;
+		
+		activeChar.getPosition().setClientXYZ(_clientX, _clientY, _clientZ);
 	}
 }

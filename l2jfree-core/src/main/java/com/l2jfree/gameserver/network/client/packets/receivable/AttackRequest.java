@@ -52,6 +52,9 @@ public abstract class AttackRequest extends L2ClientPacket
 	
 	/* Fields for storing read data */
 	private int _targetObjectId;
+	private int _clientX;
+	private int _clientY;
+	private int _clientZ;
 	private boolean _shiftPressed;
 	
 	@Override
@@ -59,9 +62,9 @@ public abstract class AttackRequest extends L2ClientPacket
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
 		_targetObjectId = buf.readD(); // Target OID
-		buf.readD(); // Current client X
-		buf.readD(); // Current client Y
-		buf.readD(); // Current client Z
+		_clientX = buf.readD(); // Current client X
+		_clientY = buf.readD(); // Current client Y
+		_clientZ = buf.readD(); // Current client Z
 		_shiftPressed = (buf.readC() == 1); // Shift (do not move)
 	}
 	
@@ -72,6 +75,8 @@ public abstract class AttackRequest extends L2ClientPacket
 		final L2Player activeChar = getClient().getActiveChar();
 		if (activeChar == null)
 			return;
+		
+		activeChar.getPosition().setClientXYZ(_clientX, _clientY, _clientZ);
 		
 		final L2Object target = L2World.findPlayer(new ObjectId(_targetObjectId));
 		if (target == null)
