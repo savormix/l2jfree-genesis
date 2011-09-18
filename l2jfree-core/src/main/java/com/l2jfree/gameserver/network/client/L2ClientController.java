@@ -29,18 +29,18 @@ import com.l2jfree.network.mmocore.MMOController;
  * 
  * @author savormix
  */
-public final class L2ClientConnections extends MMOController<L2Client, L2ClientPacket, L2ServerPacket>
+public final class L2ClientController extends MMOController<L2Client, L2ClientPacket, L2ServerPacket>
 {
 	private static final class SingletonHolder
 	{
 		static
 		{
-			final MMOConfig cfg = new MMOConfig("Experimental Core");
+			final MMOConfig cfg = new MMOConfig(L2ClientController.class.getSimpleName());
 			cfg.setSelectorSleepTime(7);
 			
 			try
 			{
-				INSTANCE = new L2ClientConnections(cfg);
+				INSTANCE = new L2ClientController(cfg);
 			}
 			catch (IOException e)
 			{
@@ -48,7 +48,7 @@ public final class L2ClientConnections extends MMOController<L2Client, L2ClientP
 			}
 		}
 		
-		public static final L2ClientConnections INSTANCE;
+		public static final L2ClientController INSTANCE;
 	}
 	
 	/**
@@ -56,12 +56,12 @@ public final class L2ClientConnections extends MMOController<L2Client, L2ClientP
 	 * 
 	 * @return an instance of this class
 	 */
-	public static L2ClientConnections getInstance()
+	public static L2ClientController getInstance()
 	{
 		return SingletonHolder.INSTANCE;
 	}
 	
-	private L2ClientConnections(MMOConfig config) throws IOException
+	private L2ClientController(MMOConfig config) throws IOException
 	{
 		super(config, L2ClientPacketHandler.getInstance());
 		

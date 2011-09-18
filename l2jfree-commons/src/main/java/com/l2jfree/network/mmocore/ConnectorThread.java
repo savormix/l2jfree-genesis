@@ -14,6 +14,7 @@
  */
 package com.l2jfree.network.mmocore;
 
+import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.nio.channels.SocketChannel;
 
@@ -44,13 +45,14 @@ final class ConnectorThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 	@Override
 	public void run()
 	{
+		final String name = getMMOController().getName();
 		// main loop
 		for (;;)
 		{
 			try
 			{
 				// Connection
-				System.out.println("Connecting to " + _address.getAddress() + ":" + _address.getPort());
+				System.out.println(name + ": Connecting to " + _address.toString());
 				
 				final SocketChannel selectable = SocketChannel.open();
 				selectable.configureBlocking(false);
@@ -67,8 +69,7 @@ final class ConnectorThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 					}
 				}
 				
-				Util.printSection(getMMOController().getClass().getSimpleName() + " "
-						+ selectable.socket().getRemoteSocketAddress().toString());
+				Util.printSection(name + " " + selectable.socket().getInetAddress().toString());
 				final T con = getMMOController().createClient(selectable);
 				con.enableReadInterest();
 				
@@ -92,6 +93,11 @@ final class ConnectorThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 						break;
 				}
 			}
+			catch (ConnectException e)
+			{
+				// stack trace is known so not required
+				System.out.println(name + ": Connecting failed - " + e.toString());
+			}
 			catch (Exception e)
 			{
 				e.printStackTrace();
@@ -103,7 +109,7 @@ final class ConnectorThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 				return;
 			}
 			
-			System.out.println("Disconnected, trying to reconnect in 5 sec!");
+			System.out.println(name + ": Disconnected, trying to reconnect in 5 sec!");
 			
 			try
 			{

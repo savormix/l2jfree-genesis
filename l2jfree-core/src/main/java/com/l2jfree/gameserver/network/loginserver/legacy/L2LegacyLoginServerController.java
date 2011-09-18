@@ -34,7 +34,7 @@ public class L2LegacyLoginServerController extends
 	{
 		static
 		{
-			final MMOConfig cfg = new MMOConfig("Legacy Login Client");
+			final MMOConfig cfg = new MMOConfig(L2LegacyLoginServerController.class.getSimpleName());
 			cfg.setSelectorSleepTime(5);
 			cfg.setThreadCount(1);
 			

@@ -39,7 +39,7 @@ public final class L2LegacyGameServerController extends
 	{
 		static
 		{
-			final MMOConfig cfg = new MMOConfig("Legacy Game Servers");
+			final MMOConfig cfg = new MMOConfig(L2LegacyGameServerController.class.getSimpleName());
 			cfg.setSelectorSleepTime(25);
 			cfg.setThreadCount(1);
 			

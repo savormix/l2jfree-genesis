@@ -62,7 +62,7 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	 * @param socketChannel connection
 	 * @throws ClosedChannelException if the given channel was closed during operations
 	 */
-	protected L2Client(L2ClientConnections mmoController, SocketChannel socketChannel) throws ClosedChannelException
+	protected L2Client(L2ClientController mmoController, SocketChannel socketChannel) throws ClosedChannelException
 	{
 		super(mmoController, socketChannel);
 		
