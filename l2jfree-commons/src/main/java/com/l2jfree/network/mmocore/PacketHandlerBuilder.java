@@ -334,7 +334,7 @@ public final class PacketHandlerBuilder<T extends MMOConnection<T, RP, SP>, RP e
 				}
 				else
 				{
-					if (buf.remaining() < 5)
+					if (buf.remaining() < 4)
 						return underflow(buf, client, opcode1, opcode2);
 					
 					final int opcode3 = buf.getInt() & 0xffffffff;
