@@ -86,6 +86,11 @@ public abstract class SystemMessagePacket extends L2ServerPacket
 			{
 				buf.writeD(0); // Item
 			}
+			// branch with param.Item2
+			{
+				buf.writeD(0); // Item
+				buf.writeD(0); // ??? 0
+			}
 			// branch with param.PledgeBase
 			{
 				buf.writeD(0); // Real estate

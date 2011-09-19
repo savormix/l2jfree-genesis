@@ -72,5 +72,11 @@ public abstract class ExManagePartyRoomMemberPacket extends L2ServerPacket
 		buf.writeD(0); // Level
 		buf.writeD(0); // Region
 		buf.writeD(0); // Membership
+		final int sizeA = 0; // ???
+		buf.writeD(sizeA);
+		for (int i = 0; i < sizeA; i++)
+		{
+			buf.writeD(0); // ???
+		}
 	}
 }
