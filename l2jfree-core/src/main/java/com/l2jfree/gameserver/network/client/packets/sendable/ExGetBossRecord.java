@@ -72,8 +72,8 @@ public abstract class ExGetBossRecord extends L2ServerPacket
 		for (int i = 0; i < sizeA; i++)
 		{
 			buf.writeD(0); // Raid boss
-			buf.writeD(0); // Points
-			buf.writeD(0); // 0
+			buf.writeD(0); // Points this week
+			buf.writeD(0); // Total points
 		}
 	}
 }

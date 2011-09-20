@@ -76,11 +76,11 @@ public abstract class ExPartyRoomMemberPacket extends L2ServerPacket
 			buf.writeD(0); // Level
 			buf.writeD(0); // Region
 			buf.writeD(0); // Membership
-			final int sizeB = 0; // ???
+			final int sizeB = 0; // Unavailable instances
 			buf.writeD(sizeB);
 			for (int j = 0; j < sizeB; j++)
 			{
-				buf.writeD(0); // ???
+				buf.writeD(0); // Instance
 			}
 		}
 	}

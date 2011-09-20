@@ -67,6 +67,6 @@ public abstract class ExPartyPetWindowDelete extends L2ServerPacket
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
 		buf.writeD(0); // Servitor OID
 		buf.writeD(0); // Owner OID
-		buf.writeS(""); // Servitor's name
+		buf.writeS(""); // Servitor's name (for named pets; empty for servitors and unnamed pets)
 	}
 }
