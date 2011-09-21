@@ -427,7 +427,7 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 	}
 	
 	@SuppressWarnings({ "unchecked", "static-method" })
-	protected <E extends Enum<?>> E getState()
+	public <E extends Enum<?>> E getState()
 	{
 		return (E)DummyState.NONE;
 	}

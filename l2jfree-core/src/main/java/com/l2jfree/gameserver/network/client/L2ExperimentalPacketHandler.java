@@ -43,18 +43,30 @@ import com.l2jfree.gameserver.network.client.packets.receivable.characterless.Ne
 import com.l2jfree.gameserver.network.client.packets.receivable.characterless.NewCharacterPacket;
 import com.l2jfree.gameserver.network.client.packets.receivable.characterless.RequestAvailableCharacters;
 import com.l2jfree.network.mmocore.PacketHandlerBuilder;
-import com.l2jfree.network.mmocore.PacketHandlerBuilder.DynamicPacketHandler;
-import com.l2jfree.network.mmocore.PacketHandlerBuilder.PacketDefinition;
+import com.l2jfree.network.mmocore.packethandlers.PacketDefinition;
+import com.l2jfree.network.mmocore.packethandlers.ThreeLevelPacketHandler;
 
 /**
  * @author NB4L1
  */
 public final class L2ExperimentalPacketHandler extends
-		DynamicPacketHandler<L2Client, L2ClientPacket, L2ServerPacket, L2ClientState>
+		ThreeLevelPacketHandler<L2Client, L2ClientPacket, L2ServerPacket, L2ClientState>
 {
 	private static final class SingletonHolder
 	{
-		public static final L2ExperimentalPacketHandler INSTANCE = new L2ExperimentalPacketHandler();
+		static
+		{
+			try
+			{
+				INSTANCE = new L2ExperimentalPacketHandler();
+			}
+			catch (Exception e)
+			{
+				throw new Error(e);
+			}
+		}
+		
+		public static final L2ExperimentalPacketHandler INSTANCE;
 	}
 	
 	public static L2ExperimentalPacketHandler getInstance()
@@ -62,18 +74,20 @@ public final class L2ExperimentalPacketHandler extends
 		return SingletonHolder.INSTANCE;
 	}
 	
-	private L2ExperimentalPacketHandler()
+	private L2ExperimentalPacketHandler() throws Exception
 	{
 		super(createTable());
 	}
 	
 	private static PacketDefinition<L2Client, L2ClientPacket, L2ServerPacket, L2ClientState>[][][][] createTable()
+			throws Exception
 	{
 		final PacketHandlerBuilder<L2Client, L2ClientPacket, L2ServerPacket, L2ClientState> dph =
 				new PacketHandlerBuilder<L2Client, L2ClientPacket, L2ServerPacket, L2ClientState>(L2ClientState.class);
 		
 		dph.addPacket(ProtocolVersion.class, //
 				CONNECTED);
+		
 		dph.addPacket(AuthLogin.RequestAuthorization.class, //
 				PROTOCOL_OK);
 		dph.addPacket(Logout.class, //
