@@ -41,13 +41,15 @@ public abstract class TwoLevelPacketHandler<T extends MMOConnection<T, RP, SP>, 
 	@Override
 	public final RP handlePacket(ByteBuffer buf, T client, final int opcode1)
 	{
-		if (_table[opcode1] == null)
+		final PacketDefinition<T, RP, SP, S>[][] table1 = _table[opcode1];
+		
+		if (table1 == null)
 		{
 			return unknown(buf, client, opcode1);
 		}
-		else if (_table[opcode1].length == 1)
+		else if (table1.length == 1)
 		{
-			final PacketDefinition<T, RP, SP, S> packetDefinition = _table[opcode1][0][client.getState().ordinal()];
+			final PacketDefinition<T, RP, SP, S> packetDefinition = table1[0][client.getState().ordinal()];
 			
 			if (packetDefinition != null)
 				return packetDefinition.newInstance();
@@ -60,15 +62,15 @@ public abstract class TwoLevelPacketHandler<T extends MMOConnection<T, RP, SP>, 
 				return underflow(buf, client, opcode1);
 			
 			final int opcode2 = buf.getShort() & 0xffff;
+			final PacketDefinition<T, RP, SP, S>[] table2 = table1[opcode2];
 			
-			if (_table[opcode1][opcode2] == null)
+			if (table2 == null)
 			{
 				return unknown(buf, client, opcode1, opcode2);
 			}
-			else if (_table[opcode1][opcode2].length == 1)
+			else if (table2.length == 1)
 			{
-				final PacketDefinition<T, RP, SP, S> packetDefinition =
-						_table[opcode1][opcode2][client.getState().ordinal()];
+				final PacketDefinition<T, RP, SP, S> packetDefinition = table2[client.getState().ordinal()];
 				
 				if (packetDefinition != null)
 					return packetDefinition.newInstance();

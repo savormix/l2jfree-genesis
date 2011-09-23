@@ -25,6 +25,7 @@ import com.l2jfree.network.mmocore.MMOConnection;
 import com.l2jfree.network.mmocore.ReceivablePacket;
 import com.l2jfree.network.mmocore.SendablePacket;
 import com.l2jfree.util.HexUtil;
+import com.l2jfree.util.jar.ClassFinder;
 
 /**
  * @author NB4L1
@@ -35,6 +36,35 @@ import com.l2jfree.util.HexUtil;
  */
 public class PacketDefinition<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>, S extends Enum<S>>
 {
+	public static List<Class<?>> findClasses(String packageName) throws Exception
+	{
+		final List<Class<?>> classes = new ArrayList<Class<?>>();
+		
+		for (Class<?> c : ClassFinder.findClasses(packageName))
+			if (isInstanceable(c))
+				classes.add(c);
+		
+		return classes;
+	}
+	
+	public static List<Class<?>> findClasses(Class<?> clazz)
+	{
+		while (clazz.getEnclosingClass() != null)
+			clazz = clazz.getEnclosingClass();
+		
+		final List<Class<?>> classes = new ArrayList<Class<?>>();
+		
+		classes.add(clazz);
+		
+		for (int i = 0; i < classes.size(); i++)
+			for (Class<?> c : classes.get(i).getDeclaredClasses())
+				if (!classes.contains(c))
+					if (isInstanceable(c))
+						classes.add(c);
+		
+		return classes;
+	}
+	
 	public static boolean isInstanceable(Class<?> clazz)
 	{
 		try

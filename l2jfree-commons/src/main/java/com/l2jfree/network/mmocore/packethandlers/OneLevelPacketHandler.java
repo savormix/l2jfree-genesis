@@ -41,13 +41,15 @@ public abstract class OneLevelPacketHandler<T extends MMOConnection<T, RP, SP>, 
 	@Override
 	public final RP handlePacket(ByteBuffer buf, T client, final int opcode1)
 	{
-		if (_table[opcode1] == null)
+		final PacketDefinition<T, RP, SP, S>[] table1 = _table[opcode1];
+		
+		if (table1 == null)
 		{
 			return unknown(buf, client, opcode1);
 		}
-		else if (_table[opcode1].length == 1)
+		else if (table1.length == 1)
 		{
-			final PacketDefinition<T, RP, SP, S> packetDefinition = _table[opcode1][client.getState().ordinal()];
+			final PacketDefinition<T, RP, SP, S> packetDefinition = table1[client.getState().ordinal()];
 			
 			if (packetDefinition != null)
 				return packetDefinition.newInstance();
