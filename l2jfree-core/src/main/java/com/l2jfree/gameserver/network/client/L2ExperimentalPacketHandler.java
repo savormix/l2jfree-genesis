@@ -75,10 +75,11 @@ public final class L2ExperimentalPacketHandler extends
 	
 	private L2ExperimentalPacketHandler() throws Exception
 	{
-		super(createBuilder());
+		// singleton
 	}
 	
-	private static PacketHandlerBuilder<L2Client, L2ClientPacket, L2ServerPacket, L2ClientState> createBuilder()
+	@Override
+	public PacketHandlerBuilder<L2Client, L2ClientPacket, L2ServerPacket, L2ClientState> initPacketHandlerBuilder()
 			throws Exception
 	{
 		final PacketHandlerBuilder<L2Client, L2ClientPacket, L2ServerPacket, L2ClientState> dph =

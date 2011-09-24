@@ -33,12 +33,16 @@ public abstract class OneLevelPacketHandler<T extends MMOConnection<T, RP, SP>, 
 {
 	private final PacketDefinition<T, RP, SP, S>[][] _table;
 	
-	protected OneLevelPacketHandler(PacketHandlerBuilder<T, RP, SP, S> phb)
+	protected OneLevelPacketHandler() throws Exception
 	{
+		final PacketHandlerBuilder<T, RP, SP, S> phb = initPacketHandlerBuilder();
+		
 		phb.getRootHandler().printStructure(0);
 		
 		_table = phb.getRootHandler().buildOneLevelTable();
 	}
+	
+	public abstract PacketHandlerBuilder<T, RP, SP, S> initPacketHandlerBuilder() throws Exception;
 	
 	@Override
 	public final RP handlePacket(ByteBuffer buf, T client, final int opcode1)
