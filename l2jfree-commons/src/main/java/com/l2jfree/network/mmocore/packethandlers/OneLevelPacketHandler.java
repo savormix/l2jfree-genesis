@@ -33,9 +33,11 @@ public abstract class OneLevelPacketHandler<T extends MMOConnection<T, RP, SP>, 
 {
 	private final PacketDefinition<T, RP, SP, S>[][] _table;
 	
-	protected OneLevelPacketHandler(PacketDefinition<T, RP, SP, S>[][] table)
+	protected OneLevelPacketHandler(PacketHandlerBuilder<T, RP, SP, S> phb)
 	{
-		_table = table;
+		phb.getRootHandler().printStructure(0);
+		
+		_table = phb.getRootHandler().buildOneLevelTable();
 	}
 	
 	@Override

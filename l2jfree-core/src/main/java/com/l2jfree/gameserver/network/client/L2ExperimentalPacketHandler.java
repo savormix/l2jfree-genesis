@@ -42,8 +42,7 @@ import com.l2jfree.gameserver.network.client.packets.receivable.characterless.Ch
 import com.l2jfree.gameserver.network.client.packets.receivable.characterless.NewCharacter;
 import com.l2jfree.gameserver.network.client.packets.receivable.characterless.NewCharacterPacket;
 import com.l2jfree.gameserver.network.client.packets.receivable.characterless.RequestAvailableCharacters;
-import com.l2jfree.network.mmocore.PacketHandlerBuilder;
-import com.l2jfree.network.mmocore.packethandlers.PacketDefinition;
+import com.l2jfree.network.mmocore.packethandlers.PacketHandlerBuilder;
 import com.l2jfree.network.mmocore.packethandlers.ThreeLevelPacketHandler;
 
 /**
@@ -76,10 +75,10 @@ public final class L2ExperimentalPacketHandler extends
 	
 	private L2ExperimentalPacketHandler() throws Exception
 	{
-		super(createTable());
+		super(createBuilder());
 	}
 	
-	private static PacketDefinition<L2Client, L2ClientPacket, L2ServerPacket, L2ClientState>[][][][] createTable()
+	private static PacketHandlerBuilder<L2Client, L2ClientPacket, L2ServerPacket, L2ClientState> createBuilder()
 			throws Exception
 	{
 		final PacketHandlerBuilder<L2Client, L2ClientPacket, L2ServerPacket, L2ClientState> dph =
@@ -142,6 +141,6 @@ public final class L2ExperimentalPacketHandler extends
 		}
 		*/
 		
-		return dph.buildTable();
+		return dph;
 	}
 }

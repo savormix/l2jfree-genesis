@@ -12,12 +12,14 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.network.mmocore;
+package com.l2jfree.network.mmocore.packethandlers;
 
 import java.util.Map;
 import java.util.TreeMap;
 
-import com.l2jfree.network.mmocore.packethandlers.PacketDefinition;
+import com.l2jfree.network.mmocore.MMOConnection;
+import com.l2jfree.network.mmocore.ReceivablePacket;
+import com.l2jfree.network.mmocore.SendablePacket;
 import com.l2jfree.util.HexUtil;
 
 /**
@@ -28,6 +30,7 @@ import com.l2jfree.util.HexUtil;
  * @param <S> client state
  */
 // FIXME runtime class generation with switch-case (so as the old structure, yet without the extensive maintenance cost)
+@SuppressWarnings("unchecked")
 public final class PacketHandlerBuilder<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>, S extends Enum<S>>
 {
 	private final int _enumValuesLength;
@@ -45,7 +48,12 @@ public final class PacketHandlerBuilder<T extends MMOConnection<T, RP, SP>, RP e
 		_rootHandler.addPacketDefinition(packetDefinition);
 	}
 	
-	private final class Handler
+	public Handler getRootHandler()
+	{
+		return _rootHandler;
+	}
+	
+	public final class Handler
 	{
 		private final TreeMap<S, PacketDefinition<T, RP, SP, S>> _definitionsByState =
 				new TreeMap<S, PacketDefinition<T, RP, SP, S>>();
@@ -88,8 +96,10 @@ public final class PacketHandlerBuilder<T extends MMOConnection<T, RP, SP>, RP e
 			}
 		}
 		
-		private PacketDefinition<T, RP, SP, S>[] getDefinitionsByState(PacketDefinition<T, RP, SP, S>[] result)
+		private PacketDefinition<T, RP, SP, S>[] getDefinitionsByState()
 		{
+			final PacketDefinition<T, RP, SP, S>[] result = new PacketDefinition[_enumValuesLength];
+			
 			for (Map.Entry<S, PacketDefinition<T, RP, SP, S>> entry : _definitionsByState.entrySet())
 				result[entry.getKey().ordinal()] = entry.getValue();
 			
@@ -129,71 +139,71 @@ public final class PacketHandlerBuilder<T extends MMOConnection<T, RP, SP>, RP e
 				}
 			}
 		}
-	}
-	
-	@SuppressWarnings("unchecked")
-	public PacketDefinition<T, RP, SP, S>[][][][] buildTable()
-	{
-		_rootHandler.printStructure(0);
 		
-		final PacketDefinition<T, RP, SP, S>[][][][] table = new PacketDefinition[256][][][];
-		
-		for (Map.Entry<Integer, Handler> entry1 : _rootHandler._handlersByOpcode.entrySet())
+		public PacketDefinition<T, RP, SP, S>[][] buildOneLevelTable()
 		{
-			final int opcode1 = entry1.getKey();
-			final Handler handler1 = entry1.getValue();
+			final PacketDefinition<T, RP, SP, S>[][] table = new PacketDefinition[256][];
 			
-			if (handler1._handlersByOpcode.isEmpty())
+			for (Map.Entry<Integer, Handler> entry : _handlersByOpcode.entrySet())
 			{
-				if (table[opcode1] == null)
-					table[opcode1] = new PacketDefinition[1][1][_enumValuesLength];
+				final int opcode = entry.getKey();
+				final Handler handler = entry.getValue();
 				
-				handler1.getDefinitionsByState(table[opcode1][0][0]);
-			}
-			else
-			{
-				if (table[opcode1] == null)
-					table[opcode1] = new PacketDefinition[256][][];
-				
-				for (Map.Entry<Integer, Handler> entry2 : handler1._handlersByOpcode.entrySet())
+				if (handler._handlersByOpcode.isEmpty())
 				{
-					final int opcode2 = entry2.getKey();
-					final Handler handler2 = entry2.getValue();
-					
-					if (handler2._handlersByOpcode.isEmpty())
-					{
-						if (table[opcode1][opcode2] == null)
-							table[opcode1][opcode2] = new PacketDefinition[1][_enumValuesLength];
-						
-						handler2.getDefinitionsByState(table[opcode1][opcode2][0]);
-					}
-					else
-					{
-						if (table[opcode1][opcode2] == null)
-							table[opcode1][opcode2] = new PacketDefinition[256][];
-						
-						for (Map.Entry<Integer, Handler> entry3 : handler2._handlersByOpcode.entrySet())
-						{
-							final int opcode3 = entry3.getKey();
-							final Handler handler3 = entry3.getValue();
-							
-							if (handler3._handlersByOpcode.isEmpty())
-							{
-								if (table[opcode1][opcode2][opcode3] == null)
-									table[opcode1][opcode2][opcode3] = new PacketDefinition[_enumValuesLength];
-								
-								handler3.getDefinitionsByState(table[opcode1][opcode2][opcode3]);
-							}
-							else
-							{
-								throw new Error();
-							}
-						}
-					}
+					table[opcode] = handler.getDefinitionsByState();
+				}
+				else
+				{
+					throw new Error();
 				}
 			}
+			
+			return table;
 		}
 		
-		return table;
+		public PacketDefinition<T, RP, SP, S>[][][] buildTwoLevelTable()
+		{
+			final PacketDefinition<T, RP, SP, S>[][][] table = new PacketDefinition[256][][];
+			
+			for (Map.Entry<Integer, Handler> entry : _handlersByOpcode.entrySet())
+			{
+				final int opcode = entry.getKey();
+				final Handler handler = entry.getValue();
+				
+				if (handler._handlersByOpcode.isEmpty())
+				{
+					table[opcode] = new PacketDefinition[][] { handler.getDefinitionsByState() };
+				}
+				else
+				{
+					table[opcode] = handler.buildOneLevelTable();
+				}
+			}
+			
+			return table;
+		}
+		
+		public PacketDefinition<T, RP, SP, S>[][][][] buildThreeLevelTable()
+		{
+			final PacketDefinition<T, RP, SP, S>[][][][] table = new PacketDefinition[256][][][];
+			
+			for (Map.Entry<Integer, Handler> entry : _handlersByOpcode.entrySet())
+			{
+				final int opcode = entry.getKey();
+				final Handler handler = entry.getValue();
+				
+				if (handler._handlersByOpcode.isEmpty())
+				{
+					table[opcode] = new PacketDefinition[][][] { { handler.getDefinitionsByState() } };
+				}
+				else
+				{
+					table[opcode] = handler.buildTwoLevelTable();
+				}
+			}
+			
+			return table;
+		}
 	}
 }

@@ -33,9 +33,11 @@ public abstract class ThreeLevelPacketHandler<T extends MMOConnection<T, RP, SP>
 {
 	private final PacketDefinition<T, RP, SP, S>[][][][] _table;
 	
-	protected ThreeLevelPacketHandler(PacketDefinition<T, RP, SP, S>[][][][] table)
+	protected ThreeLevelPacketHandler(PacketHandlerBuilder<T, RP, SP, S> phb)
 	{
-		_table = table;
+		phb.getRootHandler().printStructure(0);
+		
+		_table = phb.getRootHandler().buildThreeLevelTable();
 	}
 	
 	@Override
