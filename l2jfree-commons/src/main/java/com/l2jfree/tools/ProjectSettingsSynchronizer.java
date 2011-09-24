@@ -67,7 +67,7 @@ public final class ProjectSettingsSynchronizer
 			
 			for (File dest : destinations)
 			{
-				if (dest.getName().endsWith("-main"))
+				if (dest.getName().endsWith("-main") || dest.getName().endsWith("-datapack"))
 				{
 					final ArrayList<String> tmp = new ArrayList<String>();
 					
