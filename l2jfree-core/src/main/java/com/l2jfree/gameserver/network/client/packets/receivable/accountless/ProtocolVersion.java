@@ -35,6 +35,7 @@ public class ProtocolVersion extends L2ClientPacket
 {
 	/** Packet's identifier */
 	public static final int OPCODE = 0x0e;
+	public static final L2ClientState[] STATES = new L2ClientState[] { L2ClientState.CONNECTED };
 	
 	@Override
 	protected int getMinimumLength()

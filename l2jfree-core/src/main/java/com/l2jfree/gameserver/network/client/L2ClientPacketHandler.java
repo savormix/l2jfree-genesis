@@ -14,11 +14,7 @@
  */
 package com.l2jfree.gameserver.network.client;
 
-import static com.l2jfree.gameserver.network.client.L2ClientState.CHARACTER_MANAGEMENT;
-import static com.l2jfree.gameserver.network.client.L2ClientState.CHARACTER_SELECTED;
-import static com.l2jfree.gameserver.network.client.L2ClientState.CONNECTED;
 import static com.l2jfree.gameserver.network.client.L2ClientState.LOGGED_IN;
-import static com.l2jfree.gameserver.network.client.L2ClientState.PROTOCOL_OK;
 
 import java.nio.ByteBuffer;
 
@@ -78,52 +74,52 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 		switch (opcode)
 		{
 			case ProtocolVersion.OPCODE: // 0x0e
-				if (client.stateEquals(CONNECTED))
+				if (client.stateEquals(ProtocolVersion.STATES))
 					return new ProtocolVersion();
 				return invalidState(client, ProtocolVersion.class, opcode);
 				
 			case AuthLogin.OPCODE: // 0x2b
-				if (client.stateEquals(PROTOCOL_OK))
+				if (client.stateEquals(AuthLogin.STATES))
 					return new AuthLogin.RequestAuthorization();
 				return invalidState(client, AuthLogin.class, opcode);
 				
 			case Logout.OPCODE: // 0x00
-				if (client.stateEquals(CHARACTER_MANAGEMENT, CHARACTER_SELECTED, LOGGED_IN))
+				if (client.stateEquals(Logout.STATES))
 					return new Logout();
 				return invalidState(client, Logout.class, opcode);
 				
 			case NewCharacter.OPCODE: // 0x0c
-				if (client.stateEquals(CHARACTER_MANAGEMENT))
+				if (client.stateEquals(NewCharacter.STATES))
 					return new NewCharacter.RequestNewCharacter();
 				return invalidState(client, NewCharacter.class, opcode);
 				
 			case CharacterDeletePacket.OPCODE: // 0x0d
-				if (client.stateEquals(CHARACTER_MANAGEMENT))
+				if (client.stateEquals(CharacterDeletePacket.STATES))
 					return new CharacterDeletePacket.RequestDeleteCharacter();
 				return invalidState(client, CharacterDeletePacket.class, opcode);
 				
 			case CharacterSelect.OPCODE: // 0x12
-				if (client.stateEquals(CHARACTER_MANAGEMENT))
+				if (client.stateEquals(CharacterSelect.STATES))
 					return new CharacterSelect.RequestSelectCharacter();
 				return invalidState(client, CharacterSelect.class, opcode);
 				
 			case NewCharacterPacket.OPCODE: // 0x13
-				if (client.stateEquals(CHARACTER_MANAGEMENT))
+				if (client.stateEquals(NewCharacterPacket.STATES))
 					return new NewCharacterPacket.RequestCharacterTemplates();
 				return invalidState(client, NewCharacterPacket.class, opcode);
 				
 			case CharacterRestorePacket.OPCODE: // 0x7b
-				if (client.stateEquals(CHARACTER_MANAGEMENT))
+				if (client.stateEquals(CharacterRestorePacket.STATES))
 					return new CharacterRestorePacket.RequestRestoreCharacter();
 				return invalidState(client, CharacterRestorePacket.class, opcode);
 				
 			case NetPing.OPCODE: // 0xb1
-				if (client.stateEquals(CHARACTER_MANAGEMENT, CHARACTER_SELECTED, LOGGED_IN))
+				if (client.stateEquals(NetPing.STATES))
 					return new NetPing.UptimeResponse();
 				return invalidState(client, NetPing.class, opcode);
 				
 			case EnterWorld.OPCODE: // 0x11
-				if (client.stateEquals(CHARACTER_SELECTED))
+				if (client.stateEquals(EnterWorld.STATES))
 					return new EnterWorld.RequestEnterWorld();
 				return invalidState(client, EnterWorld.class, opcode);
 				
@@ -143,7 +139,7 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 						
 					case 0x36:
 						// RequestAvailableCharacters.OPCODE_2 // 0x36
-						if (client.stateEquals(CHARACTER_MANAGEMENT))
+						if (client.stateEquals(RequestAvailableCharacters.STATES))
 							return new RequestAvailableCharacters();
 						// ExGetOnAirShip.OPCODE_2 // 0x36
 						else if (client.stateEquals(LOGGED_IN))

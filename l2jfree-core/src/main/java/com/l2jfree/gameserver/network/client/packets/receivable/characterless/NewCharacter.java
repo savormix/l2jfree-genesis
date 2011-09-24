@@ -19,6 +19,7 @@ import java.util.regex.Pattern;
 
 import com.l2jfree.gameserver.datatables.PlayerNameTable;
 import com.l2jfree.gameserver.gameobjects.L2Player;
+import com.l2jfree.gameserver.network.client.L2ClientState;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.sendable.characterless.CharCreateFail.CharacterCreateFailure;
 import com.l2jfree.gameserver.network.client.packets.sendable.characterless.CharCreateOk.CharacterCreateSuccess;
@@ -53,6 +54,7 @@ public abstract class NewCharacter extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x0c;
+	public static final L2ClientState[] STATES = new L2ClientState[] { L2ClientState.CHARACTER_MANAGEMENT };
 	
 	@Override
 	protected int getMinimumLength()

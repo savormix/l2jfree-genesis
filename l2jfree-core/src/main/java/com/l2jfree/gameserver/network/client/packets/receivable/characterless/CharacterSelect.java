@@ -47,6 +47,7 @@ public abstract class CharacterSelect extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x12;
+	public static final L2ClientState[] STATES = new L2ClientState[] { L2ClientState.CHARACTER_MANAGEMENT };
 	
 	@Override
 	protected int getMinimumLength()

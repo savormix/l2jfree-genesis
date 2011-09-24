@@ -49,6 +49,7 @@ public abstract class AuthLogin extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x2b;
+	public static final L2ClientState[] STATES = new L2ClientState[] { L2ClientState.PROTOCOL_OK };
 	
 	@Override
 	protected int getMinimumLength()

@@ -58,6 +58,7 @@ public abstract class EnterWorld extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x11;
+	public static final L2ClientState[] STATES = new L2ClientState[] { L2ClientState.CHARACTER_SELECTED };
 	
 	@Override
 	protected int getMinimumLength()

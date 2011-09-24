@@ -16,6 +16,7 @@ package com.l2jfree.gameserver.network.client.packets.receivable.characterless;
 
 import java.nio.BufferUnderflowException;
 
+import com.l2jfree.gameserver.network.client.L2ClientState;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.sendable.characterless.CharacterDeleteFail.CharacterDeleteFailure;
 import com.l2jfree.gameserver.network.client.packets.sendable.characterless.CharacterDeleteSuccess;
@@ -45,6 +46,7 @@ public abstract class CharacterDeletePacket extends L2ClientPacket
 	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x0d;
+	public static final L2ClientState[] STATES = new L2ClientState[] { L2ClientState.CHARACTER_MANAGEMENT };
 	
 	@Override
 	protected int getMinimumLength()
