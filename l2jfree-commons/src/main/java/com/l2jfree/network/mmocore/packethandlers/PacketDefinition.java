@@ -153,12 +153,12 @@ public class PacketDefinition<T extends MMOConnection<T, RP, SP>, RP extends Rec
 		_opcodes = ArrayUtils.toPrimitive(opcodes.toArray(new Integer[opcodes.size()]));
 		_states = states;
 		
-		System.out.println(toString(getOpcodes()) + " " + getConstructorName());
+		System.out.println(toString(getOpcodes()) + " " + getClassName());
 	}
 	
-	public String getConstructorName()
+	public String getClassName()
 	{
-		return _constructor.toString().replace(_clazz.getPackage().getName() + ".", "");
+		return _clazz.getCanonicalName().replace(_clazz.getPackage().getName() + ".", "");
 	}
 	
 	public Constructor<? extends RP> getConstructor()

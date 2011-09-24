@@ -14,9 +14,6 @@
  */
 package com.l2jfree.network.mmocore;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -109,7 +106,7 @@ public final class PacketHandlerBuilder<T extends MMOConnection<T, RP, SP>, RP e
 				{
 					if (!constructorWritten)
 					{
-						System.out.println(" " + entry.getValue().getConstructorName());
+						System.out.println(" " + entry.getValue().getClassName());
 						
 						constructorWritten = true;
 					}
