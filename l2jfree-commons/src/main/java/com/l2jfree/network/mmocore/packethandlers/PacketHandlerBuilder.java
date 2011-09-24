@@ -78,16 +78,16 @@ public final class PacketHandlerBuilder<T extends MMOConnection<T, RP, SP>, RP e
 			_nextOpcodeIndex = nextOpcodeIndex;
 		}
 		
-		private void addPacketDefinition(PacketDefinition<T, RP, SP, S> packetDefinition)
+		private void addPacketDefinition(PacketDefinition<T, RP, SP, S> packetDefinition) throws Exception
 		{
 			if (packetDefinition.getOpcodes().length <= _nextOpcodeIndex)
 			{
 				if (!_handlersByOpcode.isEmpty())
-					throw new Error("Conflicting definitions!");
+					throw new Exception("Conflicting definitions: " + packetDefinition);
 				
 				for (S state : packetDefinition.getStates())
 					if (_definitionsByState.containsKey(state))
-						throw new Error("Conflicting definitions!");
+						throw new Exception("Conflicting definitions: " + packetDefinition);
 				
 				for (S state : packetDefinition.getStates())
 					_definitionsByState.put(state, packetDefinition);
@@ -95,7 +95,7 @@ public final class PacketHandlerBuilder<T extends MMOConnection<T, RP, SP>, RP e
 			else
 			{
 				if (!_definitionsByState.isEmpty())
-					throw new Error("Conflicting definitions!");
+					throw new Exception("Conflicting definitions: " + packetDefinition);
 				
 				final int nextOpcode = packetDefinition.getOpcodes()[_nextOpcodeIndex];
 				
@@ -152,7 +152,7 @@ public final class PacketHandlerBuilder<T extends MMOConnection<T, RP, SP>, RP e
 			}
 		}
 		
-		public PacketDefinition<T, RP, SP, S>[][] buildOneLevelTable()
+		public PacketDefinition<T, RP, SP, S>[][] buildOneLevelTable() throws Exception
 		{
 			final PacketDefinition<T, RP, SP, S>[][] table = new PacketDefinition[256][];
 			
@@ -167,14 +167,14 @@ public final class PacketHandlerBuilder<T extends MMOConnection<T, RP, SP>, RP e
 				}
 				else
 				{
-					throw new Error();
+					throw new Exception();
 				}
 			}
 			
 			return table;
 		}
 		
-		public PacketDefinition<T, RP, SP, S>[][][] buildTwoLevelTable()
+		public PacketDefinition<T, RP, SP, S>[][][] buildTwoLevelTable() throws Exception
 		{
 			final PacketDefinition<T, RP, SP, S>[][][] table = new PacketDefinition[256][][];
 			
@@ -196,7 +196,7 @@ public final class PacketHandlerBuilder<T extends MMOConnection<T, RP, SP>, RP e
 			return table;
 		}
 		
-		public PacketDefinition<T, RP, SP, S>[][][][] buildThreeLevelTable()
+		public PacketDefinition<T, RP, SP, S>[][][][] buildThreeLevelTable() throws Exception
 		{
 			final PacketDefinition<T, RP, SP, S>[][][][] table = new PacketDefinition[256][][][];
 			

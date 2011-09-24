@@ -45,11 +45,6 @@ import com.l2jfree.network.mmocore.packethandlers.ThreeLevelPacketHandler;
 public final class L2ExperimentalPacketHandler extends
 		ThreeLevelPacketHandler<L2Client, L2ClientPacket, L2ServerPacket, L2ClientState>
 {
-	public static void main(String[] args)
-	{
-		getInstance();
-	}
-	
 	private static final class SingletonHolder
 	{
 		static
@@ -118,7 +113,7 @@ public final class L2ExperimentalPacketHandler extends
 		dph.addPacket(Logout.class);
 		dph.addPacket(NetPing.UptimeResponse.class);
 		
-		// dph.addPackets(Action.class.getPackage().getName());
+		//dph.addPackets(Action.class.getPackage().getName());
 		
 		return dph;
 	}

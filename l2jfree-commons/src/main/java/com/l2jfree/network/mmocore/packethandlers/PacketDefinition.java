@@ -170,7 +170,13 @@ public class PacketDefinition<T extends MMOConnection<T, RP, SP>, RP extends Rec
 		_opcodes = ArrayUtils.toPrimitive(opcodes.toArray(new Integer[opcodes.size()]));
 		_states = findStates(clazz, defaultStates);
 		
-		System.out.println(toString(getOpcodes()) + " " + getClassName());
+		System.out.println(toString());
+	}
+	
+	@Override
+	public String toString()
+	{
+		return toString(getOpcodes()) + " " + getClassName();
 	}
 	
 	public String getClassName()
