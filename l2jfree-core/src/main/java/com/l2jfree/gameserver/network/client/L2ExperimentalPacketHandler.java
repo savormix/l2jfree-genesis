@@ -142,48 +142,6 @@ public final class L2ExperimentalPacketHandler extends
 		}
 		*/
 		
-		PacketDefinition<L2Client, L2ClientPacket, L2ServerPacket, L2ClientState>[][][][] table = dph.buildTable();
-		
-		System.out.println("-----");
-		
-		for (int opcode1 = 0; opcode1 < table.length; opcode1++)
-		{
-			final PacketDefinition<L2Client, L2ClientPacket, L2ServerPacket, L2ClientState>[][][] def1 = table[opcode1];
-			
-			if (def1 == null)
-				continue;
-			
-			for (int opcode2 = 0; opcode2 < def1.length; opcode2++)
-			{
-				final PacketDefinition<L2Client, L2ClientPacket, L2ServerPacket, L2ClientState>[][] def2 =
-						def1[opcode2];
-				
-				if (def2 == null)
-					continue;
-				
-				for (int opcode3 = 0; opcode3 < def2.length; opcode3++)
-				{
-					final PacketDefinition<L2Client, L2ClientPacket, L2ServerPacket, L2ClientState>[] def3 =
-							def2[opcode3];
-					
-					if (def3 == null)
-						continue;
-					
-					for (int stateOrdinal = 0; stateOrdinal < def3.length; stateOrdinal++)
-					{
-						final PacketDefinition<L2Client, L2ClientPacket, L2ServerPacket, L2ClientState> defByState =
-								def3[stateOrdinal];
-						
-						if (defByState == null)
-							continue;
-						
-						defByState.print(opcode1, def1.length == 1 ? -1 : opcode2, def2.length == 1 ? -1 : opcode3);
-						System.out.println(" " + L2ClientState.values()[stateOrdinal]);
-					}
-				}
-			}
-		}
-		
-		return table;
+		return dph.buildTable();
 	}
 }

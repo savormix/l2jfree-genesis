@@ -14,12 +14,14 @@
  */
 package com.l2jfree.network.mmocore;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 import com.l2jfree.network.mmocore.packethandlers.PacketDefinition;
+import com.l2jfree.util.HexUtil;
 
 /**
  * @author NB4L1
@@ -33,7 +35,6 @@ public final class PacketHandlerBuilder<T extends MMOConnection<T, RP, SP>, RP e
 {
 	private final int _enumValuesLength;
 	private final Handler _rootHandler = new Handler(0);
-	private final List<PacketDefinition<T, RP, SP, S>> _definitions = new ArrayList<PacketDefinition<T, RP, SP, S>>();
 	
 	public PacketHandlerBuilder(Class<S> enumClazz)
 	{
@@ -44,11 +45,7 @@ public final class PacketHandlerBuilder<T extends MMOConnection<T, RP, SP>, RP e
 	{
 		final PacketDefinition<T, RP, SP, S> packetDefinition = new PacketDefinition<T, RP, SP, S>(clazz, states);
 		
-		packetDefinition.print(packetDefinition.getOpcodes());
-		System.out.println();
-		
 		_rootHandler.addPacketDefinition(packetDefinition);
-		_definitions.add(packetDefinition);
 	}
 	
 	private final class Handler
@@ -101,11 +98,47 @@ public final class PacketHandlerBuilder<T extends MMOConnection<T, RP, SP>, RP e
 			
 			return result;
 		}
+		
+		public void printStructure(int indent)
+		{
+			if (_handlersByOpcode.isEmpty())
+			{
+				boolean constructorWritten = false;
+				
+				for (Map.Entry<S, PacketDefinition<T, RP, SP, S>> entry : _definitionsByState.entrySet())
+				{
+					if (!constructorWritten)
+					{
+						System.out.println(" " + entry.getValue().getConstructorName());
+						
+						constructorWritten = true;
+					}
+					
+					for (int i = 0; i < indent + 1; i++)
+						System.out.print("\t");
+					System.out.println(entry.getKey());
+				}
+			}
+			else
+			{
+				System.out.println();
+				for (Map.Entry<Integer, Handler> entry : _handlersByOpcode.entrySet())
+				{
+					for (int i = 0; i < indent; i++)
+						System.out.print(" |- ");
+					System.out.print("0x" + HexUtil.fillHex(entry.getKey(), 2));
+					
+					entry.getValue().printStructure(indent + 1);
+				}
+			}
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
 	public PacketDefinition<T, RP, SP, S>[][][][] buildTable()
 	{
+		_rootHandler.printStructure(0);
+		
 		final PacketDefinition<T, RP, SP, S>[][][][] table = new PacketDefinition[256][][][];
 		
 		for (Map.Entry<Integer, Handler> entry1 : _rootHandler._handlersByOpcode.entrySet())
