@@ -452,4 +452,15 @@ public abstract class MMOConnection<T extends MMOConnection<T, RP, SP>, RP exten
 		
 		return currentState == expextedState1 || currentState == expextedState2 || currentState == expextedState3;
 	}
+	
+	public final <E extends Enum<E>> boolean stateEquals(E[] expextedStates)
+	{
+		final E currentState = getState();
+		
+		for (E expextedState : expextedStates)
+			if (currentState == expextedState)
+				return true;
+		
+		return false;
+	}
 }

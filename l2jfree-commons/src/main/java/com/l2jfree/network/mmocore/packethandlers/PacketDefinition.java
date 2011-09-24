@@ -111,6 +111,23 @@ public class PacketDefinition<T extends MMOConnection<T, RP, SP>, RP extends Rec
 		return field.getInt(null);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public static <S> S[] findStates(Class<?> clazz, S... defaultStates) throws Exception
+	{
+		// easier than checking all the modifiers, visibility, type, etc :)
+		final Field field;
+		try
+		{
+			field = clazz.getField("STATES");
+		}
+		catch (NoSuchFieldException e)
+		{
+			return defaultStates;
+		}
+		
+		return (S[])field.get(null);
+	}
+	
 	public static String toString(int... opcodes)
 	{
 		final StringBuilder sb = new StringBuilder();
@@ -132,7 +149,7 @@ public class PacketDefinition<T extends MMOConnection<T, RP, SP>, RP extends Rec
 	private final int[] _opcodes;
 	private final S[] _states;
 	
-	public PacketDefinition(Class<? extends RP> clazz, S... states) throws Exception
+	public PacketDefinition(Class<? extends RP> clazz, S... defaultStates) throws Exception
 	{
 		_clazz = clazz;
 		_constructor = findConstructor(clazz);
@@ -151,7 +168,7 @@ public class PacketDefinition<T extends MMOConnection<T, RP, SP>, RP extends Rec
 		}
 		
 		_opcodes = ArrayUtils.toPrimitive(opcodes.toArray(new Integer[opcodes.size()]));
-		_states = states;
+		_states = findStates(clazz, defaultStates);
 		
 		System.out.println(toString(getOpcodes()) + " " + getClassName());
 	}

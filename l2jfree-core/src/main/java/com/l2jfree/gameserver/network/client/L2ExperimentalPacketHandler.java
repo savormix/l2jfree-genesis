@@ -14,12 +14,6 @@
  */
 package com.l2jfree.gameserver.network.client;
 
-import static com.l2jfree.gameserver.network.client.L2ClientState.CHARACTER_MANAGEMENT;
-import static com.l2jfree.gameserver.network.client.L2ClientState.CHARACTER_SELECTED;
-import static com.l2jfree.gameserver.network.client.L2ClientState.CONNECTED;
-import static com.l2jfree.gameserver.network.client.L2ClientState.LOGGED_IN;
-import static com.l2jfree.gameserver.network.client.L2ClientState.PROTOCOL_OK;
-
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.gameserver.network.client.packets.receivable.Action;
@@ -51,6 +45,11 @@ import com.l2jfree.network.mmocore.packethandlers.ThreeLevelPacketHandler;
 public final class L2ExperimentalPacketHandler extends
 		ThreeLevelPacketHandler<L2Client, L2ClientPacket, L2ServerPacket, L2ClientState>
 {
+	public static void main(String[] args)
+	{
+		getInstance();
+	}
+	
 	private static final class SingletonHolder
 	{
 		static
@@ -83,64 +82,43 @@ public final class L2ExperimentalPacketHandler extends
 			throws Exception
 	{
 		final PacketHandlerBuilder<L2Client, L2ClientPacket, L2ServerPacket, L2ClientState> dph =
-				new PacketHandlerBuilder<L2Client, L2ClientPacket, L2ServerPacket, L2ClientState>(L2ClientState.class);
+				new PacketHandlerBuilder<L2Client, L2ClientPacket, L2ServerPacket, L2ClientState>(L2ClientState.class,
+						L2ClientState.LOGGED_IN);
 		
-		dph.addPacket(ProtocolVersion.class, //
-				CONNECTED);
+		// CONNECTED
+		dph.addPacket(ProtocolVersion.class);
 		
-		dph.addPacket(AuthLogin.RequestAuthorization.class, //
-				PROTOCOL_OK);
-		dph.addPacket(Logout.class, //
-				CHARACTER_MANAGEMENT, CHARACTER_SELECTED, LOGGED_IN);
-		dph.addPacket(NewCharacter.RequestNewCharacter.class, //
-				CHARACTER_MANAGEMENT);
-		dph.addPacket(CharacterDeletePacket.RequestDeleteCharacter.class, //
-				CHARACTER_MANAGEMENT);
-		dph.addPacket(CharacterSelect.RequestSelectCharacter.class, //
-				CHARACTER_MANAGEMENT);
-		dph.addPacket(NewCharacterPacket.RequestCharacterTemplates.class, //
-				CHARACTER_MANAGEMENT);
-		dph.addPacket(CharacterRestorePacket.RequestRestoreCharacter.class, //
-				CHARACTER_MANAGEMENT);
-		dph.addPacket(NetPing.UptimeResponse.class, //
-				CHARACTER_MANAGEMENT, CHARACTER_SELECTED, LOGGED_IN);
-		dph.addPacket(EnterWorld.RequestEnterWorld.class, //
-				CHARACTER_SELECTED);
-		dph.addPacket(RequestManorList.class, //
-				LOGGED_IN);
-		dph.addPacket(RequestAvailableCharacters.class, //
-				CHARACTER_MANAGEMENT);
-		dph.addPacket(ExGetOnAirShip.RequestBoardAircraft.class, //
-				LOGGED_IN);
-		dph.addPacket(Attack.RequestAttack.class, //
-				LOGGED_IN);
-		dph.addPacket(MoveBackwardToLocation.RequestMovement.class, //
-				LOGGED_IN);
-		dph.addPacket(Action.RequestInteraction.class, //
-				LOGGED_IN);
-		dph.addPacket(AttackRequest.RequestAttack.class, //
-				LOGGED_IN);
-		dph.addPacket(Say2.RequestSendChatMessage.class, //
-				LOGGED_IN);
-		dph.addPacket(RequestRestart.class, //
-				LOGGED_IN);
-		dph.addPacket(ValidatePosition.ReportLocation.class, //
-				LOGGED_IN);
+		// PROTOCOL_OK
+		dph.addPacket(AuthLogin.RequestAuthorization.class);
 		
-		/*
-		try
-		{
-			for (Class<?> c : ClassFinder.findClasses(Action.class.getPackage().getName()))
-				if (L2ClientPacket.class.isAssignableFrom(c))
-					if (!Modifier.isAbstract(c.getModifiers()))
-						if (Modifier.isPublic(c.getModifiers()))
-							dph.addPacket((Class<? extends L2ClientPacket>)c, LOGGED_IN);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		*/
+		// CHARACTER_MANAGEMENT
+		dph.addPacket(NewCharacter.RequestNewCharacter.class);
+		dph.addPacket(CharacterDeletePacket.RequestDeleteCharacter.class);
+		dph.addPacket(CharacterSelect.RequestSelectCharacter.class);
+		dph.addPacket(NewCharacterPacket.RequestCharacterTemplates.class);
+		dph.addPacket(CharacterRestorePacket.RequestRestoreCharacter.class);
+		dph.addPacket(RequestAvailableCharacters.class);
+		
+		// CHARACTER_SELECTED
+		dph.addPacket(EnterWorld.RequestEnterWorld.class);
+		
+		// LOGGED_IN
+		dph.addPacket(RequestManorList.class);
+		
+		dph.addPacket(ExGetOnAirShip.RequestBoardAircraft.class);
+		dph.addPacket(Attack.RequestAttack.class);
+		dph.addPacket(MoveBackwardToLocation.RequestMovement.class);
+		dph.addPacket(Action.RequestInteraction.class);
+		dph.addPacket(AttackRequest.RequestAttack.class);
+		dph.addPacket(Say2.RequestSendChatMessage.class);
+		dph.addPacket(RequestRestart.class);
+		dph.addPacket(ValidatePosition.ReportLocation.class);
+		
+		// CHARACTER_MANAGEMENT, CHARACTER_SELECTED, LOGGED_IN
+		dph.addPacket(Logout.class);
+		dph.addPacket(NetPing.UptimeResponse.class);
+		
+		// dph.addPackets(Action.class.getPackage().getName());
 		
 		return dph;
 	}

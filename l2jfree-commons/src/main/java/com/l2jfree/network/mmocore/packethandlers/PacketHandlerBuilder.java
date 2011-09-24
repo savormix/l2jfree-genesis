@@ -34,18 +34,30 @@ import com.l2jfree.util.HexUtil;
 public final class PacketHandlerBuilder<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>, S extends Enum<S>>
 {
 	private final int _enumValuesLength;
+	private final S[] _defaultStates;
 	private final Handler _rootHandler = new Handler(0);
 	
-	public PacketHandlerBuilder(Class<S> enumClazz)
+	public PacketHandlerBuilder(Class<S> enumClazz, S... defaultStates) throws Exception
 	{
 		_enumValuesLength = enumClazz.getEnumConstants().length;
+		_defaultStates = defaultStates;
+		
+		if (_enumValuesLength == 0 || _defaultStates.length == 0)
+			throw new Exception();
 	}
 	
-	public void addPacket(Class<? extends RP> clazz, S... states) throws Exception
+	public void addPacket(Class<? extends RP> clazz) throws Exception
 	{
-		final PacketDefinition<T, RP, SP, S> packetDefinition = new PacketDefinition<T, RP, SP, S>(clazz, states);
+		final PacketDefinition<T, RP, SP, S> packetDefinition =
+				new PacketDefinition<T, RP, SP, S>(clazz, _defaultStates);
 		
 		_rootHandler.addPacketDefinition(packetDefinition);
+	}
+	
+	public void addPackets(String packageName) throws Exception
+	{
+		for (Class<?> c : PacketDefinition.findClasses(packageName))
+			addPacket((Class<? extends RP>)c);
 	}
 	
 	public Handler getRootHandler()
