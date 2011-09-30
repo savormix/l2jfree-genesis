@@ -72,5 +72,8 @@ public abstract class AgitDecoInfoPacket extends L2ServerPacket
 		buf.writeC(0); // Item creation level (dupe)
 		buf.writeD(0); // 0
 		buf.writeD(0); // 0
+		buf.writeD(0); // ??? 0
+		buf.writeD(0); // ??? 0
+		buf.writeD(0); // ??? 0
 	}
 }

@@ -60,6 +60,6 @@ public abstract class MagicAndSkillList extends StaticPacket
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
 		buf.writeD(activeChar.getObjectId()); // Character OID
 		buf.writeD(activeChar.getCharacterId()); // Character ID
-		buf.writeD(0); // ??? ID (persistent)
+		buf.writeD(0); // Master account ID?
 	}
 }

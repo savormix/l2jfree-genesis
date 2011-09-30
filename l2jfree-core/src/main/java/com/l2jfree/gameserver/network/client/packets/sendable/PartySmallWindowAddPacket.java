@@ -71,5 +71,7 @@ public abstract class PartySmallWindowAddPacket extends L2ServerPacket
 		buf.writeD(0); // Class
 		buf.writeD(0); // Sex
 		buf.writeD(0); // Race
+		buf.writeD(0); // ??? 0
+		buf.writeD(0); // ??? 0
 	}
 }

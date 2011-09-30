@@ -62,7 +62,7 @@ public abstract class PetStatusUpdatePacket extends L2ServerPacket
 		buf.writeD(0); // Location X
 		buf.writeD(0); // Location Y
 		buf.writeD(0); // Location Z
-		buf.writeD(0); // Heading
+		buf.writeS(""); // Name
 		buf.writeD(0); // Current satiation
 		buf.writeD(0); // Maximum satiation
 		buf.writeD(0); // Current HP

@@ -40,18 +40,16 @@ public abstract class RequestMagicSkillList extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x38;
 	
-	private int _characterId;
-	private int _objectId;
-	
-	//private int _id;
-	
 	@Override
 	protected int getMinimumLength()
 	{
 		return READ_D + READ_D + READ_D;
 	}
 	
-	/* Fields for storing read data */
+	private int _characterId;
+	private int _objectId;
+	
+	//private int _id;
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
@@ -59,7 +57,7 @@ public abstract class RequestMagicSkillList extends L2ClientPacket
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
 		_characterId = buf.readD(); // Character ID
 		_objectId = buf.readD(); // Character OID
-		/* _id = */buf.readD(); // ??? ID (persistent)
+		/* _id = */buf.readD(); // Master account ID?
 	}
 	
 	@Override
