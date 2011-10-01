@@ -14,13 +14,34 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.gameserver.gameobjects.L2Player;
+import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
+import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
  */
-public class ExPVPMatchCCMyRecord extends L2ServerPacket
+public abstract class ExPVPMatchCCMyRecord extends L2ServerPacket
 {
+	/**
+	 * A nicer name for {@link ExPVPMatchCCMyRecord}.
+	 * 
+	 * @author savormix (generated)
+	 * @see ExPVPMatchCCMyRecord
+	 */
+	public static final class MyKrateiCubePoints extends ExPVPMatchCCMyRecord
+	{
+		/**
+		 * Constructs this packet.
+		 * 
+		 * @see ExPVPMatchCCMyRecord#ExPVPMatchCCMyRecord()
+		 */
+		public MyKrateiCubePoints()
+		{
+		}
+	}
+	
 	private static final int[] EXT_OPCODES = { 0x8a, 0x00 };
 	
 	/** Constructs this packet. */
@@ -38,5 +59,12 @@ public class ExPVPMatchCCMyRecord extends L2ServerPacket
 	protected int[] getAdditionalOpcodes()
 	{
 		return EXT_OPCODES;
+	}
+	
+	@Override
+	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
+	{
+		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		buf.writeD(0); // Points
 	}
 }

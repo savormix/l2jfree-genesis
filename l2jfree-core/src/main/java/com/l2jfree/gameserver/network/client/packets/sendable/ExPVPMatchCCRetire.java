@@ -14,13 +14,32 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
-import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
-
 /**
  * @author savormix (generated)
  */
-public class ExPVPMatchCCRetire extends L2ServerPacket
+public abstract class ExPVPMatchCCRetire extends StaticPacket
 {
+	/**
+	 * A nicer name for {@link ExPVPMatchCCRetire}.
+	 * 
+	 * @author savormix (generated)
+	 * @see ExPVPMatchCCRetire
+	 */
+	public static final class LeftKrateiCubeMatch extends ExPVPMatchCCRetire
+	{
+		/** This packet. */
+		public static final LeftKrateiCubeMatch PACKET = new LeftKrateiCubeMatch();
+		
+		/**
+		 * Constructs this packet.
+		 * 
+		 * @see ExPVPMatchCCRetire#ExPVPMatchCCRetire()
+		 */
+		private LeftKrateiCubeMatch()
+		{
+		}
+	}
+	
 	private static final int[] EXT_OPCODES = { 0x8b, 0x00 };
 	
 	/** Constructs this packet. */
