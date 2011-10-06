@@ -118,7 +118,7 @@ public abstract class CharacterSelectionInfo extends L2ServerPacket
 			buf.writeF(30D); // Current MP
 			buf.writeD(0); // SP
 			buf.writeQ(0L); // XP
-			if (client.getVersion().isNewerThan(ClientProtocolVersion.FREYA))
+			if (client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.HIGH_FIVE))
 				buf.writeF(0D); // XP %
 			buf.writeD(1); // Level
 			buf.writeD(0); // Karma
@@ -174,7 +174,7 @@ public abstract class CharacterSelectionInfo extends L2ServerPacket
 			buf.writeD(0); // Total satiation incl inv food?
 			buf.writeF(0D); // Pet current HP
 			buf.writeF(0D); // Pet current MP
-			if (client.getVersion().isNewerThan(ClientProtocolVersion.FREYA))
+			if (client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.HIGH_FIVE))
 				buf.writeD(20000); // Vitality
 		}
 	}

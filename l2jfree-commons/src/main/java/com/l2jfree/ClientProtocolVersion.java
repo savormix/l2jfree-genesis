@@ -50,9 +50,19 @@ public enum ClientProtocolVersion
 		return ordinal() < version.ordinal();
 	}
 	
+	public boolean isOlderThanOrEqualTo(ClientProtocolVersion version)
+	{
+		return ordinal() <= version.ordinal();
+	}
+	
 	public boolean isNewerThan(ClientProtocolVersion version)
 	{
 		return version.ordinal() < ordinal();
+	}
+	
+	public boolean isNewerThanOrEqualTo(ClientProtocolVersion version)
+	{
+		return version.ordinal() <= ordinal();
 	}
 	
 	public static ClientProtocolVersion getByVersion(int version)
