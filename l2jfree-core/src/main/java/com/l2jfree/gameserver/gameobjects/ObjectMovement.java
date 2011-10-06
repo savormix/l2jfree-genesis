@@ -38,26 +38,33 @@ public abstract class ObjectMovement implements IObjectMovement
 	public int getDestinationX()
 	{
 		// TODO
-		return 0;
+		return _destX;
 	}
 	
 	@Override
 	public int getDestinationY()
 	{
 		// TODO
-		return 0;
+		return _destY;
 	}
 	
 	@Override
 	public int getDestinationZ()
 	{
 		// TODO
-		return 0;
+		return _destZ;
 	}
 	
+	protected long _lastMovedTimestamp;
+	
+	protected int _destX;
+	protected int _destY;
+	protected int _destZ;
+	
+	@Override
 	public void startMovement()
 	{
-		// TODO
+		_lastMovedTimestamp = System.currentTimeMillis();
 		
 		MovementController.getInstance().startMovement(_activeChar);
 	}
@@ -72,10 +79,33 @@ public abstract class ObjectMovement implements IObjectMovement
 	@Override
 	public boolean isArrived()
 	{
-		// TODO
-		// check if arrived to the exact required coordinates,
-		// or if in range, if the movement's goal is only to get inside a radius from the target
-		// DO NOT calculate new destination/route/path -> only check if arrived already at the designed designation or not
+		long timeSpent = System.currentTimeMillis() - _lastMovedTimestamp;
+		
+		L2Character cha = (L2Character)getActiveChar();
+		ObjectPosition pos = cha.getPosition();
+		
+		int x = pos.getX();
+		int y = pos.getY();
+		int z = pos.getZ();
+		
+		double distanceMoved = cha.getStat()./*getMoveSpeed()*/getRunSpeed() * timeSpent / 1000.0;
+		double distFraction = distanceMoved / Math.sqrt(_destX * _destX + _destY * _destY + _destZ * _destZ);
+		
+		if (distFraction > 1)
+		{
+			getActiveChar().getPosition().setXYZ(_destX, _destY, _destZ);
+			return true;
+		}
+		else
+		{
+			x *= distFraction;
+			y *= distFraction;
+			z *= distFraction;
+			
+			getActiveChar().getPosition().setXYZ(x, y, z);
+		}
+		
+		_lastMovedTimestamp = System.currentTimeMillis();
 		
 		return false;
 	}
