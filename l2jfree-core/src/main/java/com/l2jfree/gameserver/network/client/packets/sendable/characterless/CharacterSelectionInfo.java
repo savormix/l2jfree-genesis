@@ -170,10 +170,10 @@ public abstract class CharacterSelectionInfo extends L2ServerPacket
 			buf.writeD(0); // Transformation
 			buf.writeD(0); // Pet
 			buf.writeD(0); // Pet level
-			buf.writeD(0); // ???
-			buf.writeD(0); // ??? Pet food
-			buf.writeF(0D); // Pet maximum HP
+			buf.writeD(0); // ??? 0
+			buf.writeD(0); // Total satiation incl inv food?
 			buf.writeF(0D); // Pet current HP
+			buf.writeF(0D); // Pet current MP
 			if (client.getVersion().isNewerThan(ClientProtocolVersion.FREYA))
 				buf.writeD(20000); // Vitality
 		}

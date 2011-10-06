@@ -23,8 +23,19 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 /**
  * @author savormix (generated)
  */
-public class RequestListMpccWaiting extends L2ClientPacket
+public abstract class RequestListMpccWaiting extends L2ClientPacket
 {
+	/**
+	 * A nicer name for {@link RequestListMpccWaiting}.
+	 * 
+	 * @author savormix (generated)
+	 * @see RequestListMpccWaiting
+	 */
+	public static final class RequestCommandChannelRooms extends RequestListMpccWaiting
+	{
+		// only for convenience
+	}
+	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
@@ -33,13 +44,18 @@ public class RequestListMpccWaiting extends L2ClientPacket
 	@Override
 	protected int getMinimumLength()
 	{
-		return 0;
+		return READ_D + READ_D + READ_D;
 	}
+	
+	/* Fields for storing read data */
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		buf.readD(); // Page
+		buf.readD(); // Region
+		buf.readD(); // Level range
 	}
 	
 	@Override

@@ -60,5 +60,6 @@ public abstract class FinishRotating extends L2ServerPacket
 		buf.writeD(0); // Rotator OID
 		buf.writeD(0); // Heading
 		buf.writeD(0); // Speed
+		buf.writeD(-2); // ??? -2
 	}
 }
