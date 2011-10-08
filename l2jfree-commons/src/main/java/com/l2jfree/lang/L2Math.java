@@ -113,12 +113,29 @@ public final class L2Math
 		return Math.max(min, Math.min(value, max));
 	}
 	
+	public interface ILocation2D
+	{
+		public int getX();
+		
+		public int getY();
+	}
+	
+	public interface ILocation3D extends ILocation2D
+	{
+		public int getZ();
+	}
+	
 	public static double calculateDistance(int x1, int y1, int x2, int y2)
 	{
 		final long diffX = x1 - x2;
 		final long diffY = y1 - y2;
 		
 		return Math.sqrt(diffX * diffX + diffY * diffY);
+	}
+	
+	public static double calculateDistance(ILocation2D loc1, ILocation2D loc2)
+	{
+		return calculateDistance(loc1.getX(), loc1.getY(), loc2.getX(), loc2.getY());
 	}
 	
 	public static double calculateDistance(int x1, int y1, int z1, int x2, int y2, int z2)
@@ -130,6 +147,11 @@ public final class L2Math
 		return Math.sqrt(diffX * diffX + diffY * diffY + diffZ * diffZ);
 	}
 	
+	public static double calculateDistance(ILocation3D loc1, ILocation3D loc2)
+	{
+		return calculateDistance(loc1.getX(), loc1.getY(), loc1.getZ(), loc2.getX(), loc2.getY(), loc2.getZ());
+	}
+	
 	public static boolean isDistanceLessThan(int x1, int y1, int x2, int y2, int limit)
 	{
 		final long diffX = x1 - x2;
@@ -137,6 +159,11 @@ public final class L2Math
 		final long limit2 = limit;
 		
 		return diffX * diffX + diffY * diffY <= limit2 * limit2;
+	}
+	
+	public static boolean isDistanceLessThan(ILocation2D loc1, ILocation2D loc2, int limit)
+	{
+		return isDistanceLessThan(loc1.getX(), loc1.getY(), loc2.getX(), loc2.getY(), limit);
 	}
 	
 	public static boolean isDistanceLessThan(int x1, int y1, int z1, int x2, int y2, int z2, int limit)
@@ -147,6 +174,11 @@ public final class L2Math
 		final long limit2 = limit;
 		
 		return diffX * diffX + diffY * diffY + diffZ * diffZ <= limit2 * limit2;
+	}
+	
+	public static boolean isDistanceLessThan(ILocation3D loc1, ILocation3D loc2, int limit)
+	{
+		return isDistanceLessThan(loc1.getX(), loc1.getY(), loc1.getZ(), loc2.getX(), loc2.getY(), loc2.getZ(), limit);
 	}
 	
 	/**
