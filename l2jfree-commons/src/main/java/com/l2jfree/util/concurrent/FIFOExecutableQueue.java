@@ -14,6 +14,7 @@
  */
 package com.l2jfree.util.concurrent;
 
+import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 import com.l2jfree.util.logging.L2Logger;
@@ -30,6 +31,7 @@ public abstract class FIFOExecutableQueue implements Runnable
 	private static final byte RUNNING = 2;
 	
 	private final ReentrantLock _lock = new ReentrantLock();
+	private final Condition _condition = _lock.newCondition();
 	
 	private volatile byte _state = NONE;
 	
@@ -57,7 +59,10 @@ public abstract class FIFOExecutableQueue implements Runnable
 		try
 		{
 			if (_state != NONE)
+			{
+				_condition.awaitUninterruptibly();
 				return;
+			}
 			
 			_state = QUEUED;
 		}
@@ -117,6 +122,9 @@ public abstract class FIFOExecutableQueue implements Runnable
 		lock();
 		try
 		{
+			if (value == NONE)
+				_condition.signalAll();
+			
 			if (_state != expected)
 				throw new IllegalStateException("state: " + _state + ", expected: " + expected);
 		}
