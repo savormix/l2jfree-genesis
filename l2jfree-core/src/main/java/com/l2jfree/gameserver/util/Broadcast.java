@@ -18,6 +18,7 @@ import com.l2jfree.gameserver.gameobjects.L2Character;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.gameserver.world.L2World;
+import com.l2jfree.lang.L2Math;
 
 public final class Broadcast
 {
@@ -43,7 +44,7 @@ public final class Broadcast
 		
 		for (L2Player player : activeChar.getKnownList().getKnowingPlayers())
 			if (player != null)
-				if (true/* FIXME radius check */)
+				if (L2Math.isDistanceLessThan(activeChar.getPosition(), player.getPosition(), radius))
 					player.sendPacket(packet);
 	}
 	
