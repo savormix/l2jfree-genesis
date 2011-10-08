@@ -30,14 +30,14 @@ public abstract class AutoAttackStartPacket extends L2ServerPacket
 	 * @author savormix (generated)
 	 * @see AutoAttackStartPacket
 	 */
-	public static final class AutoAttackStart extends AutoAttackStartPacket
+	public static final class EnterCombatMode extends AutoAttackStartPacket
 	{
 		/**
 		 * Constructs this packet.
 		 * 
 		 * @see AutoAttackStartPacket#AutoAttackStartPacket()
 		 */
-		public AutoAttackStart()
+		public EnterCombatMode()
 		{
 		}
 	}
@@ -57,6 +57,6 @@ public abstract class AutoAttackStartPacket extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.writeD(0); // Attacker OID
+		buf.writeD(0); // Object ID
 	}
 }

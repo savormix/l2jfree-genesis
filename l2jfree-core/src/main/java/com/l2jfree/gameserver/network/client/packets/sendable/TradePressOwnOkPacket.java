@@ -14,13 +14,32 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
-import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
-
 /**
  * @author savormix (generated)
  */
-public class TradePressOwnOkPacket extends L2ServerPacket
+public abstract class TradePressOwnOkPacket extends StaticPacket
 {
+	/**
+	 * A nicer name for {@link TradePressOwnOkPacket}.
+	 * 
+	 * @author savormix (generated)
+	 * @see TradePressOwnOkPacket
+	 */
+	public static final class MyTradeOfferSubmitted extends TradePressOwnOkPacket
+	{
+		/** This packet. */
+		public static final MyTradeOfferSubmitted PACKET = new MyTradeOfferSubmitted();
+		
+		/**
+		 * Constructs this packet.
+		 * 
+		 * @see TradePressOwnOkPacket#TradePressOwnOkPacket()
+		 */
+		private MyTradeOfferSubmitted()
+		{
+		}
+	}
+	
 	/** Constructs this packet. */
 	public TradePressOwnOkPacket()
 	{

@@ -31,13 +31,16 @@ public class RequestStartPledgeWar extends L2ClientPacket
 	@Override
 	protected int getMinimumLength()
 	{
-		return 0;
+		return READ_S;
 	}
+	
+	/* Fields for storing read data */
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		buf.readS(); // Attacked pledge
 	}
 	
 	@Override

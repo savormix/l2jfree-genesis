@@ -23,21 +23,35 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 /**
  * @author savormix (generated)
  */
-public class RequestStopPledgeWar extends L2ClientPacket
+public abstract class RequestStopPledgeWar extends L2ClientPacket
 {
+	/**
+	 * A nicer name for {@link RequestStopPledgeWar}.
+	 * 
+	 * @author savormix (generated)
+	 * @see RequestStopPledgeWar
+	 */
+	public static final class RequestEndPledgeWar extends RequestStopPledgeWar
+	{
+		// only for convenience
+	}
+	
 	/** Packet's identifier */
 	public static final int OPCODE = 0x05;
 	
 	@Override
 	protected int getMinimumLength()
 	{
-		return 0;
+		return READ_S;
 	}
+	
+	/* Fields for storing read data */
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		buf.readS(); // Pledge
 	}
 	
 	@Override
