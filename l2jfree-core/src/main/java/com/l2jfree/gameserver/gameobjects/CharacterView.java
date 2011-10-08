@@ -16,77 +16,22 @@ package com.l2jfree.gameserver.gameobjects;
 
 import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterView;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IObjectMovement;
-import com.l2jfree.gameserver.util.ObjectId;
 
 /**
  * @author hex1r0
  * @author NB4L1
  */
-public abstract class CharacterView implements ICharacterView
+public abstract class CharacterView extends ObjectView implements ICharacterView
 {
-	private final L2Character _activeChar;
-	
 	protected CharacterView(L2Character activeChar)
 	{
-		_activeChar = activeChar;
+		super(activeChar);
 	}
 	
+	@Override
 	public L2Character getActiveChar()
 	{
-		return _activeChar;
-	}
-	
-	@Override
-	public final ObjectId getObjectId()
-	{
-		return getActiveChar().getObjectId();
-	}
-	
-	@Override
-	public void refresh()
-	{
-		refreshPosition();
-	}
-	
-	// ============================================================
-	private int _x;
-	private int _y;
-	private int _z;
-	private int _heading;
-	
-	@Override
-	public final void refreshPosition()
-	{
-		final ObjectPosition position = getActiveChar().getPosition();
-		
-		_x = position.getX();
-		_y = position.getY();
-		_z = position.getZ();
-		_heading = position.getHeading();
-	}
-	
-	@Override
-	public final int getX()
-	{
-		return _x;
-	}
-	
-	@Override
-	public final int getY()
-	{
-		return _y;
-	}
-	
-	@Override
-	public final int getZ()
-	{
-		return _z;
-	}
-	
-	@Override
-	public final int getHeading()
-	{
-		return _heading;
+		return (L2Character)super.getActiveChar();
 	}
 	
 	// ============================================================

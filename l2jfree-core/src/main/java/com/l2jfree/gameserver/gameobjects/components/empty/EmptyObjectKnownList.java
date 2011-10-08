@@ -38,13 +38,19 @@ public class EmptyObjectKnownList implements IObjectKnownList
 	}
 	
 	@Override
-	public Collection<L2Player> getKnownPlayers()
+	public Iterable<L2Player> getKnownPlayers()
 	{
 		return L2Collections.emptyCollection();
 	}
 	
 	@Override
 	public Collection<L2Object> getKnowingObjects()
+	{
+		return L2Collections.emptyCollection();
+	}
+	
+	@Override
+	public Iterable<L2Player> getKnowingPlayers()
 	{
 		return L2Collections.emptyCollection();
 	}

@@ -18,11 +18,12 @@ import com.l2jfree.gameserver.gameobjects.components.IComponent;
 import com.l2jfree.gameserver.world.L2World;
 import com.l2jfree.gameserver.world.L2WorldRegion;
 import com.l2jfree.lang.L2Math;
+import com.l2jfree.lang.L2Math.ILocation3D;
 
 /**
  * @author NB4L1
  */
-public class ObjectPosition implements IComponent
+public class ObjectPosition implements IComponent, ILocation3D
 {
 	private final L2Object _activeChar;
 	
@@ -44,16 +45,19 @@ public class ObjectPosition implements IComponent
 		return _activeChar;
 	}
 	
+	@Override
 	public final int getX()
 	{
 		return _x;
 	}
 	
+	@Override
 	public final int getY()
 	{
 		return _y;
 	}
 	
+	@Override
 	public final int getZ()
 	{
 		return _z;

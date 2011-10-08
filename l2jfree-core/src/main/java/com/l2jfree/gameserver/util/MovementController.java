@@ -69,6 +69,9 @@ public final class MovementController extends AbstractPeriodicTaskManager
 		final ArrayList<L2Object> arrivedObjects = L2Collections.newArrayList();
 		
 		for (L2Object obj : _movingObjects)
+			obj.getMovement().updatePosition();
+		
+		for (L2Object obj : _movingObjects)
 			if (obj.getMovement().isArrived())
 				arrivedObjects.add(obj);
 		

@@ -19,6 +19,7 @@ import java.util.Map;
 
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IObjectKnownList;
 import com.l2jfree.gameserver.util.ObjectId;
+import com.l2jfree.util.L2Collections;
 import com.l2jfree.util.LazyMap;
 
 /**
@@ -29,8 +30,6 @@ public class ObjectKnownList implements IObjectKnownList
 	private final L2Object _activeChar;
 	
 	private final Map<ObjectId, L2Object> _knownObjects = new LazyMap<ObjectId, L2Object>().setShared();
-	private final Map<ObjectId, L2Player> _knownPlayers = new LazyMap<ObjectId, L2Player>().setShared();
-	
 	private final Map<ObjectId, L2Object> _knowingObjects = new LazyMap<ObjectId, L2Object>().setShared();
 	
 	public ObjectKnownList(L2Object activeChar)
@@ -50,15 +49,21 @@ public class ObjectKnownList implements IObjectKnownList
 	}
 	
 	@Override
-	public final Collection<L2Player> getKnownPlayers()
+	public final Iterable<L2Player> getKnownPlayers()
 	{
-		return _knownPlayers.values();
+		return L2Collections.filteredIterable(L2Player.class, _knownObjects.values());
 	}
 	
 	@Override
 	public final Collection<L2Object> getKnowingObjects()
 	{
 		return _knowingObjects.values();
+	}
+	
+	@Override
+	public final Iterable<L2Player> getKnowingPlayers()
+	{
+		return L2Collections.filteredIterable(L2Player.class, _knowingObjects.values());
 	}
 	
 	public final boolean knowsObject(L2Object object)
@@ -76,9 +81,6 @@ public class ObjectKnownList implements IObjectKnownList
 		
 		obj.getKnownList().addKnowingObject(_activeChar);
 		
-		if (obj instanceof L2Player)
-			_knownPlayers.put(obj.getObjectId(), (L2Player)obj);
-		
 		return true;
 	}
 	
@@ -92,9 +94,6 @@ public class ObjectKnownList implements IObjectKnownList
 			return false;
 		
 		obj.getKnownList().removeKnowingObject(_activeChar);
-		
-		if (obj instanceof L2Player)
-			_knownPlayers.remove(obj.getObjectId());
 		
 		return true;
 	}
@@ -175,7 +174,6 @@ public class ObjectKnownList implements IObjectKnownList
 			obj.getKnownList().removeKnownObject(_activeChar);
 		
 		_knownObjects.clear();
-		_knownPlayers.clear();
 		_knowingObjects.clear();
 	}
 	

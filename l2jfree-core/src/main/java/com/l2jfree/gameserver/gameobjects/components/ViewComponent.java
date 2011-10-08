@@ -21,8 +21,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.l2jfree.gameserver.gameobjects.L2Character;
-import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterView;
+import com.l2jfree.gameserver.gameobjects.L2Object;
+import com.l2jfree.gameserver.gameobjects.components.interfaces.IObjectView;
 
 /**
  * @author NB4L1
@@ -33,11 +33,11 @@ import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterView;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ViewComponent
 {
-	public Class<? extends ICharacterView> value();
+	public Class<? extends IObjectView> value();
 	
 	public static final class Factory
 	{
-		public static final ComponentFactory<L2Character, ICharacterView> INSTANCE =
-				new ComponentFactory<L2Character, ICharacterView>(L2Character.class, ViewComponent.class);
+		public static final ComponentFactory<L2Object, IObjectView> INSTANCE =
+				new ComponentFactory<L2Object, IObjectView>(L2Object.class, ViewComponent.class);
 	}
 }

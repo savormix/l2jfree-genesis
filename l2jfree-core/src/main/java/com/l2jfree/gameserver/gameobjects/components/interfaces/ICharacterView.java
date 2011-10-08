@@ -14,29 +14,11 @@
  */
 package com.l2jfree.gameserver.gameobjects.components.interfaces;
 
-import com.l2jfree.gameserver.gameobjects.components.IComponent;
-import com.l2jfree.gameserver.util.ObjectId;
-
 /**
  * @author NB4L1
  */
-public interface ICharacterView extends IComponent
+public interface ICharacterView extends IObjectView
 {
-	public ObjectId getObjectId();
-	
-	public void refresh();
-	
-	// ============================================================
-	public void refreshPosition();
-	
-	public int getX();
-	
-	public int getY();
-	
-	public int getZ();
-	
-	public int getHeading();
-	
 	// ============================================================
 	public void refreshDestination();
 	

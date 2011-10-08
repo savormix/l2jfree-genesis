@@ -18,14 +18,15 @@ import com.l2jfree.gameserver.gameobjects.components.AIComponent;
 import com.l2jfree.gameserver.gameobjects.components.InventoryComponent;
 import com.l2jfree.gameserver.gameobjects.components.PositionComponent;
 import com.l2jfree.gameserver.gameobjects.components.StatComponent;
-import com.l2jfree.gameserver.gameobjects.components.ViewComponent;
 import com.l2jfree.gameserver.gameobjects.components.empty.EmptyInventory;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterAI;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterStat;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterView;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IInventory;
 import com.l2jfree.gameserver.gameobjects.interfaces.IL2Character;
+import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.gameserver.templates.L2Template;
+import com.l2jfree.gameserver.util.Broadcast;
 
 /**
  * @author NB4L1
@@ -36,7 +37,6 @@ public abstract class L2Character extends L2Object implements IL2Character
 {
 	private final ICharacterAI _ai;
 	private final ICharacterStat _stat;
-	private final ICharacterView _view;
 	private final IInventory _inventory;
 	
 	private L2Object _target;
@@ -47,7 +47,6 @@ public abstract class L2Character extends L2Object implements IL2Character
 		
 		_ai = AIComponent.Factory.INSTANCE.getComponent(this);
 		_stat = StatComponent.Factory.INSTANCE.getComponent(this);
-		_view = ViewComponent.Factory.INSTANCE.getComponent(this);
 		_inventory = InventoryComponent.Factory.INSTANCE.getComponent(this);
 	}
 	
@@ -66,7 +65,7 @@ public abstract class L2Character extends L2Object implements IL2Character
 	@Override
 	public ICharacterView getView()
 	{
-		return _view;
+		return (ICharacterView)super.getView();
 	}
 	
 	@Override
@@ -92,5 +91,15 @@ public abstract class L2Character extends L2Object implements IL2Character
 	{
 		// TODO
 		_target = target;
+	}
+	
+	public final void broadcastPacket(L2ServerPacket packet)
+	{
+		Broadcast.toSelfAndKnowingPlayers(this, packet);
+	}
+	
+	public final void broadcastPacket(L2ServerPacket packet, int radius)
+	{
+		Broadcast.toSelfAndKnowingPlayersInRadius(this, packet, radius);
 	}
 }

@@ -15,23 +15,25 @@
 package com.l2jfree.gameserver.gameobjects.components.interfaces;
 
 import com.l2jfree.gameserver.gameobjects.components.IComponent;
+import com.l2jfree.gameserver.util.ObjectId;
 
 /**
  * @author NB4L1
  */
-public interface IObjectMovement extends IComponent
+public interface IObjectView extends IComponent
 {
-	public int getDestinationX();
+	public ObjectId getObjectId();
 	
-	public int getDestinationY();
+	public void refresh();
 	
-	public int getDestinationZ();
+	// ============================================================
+	public void refreshPosition();
 	
-	public void updatePosition();
+	public int getX();
 	
-	public boolean isArrived();
+	public int getY();
 	
-	public void revalidateMovement();
+	public int getZ();
 	
-	public void movementFinished();
+	public int getHeading();
 }

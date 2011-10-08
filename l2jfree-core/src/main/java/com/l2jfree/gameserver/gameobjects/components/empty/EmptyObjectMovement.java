@@ -46,6 +46,12 @@ public class EmptyObjectMovement implements IObjectMovement
 	}
 	
 	@Override
+	public void updatePosition()
+	{
+		// do nothing
+	}
+	
+	@Override
 	public boolean isArrived()
 	{
 		return false;

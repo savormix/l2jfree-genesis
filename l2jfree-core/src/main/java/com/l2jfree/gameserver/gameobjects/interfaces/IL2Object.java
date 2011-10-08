@@ -17,6 +17,7 @@ package com.l2jfree.gameserver.gameobjects.interfaces;
 import com.l2jfree.gameserver.gameobjects.ObjectPosition;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IObjectKnownList;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IObjectMovement;
+import com.l2jfree.gameserver.gameobjects.components.interfaces.IObjectView;
 import com.l2jfree.gameserver.templates.L2Template;
 import com.l2jfree.gameserver.util.ObjectId;
 import com.l2jfree.lang.L2Entity;
@@ -35,6 +36,8 @@ public interface IL2Object extends L2Entity<ObjectId>
 	public IObjectKnownList getKnownList();
 	
 	public IObjectMovement getMovement();
+	
+	public IObjectView getView();
 	
 	@Override
 	public ObjectId getPrimaryKey();

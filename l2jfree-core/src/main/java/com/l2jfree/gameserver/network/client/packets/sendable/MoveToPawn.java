@@ -14,7 +14,11 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.gameserver.gameobjects.L2Character;
+import com.l2jfree.gameserver.gameobjects.L2Object;
 import com.l2jfree.gameserver.gameobjects.L2Player;
+import com.l2jfree.gameserver.gameobjects.components.interfaces.ICharacterView;
+import com.l2jfree.gameserver.gameobjects.components.interfaces.IObjectView;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
@@ -35,16 +39,32 @@ public abstract class MoveToPawn extends L2ServerPacket
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @see MoveToPawn#MoveToPawn()
+		 * @see MoveToPawn#MoveToPawn(L2Character, L2Object, int)
 		 */
-		public Follow()
+		public Follow(L2Character activeChar, L2Object target, int distance)
 		{
+			super(activeChar, target, distance);
 		}
 	}
 	
-	/** Constructs this packet. */
-	public MoveToPawn()
+	private final L2Character _activeChar;
+	private final L2Object _target;
+	private final int _distance;
+	
+	/**
+	 * Constructs this packet.
+	 * 
+	 * @param activeChar
+	 * @param target
+	 * @param distance
+	 */
+	public MoveToPawn(L2Character activeChar, L2Object target, int distance)
 	{
+		_activeChar = activeChar;
+		_activeChar.getView().refreshPosition();
+		_target = target;
+		_target.getView().refreshPosition();
+		_distance = distance;
 	}
 	
 	@Override
@@ -56,15 +76,17 @@ public abstract class MoveToPawn extends L2ServerPacket
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
-		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.writeD(0); // Follower OID
-		buf.writeD(0); // Target OID
-		buf.writeD(0); // Follow distance
-		buf.writeD(0); // Current follower X
-		buf.writeD(0); // Current follower Y
-		buf.writeD(0); // Current follower Z
-		buf.writeD(0); // Current target X
-		buf.writeD(0); // Current target Y
-		buf.writeD(0); // Current target Z
+		final ICharacterView view = _activeChar.getView();
+		final IObjectView targetView = _target.getView();
+		
+		buf.writeD(view.getObjectId()); // Follower OID
+		buf.writeD(targetView.getObjectId()); // Target OID
+		buf.writeD(_distance); // Follow distance
+		buf.writeD(view.getX()); // Current follower X
+		buf.writeD(view.getY()); // Current follower Y
+		buf.writeD(view.getZ()); // Current follower Z
+		buf.writeD(targetView.getX()); // Current target X
+		buf.writeD(targetView.getY()); // Current target Y
+		buf.writeD(targetView.getZ()); // Current target Z
 	}
 }

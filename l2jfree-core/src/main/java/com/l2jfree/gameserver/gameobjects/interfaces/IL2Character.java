@@ -29,6 +29,7 @@ public interface IL2Character extends IL2Object
 	
 	public ICharacterStat getStat();
 	
+	@Override
 	public ICharacterView getView();
 	
 	public IInventory getInventory();

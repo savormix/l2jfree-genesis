@@ -27,9 +27,11 @@ public interface IObjectKnownList extends IComponent
 {
 	public Collection<L2Object> getKnownObjects();
 	
-	public Collection<L2Player> getKnownPlayers();
+	public Iterable<L2Player> getKnownPlayers();
 	
 	public Collection<L2Object> getKnowingObjects();
+	
+	public Iterable<L2Player> getKnowingPlayers();
 	
 	public boolean removeKnownObject(L2Object obj);
 	
