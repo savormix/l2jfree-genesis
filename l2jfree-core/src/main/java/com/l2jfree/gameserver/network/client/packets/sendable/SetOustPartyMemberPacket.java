@@ -14,13 +14,34 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
-import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
-
 /**
+ * Sent to the player that is expelled from party.
+ * 
  * @author savormix (generated)
  */
-public class SetOustPartyMemberPacket extends L2ServerPacket
+public abstract class SetOustPartyMemberPacket extends StaticPacket
 {
+	/**
+	 * A nicer name for {@link SetOustPartyMemberPacket}.
+	 * 
+	 * @author savormix (generated)
+	 * @see SetOustPartyMemberPacket
+	 */
+	public static final class ExpelledFromParty extends SetOustPartyMemberPacket
+	{
+		/** This packet. */
+		public static final ExpelledFromParty PACKET = new ExpelledFromParty();
+		
+		/**
+		 * Constructs this packet.
+		 * 
+		 * @see SetOustPartyMemberPacket#SetOustPartyMemberPacket()
+		 */
+		private ExpelledFromParty()
+		{
+		}
+	}
+	
 	/** Constructs this packet. */
 	public SetOustPartyMemberPacket()
 	{

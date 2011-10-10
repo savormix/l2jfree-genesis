@@ -30,14 +30,14 @@ public abstract class SetDismissPartyPacket extends L2ServerPacket
 	 * @author savormix (generated)
 	 * @see SetDismissPartyPacket
 	 */
-	public static final class PartyResult extends SetDismissPartyPacket
+	public static final class DisbandPartyResult extends SetDismissPartyPacket
 	{
 		/**
 		 * Constructs this packet.
 		 * 
 		 * @see SetDismissPartyPacket#SetDismissPartyPacket()
 		 */
-		public PartyResult()
+		public DisbandPartyResult()
 		{
 		}
 	}

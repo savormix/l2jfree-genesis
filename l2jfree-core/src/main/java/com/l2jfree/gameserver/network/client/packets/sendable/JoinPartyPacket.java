@@ -58,5 +58,6 @@ public abstract class JoinPartyPacket extends L2ServerPacket
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
 		buf.writeD(0); // Joined
+		buf.writeD(0); // Item distribution
 	}
 }
