@@ -191,6 +191,14 @@ public final class ObfuscationService
 			tmp = _decodeTable1[0xD0];
 			_decodeTable1[0xD0] = (byte)0xD0;
 			_decodeTable1[cpos] = tmp;
+			
+			// non-obfuscated 2nd opcodes
+			cpos = 0;
+			while (_decodeTable2[cpos] != 0x74)
+				cpos++;
+			tmp = _decodeTable2[0x74];
+			_decodeTable2[0x74] = 0x74;
+			_decodeTable2[cpos] = tmp;
 		}
 		
 		// mirrored obfuscation tables
