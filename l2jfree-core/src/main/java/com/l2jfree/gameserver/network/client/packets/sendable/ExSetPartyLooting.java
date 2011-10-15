@@ -30,14 +30,14 @@ public abstract class ExSetPartyLooting extends L2ServerPacket
 	 * @author savormix (generated)
 	 * @see ExSetPartyLooting
 	 */
-	public static final class ItemDistributionChange extends ExSetPartyLooting
+	public static final class PartyItemDistributionChange extends ExSetPartyLooting
 	{
 		/**
 		 * Constructs this packet.
 		 * 
 		 * @see ExSetPartyLooting#ExSetPartyLooting()
 		 */
-		public ItemDistributionChange()
+		public PartyItemDistributionChange()
 		{
 		}
 	}

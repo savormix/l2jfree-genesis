@@ -20,6 +20,8 @@ import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
+ * Sent to all party members when party disperses.
+ * 
  * @author savormix (generated)
  */
 public abstract class SetDismissPartyPacket extends L2ServerPacket

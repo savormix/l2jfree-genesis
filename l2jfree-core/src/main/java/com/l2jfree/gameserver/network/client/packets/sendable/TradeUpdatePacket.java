@@ -67,9 +67,9 @@ public abstract class TradeUpdatePacket extends L2ServerPacket
 			buf.writeQ(0L); // Quantity
 			buf.writeH(0); // Main item type
 			buf.writeH(0); // Special item type
-			buf.writeH(0); // Equipped
 			buf.writeD(0); // Used paperdoll slot(s)
 			buf.writeH(0); // Enchant level
+			buf.writeH(0); // ??? 0
 			buf.writeH(0); // Name exists
 			buf.writeH(0); // Attack element
 			buf.writeH(0); // Attack element power
