@@ -25,9 +25,9 @@ import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerStat;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerView;
 import com.l2jfree.gameserver.gameobjects.item.L2EquipableItem;
 import com.l2jfree.gameserver.gameobjects.player.PlayerInventory.PaperDollSlot;
+import com.l2jfree.gameserver.templates.L2PlayerTemplate;
+import com.l2jfree.gameserver.templates.L2PlayerTemplate.L2PlayerGenderTemplate;
 import com.l2jfree.gameserver.templates.player.Gender;
-import com.l2jfree.gameserver.templates.player.PlayerBaseGenderTemplate;
-import com.l2jfree.gameserver.templates.player.PlayerBaseTemplate;
 import com.l2jfree.gameserver.templates.player.Race;
 import com.l2jfree.gameserver.util.ObjectId;
 import com.l2jfree.gameserver.util.PersistentId;
@@ -181,8 +181,8 @@ public class PlayerView extends CharacterView implements IPlayerView
 		final L2Player p = getActiveChar();
 		final PlayerAppearance appearance = p.getAppearance();
 		final IPlayerStat stat = p.getStat();
-		final PlayerBaseTemplate baseTemplate = p.getTemplate().getBaseTemplate();
-		final PlayerBaseGenderTemplate genderTemplate = baseTemplate.getGenderTemplate(appearance.getGender());
+		final L2PlayerTemplate template = p.getTemplate();
+		final L2PlayerGenderTemplate genderTemplate = template.getGenderTemplate(appearance.getGender());
 		//final IPlayerInventory inv = p.getInventory();
 		//final L2Transformation transformation = p.getTransformation();
 		
@@ -193,7 +193,7 @@ public class PlayerView extends CharacterView implements IPlayerView
 		_name = p.getName();
 		_title = p.getTitle();
 		
-		_race = baseTemplate.getRace();
+		_race = template.getClassId().getRace();
 		_gender = appearance.getGender();
 		_mainClassId = p.getMainClassId().ordinal();
 		_activeClassId = p.getActiveClassId().ordinal();
@@ -287,7 +287,7 @@ public class PlayerView extends CharacterView implements IPlayerView
 		_specialEffect = 0;//getSpecialEffect(); // Special effect
 		_cubics = new int[0]; //getCubicData()
 		
-		_race = baseTemplate.getRace();
+		_race = template.getClassId().getRace();
 		_gender = appearance.getGender();
 		
 		_gm = p.isGM();

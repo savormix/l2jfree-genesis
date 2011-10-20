@@ -260,10 +260,5 @@ public enum ClassId
 		return PlayerTemplateTable.getInstance().getTemplate(this);
 	}
 	
-	public PlayerBaseTemplate getBaseTemplate()
-	{
-		return PlayerTemplateTable.getInstance().getBaseTemplate(this);
-	}
-	
 	public static final EnumValues<ClassId> VALUES = new EnumValues<ClassId>(ClassId.class);
 }

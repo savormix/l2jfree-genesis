@@ -16,8 +16,8 @@ package com.l2jfree.gameserver.network.client.packets.sendable.characterless;
 
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
+import com.l2jfree.gameserver.templates.L2PlayerTemplate;
 import com.l2jfree.gameserver.templates.player.ClassId;
-import com.l2jfree.gameserver.templates.player.PlayerBaseTemplate;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
@@ -51,17 +51,13 @@ public abstract class NewCharacterSuccess extends L2ServerPacket
 	private static final int DELIMITER_START = 70;
 	private static final int DELIMITER_END = 10;
 	
-	private static final ClassId[] _classes = new ClassId[] { ClassId.HumanFighter, ClassId.HumanMystic,
+	private static final ClassId[] CLASSES = new ClassId[] { ClassId.HumanFighter, ClassId.HumanMystic,
 			ClassId.ElvenFighter, ClassId.ElvenMystic, ClassId.DarkFighter, ClassId.DarkMystic, ClassId.OrcFighter,
 			ClassId.OrcMystic, ClassId.DwarvenFighter, ClassId.MaleSoldier, ClassId.FemaleSoldier };
-	
-	private static final PlayerBaseTemplate[] _baseTemplates = new PlayerBaseTemplate[_classes.length];
 	
 	/** Constructs this packet. */
 	private NewCharacterSuccess()
 	{
-		for (int i = 0; i < _baseTemplates.length; i++)
-			_baseTemplates[i] = _classes[i].getBaseTemplate();
 	}
 	
 	@Override
@@ -73,28 +69,30 @@ public abstract class NewCharacterSuccess extends L2ServerPacket
 	@Override
 	protected void writeImpl(L2Client client, MMOBuffer buf) throws RuntimeException
 	{
-		buf.writeD(_baseTemplates.length); // Template count
-		for (int i = 0; i < _baseTemplates.length; i++)
+		buf.writeD(CLASSES.length); // Template count
+		for (ClassId classId : CLASSES)
 		{
-			buf.writeD(_baseTemplates[i].getRace()); // Race
-			buf.writeD(_classes[i]); // Class
+			final L2PlayerTemplate template = classId.getTemplate();
+			
+			buf.writeD(classId.getRace()); // Race
+			buf.writeD(classId.getId()); // Class
 			buf.writeD(DELIMITER_START); // Stat delimiter: start
-			buf.writeD(_baseTemplates[i].getSTR()); // STR
+			buf.writeD(template.getSTR()); // STR
 			buf.writeD(DELIMITER_END); // Stat delimiter: end
 			buf.writeD(DELIMITER_START); // Stat delimiter: start
-			buf.writeD(_baseTemplates[i].getDEX()); // DEX
+			buf.writeD(template.getDEX()); // DEX
 			buf.writeD(DELIMITER_END); // Stat delimiter: end
 			buf.writeD(DELIMITER_START); // Stat delimiter: start
-			buf.writeD(_baseTemplates[i].getCON()); // CON
+			buf.writeD(template.getCON()); // CON
 			buf.writeD(DELIMITER_END); // Stat delimiter: end
 			buf.writeD(DELIMITER_START); // Stat delimiter: start
-			buf.writeD(_baseTemplates[i].getINT()); // INT
+			buf.writeD(template.getINT()); // INT
 			buf.writeD(DELIMITER_END); // Stat delimiter: end
 			buf.writeD(DELIMITER_START); // Stat delimiter: start
-			buf.writeD(_baseTemplates[i].getWIT()); // WIT
+			buf.writeD(template.getWIT()); // WIT
 			buf.writeD(DELIMITER_END); // Stat delimiter: end
 			buf.writeD(DELIMITER_START); // Stat delimiter: start
-			buf.writeD(_baseTemplates[i].getMEN()); // MEN
+			buf.writeD(template.getMEN()); // MEN
 			buf.writeD(DELIMITER_END); // Stat delimiter: end
 		}
 	}

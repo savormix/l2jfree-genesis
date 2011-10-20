@@ -1,153 +1,903 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <list>
-	<baseTemplates>
-		<baseTemplate.defaults>
-			<set runSpeedInWater="50" runSpeedInAir="0" runSpeedNoble="0" />
-			<set walkSpeedInWater="50" walkSpeedInAir="0" walkSpeedNoble="0" />
-			<set attackRange="20" />
-			<baseTemplate.defaults.type type="Fighter">
-				<set physicalAttack="4" />
-			</baseTemplate.defaults.type>
-			<baseTemplate.defaults.type type="Mystic">
-				<set physicalAttack="3" />
-			</baseTemplate.defaults.type>
-		</baseTemplate.defaults>
+	<playerTemplate.defaults>
+		<set runSpeedInWater="50" runSpeedInAir="0" runSpeedNoble="0" />
+		<set walkSpeedInWater="50" walkSpeedInAir="0" walkSpeedNoble="0" />
+		<set attackRange="20" />
+		<set hpRegen="
+				   2	2.05	 2.1	2.15	 2.2	2.25	 2.3	2.35	 2.4	2.45
+				 2.5	 2.6	 2.7	 2.8	 2.9	   3	 3.1	 3.2	 3.3	 3.4
+				 3.5	 3.6	 3.7	 3.8	 3.9	   4	 4.1	 4.2	 4.3	 4.4
+				 4.5	 4.6	 4.7	 4.8	 4.9	   5	 5.1	 5.2	 5.3	 5.4
+				 5.5	 5.6	 5.7	 5.8	 5.9	   6	 6.1	 6.2	 6.3	 6.4
+				 6.5	 6.6	 6.7	 6.8	 6.9	   7	 7.1	 7.2	 7.3	 7.4
+				 7.5	 7.6	 7.7	 7.8	 7.9	   8	 8.1	 8.2	 8.3	 8.4
+				 8.5	 8.6	 8.7	 8.8	 8.9	   9	 9.1	 9.2	 9.3	 9.4
+				 9.5	 9.6	 9.7	 9.8	 9.9	  10	10.1	10.2	10.3	10.4
+				10.5	10.6	10.7	10.8	10.9	  11	11.1	11.2	11.3" />
+		<set mpRegen="
+				0.9		0.9		0.9		0.9		0.9		0.9		0.9		0.9		0.9		0.9	
+				1.2		1.2		1.2		1.2		1.2		1.2		1.2		1.2		1.2		1.2	
+				1.5		1.5		1.5		1.5		1.5		1.5		1.5		1.5		1.5		1.5	
+				1.8		1.8		1.8		1.8		1.8		1.8		1.8		1.8		1.8		1.8	
+				2.1		2.1		2.1		2.1		2.1		2.1		2.1		2.1		2.1		2.1	
+				2.4		2.4		2.4		2.4		2.4		2.4		2.4		2.4		2.4		2.4	
+				2.7		2.7		2.7		2.7		2.7		2.7		2.7		2.7		2.7		2.7	
+				  3		  3		  3		  3		  3		  3		  3		  3		  3		  3	
+				  3		  3		  3		  3		  3		  3		  3		  3		  3		  3	
+				  3		  3		  3		  3		  3		  3		  3		  3		  3	" />
+		<set cpRegen="
+				  2		  2		  2		  2		  2		  2		  2		  2		  2		  2	
+				2.5		2.5		2.5		2.5		2.5		2.5		2.5		2.5		2.5		2.5	
+				3.5		3.5		3.5		3.5		3.5		3.5		3.5		3.5		3.5		3.5	
+				4.5		4.5		4.5		4.5		4.5		4.5		4.5		4.5		4.5		4.5	
+				5.5		5.5		5.5		5.5		5.5		5.5		5.5		5.5		5.5		5.5	
+				6.5		6.5		6.5		6.5		6.5		6.5		6.5		6.5		6.5		6.5	
+				7.5		7.5		7.5		7.5		7.5		7.5		7.5		7.5		7.5		7.5	
+				8.5		8.5		8.5		8.5		8.5		8.5		8.5		8.5		8.5		8.5	
+				8.5		8.5		8.5		8.5		8.5		8.5		8.5		8.5		8.5		8.5	
+				8.5		8.5		8.5		8.5		8.5		8.5		8.5		8.5		8.5	" />
 		
-		<baseTemplate race="Human" type="Fighter">
-			<genderTemplate gender="Male">
+		<playerTemplate.defaults.type type="Fighter">
+			<set physicalAttack="4" />
+		</playerTemplate.defaults.type>
+		<playerTemplate.defaults.type type="Mystic">
+			<set physicalAttack="3" />
+		</playerTemplate.defaults.type>
+		
+		<playerTemplate.defaults.race.type race="Human" type="Fighter">
+			<playerTemplate.defaults.race.type.gender gender="Male">
 				<set collisionRadius="9.0" collisionHeight="23.0" />
 				<set safeFallHeight="250" />
-			</genderTemplate>
-			<genderTemplate gender="Female">
+			</playerTemplate.defaults.race.type.gender>
+			<playerTemplate.defaults.race.type.gender gender="Female">
 				<set collisionRadius="8.0" collisionHeight="23.5" />
 				<set safeFallHeight="270" />
-			</genderTemplate>
+			</playerTemplate.defaults.race.type.gender>
 			<set runSpeed="115" />
 			<set walkSpeed="80" />
 			<set breath="100" />
-		</baseTemplate>
-		<baseTemplate race="Human" type="Mystic">
-			<genderTemplate gender="Male">
+		</playerTemplate.defaults.race.type>
+		<playerTemplate.defaults.race.type race="Human" type="Mystic">
+			<playerTemplate.defaults.race.type.gender gender="Male">
 				<set collisionRadius="7.5" collisionHeight="22.8" />
 				<set safeFallHeight="200" />
-			</genderTemplate>
-			<genderTemplate gender="Female">
+			</playerTemplate.defaults.race.type.gender>
+			<playerTemplate.defaults.race.type.gender gender="Female">
 				<set collisionRadius="6.5" collisionHeight="22.5" />
 				<set safeFallHeight="220" />
-			</genderTemplate>
+			</playerTemplate.defaults.race.type.gender>
 			<set runSpeed="120" />
 			<set walkSpeed="78" />
 			<set breath="100" />
-		</baseTemplate>
-		<baseTemplate race="Elf" type="Fighter">
-			<genderTemplate gender="Male">
+		</playerTemplate.defaults.race.type>
+		<playerTemplate.defaults.race.type race="Elf" type="Fighter">
+			<playerTemplate.defaults.race.type.gender gender="Male">
 				<set collisionRadius="7.5" collisionHeight="24.0" />
 				<set safeFallHeight="350" />
-			</genderTemplate>
-			<genderTemplate gender="Female">
+			</playerTemplate.defaults.race.type.gender>
+			<playerTemplate.defaults.race.type.gender gender="Female">
 				<set collisionRadius="7.5" collisionHeight="23.0" />
 				<set safeFallHeight="380" />
-			</genderTemplate>
+			</playerTemplate.defaults.race.type.gender>
 			<set runSpeed="125" />
 			<set walkSpeed="90" />
 			<set breath="150" />
-		</baseTemplate>
-		<baseTemplate race="Elf" type="Mystic">
-			<genderTemplate gender="Male">
+		</playerTemplate.defaults.race.type>
+		<playerTemplate.defaults.race.type race="Elf" type="Mystic">
+			<playerTemplate.defaults.race.type.gender gender="Male">
 				<set collisionRadius="7.5" collisionHeight="24.0" />
 				<set safeFallHeight="300" />
-			</genderTemplate>
-			<genderTemplate gender="Female">
+			</playerTemplate.defaults.race.type.gender>
+			<playerTemplate.defaults.race.type.gender gender="Female">
 				<set collisionRadius="7.5" collisionHeight="23.0" />
 				<set safeFallHeight="330" />
-			</genderTemplate>
+			</playerTemplate.defaults.race.type.gender>
 			<set runSpeed="122" />
 			<set walkSpeed="85" />
 			<set breath="150" />
-		</baseTemplate>
-		<baseTemplate race="DarkElf" type="Fighter">
-			<genderTemplate gender="Male">
+		</playerTemplate.defaults.race.type>
+		<playerTemplate.defaults.race.type race="DarkElf" type="Fighter">
+			<playerTemplate.defaults.race.type.gender gender="Male">
 				<set collisionRadius="7.5" collisionHeight="24.0" />
 				<set safeFallHeight="350" />
-			</genderTemplate>
-			<genderTemplate gender="Female">
+			</playerTemplate.defaults.race.type.gender>
+			<playerTemplate.defaults.race.type.gender gender="Female">
 				<set collisionRadius="7.0" collisionHeight="23.5" />
 				<set safeFallHeight="380" />
-			</genderTemplate>
+			</playerTemplate.defaults.race.type.gender>
 			<set runSpeed="122" />
 			<set walkSpeed="85" />
 			<set breath="150" />
-		</baseTemplate>
-		<baseTemplate race="DarkElf" type="Mystic">
-			<genderTemplate gender="Male">
+		</playerTemplate.defaults.race.type>
+		<playerTemplate.defaults.race.type race="DarkElf" type="Mystic">
+			<playerTemplate.defaults.race.type.gender gender="Male">
 				<set collisionRadius="7.5" collisionHeight="24.0" />
 				<set safeFallHeight="300" />
-			</genderTemplate>
-			<genderTemplate gender="Female">
+			</playerTemplate.defaults.race.type.gender>
+			<playerTemplate.defaults.race.type.gender gender="Female">
 				<set collisionRadius="7.0" collisionHeight="23.5" />
 				<set safeFallHeight="330" />
-			</genderTemplate>
+			</playerTemplate.defaults.race.type.gender>
 			<set runSpeed="122" />
 			<set walkSpeed="85" />
 			<set breath="150" />
-		</baseTemplate>
-		<baseTemplate race="Orc" type="Fighter">
-			<genderTemplate gender="Male">
+		</playerTemplate.defaults.race.type>
+		<playerTemplate.defaults.race.type race="Orc" type="Fighter">
+			<playerTemplate.defaults.race.type.gender gender="Male">
 				<set collisionRadius="11.0" collisionHeight="28.0" />
 				<set safeFallHeight="200" />
-			</genderTemplate>
-			<genderTemplate gender="Female">
+			</playerTemplate.defaults.race.type.gender>
+			<playerTemplate.defaults.race.type.gender gender="Female">
 				<set collisionRadius="7.0" collisionHeight="27.0" />
 				<set safeFallHeight="220" />
-			</genderTemplate>
+			</playerTemplate.defaults.race.type.gender>
 			<set runSpeed="117" />
 			<set walkSpeed="70" />
 			<set attackRange="25" />
 			<set breath="90" />
-		</baseTemplate>
-		<baseTemplate race="Orc" type="Mystic">
-			<genderTemplate gender="Male">
+		</playerTemplate.defaults.race.type>
+		<playerTemplate.defaults.race.type race="Orc" type="Mystic">
+			<playerTemplate.defaults.race.type.gender gender="Male">
 				<set collisionRadius="7.0" collisionHeight="27.5" />
 				<set safeFallHeight="250" />
-			</genderTemplate>
-			<genderTemplate gender="Female">
+			</playerTemplate.defaults.race.type.gender>
+			<playerTemplate.defaults.race.type.gender gender="Female">
 				<set collisionRadius="8.0" collisionHeight="25.5" />
 				<set safeFallHeight="280" />
-			</genderTemplate>
+			</playerTemplate.defaults.race.type.gender>
 			<set runSpeed="121" />
 			<set walkSpeed="70" />
 			<set attackRange="25" />
 			<set breath="90" />
-		</baseTemplate>
-		<baseTemplate race="Dwarf" type="Fighter">
-			<genderTemplate gender="Male">
+		</playerTemplate.defaults.race.type>
+		<playerTemplate.defaults.race.type race="Dwarf" type="Fighter">
+			<playerTemplate.defaults.race.type.gender gender="Male">
 				<set collisionRadius="9.0" collisionHeight="18.0" />
 				<set safeFallHeight="180" />
-			</genderTemplate>
-			<genderTemplate gender="Female">
+			</playerTemplate.defaults.race.type.gender>
+			<playerTemplate.defaults.race.type.gender gender="Female">
 				<set collisionRadius="5.0" collisionHeight="19.0" />
 				<set safeFallHeight="200" />
-			</genderTemplate>
+			</playerTemplate.defaults.race.type.gender>
 			<set runSpeed="115" />
 			<set walkSpeed="80" />
 			<set breath="80" />
-		</baseTemplate>
-		<baseTemplate race="Kamael" type="Fighter">
-			<genderTemplate gender="Male">
+		</playerTemplate.defaults.race.type>
+		<playerTemplate.defaults.race.type race="Kamael" type="Fighter">
+			<playerTemplate.defaults.race.type.gender gender="Male">
 				<set collisionRadius="8.0" collisionHeight="25.2" />
 				<set safeFallHeight="500" />
-			</genderTemplate>
-			<genderTemplate gender="Female">
+			</playerTemplate.defaults.race.type.gender>
+			<playerTemplate.defaults.race.type.gender gender="Female">
 				<set collisionRadius="7.0" collisionHeight="22.6" />
 				<set safeFallHeight="500" />
-			</genderTemplate>
+			</playerTemplate.defaults.race.type.gender>
 			<set runSpeed="122" />
 			<set walkSpeed="87" />
 			<set breath="100" />
-		</baseTemplate>
-	</baseTemplates>
+		</playerTemplate.defaults.race.type>
+	</playerTemplate.defaults>
 	
-	<playerTemplates>
-		<!-- TODO -->
-	</playerTemplates>
+	<playerTemplate classId="0">
+		<!-- name: Human Fighter -->
+		<!-- race: Human -->
+		<!-- type: Fighter -->
+		<!-- level: First -->
+		<!-- parent: none -->
+	</playerTemplate>
+	<playerTemplate classId="1">
+		<!-- name: Warrior -->
+		<!-- race: Human -->
+		<!-- type: Fighter -->
+		<!-- level: Second -->
+		<!-- parent: Human Fighter -->
+	</playerTemplate>
+	<playerTemplate classId="2">
+		<!-- name: Gladiator -->
+		<!-- race: Human -->
+		<!-- type: Fighter -->
+		<!-- level: Third -->
+		<!-- parent: Warrior -->
+	</playerTemplate>
+	<playerTemplate classId="3">
+		<!-- name: Warlord -->
+		<!-- race: Human -->
+		<!-- type: Fighter -->
+		<!-- level: Third -->
+		<!-- parent: Warrior -->
+	</playerTemplate>
+	<playerTemplate classId="4">
+		<!-- name: Human Knight -->
+		<!-- race: Human -->
+		<!-- type: Fighter -->
+		<!-- level: Second -->
+		<!-- parent: Human Fighter -->
+	</playerTemplate>
+	<playerTemplate classId="5">
+		<!-- name: Paladin -->
+		<!-- race: Human -->
+		<!-- type: Fighter -->
+		<!-- level: Third -->
+		<!-- parent: Human Knight -->
+	</playerTemplate>
+	<playerTemplate classId="6">
+		<!-- name: Dark Avenger -->
+		<!-- race: Human -->
+		<!-- type: Fighter -->
+		<!-- level: Third -->
+		<!-- parent: Human Knight -->
+	</playerTemplate>
+	<playerTemplate classId="7">
+		<!-- name: Rogue -->
+		<!-- race: Human -->
+		<!-- type: Fighter -->
+		<!-- level: Second -->
+		<!-- parent: Human Fighter -->
+	</playerTemplate>
+	<playerTemplate classId="8">
+		<!-- name: Treasure Hunter -->
+		<!-- race: Human -->
+		<!-- type: Fighter -->
+		<!-- level: Third -->
+		<!-- parent: Rogue -->
+	</playerTemplate>
+	<playerTemplate classId="9">
+		<!-- name: Hawkeye -->
+		<!-- race: Human -->
+		<!-- type: Fighter -->
+		<!-- level: Third -->
+		<!-- parent: Rogue -->
+	</playerTemplate>
+	<playerTemplate classId="10">
+		<!-- name: Human Mystic -->
+		<!-- race: Human -->
+		<!-- type: Mystic -->
+		<!-- level: First -->
+		<!-- parent: none -->
+	</playerTemplate>
+	<playerTemplate classId="11">
+		<!-- name: Wizard -->
+		<!-- race: Human -->
+		<!-- type: Mystic -->
+		<!-- level: Second -->
+		<!-- parent: Human Mystic -->
+	</playerTemplate>
+	<playerTemplate classId="12">
+		<!-- name: Sorcerer -->
+		<!-- race: Human -->
+		<!-- type: Mystic -->
+		<!-- level: Third -->
+		<!-- parent: Wizard -->
+	</playerTemplate>
+	<playerTemplate classId="13">
+		<!-- name: Necromancer -->
+		<!-- race: Human -->
+		<!-- type: Mystic -->
+		<!-- level: Third -->
+		<!-- parent: Wizard -->
+	</playerTemplate>
+	<playerTemplate classId="14">
+		<!-- name: Warlock -->
+		<!-- race: Human -->
+		<!-- type: Mystic -->
+		<!-- level: Third -->
+		<!-- parent: Wizard -->
+	</playerTemplate>
+	<playerTemplate classId="15">
+		<!-- name: Cleric -->
+		<!-- race: Human -->
+		<!-- type: Mystic -->
+		<!-- level: Second -->
+		<!-- parent: Human Mystic -->
+	</playerTemplate>
+	<playerTemplate classId="16">
+		<!-- name: Bishop -->
+		<!-- race: Human -->
+		<!-- type: Mystic -->
+		<!-- level: Third -->
+		<!-- parent: Cleric -->
+	</playerTemplate>
+	<playerTemplate classId="17">
+		<!-- name: Prophet -->
+		<!-- race: Human -->
+		<!-- type: Mystic -->
+		<!-- level: Third -->
+		<!-- parent: Cleric -->
+	</playerTemplate>
+	<playerTemplate classId="18">
+		<!-- name: Elven Fighter -->
+		<!-- race: Elf -->
+		<!-- type: Fighter -->
+		<!-- level: First -->
+		<!-- parent: none -->
+	</playerTemplate>
+	<playerTemplate classId="19">
+		<!-- name: Elven Knight -->
+		<!-- race: Elf -->
+		<!-- type: Fighter -->
+		<!-- level: Second -->
+		<!-- parent: Elven Fighter -->
+	</playerTemplate>
+	<playerTemplate classId="20">
+		<!-- name: Temple Knight -->
+		<!-- race: Elf -->
+		<!-- type: Fighter -->
+		<!-- level: Third -->
+		<!-- parent: Elven Knight -->
+	</playerTemplate>
+	<playerTemplate classId="21">
+		<!-- name: Swordsinger -->
+		<!-- race: Elf -->
+		<!-- type: Fighter -->
+		<!-- level: Third -->
+		<!-- parent: Elven Knight -->
+	</playerTemplate>
+	<playerTemplate classId="22">
+		<!-- name: Elven Scout -->
+		<!-- race: Elf -->
+		<!-- type: Fighter -->
+		<!-- level: Second -->
+		<!-- parent: Elven Fighter -->
+	</playerTemplate>
+	<playerTemplate classId="23">
+		<!-- name: Plainswalker -->
+		<!-- race: Elf -->
+		<!-- type: Fighter -->
+		<!-- level: Third -->
+		<!-- parent: Elven Scout -->
+	</playerTemplate>
+	<playerTemplate classId="24">
+		<!-- name: Silver Ranger -->
+		<!-- race: Elf -->
+		<!-- type: Fighter -->
+		<!-- level: Third -->
+		<!-- parent: Elven Scout -->
+	</playerTemplate>
+	<playerTemplate classId="25">
+		<!-- name: Elven Mystic -->
+		<!-- race: Elf -->
+		<!-- type: Mystic -->
+		<!-- level: First -->
+		<!-- parent: none -->
+	</playerTemplate>
+	<playerTemplate classId="26">
+		<!-- name: Elven Wizard -->
+		<!-- race: Elf -->
+		<!-- type: Mystic -->
+		<!-- level: Second -->
+		<!-- parent: Elven Mystic -->
+	</playerTemplate>
+	<playerTemplate classId="27">
+		<!-- name: Spellsinger -->
+		<!-- race: Elf -->
+		<!-- type: Mystic -->
+		<!-- level: Third -->
+		<!-- parent: Elven Wizard -->
+	</playerTemplate>
+	<playerTemplate classId="28">
+		<!-- name: Elemental Summoner -->
+		<!-- race: Elf -->
+		<!-- type: Mystic -->
+		<!-- level: Third -->
+		<!-- parent: Elven Wizard -->
+	</playerTemplate>
+	<playerTemplate classId="29">
+		<!-- name: Elven Oracle -->
+		<!-- race: Elf -->
+		<!-- type: Mystic -->
+		<!-- level: Second -->
+		<!-- parent: Elven Mystic -->
+	</playerTemplate>
+	<playerTemplate classId="30">
+		<!-- name: Elven Elder -->
+		<!-- race: Elf -->
+		<!-- type: Mystic -->
+		<!-- level: Third -->
+		<!-- parent: Elven Oracle -->
+	</playerTemplate>
+	<playerTemplate classId="31">
+		<!-- name: Dark Fighter -->
+		<!-- race: DarkElf -->
+		<!-- type: Fighter -->
+		<!-- level: First -->
+		<!-- parent: none -->
+	</playerTemplate>
+	<playerTemplate classId="32">
+		<!-- name: Palus Knight -->
+		<!-- race: DarkElf -->
+		<!-- type: Fighter -->
+		<!-- level: Second -->
+		<!-- parent: Dark Fighter -->
+	</playerTemplate>
+	<playerTemplate classId="33">
+		<!-- name: Shillien Knight -->
+		<!-- race: DarkElf -->
+		<!-- type: Fighter -->
+		<!-- level: Third -->
+		<!-- parent: Palus Knight -->
+	</playerTemplate>
+	<playerTemplate classId="34">
+		<!-- name: Bladedancer -->
+		<!-- race: DarkElf -->
+		<!-- type: Fighter -->
+		<!-- level: Third -->
+		<!-- parent: Palus Knight -->
+	</playerTemplate>
+	<playerTemplate classId="35">
+		<!-- name: Assassin -->
+		<!-- race: DarkElf -->
+		<!-- type: Fighter -->
+		<!-- level: Second -->
+		<!-- parent: Dark Fighter -->
+	</playerTemplate>
+	<playerTemplate classId="36">
+		<!-- name: Abyss Walker -->
+		<!-- race: DarkElf -->
+		<!-- type: Fighter -->
+		<!-- level: Third -->
+		<!-- parent: Assassin -->
+	</playerTemplate>
+	<playerTemplate classId="37">
+		<!-- name: Phantom Ranger -->
+		<!-- race: DarkElf -->
+		<!-- type: Fighter -->
+		<!-- level: Third -->
+		<!-- parent: Assassin -->
+	</playerTemplate>
+	<playerTemplate classId="38">
+		<!-- name: Dark Mystic -->
+		<!-- race: DarkElf -->
+		<!-- type: Mystic -->
+		<!-- level: First -->
+		<!-- parent: none -->
+	</playerTemplate>
+	<playerTemplate classId="39">
+		<!-- name: Dark Wizard -->
+		<!-- race: DarkElf -->
+		<!-- type: Mystic -->
+		<!-- level: Second -->
+		<!-- parent: Dark Mystic -->
+	</playerTemplate>
+	<playerTemplate classId="40">
+		<!-- name: Spellhowler -->
+		<!-- race: DarkElf -->
+		<!-- type: Mystic -->
+		<!-- level: Third -->
+		<!-- parent: Dark Wizard -->
+	</playerTemplate>
+	<playerTemplate classId="41">
+		<!-- name: Phantom Summoner -->
+		<!-- race: DarkElf -->
+		<!-- type: Mystic -->
+		<!-- level: Third -->
+		<!-- parent: Dark Wizard -->
+	</playerTemplate>
+	<playerTemplate classId="42">
+		<!-- name: Shillien Oracle -->
+		<!-- race: DarkElf -->
+		<!-- type: Mystic -->
+		<!-- level: Second -->
+		<!-- parent: Dark Mystic -->
+	</playerTemplate>
+	<playerTemplate classId="43">
+		<!-- name: Shillien Elder -->
+		<!-- race: DarkElf -->
+		<!-- type: Mystic -->
+		<!-- level: Third -->
+		<!-- parent: Shillien Oracle -->
+	</playerTemplate>
+	<playerTemplate classId="44">
+		<!-- name: Orc Fighter -->
+		<!-- race: Orc -->
+		<!-- type: Fighter -->
+		<!-- level: First -->
+		<!-- parent: none -->
+	</playerTemplate>
+	<playerTemplate classId="45">
+		<!-- name: Orc Raider -->
+		<!-- race: Orc -->
+		<!-- type: Fighter -->
+		<!-- level: Second -->
+		<!-- parent: Orc Fighter -->
+	</playerTemplate>
+	<playerTemplate classId="46">
+		<!-- name: Destroyer -->
+		<!-- race: Orc -->
+		<!-- type: Fighter -->
+		<!-- level: Third -->
+		<!-- parent: Orc Raider -->
+	</playerTemplate>
+	<playerTemplate classId="47">
+		<!-- name: Monk -->
+		<!-- race: Orc -->
+		<!-- type: Fighter -->
+		<!-- level: Second -->
+		<!-- parent: Orc Fighter -->
+	</playerTemplate>
+	<playerTemplate classId="48">
+		<!-- name: Tyrant -->
+		<!-- race: Orc -->
+		<!-- type: Fighter -->
+		<!-- level: Third -->
+		<!-- parent: Monk -->
+	</playerTemplate>
+	<playerTemplate classId="49">
+		<!-- name: Orc Mystic -->
+		<!-- race: Orc -->
+		<!-- type: Mystic -->
+		<!-- level: First -->
+		<!-- parent: none -->
+	</playerTemplate>
+	<playerTemplate classId="50">
+		<!-- name: Orc Shaman -->
+		<!-- race: Orc -->
+		<!-- type: Mystic -->
+		<!-- level: Second -->
+		<!-- parent: Orc Mystic -->
+	</playerTemplate>
+	<playerTemplate classId="51">
+		<!-- name: Overlord -->
+		<!-- race: Orc -->
+		<!-- type: Mystic -->
+		<!-- level: Third -->
+		<!-- parent: Orc Shaman -->
+	</playerTemplate>
+	<playerTemplate classId="52">
+		<!-- name: Warcryer -->
+		<!-- race: Orc -->
+		<!-- type: Mystic -->
+		<!-- level: Third -->
+		<!-- parent: Orc Shaman -->
+	</playerTemplate>
+	<playerTemplate classId="53">
+		<!-- name: Dwarven Fighter -->
+		<!-- race: Dwarf -->
+		<!-- type: Fighter -->
+		<!-- level: First -->
+		<!-- parent: none -->
+	</playerTemplate>
+	<playerTemplate classId="54">
+		<!-- name: Scavenger -->
+		<!-- race: Dwarf -->
+		<!-- type: Fighter -->
+		<!-- level: Second -->
+		<!-- parent: Dwarven Fighter -->
+	</playerTemplate>
+	<playerTemplate classId="55">
+		<!-- name: Bounty Hunter -->
+		<!-- race: Dwarf -->
+		<!-- type: Fighter -->
+		<!-- level: Third -->
+		<!-- parent: Scavenger -->
+	</playerTemplate>
+	<playerTemplate classId="56">
+		<!-- name: Artisan -->
+		<!-- race: Dwarf -->
+		<!-- type: Fighter -->
+		<!-- level: Second -->
+		<!-- parent: Dwarven Fighter -->
+	</playerTemplate>
+	<playerTemplate classId="57">
+		<!-- name: Warsmith -->
+		<!-- race: Dwarf -->
+		<!-- type: Fighter -->
+		<!-- level: Third -->
+		<!-- parent: Artisan -->
+	</playerTemplate>
+	<playerTemplate classId="88">
+		<!-- name: Duelist -->
+		<!-- race: Human -->
+		<!-- type: Fighter -->
+		<!-- level: Fourth -->
+		<!-- parent: Gladiator -->
+	</playerTemplate>
+	<playerTemplate classId="89">
+		<!-- name: Dreadnought -->
+		<!-- race: Human -->
+		<!-- type: Fighter -->
+		<!-- level: Fourth -->
+		<!-- parent: Warlord -->
+	</playerTemplate>
+	<playerTemplate classId="90">
+		<!-- name: Phoenix Knight -->
+		<!-- race: Human -->
+		<!-- type: Fighter -->
+		<!-- level: Fourth -->
+		<!-- parent: Paladin -->
+	</playerTemplate>
+	<playerTemplate classId="91">
+		<!-- name: Hell Knight -->
+		<!-- race: Human -->
+		<!-- type: Fighter -->
+		<!-- level: Fourth -->
+		<!-- parent: Dark Avenger -->
+	</playerTemplate>
+	<playerTemplate classId="92">
+		<!-- name: Sagittarius -->
+		<!-- race: Human -->
+		<!-- type: Fighter -->
+		<!-- level: Fourth -->
+		<!-- parent: Hawkeye -->
+	</playerTemplate>
+	<playerTemplate classId="93">
+		<!-- name: Adventurer -->
+		<!-- race: Human -->
+		<!-- type: Fighter -->
+		<!-- level: Fourth -->
+		<!-- parent: Treasure Hunter -->
+	</playerTemplate>
+	<playerTemplate classId="94">
+		<!-- name: Archmage -->
+		<!-- race: Human -->
+		<!-- type: Mystic -->
+		<!-- level: Fourth -->
+		<!-- parent: Sorcerer -->
+	</playerTemplate>
+	<playerTemplate classId="95">
+		<!-- name: Soultaker -->
+		<!-- race: Human -->
+		<!-- type: Mystic -->
+		<!-- level: Fourth -->
+		<!-- parent: Necromancer -->
+	</playerTemplate>
+	<playerTemplate classId="96">
+		<!-- name: Arcana Lord -->
+		<!-- race: Human -->
+		<!-- type: Mystic -->
+		<!-- level: Fourth -->
+		<!-- parent: Warlock -->
+	</playerTemplate>
+	<playerTemplate classId="97">
+		<!-- name: Cardinal -->
+		<!-- race: Human -->
+		<!-- type: Mystic -->
+		<!-- level: Fourth -->
+		<!-- parent: Bishop -->
+	</playerTemplate>
+	<playerTemplate classId="98">
+		<!-- name: Hierophant -->
+		<!-- race: Human -->
+		<!-- type: Mystic -->
+		<!-- level: Fourth -->
+		<!-- parent: Prophet -->
+	</playerTemplate>
+	<playerTemplate classId="99">
+		<!-- name: Eva's Templar -->
+		<!-- race: Elf -->
+		<!-- type: Fighter -->
+		<!-- level: Fourth -->
+		<!-- parent: Temple Knight -->
+	</playerTemplate>
+	<playerTemplate classId="100">
+		<!-- name: Sword Muse -->
+		<!-- race: Elf -->
+		<!-- type: Fighter -->
+		<!-- level: Fourth -->
+		<!-- parent: Swordsinger -->
+	</playerTemplate>
+	<playerTemplate classId="101">
+		<!-- name: Wind Rider -->
+		<!-- race: Elf -->
+		<!-- type: Fighter -->
+		<!-- level: Fourth -->
+		<!-- parent: Plainswalker -->
+	</playerTemplate>
+	<playerTemplate classId="102">
+		<!-- name: Moonlight Sentinel -->
+		<!-- race: Elf -->
+		<!-- type: Fighter -->
+		<!-- level: Fourth -->
+		<!-- parent: Silver Ranger -->
+	</playerTemplate>
+	<playerTemplate classId="103">
+		<!-- name: Mystic Muse -->
+		<!-- race: Elf -->
+		<!-- type: Mystic -->
+		<!-- level: Fourth -->
+		<!-- parent: Spellsinger -->
+	</playerTemplate>
+	<playerTemplate classId="104">
+		<!-- name: Elemental Master -->
+		<!-- race: Elf -->
+		<!-- type: Mystic -->
+		<!-- level: Fourth -->
+		<!-- parent: Elemental Summoner -->
+	</playerTemplate>
+	<playerTemplate classId="105">
+		<!-- name: Eva's Saint -->
+		<!-- race: Elf -->
+		<!-- type: Mystic -->
+		<!-- level: Fourth -->
+		<!-- parent: Elven Elder -->
+	</playerTemplate>
+	<playerTemplate classId="106">
+		<!-- name: Shillien Templar -->
+		<!-- race: DarkElf -->
+		<!-- type: Fighter -->
+		<!-- level: Fourth -->
+		<!-- parent: Shillien Knight -->
+	</playerTemplate>
+	<playerTemplate classId="107">
+		<!-- name: Spectral Dancer -->
+		<!-- race: DarkElf -->
+		<!-- type: Fighter -->
+		<!-- level: Fourth -->
+		<!-- parent: Bladedancer -->
+	</playerTemplate>
+	<playerTemplate classId="108">
+		<!-- name: Ghost Hunter -->
+		<!-- race: DarkElf -->
+		<!-- type: Fighter -->
+		<!-- level: Fourth -->
+		<!-- parent: Abyss Walker -->
+	</playerTemplate>
+	<playerTemplate classId="109">
+		<!-- name: Ghost Sentinel -->
+		<!-- race: DarkElf -->
+		<!-- type: Fighter -->
+		<!-- level: Fourth -->
+		<!-- parent: Phantom Ranger -->
+	</playerTemplate>
+	<playerTemplate classId="110">
+		<!-- name: Storm Screamer -->
+		<!-- race: DarkElf -->
+		<!-- type: Mystic -->
+		<!-- level: Fourth -->
+		<!-- parent: Spellhowler -->
+	</playerTemplate>
+	<playerTemplate classId="111">
+		<!-- name: Spectral Master -->
+		<!-- race: DarkElf -->
+		<!-- type: Mystic -->
+		<!-- level: Fourth -->
+		<!-- parent: Phantom Summoner -->
+	</playerTemplate>
+	<playerTemplate classId="112">
+		<!-- name: Shillien Saint -->
+		<!-- race: DarkElf -->
+		<!-- type: Mystic -->
+		<!-- level: Fourth -->
+		<!-- parent: Shillien Elder -->
+	</playerTemplate>
+	<playerTemplate classId="113">
+		<!-- name: Titan -->
+		<!-- race: Orc -->
+		<!-- type: Fighter -->
+		<!-- level: Fourth -->
+		<!-- parent: Destroyer -->
+	</playerTemplate>
+	<playerTemplate classId="114">
+		<!-- name: Grand Khavatari -->
+		<!-- race: Orc -->
+		<!-- type: Fighter -->
+		<!-- level: Fourth -->
+		<!-- parent: Tyrant -->
+	</playerTemplate>
+	<playerTemplate classId="115">
+		<!-- name: Dominator -->
+		<!-- race: Orc -->
+		<!-- type: Mystic -->
+		<!-- level: Fourth -->
+		<!-- parent: Overlord -->
+	</playerTemplate>
+	<playerTemplate classId="116">
+		<!-- name: Doomcryer -->
+		<!-- race: Orc -->
+		<!-- type: Mystic -->
+		<!-- level: Fourth -->
+		<!-- parent: Warcryer -->
+	</playerTemplate>
+	<playerTemplate classId="117">
+		<!-- name: Fortune Seeker -->
+		<!-- race: Dwarf -->
+		<!-- type: Fighter -->
+		<!-- level: Fourth -->
+		<!-- parent: Bounty Hunter -->
+	</playerTemplate>
+	<playerTemplate classId="118">
+		<!-- name: Maestro -->
+		<!-- race: Dwarf -->
+		<!-- type: Fighter -->
+		<!-- level: Fourth -->
+		<!-- parent: Warsmith -->
+	</playerTemplate>
+	<playerTemplate classId="123">
+		<!-- name: Male Soldier -->
+		<!-- race: Kamael -->
+		<!-- type: Fighter -->
+		<!-- level: First -->
+		<!-- parent: none -->
+	</playerTemplate>
+	<playerTemplate classId="124">
+		<!-- name: Female Soldier -->
+		<!-- race: Kamael -->
+		<!-- type: Fighter -->
+		<!-- level: First -->
+		<!-- parent: none -->
+	</playerTemplate>
+	<playerTemplate classId="125">
+		<!-- name: Trooper -->
+		<!-- race: Kamael -->
+		<!-- type: Fighter -->
+		<!-- level: Second -->
+		<!-- parent: Male Soldier -->
+	</playerTemplate>
+	<playerTemplate classId="126">
+		<!-- name: Warder -->
+		<!-- race: Kamael -->
+		<!-- type: Fighter -->
+		<!-- level: Second -->
+		<!-- parent: Female Soldier -->
+	</playerTemplate>
+	<playerTemplate classId="127">
+		<!-- name: Berserker -->
+		<!-- race: Kamael -->
+		<!-- type: Fighter -->
+		<!-- level: Third -->
+		<!-- parent: Trooper -->
+	</playerTemplate>
+	<playerTemplate classId="128">
+		<!-- name: Male Soul Breaker -->
+		<!-- race: Kamael -->
+		<!-- type: Fighter -->
+		<!-- level: Third -->
+		<!-- parent: Trooper -->
+	</playerTemplate>
+	<playerTemplate classId="129">
+		<!-- name: Female Soul Breaker -->
+		<!-- race: Kamael -->
+		<!-- type: Fighter -->
+		<!-- level: Third -->
+		<!-- parent: Warder -->
+	</playerTemplate>
+	<playerTemplate classId="130">
+		<!-- name: Arbalester -->
+		<!-- race: Kamael -->
+		<!-- type: Fighter -->
+		<!-- level: Third -->
+		<!-- parent: Warder -->
+	</playerTemplate>
+	<playerTemplate classId="131">
+		<!-- name: Doombringer -->
+		<!-- race: Kamael -->
+		<!-- type: Fighter -->
+		<!-- level: Fourth -->
+		<!-- parent: Berserker -->
+	</playerTemplate>
+	<playerTemplate classId="132">
+		<!-- name: Male Soul Hound -->
+		<!-- race: Kamael -->
+		<!-- type: Fighter -->
+		<!-- level: Fourth -->
+		<!-- parent: Male Soul Breaker -->
+	</playerTemplate>
+	<playerTemplate classId="133">
+		<!-- name: Female Soul Hound -->
+		<!-- race: Kamael -->
+		<!-- type: Fighter -->
+		<!-- level: Fourth -->
+		<!-- parent: Female Soul Breaker -->
+	</playerTemplate>
+	<playerTemplate classId="134">
+		<!-- name: Trickster -->
+		<!-- race: Kamael -->
+		<!-- type: Fighter -->
+		<!-- level: Fourth -->
+		<!-- parent: Arbalester -->
+	</playerTemplate>
+	<playerTemplate classId="135">
+		<!-- name: Inspector -->
+		<!-- race: Kamael -->
+		<!-- type: Fighter -->
+		<!-- level: Third -->
+		<!-- parent: Warder -->
+	</playerTemplate>
+	<playerTemplate classId="136">
+		<!-- name: Judicator -->
+		<!-- race: Kamael -->
+		<!-- type: Fighter -->
+		<!-- level: Fourth -->
+		<!-- parent: Inspector -->
+	</playerTemplate>
 </list>
