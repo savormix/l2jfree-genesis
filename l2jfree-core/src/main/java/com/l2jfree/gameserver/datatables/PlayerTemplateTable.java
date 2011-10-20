@@ -131,7 +131,7 @@ public final class PlayerTemplateTable
 							if (classId.getBaseType() == type)
 								defaultsByClassId[classId.ordinal()].load(s2);
 					
-					for (Node n3 : L2XML.listNodesByNodeName(n2, "playerTemplate.defaults.race.type.gender"))
+					for (Node n3 : L2XML.listNodesByNodeName(n2, "genderTemplate.defaults.race.type"))
 					{
 						final L2Properties p3 = new L2Properties(n3);
 						final Gender gender = p3.getEnum(Gender.class, "gender");

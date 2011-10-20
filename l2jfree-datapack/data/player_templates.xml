@@ -46,133 +46,133 @@
 		</playerTemplate.defaults.type>
 		
 		<playerTemplate.defaults.race.type race="Human" type="Fighter">
-			<playerTemplate.defaults.race.type.gender gender="Male">
+			<genderTemplate.defaults.race.type gender="Male">
 				<set collisionRadius="9.0" collisionHeight="23.0" />
 				<set safeFallHeight="250" />
-			</playerTemplate.defaults.race.type.gender>
-			<playerTemplate.defaults.race.type.gender gender="Female">
+			</genderTemplate.defaults.race.type>
+			<genderTemplate.defaults.race.type gender="Female">
 				<set collisionRadius="8.0" collisionHeight="23.5" />
 				<set safeFallHeight="270" />
-			</playerTemplate.defaults.race.type.gender>
+			</genderTemplate.defaults.race.type>
 			<set runSpeed="115" />
 			<set walkSpeed="80" />
 			<set breath="100" />
 		</playerTemplate.defaults.race.type>
 		<playerTemplate.defaults.race.type race="Human" type="Mystic">
-			<playerTemplate.defaults.race.type.gender gender="Male">
+			<genderTemplate.defaults.race.type gender="Male">
 				<set collisionRadius="7.5" collisionHeight="22.8" />
 				<set safeFallHeight="200" />
-			</playerTemplate.defaults.race.type.gender>
-			<playerTemplate.defaults.race.type.gender gender="Female">
+			</genderTemplate.defaults.race.type>
+			<genderTemplate.defaults.race.type gender="Female">
 				<set collisionRadius="6.5" collisionHeight="22.5" />
 				<set safeFallHeight="220" />
-			</playerTemplate.defaults.race.type.gender>
+			</genderTemplate.defaults.race.type>
 			<set runSpeed="120" />
 			<set walkSpeed="78" />
 			<set breath="100" />
 		</playerTemplate.defaults.race.type>
 		<playerTemplate.defaults.race.type race="Elf" type="Fighter">
-			<playerTemplate.defaults.race.type.gender gender="Male">
+			<genderTemplate.defaults.race.type gender="Male">
 				<set collisionRadius="7.5" collisionHeight="24.0" />
 				<set safeFallHeight="350" />
-			</playerTemplate.defaults.race.type.gender>
-			<playerTemplate.defaults.race.type.gender gender="Female">
+			</genderTemplate.defaults.race.type>
+			<genderTemplate.defaults.race.type gender="Female">
 				<set collisionRadius="7.5" collisionHeight="23.0" />
 				<set safeFallHeight="380" />
-			</playerTemplate.defaults.race.type.gender>
+			</genderTemplate.defaults.race.type>
 			<set runSpeed="125" />
 			<set walkSpeed="90" />
 			<set breath="150" />
 		</playerTemplate.defaults.race.type>
 		<playerTemplate.defaults.race.type race="Elf" type="Mystic">
-			<playerTemplate.defaults.race.type.gender gender="Male">
+			<genderTemplate.defaults.race.type gender="Male">
 				<set collisionRadius="7.5" collisionHeight="24.0" />
 				<set safeFallHeight="300" />
-			</playerTemplate.defaults.race.type.gender>
-			<playerTemplate.defaults.race.type.gender gender="Female">
+			</genderTemplate.defaults.race.type>
+			<genderTemplate.defaults.race.type gender="Female">
 				<set collisionRadius="7.5" collisionHeight="23.0" />
 				<set safeFallHeight="330" />
-			</playerTemplate.defaults.race.type.gender>
+			</genderTemplate.defaults.race.type>
 			<set runSpeed="122" />
 			<set walkSpeed="85" />
 			<set breath="150" />
 		</playerTemplate.defaults.race.type>
 		<playerTemplate.defaults.race.type race="DarkElf" type="Fighter">
-			<playerTemplate.defaults.race.type.gender gender="Male">
+			<genderTemplate.defaults.race.type gender="Male">
 				<set collisionRadius="7.5" collisionHeight="24.0" />
 				<set safeFallHeight="350" />
-			</playerTemplate.defaults.race.type.gender>
-			<playerTemplate.defaults.race.type.gender gender="Female">
+			</genderTemplate.defaults.race.type>
+			<genderTemplate.defaults.race.type gender="Female">
 				<set collisionRadius="7.0" collisionHeight="23.5" />
 				<set safeFallHeight="380" />
-			</playerTemplate.defaults.race.type.gender>
+			</genderTemplate.defaults.race.type>
 			<set runSpeed="122" />
 			<set walkSpeed="85" />
 			<set breath="150" />
 		</playerTemplate.defaults.race.type>
 		<playerTemplate.defaults.race.type race="DarkElf" type="Mystic">
-			<playerTemplate.defaults.race.type.gender gender="Male">
+			<genderTemplate.defaults.race.type gender="Male">
 				<set collisionRadius="7.5" collisionHeight="24.0" />
 				<set safeFallHeight="300" />
-			</playerTemplate.defaults.race.type.gender>
-			<playerTemplate.defaults.race.type.gender gender="Female">
+			</genderTemplate.defaults.race.type>
+			<genderTemplate.defaults.race.type gender="Female">
 				<set collisionRadius="7.0" collisionHeight="23.5" />
 				<set safeFallHeight="330" />
-			</playerTemplate.defaults.race.type.gender>
+			</genderTemplate.defaults.race.type>
 			<set runSpeed="122" />
 			<set walkSpeed="85" />
 			<set breath="150" />
 		</playerTemplate.defaults.race.type>
 		<playerTemplate.defaults.race.type race="Orc" type="Fighter">
-			<playerTemplate.defaults.race.type.gender gender="Male">
+			<genderTemplate.defaults.race.type gender="Male">
 				<set collisionRadius="11.0" collisionHeight="28.0" />
 				<set safeFallHeight="200" />
-			</playerTemplate.defaults.race.type.gender>
-			<playerTemplate.defaults.race.type.gender gender="Female">
+			</genderTemplate.defaults.race.type>
+			<genderTemplate.defaults.race.type gender="Female">
 				<set collisionRadius="7.0" collisionHeight="27.0" />
 				<set safeFallHeight="220" />
-			</playerTemplate.defaults.race.type.gender>
+			</genderTemplate.defaults.race.type>
 			<set runSpeed="117" />
 			<set walkSpeed="70" />
 			<set attackRange="25" />
 			<set breath="90" />
 		</playerTemplate.defaults.race.type>
 		<playerTemplate.defaults.race.type race="Orc" type="Mystic">
-			<playerTemplate.defaults.race.type.gender gender="Male">
+			<genderTemplate.defaults.race.type gender="Male">
 				<set collisionRadius="7.0" collisionHeight="27.5" />
 				<set safeFallHeight="250" />
-			</playerTemplate.defaults.race.type.gender>
-			<playerTemplate.defaults.race.type.gender gender="Female">
+			</genderTemplate.defaults.race.type>
+			<genderTemplate.defaults.race.type gender="Female">
 				<set collisionRadius="8.0" collisionHeight="25.5" />
 				<set safeFallHeight="280" />
-			</playerTemplate.defaults.race.type.gender>
+			</genderTemplate.defaults.race.type>
 			<set runSpeed="121" />
 			<set walkSpeed="70" />
 			<set attackRange="25" />
 			<set breath="90" />
 		</playerTemplate.defaults.race.type>
 		<playerTemplate.defaults.race.type race="Dwarf" type="Fighter">
-			<playerTemplate.defaults.race.type.gender gender="Male">
+			<genderTemplate.defaults.race.type gender="Male">
 				<set collisionRadius="9.0" collisionHeight="18.0" />
 				<set safeFallHeight="180" />
-			</playerTemplate.defaults.race.type.gender>
-			<playerTemplate.defaults.race.type.gender gender="Female">
+			</genderTemplate.defaults.race.type>
+			<genderTemplate.defaults.race.type gender="Female">
 				<set collisionRadius="5.0" collisionHeight="19.0" />
 				<set safeFallHeight="200" />
-			</playerTemplate.defaults.race.type.gender>
+			</genderTemplate.defaults.race.type>
 			<set runSpeed="115" />
 			<set walkSpeed="80" />
 			<set breath="80" />
 		</playerTemplate.defaults.race.type>
 		<playerTemplate.defaults.race.type race="Kamael" type="Fighter">
-			<playerTemplate.defaults.race.type.gender gender="Male">
+			<genderTemplate.defaults.race.type gender="Male">
 				<set collisionRadius="8.0" collisionHeight="25.2" />
 				<set safeFallHeight="500" />
-			</playerTemplate.defaults.race.type.gender>
-			<playerTemplate.defaults.race.type.gender gender="Female">
+			</genderTemplate.defaults.race.type>
+			<genderTemplate.defaults.race.type gender="Female">
 				<set collisionRadius="7.0" collisionHeight="22.6" />
 				<set safeFallHeight="500" />
-			</playerTemplate.defaults.race.type.gender>
+			</genderTemplate.defaults.race.type>
 			<set runSpeed="122" />
 			<set walkSpeed="87" />
 			<set breath="100" />
