@@ -16,8 +16,8 @@
 				
 				PRIMARY KEY (persistentId)
 			);
-			CREATE UNIQUE INDEX name			ON players (name);
-			CREATE        INDEX accountName		ON players (accountName);
+			CREATE	UNIQUE	INDEX name			ON players (name);
+			CREATE			INDEX accountName	ON players (accountName);
 	" />
 	<table name="player_appearances"
 		definition="
@@ -53,10 +53,12 @@
 				
 				persistentId	INT				NOT NULL,
 				creationTime	TIMESTAMP		NOT NULL,
+				ownerId			INT				NOT NULL,
 				count			BIGINT			NOT NULL,
 				
 				PRIMARY KEY (persistentId)
 			);
+			CREATE			INDEX ownerId		ON items (ownerId);
 	" />
 	<table name="persistent_properties"
 		definition="

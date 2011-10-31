@@ -33,6 +33,7 @@ public abstract class L2Item extends L2Object implements IElemental
 {
 	private PersistentId _persistentId;
 	private final long _creationTime;
+	private final PersistentId _ownerId;
 	
 	protected L2Item(L2ItemTemplate template)
 	{
@@ -40,6 +41,7 @@ public abstract class L2Item extends L2Object implements IElemental
 		
 		// TODO
 		_creationTime = System.currentTimeMillis();
+		_ownerId = null;
 	}
 	
 	protected L2Item(L2ItemTemplate template, ItemDB itemDB)
@@ -48,6 +50,7 @@ public abstract class L2Item extends L2Object implements IElemental
 		
 		// TODO
 		_creationTime = itemDB.creationTime;
+		_ownerId = itemDB.getOwnerId();
 	}
 	
 	@Override
@@ -74,6 +77,11 @@ public abstract class L2Item extends L2Object implements IElemental
 	public long getCreationTime()
 	{
 		return _creationTime;
+	}
+	
+	public PersistentId getOwnerId()
+	{
+		return _ownerId;
 	}
 	
 	@Override

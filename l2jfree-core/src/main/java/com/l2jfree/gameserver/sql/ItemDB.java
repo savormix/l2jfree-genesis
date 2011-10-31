@@ -39,6 +39,9 @@ public class ItemDB extends L2DBEntity
 	@Column(name = "creationTime", nullable = false, updatable = false)
 	public long creationTime;
 	
+	@Column(name = "ownerId", nullable = false)
+	private Integer ownerId;
+	
 	@Column(name = "count", nullable = false)
 	public long count;
 	
@@ -50,6 +53,16 @@ public class ItemDB extends L2DBEntity
 	public void setPersistentId(PersistentId persistentId)
 	{
 		this.persistentId = persistentId.intValue();
+	}
+	
+	public PersistentId getOwnerId()
+	{
+		return new PersistentId(ownerId);
+	}
+	
+	public void setOwnerId(PersistentId ownerId)
+	{
+		this.ownerId = ownerId.intValue();
 	}
 	
 	@Override
