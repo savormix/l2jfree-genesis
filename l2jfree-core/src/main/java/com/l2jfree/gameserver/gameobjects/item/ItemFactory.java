@@ -15,6 +15,7 @@
 package com.l2jfree.gameserver.gameobjects.item;
 
 import com.l2jfree.gameserver.gameobjects.L2Item;
+import com.l2jfree.gameserver.sql.ItemDB;
 import com.l2jfree.gameserver.templates.L2ItemTemplate;
 
 /**
@@ -37,5 +38,21 @@ public final class ItemFactory
 			return new L2EquipableItem(template);
 		
 		return new L2SingularItem(template);
+	}
+	
+	public static L2Item restoreItem(ItemDB itemDB)
+	{
+		// TODO
+		L2ItemTemplate template = null;
+		final boolean stackable = false;
+		final boolean equipable = false;
+		
+		if (stackable)
+			return new L2StackableItem(template, itemDB);
+		
+		if (equipable)
+			return new L2EquipableItem(template, itemDB);
+		
+		return new L2SingularItem(template, itemDB);
 	}
 }

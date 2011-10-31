@@ -18,6 +18,7 @@ import com.l2jfree.gameserver.gameobjects.CharacterStat.Element;
 import com.l2jfree.gameserver.gameobjects.components.KnownListComponent;
 import com.l2jfree.gameserver.gameobjects.components.empty.EmptyObjectKnownList;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IElemental;
+import com.l2jfree.gameserver.sql.ItemDB;
 import com.l2jfree.gameserver.templates.L2ItemTemplate;
 import com.l2jfree.gameserver.util.IdFactory;
 import com.l2jfree.gameserver.util.IdFactory.IdRange;
@@ -39,6 +40,14 @@ public abstract class L2Item extends L2Object implements IElemental
 		
 		// TODO
 		_creationTime = System.currentTimeMillis();
+	}
+	
+	protected L2Item(L2ItemTemplate template, ItemDB itemDB)
+	{
+		super(template);
+		
+		// TODO
+		_creationTime = itemDB.creationTime;
 	}
 	
 	@Override

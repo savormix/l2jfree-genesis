@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.gameobjects.item;
 
+import com.l2jfree.gameserver.sql.ItemDB;
 import com.l2jfree.gameserver.templates.L2ItemTemplate;
 
 /**
@@ -28,6 +29,11 @@ public final class L2EquipableItem extends L2SingularItem
 	protected L2EquipableItem(L2ItemTemplate template)
 	{
 		super(template);
+	}
+	
+	protected L2EquipableItem(L2ItemTemplate template, ItemDB itemDB)
+	{
+		super(template, itemDB);
 	}
 	
 	@Override

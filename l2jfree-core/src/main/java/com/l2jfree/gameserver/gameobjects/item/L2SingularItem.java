@@ -16,6 +16,7 @@ package com.l2jfree.gameserver.gameobjects.item;
 
 import com.l2jfree.gameserver.gameobjects.CharacterStat.Element;
 import com.l2jfree.gameserver.gameobjects.L2Item;
+import com.l2jfree.gameserver.sql.ItemDB;
 import com.l2jfree.gameserver.templates.L2ItemTemplate;
 
 /**
@@ -26,6 +27,11 @@ public class L2SingularItem extends L2Item
 	protected L2SingularItem(L2ItemTemplate template)
 	{
 		super(template);
+	}
+	
+	protected L2SingularItem(L2ItemTemplate template, ItemDB itemDB)
+	{
+		super(template, itemDB);
 	}
 	
 	@Override

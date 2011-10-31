@@ -15,6 +15,7 @@
 package com.l2jfree.gameserver.gameobjects.item;
 
 import com.l2jfree.gameserver.gameobjects.L2Item;
+import com.l2jfree.gameserver.sql.ItemDB;
 import com.l2jfree.gameserver.templates.L2ItemTemplate;
 
 /**
@@ -23,11 +24,20 @@ import com.l2jfree.gameserver.templates.L2ItemTemplate;
 public final class L2StackableItem extends L2Item
 {
 	// TODO
-	private long _count;
+	private final long _count;
 	
 	protected L2StackableItem(L2ItemTemplate template)
 	{
 		super(template);
+		
+		_count = 1;
+	}
+	
+	protected L2StackableItem(L2ItemTemplate template, ItemDB itemDB)
+	{
+		super(template, itemDB);
+		
+		_count = itemDB.count;
 	}
 	
 	@Override

@@ -6,5 +6,6 @@
 	<!-- TODO: classes -->
 	<persistence-unit name="default" transaction-type="RESOURCE_LOCAL">
 		<class>com.l2jfree.gameserver.sql.PlayerDB</class>
+		<class>com.l2jfree.gameserver.sql.ItemDB</class>
 	</persistence-unit>
 </persistence>

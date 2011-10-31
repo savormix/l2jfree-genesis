@@ -47,6 +47,17 @@
 				PRIMARY KEY (persistentId)
 			);
 	" />
+	<table name="items"
+		definition="
+			CREATE TABLE items (
+				
+				persistentId	INT				NOT NULL,
+				creationTime	TIMESTAMP		NOT NULL,
+				count			BIGINT			NOT NULL,
+				
+				PRIMARY KEY (persistentId)
+			);
+	" />
 	<table name="persistent_properties"
 		definition="
 			CREATE TABLE persistent_properties (
