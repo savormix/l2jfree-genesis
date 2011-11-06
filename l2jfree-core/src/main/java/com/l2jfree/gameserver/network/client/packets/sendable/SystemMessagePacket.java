@@ -42,6 +42,16 @@ public abstract class SystemMessagePacket extends L2ServerPacket
 		{
 			super(immutableMessageId);
 		}
+		
+		public static SystemMessage valueOf(String message)
+		{
+			// FIXME
+			//SystemMessage sm = new SystemMessage(SystemMessageId.S1);
+			//sm.addString(msg);
+			//return sm;
+			_log.info("SystemMessage: " + message);
+			return null;
+		}
 	}
 	
 	private final int _messageId;

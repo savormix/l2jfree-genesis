@@ -16,7 +16,10 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 
+import com.l2jfree.gameserver.gameobjects.L2Player;
+import com.l2jfree.gameserver.handlers.admincommand.AdminCommandHandler;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
+import com.l2jfree.gameserver.network.client.packets.sendable.ActionFail.InteractionFinished;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
@@ -46,17 +49,30 @@ public abstract class RequestBypassToServer extends L2ClientPacket
 	}
 	
 	/* Fields for storing read data */
+	private String _command;
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
-		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.readS(); // Command
+		_command = buf.readS(); // Command
 	}
 	
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		// TODO: implement
+		final L2Player activeChar = getClient().getActiveChar();
+		if (activeChar == null)
+			return;
+		
+		if (_command.startsWith("admin_"))
+		{
+			AdminCommandHandler.useAdminCommand(activeChar, _command);
+		}
+		else
+		{
+			// TODO
+		}
+		
+		sendPacket(InteractionFinished.PACKET); // TODO it this right here?
 	}
 }
