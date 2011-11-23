@@ -21,10 +21,12 @@ import java.nio.ByteOrder;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 import java.util.ArrayDeque;
+import java.util.TreeSet;
 
 import javolution.util.FastList;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.l2jfree.network.mmocore.FloodManager.ErrorMode;
 import com.l2jfree.util.HexUtil;
@@ -139,10 +141,25 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 		}
 	}
 	
+	private static String describeInterestOps(int interestOps)
+	{
+		final TreeSet<String> result = new TreeSet<String>();
+		if ((interestOps & SelectionKey.OP_ACCEPT) != 0)
+			result.add("ACCEPT");
+		if ((interestOps & SelectionKey.OP_CONNECT) != 0)
+			result.add("CONNECT");
+		if ((interestOps & SelectionKey.OP_READ) != 0)
+			result.add("READ");
+		if ((interestOps & SelectionKey.OP_WRITE) != 0)
+			result.add("WRITE");
+		return StringUtils.join(result, "|");
+	}
+	
 	@Override
 	protected void handle(SelectionKey key)
 	{
-		System.out.println("ReadWriteThread.handle() " + key.interestOps() + " " + key.readyOps());
+		System.out.println("ReadWriteThread.handle() " + describeInterestOps(key.interestOps()) + ", ready: "
+				+ describeInterestOps(key.readyOps()));
 		switch (key.readyOps())
 		{
 			case SelectionKey.OP_CONNECT:
@@ -196,8 +213,6 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 	
 	private void readPacket(SelectionKey key)
 	{
-		System.out.println("ReadWriteThread.readPacket()");
-		
 		@SuppressWarnings("unchecked")
 		T con = (T)key.attachment();
 		
@@ -364,7 +379,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 				
 				if (cp != null)
 				{
-					System.out.println("READ: " + cp.getClass().getSimpleName() + " " + client.getState());
+					System.out.println("READ: " + client.getState() + " " + cp.getClass().getSimpleName());
 					
 					// remove useless bytes #2, using packet specs
 					int maxLeftoverPadding = maxPossiblePadding;
@@ -429,8 +444,6 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 	
 	private void writePacket(SelectionKey key)
 	{
-		System.out.println("ReadWriteThread.writePacket()");
-		
 		@SuppressWarnings("unchecked")
 		T con = (T)key.attachment();
 		
@@ -524,7 +537,7 @@ final class ReadWriteThread<T extends MMOConnection<T, RP, SP>, RP extends Recei
 						break;
 				}
 				
-				System.out.println("WRITE: " + sp.getClass().getSimpleName() + " " + con.getState());
+				System.out.println("WRITE: " + con.getState() + " " + sp.getClass().getSimpleName());
 				
 				// put into WriteBuffer
 				putPacketIntoWriteBuffer(con, sp);
