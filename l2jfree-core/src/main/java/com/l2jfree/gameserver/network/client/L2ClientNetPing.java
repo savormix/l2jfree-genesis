@@ -39,7 +39,8 @@ public final class L2ClientNetPing extends AbstractIterativePeriodicTaskManager<
 	@Override
 	protected void callTask(IL2Client task)
 	{
-		task.sendPacket(ServerUptime.PACKET);
+		// FIXME reactivate later
+		//task.sendPacket(ServerUptime.PACKET);
 	}
 	
 	@Override
