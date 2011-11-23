@@ -16,7 +16,9 @@ package com.l2jfree.gameserver.gameobjects;
 
 import com.l2jfree.gameserver.gameobjects.CharacterStat.Element;
 import com.l2jfree.gameserver.gameobjects.components.KnownListComponent;
+import com.l2jfree.gameserver.gameobjects.components.MovementComponent;
 import com.l2jfree.gameserver.gameobjects.components.empty.EmptyObjectKnownList;
+import com.l2jfree.gameserver.gameobjects.components.empty.EmptyObjectMovement;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IElemental;
 import com.l2jfree.gameserver.sql.ItemDB;
 import com.l2jfree.gameserver.templates.L2ItemTemplate;
@@ -29,6 +31,7 @@ import com.l2jfree.gameserver.util.PersistentId;
  */
 @SuppressWarnings("static-method")
 @KnownListComponent(EmptyObjectKnownList.class)
+@MovementComponent(EmptyObjectMovement.class)
 public abstract class L2Item extends L2Object implements IElemental
 {
 	private PersistentId _persistentId;

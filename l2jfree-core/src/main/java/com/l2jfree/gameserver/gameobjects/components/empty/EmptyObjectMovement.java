@@ -46,6 +46,18 @@ public class EmptyObjectMovement implements IObjectMovement
 	}
 	
 	@Override
+	public void moveToPawn(L2Object destination, int offset)
+	{
+		// do nothing
+	}
+	
+	@Override
+	public void moveToLocation(int x, int y, int z)
+	{
+		// do nothing
+	}
+	
+	@Override
 	public void updatePosition()
 	{
 		// do nothing
@@ -68,4 +80,5 @@ public class EmptyObjectMovement implements IObjectMovement
 	{
 		// do nothing
 	}
+	
 }

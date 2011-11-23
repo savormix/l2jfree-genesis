@@ -19,7 +19,6 @@ import com.l2jfree.gameserver.gameobjects.components.KnownListComponent;
 import com.l2jfree.gameserver.gameobjects.components.MovementComponent;
 import com.l2jfree.gameserver.gameobjects.components.PositionComponent;
 import com.l2jfree.gameserver.gameobjects.components.ViewComponent;
-import com.l2jfree.gameserver.gameobjects.components.empty.EmptyObjectMovement;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IObjectKnownList;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IObjectMovement;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IObjectView;
@@ -34,7 +33,7 @@ import com.l2jfree.util.logging.L2Logger;
 
 @PositionComponent(ObjectPosition.class)
 @KnownListComponent(ObjectKnownList.class)
-@MovementComponent(EmptyObjectMovement.class)
+@MovementComponent(ObjectMovement.class)
 public abstract class L2Object implements IL2Object
 {
 	protected static final L2Logger _log = L2Logger.getLogger(L2Object.class);

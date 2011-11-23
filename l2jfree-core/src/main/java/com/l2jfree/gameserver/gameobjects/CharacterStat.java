@@ -95,67 +95,67 @@ public abstract class CharacterStat implements ICharacterStat
 	@Override
 	public double getRunSpeed()
 	{
-		return 0;
+		return 100; // FIXME
 	}
 	
 	@Override
 	public double getWalkSpeed()
 	{
-		return 0;
+		return 100; // FIXME
 	}
 	
 	@Override
 	public int getPAtk(Object object)
 	{
-		return 0;
+		return 10; // FIXME
 	}
 	
 	@Override
 	public int getPAtkSpd()
 	{
-		return 0;
+		return 100; // FIXME
 	}
 	
 	@Override
 	public int getMAtk(Object object, Object object2)
 	{
-		return 0;
+		return 20; // FIXME
 	}
 	
 	@Override
 	public int getMAtkSpd()
 	{
-		return 0;
+		return 200; // FIXME
 	}
 	
 	@Override
 	public int getPDef(Object object)
 	{
-		return 0;
+		return 30; // FIXME
 	}
 	
 	@Override
 	public int getMDef(Object object, Object object2)
 	{
-		return 0;
+		return 40; // FIXME
 	}
 	
 	@Override
 	public int getAccuracy()
 	{
-		return 0;
+		return 50; // FIXME
 	}
 	
 	@Override
 	public int getEvasion(Object object)
 	{
-		return 0;
+		return 60; // FIXME
 	}
 	
 	@Override
 	public int getCriticalHit(Object object)
 	{
-		return 0;
+		return 70; // FIXME
 	}
 	
 	@Override
@@ -167,67 +167,67 @@ public abstract class CharacterStat implements ICharacterStat
 	@Override
 	public long getExp()
 	{
-		return 0;
+		return 1; // FIXME
 	}
 	
 	@Override
 	public int getSTR()
 	{
-		return 0;
+		return 30; // FIXME
 	}
 	
 	@Override
 	public int getDEX()
 	{
-		return 0;
+		return 30; // FIXME
 	}
 	
 	@Override
 	public int getCON()
 	{
-		return 0;
+		return 30; // FIXME
 	}
 	
 	@Override
 	public int getINT()
 	{
-		return 0;
+		return 30; // FIXME
 	}
 	
 	@Override
 	public int getWIT()
 	{
-		return 0;
+		return 30; // FIXME
 	}
 	
 	@Override
 	public int getMEN()
 	{
-		return 0;
+		return 30; // FIXME
 	}
 	
 	@Override
 	public int getMaxHP()
 	{
-		return 0;
+		return 100; // FIXME
 	}
 	
 	@Override
 	public int getCurrentHP()
 	{
-		return 0;
+		return 90; // FIXME
 	}
 	
 	@Override
 	public int getMaxMP()
 	{
-		return 0;
+		return 100; // FIXME
 	}
 	
 	@Override
 	public int getCurrentMP()
 	{
-		return 0;
+		return 90; // FIXME
 	}
 	
 	@Override

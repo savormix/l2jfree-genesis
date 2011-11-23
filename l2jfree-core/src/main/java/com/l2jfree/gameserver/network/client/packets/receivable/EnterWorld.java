@@ -145,5 +145,8 @@ public abstract class EnterWorld extends L2ClientPacket
 		// send NevitBlessingInfo
 		// send effect icons
 		// and more... but it gets rather messy here.
+		
+		activeChar.getPosition().spawn();
+		activeChar.getKnownList().updateKnownList(true);
 	}
 }

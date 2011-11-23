@@ -25,6 +25,8 @@ import com.l2jfree.util.Introspection;
 public abstract class CharacterAI implements ICharacterAI
 {
 	private final L2Character _activeChar;
+	// FIXME implement proper desire management
+	private AIDesire _desire;
 	
 	protected CharacterAI(L2Character activeChar)
 	{
@@ -54,6 +56,7 @@ public abstract class CharacterAI implements ICharacterAI
 		// TODO
 		// adds a new desire
 		_log.info(getActiveChar() + ".addDesire(): " + Introspection.toString(desire));
+		_desire = desire;
 		
 		think();
 	}
@@ -64,6 +67,7 @@ public abstract class CharacterAI implements ICharacterAI
 		// TODO
 		// replaces all previous desire with the given one
 		_log.info(getActiveChar() + ".setDesire(): " + Introspection.toString(desire));
+		_desire = desire;
 		
 		think();
 	}
@@ -74,15 +78,15 @@ public abstract class CharacterAI implements ICharacterAI
 		// TODO
 		// remove all previous desires
 		_log.info(getActiveChar() + ".clearDesires(): ");
+		_desire = null;
 	}
 	
-	@SuppressWarnings("null")
 	public void think()
 	{
 		// TODO implement
 		// check if it "can" think right now
 		// if yes, then find most important desire, 
-		AIDesire mostDesired = null;
+		AIDesire mostDesired = _desire;
 		
 		// and behave according to it... schedule asynchronously if necessary
 		if (mostDesired != null)
@@ -98,6 +102,8 @@ public abstract class CharacterAI implements ICharacterAI
 	public void onIntentionMove(int x, int y, int z)
 	{
 		// do nothing at default
+		// TODO not every AI should have move capability
+		getActiveChar().getMovement().moveToLocation(x, y, z);
 	}
 	
 	public void onIntentionOnAction(L2Object target, boolean cantMove, boolean forceAttack)

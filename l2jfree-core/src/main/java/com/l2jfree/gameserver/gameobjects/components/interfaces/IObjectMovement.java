@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.gameobjects.components.interfaces;
 
+import com.l2jfree.gameserver.gameobjects.L2Object;
 import com.l2jfree.gameserver.gameobjects.components.IComponent;
 
 /**
@@ -26,6 +27,10 @@ public interface IObjectMovement extends IComponent
 	public int getDestinationY();
 	
 	public int getDestinationZ();
+	
+	public void moveToPawn(L2Object destination, int offset);
+	
+	public void moveToLocation(int x, int y, int z);
 	
 	public void updatePosition();
 	
