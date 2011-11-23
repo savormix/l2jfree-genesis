@@ -17,13 +17,14 @@ package com.l2jfree.gameserver.gameobjects;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IObjectMovement;
 import com.l2jfree.gameserver.network.client.packets.sendable.MoveToLocation.Move;
 import com.l2jfree.gameserver.network.client.packets.sendable.MoveToPawn.Follow;
+import com.l2jfree.gameserver.network.client.packets.sendable.StopMove.Arrived;
 import com.l2jfree.gameserver.util.MovementController;
 import com.l2jfree.lang.L2Math;
 
 /**
  * @author NB4L1
  */
-public abstract class ObjectMovement implements IObjectMovement
+public class ObjectMovement implements IObjectMovement
 {
 	private final L2Object _activeChar;
 	
@@ -64,6 +65,7 @@ public abstract class ObjectMovement implements IObjectMovement
 		return _destinationZ;
 	}
 	
+	@Override
 	public void moveToPawn(L2Object destination, int offset)
 	{
 		_destinationX = 0;
@@ -88,6 +90,7 @@ public abstract class ObjectMovement implements IObjectMovement
 		MovementController.getInstance().startMovement(_activeChar);
 	}
 	
+	@Override
 	public void moveToLocation(int x, int y, int z)
 	{
 		_destinationX = x;
@@ -148,7 +151,7 @@ public abstract class ObjectMovement implements IObjectMovement
 		final double diffY = destY - currY;
 		final double diffZ = destZ - currZ;
 		
-		final double moveSpeed = 0; // FIXME cha.getStat()./*getMoveSpeed()*/getRunSpeed()
+		final double moveSpeed = 100; // FIXME cha.getStat()./*getMoveSpeed()*/getRunSpeed()
 		final double timeSpent = System.currentTimeMillis() - _lastMovedTimestamp;
 		
 		final double distMoved = moveSpeed * timeSpent / 1000.0;
@@ -238,6 +241,7 @@ public abstract class ObjectMovement implements IObjectMovement
 	{
 		// TODO
 		
+		((L2Character)getActiveChar()).broadcastPacket(new Arrived((L2Character)getActiveChar()));
 		getActiveChar().getKnownList().updateKnownList(true);
 	}
 }

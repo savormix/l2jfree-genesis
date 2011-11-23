@@ -63,9 +63,9 @@ public class PlayerPosition extends CharacterPosition
 			_log.info(getActiveChar() + " clientHeading: " + clientHeading);
 		
 		// FIXME only temporarily while we don't have proper movement
-		setXYZ(clientX, clientY, clientZ);
-		if (clientHeading != Integer.MAX_VALUE)
-			setHeading(clientHeading);
+		//setXYZ(clientX, clientY, clientZ);
+		//if (clientHeading != Integer.MAX_VALUE)
+		//	setHeading(clientHeading);
 		
 		// TODO: perhaps make an iterative task instead of replying every time
 		// even though we have flood protection
