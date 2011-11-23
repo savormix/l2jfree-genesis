@@ -86,6 +86,8 @@ public abstract class PacketHandler<T extends MMOConnection<T, RP, SP>, RP exten
 		sb.append(", Client: ").append(client);
 		sb.append("\r\n");
 		
+		// FIXME reactivate on live
+		/*
 		if (buf != null)
 		{
 			byte[] array = new byte[buf.remaining()];
@@ -93,6 +95,7 @@ public abstract class PacketHandler<T extends MMOConnection<T, RP, SP>, RP exten
 			sb.append(HexUtil.printData(array));
 			sb.append("\r\n");
 		}
+		*/
 		
 		MMOController._log.info(sb.moveToString());
 	}
