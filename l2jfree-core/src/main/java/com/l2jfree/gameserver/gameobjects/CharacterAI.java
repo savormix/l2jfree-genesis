@@ -54,7 +54,7 @@ public abstract class CharacterAI implements ICharacterAI
 	{
 		// TODO
 		// adds a new desire
-		_log.info(getActiveChar() + ".addDesire(): " + Introspection.toString(desire));
+		_log.info(getActiveChar().toShortString() + ", addDesire(): " + Introspection.toString(desire));
 		_desire = desire;
 		
 		think();
@@ -65,7 +65,7 @@ public abstract class CharacterAI implements ICharacterAI
 	{
 		// TODO
 		// replaces all previous desire with the given one
-		_log.info(getActiveChar() + ".setDesire(): " + Introspection.toString(desire));
+		_log.info(getActiveChar().toShortString() + ", setDesire(): " + Introspection.toString(desire));
 		_desire = desire;
 		
 		think();
@@ -76,7 +76,7 @@ public abstract class CharacterAI implements ICharacterAI
 	{
 		// TODO
 		// remove all previous desires
-		_log.info(getActiveChar() + ".clearDesires(): ");
+		_log.info(getActiveChar().toShortString() + ", clearDesires(): ");
 		_desire = null;
 	}
 	

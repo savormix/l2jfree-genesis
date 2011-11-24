@@ -58,9 +58,8 @@ public class PlayerPosition extends CharacterPosition
 	public void setClientPosition(int clientX, int clientY, int clientZ, int clientHeading)
 	{
 		// TODO add some semi-validation for received data from client, BUT DO NOT TAKE IT AS VALID!
-		_log.info(getActiveChar() + " clientX: " + clientX + ", clientY: " + clientY + ", clientZ: " + clientZ);
-		if (clientHeading != Integer.MAX_VALUE)
-			_log.info(getActiveChar() + " clientHeading: " + clientHeading);
+		_log.info(getActiveChar().toShortString() + ", clientX: " + clientX + ", clientY: " + clientY + ", clientZ: "
+				+ clientZ + (clientHeading != Integer.MAX_VALUE ? ", clientHeading: " + clientHeading : ""));
 		
 		// FIXME only temporarily while we don't have proper movement
 		//setXYZ(clientX, clientY, clientZ);
