@@ -18,6 +18,7 @@ import com.l2jfree.gameserver.gameobjects.components.interfaces.IObjectMovement;
 import com.l2jfree.gameserver.network.client.packets.sendable.MoveToLocation.Move;
 import com.l2jfree.gameserver.network.client.packets.sendable.MoveToPawn.Follow;
 import com.l2jfree.gameserver.network.client.packets.sendable.StopMove.Arrived;
+import com.l2jfree.gameserver.util.Geometry;
 import com.l2jfree.gameserver.util.MovementController;
 import com.l2jfree.lang.L2Math;
 
@@ -87,6 +88,10 @@ public class ObjectMovement implements IObjectMovement
 			// TODO vehicles, etc
 		}
 		
+		// TODO
+		final ObjectPosition pos = getActiveChar().getPosition();
+		pos.setHeading(Geometry.calculateHeadingFrom(getActiveChar(), _destination));
+		
 		MovementController.getInstance().startMovement(_activeChar);
 	}
 	
@@ -111,6 +116,10 @@ public class ObjectMovement implements IObjectMovement
 		{
 			// TODO vehicles, etc
 		}
+		
+		// TODO
+		final ObjectPosition pos = getActiveChar().getPosition();
+		pos.setHeading(Geometry.calculateHeadingFrom(pos.getX(), pos.getY(), _destinationX, _destinationY));
 		
 		MovementController.getInstance().startMovement(_activeChar);
 	}
@@ -159,6 +168,8 @@ public class ObjectMovement implements IObjectMovement
 		
 		if (_destination != null)
 		{
+			pos.setHeading(Geometry.calculateHeadingFrom(getActiveChar(), _destination));
+			
 			final double offset = _destinationOffset;
 			final double collisionRadius = 0; // FIXME collision radius
 			
