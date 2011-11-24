@@ -17,25 +17,6 @@ package com.l2jfree.gameserver.network.client;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.gameserver.network.client.packets.receivable.Action;
-import com.l2jfree.gameserver.network.client.packets.receivable.Attack;
-import com.l2jfree.gameserver.network.client.packets.receivable.AttackRequest;
-import com.l2jfree.gameserver.network.client.packets.receivable.EnterWorld;
-import com.l2jfree.gameserver.network.client.packets.receivable.ExGetOnAirShip;
-import com.l2jfree.gameserver.network.client.packets.receivable.Logout;
-import com.l2jfree.gameserver.network.client.packets.receivable.MoveBackwardToLocation;
-import com.l2jfree.gameserver.network.client.packets.receivable.NetPing;
-import com.l2jfree.gameserver.network.client.packets.receivable.RequestManorList;
-import com.l2jfree.gameserver.network.client.packets.receivable.RequestRestart;
-import com.l2jfree.gameserver.network.client.packets.receivable.Say2;
-import com.l2jfree.gameserver.network.client.packets.receivable.ValidatePosition;
-import com.l2jfree.gameserver.network.client.packets.receivable.accountless.AuthLogin;
-import com.l2jfree.gameserver.network.client.packets.receivable.accountless.ProtocolVersion;
-import com.l2jfree.gameserver.network.client.packets.receivable.characterless.CharacterDeletePacket;
-import com.l2jfree.gameserver.network.client.packets.receivable.characterless.CharacterRestorePacket;
-import com.l2jfree.gameserver.network.client.packets.receivable.characterless.CharacterSelect;
-import com.l2jfree.gameserver.network.client.packets.receivable.characterless.NewCharacter;
-import com.l2jfree.gameserver.network.client.packets.receivable.characterless.NewCharacterPacket;
-import com.l2jfree.gameserver.network.client.packets.receivable.characterless.RequestAvailableCharacters;
 import com.l2jfree.network.mmocore.packethandlers.PacketHandlerBuilder;
 import com.l2jfree.network.mmocore.packethandlers.ThreeLevelPacketHandler;
 
@@ -80,6 +61,7 @@ public final class L2ExperimentalPacketHandler extends
 				new PacketHandlerBuilder<L2Client, L2ClientPacket, L2ServerPacket, L2ClientState>(L2ClientState.class,
 						L2ClientState.LOGGED_IN);
 		
+		/*
 		// CONNECTED
 		dph.addPacket(ProtocolVersion.class);
 		
@@ -112,8 +94,9 @@ public final class L2ExperimentalPacketHandler extends
 		// CHARACTER_MANAGEMENT, CHARACTER_SELECTED, LOGGED_IN
 		dph.addPacket(Logout.class);
 		dph.addPacket(NetPing.UptimeResponse.class);
+		*/
 		
-		//dph.addPackets(Action.class.getPackage().getName());
+		dph.addPackets(Action.class.getPackage().getName());
 		
 		return dph;
 	}

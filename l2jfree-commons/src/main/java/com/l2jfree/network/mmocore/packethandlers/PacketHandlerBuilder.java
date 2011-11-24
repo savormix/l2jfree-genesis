@@ -21,6 +21,7 @@ import com.l2jfree.network.mmocore.MMOConnection;
 import com.l2jfree.network.mmocore.ReceivablePacket;
 import com.l2jfree.network.mmocore.SendablePacket;
 import com.l2jfree.util.HexUtil;
+import com.l2jfree.util.logging.L2Logger;
 
 /**
  * @author NB4L1
@@ -33,6 +34,8 @@ import com.l2jfree.util.HexUtil;
 @SuppressWarnings("unchecked")
 public final class PacketHandlerBuilder<T extends MMOConnection<T, RP, SP>, RP extends ReceivablePacket<T, RP, SP>, SP extends SendablePacket<T, RP, SP>, S extends Enum<S>>
 {
+	private static final L2Logger _log = L2Logger.getLogger(PacketHandlerBuilder.class);
+	
 	private final int _enumValuesLength;
 	private final S[] _defaultStates;
 	private final Handler _rootHandler = new Handler(0);
@@ -48,16 +51,31 @@ public final class PacketHandlerBuilder<T extends MMOConnection<T, RP, SP>, RP e
 	
 	public void addPacket(Class<? extends RP> clazz) throws Exception
 	{
+		addPacket(clazz, true);
+	}
+	
+	public void addPacket(Class<? extends RP> clazz, boolean strict) throws Exception
+	{
 		final PacketDefinition<T, RP, SP, S> packetDefinition =
 				new PacketDefinition<T, RP, SP, S>(clazz, _defaultStates);
 		
-		_rootHandler.addPacketDefinition(packetDefinition);
+		try
+		{
+			_rootHandler.addPacketDefinition(packetDefinition);
+		}
+		catch (Exception e)
+		{
+			if (strict)
+				throw e;
+			else
+				_log.info("", e);
+		}
 	}
 	
 	public void addPackets(String packageName) throws Exception
 	{
 		for (Class<?> c : PacketDefinition.findClasses(packageName))
-			addPacket((Class<? extends RP>)c);
+			addPacket((Class<? extends RP>)c, false);
 	}
 	
 	public Handler getRootHandler()
@@ -87,7 +105,8 @@ public final class PacketHandlerBuilder<T extends MMOConnection<T, RP, SP>, RP e
 				
 				for (S state : packetDefinition.getStates())
 					if (_definitionsByState.containsKey(state))
-						throw new Exception("Conflicting definitions: " + packetDefinition);
+						throw new Exception("Conflicting definitions:\r\n\t\t" + packetDefinition + "\r\n\t\t"
+								+ _definitionsByState.get(state));
 				
 				for (S state : packetDefinition.getStates())
 					_definitionsByState.put(state, packetDefinition);
