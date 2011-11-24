@@ -28,9 +28,11 @@ import com.l2jfree.gameserver.network.client.packets.receivable.ExGetOnAirShip;
 import com.l2jfree.gameserver.network.client.packets.receivable.Logout;
 import com.l2jfree.gameserver.network.client.packets.receivable.MoveBackwardToLocation;
 import com.l2jfree.gameserver.network.client.packets.receivable.NetPing;
+import com.l2jfree.gameserver.network.client.packets.receivable.RequestBypassToServer;
 import com.l2jfree.gameserver.network.client.packets.receivable.RequestManorList;
 import com.l2jfree.gameserver.network.client.packets.receivable.RequestRestart;
 import com.l2jfree.gameserver.network.client.packets.receivable.Say2;
+import com.l2jfree.gameserver.network.client.packets.receivable.SendBypassBuildCmd;
 import com.l2jfree.gameserver.network.client.packets.receivable.ValidatePosition;
 import com.l2jfree.gameserver.network.client.packets.receivable.accountless.AuthLogin;
 import com.l2jfree.gameserver.network.client.packets.receivable.accountless.ProtocolVersion;
@@ -166,6 +168,11 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 					return new Action.RequestInteraction();
 				return invalidState(client, Action.class, opcode);
 				
+			case RequestBypassToServer.OPCODE: // 0x23
+				if (client.stateEquals(LOGGED_IN))
+					return new RequestBypassToServer.RequestHtmlCommand();
+				return invalidState(client, RequestBypassToServer.class, opcode);
+				
 			case AttackRequest.OPCODE: // 0x32
 				if (client.stateEquals(LOGGED_IN))
 					return new AttackRequest.RequestAttack();
@@ -185,6 +192,11 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 				if (client.stateEquals(LOGGED_IN))
 					return new ValidatePosition.ReportLocation();
 				return invalidState(client, ValidatePosition.class, opcode);
+				
+			case SendBypassBuildCmd.OPCODE: // 0x74
+				if (client.stateEquals(LOGGED_IN))
+					return new SendBypassBuildCmd.RequestMasterCommand();
+				return invalidState(client, SendBypassBuildCmd.class, opcode);
 				
 			default:
 				return unknown(buf, client, opcode);
