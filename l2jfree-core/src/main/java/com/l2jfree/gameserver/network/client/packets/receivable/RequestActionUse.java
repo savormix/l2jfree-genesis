@@ -17,6 +17,7 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 import java.nio.BufferUnderflowException;
 
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
+import com.l2jfree.gameserver.network.client.packets.sendable.UserInfo.MyPlayerInfo;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
@@ -54,5 +55,8 @@ public class RequestActionUse extends L2ClientPacket
 		// TODO: implement
 		System.out.println("RequestActionUse.runImpl() - actionId: " + _actionId + ", ctrlPressed: " + _ctrlPressed
 				+ ", shiftPressed: " + _shiftPressed);
+		
+		// FIXME remove once it's not used anymore
+		getClient().sendPacket(MyPlayerInfo.PACKET);
 	}
 }

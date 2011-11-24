@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.CharacterStat.Element;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerView;
@@ -82,7 +83,8 @@ public abstract class UserInfo extends StaticPacket
 		buf.writeD(view.getMainClassId()); // Main class
 		buf.writeD(view.getLevel()); // Level
 		buf.writeQ(view.getExp()); // XP
-		buf.writeF(view.getExpPercent()); // XP %
+		if (client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.HIGH_FIVE))
+			buf.writeF(view.getExpPercent()); // XP %
 		buf.writeD(view.getSTR()); // STR
 		buf.writeD(view.getDEX()); // DEX
 		buf.writeD(view.getCON()); // CON
