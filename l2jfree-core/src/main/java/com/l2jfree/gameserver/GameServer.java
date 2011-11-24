@@ -25,6 +25,7 @@ import com.l2jfree.gameserver.datatables.PlayerNameTable;
 import com.l2jfree.gameserver.datatables.PlayerTemplateTable;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.gameobjects.components.ComponentFactory;
+import com.l2jfree.gameserver.handlers.admincommand.AdminCommandHandler;
 import com.l2jfree.gameserver.network.client.Disconnection;
 import com.l2jfree.gameserver.network.client.L2ClientController;
 import com.l2jfree.gameserver.network.loginserver.legacy.L2LegacyLoginServerController;
@@ -75,6 +76,8 @@ public final class GameServer extends Config
 		Util.printSection("Templates");
 		
 		PlayerTemplateTable.getInstance();
+		
+		L2Config.load(AdminCommandHandler.class);
 		
 		Util.printSection("Network");
 		

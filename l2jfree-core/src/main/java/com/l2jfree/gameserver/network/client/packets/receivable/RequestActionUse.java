@@ -35,19 +35,24 @@ public class RequestActionUse extends L2ClientPacket
 	}
 	
 	/* Fields for storing read data */
+	private int _actionId;
+	private boolean _ctrlPressed;
+	private boolean _shiftPressed;
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.readD(); // Action
-		buf.readD(); // Ctrl (force attack)
-		buf.readC(); // Shift (do not move)
+		_actionId = buf.readD(); // Action
+		_ctrlPressed = buf.readD() == 1; // Ctrl (force attack)
+		_shiftPressed = buf.readC() == 1; // Shift (do not move)
 	}
 	
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		// TODO: implement
+		System.out.println("RequestActionUse.runImpl() - actionId: " + _actionId + ", ctrlPressed: " + _ctrlPressed
+				+ ", shiftPressed: " + _shiftPressed);
 	}
 }

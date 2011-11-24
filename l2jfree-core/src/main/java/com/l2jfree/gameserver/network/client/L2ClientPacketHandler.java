@@ -28,6 +28,7 @@ import com.l2jfree.gameserver.network.client.packets.receivable.ExGetOnAirShip;
 import com.l2jfree.gameserver.network.client.packets.receivable.Logout;
 import com.l2jfree.gameserver.network.client.packets.receivable.MoveBackwardToLocation;
 import com.l2jfree.gameserver.network.client.packets.receivable.NetPing;
+import com.l2jfree.gameserver.network.client.packets.receivable.RequestActionUse;
 import com.l2jfree.gameserver.network.client.packets.receivable.RequestBypassToServer;
 import com.l2jfree.gameserver.network.client.packets.receivable.RequestManorList;
 import com.l2jfree.gameserver.network.client.packets.receivable.RequestRestart;
@@ -182,6 +183,11 @@ public final class L2ClientPacketHandler extends PacketHandler<L2Client, L2Clien
 				if (client.stateEquals(LOGGED_IN))
 					return new Say2.RequestSendChatMessage();
 				return invalidState(client, Say2.class, opcode);
+				
+			case RequestActionUse.OPCODE: // 0x56
+				if (client.stateEquals(LOGGED_IN))
+					return new RequestActionUse();
+				return invalidState(client, RequestActionUse.class, opcode);
 				
 			case RequestRestart.OPCODE: // 0x57
 				if (client.stateEquals(LOGGED_IN))
