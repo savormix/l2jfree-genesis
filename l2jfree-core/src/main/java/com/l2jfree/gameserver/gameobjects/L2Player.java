@@ -59,6 +59,7 @@ import com.l2jfree.lang.L2TextBuilder;
 @ViewComponent(PlayerView.class)
 @InventoryComponent(PlayerInventory.class)
 @AppearanceComponent(PlayerAppearance.class)
+@SuppressWarnings("static-method")
 public class L2Player extends L2Character implements IL2Playable, PlayerNameTable.IPlayerInfo
 {
 	public static void disconnectIfOnline(PersistentId persistentId)
@@ -341,5 +342,10 @@ public class L2Player extends L2Character implements IL2Playable, PlayerNameTabl
 	public void sendMessage(String message)
 	{
 		sendPacket(SystemMessage.valueOf(message));
+	}
+	
+	public boolean isTransformed()
+	{
+		return false; // FIXME
 	}
 }

@@ -25,6 +25,7 @@ import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.sendable.EtcStatusUpdatePacket.EtcEffectIcons;
 import com.l2jfree.gameserver.network.client.packets.sendable.ExBRExtraUserInfo.EventPlayerInfo;
 import com.l2jfree.gameserver.network.client.packets.sendable.ExBRPremiumState.PremiumPlayerInfo;
+import com.l2jfree.gameserver.network.client.packets.sendable.ExBasicActionList.ActionList;
 import com.l2jfree.gameserver.network.client.packets.sendable.ExGetBookMarkInfoPacket.MyTeleportBookmarkList;
 import com.l2jfree.gameserver.network.client.packets.sendable.ExQuestItemList.QuestInventory;
 import com.l2jfree.gameserver.network.client.packets.sendable.ExSearchOrc.DemandProcessBlock;
@@ -145,6 +146,8 @@ public abstract class EnterWorld extends L2ClientPacket
 		// send NevitBlessingInfo
 		// send effect icons
 		// and more... but it gets rather messy here.
+		
+		activeChar.sendPacket(ActionList.PACKET);
 		
 		activeChar.getPosition().spawn();
 		activeChar.getKnownList().updateKnownList(true);
