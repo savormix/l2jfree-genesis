@@ -21,7 +21,6 @@ import com.l2jfree.util.Introspection;
 /**
  * @author hex1r0
  */
-@SuppressWarnings("unused")
 public abstract class CharacterAI implements ICharacterAI
 {
 	private final L2Character _activeChar;
@@ -99,6 +98,7 @@ public abstract class CharacterAI implements ICharacterAI
 	}
 	
 	// intention handlers
+	@Override
 	public void onIntentionMove(int x, int y, int z)
 	{
 		// do nothing at default
@@ -106,12 +106,14 @@ public abstract class CharacterAI implements ICharacterAI
 		getActiveChar().getMovement().moveToLocation(x, y, z);
 	}
 	
+	@Override
 	public void onIntentionOnAction(L2Object target, boolean cantMove, boolean forceAttack)
 	{
 		// do nothing at default
 	}
 	
 	// event handlers
+	@Override
 	public void onEventArrived()
 	{
 		// do nothing at default

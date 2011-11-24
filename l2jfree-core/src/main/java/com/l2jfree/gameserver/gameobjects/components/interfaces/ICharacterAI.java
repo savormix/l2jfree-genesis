@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.gameobjects.components.interfaces;
 
+import com.l2jfree.gameserver.gameobjects.L2Object;
 import com.l2jfree.gameserver.gameobjects.ai.AIDesire;
 import com.l2jfree.gameserver.gameobjects.components.IComponent;
 
@@ -31,6 +32,12 @@ public interface ICharacterAI extends IComponent
 	public void setDesire(AIDesire desire);
 	
 	public void clearDesires();
+	
+	public void onEventArrived();
+	
+	public void onIntentionOnAction(L2Object target, boolean cantMove, boolean forceAttack);
+	
+	public void onIntentionMove(int x, int y, int z);
 	
 	// TODO	
 }
