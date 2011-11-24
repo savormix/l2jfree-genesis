@@ -18,6 +18,7 @@ import com.l2jfree.gameserver.gameobjects.CharacterPosition;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.packets.sendable.ValidateLocation.UpdateLocation;
 import com.l2jfree.gameserver.sql.PlayerDB;
+import com.l2jfree.lang.L2Math;
 
 /**
  * @author NB4L1
@@ -69,6 +70,10 @@ public class PlayerPosition extends CharacterPosition
 		// TODO: perhaps make an iterative task instead of replying every time
 		// even though we have flood protection
 		// broadcast?
-		getActiveChar().sendPacket(new UpdateLocation(getActiveChar()));
+		final double diff = L2Math.calculateDistance(getX(), getY(), getZ(), clientX, clientY, clientZ);
+		
+		// FIXME z calculation - especially during falling - could mess things up
+		if (diff > 100)
+			getActiveChar().sendPacket(new UpdateLocation(getActiveChar()));
 	}
 }
