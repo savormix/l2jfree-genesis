@@ -17,6 +17,7 @@ package com.l2jfree.security;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.network.mmocore.MMOBuffer;
 import com.l2jfree.util.HexUtil;
 import com.l2jfree.util.Rnd;
@@ -45,6 +46,8 @@ public final class ObfuscationService
 	private static final int HAS_SECOND = 0xD0;
 	// TODO: private static final int HAS_THIRD = 0x51;
 	
+	private final ClientProtocolVersion _version;
+	
 	private long _seed;
 	private boolean _seeded;
 	private boolean _initialized;
@@ -59,9 +62,14 @@ public final class ObfuscationService
 	private byte[] _encodeTable2;
 	private byte[] _encodeTable3;
 	
-	/** Constructs an uninitialized service. */
-	public ObfuscationService()
+	/**
+	 * Constructs an uninitialized service.
+	 * 
+	 * @param version protocol version
+	 */
+	public ObfuscationService(ClientProtocolVersion version)
 	{
+		_version = version;
 		_seeded = false;
 		_initialized = false;
 	}
@@ -125,7 +133,7 @@ public final class ObfuscationService
 		int cpos;
 		
 		_s1 = 0xD0;
-		_s2 = 0x97; // High Five last part, perhaps more
+		_s2 = _version.getOp2TableSize();
 		_s3 = 0x64; // O_o TODO: GF+ triple opcodes
 		
 		_decodeTable1 = new byte[_s1 + 1];
@@ -164,6 +172,7 @@ public final class ObfuscationService
 			}
 			
 			// non-obfuscated main opcodes
+			// FIXME: move to ClientProtocolVersion
 			cpos = 0;
 			while (_decodeTable1[cpos] != 0x12)
 				cpos++;
@@ -192,6 +201,16 @@ public final class ObfuscationService
 			_decodeTable1[0xD0] = (byte)0xD0;
 			_decodeTable1[cpos] = tmp;
 			
+			for (int op : _version.getIgnoredOp1s())
+			{
+				cpos = 0;
+				while (_decodeTable1[cpos] != (byte)op)
+					cpos++;
+				tmp = _decodeTable1[op];
+				_decodeTable1[op] = (byte)op;
+				_decodeTable1[cpos] = tmp;
+			}
+			
 			// non-obfuscated 2nd opcodes
 			cpos = 0;
 			while (_decodeTable2[cpos] != 0x74)
@@ -199,6 +218,16 @@ public final class ObfuscationService
 			tmp = _decodeTable2[0x74];
 			_decodeTable2[0x74] = 0x74;
 			_decodeTable2[cpos] = tmp;
+			
+			for (int op : _version.getIgnoredOp2s())
+			{
+				cpos = 0;
+				while (_decodeTable2[cpos] != (byte)op)
+					cpos++;
+				tmp = _decodeTable2[op];
+				_decodeTable2[op] = (byte)op;
+				_decodeTable2[cpos] = tmp;
+			}
 		}
 		
 		// mirrored obfuscation tables
@@ -380,7 +409,7 @@ public final class ObfuscationService
 	 */
 	public static void test() throws InternalError
 	{
-		ObfuscationService os = new ObfuscationService();
+		ObfuscationService os = new ObfuscationService(ClientProtocolVersion.FREYA);
 		os.init(Rnd.nextLong());
 		final byte[] opcodes = { (byte)0xD0, (byte)0xFF, 0x00 };
 		ByteBuffer bb = ByteBuffer.wrap(opcodes);

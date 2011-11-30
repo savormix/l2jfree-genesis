@@ -43,9 +43,8 @@ import com.l2jfree.util.concurrent.RunnableStatsManager;
 public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2ServerPacket> implements IL2Client
 {
 	private ClientProtocolVersion _version;
+	private ObfuscationService _deobfuscator;
 	private ICipher _cipher;
-	
-	private final ObfuscationService _deobfuscator;
 	
 	private volatile L2ClientState _state;
 	private int _bitsInBlock;
@@ -69,10 +68,11 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 		// TODO Auto-generated constructor stub
 		_cipher = new EmptyCipher();
 		
-		_deobfuscator = new ObfuscationService();
-		
 		_state = L2ClientState.CONNECTED;
 		_bitsInBlock = 0;
+		
+		// default (before we actually know it) and not important
+		setVersion(ClientProtocolVersion.FREYA);
 	}
 	
 	@Override
@@ -220,6 +220,7 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 	public void setVersion(ClientProtocolVersion version)
 	{
 		_version = version;
+		_deobfuscator = new ObfuscationService(version);
 	}
 	
 	private ICipher getCipher()

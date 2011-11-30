@@ -23,7 +23,9 @@ import com.l2jfree.util.ArrayBunch;
 public enum DatapackVersion
 {
 	FREYA(ClientProtocolVersion.FREYA, ClientProtocolVersion.HIGH_FIVE_UPDATE_3, true),
-	HIGH_FIVE(ClientProtocolVersion.HIGH_FIVE_UPDATE_3, ClientProtocolVersion.HIGH_FIVE_UPDATE_3, false);
+	HIGH_FIVE(ClientProtocolVersion.HIGH_FIVE_UPDATE_3, ClientProtocolVersion.HIGH_FIVE_UPDATE_3, false),
+	GODDESS_OF_DESTRUCTION(ClientProtocolVersion.GODDESS_OF_DESTRUCTION, ClientProtocolVersion.GODDESS_OF_DESTRUCTION,
+			true);
 	
 	private final ClientProtocolVersion[] _supportedClientProtocolVersions;
 	private final boolean _enabled;

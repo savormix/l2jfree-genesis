@@ -59,6 +59,8 @@ public final class Datapack
 			case FREYA:
 				return new File(DATAPACK_ROOT, "data");
 			case HIGH_FIVE:
+			case GODDESS_OF_DESTRUCTION:
+				return new File(DATAPACK_ROOT, "data");
 			default:
 				throw new IllegalStateException(VersionConfig.DATAPACK_VERSION + " isn't supported yet!");
 		}

@@ -14,30 +14,60 @@
  */
 package com.l2jfree;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 /**
  * @author NB4L1
  */
 // dates can be wrong
 public enum ClientProtocolVersion
 {
+	// TODO: move obfuscation stuff here
 	FREYA(216, true), // 2010-08-24
 	HIGH_FIVE(267, false), // 2011-02-15
 	HIGH_FIVE_UPDATE_1(268, false), // 2011-03-15
 	HIGH_FIVE_UPDATE_2(271, false), // 2011-05-25
-	HIGH_FIVE_UPDATE_3(273, false); // 2011-06-08
+	HIGH_FIVE_UPDATE_3(273, true), // 2011-06-08
+	GODDESS_OF_DESTRUCTION(415, 0xBF, null, new int[] { 0x73 }, true); // 2011-11-30
 	
 	private final int _version;
+	private final int _op2TableSize;
+	private final int[] _ignoredOp1s;
+	private final int[] _ignoredOp2s;
 	private final boolean _enabled;
+	
+	private ClientProtocolVersion(int version, int op2TableSize, int[] ignoredOp1s, int[] ignoredOp2s, boolean enabled)
+	{
+		_version = version;
+		_op2TableSize = op2TableSize;
+		_ignoredOp1s = ArrayUtils.nullToEmpty(ignoredOp1s);
+		_ignoredOp2s = ArrayUtils.nullToEmpty(ignoredOp2s);
+		_enabled = enabled;
+	}
 	
 	private ClientProtocolVersion(int version, boolean enabled)
 	{
-		_version = version;
-		_enabled = enabled;
+		this(version, 0x97, null, null, enabled);
 	}
 	
 	private int getVersion()
 	{
 		return _version;
+	}
+	
+	public int getOp2TableSize()
+	{
+		return _op2TableSize;
+	}
+	
+	public int[] getIgnoredOp1s()
+	{
+		return _ignoredOp1s;
+	}
+	
+	public int[] getIgnoredOp2s()
+	{
+		return _ignoredOp2s;
 	}
 	
 	public boolean isEnabled()
