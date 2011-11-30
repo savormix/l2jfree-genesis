@@ -104,5 +104,6 @@ public abstract class ExReplyReceivedPost extends L2ServerPacket
 		buf.writeQ(0L); // Price
 		buf.writeD(0); // Attachment(s)
 		buf.writeD(0); // Starred
+		buf.writeD(0); // ???
 	}
 }

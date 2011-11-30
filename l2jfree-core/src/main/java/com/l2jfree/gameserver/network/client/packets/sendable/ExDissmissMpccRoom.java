@@ -14,13 +14,32 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
-import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
-
 /**
  * @author savormix (generated)
  */
-public class ExDissmissMpccRoom extends L2ServerPacket
+public abstract class ExDissmissMpccRoom extends StaticPacket
 {
+	/**
+	 * A nicer name for {@link ExDissmissMpccRoom}.
+	 * 
+	 * @author savormix (generated)
+	 * @see ExDissmissMpccRoom
+	 */
+	public static final class CommandChannelRoomClosed extends ExDissmissMpccRoom
+	{
+		/** This packet. */
+		public static final CommandChannelRoomClosed PACKET = new CommandChannelRoomClosed();
+		
+		/**
+		 * Constructs this packet.
+		 * 
+		 * @see ExDissmissMpccRoom#ExDissmissMpccRoom()
+		 */
+		private CommandChannelRoomClosed()
+		{
+		}
+	}
+	
 	private static final int[] EXT_OPCODES = { 0x9d, 0x00 };
 	
 	/** Constructs this packet. */

@@ -23,8 +23,19 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 /**
  * @author savormix (generated)
  */
-public class RequestWithdrawMpccRoom extends L2ClientPacket
+public abstract class RequestWithdrawMpccRoom extends L2ClientPacket
 {
+	/**
+	 * A nicer name for {@link RequestWithdrawMpccRoom}.
+	 * 
+	 * @author savormix (generated)
+	 * @see RequestWithdrawMpccRoom
+	 */
+	public static final class RequestLeaveCommandChannelRoom extends RequestWithdrawMpccRoom
+	{
+		// only for convenience
+	}
+	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */

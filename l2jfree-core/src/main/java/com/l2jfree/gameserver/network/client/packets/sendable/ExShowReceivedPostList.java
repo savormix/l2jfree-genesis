@@ -80,7 +80,7 @@ public abstract class ExShowReceivedPostList extends L2ServerPacket
 			buf.writeD(0); // Has attachment(s)
 			buf.writeD(0); // Starred
 			buf.writeD(0); // News
-			buf.writeD(0); // 0
+			buf.writeD(0); // Sender character ID
 		}
 	}
 }

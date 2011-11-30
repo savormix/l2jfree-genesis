@@ -30,14 +30,14 @@ public abstract class ExPCCafePointInfoPacket extends L2ServerPacket
 	 * @author savormix (generated)
 	 * @see ExPCCafePointInfoPacket
 	 */
-	public static final class CafePointInfo extends ExPCCafePointInfoPacket
+	public static final class PlayerCommendationPoints extends ExPCCafePointInfoPacket
 	{
 		/**
 		 * Constructs this packet.
 		 * 
 		 * @see ExPCCafePointInfoPacket#ExPCCafePointInfoPacket()
 		 */
-		public CafePointInfo()
+		public PlayerCommendationPoints()
 		{
 		}
 	}
@@ -66,9 +66,10 @@ public abstract class ExPCCafePointInfoPacket extends L2ServerPacket
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
 		buf.writeD(0); // Total points
-		buf.writeD(0); // Earned points
-		buf.writeC(0); // Period??
-		buf.writeD(0); // Hours left??
-		buf.writeC(0); // Earned color??
+		buf.writeD(0); // Earned points this session
+		buf.writeC(0); // ??? 1
+		buf.writeD(0); // ??? (decreasing, but not every 5 min)
+		buf.writeC(0); // First login this day bonus; received lottery ticket
+		buf.writeD(0); // Timer
 	}
 }

@@ -30,14 +30,14 @@ public abstract class ExListMpccWaiting extends L2ServerPacket
 	 * @author savormix (generated)
 	 * @see ExListMpccWaiting
 	 */
-	public static final class CommandChannelWaitingList extends ExListMpccWaiting
+	public static final class CommandChannelRoomList extends ExListMpccWaiting
 	{
 		/**
 		 * Constructs this packet.
 		 * 
 		 * @see ExListMpccWaiting#ExListMpccWaiting()
 		 */
-		public CommandChannelWaitingList()
+		public CommandChannelRoomList()
 		{
 		}
 	}
@@ -65,7 +65,19 @@ public abstract class ExListMpccWaiting extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.writeD(0); // ??? 1
-		buf.writeD(0); // ??? 0
+		buf.writeD(0); // Page count
+		final int sizeA = 0; // Rooms
+		buf.writeD(sizeA);
+		for (int i = 0; i < sizeA; i++)
+		{
+			buf.writeD(0); // Room ID
+			buf.writeS(""); // Leader
+			buf.writeD(0); // Region
+			buf.writeD(0); // ???
+			buf.writeD(0); // Level
+			buf.writeD(0); // ???
+			buf.writeD(0); // ???
+			buf.writeS(""); // Leader
+		}
 	}
 }

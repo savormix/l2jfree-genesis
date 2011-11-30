@@ -23,8 +23,19 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 /**
  * @author savormix (generated)
  */
-public class RequestMpccPartyMasterList extends L2ClientPacket
+public abstract class RequestMpccPartyMasterList extends L2ClientPacket
 {
+	/**
+	 * A nicer name for {@link RequestMpccPartyMasterList}.
+	 * 
+	 * @author savormix (generated)
+	 * @see RequestMpccPartyMasterList
+	 */
+	public static final class RequestCommandChannelMatchingList extends RequestMpccPartyMasterList
+	{
+		// only for convenience
+	}
+	
 	/** Packet's identifier */
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */

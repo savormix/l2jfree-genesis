@@ -14,13 +14,34 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.gameserver.gameobjects.L2Player;
+import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
+import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
  */
-public class ExMpccRoomMember extends L2ServerPacket
+public abstract class ExMpccRoomMember extends L2ServerPacket
 {
+	/**
+	 * A nicer name for {@link ExMpccRoomMember}.
+	 * 
+	 * @author savormix (generated)
+	 * @see ExMpccRoomMember
+	 */
+	public static final class CommandChannelRoomMemberList extends ExMpccRoomMember
+	{
+		/**
+		 * Constructs this packet.
+		 * 
+		 * @see ExMpccRoomMember#ExMpccRoomMember()
+		 */
+		public CommandChannelRoomMemberList()
+		{
+		}
+	}
+	
 	private static final int[] EXT_OPCODES = { 0x9f, 0x00 };
 	
 	/** Constructs this packet. */
@@ -38,5 +59,23 @@ public class ExMpccRoomMember extends L2ServerPacket
 	protected int[] getAdditionalOpcodes()
 	{
 		return EXT_OPCODES;
+	}
+	
+	@Override
+	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
+	{
+		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		buf.writeD(0); // Room ID
+		final int sizeA = 0; // Members
+		buf.writeD(sizeA);
+		for (int i = 0; i < sizeA; i++)
+		{
+			buf.writeD(0); // Member OID
+			buf.writeS(""); // Name
+			buf.writeD(0); // Class
+			buf.writeD(0); // Level
+			buf.writeD(0); // Region
+			buf.writeD(0); // ???
+		}
 	}
 }
