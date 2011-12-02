@@ -30,23 +30,29 @@ public interface ICharacterStat extends IComponent
 	
 	public double getWalkSpeed();
 	
+	public int getPAccuracy();
+	
 	public int getPAtk(Object object);
 	
 	public int getPDef(Object object);
 	
 	public int getPAtkSpd();
 	
+	public int getPEvasion(Object object);
+	
+	public int getPCriticalHit(Object object);
+	
+	public int getMAccuracy();
+	
 	public int getMAtk(Object object, Object object2);
+	
+	public int getMDef(Object object, Object object2);
 	
 	public int getMAtkSpd();
 	
-	public int getAccuracy();
+	public int getMEvasion(Object object);
 	
-	public int getEvasion(Object object);
-	
-	public int getCriticalHit(Object object);
-	
-	public int getMDef(Object object, Object object2);
+	public int getMCriticalHit(Object object);
 	
 	public int getLevel();
 	

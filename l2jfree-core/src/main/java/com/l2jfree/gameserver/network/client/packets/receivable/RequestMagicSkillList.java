@@ -16,6 +16,7 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.network.mmocore.InvalidPacketException;
@@ -43,7 +44,7 @@ public abstract class RequestMagicSkillList extends L2ClientPacket
 	@Override
 	protected int getMinimumLength()
 	{
-		return READ_D + READ_D + READ_D;
+		return READ_C + READ_C + READ_C + READ_D + READ_D;
 	}
 	
 	private int _characterId;
@@ -55,9 +56,17 @@ public abstract class RequestMagicSkillList extends L2ClientPacket
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		final ClientProtocolVersion cpv = getClient().getVersion();
+		if (cpv.isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
+		{
+			buf.readC(); // ??? 0
+			buf.readC(); // ??? 0
+			buf.readC(); // ??? 0
+		}
 		_characterId = buf.readD(); // Character ID
 		_objectId = buf.readD(); // Character OID
-		/* _id = */buf.readD(); // Master account ID?
+		if (cpv.isOlderThanOrEqualTo(ClientProtocolVersion.HIGH_FIVE_UPDATE_3))
+			/* _id = */buf.readD(); // Unknown persistent ID
 	}
 	
 	@Override

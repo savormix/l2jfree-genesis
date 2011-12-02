@@ -96,9 +96,15 @@ public abstract class CharacterSelectionInfo extends L2ServerPacket
 	protected void writeImpl(L2Client client, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		final ClientProtocolVersion cpv = client.getVersion();
 		buf.writeD(_characters.size()); // Character count
 		buf.writeD(7); // New characters
 		buf.writeC(0); // 0
+		if (cpv.isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
+		{
+			buf.writeC(1); // 1
+			buf.writeD(0); // 0
+		}
 		for (PlayerDB p : _characters)
 		{
 			buf.writeS(p.name); // Character name
@@ -174,8 +180,10 @@ public abstract class CharacterSelectionInfo extends L2ServerPacket
 			buf.writeD(0); // Total satiation incl inv food?
 			buf.writeF(0D); // Pet current HP
 			buf.writeF(0D); // Pet current MP
-			if (client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.HIGH_FIVE))
+			if (cpv.isNewerThanOrEqualTo(ClientProtocolVersion.HIGH_FIVE))
 				buf.writeD(20000); // Vitality
+			if (cpv.isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
+				buf.writeD(1); // ??? 1
 		}
 	}
 }

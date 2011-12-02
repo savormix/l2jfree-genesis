@@ -79,7 +79,7 @@ public abstract class AuthLogin extends L2ClientPacket
 		_accountId2 = buf.readD(); // Account ID??
 		_previousKey = buf.readD(); // Session key (login)
 		_unk1 = buf.readD(); // 1
-		_bitsInBlock = buf.readD(); // 512
+		_bitsInBlock = buf.readD(); // 512 (HF) 376 (GoD)
 		_unk2 = buf.readQ(); // 0
 	}
 	

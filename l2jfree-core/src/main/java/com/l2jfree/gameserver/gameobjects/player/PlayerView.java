@@ -74,7 +74,6 @@ public class PlayerView extends CharacterView implements IPlayerView
 	}
 	
 	private int _abnormalEffect;
-	private int _accuracy;
 	private int _activeClassId;
 	private int _agathionId;
 	private int _allianceCrestId;
@@ -87,7 +86,6 @@ public class PlayerView extends CharacterView implements IPlayerView
 	private double _collisionRadius;
 	private boolean _combatAction;
 	private int _con;
-	private int _criticalHit;
 	private int[] _cubics;
 	private int _currentCp;
 	private int _currentHp;
@@ -96,7 +94,6 @@ public class PlayerView extends CharacterView implements IPlayerView
 	private int _dex;
 	private int _duelTeam;
 	private int _equipCloak;
-	private int _evasionRate;
 	private long _exp;
 	private int _expPercent;
 	private int _sp;
@@ -122,6 +119,7 @@ public class PlayerView extends CharacterView implements IPlayerView
 	private boolean _lookingForParty;
 	private boolean _lyingDead;
 	private int _mainClassId;
+	private int _mAccuracy;
 	private int _mAtk;
 	private int _mAtkSpd;
 	private int _maxCarriedWeight;
@@ -131,8 +129,10 @@ public class PlayerView extends CharacterView implements IPlayerView
 	private int _maxMp;
 	private int _maxSp;
 	private int _maxTalismanSlots;
+	private int _mCriticalHit;
 	private int _mDef;
 	private int _men;
+	private int _mEvasionRate;
 	private int _mountNpcId;
 	private int _mountType;
 	private double _movementSpeedMultiplier;
@@ -140,9 +140,12 @@ public class PlayerView extends CharacterView implements IPlayerView
 	private String _name;
 	private int _nameColor;
 	private boolean _noble;
+	private int _pAccuracy;
 	private int _pAtk;
 	private int _pAtkSpd;
+	private int _pCriticalHit;
 	private int _pDef;
+	private int _pEvasionRate;
 	private int _pkCount;
 	private int _pledgeCrestId;
 	private int _pledgeId;
@@ -237,13 +240,17 @@ public class PlayerView extends CharacterView implements IPlayerView
 		_pDef = stat.getPDef(0);
 		_pAtkSpd = stat.getPAtkSpd();
 		
+		_pAccuracy = stat.getPAccuracy();
+		_pEvasionRate = stat.getPEvasion(0);
+		_pCriticalHit = stat.getPCriticalHit(0);
+		
 		_mAtk = stat.getMAtk(0, 0);
 		_mDef = stat.getMDef(0, 0);
 		_mAtkSpd = stat.getMAtkSpd();
 		
-		_accuracy = stat.getAccuracy();
-		_evasionRate = stat.getEvasion(0);
-		_criticalHit = stat.getCriticalHit(0);
+		_mAccuracy = stat.getMAccuracy();
+		_mEvasionRate = stat.getMEvasion(0);
+		_mCriticalHit = stat.getMCriticalHit(0);
 		
 		_movementSpeedMultiplier = stat.getMovementSpeedMultiplier();
 		_attackSpeedMultiplier = stat.getAttackSpeedMultiplier();
@@ -381,12 +388,6 @@ public class PlayerView extends CharacterView implements IPlayerView
 	}
 	
 	@Override
-	public int getAccuracy()
-	{
-		return _accuracy;
-	}
-	
-	@Override
 	public int getActiveClassId()
 	{
 		return _activeClassId;
@@ -453,12 +454,6 @@ public class PlayerView extends CharacterView implements IPlayerView
 	}
 	
 	@Override
-	public int getCriticalHit()
-	{
-		return _criticalHit;
-	}
-	
-	@Override
 	public int[] getCubicData()
 	{
 		return _cubics;
@@ -504,12 +499,6 @@ public class PlayerView extends CharacterView implements IPlayerView
 	public int getDuelTeam()
 	{
 		return _duelTeam;
-	}
-	
-	@Override
-	public int getEvasionRate()
-	{
-		return _evasionRate;
 	}
 	
 	@Override
@@ -615,6 +604,12 @@ public class PlayerView extends CharacterView implements IPlayerView
 	}
 	
 	@Override
+	public int getMAccuracy()
+	{
+		return _mAccuracy;
+	}
+	
+	@Override
 	public int getMAtk()
 	{
 		return _mAtk;
@@ -669,6 +664,12 @@ public class PlayerView extends CharacterView implements IPlayerView
 	}
 	
 	@Override
+	public int getMCriticalHit()
+	{
+		return _mCriticalHit;
+	}
+	
+	@Override
 	public int getMDef()
 	{
 		return _mDef;
@@ -678,6 +679,12 @@ public class PlayerView extends CharacterView implements IPlayerView
 	public int getMEN()
 	{
 		return _men;
+	}
+	
+	@Override
+	public int getMEvasionRate()
+	{
+		return _mEvasionRate;
 	}
 	
 	@Override
@@ -711,6 +718,12 @@ public class PlayerView extends CharacterView implements IPlayerView
 	}
 	
 	@Override
+	public int getPAccuracy()
+	{
+		return _pAccuracy;
+	}
+	
+	@Override
 	public int getPAtk()
 	{
 		return _pAtk;
@@ -723,9 +736,21 @@ public class PlayerView extends CharacterView implements IPlayerView
 	}
 	
 	@Override
+	public int getPCriticalHit()
+	{
+		return _pCriticalHit;
+	}
+	
+	@Override
 	public int getPDef()
 	{
 		return _pDef;
+	}
+	
+	@Override
+	public int getPEvasionRate()
+	{
+		return _pEvasionRate;
 	}
 	
 	@Override

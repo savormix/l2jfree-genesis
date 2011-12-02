@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerView;
 import com.l2jfree.gameserver.network.client.L2Client;
@@ -67,6 +68,7 @@ public abstract class CharInfo extends StaticPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		final ClientProtocolVersion cpv = client.getVersion();
 		final IPlayerView view = _player.getView();
 		
 		buf.writeD(view.getX()); // Location X
@@ -84,6 +86,12 @@ public abstract class CharInfo extends StaticPacket
 		
 		buf.writeD(view.getMaxTalismanSlots()); // Talisman slots
 		buf.writeD(view.canEquipCloak()); // Can equip cloak
+		if (cpv.isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
+		{
+			buf.writeD(0); // ??? 0
+			buf.writeD(0); // ??? 0
+			buf.writeD(0); // ??? 0
+		}
 		buf.writeD(view.isInPvPAction()); // In PvP
 		buf.writeD(view.getKarma()); // Karma
 		buf.writeD(view.getMAtkSpd()); // Casting speed
@@ -146,5 +154,18 @@ public abstract class CharInfo extends StaticPacket
 		buf.writeD(view.getAgathionId()); // Agathion
 		buf.writeD(0); // ???
 		buf.writeD(view.getSpecialEffect()); // Special effect
+		if (cpv.isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
+		{
+			buf.writeD(0); // ???
+			buf.writeD(0); // ???
+			buf.writeD(0); // ???
+			buf.writeD(0); // ???
+			buf.writeD(0); // ???
+			buf.writeD(0); // ???
+			buf.writeD(0); // ???
+			buf.writeD(0); // ???
+			buf.writeD(0); // ???
+			buf.writeC(0); // ???
+		}
 	}
 }

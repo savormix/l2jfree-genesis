@@ -141,19 +141,37 @@ public abstract class CharacterStat implements ICharacterStat
 	}
 	
 	@Override
-	public int getAccuracy()
+	public int getMAccuracy()
+	{
+		return 20; // FIXME
+	}
+	
+	@Override
+	public int getMEvasion(Object object)
+	{
+		return 20; // FIXME
+	}
+	
+	@Override
+	public int getMCriticalHit(Object object)
+	{
+		return 10; // FIXME
+	}
+	
+	@Override
+	public int getPAccuracy()
 	{
 		return 50; // FIXME
 	}
 	
 	@Override
-	public int getEvasion(Object object)
+	public int getPEvasion(Object object)
 	{
 		return 60; // FIXME
 	}
 	
 	@Override
-	public int getCriticalHit(Object object)
+	public int getPCriticalHit(Object object)
 	{
 		return 70; // FIXME
 	}

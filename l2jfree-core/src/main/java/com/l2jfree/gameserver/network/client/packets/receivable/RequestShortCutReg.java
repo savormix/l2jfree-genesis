@@ -16,6 +16,7 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
@@ -56,6 +57,11 @@ public abstract class RequestShortCutReg extends L2ClientPacket
 		buf.readD(); // Skill
 		buf.readD(); // Level
 		buf.readD(); // Executor
+		if (getClient().getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
+		{
+			buf.readD(); // ??? 0
+			buf.readD(); // ??? 0
+		}
 	}
 	
 	@Override

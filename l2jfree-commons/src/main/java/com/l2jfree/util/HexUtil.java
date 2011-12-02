@@ -17,6 +17,8 @@ package com.l2jfree.util;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 /**
  * This class provides functions to manipulate byte arrays in the programmer-friendly hexadecimal
  * octet format.
@@ -87,8 +89,8 @@ public final class HexUtil
 	 */
 	public static String bytesToHexString(byte[] hex, CharSequence delimiter)
 	{
-		if (hex == null)
-			return "null";
+		if (ArrayUtils.isEmpty(hex))
+			return "";
 		
 		StringBuilder bytes = new StringBuilder(fillHex(hex[0] & 0xFF, 2));
 		for (int i = 1; i < hex.length; i++)

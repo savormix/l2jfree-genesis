@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.network.client.packets.receivable.characterless;
+package com.l2jfree.gameserver.network.client.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 
@@ -23,15 +23,15 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 /**
  * @author savormix (generated)
  */
-public abstract class UnkD0B0 extends L2ClientPacket
+public abstract class UnkD0C1 extends L2ClientPacket
 {
 	/**
-	 * A nicer name for {@link UnkD0B0}.
+	 * A nicer name for {@link UnkD0C1}.
 	 * 
 	 * @author savormix (generated)
-	 * @see UnkD0B0
+	 * @see UnkD0C1
 	 */
-	public static final class RequestNewCharacterName extends UnkD0B0
+	public static final class UnknownD0C1 extends UnkD0C1
 	{
 		// only for convenience
 	}
@@ -39,12 +39,12 @@ public abstract class UnkD0B0 extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
-	public static final int OPCODE_2 = 0xb0;
+	public static final int OPCODE_2 = 0xc1;
 	
 	@Override
 	protected int getMinimumLength()
 	{
-		return READ_S;
+		return 64;
 	}
 	
 	/* Fields for storing read data */
@@ -53,7 +53,7 @@ public abstract class UnkD0B0 extends L2ClientPacket
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.readS(); // Name
+		/*final byte[] bytesA = */buf.readB(new byte[64]); // ???
 	}
 	
 	@Override

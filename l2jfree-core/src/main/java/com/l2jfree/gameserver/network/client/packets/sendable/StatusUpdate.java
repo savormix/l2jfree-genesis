@@ -15,7 +15,9 @@
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -74,7 +76,7 @@ public class StatusUpdate extends L2ServerPacket
 	public static final byte MAX_CP = 0x22;
 	
 	private final ObjectId _objectId;
-	private final ArrayList<Attribute> _attributes = new ArrayList<Attribute>(4);
+	private final Collection<Attribute> _attributes;
 	
 	/**
 	 * Constructs this packet.
@@ -84,6 +86,7 @@ public class StatusUpdate extends L2ServerPacket
 	public StatusUpdate(L2Player activeChar)
 	{
 		_objectId = activeChar.getObjectId();
+		_attributes = new ArrayList<Attribute>(4);
 	}
 	
 	@Override
@@ -101,8 +104,13 @@ public class StatusUpdate extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		buf.writeD(_objectId); // Actor OID
+		if (client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
+		{
+			buf.writeD(0); // Other actor's? OID
+			buf.writeD(0); // Regeneration
+		}
 		buf.writeD(_attributes.size()); // Update count
-		for (Attribute a : _attributes)
+		for (final Attribute a : _attributes)
 		{
 			buf.writeD(a.id); // Attribute
 			buf.writeD(a.value); // Value

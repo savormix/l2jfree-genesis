@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -39,10 +40,19 @@ public class Attack extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		final ClientProtocolVersion cpv = client.getVersion();
 		buf.writeD(0); // Attacker OID
 		buf.writeD(0); // Main target OID
+		if (cpv.isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
+			buf.writeC(0); // ??? 0
 		buf.writeD(0); // Damage to main target
-		buf.writeC(0); // Damage modifiers
+		if (cpv.isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
+		{
+			buf.writeD(0); // Damage modifiers (GoD)
+			buf.writeD(0); // Soulshot
+		}
+		else
+			buf.writeC(0); // Damage modifiers (Legacy)
 		buf.writeD(0); // Attacker X
 		buf.writeD(0); // Attacker Y
 		buf.writeD(0); // Attacker Z
@@ -52,7 +62,13 @@ public class Attack extends L2ServerPacket
 		{
 			buf.writeD(0); // Target OID
 			buf.writeD(0); // Damage
-			buf.writeC(0); // Damage modifiers
+			if (cpv.isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
+			{
+				buf.writeD(0); // Damage modifiers (GoD)
+				buf.writeD(0); // Soulshot
+			}
+			else
+				buf.writeC(0); // Damage modifiers (Legacy)
 		}
 		buf.writeD(0); // Main target X
 		buf.writeD(0); // Main target Y

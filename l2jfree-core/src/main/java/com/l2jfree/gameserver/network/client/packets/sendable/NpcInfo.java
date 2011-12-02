@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -93,5 +94,17 @@ public class NpcInfo extends L2ServerPacket
 		buf.writeC(0); // Show name (dupe)
 		buf.writeD(0); // Special effect
 		buf.writeD(0); // Gracia seed effect
+		if (client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
+		{
+			buf.writeD(0); // ???
+			buf.writeD(0); // ???
+			buf.writeD(0); // ???
+			buf.writeD(0); // ???
+			buf.writeD(0); // ???
+			buf.writeD(0); // ???
+			buf.writeD(0); // ???
+			buf.writeD(0); // ???
+			buf.writeC(0); // ???
+		}
 	}
 }

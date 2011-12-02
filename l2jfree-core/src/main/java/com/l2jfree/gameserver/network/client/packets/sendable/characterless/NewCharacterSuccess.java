@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable.characterless;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.gameserver.templates.L2PlayerTemplate;
@@ -48,8 +49,11 @@ public abstract class NewCharacterSuccess extends L2ServerPacket
 		}
 	}
 	
-	private static final int DELIMITER_START = 70;
-	private static final int DELIMITER_END = 10;
+	// FIXME: export to templates for each stat
+	private static final int MAX_STAT_VALUE = 70;
+	private static final int MIN_STAT_VALUE = 10;
+	private static final int MAX_STAT_VALUE_GOD = 99;
+	private static final int MIN_STAT_VALUE_GOD = 1;
 	
 	private static final ClassId[] CLASSES = new ClassId[] { ClassId.HumanFighter, ClassId.HumanMystic,
 			ClassId.ElvenFighter, ClassId.ElvenMystic, ClassId.DarkFighter, ClassId.DarkMystic, ClassId.OrcFighter,
@@ -69,6 +73,18 @@ public abstract class NewCharacterSuccess extends L2ServerPacket
 	@Override
 	protected void writeImpl(L2Client client, MMOBuffer buf) throws RuntimeException
 	{
+		final int max, min;
+		if (client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
+		{
+			max = MAX_STAT_VALUE_GOD;
+			min = MIN_STAT_VALUE_GOD;
+		}
+		else
+		{
+			max = MAX_STAT_VALUE;
+			min = MIN_STAT_VALUE;
+		}
+		
 		buf.writeD(CLASSES.length); // Template count
 		for (ClassId classId : CLASSES)
 		{
@@ -76,24 +92,24 @@ public abstract class NewCharacterSuccess extends L2ServerPacket
 			
 			buf.writeD(classId.getRace()); // Race
 			buf.writeD(classId.getId()); // Class
-			buf.writeD(DELIMITER_START); // Stat delimiter: start
-			buf.writeD(template.getSTR()); // STR
-			buf.writeD(DELIMITER_END); // Stat delimiter: end
-			buf.writeD(DELIMITER_START); // Stat delimiter: start
-			buf.writeD(template.getDEX()); // DEX
-			buf.writeD(DELIMITER_END); // Stat delimiter: end
-			buf.writeD(DELIMITER_START); // Stat delimiter: start
-			buf.writeD(template.getCON()); // CON
-			buf.writeD(DELIMITER_END); // Stat delimiter: end
-			buf.writeD(DELIMITER_START); // Stat delimiter: start
-			buf.writeD(template.getINT()); // INT
-			buf.writeD(DELIMITER_END); // Stat delimiter: end
-			buf.writeD(DELIMITER_START); // Stat delimiter: start
-			buf.writeD(template.getWIT()); // WIT
-			buf.writeD(DELIMITER_END); // Stat delimiter: end
-			buf.writeD(DELIMITER_START); // Stat delimiter: start
-			buf.writeD(template.getMEN()); // MEN
-			buf.writeD(DELIMITER_END); // Stat delimiter: end
+			buf.writeD(max); // Max STR
+			buf.writeD(template.getSTR()); // Base STR
+			buf.writeD(min); // Min STR
+			buf.writeD(max); // Max DEX
+			buf.writeD(template.getDEX()); // Base DEX
+			buf.writeD(min); // Min DEX
+			buf.writeD(max); // Max CON
+			buf.writeD(template.getCON()); // Base CON
+			buf.writeD(min); // Min CON
+			buf.writeD(max); // Max INT
+			buf.writeD(template.getINT()); // Base INT
+			buf.writeD(min); // Min INT
+			buf.writeD(max); // Max WIT
+			buf.writeD(template.getWIT()); // Base WIT
+			buf.writeD(min); // Min WIT
+			buf.writeD(max); // Max MEN
+			buf.writeD(template.getMEN()); // Base MEN
+			buf.writeD(min); // Min MEN
 		}
 	}
 }

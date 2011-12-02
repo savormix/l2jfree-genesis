@@ -41,8 +41,6 @@ public interface IPlayerView extends ICharacterView, IElemental
 	
 	public int getAbnormalEffect();
 	
-	public int getAccuracy();
-	
 	public int getActiveClassId();
 	
 	public int getAgathionId();
@@ -61,8 +59,6 @@ public interface IPlayerView extends ICharacterView, IElemental
 	
 	public int getCON();
 	
-	public int getCriticalHit();
-	
 	public int[] getCubicData();
 	
 	public int getCurrentCP();
@@ -76,8 +72,6 @@ public interface IPlayerView extends ICharacterView, IElemental
 	public int getDEX();
 	
 	public int getDuelTeam();
-	
-	public int getEvasionRate();
 	
 	public long getExp();
 	
@@ -113,6 +107,8 @@ public interface IPlayerView extends ICharacterView, IElemental
 	
 	public int getMainClassId();
 	
+	public int getMAccuracy();
+	
 	public int getMAtk();
 	
 	public int getMAtkSpd();
@@ -131,9 +127,13 @@ public interface IPlayerView extends ICharacterView, IElemental
 	
 	public int getMaxTalismanSlots();
 	
+	public int getMCriticalHit();
+	
 	public int getMDef();
 	
 	public int getMEN();
+	
+	public int getMEvasionRate();
 	
 	public int getMountNpcId();
 	
@@ -145,11 +145,17 @@ public interface IPlayerView extends ICharacterView, IElemental
 	
 	public int getNameColor();
 	
+	public int getPAccuracy();
+	
 	public int getPAtk();
 	
 	public int getPAtkSpd();
 	
+	public int getPCriticalHit();
+	
 	public int getPDef();
+	
+	public int getPEvasionRate();
 	
 	public int getPkCount();
 	

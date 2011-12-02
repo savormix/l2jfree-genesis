@@ -69,7 +69,7 @@ public abstract class UserInfo extends StaticPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		
+		final ClientProtocolVersion cpv = client.getVersion();
 		final IPlayerView view = activeChar.getView();
 		
 		buf.writeD(view.getX()); // Location X
@@ -83,7 +83,7 @@ public abstract class UserInfo extends StaticPacket
 		buf.writeD(view.getMainClassId()); // Main class
 		buf.writeD(view.getLevel()); // Level
 		buf.writeQ(view.getExp()); // XP
-		if (client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.HIGH_FIVE))
+		if (cpv.isNewerThanOrEqualTo(ClientProtocolVersion.HIGH_FIVE))
 			buf.writeF(view.getExpPercent()); // XP %
 		buf.writeD(view.getSTR()); // STR
 		buf.writeD(view.getDEX()); // DEX
@@ -106,16 +106,25 @@ public abstract class UserInfo extends StaticPacket
 		
 		buf.writeD(view.getMaxTalismanSlots()); // Talisman slots
 		buf.writeD(view.canEquipCloak()); // Can equip cloak
+		if (cpv.isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
+		{
+			buf.writeD(0); // ??? 0
+			buf.writeD(0); // ??? 0
+			buf.writeD(0); // ??? 0
+		}
 		buf.writeD(view.getPAtk()); // P. Atk.
 		buf.writeD(view.getPAtkSpd()); // Attack speed
 		buf.writeD(view.getPDef()); // P. Def.
-		buf.writeD(view.getEvasionRate()); // Evasion
-		buf.writeD(view.getAccuracy()); // Accuracy
-		buf.writeD(view.getCriticalHit()); // Critical
+		buf.writeD(view.getPEvasionRate()); // P. Evasion
+		buf.writeD(view.getPAccuracy()); // P. Accuracy
+		buf.writeD(view.getPCriticalHit()); // P. Critical
 		buf.writeD(view.getMAtk()); // M. Atk.
 		buf.writeD(view.getMAtkSpd()); // Casting speed
 		buf.writeD(view.getPAtkSpd()); // Attack speed (dupe)
 		buf.writeD(view.getMDef()); // M. Def.
+		buf.writeD(view.getMEvasionRate()); // M. Evasion
+		buf.writeD(view.getMAccuracy()); // M. Accuracy
+		buf.writeD(view.getMCriticalHit()); // M. Critical
 		buf.writeD(view.isInPvPAction()); // In PvP
 		buf.writeD(view.getKarma()); // Karma
 		buf.writeD(view.getRunSpeed()); // Running speed (on ground)
@@ -184,5 +193,11 @@ public abstract class UserInfo extends StaticPacket
 		buf.writeD(view.canUseMinimap()); // Can use minimap
 		buf.writeD(view.getVitalityPoints()); // Vitality
 		buf.writeD(view.getSpecialEffect()); // Special effect
+		if (cpv.isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
+		{
+			buf.writeD(0); // ???
+			buf.writeD(0); // ???
+			buf.writeC(0); // ???
+		}
 	}
 }

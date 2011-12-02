@@ -28,7 +28,7 @@ public enum ClientProtocolVersion
 	HIGH_FIVE_UPDATE_1(268, false), // 2011-03-15
 	HIGH_FIVE_UPDATE_2(271, false), // 2011-05-25
 	HIGH_FIVE_UPDATE_3(273, true), // 2011-06-08
-	GODDESS_OF_DESTRUCTION(415, 0xBF, null, new int[] { 0x73 }, true); // 2011-11-30
+	GODDESS_OF_DESTRUCTION(415, 0xC2, null, new int[] { 0x73 }, true); // 2011-11-30
 	
 	private final int _version;
 	private final int _op2TableSize;

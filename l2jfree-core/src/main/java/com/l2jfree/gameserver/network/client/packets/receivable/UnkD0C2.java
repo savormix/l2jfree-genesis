@@ -16,7 +16,6 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 
-import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
@@ -24,37 +23,34 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 /**
  * @author savormix (generated)
  */
-public abstract class RequestTutorialLinkHtml extends L2ClientPacket
+public abstract class UnkD0C2 extends L2ClientPacket
 {
 	/**
-	 * A nicer name for {@link RequestTutorialLinkHtml}.
+	 * A nicer name for {@link UnkD0C2}.
 	 * 
 	 * @author savormix (generated)
-	 * @see RequestTutorialLinkHtml
+	 * @see UnkD0C2
 	 */
-	public static final class RequestLinkTutorialHtml extends RequestTutorialLinkHtml
+	public static final class UnknownD0C2 extends UnkD0C2
 	{
 		// only for convenience
 	}
 	
 	/** Packet's identifier */
-	public static final int OPCODE = 0x85;
+	public static final int OPCODE = 0xd0;
+	/** Packet's second identifier */
+	public static final int OPCODE_2 = 0xc2;
 	
 	@Override
 	protected int getMinimumLength()
 	{
-		return READ_S;
+		return 0;
 	}
-	
-	/* Fields for storing read data */
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		if (getClient().getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
-			buf.readD(); // ??? 1
-		buf.readS(); // Relative path to file
 	}
 	
 	@Override
