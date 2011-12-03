@@ -116,7 +116,7 @@ public abstract class NewCharacter extends L2ClientPacket
 		{
 			if (_log.isDebugEnabled())
 				_log.debug("charname: " + _name + " is invalid. creation failed.");
-			sendPacket(CharacterCreateFailure.TITLE_LENGTH);
+			sendPacket(CharacterCreateFailure.NAME_RESERVED);
 			return;
 		}
 		/*

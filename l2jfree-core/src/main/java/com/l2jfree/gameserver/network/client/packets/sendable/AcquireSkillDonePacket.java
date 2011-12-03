@@ -15,6 +15,8 @@
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
 /**
+ * Applies to pre-HF only.
+ * 
  * @author savormix (generated)
  */
 public abstract class AcquireSkillDonePacket extends StaticPacket

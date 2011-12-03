@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -39,11 +40,18 @@ public class MagicSkillUse extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		final ClientProtocolVersion cpv = client.getVersion();
+		if (cpv.isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
+			buf.writeD(0); // ??? 0
 		buf.writeD(0); // Caster OID
 		buf.writeD(0); // Main target OID
+		if (cpv.isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
+			buf.writeC(0); // ???
 		buf.writeD(0); // Skill
 		buf.writeD(0); // Level
 		buf.writeD(0); // Cast time
+		if (cpv.isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
+			buf.writeD(-1); // ??? -1/0
 		buf.writeD(0); // Cooldown
 		buf.writeD(0); // Caster X
 		buf.writeD(0); // Caster Y

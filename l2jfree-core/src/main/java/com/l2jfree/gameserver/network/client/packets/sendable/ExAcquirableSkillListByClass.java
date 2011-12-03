@@ -14,9 +14,6 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
-import java.util.Collection;
-
-import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -24,64 +21,61 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
+ * @since Goddess of Destruction
  */
-public abstract class SkillListPacket extends L2ServerPacket
+public abstract class ExAcquirableSkillListByClass extends L2ServerPacket
 {
 	/**
-	 * A nicer name for {@link SkillListPacket}.
+	 * A nicer name for {@link ExAcquirableSkillListByClass}.
 	 * 
 	 * @author savormix (generated)
-	 * @see SkillListPacket
+	 * @see ExAcquirableSkillListByClass
 	 */
-	public static final class SkillList extends SkillListPacket
+	public static final class LearnableSkills extends ExAcquirableSkillListByClass
 	{
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @param skills available (visible) skills
-		 * @see SkillListPacket#SkillListPacket(Collection)
+		 * @see ExAcquirableSkillListByClass#ExAcquirableSkillListByClass()
 		 */
-		public SkillList(Collection<?> skills)
+		public LearnableSkills()
 		{
-			super(skills);
 		}
 	}
 	
-	private final Collection<?> _skills;
+	private static final int[] EXT_OPCODES = { 0xf9, 0x00 };
 	
-	/**
-	 * Constructs this packet.
-	 * 
-	 * @param skills available (visible) skills
-	 */
-	public SkillListPacket(Collection<?> skills)
+	/** Constructs this packet. */
+	public ExAcquirableSkillListByClass()
 	{
-		_skills = skills;
 	}
 	
 	@Override
 	protected int getOpcode()
 	{
-		return 0x5f;
+		return 0xfe;
+	}
+	
+	@Override
+	protected int[] getAdditionalOpcodes()
+	{
+		return EXT_OPCODES;
 	}
 	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		final boolean god = client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION);
-		buf.writeD(_skills.size()); // Skill count
-		for (Object o : _skills)
+		final int sizeA = 0; // Skill count
+		buf.writeD(sizeA);
+		for (int i = 0; i < sizeA; i++)
 		{
-			buf.writeD(o.equals(o)); // Passive
-			buf.writeD(0); // Level
 			buf.writeD(0); // Skill
-			if (god)
-				buf.writeD(0); // ??? -1
-			buf.writeC(0); // Disabled
-			buf.writeC(0); // Enchantable
+			buf.writeD(0); // Skill level
+			buf.writeD(0); // SP
+			buf.writeD(0); // Character level
+			buf.writeH(0); // ??? 0
+			buf.writeD(0); // ??? 0
 		}
-		if (god)
-			buf.writeD(0); // Newly learned
 	}
 }

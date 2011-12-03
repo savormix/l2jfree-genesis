@@ -20,6 +20,8 @@ import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
+ * Only applicable to HF.
+ * 
  * @author savormix (generated)
  */
 public abstract class Ex2NDPasswordCheckPacket extends L2ServerPacket

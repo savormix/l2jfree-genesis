@@ -30,14 +30,14 @@ public abstract class ExChangeNPCState extends L2ServerPacket
 	 * @author savormix (generated)
 	 * @see ExChangeNPCState
 	 */
-	public static final class SeedNpcUpdate extends ExChangeNPCState
+	public static final class NpcStateUpdate extends ExChangeNPCState
 	{
 		/**
 		 * Constructs this packet.
 		 * 
 		 * @see ExChangeNPCState#ExChangeNPCState()
 		 */
-		public SeedNpcUpdate()
+		public NpcStateUpdate()
 		{
 		}
 	}
@@ -66,6 +66,6 @@ public abstract class ExChangeNPCState extends L2ServerPacket
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
 		buf.writeD(0); // NPC OID
-		buf.writeD(0); // Gracia seed effect
+		buf.writeD(0); // ???
 	}
 }

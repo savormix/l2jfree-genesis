@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -74,5 +75,10 @@ public abstract class ExStorageMaxCountPacket extends L2ServerPacket
 		buf.writeD(0); // Common recipe book slots
 		buf.writeD(0); // Extra inventory slots (belt?)
 		buf.writeD(0); // Quest inventory slots
+		if (client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
+		{
+			buf.writeD(40); // ??? 40 slots
+			buf.writeD(40); // ??? 40 slots
+		}
 	}
 }

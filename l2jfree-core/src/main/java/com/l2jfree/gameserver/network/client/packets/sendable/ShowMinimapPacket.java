@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -57,7 +58,15 @@ public abstract class ShowMinimapPacket extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.writeD(0); // Item
-		buf.writeC(0); // Current Seven Signs period
+		if (client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
+		{
+			buf.writeD(0); // 0
+			buf.writeC(0); // 0
+		}
+		else
+		{
+			buf.writeD(0); // Item
+			buf.writeC(0); // Current Seven Signs period
+		}
 	}
 }

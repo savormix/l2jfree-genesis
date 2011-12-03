@@ -22,6 +22,7 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
+ * @since Goddess of Destruction
  */
 public abstract class UnkD0C1 extends L2ClientPacket
 {

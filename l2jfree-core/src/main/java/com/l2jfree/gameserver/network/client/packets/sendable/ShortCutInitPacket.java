@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -71,6 +72,8 @@ public abstract class ShortCutInitPacket extends L2ServerPacket
 			{
 				buf.writeD(0); // Skill
 				buf.writeD(0); // Level
+				if (client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
+					buf.writeD(-1); // -1
 				buf.writeC(0); // 0
 			}
 			// branch with shortcut.ActionShortcut

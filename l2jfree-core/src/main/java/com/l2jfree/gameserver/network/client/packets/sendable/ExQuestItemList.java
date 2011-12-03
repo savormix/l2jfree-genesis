@@ -16,6 +16,7 @@ package com.l2jfree.gameserver.network.client.packets.sendable;
 
 import java.util.Collection;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.CharacterStat.Element;
 import com.l2jfree.gameserver.gameobjects.L2Item;
 import com.l2jfree.gameserver.gameobjects.L2Player;
@@ -79,6 +80,7 @@ public abstract class ExQuestItemList extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		final boolean god = client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION);
 		buf.writeH(_items.size()); // Item count
 		for (L2Item item : _items)
 		{
@@ -96,11 +98,15 @@ public abstract class ExQuestItemList extends L2ServerPacket
 			buf.writeD(0); // Augmentation
 			buf.writeD(item.getRemainingMana()); // Mana left
 			buf.writeD(item.getRemainingTime()); // Time remaining
+			if (god)
+				buf.writeH(1); // ??? 1
 			Element.writeElements(item, buf); // Attack and defense element info
 			// 'enchant effects'
 			buf.writeH(0); // 0
 			buf.writeH(0); // 0
 			buf.writeH(0); // 0
+			if (god)
+				buf.writeD(0); // ??? 0
 		}
 		int sizeB = 0; // Special item count, branching condition
 		buf.writeH(sizeB);

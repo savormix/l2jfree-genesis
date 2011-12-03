@@ -14,9 +14,6 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
-import java.util.Collection;
-
-import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -24,64 +21,61 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
+ * @since Goddess of Destruction
  */
-public abstract class SkillListPacket extends L2ServerPacket
+public abstract class ExAbnormalStatusUpdateFromTargetPacket extends L2ServerPacket
 {
 	/**
-	 * A nicer name for {@link SkillListPacket}.
+	 * A nicer name for {@link ExAbnormalStatusUpdateFromTargetPacket}.
 	 * 
 	 * @author savormix (generated)
-	 * @see SkillListPacket
+	 * @see ExAbnormalStatusUpdateFromTargetPacket
 	 */
-	public static final class SkillList extends SkillListPacket
+	public static final class EffectIcons extends ExAbnormalStatusUpdateFromTargetPacket
 	{
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @param skills available (visible) skills
-		 * @see SkillListPacket#SkillListPacket(Collection)
+		 * @see ExAbnormalStatusUpdateFromTargetPacket#ExAbnormalStatusUpdateFromTargetPacket()
 		 */
-		public SkillList(Collection<?> skills)
+		public EffectIcons()
 		{
-			super(skills);
 		}
 	}
 	
-	private final Collection<?> _skills;
+	private static final int[] EXT_OPCODES = { 0xe5, 0x00 };
 	
-	/**
-	 * Constructs this packet.
-	 * 
-	 * @param skills available (visible) skills
-	 */
-	public SkillListPacket(Collection<?> skills)
+	/** Constructs this packet. */
+	public ExAbnormalStatusUpdateFromTargetPacket()
 	{
-		_skills = skills;
 	}
 	
 	@Override
 	protected int getOpcode()
 	{
-		return 0x5f;
+		return 0xfe;
+	}
+	
+	@Override
+	protected int[] getAdditionalOpcodes()
+	{
+		return EXT_OPCODES;
 	}
 	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		final boolean god = client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION);
-		buf.writeD(_skills.size()); // Skill count
-		for (Object o : _skills)
+		buf.writeD(0); // Actor OID
+		final int sizeA = 0; // Count
+		buf.writeH(sizeA);
+		for (int i = 0; i < sizeA; i++)
 		{
-			buf.writeD(o.equals(o)); // Passive
-			buf.writeD(0); // Level
 			buf.writeD(0); // Skill
-			if (god)
-				buf.writeD(0); // ??? -1
-			buf.writeC(0); // Disabled
-			buf.writeC(0); // Enchantable
+			buf.writeH(0); // Level
+			buf.writeD(0); // MP ???
+			buf.writeD(0); // Time left
+			buf.writeD(0); // Buffer OID
 		}
-		if (god)
-			buf.writeD(0); // Newly learned
 	}
 }

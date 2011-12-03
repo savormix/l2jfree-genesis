@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -65,5 +66,11 @@ public abstract class FlyToLocation extends L2ServerPacket
 		buf.writeD(0); // Current Y
 		buf.writeD(0); // Current Z
 		buf.writeD(0); // Type
+		if (client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
+		{
+			// both 0s, both 600s (with horizontal throw) etc...
+			buf.writeD(0); // Distance??
+			buf.writeD(0); // Distance (dupe)??
+		}
 	}
 }

@@ -14,9 +14,6 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
-import java.util.Collection;
-
-import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -24,64 +21,58 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
+ * @since Goddess of Destruction
  */
-public abstract class SkillListPacket extends L2ServerPacket
+public abstract class ExSubjobInfo extends L2ServerPacket
 {
 	/**
-	 * A nicer name for {@link SkillListPacket}.
+	 * A nicer name for {@link ExSubjobInfo}.
 	 * 
 	 * @author savormix (generated)
-	 * @see SkillListPacket
+	 * @see ExSubjobInfo
 	 */
-	public static final class SkillList extends SkillListPacket
+	public static final class UnknownFEE9 extends ExSubjobInfo
 	{
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @param skills available (visible) skills
-		 * @see SkillListPacket#SkillListPacket(Collection)
+		 * @see ExSubjobInfo#ExSubjobInfo()
 		 */
-		public SkillList(Collection<?> skills)
+		public UnknownFEE9()
 		{
-			super(skills);
 		}
 	}
 	
-	private final Collection<?> _skills;
+	private static final int[] EXT_OPCODES = { 0xe9, 0x00 };
 	
-	/**
-	 * Constructs this packet.
-	 * 
-	 * @param skills available (visible) skills
-	 */
-	public SkillListPacket(Collection<?> skills)
+	/** Constructs this packet. */
+	public ExSubjobInfo()
 	{
-		_skills = skills;
 	}
 	
 	@Override
 	protected int getOpcode()
 	{
-		return 0x5f;
+		return 0xfe;
+	}
+	
+	@Override
+	protected int[] getAdditionalOpcodes()
+	{
+		return EXT_OPCODES;
 	}
 	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		final boolean god = client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION);
-		buf.writeD(_skills.size()); // Skill count
-		for (Object o : _skills)
-		{
-			buf.writeD(o.equals(o)); // Passive
-			buf.writeD(0); // Level
-			buf.writeD(0); // Skill
-			if (god)
-				buf.writeD(0); // ??? -1
-			buf.writeC(0); // Disabled
-			buf.writeC(0); // Enchantable
-		}
-		if (god)
-			buf.writeD(0); // Newly learned
+		buf.writeC(0); // ???
+		buf.writeD(0); // ???
+		buf.writeD(0); // ???
+		buf.writeD(0); // ???
+		buf.writeD(0); // ???
+		buf.writeD(0); // ???
+		buf.writeD(0); // ???
+		buf.writeC(0); // ???
 	}
 }

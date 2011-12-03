@@ -12,11 +12,8 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.network.client.packets.sendable;
+package com.l2jfree.gameserver.network.client.packets.sendable.characterless;
 
-import java.util.Collection;
-
-import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -24,64 +21,55 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
+ * @since Goddess of Destruction
  */
-public abstract class SkillListPacket extends L2ServerPacket
+public abstract class ExMentorAdd extends L2ServerPacket
 {
 	/**
-	 * A nicer name for {@link SkillListPacket}.
+	 * A nicer name for {@link ExMentorAdd}.
 	 * 
 	 * @author savormix (generated)
-	 * @see SkillListPacket
+	 * @see ExMentorAdd
 	 */
-	public static final class SkillList extends SkillListPacket
+	public static final class MyAccountVitality extends ExMentorAdd
 	{
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @param skills available (visible) skills
-		 * @see SkillListPacket#SkillListPacket(Collection)
+		 * @see ExMentorAdd#ExMentorAdd()
 		 */
-		public SkillList(Collection<?> skills)
+		public MyAccountVitality()
 		{
-			super(skills);
 		}
 	}
 	
-	private final Collection<?> _skills;
+	private static final int[] EXT_OPCODES = { 0x1e, 0x01 };
 	
-	/**
-	 * Constructs this packet.
-	 * 
-	 * @param skills available (visible) skills
-	 */
-	public SkillListPacket(Collection<?> skills)
+	/** Constructs this packet. */
+	public ExMentorAdd()
 	{
-		_skills = skills;
 	}
 	
 	@Override
 	protected int getOpcode()
 	{
-		return 0x5f;
+		return 0xfe;
+	}
+	
+	@Override
+	protected int[] getAdditionalOpcodes()
+	{
+		return EXT_OPCODES;
 	}
 	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		final boolean god = client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION);
-		buf.writeD(_skills.size()); // Skill count
-		for (Object o : _skills)
-		{
-			buf.writeD(o.equals(o)); // Passive
-			buf.writeD(0); // Level
-			buf.writeD(0); // Skill
-			if (god)
-				buf.writeD(0); // ??? -1
-			buf.writeC(0); // Disabled
-			buf.writeC(0); // Enchantable
-		}
-		if (god)
-			buf.writeD(0); // Newly learned
+		// default:
+		// 200[%] bonus (while account's vit points > 0), reset each week
+		// 5 vit replenishing/maintaining items per week
+		buf.writeD(0); // XP Bonus
+		buf.writeD(0); // Vitality items allowed
 	}
 }

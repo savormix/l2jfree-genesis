@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -58,6 +59,7 @@ public abstract class FriendAddRequest extends L2ServerPacket
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
 		buf.writeS(""); // Requestor
-		buf.writeD(0); // 0
+		if (client.getVersion().isOlderThanOrEqualTo(ClientProtocolVersion.HIGH_FIVE_UPDATE_3))
+			buf.writeD(0); // 0
 	}
 }

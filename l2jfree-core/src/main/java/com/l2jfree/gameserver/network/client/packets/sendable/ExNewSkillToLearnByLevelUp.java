@@ -14,56 +14,49 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
-import com.l2jfree.gameserver.gameobjects.L2Player;
-import com.l2jfree.gameserver.network.client.L2Client;
-import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
-import com.l2jfree.network.mmocore.MMOBuffer;
-
 /**
  * @author savormix (generated)
+ * @since Goddess of Destruction
  */
-public abstract class AbnormalStatusUpdatePacket extends L2ServerPacket
+public abstract class ExNewSkillToLearnByLevelUp extends StaticPacket
 {
 	/**
-	 * A nicer name for {@link AbnormalStatusUpdatePacket}.
+	 * A nicer name for {@link ExNewSkillToLearnByLevelUp}.
 	 * 
 	 * @author savormix (generated)
-	 * @see AbnormalStatusUpdatePacket
+	 * @see ExNewSkillToLearnByLevelUp
 	 */
-	public static final class MyEffectIcons extends AbnormalStatusUpdatePacket
+	public static final class UnknownFEFC extends ExNewSkillToLearnByLevelUp
 	{
+		/** This packet. */
+		public static final UnknownFEFC PACKET = new UnknownFEFC();
+		
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @see AbnormalStatusUpdatePacket#AbnormalStatusUpdatePacket()
+		 * @see ExNewSkillToLearnByLevelUp#ExNewSkillToLearnByLevelUp()
 		 */
-		public MyEffectIcons()
+		private UnknownFEFC()
 		{
 		}
 	}
 	
+	private static final int[] EXT_OPCODES = { 0xfc, 0x00 };
+	
 	/** Constructs this packet. */
-	public AbnormalStatusUpdatePacket()
+	public ExNewSkillToLearnByLevelUp()
 	{
 	}
 	
 	@Override
 	protected int getOpcode()
 	{
-		return 0x85;
+		return 0xfe;
 	}
 	
 	@Override
-	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
+	protected int[] getAdditionalOpcodes()
 	{
-		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		final int sizeA = 0; // Effect count
-		buf.writeH(sizeA);
-		for (int i = 0; i < sizeA; i++)
-		{
-			buf.writeD(0); // Skill
-			buf.writeH(0); // Level
-			buf.writeD(0); // Time left
-		}
+		return EXT_OPCODES;
 	}
 }
