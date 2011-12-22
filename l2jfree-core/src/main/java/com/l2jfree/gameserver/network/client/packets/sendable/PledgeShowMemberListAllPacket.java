@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -64,6 +65,8 @@ public abstract class PledgeShowMemberListAllPacket extends L2ServerPacket
 		buf.writeS(""); // Leader name
 		buf.writeD(0); // Crest ID
 		buf.writeD(0); // Level
+		if (client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
+			buf.writeD(0); // ??? 0
 		buf.writeD(0); // Castle
 		buf.writeD(0); // Hideout
 		buf.writeD(0); // Fortress

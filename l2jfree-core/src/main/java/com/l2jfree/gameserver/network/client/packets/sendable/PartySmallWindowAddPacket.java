@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -57,6 +58,7 @@ public abstract class PartySmallWindowAddPacket extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		final ClientProtocolVersion cpv = client.getVersion();
 		buf.writeD(0); // Leader OID
 		buf.writeD(0); // Item distribution
 		buf.writeD(0); // Member OID
@@ -67,11 +69,15 @@ public abstract class PartySmallWindowAddPacket extends L2ServerPacket
 		buf.writeD(0); // Maximum HP
 		buf.writeD(0); // Current MP
 		buf.writeD(0); // Maximum MP
+		if (cpv.isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
+			buf.writeD(0); // Vitality
 		buf.writeD(0); // Level
 		buf.writeD(0); // Class
 		buf.writeD(0); // Sex
 		buf.writeD(0); // Race
 		buf.writeD(0); // ??? 0
 		buf.writeD(0); // ??? 0
+		if (cpv.isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
+			buf.writeD(0); // ??? 0
 	}
 }

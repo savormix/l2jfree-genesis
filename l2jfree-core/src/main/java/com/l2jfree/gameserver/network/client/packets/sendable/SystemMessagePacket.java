@@ -144,6 +144,12 @@ public abstract class SystemMessagePacket extends L2ServerPacket
 				buf.writeD(0); // Location Y
 				buf.writeD(0); // Location Z
 			}
+			// branch with param.Damage (GoD only)
+			{
+				buf.writeD(0); // Target OID
+				buf.writeD(0); // Attacker OID
+				buf.writeD(0); // HP change
+			}
 		}
 	}
 }

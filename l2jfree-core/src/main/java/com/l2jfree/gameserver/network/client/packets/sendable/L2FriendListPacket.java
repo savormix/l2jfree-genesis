@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -57,14 +58,21 @@ public abstract class L2FriendListPacket extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		final boolean god = client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION);
 		final int sizeA = 0; // Friend count
 		buf.writeD(sizeA);
 		for (int i = 0; i < sizeA; i++)
 		{
-			buf.writeD(0); // Last known OID
+			buf.writeD(0); // Last known CID
 			buf.writeS(""); // Name
 			buf.writeD(0); // Online
-			buf.writeD(0); // New OID
+			buf.writeD(0); // Friend OID
+			if (god)
+			{
+				buf.writeD(0); // Level
+				buf.writeD(0); // Class
+				buf.writeH(0); // ??? 0
+			}
 		}
 	}
 }

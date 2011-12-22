@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -57,9 +58,12 @@ public abstract class PledgeShowInfoUpdatePacket extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		final ClientProtocolVersion cpv = client.getVersion();
 		buf.writeD(0); // ID
 		buf.writeD(0); // Crest ID
 		buf.writeD(0); // Level
+		if (cpv.isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
+			buf.writeD(0); // ??? 0
 		buf.writeD(0); // Castle
 		buf.writeD(0); // Hideout
 		buf.writeD(0); // Fort
@@ -71,5 +75,10 @@ public abstract class PledgeShowInfoUpdatePacket extends L2ServerPacket
 		buf.writeS(""); // Alliance name
 		buf.writeD(0); // Alliance crest ID
 		buf.writeD(0); // At war
+		if (cpv.isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
+		{
+			buf.writeD(0); // ??? 0
+			buf.writeD(0); // ??? 0
+		}
 	}
 }

@@ -31,14 +31,14 @@ public abstract class ExAcquireSkillInfo extends L2ServerPacket
 	 * @author savormix (generated)
 	 * @see ExAcquireSkillInfo
 	 */
-	public static final class SkillLearned extends ExAcquireSkillInfo
+	public static final class LearnableSkillInfo extends ExAcquireSkillInfo
 	{
 		/**
 		 * Constructs this packet.
 		 * 
 		 * @see ExAcquireSkillInfo#ExAcquireSkillInfo()
 		 */
-		public SkillLearned()
+		public LearnableSkillInfo()
 		{
 		}
 	}

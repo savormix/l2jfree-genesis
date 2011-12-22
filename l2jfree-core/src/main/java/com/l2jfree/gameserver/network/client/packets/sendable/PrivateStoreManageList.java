@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -22,20 +23,20 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 /**
  * @author savormix (generated)
  */
-public abstract class SetPrivateSellList extends L2ServerPacket
+public abstract class PrivateStoreManageList extends L2ServerPacket
 {
 	/**
-	 * A nicer name for {@link SetPrivateSellList}.
+	 * A nicer name for {@link PrivateStoreManageList}.
 	 * 
 	 * @author savormix (generated)
-	 * @see SetPrivateSellList
+	 * @see PrivateStoreManageList
 	 */
-	public static final class SellShopSetup extends SetPrivateSellList
+	public static final class SellShopSetup extends PrivateStoreManageList
 	{
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @see SetPrivateSellList#SetPrivateSellList()
+		 * @see PrivateStoreManageList#PrivateStoreManageList()
 		 */
 		public SellShopSetup()
 		{
@@ -43,7 +44,7 @@ public abstract class SetPrivateSellList extends L2ServerPacket
 	}
 	
 	/** Constructs this packet. */
-	public SetPrivateSellList()
+	public PrivateStoreManageList()
 	{
 	}
 	
@@ -57,6 +58,7 @@ public abstract class SetPrivateSellList extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		final boolean god = client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION);
 		buf.writeD(0); // Seller OID
 		buf.writeD(0); // Package sale
 		buf.writeQ(0L); // Adena
@@ -77,6 +79,8 @@ public abstract class SetPrivateSellList extends L2ServerPacket
 			buf.writeD(0); // Augmentation
 			buf.writeD(0); // Mana left
 			buf.writeD(0); // Time remaining
+			if (god)
+				buf.writeH(1); // ??? 1
 			buf.writeH(0); // Attack element
 			buf.writeH(0); // Attack element power
 			buf.writeH(0); // Fire defense
@@ -88,6 +92,8 @@ public abstract class SetPrivateSellList extends L2ServerPacket
 			buf.writeH(0); // 0
 			buf.writeH(0); // 0
 			buf.writeH(0); // 0
+			if (god)
+				buf.writeD(0); // ??? 0
 			buf.writeQ(0L); // Reference (shop) price
 		}
 		final int sizeB = 0; // Offer count
@@ -107,6 +113,8 @@ public abstract class SetPrivateSellList extends L2ServerPacket
 			buf.writeD(0); // Augmentation
 			buf.writeD(0); // Mana left
 			buf.writeD(0); // Time remaining
+			if (god)
+				buf.writeH(1); // ??? 1
 			buf.writeH(0); // Attack element
 			buf.writeH(0); // Attack element power
 			buf.writeH(0); // Fire defense
@@ -118,6 +126,8 @@ public abstract class SetPrivateSellList extends L2ServerPacket
 			buf.writeH(0); // 0
 			buf.writeH(0); // 0
 			buf.writeH(0); // 0
+			if (god)
+				buf.writeD(0); // ??? 0
 			buf.writeQ(0L); // Price
 			buf.writeQ(0L); // Reference (shop) price
 		}

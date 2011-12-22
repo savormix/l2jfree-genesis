@@ -14,6 +14,11 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.ClientProtocolVersion;
+import com.l2jfree.gameserver.gameobjects.L2Player;
+import com.l2jfree.gameserver.network.client.L2Client;
+import com.l2jfree.network.mmocore.MMOBuffer;
+
 /**
  * @author savormix (generated)
  */
@@ -57,5 +62,13 @@ public abstract class ExNotifyBirthDay extends StaticPacket
 	protected int[] getAdditionalOpcodes()
 	{
 		return EXT_OPCODES;
+	}
+	
+	@Override
+	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
+	{
+		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		if (client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
+			buf.writeD(0); // Actor OID
 	}
 }

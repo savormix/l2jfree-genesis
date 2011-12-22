@@ -12,9 +12,8 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.network.client.packets.sendable;
+package com.l2jfree.gameserver.network.client.packets.sendable.characterless;
 
-import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -22,31 +21,32 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
+ * @since Goddess of Destruction
  */
-public abstract class ExPartyPetWindowDelete extends L2ServerPacket
+public abstract class ExLoginVitalityEffectInfo extends L2ServerPacket
 {
 	/**
-	 * A nicer name for {@link ExPartyPetWindowDelete}.
+	 * A nicer name for {@link ExLoginVitalityEffectInfo}.
 	 * 
 	 * @author savormix (generated)
-	 * @see ExPartyPetWindowDelete
+	 * @see ExLoginVitalityEffectInfo
 	 */
-	public static final class RemovePartyMemberServitor extends ExPartyPetWindowDelete
+	public static final class MyAccountVitality extends ExLoginVitalityEffectInfo
 	{
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @see ExPartyPetWindowDelete#ExPartyPetWindowDelete()
+		 * @see ExLoginVitalityEffectInfo#ExLoginVitalityEffectInfo()
 		 */
-		public RemovePartyMemberServitor()
+		public MyAccountVitality()
 		{
 		}
 	}
 	
-	private static final int[] EXT_OPCODES = { 0x6a, 0x00 };
+	private static final int[] EXT_OPCODES = { 0x1e, 0x01 };
 	
 	/** Constructs this packet. */
-	public ExPartyPetWindowDelete()
+	public ExLoginVitalityEffectInfo()
 	{
 	}
 	
@@ -66,10 +66,10 @@ public abstract class ExPartyPetWindowDelete extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.writeD(0); // Servitor OID
-		if (client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
-			buf.writeD(0); // Servitor's type
-		buf.writeD(0); // Owner OID
-		buf.writeS(""); // Servitor's name (for named pets; empty for servitors and unnamed pets)
+		// default:
+		// 200[%] bonus (while account's vit points > 0), reset each week
+		// 5 vit replenishing/maintaining items per week
+		buf.writeD(0); // XP Bonus
+		buf.writeD(0); // Vitality items allowed
 	}
 }

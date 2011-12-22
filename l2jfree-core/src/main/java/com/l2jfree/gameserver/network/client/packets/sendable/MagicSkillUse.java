@@ -46,7 +46,7 @@ public class MagicSkillUse extends L2ServerPacket
 		buf.writeD(0); // Caster OID
 		buf.writeD(0); // Main target OID
 		if (cpv.isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
-			buf.writeC(0); // ???
+			buf.writeC(0); // ??? 0
 		buf.writeD(0); // Skill
 		buf.writeD(0); // Level
 		buf.writeD(0); // Cast time

@@ -15,7 +15,7 @@
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
 /**
- * Applies to pre-HF only.
+ * Applies to pre-GoD only.
  * 
  * @author savormix (generated)
  */

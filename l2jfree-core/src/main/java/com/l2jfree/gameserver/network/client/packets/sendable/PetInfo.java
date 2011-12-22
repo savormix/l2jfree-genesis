@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -57,6 +58,7 @@ public abstract class PetInfo extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		final boolean god = client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION);
 		buf.writeD(0); // Type
 		buf.writeD(0); // Servitor OID
 		buf.writeD(0); // Servitor
@@ -110,11 +112,26 @@ public abstract class PetInfo extends L2ServerPacket
 		buf.writeD(0); // Maximum carried weight
 		buf.writeD(0); // P. Atk.
 		buf.writeD(0); // P. Def.
+		if (god)
+		{
+			buf.writeD(0); // P. Accuracy
+			buf.writeD(0); // P. Evasion
+			buf.writeD(0); // P. Critical
+		}
 		buf.writeD(0); // M. Atk.
 		buf.writeD(0); // M. Def.
-		buf.writeD(0); // Accuracy
-		buf.writeD(0); // Evasion
-		buf.writeD(0); // Critical
+		if (god)
+		{
+			buf.writeD(0); // M. Accuracy
+			buf.writeD(0); // M. Evasion
+			buf.writeD(0); // M. Critical
+		}
+		else
+		{
+			buf.writeD(0); // Accuracy
+			buf.writeD(0); // Evasion
+			buf.writeD(0); // Critical
+		}
 		buf.writeD(0); // Actual movement speed
 		buf.writeD(0); // Attack speed
 		buf.writeD(0); // Casting speed
@@ -127,5 +144,11 @@ public abstract class PetInfo extends L2ServerPacket
 		buf.writeD(0); // Spiritshot usage
 		buf.writeD(0); // Ability level
 		buf.writeD(0); // Special effect
+		if (god)
+		{
+			buf.writeD(0); // ??? 0
+			buf.writeD(0); // ??? 0
+			buf.writeD(0); // ??? 0
+		}
 	}
 }

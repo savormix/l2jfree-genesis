@@ -58,9 +58,9 @@ public abstract class L2FriendPacket extends L2ServerPacket
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
 		buf.writeD(0); // Action
-		buf.writeD(0); // Last known OID
+		buf.writeD(0); // Character ID
 		buf.writeS(""); // Name
 		buf.writeD(0); // Online
-		buf.writeD(0); // New OID
+		buf.writeD(0); // Friend OID
 	}
 }

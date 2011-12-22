@@ -57,6 +57,7 @@ public abstract class AgitDecoInfoPacket extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		// dupes no longer apply in GoD
 		buf.writeD(0); // Hideout
 		buf.writeC(0); // HP restoration level
 		buf.writeC(0); // MP restoration level

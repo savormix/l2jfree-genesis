@@ -172,7 +172,7 @@ public abstract class CharacterSelectionInfo extends L2ServerPacket
 			buf.writeD(p.activeClassId); // Current class
 			buf.writeD(1); // Selected
 			buf.writeC(0); // Weapon enchant glow
-			buf.writeD(0); // ??? 0
+			buf.writeD(0); // Weapon augmentation
 			buf.writeD(0); // Transformation
 			buf.writeD(0); // Pet
 			buf.writeD(0); // Pet level

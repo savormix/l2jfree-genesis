@@ -23,20 +23,20 @@ import com.l2jfree.network.mmocore.MMOBuffer;
  * @author savormix (generated)
  * @since Goddess of Destruction
  */
-public abstract class ExMentorList extends L2ServerPacket
+public abstract class ExVitalityEffectInfo extends L2ServerPacket
 {
 	/**
-	 * A nicer name for {@link ExMentorList}.
+	 * A nicer name for {@link ExVitalityEffectInfo}.
 	 * 
 	 * @author savormix (generated)
-	 * @see ExMentorList
+	 * @see ExVitalityEffectInfo
 	 */
-	public static final class MyCharacterVitality extends ExMentorList
+	public static final class MyCharacterVitality extends ExVitalityEffectInfo
 	{
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @see ExMentorList#ExMentorList()
+		 * @see ExVitalityEffectInfo#ExVitalityEffectInfo()
 		 */
 		public MyCharacterVitality()
 		{
@@ -46,7 +46,7 @@ public abstract class ExMentorList extends L2ServerPacket
 	private static final int[] EXT_OPCODES = { 0x1d, 0x01 };
 	
 	/** Constructs this packet. */
-	public ExMentorList()
+	public ExVitalityEffectInfo()
 	{
 	}
 	

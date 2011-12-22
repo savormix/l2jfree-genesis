@@ -24,15 +24,15 @@ import com.l2jfree.network.mmocore.MMOBuffer;
  * @author savormix (generated)
  * @since Goddess of Destruction
  */
-public abstract class UnkD0C1 extends L2ClientPacket
+public abstract class RequestBrLectureMark extends L2ClientPacket
 {
 	/**
-	 * A nicer name for {@link UnkD0C1}.
+	 * A nicer name for {@link RequestBrLectureMark}.
 	 * 
 	 * @author savormix (generated)
-	 * @see UnkD0C1
+	 * @see RequestBrLectureMark
 	 */
-	public static final class UnknownD0C1 extends UnkD0C1
+	public static final class UnknownD090 extends RequestBrLectureMark
 	{
 		// only for convenience
 	}
@@ -40,12 +40,12 @@ public abstract class UnkD0C1 extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
-	public static final int OPCODE_2 = 0xc1;
+	public static final int OPCODE_2 = 0x90;
 	
 	@Override
 	protected int getMinimumLength()
 	{
-		return 64;
+		return READ_C;
 	}
 	
 	/* Fields for storing read data */
@@ -54,7 +54,7 @@ public abstract class UnkD0C1 extends L2ClientPacket
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		/*final byte[] bytesA = */buf.readB(new byte[64]); // ???
+		buf.readC(); // ??? 2
 	}
 	
 	@Override

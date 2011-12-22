@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -65,15 +66,26 @@ public abstract class PledgeReceiveWarList extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		final boolean god = client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION);
 		buf.writeD(0); // Tab
-		buf.writeD(0); // Page??
+		if (!god)
+			buf.writeD(0); // Page??
 		final int sizeA = 0; // Pledge count
 		buf.writeD(sizeA);
 		for (int i = 0; i < sizeA; i++)
 		{
 			buf.writeS(""); // Pledge name
-			buf.writeD(0); // Declared??
-			buf.writeD(0); // Under attack??
+			if (god)
+			{
+				buf.writeD(2); // ??? 2
+				buf.writeD(0); // Time in war
+				buf.writeD(0); // ??? 2/0
+			}
+			else
+			{
+				buf.writeD(0); // Declared??
+				buf.writeD(0); // Under attack??
+			}
 		}
 	}
 }

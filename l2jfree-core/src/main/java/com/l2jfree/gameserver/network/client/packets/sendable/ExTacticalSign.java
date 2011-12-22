@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree.gameserver.network.client.packets.sendable.characterless;
+package com.l2jfree.gameserver.network.client.packets.sendable;
 
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
@@ -23,30 +23,30 @@ import com.l2jfree.network.mmocore.MMOBuffer;
  * @author savormix (generated)
  * @since Goddess of Destruction
  */
-public abstract class ExMentorAdd extends L2ServerPacket
+public abstract class ExTacticalSign extends L2ServerPacket
 {
 	/**
-	 * A nicer name for {@link ExMentorAdd}.
+	 * A nicer name for {@link ExTacticalSign}.
 	 * 
 	 * @author savormix (generated)
-	 * @see ExMentorAdd
+	 * @see ExTacticalSign
 	 */
-	public static final class MyAccountVitality extends ExMentorAdd
+	public static final class TokenInfo extends ExTacticalSign
 	{
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @see ExMentorAdd#ExMentorAdd()
+		 * @see ExTacticalSign#ExTacticalSign()
 		 */
-		public MyAccountVitality()
+		public TokenInfo()
 		{
 		}
 	}
 	
-	private static final int[] EXT_OPCODES = { 0x1e, 0x01 };
+	private static final int[] EXT_OPCODES = { 0xff, 0x00 };
 	
 	/** Constructs this packet. */
-	public ExMentorAdd()
+	public ExTacticalSign()
 	{
 	}
 	
@@ -66,10 +66,7 @@ public abstract class ExMentorAdd extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		// default:
-		// 200[%] bonus (while account's vit points > 0), reset each week
-		// 5 vit replenishing/maintaining items per week
-		buf.writeD(0); // XP Bonus
-		buf.writeD(0); // Vitality items allowed
+		buf.writeD(0); // Actor OID
+		buf.writeD(0); // Token
 	}
 }

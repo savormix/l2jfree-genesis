@@ -44,6 +44,6 @@ public class EarthQuake extends L2ServerPacket
 		buf.writeD(0); // Epicenter Z
 		buf.writeD(0); // Intensity
 		buf.writeD(0); // Duration
-		buf.writeD(0); // 0
+		buf.writeD(1); // 1
 	}
 }

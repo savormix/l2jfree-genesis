@@ -73,9 +73,9 @@ public abstract class ExAbnormalStatusUpdateFromTargetPacket extends L2ServerPac
 		{
 			buf.writeD(0); // Skill
 			buf.writeH(0); // Level
-			buf.writeD(0); // MP ???
+			buf.writeD(0); // ??? of skill
 			buf.writeD(0); // Time left
-			buf.writeD(0); // Buffer OID
+			buf.writeD(0); // Caster OID
 		}
 	}
 }

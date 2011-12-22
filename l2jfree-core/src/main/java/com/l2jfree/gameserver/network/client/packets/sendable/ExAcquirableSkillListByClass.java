@@ -31,14 +31,14 @@ public abstract class ExAcquirableSkillListByClass extends L2ServerPacket
 	 * @author savormix (generated)
 	 * @see ExAcquirableSkillListByClass
 	 */
-	public static final class LearnableSkills extends ExAcquirableSkillListByClass
+	public static final class LearnableSkillList extends ExAcquirableSkillListByClass
 	{
 		/**
 		 * Constructs this packet.
 		 * 
 		 * @see ExAcquirableSkillListByClass#ExAcquirableSkillListByClass()
 		 */
-		public LearnableSkills()
+		public LearnableSkillList()
 		{
 		}
 	}

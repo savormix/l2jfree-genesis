@@ -24,7 +24,7 @@ import com.l2jfree.util.LookupTable;
  * calculation/validation. Supports legacy packet XORing with a specified 32-bit key. <BR>
  * <BR>
  * XORing was an application-specific feature, so the replacement methods are not present in this
- * class. <BR>
+ * class.<BR>
  * <BR>
  * Legacy methods may have out-of-date documentation. See the documentation of the replacement
  * method instead.

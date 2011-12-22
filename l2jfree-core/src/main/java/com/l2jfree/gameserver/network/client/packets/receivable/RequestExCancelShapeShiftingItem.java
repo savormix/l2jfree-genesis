@@ -24,15 +24,15 @@ import com.l2jfree.network.mmocore.MMOBuffer;
  * @author savormix (generated)
  * @since Goddess of Destruction
  */
-public abstract class UnkD0C2 extends L2ClientPacket
+public abstract class RequestExCancelShapeShiftingItem extends L2ClientPacket
 {
 	/**
-	 * A nicer name for {@link UnkD0C2}.
+	 * A nicer name for {@link RequestExCancelShapeShiftingItem}.
 	 * 
 	 * @author savormix (generated)
-	 * @see UnkD0C2
+	 * @see RequestExCancelShapeShiftingItem
 	 */
-	public static final class UnknownD0C2 extends UnkD0C2
+	public static final class UnknownD0C2 extends RequestExCancelShapeShiftingItem
 	{
 		// only for convenience
 	}

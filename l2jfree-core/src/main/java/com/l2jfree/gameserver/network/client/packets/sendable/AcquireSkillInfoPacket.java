@@ -20,7 +20,10 @@ import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
+ * Applies to pre-GoD only.
+ * 
  * @author savormix (generated)
+ * @see com.l2jfree.gameserver.network.client.packets.sendable.ExAcquireSkillInfo.LearnableSkillInfo
  */
 public abstract class AcquireSkillInfoPacket extends L2ServerPacket
 {

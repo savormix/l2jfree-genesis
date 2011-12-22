@@ -14,7 +14,6 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
-import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -22,31 +21,32 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
+ * @since Goddess of Destruction
  */
-public abstract class ExPartyPetWindowDelete extends L2ServerPacket
+public abstract class ExChangeMPCost extends L2ServerPacket
 {
 	/**
-	 * A nicer name for {@link ExPartyPetWindowDelete}.
+	 * A nicer name for {@link ExChangeMPCost}.
 	 * 
 	 * @author savormix (generated)
-	 * @see ExPartyPetWindowDelete
+	 * @see ExChangeMPCost
 	 */
-	public static final class RemovePartyMemberServitor extends ExPartyPetWindowDelete
+	public static final class UnknownFEEA extends ExChangeMPCost
 	{
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @see ExPartyPetWindowDelete#ExPartyPetWindowDelete()
+		 * @see ExChangeMPCost#ExChangeMPCost()
 		 */
-		public RemovePartyMemberServitor()
+		public UnknownFEEA()
 		{
 		}
 	}
 	
-	private static final int[] EXT_OPCODES = { 0x6a, 0x00 };
+	private static final int[] EXT_OPCODES = { 0xea, 0x00 };
 	
 	/** Constructs this packet. */
-	public ExPartyPetWindowDelete()
+	public ExChangeMPCost()
 	{
 	}
 	
@@ -66,10 +66,8 @@ public abstract class ExPartyPetWindowDelete extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.writeD(0); // Servitor OID
-		if (client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
-			buf.writeD(0); // Servitor's type
-		buf.writeD(0); // Owner OID
-		buf.writeS(""); // Servitor's name (for named pets; empty for servitors and unnamed pets)
+		buf.writeD(0); // ??? 0/1
+		buf.writeD(0); // ??? 0
+		buf.writeD(0); // ???
 	}
 }

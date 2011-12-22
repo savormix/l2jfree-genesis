@@ -58,25 +58,14 @@ public abstract class ShowBoardPacket extends L2ServerPacket
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
 		buf.writeC(0); // Window action
-		buf.writeS(""); // Board item, not in every packet
-		buf.writeS(""); // Board item
-		buf.writeS(""); // Board item
-		buf.writeS(""); // Board item
-		buf.writeS(""); // Board item
-		buf.writeS(""); // Board item
-		buf.writeS(""); // Board item
-		buf.writeS(""); // Board item
-		buf.writeS(""); // Board item
-		buf.writeS(""); // Board item
-		buf.writeS(""); // Board item
-		buf.writeS(""); // Board item
-		buf.writeS(""); // Board item
-		buf.writeS(""); // Board item
-		buf.writeS(""); // Board item
-		buf.writeS(""); // Board item
-		buf.writeS(""); // Board item
-		buf.writeS(""); // Board item
-		buf.writeS(""); // Board item
-		buf.writeS(""); // Board item
+		buf.writeS(""); // Home
+		buf.writeS(""); // Favorite
+		buf.writeS(""); // Region
+		buf.writeS(""); // Clan
+		buf.writeS(""); // Memo
+		buf.writeS(""); // Mail
+		buf.writeS(""); // Friends
+		buf.writeS(""); // Add Fav.
+		buf.writeS(""); // Content
 	}
 }
