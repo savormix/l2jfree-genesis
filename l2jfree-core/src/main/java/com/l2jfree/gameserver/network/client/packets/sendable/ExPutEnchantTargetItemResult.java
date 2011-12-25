@@ -65,6 +65,6 @@ public abstract class ExPutEnchantTargetItemResult extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.writeD(0); // Item OID
+		buf.writeD(0); // Success
 	}
 }

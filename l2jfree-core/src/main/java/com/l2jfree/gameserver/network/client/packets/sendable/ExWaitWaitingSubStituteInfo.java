@@ -31,14 +31,14 @@ public abstract class ExWaitWaitingSubStituteInfo extends L2ServerPacket
 	 * @author savormix (generated)
 	 * @see ExWaitWaitingSubStituteInfo
 	 */
-	public static final class UnknownFE0301 extends ExWaitWaitingSubStituteInfo
+	public static final class MyAutoPartyMatching extends ExWaitWaitingSubStituteInfo
 	{
 		/**
 		 * Constructs this packet.
 		 * 
 		 * @see ExWaitWaitingSubStituteInfo#ExWaitWaitingSubStituteInfo()
 		 */
-		public UnknownFE0301()
+		public MyAutoPartyMatching()
 		{
 		}
 	}
@@ -66,6 +66,6 @@ public abstract class ExWaitWaitingSubStituteInfo extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.writeH(true); // ??? (either 1 or 0)
+		buf.writeH(false); // Enabled
 	}
 }

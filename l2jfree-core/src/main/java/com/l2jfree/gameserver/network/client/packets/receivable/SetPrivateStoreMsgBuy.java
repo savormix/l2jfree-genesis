@@ -31,7 +31,7 @@ public abstract class SetPrivateStoreMsgBuy extends L2ClientPacket
 	 * @author savormix (generated)
 	 * @see SetPrivateStoreMsgBuy
 	 */
-	public static final class RequestUpdateBuyShop extends SetPrivateStoreMsgBuy
+	public static final class RequestSetBuyShopTitle extends SetPrivateStoreMsgBuy
 	{
 		// only for convenience
 	}

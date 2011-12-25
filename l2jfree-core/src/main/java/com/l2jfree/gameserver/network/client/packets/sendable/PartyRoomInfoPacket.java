@@ -64,6 +64,6 @@ public abstract class PartyRoomInfoPacket extends L2ServerPacket
 		buf.writeD(0); // Item distribution
 		buf.writeD(0); // Region
 		buf.writeS(""); // Name
-		buf.writeH(0); // 0
+		buf.writeH(0); // ???
 	}
 }

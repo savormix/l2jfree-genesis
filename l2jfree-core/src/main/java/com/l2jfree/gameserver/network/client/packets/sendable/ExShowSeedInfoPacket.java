@@ -67,7 +67,7 @@ public abstract class ExShowSeedInfoPacket extends L2ServerPacket
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
 		buf.writeC(0); // 0
 		buf.writeD(0); // Castle
-		buf.writeD(0); // 0
+		buf.writeD(0); // Sales
 		final int sizeA = 0; // Seed count
 		buf.writeD(sizeA);
 		for (int i = 0; i < sizeA; i++)

@@ -31,7 +31,7 @@ public abstract class SetPrivateStoreWholeMsg extends L2ClientPacket
 	 * @author savormix (generated)
 	 * @see SetPrivateStoreWholeMsg
 	 */
-	public static final class RequestUpdatePackageShop extends SetPrivateStoreWholeMsg
+	public static final class RequestSetPackageShopTitle extends SetPrivateStoreWholeMsg
 	{
 		// only for convenience
 	}

@@ -31,7 +31,7 @@ public abstract class RequestRecipeShopMessageSet extends L2ClientPacket
 	 * @author savormix (generated)
 	 * @see RequestRecipeShopMessageSet
 	 */
-	public static final class RequestUpdateManufacture extends RequestRecipeShopMessageSet
+	public static final class RequestSetManufactureTitle extends RequestRecipeShopMessageSet
 	{
 		// only for convenience
 	}

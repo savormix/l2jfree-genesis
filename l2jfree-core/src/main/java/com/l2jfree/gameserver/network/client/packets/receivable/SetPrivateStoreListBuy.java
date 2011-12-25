@@ -16,6 +16,7 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
@@ -61,17 +62,25 @@ public abstract class SetPrivateStoreListBuy extends L2ClientPacket
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		final boolean god = getClient().getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION);
 		final int sizeA = buf.readD(); // Offer count
 		for (int i = 0; i < sizeA; i++)
 		{
 			buf.readD(); // Item
-			buf.readD(); // ???
+			buf.readH(); // Enchant level
+			buf.readH(); // Name exists
 			buf.readQ(); // Quantity
 			buf.readQ(); // Price/unit
-			buf.readD(); // ???
-			buf.readD(); // ???
-			buf.readD(); // ???
-			buf.readD(); // ???
+			buf.readH(); // Attack element
+			buf.readH(); // Attack element power
+			buf.readH(); // Fire defense
+			buf.readH(); // Water defense
+			buf.readH(); // Wind defense
+			buf.readH(); // Earth defense
+			buf.readH(); // Holy defense
+			buf.readH(); // Dark defense
+			if (god)
+				buf.readD(); // ??? 0
 		}
 	}
 	

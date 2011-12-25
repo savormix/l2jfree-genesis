@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -57,9 +58,12 @@ public abstract class ViewPrivateSellList extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		final boolean god = client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION);
 		buf.writeD(0); // Seller OID
 		buf.writeD(0); // Package sale
 		buf.writeQ(0L); // Adena
+		if (god)
+			buf.writeD(0); // Viewer's item count
 		final int sizeA = 0; // Sellable count
 		buf.writeD(sizeA);
 		for (int i = 0; i < sizeA; i++)
@@ -77,6 +81,8 @@ public abstract class ViewPrivateSellList extends L2ServerPacket
 			buf.writeD(0); // Augmentation
 			buf.writeD(0); // Mana left
 			buf.writeD(0); // Time remaining
+			if (god)
+				buf.writeH(0); // ??? 1
 			buf.writeH(0); // Attack element
 			buf.writeH(0); // Attack element power
 			buf.writeH(0); // Fire defense
@@ -88,6 +94,8 @@ public abstract class ViewPrivateSellList extends L2ServerPacket
 			buf.writeH(0); // 0
 			buf.writeH(0); // 0
 			buf.writeH(0); // 0
+			if (god)
+				buf.writeD(0); // ??? 0
 			buf.writeQ(0L); // Price
 			buf.writeQ(0L); // Reference (shop) price
 		}

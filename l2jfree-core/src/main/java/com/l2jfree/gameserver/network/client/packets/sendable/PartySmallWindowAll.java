@@ -82,18 +82,37 @@ public abstract class PartySmallWindowAll extends L2ServerPacket
 			buf.writeD(0); // ??? 0
 			buf.writeD(0); // ??? 0
 			if (god)
-				buf.writeD(0); // ??? 0
-			buf.writeD(0); // Servitor OID, branching condition
-			// branch with AboveZero
 			{
-				buf.writeD(0); // Servitor
-				buf.writeD(0); // Servitor's type
-				buf.writeS(""); // Servitor's name
-				buf.writeD(0); // Servitor's current HP
-				buf.writeD(0); // Servitor's maximum HP
-				buf.writeD(0); // Servitor's current MP
-				buf.writeD(0); // Servitor's maximum MP
-				buf.writeD(0); // Servitor's level
+				buf.writeD(0); // ??? 0
+				final int sizeB = 0; // Servitor count
+				buf.writeD(sizeB);
+				for (int j = 0; j < sizeB; j++)
+				{
+					buf.writeD(0); // Servitor OID
+					buf.writeD(0); // Servitor
+					buf.writeD(0); // Servitor's type
+					buf.writeS(""); // Servitor's name
+					buf.writeD(0); // Servitor's current HP
+					buf.writeD(0); // Servitor's maximum HP
+					buf.writeD(0); // Servitor's current MP
+					buf.writeD(0); // Servitor's maximum MP
+					buf.writeD(0); // Servitor's level
+				}
+			}
+			else
+			{
+				buf.writeD(0); // Servitor OID, branching condition
+				// branch with AboveZero
+				{
+					buf.writeD(0); // Servitor
+					buf.writeD(0); // Servitor's type
+					buf.writeS(""); // Servitor's name
+					buf.writeD(0); // Servitor's current HP
+					buf.writeD(0); // Servitor's maximum HP
+					buf.writeD(0); // Servitor's current MP
+					buf.writeD(0); // Servitor's maximum MP
+					buf.writeD(0); // Servitor's level
+				}
 			}
 		}
 	}

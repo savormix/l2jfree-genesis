@@ -69,11 +69,11 @@ public abstract class ExGetPremiumItemListPacket extends L2ServerPacket
 		buf.writeD(sizeA);
 		for (int i = 0; i < sizeA; i++)
 		{
-			buf.writeD(0); // Slot number
+			buf.writeD(0); // Item OID
 			buf.writeD(0); // Owner OID
 			buf.writeD(0); // Item
 			buf.writeQ(0L); // Quantity
-			buf.writeD(0); // 0
+			buf.writeD(0); // ??? 0/1
 			buf.writeS(""); // Sender
 		}
 	}

@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -65,14 +66,25 @@ public abstract class ExListPartyMatchingWaitingRoom extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.writeD(0); // Page count
-		final int sizeA = 0; // Player count
+		final boolean god = client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION);
+		buf.writeD(0); // Player count
+		final int sizeA = 0; // In this packet/page
 		buf.writeD(sizeA);
 		for (int i = 0; i < sizeA; i++)
 		{
 			buf.writeS(""); // Name
 			buf.writeD(0); // Class
 			buf.writeD(0); // Level
+			if (god)
+			{
+				buf.writeD(0); // Region
+				final int sizeB = 0; // Unavailable instances
+				buf.writeD(sizeB);
+				for (int j = 0; j < sizeB; j++)
+				{
+					buf.writeD(0); // Instance
+				}
+			}
 		}
 	}
 }

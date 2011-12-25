@@ -53,8 +53,8 @@ public abstract class RequestWithDrawPremiumItem extends L2ClientPacket
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.readD(); // Slot number
-		buf.readD(); // Receiver OID
+		buf.readD(); // Item OID
+		buf.readD(); // Owner OID
 		buf.readQ(); // Quantity
 	}
 	

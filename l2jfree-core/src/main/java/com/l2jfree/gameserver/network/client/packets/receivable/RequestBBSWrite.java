@@ -42,7 +42,7 @@ public abstract class RequestBBSWrite extends L2ClientPacket
 	@Override
 	protected int getMinimumLength()
 	{
-		return READ_S;
+		return READ_S + READ_S + READ_S + READ_S + READ_S + READ_S;
 	}
 	
 	/* Fields for storing read data */
@@ -51,12 +51,12 @@ public abstract class RequestBBSWrite extends L2ClientPacket
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		buf.readS(); // Action
 		buf.readS(); // Link
-		buf.readS(); // Item, not in every packet
-		buf.readS(); // Item
-		buf.readS(); // Item
-		buf.readS(); // Item
-		buf.readS(); // Item
+		buf.readS(); // Edit
+		buf.readS(); // Title
+		buf.readS(); // Message
+		buf.readS(); // Type
 	}
 	
 	@Override

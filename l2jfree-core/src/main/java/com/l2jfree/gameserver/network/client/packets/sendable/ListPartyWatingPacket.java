@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -57,6 +58,7 @@ public abstract class ListPartyWatingPacket extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		final boolean god = client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION);
 		buf.writeD(0); // Page count
 		final int sizeA = 0; // Room count
 		buf.writeD(sizeA);
@@ -67,9 +69,20 @@ public abstract class ListPartyWatingPacket extends L2ServerPacket
 			buf.writeD(0); // Region
 			buf.writeD(0); // Minimum level to join
 			buf.writeD(0); // Maximum level to join
-			buf.writeD(0); // Members
+			if (!god)
+				buf.writeD(0); // Members
 			buf.writeD(0); // Size
 			buf.writeS(""); // Leader name
+			if (god)
+			{
+				final int sizeB = 0; // Members
+				buf.writeD(sizeB);
+				for (int j = 0; j < sizeB; j++)
+				{
+					buf.writeD(0); // Class
+					buf.writeS(""); // Name
+				}
+			}
 		}
 	}
 }

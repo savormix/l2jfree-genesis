@@ -54,7 +54,7 @@ public abstract class RequestRefundItem extends L2ClientPacket
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
 		buf.readD(); // List ID
-		final int sizeA = buf.readD(); // Item count
+		final int sizeA = buf.readD(); // Bought back
 		for (int i = 0; i < sizeA; i++)
 		{
 			buf.readD(); // Slot number

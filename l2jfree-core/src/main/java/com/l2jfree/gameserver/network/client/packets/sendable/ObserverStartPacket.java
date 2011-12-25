@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -60,8 +61,15 @@ public abstract class ObserverStartPacket extends L2ServerPacket
 		buf.writeD(0); // Viewport X
 		buf.writeD(0); // Viewport Y
 		buf.writeD(0); // Viewport Z
-		buf.writeC(0); // 0
-		buf.writeC(0); // 192
-		buf.writeC(0); // 0
+		if (client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
+		{
+			buf.writeD(0); // Heading
+			buf.writeD(0); // ??? 0
+		}
+		else
+		{
+			buf.writeH(0); // Heading
+			buf.writeC(0); // 0
+		}
 	}
 }

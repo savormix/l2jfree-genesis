@@ -51,7 +51,7 @@ public abstract class RequestPreviewItem extends L2ClientPacket
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		buf.readD(); // ???
+		buf.readD(); // Merchant? ID
 		buf.readD(); // List ID
 		final int sizeA = buf.readD(); // Item count
 		for (int i = 0; i < sizeA; i++)

@@ -71,12 +71,12 @@ public abstract class ExListMpccWaiting extends L2ServerPacket
 		for (int i = 0; i < sizeA; i++)
 		{
 			buf.writeD(0); // Room ID
-			buf.writeS(""); // Leader
+			buf.writeS(""); // Name
 			buf.writeD(0); // Region
-			buf.writeD(0); // ???
-			buf.writeD(0); // Level
-			buf.writeD(0); // ???
-			buf.writeD(0); // ???
+			buf.writeD(0); // Minimum level to join
+			buf.writeD(0); // Maximum level to join
+			buf.writeD(0); // Parties
+			buf.writeD(0); // Size
 			buf.writeS(""); // Leader
 		}
 	}

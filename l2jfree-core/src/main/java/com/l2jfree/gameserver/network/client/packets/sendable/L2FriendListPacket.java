@@ -71,7 +71,7 @@ public abstract class L2FriendListPacket extends L2ServerPacket
 			{
 				buf.writeD(0); // Level
 				buf.writeD(0); // Class
-				buf.writeH(0); // ??? 0
+				buf.writeS(""); // Memo
 			}
 		}
 	}

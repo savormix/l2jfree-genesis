@@ -14,6 +14,7 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -57,37 +58,83 @@ public abstract class WareHouseDepositListPacket extends L2ServerPacket
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
+		final boolean god = client.getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION);
 		buf.writeH(0); // Warehouse
 		buf.writeQ(0L); // Viewer's adena
-		final int sizeA = 0; // Item count
-		buf.writeH(sizeA);
-		for (int i = 0; i < sizeA; i++)
+		if (god)
 		{
-			buf.writeD(0); // Item OID
-			buf.writeD(0); // Item
-			buf.writeD(0); // Slot number
-			buf.writeQ(0L); // Quantity
-			buf.writeH(0); // Main item type
-			buf.writeH(0); // Special item type
-			buf.writeH(0); // Equipped
-			buf.writeD(0); // Used paperdoll slot(s)
-			buf.writeH(0); // Enchant level
-			buf.writeH(0); // Name exists
-			buf.writeD(0); // Augmentation
-			buf.writeD(0); // Mana left
-			buf.writeD(0); // Time remaining
-			buf.writeH(0); // Attack element
-			buf.writeH(0); // Attack element power
-			buf.writeH(0); // Fire defense
-			buf.writeH(0); // Water defense
-			buf.writeH(0); // Wind defense
-			buf.writeH(0); // Earth defense
-			buf.writeH(0); // Holy defense
-			buf.writeH(0); // Dark defense
-			buf.writeH(0); // 0
-			buf.writeH(0); // 0
-			buf.writeH(0); // 0
-			buf.writeD(0); // Item OID (dupe)
+			buf.writeD(0); // Items in warehouse
+			final int sizeA = 0; // Stackables in warehouse
+			buf.writeH(sizeA);
+			for (int i = 0; i < sizeA; i++)
+			{
+				buf.writeD(0); // Stackable
+			}
+			final int sizeB = 0; // Depositables
+			buf.writeH(sizeB);
+			for (int i = 0; i < sizeB; i++)
+			{
+				buf.writeD(0); // Item OID (normal)
+				buf.writeD(0); // Item
+				buf.writeD(0); // Slot number
+				buf.writeQ(0L); // Quantity
+				buf.writeH(0); // Main item type
+				buf.writeH(0); // Special item type
+				buf.writeH(0); // Equipped
+				buf.writeD(0); // Used paperdoll slot(s)
+				buf.writeH(0); // Enchant level
+				buf.writeH(0); // Name exists
+				buf.writeD(0); // Augmentation
+				buf.writeD(0); // Mana left
+				buf.writeD(0); // Time remaining
+				buf.writeH(0); // ??? 1
+				buf.writeH(0); // Attack element
+				buf.writeH(0); // Attack element power
+				buf.writeH(0); // Fire defense
+				buf.writeH(0); // Water defense
+				buf.writeH(0); // Wind defense
+				buf.writeH(0); // Earth defense
+				buf.writeH(0); // Holy defense
+				buf.writeH(0); // Dark defense
+				buf.writeH(0); // 0
+				buf.writeH(0); // 0
+				buf.writeH(0); // 0
+				buf.writeD(0); // ??? 0
+				buf.writeD(0); // Item OID (warehouse)
+			}
+		}
+		else
+		{
+			final int sizeA = 0; // Item count
+			buf.writeH(sizeA);
+			for (int i = 0; i < sizeA; i++)
+			{
+				buf.writeD(0); // Item OID
+				buf.writeD(0); // Item
+				buf.writeD(0); // Slot number
+				buf.writeQ(0L); // Quantity
+				buf.writeH(0); // Main item type
+				buf.writeH(0); // Special item type
+				buf.writeH(0); // Equipped
+				buf.writeD(0); // Used paperdoll slot(s)
+				buf.writeH(0); // Enchant level
+				buf.writeH(0); // Name exists
+				buf.writeD(0); // Augmentation
+				buf.writeD(0); // Mana left
+				buf.writeD(0); // Time remaining
+				buf.writeH(0); // Attack element
+				buf.writeH(0); // Attack element power
+				buf.writeH(0); // Fire defense
+				buf.writeH(0); // Water defense
+				buf.writeH(0); // Wind defense
+				buf.writeH(0); // Earth defense
+				buf.writeH(0); // Holy defense
+				buf.writeH(0); // Dark defense
+				buf.writeH(0); // 0
+				buf.writeH(0); // 0
+				buf.writeH(0); // 0
+				buf.writeD(0); // Item OID (dupe)
+			}
 		}
 	}
 }

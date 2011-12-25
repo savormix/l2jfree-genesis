@@ -16,42 +16,46 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 
-import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
+ * @since Goddess of Destruction
  */
-public abstract class RequestRecipeShopSellList extends L2ClientPacket
+public abstract class RequestMentorCancel extends L2ClientPacket
 {
 	/**
-	 * A nicer name for {@link RequestRecipeShopSellList}.
+	 * A nicer name for {@link RequestMentorCancel}.
 	 * 
 	 * @author savormix (generated)
-	 * @see RequestRecipeShopSellList
+	 * @see RequestMentorCancel
 	 */
-	public static final class RequestReviewManufactureList extends RequestRecipeShopSellList
+	public static final class RequestDismissMentor extends RequestMentorCancel
 	{
 		// only for convenience
 	}
 	
 	/** Packet's identifier */
-	public static final int OPCODE = 0xc0;
+	public static final int OPCODE = 0xd0;
+	/** Packet's second identifier */
+	public static final int OPCODE_2 = 0xbd;
 	
 	@Override
 	protected int getMinimumLength()
 	{
-		return 0;
+		return READ_D + READ_S;
 	}
+	
+	/* Fields for storing read data */
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		if (getClient().getVersion().isNewerThanOrEqualTo(ClientProtocolVersion.GODDESS_OF_DESTRUCTION))
-			buf.readD(); // Manufacturer's OID
+		buf.readD(); // ??? 0
+		buf.readS(); // Mentor
 	}
 	
 	@Override
