@@ -21,47 +21,54 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
+ * @since Goddess of Destruction
  */
-public abstract class PackageToListPacket extends L2ServerPacket
+public abstract class ExBlockRemoveResult extends L2ServerPacket
 {
 	/**
-	 * A nicer name for {@link PackageToListPacket}.
+	 * A nicer name for {@link ExBlockRemoveResult}.
 	 * 
 	 * @author savormix (generated)
-	 * @see PackageToListPacket
+	 * @see ExBlockRemoveResult
 	 */
-	public static final class SelectDimensionalRecipient extends PackageToListPacket
+	public static final class ChatUnblockResult extends ExBlockRemoveResult
 	{
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @see PackageToListPacket#PackageToListPacket()
+		 * @see ExBlockRemoveResult#ExBlockRemoveResult()
 		 */
-		public SelectDimensionalRecipient()
+		public ChatUnblockResult()
 		{
 		}
 	}
 	
+	private static final int[] EXT_OPCODES = { 0xed, 0x00 };
+	
 	/** Constructs this packet. */
-	public PackageToListPacket()
+	public ExBlockRemoveResult()
 	{
 	}
 	
 	@Override
 	protected int getOpcode()
 	{
-		return 0xc8;
+		return 0xfe;
+	}
+	
+	@Override
+	protected int[] getAdditionalOpcodes()
+	{
+		return EXT_OPCODES;
 	}
 	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		final int sizeA = 0; // Choice count
-		buf.writeD(sizeA);
-		for (int i = 0; i < sizeA; i++)
+		buf.writeD(0); // Unblocked, branching condition
+		// branch with AboveZero
 		{
-			buf.writeD(0); // Character ID
 			buf.writeS(""); // Name
 		}
 	}

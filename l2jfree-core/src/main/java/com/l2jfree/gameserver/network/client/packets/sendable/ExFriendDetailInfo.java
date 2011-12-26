@@ -21,48 +21,66 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
+ * @since Goddess of Destruction
  */
-public abstract class PackageToListPacket extends L2ServerPacket
+public abstract class ExFriendDetailInfo extends L2ServerPacket
 {
 	/**
-	 * A nicer name for {@link PackageToListPacket}.
+	 * A nicer name for {@link ExFriendDetailInfo}.
 	 * 
 	 * @author savormix (generated)
-	 * @see PackageToListPacket
+	 * @see ExFriendDetailInfo
 	 */
-	public static final class SelectDimensionalRecipient extends PackageToListPacket
+	public static final class DetailedFriendInfo extends ExFriendDetailInfo
 	{
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @see PackageToListPacket#PackageToListPacket()
+		 * @see ExFriendDetailInfo#ExFriendDetailInfo()
 		 */
-		public SelectDimensionalRecipient()
+		public DetailedFriendInfo()
 		{
 		}
 	}
 	
+	private static final int[] EXT_OPCODES = { 0xeb, 0x00 };
+	
 	/** Constructs this packet. */
-	public PackageToListPacket()
+	public ExFriendDetailInfo()
 	{
 	}
 	
 	@Override
 	protected int getOpcode()
 	{
-		return 0xc8;
+		return 0xfe;
+	}
+	
+	@Override
+	protected int[] getAdditionalOpcodes()
+	{
+		return EXT_OPCODES;
 	}
 	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		final int sizeA = 0; // Choice count
-		buf.writeD(sizeA);
-		for (int i = 0; i < sizeA; i++)
-		{
-			buf.writeD(0); // Character ID
-			buf.writeS(""); // Name
-		}
+		buf.writeD(0); // Character ID
+		buf.writeS(""); // Name
+		buf.writeD(0); // Online
+		buf.writeD(0); // Friend OID
+		buf.writeH(0); // Level
+		buf.writeH(0); // Class
+		buf.writeD(0); // Pledge ID
+		buf.writeD(0); // Pledge crest ID
+		buf.writeS(""); // Pledge name
+		buf.writeD(0); // Alliance ID
+		buf.writeD(0); // Alliance crest ID
+		buf.writeS(""); // Alliance name
+		buf.writeC(0); // Creation month
+		buf.writeC(0); // Creation day
+		buf.writeD(0); // Last login
+		buf.writeS(""); // Memo
 	}
 }

@@ -21,48 +21,61 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix (generated)
+ * @since Goddess of Destruction
  */
-public abstract class PackageToListPacket extends L2ServerPacket
+public abstract class ExMentorList extends L2ServerPacket
 {
 	/**
-	 * A nicer name for {@link PackageToListPacket}.
+	 * A nicer name for {@link ExMentorList}.
 	 * 
 	 * @author savormix (generated)
-	 * @see PackageToListPacket
+	 * @see ExMentorList
 	 */
-	public static final class SelectDimensionalRecipient extends PackageToListPacket
+	public static final class MyMentoringInfo extends ExMentorList
 	{
 		/**
 		 * Constructs this packet.
 		 * 
-		 * @see PackageToListPacket#PackageToListPacket()
+		 * @see ExMentorList#ExMentorList()
 		 */
-		public SelectDimensionalRecipient()
+		public MyMentoringInfo()
 		{
 		}
 	}
 	
+	private static final int[] EXT_OPCODES = { 0x20, 0x01 };
+	
 	/** Constructs this packet. */
-	public PackageToListPacket()
+	public ExMentorList()
 	{
 	}
 	
 	@Override
 	protected int getOpcode()
 	{
-		return 0xc8;
+		return 0xfe;
+	}
+	
+	@Override
+	protected int[] getAdditionalOpcodes()
+	{
+		return EXT_OPCODES;
 	}
 	
 	@Override
 	protected void writeImpl(L2Client client, L2Player activeChar, MMOBuffer buf) throws RuntimeException
 	{
 		// TODO: when implementing, consult an up-to-date packets_game_server.xml and/or savormix
-		final int sizeA = 0; // Choice count
+		buf.writeD(0); // Type
+		final int sizeA = 0; // Players
 		buf.writeD(sizeA);
 		for (int i = 0; i < sizeA; i++)
 		{
 			buf.writeD(0); // Character ID
 			buf.writeS(""); // Name
+			buf.writeD(0); // Class
+			buf.writeD(0); // Level
+			buf.writeD(0); // Online
 		}
 	}
 }
