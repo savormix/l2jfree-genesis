@@ -22,7 +22,8 @@ public enum ClassLevel
 	First(1),
 	Second(20),
 	Third(40),
-	Fourth(76);
+	Fourth(76),
+	Fifth(85);
 	
 	private final int _baseLevel;
 	

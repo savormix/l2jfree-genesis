@@ -175,7 +175,20 @@ public enum ClassId
 	/*			*/FemaleSoulHound/*	*/(133, Race.Kamael, ClassType.Fighter, ClassLevel.Fourth, FemaleSoulBreaker),
 	/*			*/Trickster/*		*/(134, Race.Kamael, ClassType.Fighter, ClassLevel.Fourth, Arbalester),
 	/*		*/Inspector/*			*/(135, Race.Kamael, ClassType.Fighter, ClassLevel.Third, Warder),
-	/*			*/Judicator/*		*/(136, Race.Kamael, ClassType.Fighter, ClassLevel.Fourth, Inspector);
+	/*			*/Judicator/*		*/(136, Race.Kamael, ClassType.Fighter, ClassLevel.Fourth, Inspector),
+	
+	dummyEntry137(137),
+	dummyEntry138(138),
+	
+	// not bound to races...
+	SigelKnight(139, Race.Human, ClassType.Fighter, ClassLevel.Fifth, PhoenixKnight),
+	TyrrWarrior(140, Race.Human, ClassType.Fighter, ClassLevel.Fifth, Duelist),
+	OthellRogue(141, Race.Human, ClassType.Fighter, ClassLevel.Fifth, Adventurer),
+	YulArcher(142, Race.Human, ClassType.Fighter, ClassLevel.Fifth, Sagittarius),
+	FeohWizard(143, Race.Human, ClassType.Mystic, ClassLevel.Fifth, Archmage),
+	IssEnchanter(144, Race.Human, ClassType.Fighter, ClassLevel.Fifth, Hierophant),
+	WynnSummoner(145, Race.Human, ClassType.Mystic, ClassLevel.Fifth, ArcanaLord),
+	AeoreHealer(146, Race.Human, ClassType.Mystic, ClassLevel.Fifth, Cardinal);
 	
 	private final int _id;
 	private final Race _race;

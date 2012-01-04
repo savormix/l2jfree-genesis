@@ -18,6 +18,7 @@ import java.nio.BufferUnderflowException;
 import java.util.regex.Pattern;
 
 import com.l2jfree.gameserver.datatables.PlayerNameTable;
+import com.l2jfree.gameserver.network.client.L2ClientState;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.sendable.characterless.ExIsCharNameCreatable.CharacterNameValidation;
 import com.l2jfree.network.mmocore.InvalidPacketException;
@@ -47,6 +48,7 @@ public abstract class RequestCharacterNameCreatable extends L2ClientPacket
 	public static final int OPCODE = 0xd0;
 	/** Packet's second identifier */
 	public static final int OPCODE_2 = 0xb0;
+	public static final L2ClientState[] STATES = new L2ClientState[] { L2ClientState.CHARACTER_MANAGEMENT };
 	
 	@Override
 	protected int getMinimumLength()

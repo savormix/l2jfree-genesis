@@ -16,6 +16,7 @@ package com.l2jfree.gameserver.network.client.packets.receivable.characterless;
 
 import java.nio.BufferUnderflowException;
 
+import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.L2ClientState;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
@@ -97,7 +98,8 @@ public abstract class CharacterSelect extends L2ClientPacket
 		
 		getClient().setState(L2ClientState.CHARACTER_SELECTED);
 		
-		sendPacket(SkyColor.getForCharacterSelection());
+		if (getClient().getVersion().isOlderThanOrEqualTo(ClientProtocolVersion.HIGH_FIVE_UPDATE_3))
+			sendPacket(SkyColor.getForCharacterSelection());
 		sendPacket(new SelectedCharacterInfo());
 	}
 	
