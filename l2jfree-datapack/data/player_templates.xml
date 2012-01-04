@@ -900,4 +900,60 @@
 		<!-- level: Fourth -->
 		<!-- parent: Inspector -->
 	</playerTemplate>
+	<playerTemplate classId="139">
+		<!-- name: Sigel Knight -->
+		<!-- race: N/A -->
+		<!-- type: Fighter -->
+		<!-- level: Fifth -->
+		<!-- parent: N/A -->
+	</playerTemplate>
+	<playerTemplate classId="140">
+		<!-- name: Tyrr Warrior -->
+		<!-- race: N/A -->
+		<!-- type: Fighter -->
+		<!-- level: Fifth -->
+		<!-- parent: N/A -->
+	</playerTemplate>
+	<playerTemplate classId="141">
+		<!-- name: Othell Rogue -->
+		<!-- race: N/A -->
+		<!-- type: Fighter -->
+		<!-- level: Fifth -->
+		<!-- parent: N/A -->
+	</playerTemplate>
+	<playerTemplate classId="142">
+		<!-- name: Yul Archer -->
+		<!-- race: N/A -->
+		<!-- type: Fighter -->
+		<!-- level: Fifth -->
+		<!-- parent: N/A -->
+	</playerTemplate>
+	<playerTemplate classId="143">
+		<!-- name: Feoh Wizard -->
+		<!-- race: N/A -->
+		<!-- type: Mystic -->
+		<!-- level: Fifth -->
+		<!-- parent: N/A -->
+	</playerTemplate>
+	<playerTemplate classId="144">
+		<!-- name: Iss Enchanter -->
+		<!-- race: N/A -->
+		<!-- type: Fighter -->
+		<!-- level: Fifth -->
+		<!-- parent: Hierophant -->
+	</playerTemplate>
+	<playerTemplate classId="145">
+		<!-- name: Wynn Summoner -->
+		<!-- race: N/A -->
+		<!-- type: Mystic -->
+		<!-- level: Fifth -->
+		<!-- parent: N/A -->
+	</playerTemplate>
+	<playerTemplate classId="146">
+		<!-- name: Aeore Healer -->
+		<!-- race: N/A -->
+		<!-- type: Mystic -->
+		<!-- level: Fifth -->
+		<!-- parent: N/A -->
+	</playerTemplate>
 </list>
