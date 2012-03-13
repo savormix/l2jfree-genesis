@@ -54,15 +54,15 @@ public class JavaCompiler
 		tool = new EclipseCompiler();
 	}
 	
-	public Map<String, byte[]> compile(String source, String fileName)
+	public Map<String, byte[]> compile(String fileName, String source)
 	{
-		PrintWriter err = new PrintWriter(System.err);
-		return compile(source, fileName, err, null, null);
+		final PrintWriter err = new PrintWriter(System.err);
+		return compile(fileName, source, err);
 	}
 	
 	public Map<String, byte[]> compile(String fileName, String source, Writer err)
 	{
-		return compile(fileName, source, err, null, null);
+		return compile(fileName, source, err, null);
 	}
 	
 	public Map<String, byte[]> compile(String fileName, String source, Writer err, String sourcePath)
