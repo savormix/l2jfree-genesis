@@ -64,8 +64,9 @@ public final class ServerList extends L2ServerPacket
 		for (L2GameServerView gsv : _gameServers)
 		{
 			buf.writeC(gsv.getId());
+			final byte[] ip = gsv.getIpv4(client.getInetAddress());
 			for (int i = 0; i < 4; i++)
-				buf.writeC(gsv.getIpv4()[i]);
+				buf.writeC(ip[i]);
 			buf.writeD(gsv.getPort());
 			buf.writeC(gsv.getAge());
 			buf.writeC(gsv.isPvp());

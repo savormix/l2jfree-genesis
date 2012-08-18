@@ -14,8 +14,6 @@
  */
 package com.l2jfree.loginserver.network.gameserver.legacy;
 
-import java.net.InetAddress;
-
 import com.l2jfree.loginserver.network.gameserver.L2GameServerView;
 import com.l2jfree.network.legacy.ServerStatus;
 
@@ -41,19 +39,7 @@ public final class L2LegacyGameServerView extends L2GameServerView
 	{
 		L2LegacyGameServer gs = getGameServer();
 		setId(gs.getId());
-		try
-		{
-			// FIXME subnet-based hosts
-			// REGRESSION -->
-			byte[] ip = InetAddress.getByName(gs.getHost()).getAddress();
-			System.arraycopy(ip, 0, getIpv4(), 0, getIpv4().length);
-			// <-- REGRESSION
-		}
-		catch (Exception e)
-		{
-			_log.error("Could not obtain IPv4 from " + gs.getHost(), e);
-			System.arraycopy(getDefaultIp(), 0, getIpv4(), 0, getIpv4().length);
-		}
+		setAddr(gs.getAddr());
 		setPort(gs.getPort());
 		setAge(gs.getAge());
 		setPvp(gs.isPvp());

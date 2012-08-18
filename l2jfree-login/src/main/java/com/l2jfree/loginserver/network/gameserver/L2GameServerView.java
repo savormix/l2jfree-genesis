@@ -14,6 +14,10 @@
  */
 package com.l2jfree.loginserver.network.gameserver;
 
+import java.net.InetAddress;
+import java.util.Collection;
+import java.util.Collections;
+
 import com.l2jfree.util.logging.L2Logger;
 
 /**
@@ -27,7 +31,7 @@ public abstract class L2GameServerView implements Comparable<L2GameServerView>
 	private static final byte[] UNKNOWN_IPV4 = { 0, 0, 0, 0 };
 	
 	private int _id;
-	private final byte[] _ipv4;
+	private Collection<L2GameServerAddress> _addr;
 	private int _port;
 	private int _age;
 	private boolean _pvp;
@@ -40,7 +44,7 @@ public abstract class L2GameServerView implements Comparable<L2GameServerView>
 	/** Creates a default (uninitialized) game server view. */
 	protected L2GameServerView()
 	{
-		_ipv4 = new byte[4];
+		setAddr(null);
 	}
 	
 	/** Update this view. */
@@ -82,14 +86,31 @@ public abstract class L2GameServerView implements Comparable<L2GameServerView>
 		return _id;
 	}
 	
+	private Collection<L2GameServerAddress> getAddr()
+	{
+		return _addr;
+	}
+	
+	public void setAddr(Collection<L2GameServerAddress> addr)
+	{
+		if (addr == null)
+			addr = Collections.emptyList();
+		_addr = addr;
+	}
+	
 	/**
 	 * Returns game server's listening IP.
 	 * 
+	 * @param client connection initiator's address
 	 * @return IPv4 listening address
 	 */
-	public byte[] getIpv4()
+	public byte[] getIpv4(InetAddress client)
 	{
-		return _ipv4;
+		for (L2GameServerAddress gsa : getAddr())
+			if (gsa.equals(client))
+				return gsa.getAddress();
+		
+		return getDefaultIp();
 	}
 	
 	/**

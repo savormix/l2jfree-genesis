@@ -20,9 +20,12 @@ import java.nio.channels.SocketChannel;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.util.Collection;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javolution.util.FastSet;
 
+import com.l2jfree.loginserver.network.gameserver.L2GameServerAddress;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyGameServerPacket;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyLoginServerPacket;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable.LoginServerFail;
@@ -52,7 +55,7 @@ public final class L2LegacyGameServer extends
 	private boolean _allowedToBan;
 	
 	// GameServerAuth
-	private String _host;
+	private final Collection<L2GameServerAddress> _addr;
 	private int _port;
 	// Can be modified via ServerStatus
 	private int _maxPlayers;
@@ -88,7 +91,7 @@ public final class L2LegacyGameServer extends
 		_id = null;
 		_allowedToBan = false;
 		
-		_host = "0.0.0.0";
+		_addr = new CopyOnWriteArrayList<L2GameServerAddress>();
 		
 		_status = ServerStatus.DOWN;
 		_onlineAccounts = FastSet.newInstance();
@@ -313,24 +316,13 @@ public final class L2LegacyGameServer extends
 	}
 	
 	/**
-	 * Returns the advertised listening IP.
+	 * Returns the advertised listening IPs.
 	 * 
-	 * @return the listening IP
+	 * @return the listening IPs
 	 */
-	public String getHost()
+	public Collection<L2GameServerAddress> getAddr()
 	{
-		return _host;
-	}
-	
-	/**
-	 * Sets the listening IP.
-	 * 
-	 * @param host game server's listening IP
-	 */
-	public void setHost(String host)
-	{
-		if (host != null)
-			_host = host;
+		return _addr;
 	}
 	
 	/**

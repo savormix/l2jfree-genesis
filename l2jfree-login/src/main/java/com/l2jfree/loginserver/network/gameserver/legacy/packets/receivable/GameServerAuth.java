@@ -19,10 +19,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Set;
 import java.util.TreeSet;
 
 import com.l2jfree.loginserver.config.ServiceConfig;
+import com.l2jfree.loginserver.network.gameserver.L2GameServerAddress;
 import com.l2jfree.loginserver.network.gameserver.L2GameServerCache;
 import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServer;
 import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServerController;
@@ -67,6 +70,7 @@ public final class GameServerAuth extends L2LegacyGameServerPacket
 		_port = buf.readH();
 		_maxPlayers = buf.readD();
 		int size = buf.readD();
+		System.err.println(size);
 		_hexId = buf.readB(new byte[size]);
 		size = 2 * buf.readD();
 		_hosts = new String[size];
@@ -186,23 +190,24 @@ public final class GameServerAuth extends L2LegacyGameServerPacket
 		lgs.setAuth(auth);
 		lgs.setAllowedToBan(trusted);
 		
-		// FIXME subnet-based hosts
-		// REGRESSION -->
-		lgs.setHost("127.0.0.1");//lgs.setHost(null);
-		/*for (int i = 0; i < _hosts.length; i++)
-			if (_hosts[i++].startsWith("0"))
-				lgs.setHost(_hosts[i]);
-		*/
-		lgs.setHost("127.0.0.1");
-		if (lgs.getHost() == null)
+		Collection<L2GameServerAddress> addr = new ArrayList<L2GameServerAddress>(_hosts.length / 2);
+		for (int i = 0; i < _hosts.length; i += 2)
 		{
-			lgs.setHost("127.0.0.1");
-			_log.info("Game server on ID " + _desiredId + " did not specify a default IP!");
+			try
+			{
+				addr.add(new L2GameServerAddress(_hosts[i], _hosts[i + 1]));
+			}
+			catch (Exception e)
+			{
+				_log.warn("Invalid subnet: " + _hosts[i], e);
+			}
 		}
-		else
-			_log.info("Authorized legacy/compatible game server on ID " + _desiredId + ", advertised IP: "
-					+ lgs.getHost());
-		// <-- REGRESSION
+		lgs.getAddr().clear();
+		lgs.getAddr().addAll(addr);
+		
+		_log.info("Authorized legacy/compatible game server on ID " + _desiredId);
+		for (L2GameServerAddress gsa : addr)
+			_log.info("Advertised IP: " + gsa);
 		lgs.setPort(_port);
 		lgs.setMaxPlayers(_maxPlayers);
 		

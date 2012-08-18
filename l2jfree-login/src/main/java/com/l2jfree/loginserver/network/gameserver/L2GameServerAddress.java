@@ -14,36 +14,32 @@
  */
 package com.l2jfree.loginserver.network.gameserver;
 
-import com.l2jfree.loginserver.network.gameserver.legacy.status.L2LegacyAgeLimit;
-import com.l2jfree.loginserver.network.gameserver.legacy.status.L2LegacyType;
+import java.net.UnknownHostException;
+
+import com.l2jserver.util.IPSubnet;
 
 /**
  * @author savormix
  */
-public class L2OfflineGameServerView extends L2GameServerView
+public class L2GameServerAddress extends IPSubnet
 {
-	/**
-	 * Creates a view for an offline server.
-	 * 
-	 * @param id game server ID
-	 */
-	public L2OfflineGameServerView(int id)
+	private final String _advertisedAddress;
+	
+	public L2GameServerAddress(String subnet, String advertisedAddress) throws UnknownHostException
 	{
-		setId(id);
-		setAddr(null);
-		setPort(0);
-		setAge(L2LegacyAgeLimit.ANY.getMin());
-		setPvp(false);
-		setOnlinePlayers(0);
-		setMaxPlayers(0);
-		setOnline(false);
-		setTypes(L2LegacyType.NORMAL.getMask());
-		setBrackets(false);
+		super(subnet);
+		
+		_advertisedAddress = advertisedAddress;
+	}
+	
+	public String getAdvertisedAddress()
+	{
+		return _advertisedAddress;
 	}
 	
 	@Override
-	public void update()
+	public String toString()
 	{
-		// do nothing at all
+		return _advertisedAddress + " @ " + super.toString();
 	}
 }
