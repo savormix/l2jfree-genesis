@@ -116,7 +116,7 @@ public final class L2LegacyGameServer extends
 		final int dataSize = size.getSize();
 		
 		size.decreaseSize(4); // checksum
-		size.setPadding(1, 8);
+		size.setPadding(0, 7);
 		
 		getCipher().decipher(buf, dataSize);
 		

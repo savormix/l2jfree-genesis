@@ -14,6 +14,7 @@
  */
 package com.l2jfree.loginserver.network.gameserver;
 
+import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import com.l2jserver.util.IPSubnet;
@@ -23,18 +24,18 @@ import com.l2jserver.util.IPSubnet;
  */
 public class L2GameServerAddress extends IPSubnet
 {
-	private final String _advertisedAddress;
+	private final InetAddress _advertisedAddress;
 	
 	public L2GameServerAddress(String subnet, String advertisedAddress) throws UnknownHostException
 	{
 		super(subnet);
 		
-		_advertisedAddress = advertisedAddress;
+		_advertisedAddress = InetAddress.getByName(advertisedAddress);
 	}
 	
-	public String getAdvertisedAddress()
+	public byte[] getAdvertisedAddress()
 	{
-		return _advertisedAddress;
+		return _advertisedAddress.getAddress();
 	}
 	
 	@Override

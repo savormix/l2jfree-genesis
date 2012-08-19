@@ -70,7 +70,6 @@ public final class GameServerAuth extends L2LegacyGameServerPacket
 		_port = buf.readH();
 		_maxPlayers = buf.readD();
 		int size = buf.readD();
-		System.err.println(size);
 		_hexId = buf.readB(new byte[size]);
 		size = 2 * buf.readD();
 		_hosts = new String[size];

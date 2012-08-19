@@ -108,7 +108,7 @@ public abstract class L2GameServerView implements Comparable<L2GameServerView>
 	{
 		for (L2GameServerAddress gsa : getAddr())
 			if (gsa.equals(client))
-				return gsa.getAddress();
+				return gsa.getAdvertisedAddress();
 		
 		return getDefaultIp();
 	}
