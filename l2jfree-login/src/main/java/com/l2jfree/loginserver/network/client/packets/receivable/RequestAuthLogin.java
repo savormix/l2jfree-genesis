@@ -55,20 +55,23 @@ public final class RequestAuthLogin extends L2ClientPacket
 	/** Packet's identifier */
 	public static final int OPCODE = 0x00;
 	
-	private static final int ENCIPHERED_LENGTH = 128;
+	private static final int BLOCK_SIZE = 128;
 	
-	private byte[] _enciphered;
+	private byte[] _userBlock;
+	private byte[] _passBlock;
 	
 	@Override
 	protected int getMinimumLength()
 	{
-		return ENCIPHERED_LENGTH;
+		return BLOCK_SIZE;
 	}
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
-		_enciphered = buf.readB(new byte[ENCIPHERED_LENGTH]);
+		_userBlock = buf.readB(new byte[BLOCK_SIZE]);
+		if (buf.getAvailableBytes() >= BLOCK_SIZE)
+			_passBlock = buf.readB(new byte[BLOCK_SIZE]);
 		buf.skipAll();
 	}
 	
@@ -76,12 +79,13 @@ public final class RequestAuthLogin extends L2ClientPacket
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
 		final L2Client client = getClient();
-		byte[] deciphered;
 		try
 		{
 			Cipher rsa = Cipher.getInstance("RSA/ECB/nopadding");
 			rsa.init(Cipher.DECRYPT_MODE, client.getPrivateKey());
-			deciphered = rsa.doFinal(_enciphered, 0, ENCIPHERED_LENGTH);
+			_userBlock = rsa.doFinal(_userBlock, 0, BLOCK_SIZE);
+			if (_passBlock != null)
+				_passBlock = rsa.doFinal(_passBlock, 0, BLOCK_SIZE);
 		}
 		catch (GeneralSecurityException e)
 		{
@@ -94,8 +98,16 @@ public final class RequestAuthLogin extends L2ClientPacket
 		String password = null;
 		try
 		{
-			user = new String(deciphered, 0x5E, 14, "US-ASCII").trim().toLowerCase();
-			password = new String(deciphered, 0x6C, 16, "US-ASCII").trim();
+			if (_passBlock != null)
+			{
+				user = new String(_userBlock, 0x4E, 50, "US-ASCII").trim().toLowerCase();
+				password = new String(_passBlock, 0x5C, 16, "US-ASCII").trim();
+			}
+			else
+			{
+				user = new String(_userBlock, 0x5E, 14, "US-ASCII").trim().toLowerCase();
+				password = new String(_userBlock, 0x6C, 16, "US-ASCII").trim();
+			}
 			
 			MessageDigest sha = MessageDigest.getInstance("SHA");
 			byte[] pass = sha.digest(password.getBytes("US-ASCII"));
