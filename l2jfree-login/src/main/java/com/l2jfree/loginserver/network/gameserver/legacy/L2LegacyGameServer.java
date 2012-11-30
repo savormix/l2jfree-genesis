@@ -69,8 +69,7 @@ public final class L2LegacyGameServer extends
 	// PlayersInGame, PlayerAuthRequest, PlayerLogout
 	private final FastSet<String> _onlineAccounts;
 	
-	// unmanaged
-	private final boolean _pvp;
+	private boolean _pvp;
 	
 	/**
 	 * Creates an internal object representing a game server connection.
@@ -456,6 +455,16 @@ public final class L2LegacyGameServer extends
 	public FastSet<String> getOnlineAccounts()
 	{
 		return _onlineAccounts;
+	}
+	
+	/**
+	 * All legacy game servers allow PvP.
+	 * 
+	 * @param pvp <TT>true</TT>
+	 */
+	public void setPvp(boolean pvp)
+	{
+		_pvp = pvp;
 	}
 	
 	/**

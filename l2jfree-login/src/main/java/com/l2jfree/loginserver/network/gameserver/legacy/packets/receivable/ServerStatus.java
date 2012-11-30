@@ -20,6 +20,7 @@ import java.util.Map.Entry;
 
 import javolution.util.FastMap;
 
+import com.l2jfree.loginserver.network.gameserver.L2GameServerType;
 import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServer;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyGameServerPacket;
 import com.l2jfree.loginserver.network.gameserver.legacy.status.L2LegacyAgeLimit;
@@ -77,12 +78,23 @@ public final class ServerStatus extends L2LegacyGameServerPacket
 				case SERVER_LIST_STATUS:
 					lgs.setStatus(com.l2jfree.network.legacy.ServerStatus.VALUES.valueOf(val));
 					break;
-				// FIXME
-				//case TYPE:
-				//	lgs.setTypes(val);
-				//	break;
+				case SERVER_LIST_UNK:
+					lgs.setTypes(L2GameServerType.UNKNOWN.set(lgs.getTypes(), val != 0));
+					break;
+				case SERVER_LIST_CLOCK:
+					lgs.setTypes(L2GameServerType.RELAX.set(lgs.getTypes(), val != 0));
+					break;
+				case SERVER_LIST_HIDE_NAME:
+					lgs.setTypes(L2GameServerType.UNNAMED.set(lgs.getTypes(), val != 0));
+					break;
+				case TEST_SERVER:
+					lgs.setTypes(L2GameServerType.TEST.set(lgs.getTypes(), val != 0));
+					break;
+				case SERVER_LIST_PVP:
+					lgs.setPvp(val != 0);
+					break;
 				case SERVER_LIST_BRACKETS:
-					lgs.setBrackets(val.intValue() == 0);
+					lgs.setBrackets(val != 0);
 					break;
 				case SERVER_LIST_MAX_PLAYERS:
 					lgs.setMaxPlayers(val);

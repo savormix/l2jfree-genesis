@@ -25,9 +25,9 @@ public enum L2LegacyAgeLimit
 	/** No age restriction */
 	ANY(0),
 	/** 15 or older (Korea-only, non-PvP) */
-	_15(15),
-	/** 18 or older (Korea-only, PvP) */
-	_18(18);
+	_15(15);
+	/* 18 or older (Korea-only, PvP): no longer applicable */
+	//_18(18)*/;
 	
 	private final int _min;
 	
