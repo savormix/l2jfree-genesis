@@ -36,7 +36,7 @@ public enum L2GameServerType
 	
 	public int disable(int mask)
 	{
-		return mask ^ (1 << (ordinal() - 1));
+		return mask & ~(1 << (ordinal() - 1));
 	}
 	
 	public int set(int mask, boolean enabled)
