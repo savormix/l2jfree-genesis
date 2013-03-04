@@ -14,9 +14,14 @@
  */
 package com.l2jfree.security;
 
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.nio.ByteBuffer;
 
+import org.apache.commons.io.IOUtils;
+
+import com.l2jfree.util.HexUtil;
 import com.l2jfree.util.LookupTable;
 
 /**
@@ -139,8 +144,10 @@ public class NewCipher implements ICipher
 	public static boolean verifyChecksum(ByteBuffer buf, final int offset, final int size, boolean experimental)
 	{
 		// check if size is multiple of 4 (and > 0)
-		if ((size & 3) != 0 || size <= 4)
+		if ((size & 3) != 0 || size <= 4) {
+			reportFailedChecksum(null, offset, size, 0, 0);
 			return false;
+		}
 		
 		int calculated = 0;
 		int end = offset + size - 4; // ignore embedded checksum
@@ -155,8 +162,29 @@ public class NewCipher implements ICipher
 		int real = buf.getInt(pos);
 		if (experimental && calculated != real) // someone knows a better scheme?
 			_checks.put(buf.get(offset), real); // let them have it
-			
+		
+		if (calculated != real)
+			reportFailedChecksum(buf, offset, end, calculated, real);
+		
 		return (calculated == real);
+	}
+	
+	private static void reportFailedChecksum(ByteBuffer buf, int off, int size, int calc, int real) {
+		@SuppressWarnings("resource")
+		Writer w = null;
+		try {
+			w = new FileWriter("chk_fail.txt", true);
+			if (buf == null)
+				w.write("Checksum failed, size = " + size + "\r\n");
+			else {
+				w.write("Checksum failed, " + calc + " != " + real + "\r\n");
+				w.write(HexUtil.printData(buf, off, size));
+			}
+		} catch (IOException e) {
+			// ignore
+		} finally {
+			IOUtils.closeQuietly(w);
+		}
 	}
 	
 	/**

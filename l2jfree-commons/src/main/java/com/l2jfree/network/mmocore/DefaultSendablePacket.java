@@ -26,23 +26,50 @@ public abstract class DefaultSendablePacket<T extends MMOConnection<T, RP, SP>, 
 	private static final int[] EMPTY_ADDITIONAL_OPCODES = new int[0];
 	
 	/**
-	 * Returns this packet's identifier.
+	 * Returns this packet's identifier.<BR>It is assumed that the same opcode
+	 * can safely be used for all supported clients.
 	 * 
 	 * @return a number from the interval [{@link java.lang.Byte#MIN_VALUE};
 	 *         {@link java.lang.Byte#MAX_VALUE}]
 	 */
-	protected abstract int getOpcode();
+	@SuppressWarnings("static-method")
+	protected int getOpcode() {
+		throw new AbstractMethodError();
+	}
 	
 	/**
-	 * Returns this packet's additional identifiers, if any, an empty array otherwise.
+	 * Returns a suitable packet's identifier for the specified client.
+	 * 
+	 * @param client packet receiver
+	 * @return a number from the interval [{@link java.lang.Byte#MIN_VALUE};
+	 *         {@link java.lang.Byte#MAX_VALUE}]
+	 */
+	protected int getOpcode(T client) {
+		return getOpcode();
+	}
+	
+	/**
+	 * Returns this packet's additional identifiers, if any; an empty array otherwise.<BR>
+	 * It is assumed that the same opcodes can safely be used for all supported clients.
 	 * 
 	 * @return an array filled with numbers from the interval [{@link java.lang.Byte#MIN_VALUE};
 	 *         {@link java.lang.Byte#MAX_VALUE}]
 	 */
 	@SuppressWarnings("static-method")
-	protected int[] getAdditionalOpcodes()
-	{
+	protected int[] getAdditionalOpcodes() {
 		return EMPTY_ADDITIONAL_OPCODES;
+	}
+	
+	/**
+	 * Returns suitable packet's additional identifiers, if any, for the specified client; an empty array otherwise.
+	 * 
+	 * @param client packet receiver
+	 * @return an array filled with numbers from the interval [{@link java.lang.Byte#MIN_VALUE};
+	 *         {@link java.lang.Byte#MAX_VALUE}]
+	 */
+	protected int[] getAdditionalOpcodes(T client)
+	{
+		return getAdditionalOpcodes();
 	}
 	
 	/**
@@ -57,8 +84,8 @@ public abstract class DefaultSendablePacket<T extends MMOConnection<T, RP, SP>, 
 	@Override
 	protected final void write(T client, MMOBuffer buf) throws RuntimeException
 	{
-		buf.writeC(getOpcode());
-		for (int additionalOpcode : getAdditionalOpcodes())
+		buf.writeC(getOpcode(client));
+		for (int additionalOpcode : getAdditionalOpcodes(client))
 			buf.writeC(additionalOpcode);
 		
 		writeImpl(client, buf);
