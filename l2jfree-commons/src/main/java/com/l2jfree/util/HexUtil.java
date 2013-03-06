@@ -89,11 +89,15 @@ public final class HexUtil
 	 */
 	public static String bytesToHexString(byte[] hex, CharSequence delimiter)
 	{
-		if (ArrayUtils.isEmpty(hex))
+		return bytesToHexString(hex, 0, delimiter);
+	}
+	
+	public static String bytesToHexString(byte[] hex, int off, CharSequence delimiter) {
+		if (ArrayUtils.isEmpty(hex) || off >= hex.length)
 			return "";
 		
-		StringBuilder bytes = new StringBuilder(fillHex(hex[0] & 0xFF, 2));
-		for (int i = 1; i < hex.length; i++)
+		final StringBuilder bytes = new StringBuilder(fillHex(hex[off] & 0xFF, 2));
+		for (int i = off + 1; i < hex.length; i++)
 		{
 			if (delimiter != null)
 				bytes.append(delimiter);
