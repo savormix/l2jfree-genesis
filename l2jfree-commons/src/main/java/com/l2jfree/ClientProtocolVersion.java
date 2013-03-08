@@ -23,17 +23,17 @@ import org.apache.commons.lang3.ArrayUtils;
 public enum ClientProtocolVersion
 {
 	// TODO: move obfuscation stuff here
-	GRACIA_FINAL(87, true), // latest, 2009-10-25
+	GRACIA_FINAL(87, 0x63, new int[] { 0x12, 0xB1 }, null, true), // latest, 2009-10-25
 	FREYA(216, true), // 2010-08-24
-	HIGH_FIVE(267, false), // 2011-02-15
-	HIGH_FIVE_UPDATE_1(268, false), // 2011-03-15
-	HIGH_FIVE_UPDATE_2(271, false), // 2011-05-25
-	HIGH_FIVE_UPDATE_3(273, true), // 2011-06-08
-	GODDESS_OF_DESTRUCTION(415, 0xC4, null, new int[] { 0x73 }, true), // 2011-11-30
-	HARMONY(410, 0xC6, null, new int[] { 0x73 }, true), // 2012-03-07
-	GLORY_DAYS_479(479, 0xDE, null, new int[] { 0x73 }, true), // 2012-10-24?
-	GLORY_DAYS_480(480, 0xDE, null, new int[] { 0x73 }, true), // 2012-11-21
-	GLORY_DAYS_488(488, 0xDE, null, new int[] { 0x73 }, true); // no idea
+	HIGH_FIVE(267, 0x97, new int[] { 0x12, 0xB1, 0x11, 0xD0 }, new int[] { 0x74 }, false), // 2011-02-15
+	HIGH_FIVE_UPDATE_1(268, 0x97, new int[] { 0x12, 0xB1, 0x11, 0xD0 }, new int[] { 0x74 }, false), // 2011-03-15
+	HIGH_FIVE_UPDATE_2(271, 0x97, new int[] { 0x12, 0xB1, 0x11, 0xD0 }, new int[] { 0x74 }, false), // 2011-05-25
+	HIGH_FIVE_UPDATE_3(273, 0x97, new int[] { 0x12, 0xB1, 0x11, 0xD0 }, new int[] { 0x74 }, true), // 2011-06-08
+	GODDESS_OF_DESTRUCTION(415, 0xC4, new int[] { 0x12, 0xB1, 0x11, 0xD0 }, new int[] { 0x74, 0x73 }, true), // 2011-11-30
+	HARMONY(410, 0xC6, new int[] { 0x12, 0xB1, 0x11, 0xD0 }, new int[] { 0x74, 0x73 }, true), // 2012-03-07
+	GLORY_DAYS_479(479, 0xDE, new int[] { 0x12, 0xB1, 0x11, 0xD0 }, new int[] { 0x74, 0x73 }, true), // 2012-10-24?
+	GLORY_DAYS_480(480, 0xDE, new int[] { 0x12, 0xB1, 0x11, 0xD0 }, new int[] { 0x74, 0x73 }, true), // 2012-11-21
+	GLORY_DAYS_488(488, 0xDE, new int[] { 0x12, 0xB1, 0x11, 0xD0 }, new int[] { 0x74, 0x73 }, true); // no idea
 	
 	private final int _version;
 	private final int _op2TableSize;

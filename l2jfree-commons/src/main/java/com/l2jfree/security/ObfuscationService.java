@@ -172,35 +172,6 @@ public final class ObfuscationService
 			}
 			
 			// non-obfuscated main opcodes
-			// FIXME: move to ClientProtocolVersion
-			cpos = 0;
-			while (_decodeTable1[cpos] != 0x12)
-				cpos++;
-			tmp = _decodeTable1[0x12];
-			_decodeTable1[0x12] = 0x12;
-			_decodeTable1[cpos] = tmp;
-			
-			cpos = 0;
-			while (_decodeTable1[cpos] != (byte)0xB1)
-				cpos++;
-			tmp = _decodeTable1[0xB1];
-			_decodeTable1[0xB1] = (byte)0xB1;
-			_decodeTable1[cpos] = tmp;
-			
-			cpos = 0;
-			while (_decodeTable1[cpos] != 0x11)
-				cpos++;
-			tmp = _decodeTable1[0x11];
-			_decodeTable1[0x11] = 0x11;
-			_decodeTable1[cpos] = tmp;
-			
-			cpos = 0;
-			while (_decodeTable1[cpos] != (byte)0xD0)
-				cpos++;
-			tmp = _decodeTable1[0xD0];
-			_decodeTable1[0xD0] = (byte)0xD0;
-			_decodeTable1[cpos] = tmp;
-			
 			for (int op : _version.getIgnoredOp1s())
 			{
 				cpos = 0;
@@ -212,13 +183,6 @@ public final class ObfuscationService
 			}
 			
 			// non-obfuscated 2nd opcodes
-			cpos = 0;
-			while (_decodeTable2[cpos] != 0x74)
-				cpos++;
-			tmp = _decodeTable2[0x74];
-			_decodeTable2[0x74] = 0x74;
-			_decodeTable2[cpos] = tmp;
-			
 			for (int op : _version.getIgnoredOp2s())
 			{
 				cpos = 0;
