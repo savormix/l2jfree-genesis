@@ -27,6 +27,8 @@ import java.util.Set;
 
 import javolution.util.FastList;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 /**
  * @author NB4L1
  */
@@ -883,5 +885,32 @@ public final class L2Collections
 		{
 			return c.toArray((T[])Array.newInstance(clazz, c.size()));
 		}
+	}
+	
+	public static <E, C extends Collection<E>> C emptyToNull(C c)
+	{
+		if (c.isEmpty())
+			return null;
+		
+		return c;
+	}
+	
+	public static boolean containsNotNull(Object... array) {
+		for (final Object o : ArrayUtils.nullToEmpty(array))
+			if (o != null)
+				return true;
+		
+		return false;
+	}
+	
+	public static boolean containsNotEmpty(Collection<?>... array) {
+		if (array == null)
+			return false;
+		
+		for (final Collection<?> c : array)
+			if (c != null && !c.isEmpty())
+				return true;
+		
+		return false;
 	}
 }

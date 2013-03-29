@@ -112,7 +112,7 @@ public final class HexUtil
 	 * @param hex a byte array
 	 * @return decoded byte array
 	 */
-	public static byte[] HexStringToBytes(String hex)
+	public static byte[] hexStringToBytes(String hex)
 	{
 		if (hex == null)
 			return null;
@@ -127,6 +127,11 @@ public final class HexUtil
 			bytes[i] = (byte)(Integer.parseInt(byte_, 16) & 0xFF);
 		}
 		return bytes;
+	}
+	
+	@Deprecated
+	public static byte[] HexStringToBytes(String hex) {
+		return hexStringToBytes(hex);
 	}
 	
 	public static String printData(ByteBuffer buf, int offset, int len)
