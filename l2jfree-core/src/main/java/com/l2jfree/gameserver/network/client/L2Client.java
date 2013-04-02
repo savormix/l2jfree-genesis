@@ -19,7 +19,6 @@ import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SocketChannel;
 import java.util.List;
 
-import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
@@ -29,6 +28,7 @@ import com.l2jfree.gameserver.network.client.packets.sendable.ServerCloseSocketP
 import com.l2jfree.gameserver.sql.PlayerDB;
 import com.l2jfree.gameserver.util.PersistentId;
 import com.l2jfree.lang.L2TextBuilder;
+import com.l2jfree.network.ClientProtocolVersion;
 import com.l2jfree.network.mmocore.DataSizeHolder;
 import com.l2jfree.network.mmocore.MMOConnection;
 import com.l2jfree.security.CoreCipher;

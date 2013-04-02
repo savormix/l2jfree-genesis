@@ -16,11 +16,11 @@ package com.l2jfree.gameserver.network.client.packets.sendable.characterless;
 
 import java.util.List;
 
-import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.config.ReportedConfig;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.gameserver.sql.PlayerDB;
+import com.l2jfree.network.ClientProtocolVersion;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**

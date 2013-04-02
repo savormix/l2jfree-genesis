@@ -83,4 +83,12 @@ public class UnknownClientProtocolVersion implements IClientProtocolVersion
 	{
 		return _latestKnown.getIgnoredOp2s();
 	}
+	
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder(getClass().getSimpleName());
+		sb.append('@').append(getVersion()).append(", ");
+		sb.append(" using ").append(_latestKnown);
+		return sb.toString();
+	}
 }

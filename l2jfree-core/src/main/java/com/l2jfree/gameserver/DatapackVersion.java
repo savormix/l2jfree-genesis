@@ -14,7 +14,7 @@
  */
 package com.l2jfree.gameserver;
 
-import com.l2jfree.ClientProtocolVersion;
+import com.l2jfree.network.ClientProtocolVersion;
 import com.l2jfree.util.ArrayBunch;
 
 /**

@@ -16,12 +16,13 @@ package com.l2jfree.gameserver.network.client.packets.receivable.accountless;
 
 import java.nio.BufferUnderflowException;
 
-import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.config.VersionConfig;
 import com.l2jfree.gameserver.network.client.L2Client;
 import com.l2jfree.gameserver.network.client.L2ClientState;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.sendable.characterless.VersionCheck.ProtocolAnswer;
+import com.l2jfree.network.ClientProtocolVersion;
+import com.l2jfree.network.ClientProtocolVersionManager;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
@@ -62,7 +63,8 @@ public class ProtocolVersion extends L2ClientPacket
 			_log.debug("Client protocol version: " + _version);
 		
 		final L2Client client = getClient();
-		final ClientProtocolVersion version = ClientProtocolVersion.getByVersion(_version);
+		final ClientProtocolVersion version =
+				(ClientProtocolVersion)ClientProtocolVersionManager.getInstance().getByVersion(_version);
 		
 		if (!VersionConfig.isSupported(version))
 		{

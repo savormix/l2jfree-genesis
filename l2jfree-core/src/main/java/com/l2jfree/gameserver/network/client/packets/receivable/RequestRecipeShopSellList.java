@@ -16,8 +16,8 @@ package com.l2jfree.gameserver.network.client.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 
-import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
+import com.l2jfree.network.ClientProtocolVersion;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 

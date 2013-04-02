@@ -16,7 +16,6 @@ package com.l2jfree.gameserver.config;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.L2Config.ConfigPropertiesLoader;
 import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
@@ -24,6 +23,8 @@ import com.l2jfree.config.L2Properties;
 import com.l2jfree.config.annotation.ConfigClass;
 import com.l2jfree.config.annotation.ConfigField;
 import com.l2jfree.gameserver.DatapackVersion;
+import com.l2jfree.network.ClientProtocolVersion;
+import com.l2jfree.network.IClientProtocolVersion;
 import com.l2jfree.util.ArrayBunch;
 
 /**
@@ -71,7 +72,7 @@ public final class VersionConfig extends ConfigPropertiesLoader
 		SUPPORTED_CLIENT_PROTOCOL_VERSIONS = tmp.moveToArray(ClientProtocolVersion.class);
 	}
 	
-	public static boolean isSupported(ClientProtocolVersion version)
+	public static boolean isSupported(IClientProtocolVersion version)
 	{
 		if (version == null)
 			return false;

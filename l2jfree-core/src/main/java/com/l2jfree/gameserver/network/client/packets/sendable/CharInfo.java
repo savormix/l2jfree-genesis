@@ -14,10 +14,10 @@
  */
 package com.l2jfree.gameserver.network.client.packets.sendable;
 
-import com.l2jfree.ClientProtocolVersion;
 import com.l2jfree.gameserver.gameobjects.L2Player;
 import com.l2jfree.gameserver.gameobjects.components.interfaces.IPlayerView;
 import com.l2jfree.gameserver.network.client.L2Client;
+import com.l2jfree.network.ClientProtocolVersion;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
