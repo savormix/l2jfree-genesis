@@ -12,15 +12,19 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jfree;
+package com.l2jfree.network;
 
 import org.apache.commons.lang3.ArrayUtils;
 
 /**
+ * An enumeration of known client protocol versions.<BR>
+ * <BR>
+ * This enumeration DOES NOT support any extended features of the {@link IProtocolVersion} interface.
+ * 
  * @author NB4L1
  */
 // dates can be wrong
-public enum ClientProtocolVersion
+public enum ClientProtocolVersion implements IClientProtocolVersion
 {
 	// TODO: move obfuscation stuff here
 	GRACIA_FINAL(87, 0x63, new int[] { 0x12, 0xB1 }, null, true), // latest, 2009-10-25
@@ -55,21 +59,25 @@ public enum ClientProtocolVersion
 		this(version, 0x97, null, null, enabled);
 	}
 	
-	private int getVersion()
+	@Override
+	public int getVersion()
 	{
 		return _version;
 	}
 	
+	@Override
 	public int getOp2TableSize()
 	{
 		return _op2TableSize;
 	}
 	
+	@Override
 	public int[] getIgnoredOp1s()
 	{
 		return _ignoredOp1s;
 	}
 	
+	@Override
 	public int[] getIgnoredOp2s()
 	{
 		return _ignoredOp2s;
@@ -100,12 +108,37 @@ public enum ClientProtocolVersion
 		return version.ordinal() <= ordinal();
 	}
 	
-	public static ClientProtocolVersion getByVersion(int version)
+	@Override
+	public boolean isOlderThan(IProtocolVersion version) throws UnsupportedOperationException
 	{
-		for (ClientProtocolVersion cpv : values())
-			if (cpv.getVersion() == version && cpv.isEnabled())
-				return cpv;
-		
-		return null;
+		return isOlderThan((ClientProtocolVersion) version);
+	}
+	
+	@Override
+	public boolean isOlderThanOrEqualTo(IProtocolVersion version) throws UnsupportedOperationException
+	{
+		return isOlderThanOrEqualTo((ClientProtocolVersion) version);
+	}
+	
+	@Override
+	public boolean isNewerThan(IProtocolVersion version) throws UnsupportedOperationException
+	{
+		return isNewerThan((ClientProtocolVersion) version);
+	}
+	
+	@Override
+	public boolean isNewerThanOrEqualTo(IProtocolVersion version) throws UnsupportedOperationException
+	{
+		return isNewerThanOrEqualTo((ClientProtocolVersion) version);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 * @throws UnsupportedOperationException always
+	 */
+	@Override
+	public long getReleaseDate() throws UnsupportedOperationException
+	{
+		throw new UnsupportedOperationException();
 	}
 }
