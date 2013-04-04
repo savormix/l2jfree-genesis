@@ -21,7 +21,7 @@ import com.l2jfree.security.ObfuscationService;
  * 
  * @author savormix
  */
-public interface IClientProtocolVersion extends IProtocolVersion
+public interface IGameProtocolVersion extends IProtocolVersion
 {
 	/**
 	 * The size of the secondary opcode table. This is equal to [highest opcode in use + 1].

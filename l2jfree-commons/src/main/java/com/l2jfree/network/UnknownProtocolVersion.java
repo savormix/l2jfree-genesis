@@ -15,16 +15,17 @@
 package com.l2jfree.network;
 
 /**
- * Represents an unknown client protocol version.
+ * Represents an unknown protocol version.
  * 
  * @author savormix
+ * @param <V> version type
  */
-public class UnknownClientProtocolVersion implements IClientProtocolVersion
+public abstract class UnknownProtocolVersion<V extends IProtocolVersion> implements IProtocolVersion
 {
 	private final int _version;
-	private final IClientProtocolVersion _latestKnown;
+	private final V _latestKnown;
 	
-	public UnknownClientProtocolVersion(int version, IClientProtocolVersion latestKnown)
+	public UnknownProtocolVersion(int version, V latestKnown)
 	{
 		_version = version;
 		_latestKnown = latestKnown;
@@ -65,27 +66,15 @@ public class UnknownClientProtocolVersion implements IClientProtocolVersion
 	{
 		return _latestKnown.getReleaseDate();
 	}
-
-	@Override
-	public int getOp2TableSize()
+	
+	protected V getLatestKnown()
 	{
-		return _latestKnown.getOp2TableSize();
-	}
-
-	@Override
-	public int[] getIgnoredOp1s()
-	{
-		return _latestKnown.getIgnoredOp1s();
-	}
-
-	@Override
-	public int[] getIgnoredOp2s()
-	{
-		return _latestKnown.getIgnoredOp2s();
+		return _latestKnown;
 	}
 	
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		final StringBuilder sb = new StringBuilder(getClass().getSimpleName());
 		sb.append('@').append(getVersion()).append(", ");
 		sb.append(" using ").append(_latestKnown);

@@ -18,7 +18,7 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 import com.l2jfree.network.ClientProtocolVersion;
-import com.l2jfree.network.IClientProtocolVersion;
+import com.l2jfree.network.IGameProtocolVersion;
 import com.l2jfree.network.mmocore.MMOBuffer;
 import com.l2jfree.util.HexUtil;
 import com.l2jfree.util.Rnd;
@@ -47,7 +47,7 @@ public final class ObfuscationService
 	private static final int HAS_SECOND = 0xD0;
 	// TODO: private static final int HAS_THIRD = 0x51;
 	
-	private final IClientProtocolVersion _version;
+	private final IGameProtocolVersion _version;
 	
 	private long _seed;
 	private boolean _seeded;
@@ -68,7 +68,7 @@ public final class ObfuscationService
 	 * 
 	 * @param version protocol version
 	 */
-	public ObfuscationService(IClientProtocolVersion version)
+	public ObfuscationService(IGameProtocolVersion version)
 	{
 		_version = version;
 		_seeded = false;
