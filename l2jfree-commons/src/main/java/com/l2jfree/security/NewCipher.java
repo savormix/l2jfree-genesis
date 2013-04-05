@@ -141,35 +141,68 @@ public class NewCipher implements ICipher
 	 * @param experimental undocumented experimental features
 	 * @return whether packet integrity is OK or not
 	 */
-	public static boolean verifyChecksum(ByteBuffer buf, final int offset, final int size, boolean experimental)
+	public static boolean verifyChecksum(ByteBuffer buf, final int offset, final int size, boolean experimental) {
+		return verifyChecksum(buf, offset, size, experimental, true);
+	}
+	
+	/**
+	 * Verifies a packet's checksum.
+	 * 
+	 * @param buf byte buffer
+	 * @param offset offset to a packet's body
+	 * @param size packet's body size
+	 * @param experimental undocumented experimental features
+	 * @param report whether to report checksum validation failures
+	 * @return whether packet integrity is OK or not
+	 */
+	public static boolean verifyChecksum(ByteBuffer buf, final int offset, final int size, boolean experimental, boolean report)
 	{
 		// check if size is multiple of 4 (and > 0)
 		if ((size & 3) != 0 || size <= 4) {
-			reportFailedChecksum(null, offset, size, 0, 0);
+			if (report)
+				reportFailedChecksum(null, offset, size, 0, 0);
 			return false;
 		}
 		
-		int calculated = 0;
+		long calculated = 0;
 		int end = offset + size - 4; // ignore embedded checksum
 		
 		int pos;
 		for (pos = offset; pos < end; pos += 4)
 		{
-			int i = buf.getInt(pos);
-			calculated ^= i;
+			final long i = buf.getInt(pos);
+			calculated ^= (i & 0xffffffff);
 		}
 		
-		int real = buf.getInt(pos);
+		long real = buf.getInt(pos);
+		real &= 0xffffffff;
 		if (experimental && calculated != real) // someone knows a better scheme?
-			_checks.put(buf.get(offset), real); // let them have it
+			_checks.put(buf.get(offset), (int) real); // let them have it
 		
-		if (calculated != real)
-			reportFailedChecksum(buf, offset, end, calculated, real);
+		//if (report && calculated != real)
+			reportFailedChecksum(buf, offset, size, calculated, real);
 		
 		return (calculated == real);
 	}
 	
-	private static void reportFailedChecksum(ByteBuffer buf, int off, int size, int calc, int real) {
+	public static int getVerifiedChecksum(ByteBuffer buf, final int offset, final int size) {
+		long calculated = 0;
+		int end = offset + size - 4; // ignore embedded checksum
+		
+		int pos;
+		for (pos = offset; pos < end; pos += 4)
+		{
+			final long i = buf.getInt(pos);
+			calculated ^= (i & 0xffffffff);
+		}
+		return (int) calculated;
+	}
+	
+	public static int getPreCalculatedChecksum(ByteBuffer buf, final int offset, final int size) {
+		return buf.getInt(offset + size - 4);
+	}
+	
+	private static void reportFailedChecksum(ByteBuffer buf, int off, int size, long calc, long real) {
 		@SuppressWarnings("resource")
 		Writer w = null;
 		try {
@@ -177,8 +210,9 @@ public class NewCipher implements ICipher
 			if (buf == null)
 				w.write("Checksum failed, size = " + size + "\r\n");
 			else {
-				w.write("Checksum failed, " + calc + " != " + real + "\r\n");
+				w.write("Checksum failed, " + calc + " != " + real/* + "\r\n"*/);
 				w.write(HexUtil.printData(buf, off, size));
+				w.write("\r\n");
 			}
 		} catch (IOException e) {
 			// ignore

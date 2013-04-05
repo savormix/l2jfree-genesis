@@ -202,7 +202,7 @@ public final class L2GameServerRegistrar extends Config
 								if (rs.next())
 								{
 									reg.setAuth(rs.getString("authData"));
-									byte[] b = HexUtil.HexStringToBytes(reg.getAuth());
+									byte[] b = HexUtil.hexStringToBytes(reg.getAuth());
 									
 									Properties pro = new Properties();
 									pro.setProperty("ServerID", String.valueOf(reg.getId()));

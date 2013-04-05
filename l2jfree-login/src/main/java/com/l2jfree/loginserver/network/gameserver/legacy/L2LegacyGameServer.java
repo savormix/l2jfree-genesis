@@ -84,7 +84,7 @@ public final class L2LegacyGameServer extends
 		super(mmoController, socketChannel);
 		
 		_keyPair = L2LegacyGameServerSecurity.getInstance().getKeyPair();
-		_cipher = new NewCipher(HexUtil.HexStringToBytes(CIPHER_HEX_STRING));
+		_cipher = new NewCipher(HexUtil.hexStringToBytes(CIPHER_HEX_STRING));
 		
 		_state = L2LegacyGameServerState.CONNECTED;
 		_id = null;

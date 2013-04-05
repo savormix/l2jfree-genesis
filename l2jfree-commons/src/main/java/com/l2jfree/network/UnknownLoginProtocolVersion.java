@@ -14,32 +14,16 @@
  */
 package com.l2jfree.network;
 
-import com.l2jfree.security.ObfuscationService;
-
 /**
- * An interface that allows user-defined protocol version support.
+ * Represents an unknown game protocol version.
  * 
  * @author savormix
  */
-public interface IGameProtocolVersion extends IProtocolVersion
+public class UnknownLoginProtocolVersion extends UnknownProtocolVersion<ILoginProtocolVersion>
+	implements ILoginProtocolVersion
 {
-	/**
-	 * The size of the secondary opcode table. This is equal to [highest opcode in use].
-	 * 
-	 * @return 2nd opcode table size
-	 */
-	int getOp2TableSize();
-	
-	/**
-	 * All primary opcodes that should not be [de]obfuscated.
-	 * 
-	 * @return primary opcodes exempt from {@link ObfuscationService}.
-	 */
-	int[] getIgnoredOp1s();
-	/**
-	 * All secondary opcodes that should not be [de]obfuscated.
-	 * 
-	 * @return secondary opcodes exempt from {@link ObfuscationService}.
-	 */
-	int[] getIgnoredOp2s();
+	public UnknownLoginProtocolVersion(int version, ILoginProtocolVersion latestKnown)
+	{
+		super(version, latestKnown);
+	}
 }

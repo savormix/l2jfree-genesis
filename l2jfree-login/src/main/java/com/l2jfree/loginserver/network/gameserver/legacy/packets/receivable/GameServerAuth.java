@@ -15,6 +15,8 @@
 package com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable;
 
 import java.nio.BufferUnderflowException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -67,14 +69,44 @@ public final class GameServerAuth extends L2LegacyGameServerPacket
 		_desiredId = buf.readC();
 		_acceptAlternateId = (buf.readC() == 0 ? false : true);
 		/*_reservedHost = (*/buf.readC()/* == 0 ? false : true)*/;
-		_port = buf.readH();
-		_maxPlayers = buf.readD();
-		int size = buf.readD();
-		_hexId = buf.readB(new byte[size]);
-		size = 2 * buf.readD();
-		_hosts = new String[size];
-		for (int i = 0; i < size; i++)
-			_hosts[i] = buf.readS();
+		boolean trueLegacy = true;
+		byte[] infer = buf.readB(buf.getAvailableBytes());
+		for (int i = 0; i < 7 * 2; i += 2)
+		{
+			if (infer[i] == '.')
+				continue;
+			if (infer[i] >= '0' && infer[i] <= '9')
+				continue;
+			trueLegacy = false;
+			break;
+		}
+		// forget the exhausted buffer
+		buf = new MMOBuffer();
+		buf.setByteBuffer(ByteBuffer.wrap(infer).order(ByteOrder.LITTLE_ENDIAN));
+		if (trueLegacy)
+		{
+			// old interlude format, before l2jserver started changing protocol numbers on each commit
+			String ex = buf.readS(), in = buf.readS();
+			_hosts =
+					new String[] { "127.0.0.1/32", in, "192.168.0.0/16", in, "10.0.0.0/8", in, "172.16.0.0/12", in,
+							"0.0.0.0/0", ex };
+			_port = buf.readH();
+			_maxPlayers = buf.readD();
+			final int size = buf.readD();
+			_hexId = buf.readB(size);
+		}
+		else
+		{
+			// new l2jserver format
+			_port = buf.readH();
+			_maxPlayers = buf.readD();
+			int size = buf.readD();
+			_hexId = buf.readB(new byte[size]);
+			size = 2 * buf.readD();
+			_hosts = new String[size];
+			for (int i = 0; i < size; i++)
+				_hosts[i] = buf.readS();
+		}
 	}
 	
 	@Override

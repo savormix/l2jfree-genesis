@@ -22,7 +22,7 @@ import com.l2jfree.gameserver.network.client.L2ClientState;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.sendable.characterless.VersionCheck.ProtocolAnswer;
 import com.l2jfree.network.ClientProtocolVersion;
-import com.l2jfree.network.ClientProtocolVersionManager;
+import com.l2jfree.network.ProtocolVersionManager;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
@@ -64,7 +64,7 @@ public class ProtocolVersion extends L2ClientPacket
 		
 		final L2Client client = getClient();
 		final ClientProtocolVersion version =
-				(ClientProtocolVersion)ClientProtocolVersionManager.getInstance().getByVersion(_version);
+				(ClientProtocolVersion)ProtocolVersionManager.getInstance().getGameProtocol(_version);
 		
 		if (!VersionConfig.isSupported(version))
 		{

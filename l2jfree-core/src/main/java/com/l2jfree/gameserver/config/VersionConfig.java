@@ -24,7 +24,7 @@ import com.l2jfree.config.annotation.ConfigClass;
 import com.l2jfree.config.annotation.ConfigField;
 import com.l2jfree.gameserver.DatapackVersion;
 import com.l2jfree.network.ClientProtocolVersion;
-import com.l2jfree.network.IClientProtocolVersion;
+import com.l2jfree.network.IGameProtocolVersion;
 import com.l2jfree.util.ArrayBunch;
 
 /**
@@ -72,7 +72,7 @@ public final class VersionConfig extends ConfigPropertiesLoader
 		SUPPORTED_CLIENT_PROTOCOL_VERSIONS = tmp.moveToArray(ClientProtocolVersion.class);
 	}
 	
-	public static boolean isSupported(IClientProtocolVersion version)
+	public static boolean isSupported(IGameProtocolVersion version)
 	{
 		if (version == null)
 			return false;

@@ -30,7 +30,12 @@ public abstract class UnknownProtocolVersion<V extends IProtocolVersion> impleme
 		_version = version;
 		_latestKnown = latestKnown;
 	}
-
+	
+	public V getImpersonatedVersion()
+	{
+		return _latestKnown;
+	}
+	
 	@Override
 	public int getVersion()
 	{
@@ -73,11 +78,23 @@ public abstract class UnknownProtocolVersion<V extends IProtocolVersion> impleme
 	}
 	
 	@Override
+	public boolean equals(Object o)
+	{
+		return _latestKnown.equals(o);
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		return _latestKnown.hashCode();
+	}
+	
+	@Override
 	public String toString()
 	{
 		final StringBuilder sb = new StringBuilder(getClass().getSimpleName());
 		sb.append('@').append(getVersion()).append(", ");
-		sb.append(" using ").append(_latestKnown);
+		sb.append("using ").append(_latestKnown);
 		return sb.toString();
 	}
 }

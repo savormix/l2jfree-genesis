@@ -70,7 +70,7 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 		_sessionId = L2ClientSecurity.getInstance().getNextSessionId();
 		_protocol = protocol;
 		_keyPair = L2ClientSecurity.getInstance().getKeyPair();
-		_cipher = new DefaultLoginCipher(HexUtil.HexStringToBytes("6b 60 cb 5b 82 ce 90 b1 cc 2b 6c 55 6c 6c 6c 6c"));
+		_cipher = new DefaultLoginCipher(HexUtil.hexStringToBytes("6b 60 cb 5b 82 ce 90 b1 cc 2b 6c 55 6c 6c 6c 6c"));
 		_state = L2ClientState.CONNECTED;
 		_sessionKey = null;
 		_account = null;
@@ -102,7 +102,6 @@ public final class L2Client extends MMOConnection<L2Client, L2ClientPacket, L2Se
 		
 		if (!NewCipher.verifyChecksum(buf, dataSize))
 		{
-			_log.warn("Could not decipher received data: checksum mismatch. " + this);
 			closeNow();
 			return false;
 		}
