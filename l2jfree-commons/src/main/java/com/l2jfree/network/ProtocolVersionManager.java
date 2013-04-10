@@ -82,6 +82,13 @@ public class ProtocolVersionManager
 		return getFallbackVersionGame(version);
 	}
 	
+	public IProtocolVersion getProtocol(int version, boolean login) {
+		if (login)
+			return getLoginProtocol(version);
+		else
+			return getGameProtocol(version);
+	}
+	
 	private static ILoginProtocolVersion getFallbackVersionLogin(int version)
 	{
 		// TODO: bad idea

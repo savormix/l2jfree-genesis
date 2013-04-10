@@ -157,10 +157,13 @@ public class NewCipher implements ICipher
 	 */
 	public static boolean verifyChecksum(ByteBuffer buf, final int offset, final int size, boolean experimental, boolean report)
 	{
+		// FIXME: this whole method is most likely a big hoax
+		// there is no checksum and definitely no validation!
+		
 		// check if size is multiple of 4 (and > 0)
 		if ((size & 3) != 0 || size <= 4) {
 			if (report)
-				reportFailedChecksum(null, offset, size, 0, 0);
+				reportSoCalledChecksum(null, offset, size, 0, 0);
 			return false;
 		}
 		
@@ -179,8 +182,7 @@ public class NewCipher implements ICipher
 		if (experimental && calculated != real) // someone knows a better scheme?
 			_checks.put(buf.get(offset), (int) real); // let them have it
 		
-		//if (report && calculated != real)
-			reportFailedChecksum(buf, offset, size, calculated, real);
+		reportSoCalledChecksum(buf, offset, size, calculated, real);
 		
 		return (calculated == real);
 	}
@@ -202,15 +204,15 @@ public class NewCipher implements ICipher
 		return buf.getInt(offset + size - 4);
 	}
 	
-	private static void reportFailedChecksum(ByteBuffer buf, int off, int size, long calc, long real) {
+	private static void reportSoCalledChecksum(ByteBuffer buf, int off, int size, long calc, long real) {
 		@SuppressWarnings("resource")
 		Writer w = null;
 		try {
-			w = new FileWriter("chk_fail.txt", true);
+			w = new FileWriter("chk_facts.txt", true);
 			if (buf == null)
 				w.write("Checksum failed, size = " + size + "\r\n");
 			else {
-				w.write("Checksum failed, " + calc + " != " + real/* + "\r\n"*/);
+				w.write("Checksum C=" + calc + " R=" + real/* + "\r\n"*/);
 				w.write(HexUtil.printData(buf, off, size));
 				w.write("\r\n");
 			}
