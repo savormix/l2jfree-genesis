@@ -16,38 +16,45 @@ package com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable;
 
 import java.nio.BufferUnderflowException;
 
-import com.l2jfree.loginserver.account.AccountCharacterManager;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyGameServerPacket;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable.ChangePasswordResponse;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
  * @author savormix
  */
-public final class PlayerLogout extends L2LegacyGameServerPacket
+@SuppressWarnings("unused")
+public class ChangePassword extends L2LegacyGameServerPacket
 {
 	/** Packet's identifier */
-	public static final int OPCODE = 0x03;
+	public static final int OPCODE = 0x0b;
 	
 	private String _account;
+	private String _character;
+	private String _current;
+	private String _next;
 	
 	@Override
 	protected int getMinimumLength()
 	{
-		return READ_S;
+		return READ_S + READ_S + READ_S + READ_S;
 	}
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		_account = buf.readS();
+		_character = buf.readS();
+		_current = buf.readS();
+		_next = buf.readS();
 	}
 	
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		getClient().getOnlineAccounts().remove(_account);
+		sendPacket(new ChangePasswordResponse(_character, "This feature is not supported."));
 		
-		AccountCharacterManager.getInstance().updateAccount(_account, getClient().getId());
+		_log.info("Character " + _character + " (" + _account + ") attempted password change.");
 	}
 }

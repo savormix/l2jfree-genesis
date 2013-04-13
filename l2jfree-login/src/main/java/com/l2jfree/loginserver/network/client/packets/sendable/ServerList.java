@@ -17,6 +17,9 @@ package com.l2jfree.loginserver.network.client.packets.sendable;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import com.l2jfree.loginserver.account.AccountCharacterInfo;
+import com.l2jfree.loginserver.account.AccountCharacterManager;
+import com.l2jfree.loginserver.account.CharactersOnServer;
 import com.l2jfree.loginserver.network.client.L2Client;
 import com.l2jfree.loginserver.network.client.packets.L2ServerPacket;
 import com.l2jfree.loginserver.network.gameserver.L2GameServerCache;
@@ -78,19 +81,33 @@ public final class ServerList extends L2ServerPacket
 		}
 		
 		// FIXME in which chronicle were these introduced?
-		final int totalChars = 0; // total player's characters (on a GS)
-		final int pendingRemoval = 0; // player's characters pending removal (on a GS)
-		final int bytesize = 1 + count * 3 + pendingRemoval * 4;
+		final AccountCharacterInfo aci =
+				AccountCharacterManager.getInstance().getCharacterInfo(client.getAccount().getAccount());
+		
+		final int bytesize;
+		{
+			int pendingRemoval = 0; // total characters pending removal
+			for (final L2GameServerView gsv : _gameServers)
+			{
+				final CharactersOnServer cos = aci.getInfo(gsv.getId());
+				pendingRemoval += cos.getDelTime().length;
+			}
+			bytesize = 1 + count * 3 + pendingRemoval * 4;
+		}
 		
 		buf.writeH(bytesize);
 		buf.writeC(count);
-		for (L2GameServerView gsv : _gameServers)
+		for (final L2GameServerView gsv : _gameServers)
 		{
+			final int id = gsv.getId();
 			buf.writeC(gsv.getId());
-			buf.writeC(totalChars);
-			buf.writeC(pendingRemoval);
-			for (int i = 0; i < pendingRemoval; i++)
-				buf.writeD(0); // time of removal
+			
+			final CharactersOnServer cos = aci.getInfo(id);
+			buf.writeC(cos.getCharacters()); // total player's characters (on a GS)
+			final long[] delTime = cos.getDelTime();
+			buf.writeC(delTime.length); // player's characters pending removal (on a GS)
+			for (long element : delTime)
+				buf.writeD(element / 1000); // time of removal
 		}
 	}
 }

@@ -15,8 +15,8 @@
 package com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable;
 
 import java.nio.BufferUnderflowException;
+import java.util.Arrays;
 
-import com.l2jfree.loginserver.account.AccountCharacterManager;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyGameServerPacket;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
@@ -24,30 +24,37 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 /**
  * @author savormix
  */
-public final class PlayerLogout extends L2LegacyGameServerPacket
+public class RequestSendMail extends L2LegacyGameServerPacket
 {
 	/** Packet's identifier */
-	public static final int OPCODE = 0x03;
+	public static final int OPCODE = 0x09;
 	
 	private String _account;
+	private String _template;
+	private String[] _args;
 	
 	@Override
 	protected int getMinimumLength()
 	{
-		return READ_S;
+		return READ_S + READ_S + READ_C;
 	}
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		_account = buf.readS();
+		_template = buf.readS();
+		
+		final int size = buf.readUC();
+		_args = new String[size];
+		for (int i = 0; i < size; ++i)
+			_args[i] = buf.readS();
 	}
 	
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		getClient().getOnlineAccounts().remove(_account);
-		
-		AccountCharacterManager.getInstance().updateAccount(_account, getClient().getId());
+		_log.info("Attempt to e-mail template " + _template + " to " + _account + ". Format args:");
+		_log.info(Arrays.toString(_args));
 	}
 }

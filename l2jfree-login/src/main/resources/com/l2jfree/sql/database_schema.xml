@@ -15,6 +15,11 @@
 		If IS NULL then an account has never (successfully) logged into a game server.
 		* Ban Reason - ID that defines why an account has been suspended and can no longer be used to log in.
 		If IS NULL then an account may be used to log in.
+		* Ban Expiry - If ban reason IS NOT NULL, specifies the time when this account can be used to log in.
+		If IS NULL and ban reason IS NOT NULL, specifies that an account was suspended for an arbitrary
+		amount of time.
+		IF ban reason IS NULL, then this field is not taken into consideration.
+		TODO: move bans to a dedicated table?
 	-->
 	<!-- Table must not be preloaded. -->
 	<table name="account"
@@ -28,6 +33,7 @@
 				lastLogin		BIGINT					DEFAULT NULL,
 				lastServerId	SMALLINT				DEFAULT NULL,
 				banReason		SMALLINT				DEFAULT NULL,
+				banExpiry		BIGINT					DEFAULT NULL,
 				
 				PRIMARY KEY (username)
 			);
@@ -84,4 +90,5 @@
 				PRIMARY KEY (ipv4)
 			);
 	" />
+	<update revision="0.0001" query="ALTER TABLE account ADD COLUMN banExpiry BIGINT DEFAULT NULL"/>
 </database>

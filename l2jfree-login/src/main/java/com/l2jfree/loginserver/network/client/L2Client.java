@@ -19,6 +19,7 @@ import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SocketChannel;
 import java.security.PrivateKey;
 
+import com.l2jfree.loginserver.account.L2Account;
 import com.l2jfree.loginserver.network.client.L2ClientSecurity.SessionKey;
 import com.l2jfree.loginserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.loginserver.network.client.packets.L2ServerPacket;

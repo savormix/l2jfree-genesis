@@ -24,13 +24,15 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 
 import javax.crypto.Cipher;
 
 import com.l2jfree.Shutdown;
 import com.l2jfree.TerminationStatus;
+import com.l2jfree.loginserver.account.AccountCharacterManager;
+import com.l2jfree.loginserver.account.L2Account;
 import com.l2jfree.loginserver.config.ServiceConfig;
-import com.l2jfree.loginserver.network.client.L2Account;
 import com.l2jfree.loginserver.network.client.L2BanReason;
 import com.l2jfree.loginserver.network.client.L2Client;
 import com.l2jfree.loginserver.network.client.L2ClientState;
@@ -131,11 +133,9 @@ public final class RequestAuthLogin extends L2ClientPacket
 		Connection con = null;
 		try
 		{
-			int ban = -1;
-			
 			con = L2Database.getConnection();
 			PreparedStatement ps =
-					con.prepareStatement("SELECT password, superUser, birthDate, banReason, lastServerId FROM account WHERE username LIKE ?");
+					con.prepareStatement("SELECT password, superUser, birthDate, banReason, banExpiry, lastServerId FROM account WHERE username LIKE ?");
 			ps.setString(1, user);
 			ResultSet rs = ps.executeQuery();
 			
@@ -155,7 +155,7 @@ public final class RequestAuthLogin extends L2ClientPacket
 					ps2.setInt(6, 0);
 					if (ps2.executeUpdate() > 0)
 					{
-						_log.info("New account " + user + " created");
+						_log.info("Created new account: " + user);
 						requestLogin(con, user, isSuperUser, birthDate, 0);
 					}
 					ps2.close();
@@ -168,7 +168,24 @@ public final class RequestAuthLogin extends L2ClientPacket
 			{
 				if (password.equals(rs.getString("password")))
 				{
-					ban = rs.getInt("banReason");
+					int ban = rs.getInt("banReason");
+					if (ban != 0)
+					{
+						long expiry = rs.getLong("banExpiry");
+						if (expiry > 0 && expiry < System.currentTimeMillis())
+						{
+							ban = 0;
+							
+							PreparedStatement ps2 =
+									con.prepareStatement("UPDATE account SET banReason = ?, banExpiry = ? WHERE username LIKE ?");
+							ps2.setNull(1, Types.SMALLINT);
+							ps2.setNull(2, Types.BIGINT);
+							ps2.setString(3, user);
+							ps2.executeUpdate();
+							ps2.close();
+						}
+					}
+					
 					if (ban == 0)
 					{
 						boolean offline = true;
@@ -214,6 +231,8 @@ public final class RequestAuthLogin extends L2ClientPacket
 	{
 		L2Account la = new L2Account(user, isSuperUser, birthDate, lastServerId);
 		getClient().setAccount(la);
+		
+		AccountCharacterManager.getInstance().updateAccount(user, null);
 		
 		if (ServiceConfig.SHOW_EULA)
 		{

@@ -24,30 +24,35 @@ import com.l2jfree.network.mmocore.MMOBuffer;
 /**
  * @author savormix
  */
-public final class PlayerLogout extends L2LegacyGameServerPacket
+public class ReplyCharacters extends L2LegacyGameServerPacket
 {
 	/** Packet's identifier */
-	public static final int OPCODE = 0x03;
+	public static final int OPCODE = 0x08;
 	
 	private String _account;
+	private int _characters;
+	private long[] _pendingDeletion;
 	
 	@Override
 	protected int getMinimumLength()
 	{
-		return READ_S;
+		return READ_S + READ_C + READ_C;
 	}
 	
 	@Override
 	protected void read(MMOBuffer buf) throws BufferUnderflowException, RuntimeException
 	{
 		_account = buf.readS();
+		_characters = buf.readC();
+		_pendingDeletion = new long[buf.readC()];
+		for (int i = 0; i < _pendingDeletion.length; ++i)
+			_pendingDeletion[i] = buf.readQ();
 	}
 	
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		getClient().getOnlineAccounts().remove(_account);
-		
-		AccountCharacterManager.getInstance().updateAccount(_account, getClient().getId());
+		AccountCharacterManager.getInstance().updateAccount(_account, getClient().getId(), _characters,
+				_pendingDeletion);
 	}
 }

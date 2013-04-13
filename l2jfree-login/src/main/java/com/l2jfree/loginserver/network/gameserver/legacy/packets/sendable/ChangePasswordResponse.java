@@ -14,47 +14,34 @@
  */
 package com.l2jfree.loginserver.network.gameserver.legacy.packets.sendable;
 
-import java.security.interfaces.RSAPublicKey;
-
 import com.l2jfree.loginserver.network.gameserver.legacy.L2LegacyGameServer;
-import com.l2jfree.loginserver.network.gameserver.legacy.LegacyProtocol;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyLoginServerPacket;
 import com.l2jfree.network.mmocore.MMOBuffer;
 
 /**
- * Login server declares the only supported version and specifies a public key modulus that
- * gameserver should use to encipher packets.
- * 
  * @author savormix
  */
-public final class InitLS extends L2LegacyLoginServerPacket
+public class ChangePasswordResponse extends L2LegacyLoginServerPacket
 {
-	private final int _protocol;
-	private final byte[] _publicKey;
+	private final String _character;
+	private final String _message;
 	
-	/**
-	 * Constructs the packet to transmit the public key.
-	 * 
-	 * @param protocol a supported protocol version
-	 * @param publicKey public key
-	 */
-	public InitLS(LegacyProtocol protocol, RSAPublicKey publicKey)
+	public ChangePasswordResponse(String character, String message)
 	{
-		_protocol = protocol.getVersion();
-		_publicKey = publicKey.getModulus().toByteArray();
+		_character = character;
+		_message = message;
 	}
 	
 	@Override
 	protected int getOpcode()
 	{
-		return 0x00;
+		return 0x06;
 	}
 	
 	@Override
 	protected void writeImpl(L2LegacyGameServer client, MMOBuffer buf)
 	{
-		buf.writeD(_protocol);
-		buf.writeD(_publicKey.length);
-		buf.writeB(_publicKey);
+		buf.writeS(_character);
+		buf.writeS(_message);
 	}
 }

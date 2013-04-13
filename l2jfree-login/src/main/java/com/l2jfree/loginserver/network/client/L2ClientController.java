@@ -21,6 +21,7 @@ import java.nio.channels.SocketChannel;
 import javolution.util.FastMap;
 
 import com.l2jfree.loginserver.LoginInfo;
+import com.l2jfree.loginserver.account.L2Account;
 import com.l2jfree.loginserver.network.client.L2ClientSecurity.SessionKey;
 import com.l2jfree.loginserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.loginserver.network.client.packets.L2ServerPacket;

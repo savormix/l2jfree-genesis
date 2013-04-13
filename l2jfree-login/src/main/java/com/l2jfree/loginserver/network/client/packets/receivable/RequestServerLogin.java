@@ -19,7 +19,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import com.l2jfree.loginserver.network.client.L2Account;
+import com.l2jfree.loginserver.account.L2Account;
 import com.l2jfree.loginserver.network.client.L2Client;
 import com.l2jfree.loginserver.network.client.L2ClientSecurity.SessionKey;
 import com.l2jfree.loginserver.network.client.L2NoServiceReason;

@@ -15,36 +15,40 @@
 package com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable;
 
 import java.nio.BufferUnderflowException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
+import com.l2jfree.loginserver.network.client.L2NoServiceReason;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyGameServerPacket;
 import com.l2jfree.network.mmocore.InvalidPacketException;
 import com.l2jfree.network.mmocore.MMOBuffer;
+import com.l2jfree.sql.L2Database;
 
 /**
  * @author savormix
  */
 @SuppressWarnings("unused")
-public final class PlayerTraceRt extends L2LegacyGameServerPacket
+public class RequestTempBan extends L2LegacyGameServerPacket
 {
 	/** Packet's identifier */
-	public static final int OPCODE = 0x07;
+	public static final int OPCODE = 0x0a;
 	
-	private static final int HOPS = 4;
+	private static final DateFormat EXP_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
 	
 	private String _account;
 	private String _ip;
-	private final String[] _hops;
-	
-	/** Constructs this packet. */
-	public PlayerTraceRt()
-	{
-		_hops = new String[HOPS];
-	}
+	private long _expiry;
+	private String _reason;
 	
 	@Override
 	protected int getMinimumLength()
 	{
-		return READ_S + READ_S + HOPS * READ_S;
+		return READ_S + READ_S + READ_Q + READ_C;
 	}
 	
 	@Override
@@ -52,14 +56,38 @@ public final class PlayerTraceRt extends L2LegacyGameServerPacket
 	{
 		_account = buf.readS();
 		_ip = buf.readS();
-		for (int i = 0; i < _hops.length; i++)
-			_hops[i] = buf.readS();
+		_expiry = buf.readQ();
+		if (buf.readC() != 0)
+			_reason = buf.readS();
 	}
 	
 	@Override
 	protected void runImpl() throws InvalidPacketException, RuntimeException
 	{
-		// there is absolutely no reason to trust this
-		// System.out.println(getClient() + "|" + getType() + "|" + _account + "|" + _ip + "|" + Arrays.toString(_hops));
+		// temporary ban
+		Connection con = null;
+		try
+		{
+			con = L2Database.getConnection();
+			PreparedStatement ps =
+					con.prepareStatement("UPDATE account SET banReason = ?, banExpiry = ? WHERE username LIKE ?");
+			ps.setInt(1, -L2NoServiceReason.ACCESS_FAILED_TRY_AGAIN.getId());
+			ps.setLong(2, _expiry);
+			ps.setString(3, _account);
+			ps.executeUpdate();
+			ps.close();
+			
+			_log.info("Banned " + _account + " until " + EXP_FORMAT.format(new Date(_expiry)));
+		}
+		catch (SQLException e)
+		{
+			_log.error("Could not temporarily ban account!", e);
+		}
+		finally
+		{
+			L2Database.close(con);
+		}
+		
+		// TODO: ban IP as well?
 	}
 }

@@ -20,11 +20,15 @@ import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyGameSer
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.L2LegacyLoginServerPacket;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable.BlowfishKey;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable.ChangeAccessLevel;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable.ChangePassword;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable.GameServerAuth;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable.PlayerAuthRequest;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable.PlayerLogout;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable.PlayerTraceRt;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable.PlayersInGame;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable.ReplyCharacters;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable.RequestSendMail;
+import com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable.RequestTempBan;
 import com.l2jfree.loginserver.network.gameserver.legacy.packets.receivable.ServerStatus;
 import com.l2jfree.network.mmocore.PacketHandler;
 
@@ -77,6 +81,18 @@ public final class L2LegacyGameServerPacketHandler extends
 						
 					case PlayerTraceRt.OPCODE:
 						return new PlayerTraceRt();
+						
+					case ReplyCharacters.OPCODE:
+						return new ReplyCharacters();
+						
+					case RequestSendMail.OPCODE:
+						return new RequestSendMail();
+						
+					case RequestTempBan.OPCODE:
+						return new RequestTempBan();
+						
+					case ChangePassword.OPCODE:
+						return new ChangePassword();
 						
 					default:
 						return unknown(buf, client, opcode);
