@@ -17,10 +17,16 @@ package com.l2jfree.gameserver.network.client;
 import java.io.IOException;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SocketChannel;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.l2jfree.gameserver.CoreInfo;
 import com.l2jfree.gameserver.network.client.packets.L2ClientPacket;
 import com.l2jfree.gameserver.network.client.packets.L2ServerPacket;
+import com.l2jfree.network.ClientProtocolVersion;
+import com.l2jfree.network.ProtocolVersionFactory;
+import com.l2jfree.network.ProtocolVersionManager;
 import com.l2jfree.network.mmocore.MMOConfig;
 import com.l2jfree.network.mmocore.MMOController;
 
@@ -29,7 +35,8 @@ import com.l2jfree.network.mmocore.MMOController;
  * 
  * @author savormix
  */
-public final class L2ClientController extends MMOController<L2Client, L2ClientPacket, L2ServerPacket>
+public final class L2ClientController extends MMOController<L2Client, L2ClientPacket, L2ServerPacket> implements
+		ProtocolVersionFactory<ClientProtocolVersion>
 {
 	private static final class SingletonHolder
 	{
@@ -40,7 +47,7 @@ public final class L2ClientController extends MMOController<L2Client, L2ClientPa
 			
 			try
 			{
-				INSTANCE = new L2ClientController(cfg);
+				ProtocolVersionManager.getInstance().addGameFactory(INSTANCE = new L2ClientController(cfg));
 			}
 			catch (IOException e)
 			{
@@ -61,13 +68,21 @@ public final class L2ClientController extends MMOController<L2Client, L2ClientPa
 		return SingletonHolder.INSTANCE;
 	}
 	
+	private final Map<Integer, ClientProtocolVersion> _versions;
+	
 	private L2ClientController(MMOConfig config) throws IOException
 	{
 		//super(config, L2ClientPacketHandler.getInstance());
 		super(config, L2ExperimentalPacketHandler.getInstance());
 		
 		L2ClientSecurity.getInstance();
-		// TODO Auto-generated constructor stub
+		
+		{
+			final Map<Integer, ClientProtocolVersion> versions = new HashMap<Integer, ClientProtocolVersion>();
+			for (final ClientProtocolVersion cpv : ClientProtocolVersion.values())
+				versions.put(cpv.getVersion(), cpv);
+			_versions = Collections.unmodifiableMap(versions);
+		}
 	}
 	
 	@Override
@@ -82,5 +97,16 @@ public final class L2ClientController extends MMOController<L2Client, L2ClientPa
 	protected String getVersionInfo()
 	{
 		return super.getVersionInfo() + " - " + CoreInfo.getVersionInfo();
+	}
+	
+	@Override
+	public ClientProtocolVersion getByVersion(int version)
+	{
+		final ClientProtocolVersion cpv = _versions.get(version);
+		if (cpv != null)
+			return cpv;
+		
+		final ClientProtocolVersion[] all = ClientProtocolVersion.values();
+		return all[all.length - 1];
 	}
 }

@@ -24,43 +24,43 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class ProtocolVersionManager
 {
-	private final List<ProtocolVersionFactory<ILoginProtocolVersion>> _factoriesLogin;
-	private final List<ProtocolVersionFactory<IGameProtocolVersion>> _factoriesGame;
+	private final List<ProtocolVersionFactory<? extends ILoginProtocolVersion>> _factoriesLogin;
+	private final List<ProtocolVersionFactory<? extends IGameProtocolVersion>> _factoriesGame;
 	private final UnknownLoginProtocolVersion _fallbackLogin;
 	private final UnknownGameProtocolVersion _fallbackGame;
 	
 	private ProtocolVersionManager()
 	{
-		_factoriesLogin = new CopyOnWriteArrayList<ProtocolVersionFactory<ILoginProtocolVersion>>();
-		_factoriesGame = new CopyOnWriteArrayList<ProtocolVersionFactory<IGameProtocolVersion>>();
+		_factoriesLogin = new CopyOnWriteArrayList<ProtocolVersionFactory<? extends ILoginProtocolVersion>>();
+		_factoriesGame = new CopyOnWriteArrayList<ProtocolVersionFactory<? extends IGameProtocolVersion>>();
 		
 		_fallbackLogin = new UnknownLoginProtocolVersion(-1, getLatestLogin());
 		_fallbackGame = new UnknownGameProtocolVersion(-1, getLatestGame());
 	}
 	
-	public void addLoginFactory(ProtocolVersionFactory<ILoginProtocolVersion> factory)
+	public void addLoginFactory(ProtocolVersionFactory<? extends ILoginProtocolVersion> factory)
 	{
 		_factoriesLogin.add(0, factory);
 	}
 	
-	public void addGameFactory(ProtocolVersionFactory<IGameProtocolVersion> factory)
+	public void addGameFactory(ProtocolVersionFactory<? extends IGameProtocolVersion> factory)
 	{
 		_factoriesGame.add(0, factory);
 	}
 	
-	public void removeLoginFactory(ProtocolVersionFactory<ILoginProtocolVersion> factory)
+	public void removeLoginFactory(ProtocolVersionFactory<? extends ILoginProtocolVersion> factory)
 	{
 		_factoriesLogin.remove(factory);
 	}
 	
-	public void removeGameFactory(ProtocolVersionFactory<IGameProtocolVersion> factory)
+	public void removeGameFactory(ProtocolVersionFactory<? extends IGameProtocolVersion> factory)
 	{
 		_factoriesGame.remove(factory);
 	}
 	
 	public ILoginProtocolVersion getLoginProtocol(int version)
 	{
-		for (final ProtocolVersionFactory<ILoginProtocolVersion> factory : _factoriesLogin)
+		for (final ProtocolVersionFactory<? extends ILoginProtocolVersion> factory : _factoriesLogin)
 		{
 			final ILoginProtocolVersion cpv = factory.getByVersion(version);
 			if (cpv != null)
@@ -72,7 +72,7 @@ public class ProtocolVersionManager
 	
 	public IGameProtocolVersion getGameProtocol(int version)
 	{
-		for (final ProtocolVersionFactory<IGameProtocolVersion> factory : _factoriesGame)
+		for (final ProtocolVersionFactory<? extends IGameProtocolVersion> factory : _factoriesGame)
 		{
 			final IGameProtocolVersion cpv = factory.getByVersion(version);
 			if (cpv != null)
