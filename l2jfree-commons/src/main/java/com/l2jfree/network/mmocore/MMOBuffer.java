@@ -437,6 +437,17 @@ public final class MMOBuffer
 	}
 	
 	/**
+	 * Writes a signed floating point number into four bytes.
+	 * 
+	 * @param value a number from the interval [{@link java.lang.Float#MIN_VALUE};
+	 *            {@link java.lang.Float#MAX_VALUE}]
+	 */
+	public void writeIEEESingle(float value)
+	{
+		_buffer.putFloat(value);
+	}
+	
+	/**
 	 * Writes <TT>data.length</TT> bytes from the given array.
 	 * 
 	 * @param data a byte array
