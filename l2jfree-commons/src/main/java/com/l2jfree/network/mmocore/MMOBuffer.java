@@ -196,7 +196,18 @@ public final class MMOBuffer
 	}
 	
 	/**
-	 * Reads an UTF-16 encoded C string. <BR>
+	 * Reads four bytes as a signed floating point number.
+	 * 
+	 * @return a number from the interval [{@link java.lang.Float#MIN_VALUE};
+	 *         {@link java.lang.Float#MAX_VALUE}]
+	 */
+	public float readIEEESingle()
+	{
+		return _buffer.getFloat();
+	}
+	
+	/**
+	 * Reads an UTF-16 encoded C string.<BR>
 	 * <BR>
 	 * <I>NOTE: The read string remains in memory until this method is called again.</I>
 	 * 
@@ -209,6 +220,25 @@ public final class MMOBuffer
 		
 		for (char c; (c = _buffer.getChar()) != 0;)
 			_sb.append(c);
+		
+		return _sb.toString();
+	}
+	
+	/**
+	 * Reads an UTF-16 encoded C string with an UTF-8 NULL terminator.<BR>
+	 * <BR>
+	 * <I>NOTE: The read string remains in memory until this method is called again.</I>
+	 * 
+	 * @return a string
+	 */
+	public String readS0()
+	{
+		// clears the builder
+		_sb.setLength(0);
+		
+		while (_buffer.get(_buffer.position()) != 0)
+			_sb.append(_buffer.getChar());
+		_buffer.get();
 		
 		return _sb.toString();
 	}
@@ -480,6 +510,40 @@ public final class MMOBuffer
 		putChars(charSequence);
 		
 		_buffer.putChar('\000');
+	}
+	
+	/**
+	 * Writes a C string. <BR>
+	 * <BR>
+	 * Given character sequences are written one after another in the given order. <BR>
+	 * <BR>
+	 * A convenience method to write all parts of a string without concatenating.
+	 * 
+	 * @param charSequences parts of a string in the correct order
+	 * @see #append(CharSequence)
+	 * @see #writeS0(CharSequence)
+	 */
+	public void writeS0(CharSequence... charSequences)
+	{
+		if (charSequences != null)
+			for (CharSequence charSequence : charSequences)
+				putChars(charSequence);
+		
+		_buffer.put((byte) 0);
+	}
+	
+	/**
+	 * Writes a C string.
+	 * 
+	 * @param charSequence a character sequence
+	 * @see #append(CharSequence)
+	 * @see #writeS0(CharSequence[])
+	 */
+	public void writeS0(CharSequence charSequence)
+	{
+		putChars(charSequence);
+		
+		_buffer.put((byte) 0);
 	}
 	
 	private void putChars(CharSequence charSequence)
